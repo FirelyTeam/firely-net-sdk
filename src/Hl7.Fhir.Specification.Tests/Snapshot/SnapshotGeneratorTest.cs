@@ -88,28 +88,39 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        [TestMethod]
-        public void TestMergeMax()
+        [DataTestMethod]
+        [DataRow(null, "1", "1")]
+        [DataRow("1", null, "1")]
+        [DataRow("1", "1", "1")]
+        [DataRow("1", "*", "1")]
+        [DataRow("2", "*", "2")]
+        [DataRow("*", "*", "*")]
+        [DataRow("*", "2", "2")]
+        [DataRow("*", null, "*")]
+        [DataRow(null, "*", "*")]
+        [DataRow("3", "2", "2")]
+        [DataRow("2", "3", "2")]
+        public void TestMergeMax(string snap, string diff, string expected)
         {
             var sg = new SnapshotGenerator.ElementDefnMerger();
 
-            test(null, "1", "1");
-            test("1", null, "1");
-            test("1", "1", "1");
-            test("1", "*", "1");
-            test("2", "*", "2");
-            test("*", "*", "*");
-            test("*", "2", "2");
-            test("*", null, "*");
-            test(null, "*", "*");
-            test("3", "2", "2");
-            test("2", "3", "2");
+            var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+            Assert.AreEqual(expected, actual.Value);
+        }
 
-            void test(string snap, string diff, string expected)
-            {
-                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
-                Assert.AreEqual(expected, actual.Value);
-            }
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, 1, 1)]
+        [DataRow(1, null, 1)]
+        [DataRow(1, 2, 2)]
+        [DataRow(2, 1, 2)]
+        [DataRow(1, 1, 1)]
+        public void TestMinMax(int? snap, int? diff, int? expected)
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            var actual = sg.mergeMin(new UnsignedInt(snap), new UnsignedInt(diff));
+            Assert.AreEqual(expected, actual.Value);
         }
 
         [TestMethod]
@@ -7547,6 +7558,55 @@ namespace Hl7.Fhir.Specification.Tests
             var extensionElement = elements.SingleOrDefault(x => x.ElementId == elementId);
 
             extensionElement.Should().NotBeNull();
+        }
+
+        [TestMethod]
+        public async T.Task CardinalityOfExtension()
+        {
+            // Arrange
+            string parentId = "Patient.extension";
+            string elementId = "Patient.extension:birthPlace";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync("https://example.org/fhir/StructureDefinition/issue-1981-patient");
+
+            sd.Differential.Element.Should().HaveCount(2);
+
+            var extensionElement = sd.Differential.Element.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min.Should().Be(0);
+            extensionElement.Max.Should().BeNull();
+
+            var snapshotGenerator = new SnapshotGenerator(_testResolver, _settings);
+
+            snapshotGenerator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+            {
+                e.Element.Should().NotBeNull();
+
+                if (e.Element.Annotation<TestAnnotation>() != null)
+                    e.Element.RemoveAnnotations<TestAnnotation>();
+
+                e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+            };
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            var elementsExpanded = await snapshotGenerator.ExpandElementAsync(elements, parentElement);
+
+            // Assert
+            extensionElement = elementsExpanded.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min.Should().Be(0);
+            extensionElement.Max.Should().Be("1");
+
+            var baseElement = extensionElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Min.Should().Be(0);
+            baseElement.Max.Should().Be("1");
         }
 
         private sealed class TestAnnotation

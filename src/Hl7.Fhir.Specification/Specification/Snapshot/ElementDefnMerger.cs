@@ -6,14 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
 using System.Reflection;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
@@ -105,7 +104,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Mappings are cumulative, but keep unique on full contents
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
-                snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
+                //snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
+                snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
                 //snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
                 snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.MinValue = mergeComplexAttribute(snap.MinValue, diff.MinValue);
                 snap.MaxValue = mergeComplexAttribute(snap.MaxValue, diff.MaxValue);
-                
+
                 // [WMR 20160909] merge defaultValue and meaningWhenMissing, to handle core definitions; validator can detect invalid constraints
                 snap.DefaultValue = mergeComplexAttribute(snap.DefaultValue, diff.DefaultValue);
                 snap.MeaningWhenMissingElement = mergePrimitiveAttribute(snap.MeaningWhenMissingElement, diff.MeaningWhenMissingElement);
@@ -224,8 +224,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // [WMR 20160719] Handle snap == null
                             // diffText = (snap.ObjectValue as string) + "\r\n" + diffText.Substring(3);
                             var prefix = snap != null ? snap.ObjectValue as string : null;
-                            diffText = string.IsNullOrEmpty(prefix) ? 
-                                diffText.Substring(3) 
+                            diffText = string.IsNullOrEmpty(prefix) ?
+                                diffText.Substring(3)
                                 : prefix + "\r\n" + diffText.Substring(3);
                         }
 
@@ -238,6 +238,36 @@ namespace Hl7.Fhir.Specification.Snapshot
                 else
                     return snap;
             }
+
+            /// <summary>
+            /// Merge the Min element of the differential into the snapshot. The most contrained will win: so the maximum of both values.
+            /// </summary>
+            /// <param name="snap"></param>
+            /// <param name="diff"></param>
+            /// <returns></returns>
+            internal UnsignedInt mergeMin(UnsignedInt snap, UnsignedInt diff)
+            {
+                if (snap.IsNullOrEmpty() && !diff.IsNullOrEmpty())
+                {
+                    // no snap element, but diff element: return the diff:
+                    return deepCopyAndRaiseOnConstraint(diff);
+                }
+
+                if (!diff.IsNullOrEmpty())
+                {
+                    // a snap element and diff element exist
+                    var snapMin = snap.Value;
+                    var diffMin = diff.Value;
+
+                    if (diffMin > snapMin)
+                    {
+                        return deepCopyAndRaiseOnConstraint(diff);
+                    }
+                }
+                // in all other cases, return the snap
+                return snap;
+            }
+
 
             // The diamond problem is especially painful for min/max -
             // most datatypes roots have a cardinality of 0..*, so
@@ -255,7 +285,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                     // Now, diff has a numeric limit
                     // So, if snap has no limit, take the diff
-                    if(snap.Value == "*")
+                    if (snap.Value == "*")
                         return deepCopyAndRaiseOnConstraint(diff);
 
                     // snap and diff both have a numeric value
@@ -265,7 +295,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         // compare them if they are both numerics
                         return dv < sv ? deepCopyAndRaiseOnConstraint(diff) : snap;
                     }
-                    
+
                     // one of the two values cannot be parsed, just don't
                     // do anything to not break it any further.
                     return snap;
@@ -278,9 +308,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return snap;
             }
 
-            private FhirString deepCopyAndRaiseOnConstraint(FhirString elt)
+            private T deepCopyAndRaiseOnConstraint<T>(T elt) where T : PrimitiveType
             {
-                var result = (FhirString)elt.DeepCopy();
+                var result = (T)elt.DeepCopy();
                 onConstraint(result);
                 return result;
             }
