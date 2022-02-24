@@ -2,7 +2,7 @@
 
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
-  <Import Project="..\firely-net-sdk-tests.props"/>
+  <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>   

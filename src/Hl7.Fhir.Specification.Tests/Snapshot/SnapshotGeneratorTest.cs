@@ -7549,6 +7549,55 @@ namespace Hl7.Fhir.Specification.Tests
             extensionElement.Should().NotBeNull();
         }
 
+        [TestMethod]
+        public async T.Task CardinalityOfExtension()
+        {
+            // Arrange
+            string parentId = "Patient.extension";
+            string elementId = "Patient.extension:birthPlace";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync("https://example.org/fhir/StructureDefinition/issue-1981-patient");
+
+            sd.Differential.Element.Should().HaveCount(2);
+
+            var extensionElement = sd.Differential.Element.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min.Should().Be(0);
+            extensionElement.Max.Should().BeNull();
+
+            var snapshotGenerator = new SnapshotGenerator(_testResolver, _settings);
+
+            snapshotGenerator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+            {
+                e.Element.Should().NotBeNull();
+
+                if (e.Element.Annotation<TestAnnotation>() != null)
+                    e.Element.RemoveAnnotations<TestAnnotation>();
+
+                e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+            };
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            var elementsExpanded = await snapshotGenerator.ExpandElementAsync(elements, parentElement);
+
+            // Assert
+            extensionElement = elementsExpanded.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min.Should().Be(0);
+            extensionElement.Max.Should().Be("1");
+
+            var baseElement = extensionElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Min.Should().Be(0);
+            baseElement.Max.Should().Be("1");
+        }
+
         private sealed class TestAnnotation
         {
             public TestAnnotation(StructureDefinition baseStructure, ElementDefinition baseElemDef)
