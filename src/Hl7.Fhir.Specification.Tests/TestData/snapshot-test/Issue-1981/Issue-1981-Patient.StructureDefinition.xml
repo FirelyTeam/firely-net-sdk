@@ -27,7 +27,7 @@
       <min value="0" />
       <type>
         <code value="Extension" />
-        <profile value="http://hl7.org/fhir/StructureDefinition/birthPlace" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthPlace" />
       </type>
       <isModifier value="false" />
     </element>
