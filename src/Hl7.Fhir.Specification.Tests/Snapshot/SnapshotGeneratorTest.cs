@@ -9123,6 +9123,75 @@ namespace Hl7.Fhir.Specification.Tests
             sutCode.Min.Should().Be(sdCode.Min);
         }
 
+        [TestMethod]
+        public async T.Task CheckCardinalityOfProfiledType2()
+        {
+            // Arrange
+            var zipSource = ZipSource.CreateValidationSource();
+            var dirSource = new DirectorySource("TestData\\snapshot-test\\FOR-497");
+            var resolver = new CachedResolver(new MultiResolver(zipSource, dirSource));
+            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
+            var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
+            var sut = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips") as StructureDefinition;
+
+            // Act
+            var elements = await snapshotGenerator.GenerateAsync(sut);
+
+            // Assert
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            const string codeId = "Observation.code";
+
+            var sdCode = sd.Snapshot.Element.Single(x => x.ElementId == codeId);
+            var sutCode = elements.Single(x => x.ElementId == codeId);
+
+            sutCode.Max.Should().Be(sdCode.Max);
+            sutCode.Min.Should().Be(sdCode.Min);
+        }
+
+        [TestMethod]
+        public async T.Task DiscriminatorBaseElementWithExpansionTest()
+        {
+            var parentId = "Patient.address";
+            var elementId = "Patient.address.country.extension:countryCode.value[x]:valueCodeableConcept.coding";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync("http://example.com/fhir/StructureDefinition/issue-1892-patient");
+
+            var generator = new SnapshotGenerator(_testResolver, _settings);
+            generator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+                {
+                    e.Element.Should().NotBeNull();
+
+                    if (e.Element.Annotation<TestAnnotation>() != null)
+                        e.Element.RemoveAnnotations<TestAnnotation>();
+
+                    e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+                };
+
+            var elements = await generator.GenerateAsync(sd);
+
+            generator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            elements = generator.ExpandElementAsync(elements, parentElement).Result.ToList();
+
+            // Assert
+            var slicingElement = elements.Single(x => x.ElementId == elementId);
+
+            slicingElement.Slicing.Should().NotBeNull();
+            slicingElement.Slicing.Discriminator.Should().HaveCount(1);
+            slicingElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
+            slicingElement.Slicing.Discriminator[0].Path.Should().Be("$this");
+
+            var baseElement = slicingElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Slicing.Should().NotBeNull();
+            baseElement.Slicing.Discriminator.Should().HaveCount(1);
+            baseElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
+            baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
+        }
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
@@ -9144,20 +9213,23 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public async T.Task CardinalityOfExtension()
+        [DataRow("https://example.org/fhir/StructureDefinition/issue-1981-noMax-patient", 0, null, 0, "1", 0, "1")]
+        [DataRow("https://example.org/fhir/StructureDefinition/issue-1981-max0-patient", 0, "0", 0, "0", 0, "1")]
+        [DataRow("https://example.org/fhir/StructureDefinition/issue-1981-minMax1-patient", 1, "1", 1, "1", 0, "1")]
+        public async T.Task CardinalityOfExtension(string url, int diffMin, string diffMax, int extMin, string extMax, int baseMin, string baseMax)
         {
             // Arrange
             string parentId = "Patient.extension";
             string elementId = "Patient.extension:birthPlace";
 
-            var sd = await _testResolver.FindStructureDefinitionAsync("https://example.org/fhir/StructureDefinition/issue-1981-patient");
+            var sd = await _testResolver.FindStructureDefinitionAsync(url);
 
             sd.Differential.Element.Should().HaveCount(2);
 
             var extensionElement = sd.Differential.Element.Single(x => x.ElementId == elementId);
 
-            extensionElement.Min.Should().Be(0);
-            extensionElement.Max.Should().BeNull();
+            extensionElement.Min.Should().Be(diffMin);
+            extensionElement.Max.Should().Be(diffMax);
 
             var snapshotGenerator = new SnapshotGenerator(_testResolver, _settings);
 
@@ -9183,13 +9255,13 @@ namespace Hl7.Fhir.Specification.Tests
             // Assert
             extensionElement = elementsExpanded.Single(x => x.ElementId == elementId);
 
-            extensionElement.Min.Should().Be(0);
-            extensionElement.Max.Should().Be("1");
+            extensionElement.Min.Should().Be(extMin);
+            extensionElement.Max.Should().Be(extMax);
 
             var baseElement = extensionElement.Annotation<TestAnnotation>().BaseElementDefinition;
 
-            baseElement.Min.Should().Be(0);
-            baseElement.Max.Should().Be("1");
+            baseElement.Min.Should().Be(baseMin);
+            baseElement.Max.Should().Be(baseMax);
         }
 
         private sealed class TestAnnotation

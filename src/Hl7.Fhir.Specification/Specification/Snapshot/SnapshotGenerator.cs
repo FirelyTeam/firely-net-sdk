@@ -1302,11 +1302,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // the external profile type (3). We do first a merge with the profile type and the differential and then the differential 
                                 // will be merged into the snapshot.
 
-                                var sg = new ElementDefnMerger();
-                                // merge the min of the external profile type with the diff. Most constrained wins (the maximum of both values)
-                                rebasedRootElem.MinElement = sg.mergeMin(rebasedRootElem.MinElement, diff.Current.MinElement);
-                                // merge the min of the external profile type with the diff. Most constrained wins (the minumum of both values) 
-                                rebasedRootElem.MaxElement = sg.mergeMax(rebasedRootElem.MaxElement, diff.Current.MaxElement);
+                            var sg = new ElementDefnMerger();
+                            // merge the min of the external profile type with the diff. Most constrained wins (the maximum of both values)
+                            //rebasedRootElem.MinElement = sg.mergeMin(rebasedRootElem.MinElement, diff.Current.MinElement);
+                            // merge the min of the external profile type with the diff. Most constrained wins (the minimum of both values) 
+                            //rebasedRootElem.MaxElement = sg.mergeMax(rebasedRootElem.MaxElement, diff.Current.MaxElement);
 
 
                                 // Merge the type profile root element; no need to expand children
