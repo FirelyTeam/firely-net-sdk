@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Validation
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
-                    success = compiled.Predicate(instance,
+                    success = compiled.IsTrue(instance,
                         new FhirEvaluationContext(instance)
                         { ElementResolver = callExternalResolver });
                 }
