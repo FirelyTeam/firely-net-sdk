@@ -17,6 +17,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task Search_UsingSearchParams_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
@@ -62,6 +63,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchUsingPost_UsingSearchParams_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
@@ -109,6 +111,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public void SearchSync_UsingSearchParams_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
@@ -157,6 +160,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public void SearchUsingPostSync_UsingSearchParams_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
@@ -188,6 +192,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchMultiple_UsingSearchParams_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
@@ -243,6 +248,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchUsingPostMultiple_UsingSearchParams_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
@@ -299,6 +305,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchWithCriteria_SyncContinue_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
@@ -343,6 +350,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
@@ -387,6 +395,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
@@ -433,6 +442,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
+        [Obsolete]
         public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturned()
         {
             var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
