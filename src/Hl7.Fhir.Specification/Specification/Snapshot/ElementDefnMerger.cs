@@ -118,10 +118,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.AliasElement = mergePrimitiveCollection(snap.AliasElement, diff.AliasElement, matchStringValues);
 
                 snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
-                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
+                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement, snap.MinElement);
 
                 // snap.Base should already be there, and is not changed by the diff
-                // ElementDefinition.contentReference cannot be overridden by a derived profile                
+                // ElementDefinition.contentReference cannot be overridden by a derived profile
 
                 // Type collection has different semantics (no implicit type inheritance)
                 // Include all diff types, merged onto matching snap
@@ -511,7 +511,13 @@ namespace Hl7.Fhir.Specification.Snapshot
             // (with 0..*) onto an element which needs to be expanded
             // and which has no diff constraints on max will get the 
             // max from the base -> a non-repeating element will become repeating.
-            internal FhirString mergeMax(FhirString snap, FhirString diff)
+
+            internal FhirString mergeMax(FhirString snap, FhirString diff, UnsignedInt snapMin)
+            {
+                return constrainMax(mergeMax(snap, diff), snapMin);
+            }
+
+            private FhirString mergeMax(FhirString snap, FhirString diff)
             {
                 if (!diff.IsNullOrEmpty() && !snap.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
@@ -536,12 +542,31 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // do anything to not break it any further.
                     return snap;
                 }
-                else if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
+                
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     return deepCopyAndRaiseOnConstraint(diff);
                 }
-                else
-                    return snap;
+
+                return snap;
+            }
+
+            /// <summary>
+            /// Make sure max >= min
+            /// </summary>
+            private static FhirString constrainMax(FhirString max, UnsignedInt minValue)
+            {
+                if (minValue.IsNullOrEmpty())
+                    return max;
+
+                // Max does not have a value but min does so take min
+                if (max.IsNullOrEmpty())
+                    return new FhirString(minValue.Value.ToString());
+
+                // If max is an int and is smaller than min then take min otherwise take max
+                return int.TryParse(max.Value, out var maxValue) && maxValue < minValue.Value
+                    ? new FhirString(minValue.Value.ToString())
+                    : max;
             }
 
             private T deepCopyAndRaiseOnConstraint<T>(T elt) where T : PrimitiveType

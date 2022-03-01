@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <StructureDefinition xmlns="http://hl7.org/fhir">
-  <url value="https://example.org/fhir/StructureDefinition/issue-1981-minMax1-patient" />
+  <url value="https://example.org/fhir/StructureDefinition/issue-1981-patient" />
   <name value="MyPatient" />
   <status value="draft" />
   <fhirVersion value="4.0.1" />
@@ -21,14 +21,14 @@
       </slicing>
       <min value="0" />
     </element>
-    <element id="Patient.extension:birthPlace">
+    <element id="Patient.extension:test">
       <path value="Patient.extension" />
-      <sliceName value="birthPlace" />
-      <min value="1" />
+      <sliceName value="test" />
+      <min value="0" />
       <max value="1" />
       <type>
         <code value="Extension" />
-        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthPlace" />
+        <profile value="https://example.org/fhir/StructureDefinition/TestExtension0star" />
       </type>
       <isModifier value="false" />
     </element>
