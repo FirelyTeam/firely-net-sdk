@@ -15,7 +15,7 @@ using System.Net;
 
 namespace Hl7.Fhir.Rest.Legacy
 {
-    [Obsolete("Use the class FhirClient instead.")]       // Obsoleted on 20220210 by Marco Visser
+    [Obsolete("Use the class FhirClient instead. Will be removed in the next major release.")]       // Obsoleted on 20220210 by Marco Visser
     public partial class LegacyFhirClient : BaseFhirClient
     {
         /// <summary>
