@@ -926,7 +926,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static bool hasWarnings(Parameters outcome) =>
             isSuccess(outcome) && outcome.GetSingleValue<FhirString>("message") is not null;
 
-        private static string? getMessage(Parameters outcome) =>
+        private static string getMessage(Parameters outcome) =>
             outcome.GetSingleValue<FhirString>("message")?.Value;
 
         #endregion
