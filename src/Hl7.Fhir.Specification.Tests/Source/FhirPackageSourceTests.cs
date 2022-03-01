@@ -7,11 +7,11 @@ using System.IO;
 namespace Firely.Fhir.Packages.Tests
 {
     [TestClass]
-    public class CorePackageSourceTests
+    public class FhirPackageSourceTests
     {
         private const string CORE_PACKAGE_PATH = "TestData/hl7.fhir.r3.corexml-3.0.2.tgz";
         private const string CORE_EXPANSIONS_PACKAGE_PATH = "TestData/hl7.fhir.r3.expansions-3.0.2.tgz";
-        private readonly CorePackageSource _resolver = new(new string[] { CORE_PACKAGE_PATH, CORE_EXPANSIONS_PACKAGE_PATH });
+        private readonly FhirPackageSource _resolver = new(new string[] { CORE_PACKAGE_PATH, CORE_EXPANSIONS_PACKAGE_PATH });
 
         [TestMethod]
         public async System.Threading.Tasks.Task TestResolveByCanonicalUri()

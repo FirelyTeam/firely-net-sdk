@@ -10,18 +10,28 @@ namespace Hl7.Fhir.Specification.Source
 {
 
 
-    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from the FHIR Core package</summary>
-    public class CorePackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource
+    /// <summary>Reads FHIR version specific artifacts (Profiles, ValueSets, ...) from the FHIR Packages</summary>
+    public class FhirPackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource
     {
-        private FhirPackageResolver _resolver;
+        private CommonFhirPackageSource _resolver;
 
-        /// <summary>Create a new <see cref="CorePackageSource"/> instance to read FHIR artifacts from references FHIR packages.</summary>
+        /// <summary>Create a new <see cref="FhirPackageSource"/> instance to read FHIR artifacts from the referenced FHIR packages.</summary>
         /// <param name="packageFilePaths">The file paths of the packages that are used as the source for resolving</param>
-        public CorePackageSource(string[] packageFilePaths)
+        public FhirPackageSource(string[] packageFilePaths)
         {
             var inspector = ModelInfo.ModelInspector;
-            _resolver = new FhirPackageResolver(inspector, packageFilePaths);
+            _resolver = new CommonFhirPackageSource(inspector, packageFilePaths);
         }
+
+        /// <summary>Create a new <see cref="CommonFhirPackageSource"/> instance to read FHIR artifacts from one or multiple FHIR packages.</summary>
+        /// <param name="packageServer">The package server from which to retrieve the FHIR packages</param>
+        /// <param name="packageNames">The FHIR package names which are used to resolve artifacts from, example: hl7.fhir.r3.expansions@3.0.2</param>
+        public FhirPackageSource(string packageServer, string[] packageNames)
+        {
+            var inspector = ModelInfo.ModelInspector;
+            _resolver = new CommonFhirPackageSource(inspector, packageServer, packageNames);
+        }
+
 
         ///<inheritdoc/>
         public async Task<Resource?> ResolveByCanonicalUriAsync(string uri)
