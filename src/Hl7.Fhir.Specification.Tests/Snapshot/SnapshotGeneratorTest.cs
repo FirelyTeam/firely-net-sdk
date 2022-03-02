@@ -100,62 +100,50 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [DataTestMethod]
-        [DataRow(null, null, null, null)]
-        [DataRow(null, null, "1", "1")]
-        [DataRow(null, "1", null, "1")]
-        [DataRow(null, "1", "1", "1")]
-        [DataRow(null, "1", "*", "1")]
-        [DataRow(null, "2", "*", "2")]
-        [DataRow(null, "*", "*", "*")]
-        [DataRow(null, "*", "2", "2")]
-        [DataRow(null, "*", null, "*")]
-        [DataRow(null, null, "*", "*")]
-        [DataRow(null, "3", "2", "2")]
-        [DataRow(null, "2", "3", "2")]
-
-        [DataRow(0, null, null, "0")]
-        [DataRow(0, null, "1", "1")]
-        [DataRow(0, "1", null, "1")]
-        [DataRow(0, "1", "1", "1")]
-        [DataRow(0, "1", "*", "1")]
-        [DataRow(0, "2", "*", "2")]
-        [DataRow(0, "*", "*", "*")]
-        [DataRow(0, "*", "2", "2")]
-        [DataRow(0, "*", null, "*")]
-        [DataRow(0, null, "*", "*")]
-        [DataRow(0, "3", "2", "2")]
-        [DataRow(0, "2", "3", "2")]
-
-        [DataRow(2, null, null, "2")]
-        [DataRow(2, null, "1", "2")]
-        [DataRow(2, "1", null, "2")]
-        [DataRow(2, "1", "1", "2")]
-        [DataRow(2, "1", "*", "2")]
-        [DataRow(2, "2", "*", "2")]
-        [DataRow(2, "*", "*", "*")]
-        [DataRow(2, "*", "2", "2")]
-        [DataRow(2, "*", null, "*")]
-        [DataRow(2, null, "*", "*")]
-        [DataRow(2, "3", "2", "2")]
-        [DataRow(2, "2", "3", "2")]
-
-        [DataRow(4, null, null, "4")]
-        [DataRow(4, null, "1", "4")]
-        [DataRow(4, "1", null, "4")]
-        [DataRow(4, "1", "1", "4")]
-        [DataRow(4, "1", "*", "4")]
-        [DataRow(4, "2", "*", "4")]
-        [DataRow(4, "*", "*", "*")]
-        [DataRow(4, "*", "2", "4")]
-        [DataRow(4, "*", null, "*")]
-        [DataRow(4, null, "*", "*")]
-        [DataRow(4, "3", "2", "4")]
-        [DataRow(4, "2", "3", "4")]
-        public void TestMergeMax(int? snapMin, string snap, string diff, string expected)
+        [DataRow(null, null, null)]
+        [DataRow(null, "1", "1")]
+        [DataRow("1", null, "1")]
+        [DataRow("1", "1", "1")]
+        [DataRow("1", "*", "1")]
+        [DataRow("2", "*", "2")]
+        [DataRow("*", "*", "*")]
+        [DataRow("*", "2", "2")]
+        [DataRow("*", null, "*")]
+        [DataRow(null, "*", "*")]
+        [DataRow("3", "2", "2")]
+        [DataRow("2", "3", "2")]
+        public void TestMergeMax(string snap, string diff, string expected)
         {
             var sg = new SnapshotGenerator.ElementDefnMerger();
 
-            var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff), new UnsignedInt(snapMin));
+            var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+            Assert.AreEqual(expected, actual.Value);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, "1", "1")]
+        [DataRow(null, "2", "2")]
+        [DataRow(null, "3", "3")]
+        [DataRow(null, "*", "*")]
+        [DataRow(0, null, "0")]
+        [DataRow(0, "1", "1")]
+        [DataRow(0, "2", "2")]
+        [DataRow(0, "3", "3")]
+        [DataRow(0, "*", "*")]
+        [DataRow(2, null, "2")]
+        [DataRow(2, "1", "2")]
+        [DataRow(2, "2", "2")]
+        [DataRow(2, "3", "3")]
+        [DataRow(2, "*", "*")]
+        [DataRow(4, null, "4")]
+        [DataRow(4, "1", "4")]
+        [DataRow(4, "2", "4")]
+        [DataRow(4, "3", "4")]
+        [DataRow(4, "*", "*")]
+        public void TestConstrainMax(int? snapMin, string snapMax, string expected)
+        {
+            var actual = SnapshotGenerator.ElementDefnMerger.constrainMax(new FhirString(snapMax), new UnsignedInt(snapMin));
             Assert.AreEqual(expected, actual.Value);
         }
 
@@ -166,7 +154,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow(1, 2, 2)]
         [DataRow(2, 1, 2)]
         [DataRow(1, 1, 1)]
-        public void TestMinMax(int? snap, int? diff, int? expected)
+        public void TestMergeMin(int? snap, int? diff, int? expected)
         {
             var sg = new SnapshotGenerator.ElementDefnMerger();
 
@@ -9209,32 +9197,39 @@ namespace Hl7.Fhir.Specification.Tests
             extensionElement.Should().NotBeNull();
         }
 
+        /// <summary>
+        /// Test cases that have non corrected values:
+        /// [N1] Max lt Min
+        /// Test cases that have corrected values:
+        /// [C1] Max diff: * -> take Max snap: 1
+        /// [C2] Min diff lte snap -> take Min snap: 1
+        /// </summary>
         [TestMethod]
         [DataRow("TestExtension01", null, null, 0, "1", 0, "1")]
         [DataRow("TestExtension01", null, "0", 0, "0", 0, "1")]
         [DataRow("TestExtension01", null, "1", 0, "1", 0, "1")]
-        [DataRow("TestExtension01", null, "*", 0, "1", 0, "1")] 
+        [DataRow("TestExtension01", null, "*", 0, "1", 0, "1")] // [C1]
         [DataRow("TestExtension01", 0, null, 0, "1", 0, "1")]
         [DataRow("TestExtension01", 0, "0", 0, "0", 0, "1")]
         [DataRow("TestExtension01", 0, "1", 0, "1", 0, "1")]
-        [DataRow("TestExtension01", 0, "*", 0, "1", 0, "1")] 
+        [DataRow("TestExtension01", 0, "*", 0, "1", 0, "1")] // [C1]
         [DataRow("TestExtension01", 1, null, 1, "1", 0, "1")]
-        [DataRow("TestExtension01", 1, "0", 1, "1", 0, "1")]
+        [DataRow("TestExtension01", 1, "0", 1, "0", 0, "1")] // [N1]
         [DataRow("TestExtension01", 1, "1", 1, "1", 0, "1")]
-        [DataRow("TestExtension01", 1, "*", 1, "1", 0, "1")]
-        
+        [DataRow("TestExtension01", 1, "*", 1, "1", 0, "1")] // [C1]
+
         [DataRow("TestExtension11", null, null, 1, "1", 1, "1")]
-        [DataRow("TestExtension11", null, "0", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", null, "0", 1, "0", 1, "1")] // [N1]
         [DataRow("TestExtension11", null, "1", 1, "1", 1, "1")]
-        [DataRow("TestExtension11", null, "*", 1, "1", 1, "1")]
-        [DataRow("TestExtension11", 0, null, 1, "1", 1, "1")]
-        [DataRow("TestExtension11", 0, "0", 1, "1", 1, "1")]
-        [DataRow("TestExtension11", 0, "1", 1, "1", 1, "1")]
-        [DataRow("TestExtension11", 0, "*", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", null, "*", 1, "1", 1, "1")] // [C1]
+        [DataRow("TestExtension11", 0, null, 1, "1", 1, "1")] // [C2]
+        [DataRow("TestExtension11", 0, "0", 1, "0", 1, "1")] // [C2][N1]
+        [DataRow("TestExtension11", 0, "1", 1, "1", 1, "1")] // [C2]
+        [DataRow("TestExtension11", 0, "*", 1, "1", 1, "1")] // [C2][C1]
         [DataRow("TestExtension11", 1, null, 1, "1", 1, "1")]
-        [DataRow("TestExtension11", 1, "0", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", 1, "0", 1, "0", 1, "1")] // [N1]
         [DataRow("TestExtension11", 1, "1", 1, "1", 1, "1")]
-        [DataRow("TestExtension11", 1, "*", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", 1, "*", 1, "1", 1, "1")] // [C1]
 
         [DataRow("TestExtension0star", null, null, 0, "*", 0, "*")]
         [DataRow("TestExtension0star", null, "0", 0, "0", 0, "*")]
@@ -9247,34 +9242,34 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("TestExtension0star", 0, "2", 0, "2", 0, "*")]
         [DataRow("TestExtension0star", 0, "*", 0, "*", 0, "*")]
         [DataRow("TestExtension0star", 1, null, 1, "*", 0, "*")]
-        [DataRow("TestExtension0star", 1, "0", 1, "1", 0, "*")]
+        [DataRow("TestExtension0star", 1, "0", 1, "0", 0, "*")] // [N1]
         [DataRow("TestExtension0star", 1, "1", 1, "1", 0, "*")]
         [DataRow("TestExtension0star", 1, "2", 1, "2", 0, "*")]
         [DataRow("TestExtension0star", 1, "*", 1, "*", 0, "*")]
         [DataRow("TestExtension0star", 2, null, 2, "*", 0, "*")]
-        [DataRow("TestExtension0star", 2, "0", 2, "2", 0, "*")]
-        [DataRow("TestExtension0star", 2, "1", 2, "2", 0, "*")]
+        [DataRow("TestExtension0star", 2, "0", 2, "0", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 2, "1", 2, "1", 0, "*")] // [N1]
         [DataRow("TestExtension0star", 2, "2", 2, "2", 0, "*")]
         [DataRow("TestExtension0star", 2, "*", 2, "*", 0, "*")]
 
         [DataRow("TestExtension1star", null, null, 1, "*", 1, "*")]
-        [DataRow("TestExtension1star", null, "0", 1, "1", 1, "*")]
+        [DataRow("TestExtension1star", null, "0", 1, "0", 1, "*")] // [N1]
         [DataRow("TestExtension1star", null, "1", 1, "1", 1, "*")]
         [DataRow("TestExtension1star", null, "2", 1, "2", 1, "*")]
         [DataRow("TestExtension1star", null, "*", 1, "*", 1, "*")]
-        [DataRow("TestExtension1star", 0, null, 1, "*", 1, "*")] 
-        [DataRow("TestExtension1star", 0, "0", 1, "1", 1, "*")]
-        [DataRow("TestExtension1star", 0, "1", 1, "1", 1, "*")]
-        [DataRow("TestExtension1star", 0, "2", 1, "2", 1, "*")]
-        [DataRow("TestExtension1star", 0, "*", 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 0, null, 1, "*", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "0", 1, "0", 1, "*")] // [C2][N1]
+        [DataRow("TestExtension1star", 0, "1", 1, "1", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "2", 1, "2", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "*", 1, "*", 1, "*")] // [C2]
         [DataRow("TestExtension1star", 1, null, 1, "*", 1, "*")]
-        [DataRow("TestExtension1star", 1, "0", 1, "1", 1, "*")]
+        [DataRow("TestExtension1star", 1, "0", 1, "0", 1, "*")] // [N1]
         [DataRow("TestExtension1star", 1, "1", 1, "1", 1, "*")]
         [DataRow("TestExtension1star", 1, "2", 1, "2", 1, "*")]
         [DataRow("TestExtension1star", 1, "*", 1, "*", 1, "*")]
         [DataRow("TestExtension1star", 2, null, 2, "*", 1, "*")]
-        [DataRow("TestExtension1star", 2, "0", 2, "2", 1, "*")]
-        [DataRow("TestExtension1star", 2, "1", 2, "2", 1, "*")]
+        [DataRow("TestExtension1star", 2, "0", 2, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 2, "1", 2, "1", 1, "*")] // [N1]
         [DataRow("TestExtension1star", 2, "2", 2, "2", 1, "*")]
         [DataRow("TestExtension1star", 2, "*", 2, "*", 1, "*")]
         public async T.Task CardinalityOfExtension(string extension, int? diffMin, string diffMax, int extMin, string extMax, int baseMin, string baseMax)

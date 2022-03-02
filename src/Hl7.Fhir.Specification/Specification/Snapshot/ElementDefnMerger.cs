@@ -117,8 +117,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Aliases are cumulative based on the string value
                 snap.AliasElement = mergePrimitiveCollection(snap.AliasElement, diff.AliasElement, matchStringValues);
 
+                // Note that max is not corrected when max < min! constrainMax could be used if that is desired.
                 snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
-                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement, snap.MinElement);
+                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement); 
 
                 // snap.Base should already be there, and is not changed by the diff
                 // ElementDefinition.contentReference cannot be overridden by a derived profile
@@ -476,7 +477,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             /// <summary>
-            /// Merge the Min element of the differential into the snapshot. The most contrained will win: so the maximum of both values.
+            /// Merge the Min element of the differential into the snapshot. The most constrained will win: so the maximum of both values.
             /// </summary>
             /// <param name="snap"></param>
             /// <param name="diff"></param>
@@ -511,13 +512,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             // (with 0..*) onto an element which needs to be expanded
             // and which has no diff constraints on max will get the 
             // max from the base -> a non-repeating element will become repeating.
-
-            internal FhirString mergeMax(FhirString snap, FhirString diff, UnsignedInt snapMin)
-            {
-                return constrainMax(mergeMax(snap, diff), snapMin);
-            }
-
-            private FhirString mergeMax(FhirString snap, FhirString diff)
+            internal FhirString mergeMax(FhirString snap, FhirString diff)
             {
                 if (!diff.IsNullOrEmpty() && !snap.IsNullOrEmpty() && !diff.IsExactly(snap))
                 {
@@ -554,7 +549,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             /// <summary>
             /// Make sure max >= min
             /// </summary>
-            private static FhirString constrainMax(FhirString max, UnsignedInt minValue)
+            internal static FhirString constrainMax(FhirString max, UnsignedInt minValue)
             {
                 if (minValue.IsNullOrEmpty())
                     return max;
