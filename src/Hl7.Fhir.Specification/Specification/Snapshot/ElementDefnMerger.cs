@@ -104,9 +104,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Mappings are cumulative, but keep unique on full contents
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, (a, b) => a.IsExactly(b));
 
-                //snap.MinElement = mergePrimitiveAttribute(snap.MinElement, diff.MinElement);
+                // Note that max is not corrected when max < min! constrainMax could be used if that is desired.
                 snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
-                //snap.MaxElement = mergePrimitiveAttribute(snap.MaxElement, diff.MaxElement);
                 snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
                 // snap.base should already be there, and is not changed by the diff
@@ -240,7 +239,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             /// <summary>
-            /// Merge the Min element of the differential into the snapshot. The most contrained will win: so the maximum of both values.
+            /// Merge the Min element of the differential into the snapshot. The most constrained will win: so the maximum of both values.
             /// </summary>
             /// <param name="snap"></param>
             /// <param name="diff"></param>
@@ -300,12 +299,31 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // do anything to not break it any further.
                     return snap;
                 }
-                else if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
+
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     return deepCopyAndRaiseOnConstraint(diff);
                 }
-                else
-                    return snap;
+
+                return snap;
+            }
+
+            /// <summary>
+            /// Make sure max >= min
+            /// </summary>
+            internal static FhirString constrainMax(FhirString max, UnsignedInt minValue)
+            {
+                if (minValue.IsNullOrEmpty())
+                    return max;
+
+                // Max does not have a value but min does so take min
+                if (max.IsNullOrEmpty())
+                    return new FhirString(minValue.Value.ToString());
+
+                // If max is an int and is smaller than min then take min otherwise take max
+                return int.TryParse(max.Value, out var maxValue) && maxValue < minValue.Value
+                    ? new FhirString(minValue.Value.ToString())
+                    : max;
             }
 
             private T deepCopyAndRaiseOnConstraint<T>(T elt) where T : PrimitiveType
