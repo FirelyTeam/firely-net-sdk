@@ -3,7 +3,7 @@
   <url value="https://example.org/fhir/StructureDefinition/issue-1981-patient" />
   <name value="MyPatient" />
   <status value="draft" />
-  <fhirVersion value="4.3.0-snapshot1" />
+  <fhirVersion value="5.0.0-snapshot1" />
   <kind value="resource" />
   <abstract value="false" />
   <type value="Patient" />

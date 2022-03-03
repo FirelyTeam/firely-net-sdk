@@ -3,7 +3,7 @@
   <url value="https://example.org/fhir/StructureDefinition/TestExtension01" />
   <name value="TestExtension01" />
   <status value="draft" />
-  <fhirVersion value="4.3.0-snapshot1" />
+  <fhirVersion value="5.0.0-snapshot1" />
   <kind value="complex-type" />
   <abstract value="false" />
   <context>
