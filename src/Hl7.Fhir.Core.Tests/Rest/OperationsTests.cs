@@ -7,14 +7,11 @@
  */
 
 using Hl7.Fhir.Model;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Rest.Legacy;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Linq;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -24,12 +21,13 @@ namespace Hl7.Fhir.Tests.Rest
     {
         string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
 
-        [TestMethod] 
+        [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeTestPatientGetEverythingWebClient()
+        [Obsolete]
+        public void InvokeTestPatientGetEverything()
         {
             var client = new LegacyFhirClient(testEndpoint);
-            patientGetEverything(client);            
+            patientGetEverything(client);
         }
 
         [TestMethod]
@@ -56,7 +54,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeExpandExistingValueSetWebClient()
+        [Obsolete]
+        public void InvokeExpandExistingValueSet()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             expandExistingValueset(client);
@@ -69,7 +68,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 expandExistingValueset(client);
-            };            
+            };
         }
 
         private static void expandExistingValueset(BaseFhirClient client)
@@ -80,7 +79,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeExpandParameterValueSetWebClient()
+        [Obsolete]
+        public void InvokeExpandParameterValueSet()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             expandParameterValueSet(client);
@@ -88,12 +88,12 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeExpandParameterValueSetHttpClient ()
+        public void InvokeExpandParameterValueSetHttpClient()
         {
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 expandParameterValueSet(client);
-            }            
+            }
         }
 
         private static void expandParameterValueSet(BaseFhirClient client)
@@ -122,7 +122,8 @@ namespace Hl7.Fhir.Tests.Rest
         /// </summary>
         [TestMethod]  // Server returns internal server error
         [TestCategory("IntegrationTest")]
-        public void InvokeLookupCodingWebClient()
+        [Obsolete]
+        public void InvokeLookupCoding()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             lookupCoding(client);
@@ -150,7 +151,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod] // Server returns internal server error
         [TestCategory("IntegrationTest")]
-        public void InvokeLookupCodeWebClient()
+        [Obsolete]
+        public void InvokeLookupCode()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             lookUpCode(client);
@@ -163,7 +165,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 lookUpCode(client);
-            };            
+            };
         }
 
         private static void lookUpCode(BaseFhirClient client)
@@ -176,7 +178,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeByIdWebClient()
+        [Obsolete]
+        public void InvokeValidateCodeById()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             validateCodeById(client);
@@ -202,7 +205,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeByCanonicalWebClient()
+        [Obsolete]
+        public void InvokeValidateCodeByCanonical()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             validateCodeByCanonical(client);
@@ -210,12 +214,12 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeByCanonicalHttpClient ()
+        public void InvokeValidateCodeByCanonicalHttpClient()
         {
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 validateCodeByCanonical(client);
-            }            
+            }
         }
 
 
@@ -230,7 +234,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeWithVSWebClient()
+        [Obsolete]
+        public void InvokeValidateCodeWithVS()
         {
             var client = new LegacyFhirClient(FhirClientTests.TerminologyEndpoint);
             validateCodeWithVS(client);
@@ -243,7 +248,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
             {
                 validateCodeWithVS(client);
-            };           
+            };
         }
 
         private static void validateCodeWithVS(BaseFhirClient client)
@@ -259,7 +264,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public void InvokeResourceValidationWebClient()
+        [Obsolete]
+        public void InvokeResourceValidation()
         {
             var client = new LegacyFhirClient(testEndpoint);
             validateResource(client);
@@ -272,7 +278,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var client = new FhirClient(testEndpoint))
             {
                 validateResource(client);
-            }            
+            }
         }
 
         private static void validateResource(BaseFhirClient client)
@@ -280,12 +286,13 @@ namespace Hl7.Fhir.Tests.Rest
             var pat = client.Read<Patient>("Patient/pat1");
             var vresult = client.ValidateResource(pat, null,
                 new FhirUri("http://hl7.org/fhir/StructureDefinition/Patient"));
-            Assert.IsTrue(vresult.Success);          
+            Assert.IsTrue(vresult.Success);
         }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsyncWebClient()
+        [Obsolete]
+        public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsync()
         {
             string _endpoint = "https://api.hspconsortium.org/rpineda/open";
             var client = new LegacyFhirClient(_endpoint);
@@ -300,7 +307,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var client = new FhirClient(_endpoint))
             {
                 await patientEverythingAsync(client).ConfigureAwait(false);
-            }           
+            }
         }
 
         private static async System.Threading.Tasks.Task patientEverythingAsync(BaseFhirClient client)

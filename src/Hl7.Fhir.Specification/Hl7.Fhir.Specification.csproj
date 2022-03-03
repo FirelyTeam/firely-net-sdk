@@ -37,12 +37,6 @@
 			<PackageCopyToOutput>true</PackageCopyToOutput>
 			<PackageFlatten>true</PackageFlatten>
 		</Content>
-		<Content Include="hl7.fhir.r4b.corexml.tgz">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<Content Include="hl7.fhir.r4b.expansions.tgz">
-		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
 	</ItemGroup>
 	
 	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
