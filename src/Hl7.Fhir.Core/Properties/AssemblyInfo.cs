@@ -21,3 +21,8 @@ using System.Runtime.CompilerServices;
 
 // Moved FhirOperationException to Hl7.Fhir.Support.Poco
 [assembly: TypeForwardedTo(typeof(FhirOperationException))]
+
+// Moves some FHIR Client classes to Hl7.Fhir.Support.Poco
+[assembly: TypeForwardedTo(typeof(SearchParamsExtensions))]
+[assembly: TypeForwardedTo(typeof(TokenExtensions))]
+[assembly: TypeForwardedTo(typeof(ResourceReferenceExtensions))]
