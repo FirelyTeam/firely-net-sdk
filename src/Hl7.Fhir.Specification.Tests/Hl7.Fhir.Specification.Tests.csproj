@@ -81,7 +81,7 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>  
+  </ItemGroup>
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
