@@ -117,11 +117,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Aliases are cumulative based on the string value
                 snap.AliasElement = mergePrimitiveCollection(snap.AliasElement, diff.AliasElement, matchStringValues);
 
+                // Note that max is not corrected when max < min! constrainMax could be used if that is desired.
                 snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
                 snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
                 // snap.Base should already be there, and is not changed by the diff
-                // ElementDefinition.contentReference cannot be overridden by a derived profile                
+                // ElementDefinition.contentReference cannot be overridden by a derived profile
 
                 // Type collection has different semantics (no implicit type inheritance)
                 // Include all diff types, merged onto matching snap
@@ -476,7 +477,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             /// <summary>
-            /// Merge the Min element of the differential into the snapshot. The most contrained will win: so the maximum of both values.
+            /// Merge the Min element of the differential into the snapshot. The most constrained will win: so the maximum of both values.
             /// </summary>
             /// <param name="snap"></param>
             /// <param name="diff"></param>
@@ -536,12 +537,36 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // do anything to not break it any further.
                     return snap;
                 }
-                else if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
+
+                if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     return deepCopyAndRaiseOnConstraint(diff);
                 }
-                else
-                    return snap;
+
+                return snap;
+            }
+
+            /// <summary>
+            /// Make sure max >= min. To be used in conjunction with mergeMax:
+            /// 
+            ///     snap.MaxElement = constrainMax(mergeMax(snap.MaxElement, diff.MaxElement), snap.MinElement);
+            /// 
+            /// However this method is not used at the moment.
+            /// It may be used in the future when the need arises.
+            /// </summary>
+            internal static FhirString constrainMax(FhirString max, UnsignedInt minValue)
+            {
+                if (minValue.IsNullOrEmpty())
+                    return max;
+
+                // Max does not have a value but min does so take min
+                if (max.IsNullOrEmpty())
+                    return new FhirString(minValue.Value.ToString());
+
+                // If max is an int and is smaller than min then take min otherwise take max
+                return int.TryParse(max.Value, out var maxValue) && maxValue < minValue.Value
+                    ? new FhirString(minValue.Value.ToString())
+                    : max;
             }
 
             private T deepCopyAndRaiseOnConstraint<T>(T elt) where T : PrimitiveType
