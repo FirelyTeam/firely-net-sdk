@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 #nullable enable
 namespace Hl7.Fhir.Specification.Source
 {
-<<<<<<< HEAD:src/Hl7.Fhir.Specification/Specification/Source/CorePackageSource.cs
+
     /// <summary>
     /// File names of the FHIR packages shipped with the SDK
     /// </summary>
@@ -17,9 +17,6 @@ namespace Hl7.Fhir.Specification.Source
         public const string CORE_PACKAGENAME = "hl7.fhir.r4.corexml.tgz";
         public const string EXPANSIONS_PACKAGENAME = "hl7.fhir.r4.expansions.tgz";
     }
-=======
->>>>>>> origin/release/4.0.0-beta2-stu3:src/Hl7.Fhir.Specification/Specification/Source/FhirPackageSource.cs
-
 
     /// <summary>Reads FHIR version specific artifacts (Profiles, ValueSets, ...) from the FHIR Packages</summary>
     public class FhirPackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource

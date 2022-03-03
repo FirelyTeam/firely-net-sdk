@@ -205,9 +205,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <returns>A new, expanded list of <see cref="ElementDefinition"/> instances.</returns>
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
         public T.Task<IList<ElementDefinition>> ExpandElementAsync(IElementList elements, ElementDefinition element)
-        {
-            return elements == null ? throw Error.ArgumentNull(nameof(elements)) : ExpandElementAsync(elements.Element, element);
-        }
+            => elements is null ? throw Error.ArgumentNull(nameof(elements)) : ExpandElementAsync(elements.Element, element);
 
         /// <inheritdoc cref="ExpandElementAsync(IElementList, ElementDefinition)" />
         [Obsolete("SnapshotGenerator now works best with asynchronous resolvers. Use ExpandElementAsync() instead.")]
@@ -828,7 +826,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             await mergeElement(snap, diff).ConfigureAwait(false);
         }
 
-        private void removeNewTypeConstraint(ElementDefinition element, StructureDefinition typeStructure)
+        private static void removeNewTypeConstraint(ElementDefinition element, StructureDefinition typeStructure)
         {
             if (typeStructure?.Differential?.Element != null && !element.Constraint.IsNullOrEmpty())
             {
@@ -1358,7 +1356,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// Remove existing annotations, fix Base components
         /// </summary>
         // [WMR 20170501] OBSOLETE: notify listeners - moved to prepareTypeProfileChildren
-        private bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav) // , StructureDefinition typeStructure)
+        private static bool copyChildren(ElementDefinitionNavigator nav, ElementDefinitionNavigator typeNav) // , StructureDefinition typeStructure)
         {
             // [WMR 20170426] IMPORTANT!
             // Do NOT modify typeNav/typeStructure
@@ -1578,14 +1576,14 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (nav.MoveToChild("url"))
                 {
                     var urlElem = nav.Current;
-                    if (!(urlElem is null) && urlElem.Fixed is null)
+                    if (urlElem is not null && urlElem.Fixed is null)
                     {
                         string profile = null;
                         if (extElem.IsRootElement())
                         {
                             // Initialize extension definitions, but exclude core Extension profile
                             var extDef = nav.StructureDefinition;
-                            if (!(extDef is null) && extDef.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                            if (extDef is not null && extDef.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
                             {
                                 // Extension definition root element: initialize url from canonical
                                 profile = nav.StructureDefinition?.Url;
@@ -2365,11 +2363,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// </summary>
         /// <returns><c>true</c> if the profile type is equal to or derived from the specified type, or <c>false</c> otherwise.</returns>
         private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, string type, StructureDefinition profile)
-        {
-            return resolver == null
-                ? throw new ArgumentNullException(nameof(resolver))
-                : await isValidTypeProfile(resolver, new HashSet<string>(), type, profile).ConfigureAwait(false);
-        }
+            => resolver is not null
+                ? await isValidTypeProfile(resolver, new HashSet<string>(), type, profile).ConfigureAwait(false)
+                : throw new ArgumentNullException(nameof(resolver));
 
         private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
         {
