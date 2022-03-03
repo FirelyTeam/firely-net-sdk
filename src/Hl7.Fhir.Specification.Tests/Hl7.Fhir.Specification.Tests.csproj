@@ -81,19 +81,7 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>  
- 
-  <ItemGroup>
-    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-max0-Patient.StructureDefinition.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-minMax1-Patient.StructureDefinition.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-noMax- Patient.StructureDefinition.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>  
+  </ItemGroup>
 
   <!-- Necessary to make the Test Explorer find the tests in this assembly 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
