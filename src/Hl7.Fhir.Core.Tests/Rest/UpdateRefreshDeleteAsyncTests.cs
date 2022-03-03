@@ -15,15 +15,16 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedWebClient()
+        [Obsolete]
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;            
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
             await updateDelete(client);
         }
-        
+
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient()
@@ -33,7 +34,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 client.Settings.PreferredFormat = ResourceFormat.Json;
                 client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await updateDelete(client);
-            }           
+            }
         }
 
 
