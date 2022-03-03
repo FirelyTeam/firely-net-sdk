@@ -8,9 +8,11 @@ using System.Linq;
 namespace Firely.Fhir.Packages.Tests
 {
     [TestClass]
-    public class CorePackageSourceTests
+    public class FhirPackageSourceTests
     {
-        private readonly CorePackageSource _resolver = new();
+        private const string CORE_PACKAGE_PATH = "TestData/hl7.fhir.r5.core.tgz";
+        private const string CORE_EXPANSIONS_PACKAGE_PATH = "TestData/hl7.fhir.r5.expansions.tgz";
+        private readonly FhirPackageSource _resolver = new(new string[] { CORE_PACKAGE_PATH, CORE_EXPANSIONS_PACKAGE_PATH });
 
         [TestMethod]
         public async System.Threading.Tasks.Task TestResolveByCanonicalUri()
@@ -112,6 +114,5 @@ namespace Firely.Fhir.Packages.Tests
             var stn = vs.Expansion.Contains.Where(c => c.Code == "STN").FirstOrDefault();
             stn.Display.Should().Be("São Tomé and Príncipe dobra");
         }
-
     }
 }
