@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Validation
         /// <summary>
         /// A list of constraints to be ignored by the validator. Default values are dom-6 and rng-2
         /// </summary>
-        public string[] ConstraintsToIgnore { get; set; } = new string[] { "dom-6", "rng-2", "bdl-8", "que-0" };
+        public string[] ConstraintsToIgnore { get; set; } = new string[] { "dom-6", "rng-2", "bdl-8", "cnl-0" };
         /// <summary>
         /// If a reference is encountered that references to a resource outside of the current instance being validated,
         /// this setting controls whether the validator will call out to the ResourceResolver to try to resolve the
