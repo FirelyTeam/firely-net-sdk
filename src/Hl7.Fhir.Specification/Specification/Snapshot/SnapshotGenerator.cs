@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
 
         private readonly SnapshotGeneratorSettings _settings;
-        private readonly SnapshotRecursionStack _stack = new SnapshotRecursionStack();
+        private readonly SnapshotRecursionStack _stack = new();
 
         /// <summary>
         /// Create a new instance of the <see cref="SnapshotGenerator"/> class
@@ -206,8 +206,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <exception cref="ArgumentException">The specified element is not contained in the list.</exception>
         public T.Task<IList<ElementDefinition>> ExpandElementAsync(IElementList elements, ElementDefinition element)
         {
-            if (elements == null) { throw Error.ArgumentNull(nameof(elements)); }
-            return ExpandElementAsync(elements.Element, element);
+            return elements == null ? throw Error.ArgumentNull(nameof(elements)) : ExpandElementAsync(elements.Element, element);
         }
 
         /// <inheritdoc cref="ExpandElementAsync(IElementList, ElementDefinition)" />
@@ -1028,7 +1027,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // By default, use strategy (A): ignore custom type profile, merge from base
         // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
 
-        private static readonly string DomainResource_Extension_Path = ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.DomainResource) + ".extension";
+        private static readonly string DOMAINRESOURCE_EXTENSION_PATH = ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.DomainResource) + ".extension";
 
         // Resolve the type profile of the currently selected element and merge into snapshot
         private async T.Task<bool> mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)
@@ -1346,7 +1345,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Call this method after merging an external extension definition to remove incorrect annotations from the target profile extension element
         private static void fixExtensionAnnotationsAfterMerge(ElementDefinition elem)
         {
-            if (IsEqualPath(elem.Base?.Path, DomainResource_Extension_Path))
+            if (IsEqualPath(elem.Base?.Path, DOMAINRESOURCE_EXTENSION_PATH))
             {
                 elem.ShortElement?.RemoveConstrainedByDiffAnnotation();
                 elem.Comment?.RemoveConstrainedByDiffAnnotation();
@@ -2367,9 +2366,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <returns><c>true</c> if the profile type is equal to or derived from the specified type, or <c>false</c> otherwise.</returns>
         private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, string type, StructureDefinition profile)
         {
-            if (resolver == null) throw new ArgumentNullException(nameof(resolver));
-
-            return await isValidTypeProfile(resolver, new HashSet<string>(), type, profile).ConfigureAwait(false);
+            return resolver == null
+                ? throw new ArgumentNullException(nameof(resolver))
+                : await isValidTypeProfile(resolver, new HashSet<string>(), type, profile).ConfigureAwait(false);
         }
 
         private static async T.Task<bool> isValidTypeProfile(IAsyncResourceResolver resolver, HashSet<string> recursionStack, string type, StructureDefinition profile)
@@ -2387,14 +2386,11 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (sdBase.Url == null) { return false; } // Shouldn't happen...
 
             // Detect/prevent endless recursion... e.g. X.Base = Y and Y.Base = X
-            if (!recursionStack.Add(sdBase.Url))
-            {
-                throw Error.InvalidOperation(
+            return !recursionStack.Add(sdBase.Url)
+                ? throw Error.InvalidOperation(
                     $"Recursive profile dependency detected. Base profile hierarchy:\r\n{string.Join("\r\n", recursionStack)}"
-                );
-            }
-
-            return await isValidTypeProfile(resolver, recursionStack, type, sdBase).ConfigureAwait(false);
+                )
+                : await isValidTypeProfile(resolver, recursionStack, type, sdBase).ConfigureAwait(false);
         }
     }
 }

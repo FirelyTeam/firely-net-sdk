@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
-  <Import Project="..\firely-net-sdk-tests.props"/>
+  <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>   
@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="TestData\**\*.xml;TestData\**\*.json">
+    <Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.tgz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

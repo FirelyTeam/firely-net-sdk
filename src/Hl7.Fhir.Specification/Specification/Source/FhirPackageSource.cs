@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 #nullable enable
 namespace Hl7.Fhir.Specification.Source
 {
+<<<<<<< HEAD:src/Hl7.Fhir.Specification/Specification/Source/CorePackageSource.cs
     /// <summary>
     /// File names of the FHIR packages shipped with the SDK
     /// </summary>
@@ -16,22 +17,32 @@ namespace Hl7.Fhir.Specification.Source
         public const string CORE_PACKAGENAME = "hl7.fhir.r4.corexml.tgz";
         public const string EXPANSIONS_PACKAGENAME = "hl7.fhir.r4.expansions.tgz";
     }
+=======
+>>>>>>> origin/release/4.0.0-beta2-stu3:src/Hl7.Fhir.Specification/Specification/Source/FhirPackageSource.cs
 
-    /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from the FHIR Core package</summary>
-    public class CorePackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource
+
+    /// <summary>Reads FHIR version specific artifacts (Profiles, ValueSets, ...) from the FHIR Packages</summary>
+    public class FhirPackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource
     {
+        private CommonFhirPackageSource _resolver;
 
-        private FhirPackageResolver _resolver;
-
-        /// <summary>Create a new <see cref="CorePackageSource()"/> instance to read FHIR artifacts from the FHIR core package.</summary>
-        /// <returns>A new <see cref="CorePackageSource()"/> instance.</returns>
-        public CorePackageSource()
+        /// <summary>Create a new <see cref="FhirPackageSource"/> instance to read FHIR artifacts from the referenced FHIR packages.</summary>
+        /// <param name="packageFilePaths">The file paths of the packages that are used as the source for resolving</param>
+        public FhirPackageSource(string[] packageFilePaths)
         {
             var inspector = ModelInfo.ModelInspector;
-            var corePackagePath = Path.Combine(Directory.GetCurrentDirectory(), CorePackageFileNames.CORE_PACKAGENAME);
-            var coreExpansionPackagePath = Path.Combine(Directory.GetCurrentDirectory(), CorePackageFileNames.EXPANSIONS_PACKAGENAME);
-            _resolver = new FhirPackageResolver(inspector, corePackagePath, coreExpansionPackagePath);
+            _resolver = new CommonFhirPackageSource(inspector, packageFilePaths);
         }
+
+        /// <summary>Create a new <see cref="CommonFhirPackageSource"/> instance to read FHIR artifacts from one or multiple FHIR packages.</summary>
+        /// <param name="packageServer">The package server from which to retrieve the FHIR packages</param>
+        /// <param name="packageNames">The FHIR package names which are used to resolve artifacts from, example: hl7.fhir.r3.expansions@3.0.2</param>
+        public FhirPackageSource(string packageServer, string[] packageNames)
+        {
+            var inspector = ModelInfo.ModelInspector;
+            _resolver = new CommonFhirPackageSource(inspector, packageServer, packageNames);
+        }
+
 
         ///<inheritdoc/>
         public async Task<Resource?> ResolveByCanonicalUriAsync(string uri)

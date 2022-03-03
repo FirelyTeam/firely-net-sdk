@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Hl7.Fhir.Model;
@@ -17,10 +17,10 @@ namespace Hl7.Fhir.Core.AsyncTests
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
-            var client = new LegacyFhirClient(_endpoint);
+            var client = new FhirClient(_endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-            
+
 
 
             var pat = new Patient()
@@ -63,11 +63,12 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturnedWebClient()
+        [Obsolete]
+        public async System.Threading.Tasks.Task Read_UsingResourceIdentity_ResultReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;          
+            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
 
             await readUsingResourceId(client);
         }
@@ -81,7 +82,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 client.Settings.PreferredFormat = ResourceFormat.Json;
                 client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await readUsingResourceId(client);
-            }          
+            }
         }
 
 
@@ -97,12 +98,13 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturnedWebClient()
+        [Obsolete]
+        public async System.Threading.Tasks.Task Read_UsingLocationString_ResultReturned()
         {
             var client = new LegacyFhirClient(_endpoint);
             client.Settings.PreferredFormat = ResourceFormat.Json;
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-            
+
 
             await readUsingLocationString(client);
         }
@@ -116,7 +118,7 @@ namespace Hl7.Fhir.Core.AsyncTests
                 client.Settings.PreferredFormat = ResourceFormat.Json;
                 client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
                 await readUsingLocationString(client);
-            }            
+            }
         }
 
         private static async System.Threading.Tasks.Task readUsingLocationString(BaseFhirClient client)
