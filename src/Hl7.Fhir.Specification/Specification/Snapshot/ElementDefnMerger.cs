@@ -547,7 +547,12 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
 
             /// <summary>
-            /// Make sure max >= min
+            /// Make sure max >= min. To be used in conjunction with mergeMax:
+            /// 
+            ///     snap.MaxElement = constrainMax(mergeMax(snap.MaxElement, diff.MaxElement), snap.MinElement);
+            /// 
+            /// However this method is not used at the moment.
+            /// It may be used in the future when the need arises.
             /// </summary>
             internal static FhirString constrainMax(FhirString max, UnsignedInt minValue)
             {
