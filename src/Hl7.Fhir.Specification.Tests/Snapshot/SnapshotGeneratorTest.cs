@@ -9151,31 +9151,6 @@ namespace Hl7.Fhir.Specification.Tests
             sutCode.Min.Should().Be(sdCode.Min);
         }
 
-        [TestMethod]
-        public async T.Task CheckCardinalityOfProfiledTypeOriginalTest()
-        {
-            // Arrange
-            var zipSource = ZipSource.CreateValidationSource();
-            var dirSource = new DirectorySource("TestData\\snapshot-test\\FOR-497");
-            var resolver = new CachedResolver(new MultiResolver(zipSource, dirSource));
-            var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
-            var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
-            var sut = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-results-uv-ips") as StructureDefinition;
-
-            // Act
-            var elements = await snapshotGenerator.GenerateAsync(sut);
-
-            // Assert
-            snapshotGenerator.Outcome.Should().BeNull();
-
-            const string codeId = "Observation.code";
-
-            var sdCode = sd.Snapshot.Element.Single(x => x.ElementId == codeId);
-            var sutCode = elements.Single(x => x.ElementId == codeId);
-
-            sutCode.Max.Should().Be(sdCode.Max);
-            sutCode.Min.Should().Be(sdCode.Min);
-        }
 
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]

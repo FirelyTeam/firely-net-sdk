@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Note that max is not corrected when max < min! constrainMax could be used if that is desired.
                 snap.MinElement = mergeMin(snap.MinElement, diff.MinElement);
-                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement); 
+                snap.MaxElement = mergeMax(snap.MaxElement, diff.MaxElement);
 
                 // snap.Base should already be there, and is not changed by the diff
                 // ElementDefinition.contentReference cannot be overridden by a derived profile
@@ -537,7 +537,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     // do anything to not break it any further.
                     return snap;
                 }
-                
+
                 if (!diff.IsNullOrEmpty() && (snap.IsNullOrEmpty() || !diff.IsExactly(snap)))
                 {
                     return deepCopyAndRaiseOnConstraint(diff);
