@@ -1158,9 +1158,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Rebase before merging
                             var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                             rebasedRootElem.Path = diff.Path;
-                            // MV 20210727: copy cardinality from base (so do not use the cardinality of the type). See issue #1824
-                            rebasedRootElem.Min = diff.Current.Min;
-                            rebasedRootElem.Max = diff.Current.Max;
 
                             // Merge the type profile root element; no need to expand children
                             mergeElementDefinition(snap.Current, rebasedRootElem, false);
