@@ -3,7 +3,7 @@
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
     <VersionPrefix>3.8.1</VersionPrefix>
-    <VersionSuffix>alpha</VersionSuffix>
+    <VersionSuffix></VersionSuffix>
     <Authors>Firely (info@fire.ly) and contributors</Authors>
     <Company>Firely (https://fire.ly)</Company>
     <Copyright>Copyright 2013-2021 Firely.  Contains materials (C) HL7 International</Copyright>
