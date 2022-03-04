@@ -99,28 +99,67 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        [TestMethod]
-        public void TestMergeMax()
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, "1", "1")]
+        [DataRow("1", null, "1")]
+        [DataRow("1", "1", "1")]
+        [DataRow("1", "*", "1")]
+        [DataRow("2", "*", "2")]
+        [DataRow("*", "*", "*")]
+        [DataRow("*", "2", "2")]
+        [DataRow("*", null, "*")]
+        [DataRow(null, "*", "*")]
+        [DataRow("3", "2", "2")]
+        [DataRow("2", "3", "2")]
+        public void TestMergeMax(string snap, string diff, string expected)
         {
             var sg = new SnapshotGenerator.ElementDefnMerger();
 
-            test(null, "1", "1");
-            test("1", null, "1");
-            test("1", "1", "1");
-            test("1", "*", "1");
-            test("2", "*", "2");
-            test("*", "*", "*");
-            test("*", "2", "2");
-            test("*", null, "*");
-            test(null, "*", "*");
-            test("3", "2", "2");
-            test("2", "3", "2");
+            var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+            Assert.AreEqual(expected, actual.Value);
+        }
 
-            void test(string snap, string diff, string expected)
-            {
-                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
-                Assert.AreEqual(expected, actual.Value);
-            }
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, "1", "1")]
+        [DataRow(null, "2", "2")]
+        [DataRow(null, "3", "3")]
+        [DataRow(null, "*", "*")]
+        [DataRow(0, null, "0")]
+        [DataRow(0, "1", "1")]
+        [DataRow(0, "2", "2")]
+        [DataRow(0, "3", "3")]
+        [DataRow(0, "*", "*")]
+        [DataRow(2, null, "2")]
+        [DataRow(2, "1", "2")]
+        [DataRow(2, "2", "2")]
+        [DataRow(2, "3", "3")]
+        [DataRow(2, "*", "*")]
+        [DataRow(4, null, "4")]
+        [DataRow(4, "1", "4")]
+        [DataRow(4, "2", "4")]
+        [DataRow(4, "3", "4")]
+        [DataRow(4, "*", "*")]
+        public void TestConstrainMax(int? snapMin, string snapMax, string expected)
+        {
+            var actual = SnapshotGenerator.ElementDefnMerger.constrainMax(new FhirString(snapMax), new UnsignedInt(snapMin));
+            Assert.AreEqual(expected, actual.Value);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, 1, 1)]
+        [DataRow(1, null, 1)]
+        [DataRow(1, 2, 2)]
+        [DataRow(2, 1, 2)]
+        [DataRow(1, 1, 1)]
+        public void TestMergeMin(int? snap, int? diff, int? expected)
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            var actual = sg.mergeMin(new UnsignedInt(snap), new UnsignedInt(diff));
+            Assert.AreEqual(expected, actual.Value);
         }
 
         [TestMethod]
@@ -9119,6 +9158,7 @@ namespace Hl7.Fhir.Specification.Tests
             sutCode.Min.Should().Be(sdCode.Min);
         }
 
+
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
@@ -9137,6 +9177,143 @@ namespace Hl7.Fhir.Specification.Tests
             var extensionElement = elements.SingleOrDefault(x => x.ElementId == elementId);
 
             extensionElement.Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Test cases that have non corrected values:
+        /// [N1] Max lt Min
+        /// Test cases that have corrected values:
+        /// [C1] Max diff: * -> take Max snap: 1
+        /// [C2] Min diff lte snap -> take Min snap: 1
+        /// </summary>
+        [TestMethod]
+        [DataRow("TestExtension01", null, null, 0, "1", 0, "1")]
+        [DataRow("TestExtension01", null, "0", 0, "0", 0, "1")]
+        [DataRow("TestExtension01", null, "1", 0, "1", 0, "1")]
+        [DataRow("TestExtension01", null, "*", 0, "1", 0, "1")] // [C1]
+        [DataRow("TestExtension01", 0, null, 0, "1", 0, "1")]
+        [DataRow("TestExtension01", 0, "0", 0, "0", 0, "1")]
+        [DataRow("TestExtension01", 0, "1", 0, "1", 0, "1")]
+        [DataRow("TestExtension01", 0, "*", 0, "1", 0, "1")] // [C1]
+        [DataRow("TestExtension01", 1, null, 1, "1", 0, "1")]
+        [DataRow("TestExtension01", 1, "0", 1, "0", 0, "1")] // [N1]
+        [DataRow("TestExtension01", 1, "1", 1, "1", 0, "1")]
+        [DataRow("TestExtension01", 1, "*", 1, "1", 0, "1")] // [C1]
+
+        [DataRow("TestExtension11", null, null, 1, "1", 1, "1")]
+        [DataRow("TestExtension11", null, "0", 1, "0", 1, "1")] // [N1]
+        [DataRow("TestExtension11", null, "1", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", null, "*", 1, "1", 1, "1")] // [C1]
+        [DataRow("TestExtension11", 0, null, 1, "1", 1, "1")] // [C2]
+        [DataRow("TestExtension11", 0, "0", 1, "0", 1, "1")] // [C2][N1]
+        [DataRow("TestExtension11", 0, "1", 1, "1", 1, "1")] // [C2]
+        [DataRow("TestExtension11", 0, "*", 1, "1", 1, "1")] // [C2][C1]
+        [DataRow("TestExtension11", 1, null, 1, "1", 1, "1")]
+        [DataRow("TestExtension11", 1, "0", 1, "0", 1, "1")] // [N1]
+        [DataRow("TestExtension11", 1, "1", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", 1, "*", 1, "1", 1, "1")] // [C1]
+
+        [DataRow("TestExtension0star", null, null, 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", null, "0", 0, "0", 0, "*")]
+        [DataRow("TestExtension0star", null, "1", 0, "1", 0, "*")]
+        [DataRow("TestExtension0star", null, "2", 0, "2", 0, "*")]
+        [DataRow("TestExtension0star", null, "*", 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", 0, null, 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", 0, "0", 0, "0", 0, "*")]
+        [DataRow("TestExtension0star", 0, "1", 0, "1", 0, "*")]
+        [DataRow("TestExtension0star", 0, "2", 0, "2", 0, "*")]
+        [DataRow("TestExtension0star", 0, "*", 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", 1, null, 1, "*", 0, "*")]
+        [DataRow("TestExtension0star", 1, "0", 1, "0", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 1, "1", 1, "1", 0, "*")]
+        [DataRow("TestExtension0star", 1, "2", 1, "2", 0, "*")]
+        [DataRow("TestExtension0star", 1, "*", 1, "*", 0, "*")]
+        [DataRow("TestExtension0star", 2, null, 2, "*", 0, "*")]
+        [DataRow("TestExtension0star", 2, "0", 2, "0", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 2, "1", 2, "1", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 2, "2", 2, "2", 0, "*")]
+        [DataRow("TestExtension0star", 2, "*", 2, "*", 0, "*")]
+
+        [DataRow("TestExtension1star", null, null, 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", null, "0", 1, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", null, "1", 1, "1", 1, "*")]
+        [DataRow("TestExtension1star", null, "2", 1, "2", 1, "*")]
+        [DataRow("TestExtension1star", null, "*", 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 0, null, 1, "*", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "0", 1, "0", 1, "*")] // [C2][N1]
+        [DataRow("TestExtension1star", 0, "1", 1, "1", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "2", 1, "2", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "*", 1, "*", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 1, null, 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 1, "0", 1, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 1, "1", 1, "1", 1, "*")]
+        [DataRow("TestExtension1star", 1, "2", 1, "2", 1, "*")]
+        [DataRow("TestExtension1star", 1, "*", 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 2, null, 2, "*", 1, "*")]
+        [DataRow("TestExtension1star", 2, "0", 2, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 2, "1", 2, "1", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 2, "2", 2, "2", 1, "*")]
+        [DataRow("TestExtension1star", 2, "*", 2, "*", 1, "*")]
+        public async T.Task CardinalityOfExtension(string extension, int? diffMin, string diffMax, int extMin, string extMax, int baseMin, string baseMax)
+        {
+            // Arrange
+            string url = $"https://example.org/fhir/StructureDefinition/issue-1981-patient";
+            string parentId = "Patient.extension";
+            string elementId = "Patient.extension:test";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync(url);
+
+            sd.Differential.Element.Should().HaveCount(2);
+
+            var extensionElement = sd.Differential.Element.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min = diffMin;
+            extensionElement.Max = diffMax;
+            extensionElement.Type[0].ProfileElement[0].Value = $"https://example.org/fhir/StructureDefinition/{extension}";
+
+            var snapshotGenerator = new SnapshotGenerator(_testResolver, _settings);
+
+            snapshotGenerator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+            {
+                e.Element.Should().NotBeNull();
+
+                if (e.Element.Annotation<TestAnnotation>() != null)
+                    e.Element.RemoveAnnotations<TestAnnotation>();
+
+                e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+            };
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            var elementsExpanded = await snapshotGenerator.ExpandElementAsync(elements, parentElement);
+
+            // Assert
+            extensionElement = elementsExpanded.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min.Should().Be(extMin);
+            extensionElement.Max.Should().Be(extMax);
+
+            var baseElement = extensionElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Min.Should().Be(baseMin);
+            baseElement.Max.Should().Be(baseMax);
+        }
+
+        private sealed class TestAnnotation
+        {
+            public TestAnnotation(StructureDefinition baseStructure, ElementDefinition baseElemDef)
+            {
+                BaseStructureDefinition = baseStructure;
+                BaseElementDefinition = baseElemDef;
+            }
+
+            public StructureDefinition BaseStructureDefinition { get; }
+            public ElementDefinition BaseElementDefinition { get; }
         }
     }
 }
