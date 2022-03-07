@@ -1390,6 +1390,49 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [Fact]
+        public async void TestValidationPerformanceUsCore()
+        {
+            var resolver = new MultiResolver(new CachedResolver(new DirectorySource(Path.Combine("TestData", "us-core-profiles"))), new CachedResolver(new ZipSource("specification.zip")));
+
+            var ctx = new ValidationSettings()
+            {
+                ResourceResolver = resolver,
+                GenerateSnapshot = true,
+                EnableXsdValidation = false,
+                Trace = false,
+                ResolveExternalReferences = false
+            };
+
+            _validator = new Validator(ctx);
+
+            var instances = new[] { "us-core-instance-1.json", 
+                                    "us-core-instance-10.json", 
+                                    "us-core-instance-25.json", 
+                                    "us-core-instance-50.json",
+                                    "us-core-instance-100.json",
+                                    "us-core-instance-200.json",
+                                    "us-core-instance-300.json",
+                                    "us-core-instance-500.json",
+                                    "us-core-instance-700.json"};
+
+            foreach(var instance in instances)
+            {
+                var jsonBundle = await File.ReadAllTextAsync(Path.Combine("TestData", "us-core-instances", instance));
+                var parser = new FhirJsonParser();
+                var bundle = await parser.ParseAsync<Bundle>(jsonBundle);
+                Assert.NotNull(bundle);
+
+                var sw = new Stopwatch();
+                sw.Start();
+                var result = _validator.Validate(bundle);
+                sw.Stop();
+
+                Debug.WriteLine(result.ToJson());
+                Debug.WriteLine($"Validation executed in {sw.ElapsedMilliseconds}ms");
+            }
+        }
+
         class VisitResolver : IResourceResolver
         {
             private List<string> _visits = new List<string>();
