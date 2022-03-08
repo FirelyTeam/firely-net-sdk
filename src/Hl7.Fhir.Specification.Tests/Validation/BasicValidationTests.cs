@@ -1406,15 +1406,18 @@ namespace Hl7.Fhir.Specification.Tests
 
             _validator = new Validator(ctx);
 
-            var instances = new[] { "us-core-instance-1.json", 
-                                    "us-core-instance-10.json", 
-                                    "us-core-instance-25.json", 
-                                    "us-core-instance-50.json",
-                                    "us-core-instance-100.json",
-                                    "us-core-instance-200.json",
-                                    "us-core-instance-300.json",
-                                    "us-core-instance-500.json",
-                                    "us-core-instance-700.json"};
+            var instances = new[]
+            {
+                "us-core-instance-1.json",
+                "us-core-instance-10.json",
+                "us-core-instance-25.json",
+                "us-core-instance-50.json",
+                "us-core-instance-100.json",
+                "us-core-instance-200.json",
+                "us-core-instance-300.json",
+                "us-core-instance-500.json",
+                "us-core-instance-700.json",
+            };
 
             foreach(var instance in instances)
             {
@@ -1428,8 +1431,8 @@ namespace Hl7.Fhir.Specification.Tests
                 var result = _validator.Validate(bundle);
                 sw.Stop();
 
-                Debug.WriteLine(result.ToJson());
-                Debug.WriteLine($"Validation executed in {sw.ElapsedMilliseconds}ms");
+                //output.WriteLine(result.ToJson());
+                output.WriteLine($"Validation of instance ${instance} executed in {sw.ElapsedMilliseconds}ms");
             }
         }
 
