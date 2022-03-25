@@ -6,16 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
     internal class ElementBucket : BaseBucket
     {
-        public ElementBucket(ElementDefinitionNavigator root, Validator validator) : base(root.Current)
+        public ElementBucket(ElementDefinitionNavigator root, Validator validator, ValidationState state) : base(root.Current, state)
         {
             Root = root.ShallowCopy();
             Validator = validator;
@@ -36,9 +36,9 @@ namespace Hl7.Fhir.Validation
         {
             var outcome = base.Validate(validator, errorLocation);
 
-            foreach(var member in Members)
+            foreach (var member in Members)
             {
-                outcome.Include(Validator.Validate(member, Root));
+                outcome.Include(Validator.ValidateInternal(member, Root, State));
             }
 
             return outcome;
