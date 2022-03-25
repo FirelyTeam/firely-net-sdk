@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Specification.Tests
             //var xml = FhirSerializer.SerializeResourceToXml(sd);
             //File.WriteAllText(@"c:\temp\sdout.xml", xml);
 
-            return BucketFactory.CreateRoot(nav, _resolver, _validator);
+            return BucketFactory.CreateRoot(nav, _resolver, _validator, new ValidationState());
         }
 
         /*

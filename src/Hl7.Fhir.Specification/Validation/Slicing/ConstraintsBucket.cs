@@ -6,10 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Validation
 {
@@ -21,21 +20,25 @@ namespace Hl7.Fhir.Validation
         /// </summary>
         /// <param name="sliceConstraints">The set of constraints that are the criterium for membership of the slice.</param>
         /// <param name="validator">A validator instance that will be invoked to validate the child constraints.</param>
-        public ConstraintsBucket(ElementDefinitionNavigator sliceConstraints, Validator validator) : base(sliceConstraints.Current)
+        /// <param name="state">The validation state to forward to all nested validations in this bucket.</param>
+        public ConstraintsBucket(
+            ElementDefinitionNavigator sliceConstraints,
+            Validator validator,
+            ValidationState state) : base(sliceConstraints.Current, state)
         {
             // Keep a copy of the constraints for this slice, so we can use them to validate the instances against later.
             SliceConstraints = sliceConstraints.ShallowCopy();
 
             Validator = validator;
         }
-    
+
         public ElementDefinitionNavigator SliceConstraints { get; private set; }
 
         public Validator Validator { get; private set; }
 
         public override bool Add(ITypedElement candidate)
         {
-            OperationOutcome outcome = Validator.Validate(candidate, SliceConstraints);
+            OperationOutcome outcome = Validator.ValidateInternal(candidate, SliceConstraints, State);
 
             if (outcome.Success)
             {
