@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void AvoidsRedoingProfileValidation()
         {
-            var all = new Bundle() { Type = Bundle.BundleType.Batch };
+            var all = new Bundle() { Type = Bundle.BundleType.Collection };
             var org1 = new Organization() { Id = "org1", Name = "Organization 1" };
             var org2 = new Organization() { Id = "org2", Name = "Organization 2", Meta = new() { Profile = new[] { TestProfileArtifactSource.PROFILED_ORG_URL } } };
 
