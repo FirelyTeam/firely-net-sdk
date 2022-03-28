@@ -23,13 +23,17 @@ namespace Hl7.Fhir.Validation
         public readonly Validator Validator;
         public readonly string[] Profiles;
 
-        protected override bool MatchInternal(ITypedElement instance) =>
-            Profiles.Any(profile => validates(instance, profile));
+        protected override bool MatchInternal(ITypedElement instance, ValidationState state) =>
+            Profiles.Any(profile => validates(instance, profile, state));
 
-        private bool validates(ITypedElement instance, string profile)
+        private bool validates(ITypedElement instance, string profile, ValidationState state)
         {
             var validator = Validator.NewInstance();
-            var result = validator.Validate(instance, profile);
+            var result = validator.ValidateInternal(instance,
+                                            declaredTypeProfile: null,
+                                            statedCanonicals: new[] { profile },
+                                            statedProfiles: null,
+                                            state: state);
             return result.Success;
         }
     }
