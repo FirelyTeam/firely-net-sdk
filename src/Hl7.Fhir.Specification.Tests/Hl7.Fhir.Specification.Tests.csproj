@@ -2,7 +2,7 @@
 
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
-  <Import Project="..\firely-net-sdk-tests.props"/>
+  <Import Project="..\firely-net-sdk-tests.props" />
 
   <PropertyGroup>
     <AssemblyName>Hl7.Fhir.Specification.Tests</AssemblyName>   
@@ -80,6 +80,18 @@
     </Content>
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>  
+ 
+  <ItemGroup>
+    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-max0-Patient.StructureDefinition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-minMax1-Patient.StructureDefinition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-noMax- Patient.StructureDefinition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>  
 

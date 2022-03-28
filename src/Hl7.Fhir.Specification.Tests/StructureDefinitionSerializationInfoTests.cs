@@ -1,6 +1,6 @@
 ﻿using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Validation;
+using Hl7.Fhir.Specification.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 );
         }
 
-        static IResourceResolver source = null;
+        private static IResourceResolver source = null;
 
         [TestMethod]
         public void TestCanLocateTypes() => SerializationInfoTestHelpers.TestCanLocateTypes(new StructureDefinitionSummaryProvider(source));

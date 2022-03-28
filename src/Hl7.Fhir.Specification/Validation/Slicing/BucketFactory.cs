@@ -15,18 +15,18 @@ namespace Hl7.Fhir.Validation
 {
     internal static class BucketFactory
     {
-        public static IBucket CreateRoot(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator)
+        public static IBucket CreateRoot(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator, ValidationState state)
         {
             // Create a single bucket
-            var entryBucket = new ElementBucket(root, validator);
+            var entryBucket = new ElementBucket(root, validator, state);
 
             if (root.Current.Slicing == null)
                 return entryBucket;
             else
-                return CreateGroup(root, resolver, validator, entryBucket);
+                return CreateGroup(root, resolver, validator, entryBucket, state);
         }
 
-        public static IBucket CreateGroup(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator, IBucket entryBucket)
+        public static IBucket CreateGroup(ElementDefinitionNavigator root, IResourceResolver resolver, Validator validator, IBucket entryBucket, ValidationState state)
         {
             var discriminatorSpecs = root.Current.Slicing.Discriminator.ToArray();  // copy, since root will move after this
             var location = root.Current.Path;
@@ -48,16 +48,16 @@ namespace Hl7.Fhir.Validation
                     {
                         throw new IncorrectElementDefinitionException($"There is nothing to discriminate on at {location}.");
                     }
-                    subBucket = new DiscriminatorBucket(root, validator, discriminators.ToArray());
+                    subBucket = new DiscriminatorBucket(root, validator, discriminators.ToArray(), state);
                 }
                 else
                     // Discriminator-less matching
-                    subBucket = new ConstraintsBucket(root, validator);
+                    subBucket = new ConstraintsBucket(root, validator, state);
 
                 if (root.Current.Slicing == null)
                     subs.Add(subBucket);
                 else
-                    subs.Add(CreateGroup(root, resolver, validator, subBucket));
+                    subs.Add(CreateGroup(root, resolver, validator, subBucket, state));
             }
 
             root.ReturnToBookmark(bm);
