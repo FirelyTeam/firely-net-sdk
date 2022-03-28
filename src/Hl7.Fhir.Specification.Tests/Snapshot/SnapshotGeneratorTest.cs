@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170810] Order is important!
             // Specify source first to override core defs from
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
-            _zipSource = new ZipSource("specification.zip");
+            _zipSource = ZipSource.CreateValidationSource();
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
         }
 
