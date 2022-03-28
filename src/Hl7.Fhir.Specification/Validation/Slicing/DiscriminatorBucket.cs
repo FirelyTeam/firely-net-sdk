@@ -24,7 +24,12 @@ namespace Hl7.Fhir.Validation
         /// <param name="sliceConstraints">The set of constraints that will be validated for members of the bucket.</param>
         /// <param name="validator">A validator instance that will be invoked to validate the child constraints.</param>
         /// <param name="discriminators">A set of discriminators that determine whether or not an instance is part of this bucket.</param>
-        public DiscriminatorBucket(ElementDefinitionNavigator sliceConstraints, Validator validator, IDiscriminator[] discriminators) : base(sliceConstraints.Current)
+        /// <param name="state">The validation state to forward to all nested validations in this bucket.</param>
+        public DiscriminatorBucket(
+            ElementDefinitionNavigator sliceConstraints,
+            Validator validator,
+            IDiscriminator[] discriminators,
+            ValidationState state) : base(sliceConstraints.Current, state)
         {
             if (discriminators == null || discriminators.Length == 0)
                 throw Error.InvalidOperation($"Discriminator bucket requires at least one discriminator. Otherwise, use the ConstraintsBucket instead.");
@@ -44,7 +49,7 @@ namespace Hl7.Fhir.Validation
 
         public override bool Add(ITypedElement candidate)
         {
-            if (Discriminators.All(d => d.Matches(candidate)))
+            if (Discriminators.All(d => d.Matches(candidate, State)))
             {
                 Members.Add(candidate);
                 return true;
@@ -59,7 +64,7 @@ namespace Hl7.Fhir.Validation
 
             // Simply validate all members and report errors
             foreach (var member in Members)
-                outcome.Add(Validator.Validate(member, SliceConstraints));
+                outcome.Add(Validator.ValidateInternal(member, SliceConstraints, State));
 
             // include errors reported by our base as well
             outcome.Add(base.Validate(validator, errorLocation));

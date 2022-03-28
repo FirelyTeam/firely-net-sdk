@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Validation
         public readonly Validator Validator;
         public readonly Element Pattern;
 
-        protected override bool MatchInternal(ITypedElement instance)
+        protected override bool MatchInternal(ITypedElement instance, ValidationState _)
         {
             var result = Validator.ValidatePattern(Pattern, instance);
             return result.Success;

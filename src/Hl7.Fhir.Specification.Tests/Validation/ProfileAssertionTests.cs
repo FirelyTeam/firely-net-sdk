@@ -1,13 +1,10 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using T=System.Threading.Tasks;
 using Xunit;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -25,7 +22,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
                         new DirectorySource(Path.Combine("TestData", "validation")),
                         new TestProfileArtifactSource(),
-                        new ZipSource("specification.zip")));
+                        ZipSource.CreateValidationSource()));
 
             var ctx = new ValidationSettings()
             {
@@ -91,7 +88,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
 
-// We don't want to rewrite ProfileAssertion right now...
+        // We don't want to rewrite ProfileAssertion right now...
 #pragma warning disable CS0618 // Type or member is obsolete
         private StructureDefinition resolve(string uri) => _resolver.FindStructureDefinition(uri);
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -182,11 +179,11 @@ namespace Hl7.Fhir.Specification.Tests
             assertion.AddStatedProfile(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation));
             assertion.AddStatedProfile("http://validationtest.org/fhir/StructureDefinition/WeightHeightObservation");
             assertion.AddStatedProfile("http://hl7.org/fhir/StructureDefinition/devicemetricobservation");
-            
+
             var report = assertion.Validate();
             Assert.True(report.Success);
             Assert.Equal(2, assertion.MinimalProfiles.Count());
-            Assert.Equal( assertion.MinimalProfiles, assertion.StatedProfiles.Skip(1));
+            Assert.Equal(assertion.MinimalProfiles, assertion.StatedProfiles.Skip(1));
 
             assertion.SetDeclaredType(FHIRAllTypes.Procedure);
             report = assertion.Validate();
