@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel.Tests
     [TestClass]
     public class ScopedNodeTests
     {
-        ScopedNode? _bundleNode;
+        private ScopedNode? _bundleNode;
 
         [TestInitialize]
         public void SetupSource()
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             public CCDAResourceResolver()
             {
                 _cache = new Dictionary<string, StructureDefinition>();
-                _zipSource = new ZipSource("specification.zip");
+                _zipSource = ZipSource.CreateValidationSource();
                 _coreResolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
             }
 

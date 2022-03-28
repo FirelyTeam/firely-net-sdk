@@ -22,6 +22,6 @@ namespace Hl7.Fhir.Validation
         public CombinedDiscriminator(IEnumerable<IDiscriminator> components) =>
                 Components = components.ToArray();
 
-        public bool Matches(ITypedElement candidate) => Components.All(c => c.Matches(candidate));
+        public bool Matches(ITypedElement candidate, ValidationState state) => Components.All(c => c.Matches(candidate, state));
     }
 }
