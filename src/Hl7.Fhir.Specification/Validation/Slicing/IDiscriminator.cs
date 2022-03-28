@@ -12,6 +12,6 @@ namespace Hl7.Fhir.Validation
 {
     internal interface IDiscriminator
     {
-        bool Matches(ITypedElement candidate);
+        bool Matches(ITypedElement candidate, ValidationState state);
     }
 }

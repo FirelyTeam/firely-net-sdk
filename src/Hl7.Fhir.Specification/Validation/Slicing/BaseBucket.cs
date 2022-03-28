@@ -7,18 +7,20 @@ namespace Hl7.Fhir.Validation
 {
     internal abstract class BaseBucket : IBucket
     {
-        internal protected BaseBucket(ElementDefinition definition)
+        protected internal BaseBucket(ElementDefinition definition, ValidationState state)
         {
             Name = definition.Path + (definition.SliceName != null ? $":{definition.SliceName}" : null);
             Cardinality = Cardinality.FromElementDefinition(definition);
+            State = state;
         }
 
         public string Name { get; private set; }
         public Cardinality Cardinality { get; private set; }
         public IList<ITypedElement> Members { get; private set; } = new List<ITypedElement>();
+        protected ValidationState State { get; }
 
         public abstract bool Add(ITypedElement instance);
-  
+
         public virtual OperationOutcome Validate(Validator validator, ITypedElement errorLocation)
         {
             var outcome = new OperationOutcome();

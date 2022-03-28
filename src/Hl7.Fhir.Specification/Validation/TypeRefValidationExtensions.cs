@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance, ValidationState state)
         {
             var outcome = new OperationOutcome();
 
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Validation
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
                         {
-                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance));
+                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance, state));
                         }
                         else
                         {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Validation
             else if (choices.Count() == 1)
             {
                 // Only one type present in list of typerefs, all of the typerefs are candidates
-                outcome.Include(validator.ValidateTypeReferences(typeRefs, instance));
+                outcome.Include(validator.ValidateTypeReferences(typeRefs, instance, state));
             }
 
             return outcome;
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Validation
 
 
         internal static OperationOutcome ValidateTypeReferences(this Validator validator,
-            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance, bool validateProfiles = true)
+            IEnumerable<ElementDefinition.TypeRefComponent> typeRefs, ScopedNode instance, ValidationState state, bool validateProfiles = true)
         {
             //TODO: It's more efficient to do the non-reference types FIRST, since ANY match would be ok,
             //and validating non-references is cheaper
@@ -87,12 +87,16 @@ namespace Hl7.Fhir.Validation
             //better separate the fetching of the instance from the validation, so we do not run the rest of the validation (multiple times!)
             //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
-            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance, tr, validateProfiles));
+            IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance, tr, validateProfiles, state));
             return validator.Combine(BatchValidationMode.Any, instance, validations);
         }
 
-        private static Func<OperationOutcome> createValidatorForTypeRef(Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent tr,
-            bool validateProfiles)
+        private static Func<OperationOutcome> createValidatorForTypeRef(
+            Validator validator,
+            ScopedNode instance,
+            ElementDefinition.TypeRefComponent tr,
+            bool validateProfiles,
+            ValidationState state)
         {
             return validate;
 
@@ -103,28 +107,36 @@ namespace Hl7.Fhir.Validation
                 if (validateProfiles)
                 {
                     // First, call Validate() for the current element (the reference itself) against the profile
-                    var validations = tr.GetDeclaredProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile));
+                    var validations = tr.GetDeclaredProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile, state));
                     result.Add(validator.Combine(BatchValidationMode.Any, instance, validations));
                 }
                 // If this is a reference, also validate the reference against the targetProfile
                 if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
-                    result.Add(validator.ValidateResourceReference(instance, tr));
+                    result.Add(validator.ValidateResourceReference(instance, tr, state));
 
                 return result;
             }
         }
 
-        private static Func<OperationOutcome> createValidatorForDeclaredProfile(Validator validator, ScopedNode instance, string declaredProfile)
+        private static Func<OperationOutcome> createValidatorForDeclaredProfile(
+            Validator validator,
+            ScopedNode instance,
+            string declaredProfile,
+            ValidationState state)
         {
             return validate;
 
             OperationOutcome validate()
             {
-                return validator.Validate(instance, declaredProfile, statedCanonicals: null, statedProfiles: null);
+                return validator.ValidateInternal(instance, declaredProfile, statedCanonicals: null, statedProfiles: null, state);
             }
         }
 
-        internal static OperationOutcome ValidateResourceReference(this Validator validator, ScopedNode instance, ElementDefinition.TypeRefComponent typeRef)
+        internal static OperationOutcome ValidateResourceReference(
+            this Validator validator,
+            ScopedNode instance,
+            ElementDefinition.TypeRefComponent typeRef,
+            ValidationState state)
         {
             var outcome = new OperationOutcome();
 
@@ -132,7 +144,6 @@ namespace Hl7.Fhir.Validation
 
             if (reference == null)       // No reference found -> this is always valid
                 return outcome;
-
 
             // Try to resolve the reference *within* the current instance (Bundle, resource with contained resources) first
             var referencedResource = validator.resolveReference(instance, reference,
@@ -177,12 +188,23 @@ namespace Hl7.Fhir.Validation
                 //              we be permitting more than one target profile here.
                 if (encounteredKind != ElementDefinition.AggregationMode.Referenced)
                 {
-                    childResult = validator.ValidateReferences(referencedResource, typeRef.TargetProfile);
+                    childResult = validator.validateReferences(reference,
+                                                               referencedResource,
+                                                               typeRef.TargetProfile,
+                                                               state,
+                                                               external: false);
                 }
                 else
                 {
                     var newValidator = validator.NewInstance();
-                    childResult = newValidator.ValidateReferences(referencedResource, typeRef.TargetProfile);
+                    var newState = state.NewInstanceScope();
+                    newState.Instance.ExternalUrl = reference;
+
+                    childResult = newValidator.validateReferences(reference,
+                                                                  referencedResource,
+                                                                  typeRef.TargetProfile,
+                                                                  newState,
+                                                                  external: true);
                 }
 
                 // Prefix each path with the referring resource's path to keep the locations
@@ -199,17 +221,38 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static OperationOutcome ValidateReferences(this Validator validator, ITypedElement referencedResource, IEnumerable<string> targetProfiles)
+        private static OperationOutcome validateReferences(
+            this Validator validator,
+            string reference,
+            ITypedElement referencedResource,
+            IEnumerable<string> targetProfiles,
+            ValidationState state,
+            bool external)
         {
-            IEnumerable<Func<OperationOutcome>> validations = targetProfiles.Select(tp => createValidatorForReferenceResource(tp));
+            IEnumerable<Func<OperationOutcome>> validations =
+                external == false
+                    ? targetProfiles.Select(tp => createValidatorForReferenceResource(tp))
+                    : targetProfiles.Select(tp => createValidatorForExternalReferenceResource(tp));
+
             return validator.Combine(BatchValidationMode.Any, referencedResource, validations);
 
             Func<OperationOutcome> createValidatorForReferenceResource(string targetProfile)
             {
-                return () =>
-                {
-                    return validator.Validate(referencedResource, targetProfile, statedProfiles: null, statedCanonicals: null);
-                };
+                return () => validator.ValidateInternal(referencedResource,
+                                         targetProfile,
+                                         statedProfiles: null,
+                                         statedCanonicals: null,
+                                         state: state);
+            }
+
+            Func<OperationOutcome> createValidatorForExternalReferenceResource(string targetProfile)
+            {
+                return () => state.Global.ExternalValidations.Start(reference, targetProfile,
+                            () => validator.ValidateInternal(referencedResource,
+                                                        targetProfile,
+                                                        statedProfiles: null,
+                                                        statedCanonicals: null,
+                                                        state: state));
             }
         }
 
