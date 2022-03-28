@@ -8,9 +8,6 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
-using Hl7.FhirPath;
-using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -29,7 +26,7 @@ namespace Hl7.Fhir.Validation
         public readonly ElementDefinition.ElementDefinitionBindingComponent Binding;
         public readonly string Context;
 
-        protected override bool MatchInternal(ITypedElement instance)
+        protected override bool MatchInternal(ITypedElement instance, ValidationState _)
         {
             var result = Validator.ValidateBinding(Binding, instance, ErrorLocation, Context);
             return result.Success;
