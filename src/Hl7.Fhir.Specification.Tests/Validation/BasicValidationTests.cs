@@ -22,7 +22,7 @@ using T = System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
-    public class BasicValidationTests : IClassFixture<ValidationFixture>
+    public partial class BasicValidationTests : IClassFixture<ValidationFixture>
     {
         private readonly IResourceResolver _source;
         private readonly IAsyncResourceResolver _asyncSource;
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source =
                     new MultiResolver(
                         new DirectorySource(@"TestData\validation"),
-                        new ZipSource("specification.zip"));
+                        ZipSource.CreateValidationSource());
 
             var ctx = new ValidationSettings()
             {
@@ -1020,7 +1020,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // new DirectorySource(Path.Combine("TestData", "validation")),
                         // new TestProfileArtifactSource(),
                         memResolver,
-                        new ZipSource("specification.zip"))));
+                        ZipSource.CreateValidationSource())));
 
             var ctx = new ValidationSettings()
             {
@@ -1088,7 +1088,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
                     new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
-                    new ZipSource("specification.zip")));
+                    ZipSource.CreateValidationSource()));
 
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
@@ -1268,25 +1268,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(visitResolver.Visited(patientReference), "no attempt was made to resolve the example patient");
             Assert.True(0 == outcome.Warnings, $"Found {outcome.Warnings} warnings");
 
-        }
-
-        class VisitResolver : IResourceResolver
-        {
-            private List<string> _visits = new List<string>();
-
-            public Resource ResolveByCanonicalUri(string uri)
-            {
-                _visits.Add(uri);
-                return null;
-            }
-
-            public Resource ResolveByUri(string uri)
-            {
-                _visits.Add(uri);
-                return null;
-            }
-
-            internal bool Visited(string uri) => _visits.Contains(uri);
         }
 
         private class ClearSnapshotResolver : IResourceResolver
