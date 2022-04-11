@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Rest
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
 
-            var requester = new HttpClientRequester(Endpoint, Settings, handler);
+            var requester = new HttpClientRequester(Endpoint, Settings, handler, messageHandler == null);
             Requester = requester;
 
             // Expose default request headers to user.
