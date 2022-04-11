@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
 * Copyright (c) 2014, Firely (info@fire.ly) and contributors
 * See the file CONTRIBUTORS for details.
-* 
+*
 * This file is licensed under the BSD 3-Clause license
 * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
 */
@@ -21,11 +21,14 @@ namespace Hl7.Fhir.Rest
     {
 //disables warning that OnBeforeRequest and OnAfterResponse are never used.
 #pragma warning disable CS0067
-        
+
         /// <summary>
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
+        /// <remarks>
+        /// If the messageHandler is provided then it must be disposed by the caller
+        /// </remarks>
         /// <param name="endpoint">
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
@@ -122,7 +125,7 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Should calls to Create, Update and transaction operations return the whole updated content, 
+        /// Should calls to Create, Update and transaction operations return the whole updated content,
         /// or an OperationOutcome?
         /// </summary>
         /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
@@ -157,7 +160,7 @@ namespace Hl7.Fhir.Rest
             set => Settings.PreferCompressedResponses = value;
         }
         /// <summary>
-        /// Compress any Request bodies 
+        /// Compress any Request bodies
         /// (warning, if a server does not handle compressed requests you will get a 415 response)
         /// </summary>
         [Obsolete("Use the FhirClient.Settings property or the settings argument in the constructor instead")]
@@ -201,6 +204,6 @@ namespace Hl7.Fhir.Rest
         }
     }
 
-   
+
 }
 
