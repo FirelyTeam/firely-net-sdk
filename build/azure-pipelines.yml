@@ -120,7 +120,7 @@ stages:
         nobuild: true
         verbosityPack: Normal
 
-    - template: templates/codesign-nuget-packages.yml
+    - template: codesign-nuget-packages.yml@templates
       parameters:
         certificateValue: $(FirelyCodeSignerCertificate)
         certificatePasswordValue: $(CodeSigningPassword)
