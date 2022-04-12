@@ -16,6 +16,7 @@ trigger:
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
+- group: CodeSigning
 - template: build-variables.yml
 - template: pipeline-variables.yml
   
@@ -118,6 +119,13 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
+    - task: DotNetCoreCLI@2
+      displayName: Code signing of packages
+      inputs:
+        command: custom
+        custom:  nuget sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-path $(FirelyCodeSignerCertificate) --timestamper http://timestamp.digicert.com --certificate-password $(CodeSigningPassword) 
+      
+    
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
