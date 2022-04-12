@@ -72,7 +72,7 @@ stages:
       inputs:
         command: build
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration $(buildConfiguration) --no-restore
+        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
 
     - task: DotNetCoreCLI@2
       displayName: Create Test artifacts
