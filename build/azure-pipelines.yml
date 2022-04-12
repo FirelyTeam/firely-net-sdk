@@ -122,18 +122,18 @@ stages:
      
     - powershell: |
         #Convert the Secure password that's presented as plain text back into a secure string
-        $pwd = ConvertTo-SecureString -String $(CodeSigningPassword) -Force -AsPlainText
+        #$pwd = ConvertTo-SecureString -String $(CodeSigningPassword) -Force -AsPlainText
 
         #Create PFX file from Certificate Variable
         New-Item Temp-Certificate.pfx -Value $(FirelyCodeSignerCertificate)
 
         #Import the PFX certificate from the newly created file and password. Read the thumbprint into variable
-        $Thumbprint = (Import-PfxCertificate -CertStoreLocation Cert:\CurrentUser\My -FilePath Temp-Certificate.pfx -Password $pwd).Thumbprint
+        #$Thumbprint = (Import-PfxCertificate -CertStoreLocation Cert:\CurrentUser\My -FilePath Temp-Certificate.pfx -Password $pwd).Thumbprint
 
-        Write-Host $Thumbprint
+        #Write-Host $Thumbprint
 
         #Rest of Script below or set environment variable for rest of Pipeline
-        Write-Host "##vso[task.setvariable variable=Thumbprint]$Thumbprint"
+        #Write-Host "##vso[task.setvariable variable=Thumbprint]$Thumbprint"
     - task: DotNetCoreCLI@2
       displayName: Code signing of packages
       inputs:
