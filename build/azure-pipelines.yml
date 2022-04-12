@@ -119,13 +119,27 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
-        
+     
+    - powershell: |
+        #Convert the Secure password that's presented as plain text back into a secure string
+        $pwd = ConvertTo-SecureString -String $(CodeSigningPassword) -Force -AsPlainText
+
+        #Create PFX file from Certificate Variable
+        New-Item Temp-Certificate.pfx -Value $(FirelyCodeSignerCertificate)
+
+        #Import the PFX certificate from the newly created file and password. Read the thumbprint into variable
+        $Thumbprint = (Import-PfxCertificate -CertStoreLocation Cert:\CurrentUser\My -FilePath Temp-Certificate.pfx -Password $pwd).Thumbprint
+
+        Write-Host $Thumbprint
+
+        #Rest of Script below or set environment variable for rest of Pipeline
+        Write-Host "##vso[task.setvariable variable=Thumbprint]$Thumbprint"
     - task: DotNetCoreCLI@2
       displayName: Code signing of packages
       inputs:
         command: custom
         custom:  nuget 
-        arguments: sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-path $(FirelyCodeSignerCertificate) --timestamper http://timestamp.digicert.com --certificate-password $(CodeSigningPassword) 
+        arguments: sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-path Temp-Certificate.pfx --timestamper http://timestamp.digicert.com --certificate-password $(CodeSigningPassword) 
     
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
