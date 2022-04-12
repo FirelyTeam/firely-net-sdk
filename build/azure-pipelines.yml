@@ -137,7 +137,7 @@ stages:
       inputs:
         command: custom
         custom:  nuget 
-        arguments: sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-path Temp-Certificate.pfx --timestamper http://timestamp.digicert.com --certificate-password $(certpassword) 
+        arguments: sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-path Temp-Certificate.pfx --timestamper http://timestamp.digicert.com --certificate-password "$(CodeSigningPassword)" 
     
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
