@@ -124,20 +124,29 @@ stages:
         #Convert the Secure password that's presented as plain text back into a secure string
         $pwd = ConvertTo-SecureString -String "$(CodeSigningPassword)" -Force -AsPlainText
 
-        Write-Host $(CodeSigningPassword)
-        Write-Host $pwd
-
         #Create PFX file from Certificate Variable
-        New-Item $(Build.ArtifactStagingDirectory)\Temp-Certificate.pfx -Value $(FirelyCodeSignerCertificate)
+        New-Item Temp-Certificate.pfx -Value $(FirelyCodeSignerCertificate)
 
-        #Rest of Script below or set environment variable for rest of Pipeline
-        Write-Host "##vso[task.setvariable variable=certpassword]$pwd"
-    #- task: DotNetCoreCLI@2
-    #  displayName: Code signing of packages
-    #  inputs:
-    #    command: custom
-    #    custom:  nuget 
-    #    arguments: sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-path Temp-Certificate.pfx --timestamper http://timestamp.digicert.com --certificate-password "$(CodeSigningPassword)" 
+        #Import the PFX certificate from the newly created file and password. Read the thumbprint into variable
+        $Thumbprint = (Import-PfxCertificate -CertStoreLocation Cert:\CurrentUser\My -FilePath Temp-Certificate.pfx -Password $pwd).Thumbprint
+
+        Write-Host "##vso[task.setvariable variable=Thumbprint]$Thumbprint"
+
+        #Remove the pfx file, the certificate is now imported
+        Remove-Item Temp-Certificate.pfx
+      displayName: 'Import Code Signing certificate'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Code signing of packages'
+      inputs:
+        command: custom
+        custom:  nuget 
+        arguments: sign $(Build.ArtifactStagingDirectory)\*.nupkg --certificate-fingerprint $(Thumbprint) --timestamper http://timestamp.digicert.com 
+
+    - powershell: |
+        #Delete the certificate by thumbprint, so it cannot be used elsewhere.
+        Get-ChildItem Cert:\CurrentUser\My\$(Thumbprint) | Remove-Item
+      displayName: 'Remove the certificate from cert store'
     
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
