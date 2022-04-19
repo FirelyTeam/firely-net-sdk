@@ -1390,6 +1390,60 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [Fact]
+        public void ValidateAbsoluteContentReferences()
+        {
+            //prepare
+            var resolver = new MultiResolver(
+                                   new DirectorySource(@"TestData\validation"),
+                                   ZipSource.CreateValidationSource());
+
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = false });
+
+            var questionnaire = new QuestionnaireResponse()
+            {
+                Meta = new Meta()
+                {
+                    Profile = new string[] { "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse" }
+                },
+                Status = QuestionnaireResponse.QuestionnaireResponseStatus.Completed,
+                Authored = "2022",
+                Questionnaire = "Questionnaire/example",
+                Item = new List<QuestionnaireResponse.ItemComponent>
+                {
+                    new QuestionnaireResponse.ItemComponent()
+                    {
+                        LinkId = "1",
+                        Answer = new List<QuestionnaireResponse.AnswerComponent>
+                        {
+                            new QuestionnaireResponse.AnswerComponent
+                            {
+                                Value = new FhirString("This is a test answer")
+                            }
+                        },
+                        Item = new List<QuestionnaireResponse.ItemComponent>
+                        {
+                            new QuestionnaireResponse.ItemComponent()
+                            {
+                                LinkId = "1.1",
+                                Answer = new List<QuestionnaireResponse.AnswerComponent>
+                                {
+                                    new QuestionnaireResponse.AnswerComponent
+                                    {
+                                        Value = new FhirString("with a child test answer")
+                                    }
+                                },
+                            },
+                        }
+                    }
+                }
+            };
+
+            var outcome = validator.Validate(questionnaire);
+            Assert.True(outcome.Success);
+        }
+
+
         private class ClearSnapshotResolver : IResourceResolver
         {
             private readonly IResourceResolver _resolver;
