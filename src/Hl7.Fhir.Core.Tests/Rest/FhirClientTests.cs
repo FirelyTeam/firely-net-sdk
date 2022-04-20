@@ -38,14 +38,14 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://fhirtest.uhn.ca/baseDstu3");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
-        public static Uri testEndpoint = new Uri("https://server.fire.ly/r4");
+        public static Uri testEndpoint = new Uri("https://server.fire.ly/r3");
 
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
         public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("https://vonk.fire.ly/r3");
 
         public static Uri TerminologyEndpoint = new Uri("https://r4.ontoserver.csiro.au/fhir");
-        // public static Uri TerminologyEndpoint = new Uri("http://test.fhir.org/r4");
+        // public static Uri TerminologyEndpoint = new Uri("http://test.fhir.org/r3");
 
         private static string patientId = "pat1" + ModelInfo.Version;
         private static string locationId = "loc1" + ModelInfo.Version;
