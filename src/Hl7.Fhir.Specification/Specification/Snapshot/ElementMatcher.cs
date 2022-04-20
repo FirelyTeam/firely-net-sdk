@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             public OperationOutcome.IssueComponent Issue;
 
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            string DebuggerDisplay => $"B:{BaseBookmark.DebuggerDisplay} <-- {Action} --> D:{DiffBookmark.DebuggerDisplay}";
+            private string DebuggerDisplay => $"B:{BaseBookmark.DebuggerDisplay} <-- {Action} --> D:{DiffBookmark.DebuggerDisplay}";
         }
 
         /// <summary>Match the children of the current element in diffNav to the children of the current element in snapNav.</summary>
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Move snapNav to matching base element for diffNav, if it exists. Otherwise diffNav introduces a new element.</summary>
         /// <returns><c>true</c> if snapNav is positioned on matching base element, or <c>false</c> if diffNav introduces a new element.</returns>
-        static bool matchBase(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> choiceNames)
+        private static bool matchBase(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<string> choiceNames)
         {
             var bm = snapNav.Bookmark();
 
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="snapNav"></param>
         /// <param name="diffNav"></param>
         /// <returns></returns>
-        static List<MatchInfo> constructMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        private static List<MatchInfo> constructMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             // [WMR 20160802] snapNav and diffNav point to matching elements
             // Determine the associated action (Add, Merge, Slice)
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     AddOrMergeCurrentOrNext(sliceName);
                 }
 
-                if (!TypeIsSubSetOf(diffNav, snapNav))
+                if (!typeIsSubSetOf(diffNav, snapNav))
                 {
                     // diff.Types is not a subset of snap.Types, which is not allowed
                     throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(ElementMatcher)}.{nameof(constructChoiceTypeMatch)}): choice type of diff does not occur in snap, snap = '{snapNav.Path}', diff = '{diffNav.Path}'.");
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return matches;
         }
 
-        private static bool TypeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
+        private static bool typeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
             => !diffNav.Current.Type.Except(snapNav.Current.Type, new TypeRefEqualityComparer()).Any();
 
         private class TypeRefEqualityComparer : IEqualityComparer<ElementDefinition.TypeRefComponent>
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         // [WMR 20160902] Represents a new element definition with no matching base element (for core resource & datatype definitions)
-        static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        private static MatchInfo constructNew(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             // Called by Match when the current diffNav does not match any following sibling of snapNav (base)
             // This happens when merging a core definition (e.g. Patient) with a base type (e.g. Resource)
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // However for sliced elements, we need to initialize the slice entry and all following named slices from the same base element.
         // Therefore we first clone the original, unmerged base element and it's children (recursively).
         // Now each slice match return a reference to the associated original base element, unaffected by further processing.
-        static ElementDefinitionNavigator initSliceBase(ElementDefinitionNavigator snapNav)
+        private static ElementDefinitionNavigator initSliceBase(ElementDefinitionNavigator snapNav)
         {
             var sliceBase = snapNav.CloneSubtree();
 
