@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Validation
                         Code = issue.Type,
                         Details = issue.ToCodeableConcept(text),
                         Diagnostics = constraintElement.GetFhirPathConstraint(), // Putting the fhirpath expression of the invariant in the diagnostics
-                        Location = new string[] { instance.Location }
+                        Expression = new string[] { instance.Location }
                     };
                     outcomeIssue.Details.Coding.Add(new Coding(structureDefinitionUrl, constraintElement.Key, constraintElement.Human));
                     outcome.AddIssue(outcomeIssue);

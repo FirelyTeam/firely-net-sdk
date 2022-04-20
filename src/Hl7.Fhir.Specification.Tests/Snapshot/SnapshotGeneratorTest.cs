@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
             if (location != null && location.Length > 0)
             {
-                Assert.IsTrue(location.SequenceEqual(issue.Location));
+                Assert.IsTrue(location.SequenceEqual(issue.Expression));
             }
         }
 
@@ -1619,7 +1619,7 @@ namespace Hl7.Fhir.Specification.Tests
                 if (issue.Details.Text != null) sb.AppendFormat(" Text : '{0}'", issue.Details.Text);
             }
             if (issue.Diagnostics != null) { sb.AppendFormat(" Profile: '{0}'", issue.Diagnostics); }
-            if (issue.Location != null) { sb.AppendFormat(" Path: '{0}'", string.Join(" | ", issue.Location)); }
+            if (issue.Expression != null) { sb.AppendFormat(" Path: '{0}'", string.Join(" | ", issue.Expression)); }
 
             Debug.Print(sb.ToString());
         }
