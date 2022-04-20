@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
         private ZipSource _zipSource;
         private CachedResolver _testResolver;
         private TimingSource _source;
-        private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
+        private readonly SnapshotGeneratorSettings _settings = new()
         {
             // Throw on unresolved profile references; must include in TestData folder
             GenerateSnapshotForExternalProfiles = true,
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Specification.Tests
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
         }
 
-        private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
+        private StructureDefinition createStructureDefinition(string url, params ElementDefinition[] elements)
         {
             return new StructureDefinition
             {
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Specification.Tests
             var code = "someCode";
             var discriminatorPath = "system";
 
-            var baseSD = CreateStructureDefinition(baseCanonical,
+            var baseSD = createStructureDefinition(baseCanonical,
                 new ElementDefinition
                 {
                     Path = "Practitioner.identifier",
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 });
 
-            var derivedSD = CreateStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
+            var derivedSD = createStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
                 new ElementDefinition
                 {
                     Path = "Practitioner.identifier",
@@ -1611,7 +1611,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Conditional("DEBUG")]
         private void dumpIssue(OperationOutcome.IssueComponent issue, int index)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendFormat("* Issue #{0}: Severity = '{1}' Code = '{2}'", index, issue.Severity, issue.Code);
             if (issue.Details != null)
             {
@@ -2131,7 +2131,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20170714] NEW
         // Annotated Base Element for backbone elements is not included in base structuredefinition ?
 
-        private static StructureDefinition MyTestObservation => new StructureDefinition()
+        private static StructureDefinition MyTestObservation => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -2922,7 +2922,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Ewout: type slices cannot contain renamed elements!
-        private static StructureDefinition ObservationTypeSliceProfile => new StructureDefinition()
+        private static StructureDefinition ObservationTypeSliceProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -3070,7 +3070,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.BaseDefinition);
         }
 
-        private static StructureDefinition ObservationTypeResliceProfile => new StructureDefinition()
+        private static StructureDefinition ObservationTypeResliceProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ObservationTypeSliceProfile.Url,
@@ -3151,7 +3151,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Choice type constraint, with element renaming
-        private static StructureDefinition ObservationTypeConstraintProfile => new StructureDefinition()
+        private static StructureDefinition ObservationTypeConstraintProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -3246,7 +3246,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[0], SnapshotGenerator.PROFILE_ELEMENTDEF_INVALID_CHOICE_CONSTRAINT);
         }
 
-        private static StructureDefinition ClosedExtensionSliceObservationProfile => new StructureDefinition()
+        private static StructureDefinition ClosedExtensionSliceObservationProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -6665,7 +6665,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180410] Add unit tests for content references
 
-        public StructureDefinition QuestionnaireWithNestedItems = new StructureDefinition()
+        public StructureDefinition QuestionnaireWithNestedItems = new()
         {
             Type = FHIRAllTypes.Questionnaire.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Questionnaire),
@@ -7179,7 +7179,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestExtensionUrlFixedValueComplex()
         {
-            StructureDefinition ComplexTestExtension = new StructureDefinition()
+            StructureDefinition ComplexTestExtension = new()
             {
                 Type = FHIRAllTypes.Extension.GetLiteral(),
                 BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
@@ -7418,14 +7418,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task SnapshotSucceedsWithExtendedVariantElementDef()
         {
-            var structureDef = new StructureDefinition();
-            structureDef.BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation";
-            structureDef.Type = "Observation";
-            structureDef.Url = "http://some.canonical";
-
-            structureDef.Differential = new StructureDefinition.DifferentialComponent
+            var structureDef = new StructureDefinition
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation",
+                Type = "Observation",
+                Url = "http://some.canonical",
+
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new System.Collections.Generic.List<ElementDefinition>{
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
@@ -7457,6 +7458,7 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     }
+                }
                 }
             };
 
