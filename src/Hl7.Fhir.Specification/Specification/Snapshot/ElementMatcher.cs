@@ -1039,7 +1039,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
         {
             var bm = nav.Bookmark();
-            var result = new List<string>();
 
             if (nav.MoveToFirstChild())
             {

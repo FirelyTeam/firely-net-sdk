@@ -375,16 +375,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return true;
         }
 
-        private bool canInsertSiblingHere()
-        {
-            // We're not positioned anywhere...
-            if (OrdinalPosition == null) return false;
-
-            // Cannot insert a sibling to the unique root element
-            if (OrdinalPosition == 0) return false;
-
-            return true;
-        }
+        private bool canInsertSiblingHere() => OrdinalPosition != null && OrdinalPosition != 0;
 
 
         /// <summary>
