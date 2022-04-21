@@ -10,7 +10,9 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,7 +26,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            _source = new CachedResolver(new DirectorySource("TestData/validation"));
+            _source = new CachedResolver(
+                new MultiResolver(
+                    new DirectorySource("TestData/validation"),
+                    ZipSource.CreateValidationSource()));
         }
 
 
@@ -422,19 +427,48 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void LocateElementByName()
+        public void LocateContentReference()
         {
             var nav = createTestNav();
+            nav.StructureDefinition = new StructureDefinition() { Url = "http://nu.nl/test" };
             nav.JumpToFirst("A.B.C1.D");
-            nav.Current.ContentReference = "A-Named-Constraint";
+            nav.Current.ElementId = "A-Named-Constraint";
 
             nav.Reset();
-            Assert.IsTrue(nav.JumpToNameReference("A-Named-Constraint"));
+            Assert.IsTrue(nav.JumpToNameReference("#A-Named-Constraint"));
             Assert.AreEqual(7, nav.OrdinalPosition);
 
-            Assert.IsFalse(nav.JumpToNameReference("IDontExist"));
+            Assert.IsTrue(nav.JumpToNameReference("http://nu.nl/test#A-Named-Constraint"));
+            Assert.AreEqual(7, nav.OrdinalPosition);
+
+            Assert.IsFalse(nav.JumpToNameReference("#IDontExist"));
+
+            Assert.ThrowsException<NotSupportedException>(() =>
+                nav.JumpToNameReference("http://then.nl/test#A-Named-Constraint"));
         }
 
+        [TestMethod]
+        public void LocateExternalContentReference()
+        {
+            var nav = createTestNav();
+            nav.StructureDefinition = new StructureDefinition() { Url = "http://nu.nl/test" };
+            nav.JumpToFirst("A.B.C1.D");
+            nav.Current.ContentReference = "http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item";
+
+            string lastHit = null;
+
+            var qUrl = "http://hl7.org/fhir/StructureDefinition/Questionnaire";
+            Assert.IsTrue(nav.TryFollowContentReference(resolver, out var target));
+            Assert.AreEqual(lastHit, qUrl);
+            Assert.AreEqual(qUrl, target.StructureDefinition.Url);
+            Assert.AreEqual("Questionnaire.item", target.Current.Path);
+
+            StructureDefinition resolver(string url)
+            {
+                lastHit = url;
+                return _source.FindStructureDefinition(url);
+            }
+        }
 
         [TestMethod]
         public void TestNodeDuplication()
