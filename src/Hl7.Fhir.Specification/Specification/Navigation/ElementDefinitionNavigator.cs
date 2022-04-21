@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Returns a reference to the <see cref="StructureDefinition"/> instance containing the navigated elements.</summary>
-        public StructureDefinition StructureDefinition { get; private set; }
+        public StructureDefinition StructureDefinition { get; internal set; }
 
         /// <summary>Indicates if the navigator has not yet been positioned on a node.</summary>
         /// <returns><c>true</c> if <see cref="Current"/> equals <c>null</c>, or <c>false</c> otherwise.</returns>
