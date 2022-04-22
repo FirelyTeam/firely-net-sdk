@@ -6,7 +6,6 @@
 * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
 */
 
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification;
 using System;
@@ -36,33 +35,45 @@ namespace Hl7.Fhir.Rest
         /// </param>
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        /// <param name="httpClient"></param>
         /// <param name="provider"></param>
-        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, HttpClient httpClient = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
+        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
         {
-            HttpClientRequester requester;
-            if (httpClient != null)
+            // If user does not supply message handler, create our own and add decompression strategy in default handler.
+            var handler = messageHandler ?? new HttpClientHandler()
             {
-                if (messageHandler != null) throw new ArgumentException("Must not provide both messageHandler and httpClient parameters", nameof(messageHandler));
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
 
-                requester = new HttpClientRequester(Endpoint, Settings, httpClient);
-            }
-            else
-            {
-                // If user does not supply message handler, create our own and add decompression strategy in default handler.
-                var handler = messageHandler ?? new HttpClientHandler()
-                {
-                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-                };
-
-                requester = new HttpClientRequester(Endpoint, Settings, handler, messageHandler == null);
-            }
+            HttpClientRequester requester = new HttpClientRequester(Endpoint, Settings, handler, messageHandler == null);
             Requester = requester;
 
             // Expose default request headers to user.
             RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
+        /// <remarks>
+        /// If the messageHandler, or httpClient is provided then it must be disposed by the caller
+        /// Only one of the messageHandler or httpClient can be provided
+        /// </remarks>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="settings"></param>
+        /// <param name="httpClient"></param>
+        /// <param name="provider"></param>
+        public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null, IStructureDefinitionSummaryProvider provider = null) : base(endpoint, settings, provider)
+        {
+            HttpClientRequester requester = new HttpClientRequester(Endpoint, Settings, httpClient);
+            Requester = requester;
+
+            // Expose default request headers to user.
+            RequestHeaders = requester.Client.DefaultRequestHeaders;
+        }
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -74,10 +85,25 @@ namespace Hl7.Fhir.Rest
         /// </param>
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
+        /// <param name="provider"></param>
+        public FhirClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, IStructureDefinitionSummaryProvider provider = null)
+            : this(new Uri(endpoint), settings, messageHandler, provider)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="settings"></param>
         /// <param name="httpClient"></param>
         /// <param name="provider"></param>
-        public FhirClient(string endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null, HttpClient httpClient = null, IStructureDefinitionSummaryProvider provider = null)
-            : this(new Uri(endpoint), settings, messageHandler, httpClient, provider)
+        public FhirClient(string endpoint, HttpClient httpClient, FhirClientSettings settings = null, IStructureDefinitionSummaryProvider provider = null)
+            : this(new Uri(endpoint), httpClient, settings, provider)
         {
         }
 
@@ -191,7 +217,7 @@ namespace Hl7.Fhir.Rest
         }
         #endregion
 
-        [Obsolete ("OnBeforeRequest is deprecated, please add a HttpClientEventHandler or another HttpMessageHandler to the constructor to use this functionality", true)]
+        [Obsolete("OnBeforeRequest is deprecated, please add a HttpClientEventHandler or another HttpMessageHandler to the constructor to use this functionality", true)]
         public event EventHandler<BeforeHttpRequestEventArgs> OnBeforeRequest;
 
         [Obsolete("OnAfterResponse is deprecated, please add a HttpClientEventHandler or another HttpMessageHandler to the constructor to use this functionality", true)]
