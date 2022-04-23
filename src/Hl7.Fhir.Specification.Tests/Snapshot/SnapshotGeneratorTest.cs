@@ -6998,7 +6998,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = fhirType.GetLiteral(),
-                                    Profile = string.IsNullOrEmpty(profileCanonical) ? null : profileCanonical
+                                    ProfileElement = string.IsNullOrEmpty(profileCanonical) ? null : new List<Canonical> { new Canonical(profileCanonical) } 
                                 }
                             }
                         },
