@@ -7626,6 +7626,7 @@ namespace Hl7.Fhir.Specification.Tests
             baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
         }
 
+        [TestMethod]
         public async T.Task ConstrainChoiceTypeInDerivedProfileCorrectly()
         {
             var baseStructureDefinition = new StructureDefinition()
