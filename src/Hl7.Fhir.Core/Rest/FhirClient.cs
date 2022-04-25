@@ -26,8 +26,7 @@ namespace Hl7.Fhir.Rest
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
         /// <remarks>
-        /// If the messageHandler, or httpClient is provided then it must be disposed by the caller
-        /// Only one of the messageHandler or httpClient can be provided
+        /// If the messageHandler is provided then it must be disposed by the caller
         /// </remarks>
         /// <param name="endpoint">
         /// The URL of the server to connect to.<br/>
@@ -56,8 +55,7 @@ namespace Hl7.Fhir.Rest
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
         /// <remarks>
-        /// If the messageHandler, or httpClient is provided then it must be disposed by the caller
-        /// Only one of the messageHandler or httpClient can be provided
+        /// The httpClient must be disposed by the caller
         /// </remarks>
         /// <param name="endpoint">
         /// The URL of the server to connect to.<br/>
@@ -79,6 +77,9 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
+        /// <remarks>
+        /// If the messageHandler is provided then it must be disposed by the caller
+        /// </remarks>
         /// <param name="endpoint">
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
@@ -95,6 +96,9 @@ namespace Hl7.Fhir.Rest
         /// Creates a new client using a default endpoint
         /// If the endpoint does not end with a slash (/), it will be added.
         /// </summary>
+        /// <remarks>
+        /// The httpClient must be disposed by the caller
+        /// </remarks>
         /// <param name="endpoint">
         /// The URL of the server to connect to.<br/>
         /// If the trailing '/' is not present, then it will be appended automatically
