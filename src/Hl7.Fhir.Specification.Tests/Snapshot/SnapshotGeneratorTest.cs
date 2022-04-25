@@ -7525,6 +7525,74 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public async T.Task TestAbsoluteContentReferenceGeneration()
+        {
+            //prepare 
+            var zipSource = ZipSource.CreateValidationSource();
+            var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
+
+
+            // Test if core resource has relative content references.
+            var coreQuestionnaire = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var coreSnapshot = await generator.GenerateAsync(coreQuestionnaire);
+            coreSnapshot.Should().Contain(e => e.ContentReference == "#Questionnaire#Questionnaire.item");
+
+
+            //Create profile for testing creation of absolute references.
+            var profile = new StructureDefinition
+            {
+                Url = "http://firely-sdk.org/fhir/StructureDefinition/content-reference-check",
+                Status = PublicationStatus.Draft,
+                FhirVersion = "3.0.2",
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Questionnaire",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>
+                    {
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item",
+                            Path = "Questionnaire.item",
+                            Slicing = new ElementDefinition.SlicingComponent
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                                {
+                                    new ElementDefinition.DiscriminatorComponent
+                                    {
+                                        Type = ElementDefinition.DiscriminatorType.Value,
+                                        Path = "type"
+                                    }
+                                },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item:booleanItem",
+                            Path = "Questionnaire.item",
+                            SliceName = "booleanItem",
+                            Min = 1
+                        },
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item:booleanItem.type",
+                            Path = "Questionnaire.item.type",
+                            Fixed = new Code("boolean")
+                        }
+                    }
+                }
+            };
+
+            // test if profiles have absolute content references.
+            var profileSnapshot = await generator.GenerateAsync(profile);
+            profileSnapshot.Should().Contain(e => e.ContentReference == "http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
+        }
+
+        [TestMethod]
         public async T.Task DiscriminatorBaseElementWithExpansionTest()
         {
             var parentId = "Patient.address";
@@ -7534,14 +7602,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             var generator = new SnapshotGenerator(_testResolver, _settings);
             generator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
-                {
-                    e.Element.Should().NotBeNull();
+                    {
+                        e.Element.Should().NotBeNull();
 
-                    if (e.Element.Annotation<TestAnnotation>() != null)
-                        e.Element.RemoveAnnotations<TestAnnotation>();
+                        if (e.Element.Annotation<TestAnnotation>() != null)
+                            e.Element.RemoveAnnotations<TestAnnotation>();
 
-                    e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
-                };
+                        e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+                    };
 
             var elements = await generator.GenerateAsync(sd);
 
