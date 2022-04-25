@@ -9218,10 +9218,10 @@ namespace Hl7.Fhir.Specification.Tests
             var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
 
 
-            // Test if core resource has relative content references.
+            //Test if core resource has relative content references.
             var coreQuestionnaire = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             var coreSnapshot = await generator.GenerateAsync(coreQuestionnaire);
-            coreSnapshot.Should().Contain(e => e.ContentReference == "#Questionnaire#Questionnaire.item");
+            coreSnapshot.Should().Contain(e => e.ContentReference == "#Questionnaire.item");
 
 
             //Create profile for testing creation of absolute references.
@@ -9268,6 +9268,12 @@ namespace Hl7.Fhir.Specification.Tests
                             ElementId = "Questionnaire.item:booleanItem.type",
                             Path = "Questionnaire.item.type",
                             Fixed = new Code("boolean")
+                        },
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item:booleanItem.item.type",
+                            Path = "Questionnaire.item.item.type",
+                            Fixed = new Code("string")
                         }
                     }
                 }
@@ -9275,7 +9281,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             // test if profiles have absolute content references.
             var profileSnapshot = await generator.GenerateAsync(profile);
-            profileSnapshot.Should().Contain(e => e.ContentReference == "http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
+
+            var cref1 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item").FirstOrDefault();
+            cref1.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
+
+            var cref2 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item.item").FirstOrDefault();
+            cref2.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
+            // profileSnapshot.Should().Contain(e => e.ContentReference == "http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
         }
 
         [DataTestMethod]
