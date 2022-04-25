@@ -153,8 +153,10 @@ namespace Hl7.Fhir.Specification
                 return new[] { this };
             else if (Current.Current.ContentReference != null)
             {
+#pragma warning disable CS0618 // Type or member is obsolete
                 if (!Current.TryFollowContentReference(s => Resolver.FindStructureDefinition(s), out var reference))
                     throw new StructureDefinitionWalkerException($"The contentReference '{reference}' cannot be resolved.");
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 return new[] { new StructureDefinitionWalker(reference!, _resolver) };
             }
