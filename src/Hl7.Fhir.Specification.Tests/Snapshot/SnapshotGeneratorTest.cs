@@ -7535,7 +7535,8 @@ namespace Hl7.Fhir.Specification.Tests
             //Test if core resource has relative content references.
             var coreQuestionnaire = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Questionnaire");
             var coreSnapshot = await generator.GenerateAsync(coreQuestionnaire);
-            coreSnapshot.Should().Contain(e => e.ContentReference == "#Questionnaire.item");
+            var item = coreSnapshot.Where(e => e.Path == "Questionnaire.item.item").FirstOrDefault();
+            item.ContentReference.Should().Be("#Questionnaire.item");
 
 
             //Create profile for testing creation of absolute references.

@@ -399,6 +399,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20170424] Inherit existing base components, generate if missing
                 await ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false).ConfigureAwait(false);
 
+
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 snapshot.Element.RemoveAllConstrainedByDiffExtensions();
@@ -411,6 +412,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 nav = new ElementDefinitionNavigator(snapshot.Element, structure);
+
+
             }
             else
             {
@@ -418,6 +421,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var snapshot = new StructureDefinition.SnapshotComponent();
                 nav = new ElementDefinitionNavigator(snapshot.Element, structure);
             }
+
+
 
             // var nav = new ElementDefinitionNavigator(snapshot.Element);
 
@@ -879,6 +884,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Now, recursively merge the children
                 await merge(snap, diff).ConfigureAwait(false);
 
+                // [MS 20220425] Make sure newly added contentReferences (from bases, types, and contentReferences) are absolute.
+                // Except when the it's a core profile (Derivation is not a Constraint)
+                if (snap.StructureDefinition.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                    ensureAbsoluteContentReferences(snap, snap.StructureDefinition.BaseDefinition);
+
                 // [WMR 20160720] NEW
                 // generate [...]extension.url/fixedUri if missing
                 // Ewout: [...]extension.url may be missing from differential
@@ -887,6 +897,34 @@ namespace Hl7.Fhir.Specification.Snapshot
                 fixExtensionUrl(snap);
             }
         }
+
+        private static void ensureAbsoluteContentReferences(ElementDefinitionNavigator nav, string baseTypeUrl)
+        {
+            var bookmark = nav.Bookmark();
+
+            if (nav.MoveToFirstChild())
+            {
+                do
+                {
+                    if (!string.IsNullOrEmpty(nav.Current?.ContentReference))
+                        ensureAbsoluteContentReference(nav.Current?.ContentReferenceElement, baseTypeUrl);
+                }
+                while (nav.MoveToNext());
+            }
+
+            nav.ReturnToBookmark(bookmark);
+        }
+
+        private static void ensureAbsoluteContentReference(FhirUri contentReferenceElement, string baseTypeUrl)
+        {
+            if (contentReferenceElement.Value?.StartsWith("#") == true)
+            {
+                var contentRefBase = baseTypeUrl.StartsWith("http://") ? baseTypeUrl : ModelInfo.FhirCoreProfileBaseUri.ToString() + baseTypeUrl;
+                contentReferenceElement.Value = contentRefBase + contentReferenceElement.Value;
+            }
+        }
+
+
 
         // [WMR 20170105] New: determine wether to expand the current element
         // Notify client to allow overriding the default behavior
