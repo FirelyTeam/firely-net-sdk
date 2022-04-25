@@ -466,7 +466,9 @@ namespace Hl7.Fhir.Specification.Tests
             StructureDefinition resolver(string url)
             {
                 lastHit = url;
+#pragma warning disable CS0618 // Type or member is obsolete
                 return _source.FindStructureDefinition(url);
+#pragma warning restore CS0618 // Type or member is obsolete
             }
         }
 
