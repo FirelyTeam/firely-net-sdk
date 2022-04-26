@@ -1383,7 +1383,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CallsCallbacksHttpClient()
+        public void CallsCallbacksHttpClientHandler()
         {
             using (var handler = new HttpClientEventHandler())
             {
@@ -1428,6 +1428,94 @@ namespace Hl7.Fhir.Tests.Rest
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
                 using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
+                {
+                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+
+                    bool calledBefore = false;
+                    HttpStatusCode? status = null;
+                    byte[] body = null;
+                    byte[] bodyOut = null;
+
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        calledBefore = true;
+                        bodyOut = e.Body;
+                    };
+
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        body = e.Body;
+                        status = e.RawResponse.StatusCode;
+                    };
+
+                    var pat = client.Read<Patient>("Patient/" + patientId);
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(status);
+                    Assert.IsNotNull(body);
+
+                    var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+
+                    calledBefore = false;
+                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(bodyOut);
+
+                    bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                }
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void CallsCallbacksHttpClient()
+        {
+            using (var handler = new HttpClientEventHandler())
+            using (var httpClient = new HttpClient(handler))
+            {
+                using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
+                {
+                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+
+                    bool calledBefore = false;
+                    HttpStatusCode? status = null;
+                    byte[] body = null;
+                    byte[] bodyOut = null;
+
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        calledBefore = true;
+                        bodyOut = e.Body;
+                    };
+
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        body = e.Body;
+                        status = e.RawResponse.StatusCode;
+                    };
+
+                    var pat = client.Read<Patient>("Patient/" + patientId);
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(status);
+                    Assert.IsNotNull(body);
+
+                    var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+
+                    calledBefore = false;
+                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(bodyOut);
+
+                    bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                }
+
+                // And use another on the same handler to ensure that it wasn't disposed :O
+                using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
                 {
                     client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
