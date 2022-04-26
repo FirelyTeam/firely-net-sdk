@@ -6922,9 +6922,61 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("reference"));
         }
 
-        [TestMethod]
-        public async T.Task TestExpandBundleEntryResource()
+        /// <summary>
+        /// Test if a bundle entry resource is expanded.
+        /// </summary>
+        /// <param name="fhirType">The resource type to add to the test bundle.</param>
+        /// <param name="profileCanonical">Optional canonical for the profile (to be used with FHIRAllTypes.Resource).</param>
+        /// <param name="differentialElement">Optional element name to add to the differential (min = 1).</param>
+        /// <param name="alwaysExpand">Flag indicating if the bundle entry resource should always be expanded.</param>
+        [DataTestMethod]
+        [DataRow(FHIRAllTypes.Resource, "", "", false)]
+        [DataRow(FHIRAllTypes.Resource, "", "", true)]
+        [DataRow(FHIRAllTypes.Resource, "", "id", false)]
+        [DataRow(FHIRAllTypes.Resource, "", "id", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "orderedBy", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "orderedBy", true)]
+        [DataRow(FHIRAllTypes.List, "", "", false)]
+        [DataRow(FHIRAllTypes.List, "", "", true)]
+        [DataRow(FHIRAllTypes.List, "", "orderedBy", false)]
+        [DataRow(FHIRAllTypes.List, "", "orderedBy", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "gender", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "gender", true)]
+        [DataRow(FHIRAllTypes.Patient, "", "", false)]
+        [DataRow(FHIRAllTypes.Patient, "", "", true)]
+        [DataRow(FHIRAllTypes.Patient, "", "gender", false)]
+        [DataRow(FHIRAllTypes.Patient, "", "gender", true)]
+        public async T.Task TestExpandBundleEntryResource(FHIRAllTypes fhirType, string profileCanonical, string differentialElement, bool alwaysExpand)
         {
+            const string BundleEntryResource = "Bundle.entry.resource";
+
+            void OnBeforeExpandElement(object sender, SnapshotExpandElementEventArgs e)
+            {
+                if (e.Element.Path == BundleEntryResource)
+                {
+                    if (!string.IsNullOrEmpty(differentialElement))
+                    {
+                        Assert.IsTrue(e.MustExpand);
+                        Assert.IsTrue(e.HasChildren);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(e.MustExpand, e.HasChildren);
+                    }
+
+                    if (alwaysExpand)
+                        e.MustExpand = true;
+                }
+                else
+                {
+                    Assert.AreEqual(e.MustExpand, e.HasChildren);
+                }
+            }
+
             // Verify that the snapshot generator is capable of expanding Bundle.entry.resource,
             // if constrained to a resource type
 
@@ -6932,21 +6984,21 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Type = FHIRAllTypes.Bundle.GetLiteral(),
                 BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Bundle),
-                Name = "BundleWithList",
-                Url = @"http://example.org/fhir/StructureDefinition/BundleWithList",
-                //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Name = "BundleWithType",
+                Url = @"http://example.org/fhir/StructureDefinition/BundleWithType",
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,
                 Differential = new StructureDefinition.DifferentialComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
-                        new ElementDefinition("Bundle.entry.resource")
+                        new ElementDefinition(BundleEntryResource)
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
                                 new ElementDefinition.TypeRefComponent()
                                 {
-                                    Code = FHIRAllTypes.List.GetLiteral()
+                                    Code = fhirType.GetLiteral(),
+                                    ProfileElement = string.IsNullOrEmpty(profileCanonical) ? null : new List<Canonical> { new Canonical(profileCanonical) } 
                                 }
                             }
                         },
@@ -6954,27 +7006,31 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
+            if (!string.IsNullOrEmpty(differentialElement))
+                sd.Differential.Element.Add(new ElementDefinition($"{BundleEntryResource}.{differentialElement}") { Min = 1 });
+
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(resolver, _testResolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             Debug.Print("===== Prepare ===== ");
-            // Prepare standard snapshots for core Bundle & List
+            // Prepare standard snapshots for core Bundle & the specified fhir type
 
             var sdBundle = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Bundle);
             Assert.IsNotNull(sdBundle);
             await _generator.UpdateAsync(sdBundle);
             Assert.IsTrue(sdBundle.HasSnapshot);
 
-            var sdList = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.List);
-            Assert.IsNotNull(sdList);
-            await _generator.UpdateAsync(sdList);
-            Assert.IsTrue(sdList.HasSnapshot);
+            var sdType = await _testResolver.FindStructureDefinitionForCoreTypeAsync(fhirType);
+            Assert.IsNotNull(sdType);
+            await _generator.UpdateAsync(sdType);
+            Assert.IsTrue(sdType.HasSnapshot);
 
             Debug.Print("===== Generate ===== ");
             // Generate custom snapshot for Bundle profile
 
             _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += OnBeforeExpandElement;
             try
             {
                 var (_, expanded) = await generateSnapshotAndCompare(sd);
@@ -6988,34 +7044,38 @@ namespace Hl7.Fhir.Specification.Tests
 
                 var elems = expanded.Snapshot.Element;
 
-                // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
+                // The snapshot generator should fully expand resource children if the resource is different from
+                // the base resource or when we override the behaviour in the event BeforeExpandElement.
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                elems = await fullyExpand(elems, issues);
                 Assert.AreEqual(0, issues.Count);
 
-                // Verify that Bundle.entry.resource : List was properly expanded
-                var pos = elems.FindIndex(e => e.Path == "Bundle.entry.resource");
+                // Verify that Bundle.entry.resource : fhir type was properly expanded (or not)
+                var expectExpanded = !string.IsNullOrEmpty(differentialElement) || alwaysExpand;
+                var pos = elems.FindIndex(e => e.Path == BundleEntryResource);
                 Assert.AreNotEqual(-1, pos);
                 var elem = elems[pos];
-                Assert.AreEqual(FHIRAllTypes.List.GetLiteral(), elem.Type.FirstOrDefault()?.Code);
+                Assert.AreEqual(fhirType.GetLiteral(), elem.Type.FirstOrDefault()?.Code);
 
-                // Verify that expanded child elements of Bundle.entry.resource contains all the elements in List snapshot
-                // [WMR 20180115] Full expansion will add additional grand children, not present in defaut List snapshot
-                var listElems = sdList.Snapshot.Element;
+                // Verify that expanded child elements of Bundle.entry.resource
+                var listElems = sdType.Snapshot.Element;
                 for (int i = 1; i < listElems.Count; i++)
                 {
                     var listElem = listElems[i];
-                    var rebasedPath = ElementDefinitionNavigator.ReplacePathRoot(listElem.Path, "Bundle.entry.resource");
-                    // Verify that full Bundle expansion contains the default List snapshot element
+                    var rebasedPath = ElementDefinitionNavigator.ReplacePathRoot(listElem.Path, BundleEntryResource);
                     pos = elems.FindIndex(pos + 1, e => e.Path == rebasedPath);
-                    Assert.AreNotEqual(-1, pos);
+
+                    // Verify bundle entry resource expansion in snapshot
+                    if (expectExpanded)
+                        Assert.AreNotEqual(-1, pos); // Should contain element
+                    else
+                        Assert.AreEqual(-1, pos); // Should not contain element
                 }
             }
             finally
             {
+                _generator.BeforeExpandElement -= OnBeforeExpandElement;
                 _generator.PrepareElement -= elementHandler;
             }
-
         }
 
         // [WMR 20180115]
