@@ -67,9 +67,9 @@
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-input.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-expected.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-input.xml" />
+    <None Remove="TestData\validation\absolute-content-reference.xml" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
     <None Remove="TestData\CCDA_ANY.xml" />
-    <None Remove="TestData\validation\absolute-contentReference-stu3.xml" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
     <None Remove="TestData\CCDA_ANY.xml" />
     <None Remove="TestData\validation\StructureDefinition-sdc-questionnaireresponse.xml" />

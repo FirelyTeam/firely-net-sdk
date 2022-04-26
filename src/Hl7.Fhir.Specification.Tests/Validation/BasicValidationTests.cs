@@ -1417,7 +1417,7 @@ namespace Hl7.Fhir.Specification.Tests
                         {
                             new Questionnaire.ItemComponent()
                             {
-                                LinkId = "1",
+                                LinkId = "1.1",
                                 Type = Questionnaire.QuestionnaireItemType.String
                             }
                         }
