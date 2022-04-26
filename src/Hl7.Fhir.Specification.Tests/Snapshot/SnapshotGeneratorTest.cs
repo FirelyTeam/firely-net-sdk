@@ -6998,7 +6998,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 new ElementDefinition.TypeRefComponent()
                                 {
                                     Code = fhirType.GetLiteral(),
-                                    ProfileElement = string.IsNullOrEmpty(profileCanonical) ? null : new List<Canonical> { new Canonical(profileCanonical) } 
+                                    ProfileElement = string.IsNullOrEmpty(profileCanonical) ? null : new List<Canonical> { new Canonical(profileCanonical) }
                                 }
                             }
                         },
@@ -9230,7 +9230,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Url = "http://firely-sdk.org/fhir/StructureDefinition/content-reference-check",
                 Status = PublicationStatus.Draft,
-                FhirVersion = "3.0.2",
+                FhirVersion = FHIRVersion.N4_0_1,
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,
                 Abstract = false,
                 Type = "Questionnaire",
@@ -9288,7 +9288,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cref2 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item.item").FirstOrDefault();
             cref2.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
-            // profileSnapshot.Should().Contain(e => e.ContentReference == "http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
         }
 
         [DataTestMethod]
