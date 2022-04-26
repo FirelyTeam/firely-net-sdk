@@ -974,7 +974,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [MS 20220425] Make sure newly added contentReferences (from bases, types, and contentReferences) are absolute.
                 // Except when the it's a core profile (Derivation is not a Constraint)
                 if (snap.StructureDefinition.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                    ensureAbsoluteContentReferences(snap, snap.StructureDefinition.BaseDefinition);
+                    await ensureAbsoluteContentReferences(snap, snap.StructureDefinition.Type).ConfigureAwait(false);
+
 
                 // [WMR 20160720] NEW
                 // generate [...]extension.url/fixedUri if missing
@@ -985,7 +986,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             }
         }
 
-        private static void ensureAbsoluteContentReferences(ElementDefinitionNavigator nav, string baseTypeUrl)
+        private async T.Task ensureAbsoluteContentReferences(ElementDefinitionNavigator nav, string baseTypeUrl)
         {
             var bookmark = nav.Bookmark();
 
@@ -994,7 +995,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 do
                 {
                     if (!string.IsNullOrEmpty(nav.Current?.ContentReference))
-                        ensureAbsoluteContentReference(nav.Current?.ContentReferenceElement, baseTypeUrl);
+                        await ensureAbsoluteContentReference(nav.Current?.ContentReferenceElement, baseTypeUrl).ConfigureAwait(false);
                 }
                 while (nav.MoveToNext());
             }
@@ -1002,15 +1003,20 @@ namespace Hl7.Fhir.Specification.Snapshot
             nav.ReturnToBookmark(bookmark);
         }
 
-        private static void ensureAbsoluteContentReference(FhirUri contentReferenceElement, string baseTypeUrl)
+        private async T.Task ensureAbsoluteContentReference(FhirUri contentReferenceElement, string baseTypeUrl)
         {
             if (contentReferenceElement.Value?.StartsWith("#") == true)
             {
-                var contentRefBase = baseTypeUrl.StartsWith("http://") ? baseTypeUrl : ModelInfo.FhirCoreProfileBaseUri.ToString() + baseTypeUrl;
+                string contentRefBase = baseTypeUrl.StartsWith("http://") ? baseTypeUrl : await getCanonicalUrlFromCoreType(baseTypeUrl).ConfigureAwait(false);
                 contentReferenceElement.Value = contentRefBase + contentReferenceElement.Value;
             }
         }
 
+        private async T.Task<string> getCanonicalUrlFromCoreType(string baseTypeUrl)
+        {
+            var coreType = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(baseTypeUrl).ConfigureAwait(false);
+            return coreType.Url;
+        }
 
 
         // [WMR 20170105] New: determine wether to expand the current element
