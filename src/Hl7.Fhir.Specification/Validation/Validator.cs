@@ -137,12 +137,13 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
 
-            StructureDefinition profileResolutionNeeded(string canonical) =>
+        }
+        private StructureDefinition profileResolutionNeeded(string canonical) =>
                 //TODO: Need to make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
-        }
+
 
         internal OperationOutcome ValidateInternal(ITypedElement instance, ElementDefinitionNavigator definition, ValidationState state)
             => ValidateInternal(instance, new[] { definition }, state).RemoveDuplicateMessages();
@@ -159,7 +160,7 @@ namespace Hl7.Fhir.Validation
             {
                 var allDefinitions = definitions.ToList();
 
-                if (allDefinitions.Count() == 1)
+                if (allDefinitions.Count == 1)
                     outcome.Add(startValidation(allDefinitions.Single(), instance, state));
                 else
                 {
@@ -368,7 +369,7 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver.AsAsync());
             }
 
-            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
+            var vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
@@ -384,20 +385,19 @@ namespace Hl7.Fhir.Validation
         }
 
         internal OperationOutcome ValidateNameReference(
-            ElementDefinition definition,
-            ElementDefinitionNavigator allDefinitions,
+            ElementDefinition _,
+            ElementDefinitionNavigator profile,
             ScopedNode instance,
             ValidationState state)
         {
             var outcome = new OperationOutcome();
+            var definition = profile.Current;
 
-            if (definition.ContentReference != null)
+            if (profile.Current.ContentReference != null)
             {
                 Trace(outcome, "Start validation of constraints referred to by nameReference '{0}'".FormatWith(definition.ContentReference), Issue.PROCESSING_PROGRESS, instance);
 
-                var referencedPositionNav = allDefinitions.ShallowCopy();
-
-                if (referencedPositionNav.JumpToNameReference(definition.ContentReference))
+                if (profile.TryFollowContentReference(profileResolutionNeeded, out var referencedPositionNav))
                     outcome.Include(ValidateInternal(instance, referencedPositionNav, state));
                 else
                     Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.ContentReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
@@ -449,12 +449,8 @@ namespace Hl7.Fhir.Validation
                 : null;
         }
 
-        private string toStringRepresentation(ITypedElement vp)
-        {
-            return vp == null || vp.Value == null ?
-                null :
-                PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
-        }
+        private static string toStringRepresentation(ITypedElement vp) =>
+            vp?.Value == null ? null : PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
 
         internal ITypedElement ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {

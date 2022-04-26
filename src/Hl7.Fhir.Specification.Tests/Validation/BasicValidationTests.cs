@@ -1400,40 +1400,26 @@ namespace Hl7.Fhir.Specification.Tests
 
             var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = false });
 
-            var questionnaire = new QuestionnaireResponse()
+            var questionnaire = new Questionnaire()
             {
                 Meta = new Meta()
                 {
-                    Profile = new string[] { "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaireresponse" }
+                    Profile = new string[] { "https://firely-sdk.org/fhir/StructureDefinition/AbsoluteContentReference" }
                 },
-                Status = QuestionnaireResponse.QuestionnaireResponseStatus.Completed,
-                Authored = "2022",
-                Questionnaire = "Questionnaire/example",
-                Item = new List<QuestionnaireResponse.ItemComponent>
+                Status = PublicationStatus.Active,
+                Item = new List<Questionnaire.ItemComponent>
                 {
-                    new QuestionnaireResponse.ItemComponent()
+                    new Questionnaire.ItemComponent()
                     {
                         LinkId = "1",
-                        Answer = new List<QuestionnaireResponse.AnswerComponent>
+                        Type = Questionnaire.QuestionnaireItemType.Boolean,
+                        Item = new List<Questionnaire.ItemComponent>
                         {
-                            new QuestionnaireResponse.AnswerComponent
-                            {
-                                Value = new FhirString("This is a test answer")
-                            }
-                        },
-                        Item = new List<QuestionnaireResponse.ItemComponent>
-                        {
-                            new QuestionnaireResponse.ItemComponent()
+                            new Questionnaire.ItemComponent()
                             {
                                 LinkId = "1.1",
-                                Answer = new List<QuestionnaireResponse.AnswerComponent>
-                                {
-                                    new QuestionnaireResponse.AnswerComponent
-                                    {
-                                        Value = new FhirString("with a child test answer")
-                                    }
-                                },
-                            },
+                                Type = Questionnaire.QuestionnaireItemType.String
+                            }
                         }
                     }
                 }

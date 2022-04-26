@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindExtensionDefinitionAsync() instead.")]
         public static StructureDefinition FindExtensionDefinition(this IResourceResolver resolver, string uri)
         {
-            if (!(resolver.ResolveByCanonicalUri(uri) is StructureDefinition sd)) return null;
+            if (resolver.ResolveByCanonicalUri(uri) is not StructureDefinition sd) return null;
 
             if (!sd.IsExtension)
                 throw Error.Argument(nameof(uri), $"Found StructureDefinition at '{uri}', but is not an extension");
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns>Returns a StructureDefinition if it is resolvable and defines an extension, otherwise <c>null</c>.</returns>
         public static async T.Task<StructureDefinition> FindExtensionDefinitionAsync(this IAsyncResourceResolver resolver, string uri)
         {
-            if (!(await resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) is StructureDefinition sd)) return null;
+            if (await resolver.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) is not StructureDefinition sd) return null;
 
             if (!sd.IsExtension)
                 throw Error.Argument(nameof(uri), $"Found StructureDefinition at '{uri}', but is not an extension");
@@ -63,9 +63,7 @@ namespace Hl7.Fhir.Specification.Source
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
             var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfo.CanonicalUriForFhirCoreType(typename).Value;
-#pragma warning disable CS0618 // Type or member is obsolete
             return resolver.FindStructureDefinition(url);
-#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         /// <summary>
@@ -83,10 +81,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
-#pragma warning disable CS0618 // Type or member is obsolete
-            => resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
-#pragma warning restore CS0618 // Type or member is obsolete
+        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type) => resolver.FindStructureDefinitionForCoreType(ModelInfo.FhirTypeToFhirTypeName(type));
 
         /// <summary>
         /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.

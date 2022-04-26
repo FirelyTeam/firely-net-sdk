@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
   <Import Project="..\firely-net-sdk.props" />
   <Import Project="..\firely-net-sdk.targets" />
@@ -67,6 +67,7 @@
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-input.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-expected.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-input.xml" />
+    <None Remove="TestData\validation\absolute-contentReference-r4.xml" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
     <None Remove="TestData\CCDA_ANY.xml" />
     <None Remove="TestData\validation\StructureDefinition-sdc-questionnaireresponse.xml" />
