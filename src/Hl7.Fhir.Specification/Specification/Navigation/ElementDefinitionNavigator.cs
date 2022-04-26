@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
             for (int pos = 0; pos < Count; pos++)
             {
-                if (Elements[pos].ElementId == "#" + profileRef.ElementName)
+                if (Elements[pos].ElementId == profileRef.ElementName)
                 {
                     OrdinalPosition = pos;
                     return true;
