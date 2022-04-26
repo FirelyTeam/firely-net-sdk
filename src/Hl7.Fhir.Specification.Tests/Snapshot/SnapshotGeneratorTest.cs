@@ -7662,7 +7662,6 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cref2 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item.item").FirstOrDefault();
             cref2.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
-            // profileSnapshot.Should().Contain(e => e.ContentReference == "http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
         }
 
         [TestMethod]
