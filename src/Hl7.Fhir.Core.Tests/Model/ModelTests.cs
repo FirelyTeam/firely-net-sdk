@@ -6,17 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
+using Hl7.Fhir.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Text;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
 using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
-using Hl7.Fhir.Serialization;
-using FluentAssertions;
 
 namespace Hl7.Fhir.Tests.Model
 {
@@ -36,14 +32,14 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void OperationOutcomeLocation()
+        public void OperationOutcomeExpression()
         {
             OperationOutcome oo = new OperationOutcome();
             oo.Issue.Add(new OperationOutcome.IssueComponent()
             {
-                Location = new string[] { "yes" }
+                Expression = new string[] { "this" }
             });
-            Assert.AreEqual(1, oo.Issue[0].Location.Count());
+            Assert.AreEqual(1, oo.Issue[0].Expression.Count());
         }
 
         [TestMethod]
@@ -72,7 +68,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TestTryToDateTimeOffset()
         {
-            var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));           
+            var fdt = new FhirDateTime(new DateTimeOffset(2021, 3, 18, 12, 22, 35, 999, new TimeSpan(-4, 0, 0)));
             Assert.AreEqual("2021-03-18T12:22:35.999-04:00", fdt.Value);
 
             Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto1));
@@ -87,7 +83,7 @@ namespace Hl7.Fhir.Tests.Model
             fdt = new FhirDateTime("2021-03-18T12:22:35.999Z");
             Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto3));
             Assert.AreEqual("2021-03-18T12:22:35.9990000+00:00", dto3.ToString("o"));
-            
+
             fdt = new FhirDateTime("2021-03-18T12:22:35.1234+04:00");
             Assert.IsTrue(fdt.TryToDateTimeOffset(out var dto4));
             Assert.AreEqual("2021-03-18T12:22:35.1234000+04:00", dto4.ToString("o"));
@@ -100,7 +96,7 @@ namespace Hl7.Fhir.Tests.Model
         [TestMethod]
         public void TodayTests()
         {
-            var todayLocal = Date.Today(); 
+            var todayLocal = Date.Today();
             Assert.AreEqual(DateTimeOffset.Now.ToString("yyy-MM-dd"), todayLocal.Value);
 
             var todayUtc = Date.UtcToday();
@@ -135,7 +131,7 @@ namespace Hl7.Fhir.Tests.Model
                 var uriEncodedUrl = string.Format(urlFormat, Uri.EscapeDataString(param1), Uri.EscapeDataString(param2));
                 Assert.AreEqual(manuallyEncodedUrl, uriEncodedUrl);
                 var uri = new Uri(manuallyEncodedUrl, UriKind.RelativeOrAbsolute);
-                var bundle = new Bundle {SelfLink = uri};
+                var bundle = new Bundle { SelfLink = uri };
                 if (uri.IsAbsoluteUri)
                 {
                     Assert.AreEqual(uri.AbsoluteUri, bundle.SelfLink.AbsoluteUri);
@@ -454,7 +450,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsNull(ns.UrlElement);
 
             ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://nu.nl" });
-            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://dan.nl", Preferred=true });
+            ns.UniqueId.Add(new NamingSystem.UniqueIdComponent { Value = "http://dan.nl", Preferred = true });
 
             Assert.AreEqual("http://dan.nl", ns.Url);
             Assert.AreEqual("http://dan.nl", ns.UrlElement.Value);
@@ -621,7 +617,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
             Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0"));
             Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));            
+            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
         }
 
         [TestMethod]
