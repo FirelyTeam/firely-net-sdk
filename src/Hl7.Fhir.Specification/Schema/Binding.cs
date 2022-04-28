@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Specification.Schema
                 Coding coding = null, CodeableConcept cc = null, bool? abstractAllowed = null, string context = null)
         {
             try
-            {                
+            {
                 var parameters = new ValidateCodeParameters()
                     .WithValueSet(canonical)
                     .WithCode(code: code, system: system, display: display, context: context)
@@ -149,14 +149,19 @@ namespace Hl7.Fhir.Specification.Schema
 
 
                 var outcome = (await svc.ValueSetValidateCode(parameters).ConfigureAwait(false)).ToOperationOutcome();
-                foreach (var issue in outcome.Issue) issue.Location = new string[] { location };
+                foreach (var issue in outcome.Issue)
+                {
+                    issue.Expression = new string[] { location };
+                    // Location is deprecated, but we set this for backwards compatibility
+                    issue.Location = new string[] { location };
+                }
                 return outcome;
             }
             catch (FhirOperationException tse)
             {
-                string message = (cc?.Coding == null || cc.Coding.Count == 1) 
+                string message = (cc?.Coding == null || cc.Coding.Count == 1)
                     ? $"Terminology service failed while validating code '{code ?? coding?.Code ?? cc?.Coding[0]?.Code}' (system '{system ?? coding?.System ?? cc?.Coding[0]?.System}'): {tse.Message}"
-                    : $"Terminology service failed while validating the codes: {tse.Message}";            
+                    : $"Terminology service failed while validating the codes: {tse.Message}";
 
                 return Issue.TERMINOLOGY_SERVICE_FAILED
                         .NewOutcomeWithIssue(message, location);

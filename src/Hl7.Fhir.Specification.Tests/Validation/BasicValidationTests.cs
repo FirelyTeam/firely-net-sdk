@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.value"},
+                        Expression = new string[]{"active.value"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
