@@ -149,7 +149,12 @@ namespace Hl7.Fhir.Specification.Schema
 
 
                 var outcome = (await svc.ValueSetValidateCode(parameters).ConfigureAwait(false)).ToOperationOutcome();
-                foreach (var issue in outcome.Issue) issue.Expression = new string[] { location };
+                foreach (var issue in outcome.Issue)
+                {
+                    issue.Expression = new string[] { location };
+                    // Location is deprecated, but we set this for backwards compatibility
+                    issue.Location = new string[] { location };
+                }
                 return outcome;
             }
             catch (FhirOperationException tse)

@@ -195,7 +195,11 @@ namespace Hl7.Fhir.Validation
                 // Prefix each path with the referring resource's path to keep the locations
                 // interpretable
                 foreach (var issue in childResult.Issue)
+                {
                     issue.Expression = issue.Expression.Concat(new string[] { instance.Location });
+                    // Location is deprecated, but we set this for backwards compatibility
+                    issue.Location = issue.Expression.Concat(new string[] { instance.Location });
+                }
 
                 outcome.Include(childResult);
             }
