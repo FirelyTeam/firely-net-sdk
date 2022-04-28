@@ -33,14 +33,14 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void OperationOutcomeLocation()
+        public void OperationOutcomeExpression()
         {
             OperationOutcome oo = new OperationOutcome();
             oo.Issue.Add(new OperationOutcome.IssueComponent()
             {
-                Location = new string[] { "yes" }
+                Expression = new string[] { "this" }
             });
-            Assert.AreEqual(1, oo.Issue[0].Location.Count());
+            Assert.AreEqual(1, oo.Issue[0].Expression.Count());
         }
 
         [TestMethod]
