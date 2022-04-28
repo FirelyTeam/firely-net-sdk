@@ -137,12 +137,13 @@ namespace Hl7.Fhir.Validation
 
             return outcome;
 
-            StructureDefinition profileResolutionNeeded(string canonical) =>
+        }
+        private StructureDefinition profileResolutionNeeded(string canonical) =>
                 //TODO: Need to make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
-        }
+
 
         internal OperationOutcome ValidateInternal(ITypedElement instance, ElementDefinitionNavigator definition, ValidationState state)
             => ValidateInternal(instance, new[] { definition }, state).RemoveDuplicateMessages();
@@ -159,7 +160,7 @@ namespace Hl7.Fhir.Validation
             {
                 var allDefinitions = definitions.ToList();
 
-                if (allDefinitions.Count() == 1)
+                if (allDefinitions.Count == 1)
                     outcome.Add(startValidation(allDefinitions.Single(), instance, state));
                 else
                 {
@@ -280,7 +281,7 @@ namespace Hl7.Fhir.Validation
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
                 outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
-                outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
+                outcome.Add(this.validateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
                 outcome.Add(this.ValidateBinding(elementConstraints, instance, context));
 
                 // If the report only has partial information, no use to show the hierarchy, so flatten it.
@@ -296,7 +297,7 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private OperationOutcome ValidateExtension(IExtendable elementDef, ITypedElement instance, string uri)
+        private OperationOutcome validateExtension(IExtendable elementDef, ITypedElement instance, string uri)
         {
             var outcome = new OperationOutcome();
 
@@ -304,7 +305,7 @@ namespace Hl7.Fhir.Validation
             if (pattern != null)
             {
                 var regex = new Regex(pattern);
-                var value = toStringRepresentation(instance);
+                var value = Validator.toStringRepresentation(instance);
                 var success = Regex.Match(value, "^" + regex + "$").Success;
 
                 if (!success)
@@ -361,7 +362,7 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver.AsAsync());
             }
 
-            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
+            var vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
@@ -377,20 +378,19 @@ namespace Hl7.Fhir.Validation
         }
 
         internal OperationOutcome ValidateNameReference(
-            ElementDefinition definition,
-            ElementDefinitionNavigator allDefinitions,
+            ElementDefinition _,
+            ElementDefinitionNavigator profile,
             ScopedNode instance,
             ValidationState state)
         {
             var outcome = new OperationOutcome();
+            var definition = profile.Current;
 
-            if (definition.ContentReference != null)
+            if (profile.Current.ContentReference != null)
             {
                 Trace(outcome, "Start validation of constraints referred to by nameReference '{0}'".FormatWith(definition.ContentReference), Issue.PROCESSING_PROGRESS, instance);
 
-                var referencedPositionNav = allDefinitions.ShallowCopy();
-
-                if (referencedPositionNav.JumpToNameReference(definition.ContentReference))
+                if (profile.TryFollowContentReference(profileResolutionNeeded, out var referencedPositionNav))
                     outcome.Include(ValidateInternal(instance, referencedPositionNav, state));
                 else
                     Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.ContentReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
@@ -423,8 +423,8 @@ namespace Hl7.Fhir.Validation
             // type? Would it convert it to a .NET native type? How to check?
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
-            return definition.Type.Count() == 1
-                ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
+            return definition.Type.Count == 1
+                ? validateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
                 : outcome;
         }
 
@@ -471,12 +471,8 @@ namespace Hl7.Fhir.Validation
                 : null;
         }
 
-        private string toStringRepresentation(ITypedElement vp)
-        {
-            return vp == null || vp.Value == null ?
-                null :
-                PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
-        }
+        private static string toStringRepresentation(ITypedElement vp) =>
+            vp?.Value == null ? null : PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
 
         internal ITypedElement ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {
