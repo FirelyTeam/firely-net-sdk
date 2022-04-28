@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.value"},
+                        Expression = new string[]{"active.value"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -1389,6 +1389,46 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.True(0 == outcome.Warnings, $"Found {outcome.Warnings} warnings");
 
         }
+
+        [Fact]
+        public void ValidateAbsoluteContentReferences()
+        {
+            //prepare
+            var resolver = new MultiResolver(
+                                   new DirectorySource(@"TestData\validation"),
+                                   ZipSource.CreateValidationSource());
+
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = false });
+
+            var questionnaire = new Questionnaire()
+            {
+                Meta = new Meta()
+                {
+                    Profile = new string[] { "https://firely-sdk.org/fhir/StructureDefinition/AbsoluteContentReference" }
+                },
+                Status = PublicationStatus.Active,
+                Item = new List<Questionnaire.ItemComponent>
+                {
+                    new Questionnaire.ItemComponent()
+                    {
+                        LinkId = "1",
+                        Type = Questionnaire.QuestionnaireItemType.Boolean,
+                        Item = new List<Questionnaire.ItemComponent>
+                        {
+                            new Questionnaire.ItemComponent()
+                            {
+                                LinkId = "1.1",
+                                Type = Questionnaire.QuestionnaireItemType.String
+                            }
+                        }
+                    }
+                }
+            };
+
+            var outcome = validator.Validate(questionnaire);
+            Assert.True(outcome.Success);
+        }
+
 
         private class ClearSnapshotResolver : IResourceResolver
         {
