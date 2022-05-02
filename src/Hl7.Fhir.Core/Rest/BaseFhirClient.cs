@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Rest
                 if (!typedEntryResponse.IsSuccessful())
                 {
                     Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
-                    throw FhirOperationException.BuildFhirOperationException(code, response.Resource);
+                    throw FhirOperationException.BuildFhirOperationException(code, response.Resource, typedEntryResponse.GetBodyAsText());
                 }
 
             }
