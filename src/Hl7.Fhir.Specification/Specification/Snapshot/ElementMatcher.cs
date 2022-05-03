@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             if (isChoice)
             {
-                if (!TypeIsSubSetOf(diffNav, snapNav))
+                if (!typeIsSubSetOf(diffNav, snapNav))
                 {
                     // diff.Types is not a subset of snap.Types, which is not allowed
                     throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(ElementMatcher)}.{nameof(constructMatch)}): choice type of diff does not occur in snap, snap = '{snapNav.Path}', diff = '{diffNav.Path}'.");
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-        private static bool TypeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
+        private static bool typeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
             => !diffNav.Current.Type.Except(snapNav.Current.Type, new TypeRefEqualityComparer()).Any();
 
         private class TypeRefEqualityComparer : IEqualityComparer<ElementDefinition.TypeRefComponent>
@@ -704,7 +704,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Fixed default discriminator for slicing extension elements.</summary>
-        private static readonly string UrlDiscriminator = "url";
+        private static readonly string URLDISCRIMINATOR = "url";
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
         private static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Profile;
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         //static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
-        private static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator?.Path, UrlDiscriminator);
+        private static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => StringComparer.Ordinal.Equals(discriminator?.Path, URLDISCRIMINATOR);
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on (type and) profile
@@ -771,7 +771,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
         {
             var bm = nav.Bookmark();
-            var result = new List<string>();
 
             if (nav.MoveToFirstChild())
             {
@@ -833,7 +832,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += $" '{snapNav.Current.SliceName}'";
                 if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += $" '{diffNav.Current.SliceName}'";
 
-                Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+                Debug.WriteLine($"B:{bPos} <-- {match.Action} --> D:{dPos}");
             }
 
             snapNav.ReturnToBookmark(sbm);
@@ -858,7 +857,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (snapNav.Current != null && snapNav.Current.SliceName != null) bPos += $" '{snapNav.Current.SliceName}'";
             if (diffNav.Current != null && diffNav.Current.SliceName != null) dPos += $" '{diffNav.Current.SliceName}'";
 
-            Debug.WriteLine($"B:{bPos} <-- {match.Action.ToString()} --> D:{dPos}");
+            Debug.WriteLine($"B:{bPos} <-- {match.Action} --> D:{dPos}");
 
             snapNav.ReturnToBookmark(sbm);
             diffNav.ReturnToBookmark(dbm);

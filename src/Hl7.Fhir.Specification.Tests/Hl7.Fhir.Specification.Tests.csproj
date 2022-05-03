@@ -25,7 +25,7 @@
     <Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.tgz">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>  
+  </ItemGroup>
  
   <ItemGroup>
     <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\profiles-resources.xml">
