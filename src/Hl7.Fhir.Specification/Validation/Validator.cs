@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Validation
         private FhirPathCompiler _fpCompiler;
 
 #if REUSE_SNAPSHOT_GENERATOR
-        SnapshotGenerator _snapshotGenerator;
+        private SnapshotGenerator _snapshotGenerator;
 
         internal SnapshotGenerator SnapshotGenerator
         {
@@ -83,71 +83,85 @@ namespace Hl7.Fhir.Validation
             };
         }
 
-
         public OperationOutcome Validate(ITypedElement instance)
         {
-            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null).RemoveDuplicateMessages();
+            var state = new ValidationState();
+            var result = ValidateInternal(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null, state: state)
+                .RemoveDuplicateMessages();
+            result.SetAnnotation(state);
+            return result;
         }
 
-        public OperationOutcome Validate(ITypedElement instance, params string[] definitionUris)
-        {
-            return Validate(instance, (IEnumerable<string>)definitionUris).RemoveDuplicateMessages(); ;
-        }
+        public OperationOutcome Validate(ITypedElement instance, params string[] definitionUris) =>
+            Validate(instance, (IEnumerable<string>)definitionUris);
 
         public OperationOutcome Validate(ITypedElement instance, IEnumerable<string> definitionUris)
         {
-            return Validate(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null).RemoveDuplicateMessages(); ;
+            var state = new ValidationState();
+            var result = ValidateInternal(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null, state: state)
+                .RemoveDuplicateMessages();
+            result.SetAnnotation(state);
+            return result;
         }
 
-        public OperationOutcome Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions)
-        {
-            return Validate(instance, (IEnumerable<StructureDefinition>)structureDefinitions).RemoveDuplicateMessages();
-        }
+        public OperationOutcome Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) =>
+            Validate(instance, (IEnumerable<StructureDefinition>)structureDefinitions);
 
         public OperationOutcome Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return Validate(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: structureDefinitions).RemoveDuplicateMessages(); ;
+            var state = new ValidationState();
+            var result = ValidateInternal(
+                instance,
+                declaredTypeProfile: null,
+                statedCanonicals: null,
+                statedProfiles: structureDefinitions,
+                state: state).RemoveDuplicateMessages();
+            result.SetAnnotation(state);
+            return result;
         }
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
-        internal OperationOutcome Validate(ITypedElement instance, string declaredTypeProfile, IEnumerable<string> statedCanonicals, IEnumerable<StructureDefinition> statedProfiles)
+        internal OperationOutcome ValidateInternal(
+            ITypedElement instance,
+            string declaredTypeProfile,
+            IEnumerable<string> statedCanonicals,
+            IEnumerable<StructureDefinition> statedProfiles,
+            ValidationState state)
         {
             var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
             if (outcome.Success)
-                outcome.Add(Validate(instance, processor.Result));
+                outcome.Add(ValidateInternal(instance, processor.Result, state));
 
             return outcome;
 
-            StructureDefinition profileResolutionNeeded(string canonical) =>
+        }
+        private StructureDefinition profileResolutionNeeded(string canonical) =>
                 //TODO: Need to make everything async in 2.x validator
 #pragma warning disable CS0618 // Type or member is obsolete
                 Settings.ResourceResolver?.FindStructureDefinition(canonical);
 #pragma warning restore CS0618 // Type or member is obsolete
-        }
 
-        internal OperationOutcome Validate(ITypedElement instance, ElementDefinitionNavigator definition)
-        {
-            return Validate(instance, new[] { definition }).RemoveDuplicateMessages(); ;
-        }
+
+        internal OperationOutcome ValidateInternal(ITypedElement instance, ElementDefinitionNavigator definition, ValidationState state)
+            => ValidateInternal(instance, new[] { definition }, state).RemoveDuplicateMessages();
 
 
         // This is the one and only main internal entry point for all validations, which in its term
         // will call step 1 in the validator, the function validateElement
-        internal OperationOutcome Validate(ITypedElement elementNav, IEnumerable<ElementDefinitionNavigator> definitions)
+        internal OperationOutcome ValidateInternal(ITypedElement elementNav, IEnumerable<ElementDefinitionNavigator> definitions, ValidationState state)
         {
             var outcome = new OperationOutcome();
-
-            var instance = elementNav as ScopedNode ?? new ScopedNode(elementNav);
+            var instance = elementNav.ToScopedNode();
 
             try
             {
                 var allDefinitions = definitions.ToList();
 
-                if (allDefinitions.Count() == 1)
-                    outcome.Add(validateElement(allDefinitions.Single(), instance));
+                if (allDefinitions.Count == 1)
+                    outcome.Add(startValidation(allDefinitions.Single(), instance, state));
                 else
                 {
                     var validators = allDefinitions.Select(nav => createValidator(nav));
@@ -162,17 +176,36 @@ namespace Hl7.Fhir.Validation
             return outcome;
 
             Func<OperationOutcome> createValidator(ElementDefinitionNavigator nav) =>
-                () => validateElement(nav, instance);
+                () => startValidation(nav, instance, state);
 
         }
 
-        private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNode instance)
+        private OperationOutcome startValidation(ElementDefinitionNavigator definition, ScopedNode instance, ValidationState state)
+        {
+            // If we are starting a validation of a referenceable element (resource, contained resource, nested resource),
+            // make sure we keep track of it, so we can detect loops and avoid validating the same resource multiple times.
+            if (instance.AtResource && definition.AtRoot)
+            {
+                state.Global.ResourcesValidated.Increase();
+                var location = state.Instance.ExternalUrl is string extu
+                    ? extu + "#" + instance.Location
+                    : instance.Location;
+
+                return state.Instance.InternalValidations.Start(location, definition.StructureDefinition.Url,
+                    () => validateElement(definition, instance, state));
+            }
+            else
+            {
+                return validateElement(definition, instance, state);
+            }
+        }
+
+        private OperationOutcome validateElement(ElementDefinitionNavigator definition, ScopedNode instance, ValidationState state)
         {
             var outcome = new OperationOutcome();
 
             try
             {
-
                 // If navigator cannot be moved to content, there's really nothing to validate against.
                 if (definition.AtRoot && !definition.MoveToFirstChild())
                 {
@@ -217,13 +250,13 @@ namespace Hl7.Fhir.Validation
                         // TODO: Check whether this is even true when the <type> has a profile?
                         // Note: the snapshot is *not* exhaustive if the declared type is a base FHIR type (like Resource),
                         // in which case there may be additional children (verified in the next step)
-                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren));
+                        outcome.Add(this.ValidateChildConstraints(definition, instance, allowAdditionalChildren: allowAdditionalChildren, state));
 
                         // Special case: if we are located at a nested resource (i.e. contained or Bundle.entry.resource),
                         // we need to validate based on the actual type of the instance
                         if (isInlineChildren && elementConstraints.IsResourcePlaceholder())
                         {
-                            outcome.Add(this.ValidateType(elementConstraints, instance));
+                            outcome.Add(this.ValidateType(elementConstraints, instance, state));
                         }
                     }
 
@@ -232,8 +265,8 @@ namespace Hl7.Fhir.Validation
                         // No inline-children, so validation depends on the presence of a <type> or <contentReference>
                         if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
                         {
-                            outcome.Add(this.ValidateType(elementConstraints, instance));
-                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance));
+                            outcome.Add(this.ValidateType(elementConstraints, instance, state));
+                            outcome.Add(ValidateNameReference(elementConstraints, definition, instance, state));
                         }
                         else
                             Trace(outcome, "ElementDefinition has no child, nor does it specify a type or contentReference to validate the instance data against", Issue.PROFILE_ELEMENTDEF_CONTAINS_NO_TYPE_OR_NAMEREF, instance);
@@ -248,7 +281,7 @@ namespace Hl7.Fhir.Validation
                 outcome.Add(this.ValidateMinMaxValue(elementConstraints, instance));
                 outcome.Add(ValidateMaxLength(elementConstraints, instance));
                 outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
-                outcome.Add(this.ValidateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
+                outcome.Add(this.validateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
                 outcome.Add(this.ValidateBinding(elementConstraints, instance, context));
 
                 // If the report only has partial information, no use to show the hierarchy, so flatten it.
@@ -263,7 +296,8 @@ namespace Hl7.Fhir.Validation
             }
         }
 
-        private OperationOutcome ValidateExtension(IExtendable elementDef, ITypedElement instance, string uri)
+
+        private OperationOutcome validateExtension(IExtendable elementDef, ITypedElement instance, string uri)
         {
             var outcome = new OperationOutcome();
 
@@ -271,7 +305,7 @@ namespace Hl7.Fhir.Validation
             if (pattern != null)
             {
                 var regex = new Regex(pattern);
-                var value = toStringRepresentation(instance);
+                var value = Validator.toStringRepresentation(instance);
                 var success = Regex.Match(value, "^" + regex + "$").Success;
 
                 if (!success)
@@ -328,7 +362,7 @@ namespace Hl7.Fhir.Validation
                 ts = new LocalTerminologyService(Settings.ResourceResolver.AsAsync());
             }
 
-            ValidationContext vc = new ValidationContext() { TerminologyService = ts };
+            var vc = new ValidationContext() { TerminologyService = ts };
 
             try
             {
@@ -343,18 +377,21 @@ namespace Hl7.Fhir.Validation
             return outcome;
         }
 
-        internal OperationOutcome ValidateNameReference(ElementDefinition definition, ElementDefinitionNavigator allDefinitions, ScopedNode instance)
+        internal OperationOutcome ValidateNameReference(
+            ElementDefinition _,
+            ElementDefinitionNavigator profile,
+            ScopedNode instance,
+            ValidationState state)
         {
             var outcome = new OperationOutcome();
+            var definition = profile.Current;
 
-            if (definition.ContentReference != null)
+            if (profile.Current.ContentReference != null)
             {
                 Trace(outcome, "Start validation of constraints referred to by nameReference '{0}'".FormatWith(definition.ContentReference), Issue.PROCESSING_PROGRESS, instance);
 
-                var referencedPositionNav = allDefinitions.ShallowCopy();
-
-                if (referencedPositionNav.JumpToNameReference(definition.ContentReference))
-                    outcome.Include(Validate(instance, referencedPositionNav));
+                if (profile.TryFollowContentReference(profileResolutionNeeded, out var referencedPositionNav))
+                    outcome.Include(ValidateInternal(instance, referencedPositionNav, state));
                 else
                     Trace(outcome, $"ElementDefinition uses a non-existing nameReference '{definition.ContentReference}'", Issue.PROFILE_ELEMENTDEF_INVALID_NAMEREFERENCE, instance);
 
@@ -386,8 +423,8 @@ namespace Hl7.Fhir.Validation
             // type? Would it convert it to a .NET native type? How to check?
 
             // The spec has no regexes for the primitives mentioned below, so don't check them
-            return definition.Type.Count() == 1
-                ? ValidateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
+            return definition.Type.Count == 1
+                ? validateExtension(definition.Type.Single(), instance, "http://hl7.org/fhir/StructureDefinition/structuredefinition-regex")
                 : outcome;
         }
 
@@ -434,12 +471,8 @@ namespace Hl7.Fhir.Validation
                 : null;
         }
 
-        private string toStringRepresentation(ITypedElement vp)
-        {
-            return vp == null || vp.Value == null ?
-                null :
-                PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
-        }
+        private static string toStringRepresentation(ITypedElement vp) =>
+            vp?.Value == null ? null : PrimitiveTypeConverter.ConvertTo<string>(vp.Value);
 
         internal ITypedElement ExternalReferenceResolutionNeeded(string reference, OperationOutcome outcome, string path)
         {

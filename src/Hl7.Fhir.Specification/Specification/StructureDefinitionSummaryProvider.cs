@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Specification
             _definition = nav.Current;
             Order = nav.OrdinalPosition.Value;     // cannot be null, since nav.Current != null
 
-            string noChoiceSuffix(string n) => n.EndsWith("[x]") ? n.Substring(0, n.Length - 3) : n;
+            static string noChoiceSuffix(string n) => n.EndsWith("[x]") ? n.Substring(0, n.Length - 3) : n;
         }
 
         private static ITypeSerializationInfo[] buildTypes(ElementDefinitionNavigator nav)
@@ -186,6 +186,9 @@ namespace Hl7.Fhir.Specification
             {
                 var reference = nav.ShallowCopy();
                 var name = nav.Current.ContentReference;
+
+                // Note that these contentReferences MAY be absolute urls in profiles, but since this provider works on the
+                // core SDs only, we do not have to take this into account.
                 if (!reference.JumpToNameReference(name))
                     throw Error.InvalidOperation($"StructureDefinition '{nav?.StructureDefinition?.Url}' " +
                         $"has a namereference '{name}' on element '{nav.Current.Path}' that cannot be resolved.");
@@ -213,21 +216,15 @@ namespace Hl7.Fhir.Specification
             {
                 if (!_definition.Representation.Any()) return XmlRepresentation.XmlElement;
 
-                switch (_definition.Representation.First())
+                return _definition.Representation.First() switch
                 {
-                    case ElementDefinition.PropertyRepresentation.XmlAttr:
-                        return XmlRepresentation.XmlAttr;
-                    case ElementDefinition.PropertyRepresentation.XmlText:
-                        return XmlRepresentation.XmlText;
-                    case ElementDefinition.PropertyRepresentation.TypeAttr:
-                        return XmlRepresentation.TypeAttr;
-                    case ElementDefinition.PropertyRepresentation.CdaText:
-                        return XmlRepresentation.CdaText;
-                    case ElementDefinition.PropertyRepresentation.Xhtml:
-                        return XmlRepresentation.XHtml;
-                    default:
-                        return XmlRepresentation.XmlElement;
-                }
+                    ElementDefinition.PropertyRepresentation.XmlAttr => XmlRepresentation.XmlAttr,
+                    ElementDefinition.PropertyRepresentation.XmlText => XmlRepresentation.XmlText,
+                    ElementDefinition.PropertyRepresentation.TypeAttr => XmlRepresentation.TypeAttr,
+                    ElementDefinition.PropertyRepresentation.CdaText => XmlRepresentation.CdaText,
+                    ElementDefinition.PropertyRepresentation.Xhtml => XmlRepresentation.XHtml,
+                    _ => XmlRepresentation.XmlElement,
+                };
             }
         }
 
