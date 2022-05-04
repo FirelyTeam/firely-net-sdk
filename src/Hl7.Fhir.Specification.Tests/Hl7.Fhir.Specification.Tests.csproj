@@ -61,8 +61,12 @@
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-1-input.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-expected.xml" />
     <None Remove="TestData\snapshot-test\Type Slicing\pattern-ext-2-input.xml" />
+    <None Remove="TestData\validation\absolute-content-reference.xml" />
     <None Remove="TestData\validation\obs-with-sliced-value.xml" />
     <None Remove="TestData\CCDA_ANY.xml" />
+    <None Remove="TestData\validation\obs-with-sliced-value.xml" />
+    <None Remove="TestData\CCDA_ANY.xml" />
+    <None Remove="TestData\validation\StructureDefinition-sdc-questionnaireresponse.xml" />
   </ItemGroup>  
  
   <ItemGroup>
@@ -74,6 +78,18 @@
     </Content>
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>  
+ 
+  <ItemGroup>
+    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-max0-Patient.StructureDefinition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-minMax1-Patient.StructureDefinition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="TestData\snapshot-test\Issue-1981\Issue-1981-noMax- Patient.StructureDefinition.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>  
 

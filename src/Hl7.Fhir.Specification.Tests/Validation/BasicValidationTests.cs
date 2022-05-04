@@ -23,7 +23,7 @@ using T = System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Tests
 {
     [Trait("Category", "Validation")]
-    public class BasicValidationTests : IClassFixture<ValidationFixture>
+    public partial class BasicValidationTests : IClassFixture<ValidationFixture>
     {
         private readonly IResourceResolver _source;
         private readonly IAsyncResourceResolver _asyncSource;
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.value"},
+                        Expression = new string[]{"active.value"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Specification.Tests
                     },
                     new OperationOutcome.IssueComponent
                     {
-                        Location = new string[]{"active.extension"},
+                        Expression = new string[]{"active.extension"},
                         Severity = OperationOutcome.IssueSeverity.Error,
                         Details = new CodeableConcept
                         {
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source =
                     new MultiResolver(
                         new DirectorySource(@"TestData\validation"),
-                        new ZipSource("specification.zip"));
+                        ZipSource.CreateValidationSource());
 
             var ctx = new ValidationSettings()
             {
@@ -1061,7 +1061,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // new DirectorySource(Path.Combine("TestData", "validation")),
                         // new TestProfileArtifactSource(),
                         memResolver,
-                        new ZipSource("specification.zip"))));
+                        ZipSource.CreateValidationSource())));
 
             var ctx = new ValidationSettings()
             {
@@ -1129,7 +1129,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new BasicValidationTests.BundleExampleResolver(@"TestData\validation"),
                     new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
-                    new ZipSource("specification.zip")));
+                    ZipSource.CreateValidationSource()));
 
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
@@ -1392,24 +1392,45 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
-        class VisitResolver : IResourceResolver
+        [Fact]
+        public void ValidateAbsoluteContentReferences()
         {
-            private List<string> _visits = new List<string>();
+            //prepare
+            var resolver = new MultiResolver(
+                                   new DirectorySource(@"TestData\validation"),
+                                   ZipSource.CreateValidationSource());
 
-            public Resource ResolveByCanonicalUri(string uri)
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = false });
+
+            var questionnaire = new Questionnaire()
             {
-                _visits.Add(uri);
-                return null;
-            }
+                Meta = new Meta()
+                {
+                    Profile = new string[] { "https://firely-sdk.org/fhir/StructureDefinition/AbsoluteContentReference" }
+                },
+                Status = PublicationStatus.Active,
+                Item = new List<Questionnaire.ItemComponent>
+                {
+                    new Questionnaire.ItemComponent()
+                    {
+                        LinkId = "1",
+                        Type = Questionnaire.QuestionnaireItemType.Boolean,
+                        Item = new List<Questionnaire.ItemComponent>
+                        {
+                            new Questionnaire.ItemComponent()
+                            {
+                                LinkId = "1.1",
+                                Type = Questionnaire.QuestionnaireItemType.String
+                            }
+                        }
+                    }
+                }
+            };
 
-            public Resource ResolveByUri(string uri)
-            {
-                _visits.Add(uri);
-                return null;
-            }
-
-            internal bool Visited(string uri) => _visits.Contains(uri);
+            var outcome = validator.Validate(questionnaire);
+            Assert.True(outcome.Success);
         }
+
 
         private class ClearSnapshotResolver : IResourceResolver
         {
