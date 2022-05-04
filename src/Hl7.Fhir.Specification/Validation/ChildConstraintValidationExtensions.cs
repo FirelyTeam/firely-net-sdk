@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
     internal static class ChildConstraintValidationExtensions
     {
         internal static OperationOutcome ValidateChildConstraints(this Validator validator, ElementDefinitionNavigator definition,
-            ScopedNode instance, bool allowAdditionalChildren)
+            ScopedNode instance, bool allowAdditionalChildren, ValidationState state)
         {
             var outcome = new OperationOutcome();
             if (!definition.HasChildren) return outcome;
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Validation
             validator.Trace(outcome, "Start validation of inlined child constraints for '{0}'".FormatWith(definition.Path), Issue.PROCESSING_PROGRESS, instance);
 
             // validate the type on the parent of children. If this is a reference type, it will follow that reference as well
-            outcome.Add(validator.ValidateTypeReferences(definition.Current.Type, instance, validateProfiles: false));
+            outcome.Add(validator.ValidateTypeReferences(definition.Current.Type, instance, state, validateProfiles: false));
 
             var matchResult = ChildNameMatcher.Match(definition, instance);
 
@@ -49,13 +49,13 @@ namespace Hl7.Fhir.Validation
             // Recursively validate my children
             foreach (var match in matchResult.Matches)
             {
-                outcome.Add(validator.validateMatch(match, instance));
+                outcome.Add(validator.validateMatch(match, instance, state));
             }
 
             return outcome;
         }
 
-        private static OperationOutcome validateMatch(this Validator validator, Match match, ScopedNode parent)
+        private static OperationOutcome validateMatch(this Validator validator, Match match, ScopedNode parent, ValidationState state)
         {
             var outcome = new OperationOutcome();
 
@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Validation
 
             try
             {
-                bucket = BucketFactory.CreateRoot(match.Definition, resolver, validator);
+                bucket = BucketFactory.CreateRoot(match.Definition, resolver, validator, state);
             }
             catch (NotImplementedException ni)
             {
