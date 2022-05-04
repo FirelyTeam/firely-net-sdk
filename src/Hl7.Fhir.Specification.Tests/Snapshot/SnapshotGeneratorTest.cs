@@ -32,7 +32,6 @@ using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -57,8 +56,7 @@ namespace Hl7.Fhir.Specification.Tests
         private ZipSource _zipSource;
         private CachedResolver _testResolver;
         private TimingSource _source;
-
-        private readonly SnapshotGeneratorSettings _settings = new SnapshotGeneratorSettings()
+        private readonly SnapshotGeneratorSettings _settings = new()
         {
             // Throw on unresolved profile references; must include in TestData folder
             GenerateSnapshotForExternalProfiles = true,
@@ -78,11 +76,11 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170810] Order is important!
             // Specify source first to override core defs from
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
-            _zipSource = new ZipSource("specification.zip");
+            _zipSource = ZipSource.CreateValidationSource();
             _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
         }
 
-        private StructureDefinition CreateStructureDefinition(string url, params ElementDefinition[] elements)
+        private StructureDefinition createStructureDefinition(string url, params ElementDefinition[] elements)
         {
             return new StructureDefinition
             {
@@ -99,28 +97,67 @@ namespace Hl7.Fhir.Specification.Tests
             };
         }
 
-        [TestMethod]
-        public void TestMergeMax()
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, "1", "1")]
+        [DataRow("1", null, "1")]
+        [DataRow("1", "1", "1")]
+        [DataRow("1", "*", "1")]
+        [DataRow("2", "*", "2")]
+        [DataRow("*", "*", "*")]
+        [DataRow("*", "2", "2")]
+        [DataRow("*", null, "*")]
+        [DataRow(null, "*", "*")]
+        [DataRow("3", "2", "2")]
+        [DataRow("2", "3", "2")]
+        public void TestMergeMax(string snap, string diff, string expected)
         {
             var sg = new SnapshotGenerator.ElementDefnMerger();
 
-            test(null, "1", "1");
-            test("1", null, "1");
-            test("1", "1", "1");
-            test("1", "*", "1");
-            test("2", "*", "2");
-            test("*", "*", "*");
-            test("*", "2", "2");
-            test("*", null, "*");
-            test(null, "*", "*");
-            test("3", "2", "2");
-            test("2", "3", "2");
+            var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
+            Assert.AreEqual(expected, actual.Value);
+        }
 
-            void test(string snap, string diff, string expected)
-            {
-                var actual = sg.mergeMax(new FhirString(snap), new FhirString(diff));
-                Assert.AreEqual(expected, actual.Value);
-            }
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, "1", "1")]
+        [DataRow(null, "2", "2")]
+        [DataRow(null, "3", "3")]
+        [DataRow(null, "*", "*")]
+        [DataRow(0, null, "0")]
+        [DataRow(0, "1", "1")]
+        [DataRow(0, "2", "2")]
+        [DataRow(0, "3", "3")]
+        [DataRow(0, "*", "*")]
+        [DataRow(2, null, "2")]
+        [DataRow(2, "1", "2")]
+        [DataRow(2, "2", "2")]
+        [DataRow(2, "3", "3")]
+        [DataRow(2, "*", "*")]
+        [DataRow(4, null, "4")]
+        [DataRow(4, "1", "4")]
+        [DataRow(4, "2", "4")]
+        [DataRow(4, "3", "4")]
+        [DataRow(4, "*", "*")]
+        public void TestConstrainMax(int? snapMin, string snapMax, string expected)
+        {
+            var actual = SnapshotGenerator.ElementDefnMerger.constrainMax(new FhirString(snapMax), new UnsignedInt(snapMin));
+            Assert.AreEqual(expected, actual.Value);
+        }
+
+        [DataTestMethod]
+        [DataRow(null, null, null)]
+        [DataRow(null, 1, 1)]
+        [DataRow(1, null, 1)]
+        [DataRow(1, 2, 2)]
+        [DataRow(2, 1, 2)]
+        [DataRow(1, 1, 1)]
+        public void TestMergeMin(int? snap, int? diff, int? expected)
+        {
+            var sg = new SnapshotGenerator.ElementDefnMerger();
+
+            var actual = sg.mergeMin(new UnsignedInt(snap), new UnsignedInt(diff));
+            Assert.AreEqual(expected, actual.Value);
         }
 
         [TestMethod]
@@ -130,7 +167,7 @@ namespace Hl7.Fhir.Specification.Tests
             var code = "someCode";
             var discriminatorPath = "system";
 
-            var baseSD = CreateStructureDefinition(baseCanonical,
+            var baseSD = createStructureDefinition(baseCanonical,
                 new ElementDefinition
                 {
                     Path = "Practitioner.identifier",
@@ -158,7 +195,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 });
 
-            var derivedSD = CreateStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
+            var derivedSD = createStructureDefinition("http://yourdomain.org/fhir/StructureDefinition/Derived",
                 new ElementDefinition
                 {
                     Path = "Practitioner.identifier",
@@ -1691,7 +1728,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Conditional("DEBUG")]
         private void dumpIssue(OperationOutcome.IssueComponent issue, int index)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.AppendFormat("* Issue #{0}: Severity = '{1}' Code = '{2}'", index, issue.Severity, issue.Code);
             if (issue.Details != null)
             {
@@ -2220,7 +2257,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20170714] NEW
         // Annotated Base Element for backbone elements is not included in base structuredefinition ?
 
-        private static StructureDefinition MyTestObservation => new StructureDefinition()
+        private static StructureDefinition MyTestObservation => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -2713,7 +2750,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         private struct ProfileInfo { public string Url; public string BaseDefinition; }
 
-        async T.Task expandStructuresBasedOn(IAsyncResourceResolver resolver, ProfileInfo[] profileInfo, string baseUrl)
+        private async T.Task expandStructuresBasedOn(IAsyncResourceResolver resolver, ProfileInfo[] profileInfo, string baseUrl)
         {
             var derivedStructures = profileInfo.Where(pi => pi.BaseDefinition == baseUrl);
             if (derivedStructures.Any())
@@ -2729,7 +2766,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        async T.Task updateSnapshot(StructureDefinition sd)
+        private async T.Task updateSnapshot(StructureDefinition sd)
         {
             Assert.IsNotNull(sd);
             Debug.Print("Profile: '{0}' : '{1}'".FormatWith(sd.Url, sd.BaseDefinition));
@@ -3042,7 +3079,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Ewout: type slices cannot contain renamed elements!
-        private static StructureDefinition ObservationTypeSliceProfile => new StructureDefinition()
+        private static StructureDefinition ObservationTypeSliceProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -3205,7 +3242,7 @@ namespace Hl7.Fhir.Specification.Tests
             assertIssue(outcome.Issue[0], Issue.UNAVAILABLE_REFERENCED_PROFILE, profile.BaseDefinition);
         }
 
-        private static StructureDefinition ObservationTypeResliceProfile => new StructureDefinition()
+        private static StructureDefinition ObservationTypeResliceProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ObservationTypeSliceProfile.Url,
@@ -3301,7 +3338,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Choice type constraint, with element renaming
-        private static StructureDefinition ObservationTypeConstraintProfile => new StructureDefinition()
+        private static StructureDefinition ObservationTypeConstraintProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -4142,7 +4179,7 @@ namespace Hl7.Fhir.Specification.Tests
         // - Patient.identifier:B/2               => Patient.identifier:B in MyPatient
         // - Patient.identifier:C                 => Patient.identifier in MyPatient
 
-        private static StructureDefinition SlicedPatientProfile => new StructureDefinition()
+        private static StructureDefinition SlicedPatientProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -4260,7 +4297,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("2", nav.Current.Max);
         }
 
-        private static StructureDefinition NationalPatientProfile => new StructureDefinition()
+        private static StructureDefinition NationalPatientProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -4283,7 +4320,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
-        private static StructureDefinition SlicedNationalPatientProfile => new StructureDefinition()
+        private static StructureDefinition SlicedNationalPatientProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = NationalPatientProfile.Url,
@@ -4478,7 +4515,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
         }
 
-        private static StructureDefinition ReslicedNationalPatientProfile => new StructureDefinition()
+        private static StructureDefinition ReslicedNationalPatientProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = NationalPatientProfile.Url,
@@ -4893,7 +4930,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Ewout: type slices cannot contain renamed elements!
 
-        static StructureDefinition PatientNonTypeSliceProfile => new StructureDefinition()
+        private static StructureDefinition PatientNonTypeSliceProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -4938,7 +4975,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // Ewout: type slices cannot contain renamed elements!
-        private static StructureDefinition ObservationSimpleQuantityProfile => new StructureDefinition()
+        private static StructureDefinition ObservationSimpleQuantityProfile => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -5122,7 +5159,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170424] For debugging ElementIdGenerator
 
-        private static StructureDefinition TestQuestionnaireProfile => new StructureDefinition()
+        private static StructureDefinition TestQuestionnaireProfile => new()
         {
             Type = FHIRAllTypes.Questionnaire.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Questionnaire),
@@ -5308,7 +5345,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
-        private static StructureDefinition TestPatientTypeSliceProfile => new StructureDefinition()
+        private static StructureDefinition TestPatientTypeSliceProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -5376,7 +5413,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170616] NEW - Test custom element IDs
 
-        private static StructureDefinition TestSlicedPatientWithCustomIdProfile => new StructureDefinition()
+        private static StructureDefinition TestSlicedPatientWithCustomIdProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -5638,7 +5675,7 @@ namespace Hl7.Fhir.Specification.Tests
         private const string PatientIdentifierTypeValueSetUri = @"http://example.org/fhir/ValueSet/PatientIdentifierTypeValueSet";
 
         // Identifier profile with valueset binding on child element Identifier.type
-        private static StructureDefinition PatientIdentifierProfile => new StructureDefinition()
+        private static StructureDefinition PatientIdentifierProfile => new()
         {
             Type = FHIRAllTypes.Identifier.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier),
@@ -5665,7 +5702,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Patient profile with type profile constraint on Patient.identifier
         // Snapshot should pick up the valueset binding on Identifier.type
-        private static StructureDefinition PatientProfileWithIdentifierProfile => new StructureDefinition()
+        private static StructureDefinition PatientProfileWithIdentifierProfile => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -5728,7 +5765,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsFalse(nav.MoveToChild("type"));
         }
 
-        private static StructureDefinition QuestionnaireResponseWithSlice => new StructureDefinition()
+        private static StructureDefinition QuestionnaireResponseWithSlice => new()
         {
             Type = FHIRAllTypes.QuestionnaireResponse.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.QuestionnaireResponse),
@@ -5834,7 +5871,7 @@ namespace Hl7.Fhir.Specification.Tests
         // When expanding MyVitalSigns, the annotated base elements also include local diff constraints... WRONG!
         // As a result, Forge will not detect the existing local constraints (no yellow pen, excluded from output).
 
-        private static StructureDefinition MyDerivedObservation => new StructureDefinition()
+        private static StructureDefinition MyDerivedObservation => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
@@ -5898,7 +5935,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(coreMethodElem.Short, baseElem.Short);
         }
 
-        private static StructureDefinition MyMoreDerivedObservation => new StructureDefinition()
+        private static StructureDefinition MyMoreDerivedObservation => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = MyDerivedObservation.Url,
@@ -5982,7 +6019,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20170718] Test for slicing issue
-        private static StructureDefinition MySlicedDocumentReference => new StructureDefinition()
+        private static StructureDefinition MySlicedDocumentReference => new()
         {
             Type = FHIRAllTypes.Observation.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DocumentReference),
@@ -6077,7 +6114,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20170718] NEW
         // Accept and handle derived profile constraints on existing slice entry in base profile
 
-        private static StructureDefinition MySlicedBasePatient => new StructureDefinition()
+        private static StructureDefinition MySlicedBasePatient => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -6104,7 +6141,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
-        private static StructureDefinition MyMoreDerivedPatient => new StructureDefinition()
+        private static StructureDefinition MyMoreDerivedPatient => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = MySlicedBasePatient.Url,
@@ -6204,7 +6241,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
+        private static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
         {
             Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
@@ -6280,7 +6317,7 @@ namespace Hl7.Fhir.Specification.Tests
         private const string SL_HumanNameTitleSuffixUri = @"http://example.org/fhir/StructureDefinition/SL-HumanNameTitleSuffix";
 
         // Extension on complex datatype HumanName
-        private static StructureDefinition SL_HumanNameTitleSuffix => new StructureDefinition()
+        private static StructureDefinition SL_HumanNameTitleSuffix => new()
         {
             Type = FHIRAllTypes.Extension.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
@@ -6313,7 +6350,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         // Profile on complex datatype HumanName with extension element
-        private static StructureDefinition SL_HumanNameBasis => new StructureDefinition()
+        private static StructureDefinition SL_HumanNameBasis => new()
         {
             Type = FHIRAllTypes.HumanName.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.HumanName),
@@ -6343,7 +6380,7 @@ namespace Hl7.Fhir.Specification.Tests
         };
 
         // Profile on Patient referencing custom HumanName datatype profile
-        private static StructureDefinition SL_PatientBasis => new StructureDefinition()
+        private static StructureDefinition SL_PatientBasis => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
@@ -6370,11 +6407,10 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
-
         private const string SL_NameSuffixValueSetUri = @"http://fhir.de/ValueSet/deuev/anlage-7-namenszusaetze";
 
         // Derived profile on Patient
-        private static StructureDefinition SL_PatientDerived => new StructureDefinition()
+        private static StructureDefinition SL_PatientDerived => new()
         {
             Type = FHIRAllTypes.Patient.GetLiteral(),
             BaseDefinition = SL_PatientBasis.Url,
@@ -6892,9 +6928,61 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.MoveToChild("reference"));
         }
 
-        [TestMethod]
-        public async T.Task TestExpandBundleEntryResource()
+        /// <summary>
+        /// Test if a bundle entry resource is expanded.
+        /// </summary>
+        /// <param name="fhirType">The resource type to add to the test bundle.</param>
+        /// <param name="profileCanonical">Optional canonical for the profile (to be used with FHIRAllTypes.Resource).</param>
+        /// <param name="differentialElement">Optional element name to add to the differential (min = 1).</param>
+        /// <param name="alwaysExpand">Flag indicating if the bundle entry resource should always be expanded.</param>
+        [DataTestMethod]
+        [DataRow(FHIRAllTypes.Resource, "", "", false)]
+        [DataRow(FHIRAllTypes.Resource, "", "", true)]
+        [DataRow(FHIRAllTypes.Resource, "", "id", false)]
+        [DataRow(FHIRAllTypes.Resource, "", "id", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "orderedBy", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/List", "orderedBy", true)]
+        [DataRow(FHIRAllTypes.List, "", "", false)]
+        [DataRow(FHIRAllTypes.List, "", "", true)]
+        [DataRow(FHIRAllTypes.List, "", "orderedBy", false)]
+        [DataRow(FHIRAllTypes.List, "", "orderedBy", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "", true)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "gender", false)]
+        [DataRow(FHIRAllTypes.Resource, "http://hl7.org/fhir/StructureDefinition/Patient", "gender", true)]
+        [DataRow(FHIRAllTypes.Patient, "", "", false)]
+        [DataRow(FHIRAllTypes.Patient, "", "", true)]
+        [DataRow(FHIRAllTypes.Patient, "", "gender", false)]
+        [DataRow(FHIRAllTypes.Patient, "", "gender", true)]
+        public async T.Task TestExpandBundleEntryResource(FHIRAllTypes fhirType, string profileCanonical, string differentialElement, bool alwaysExpand)
         {
+            const string BundleEntryResource = "Bundle.entry.resource";
+
+            void OnBeforeExpandElement(object sender, SnapshotExpandElementEventArgs e)
+            {
+                if (e.Element.Path == BundleEntryResource)
+                {
+                    if (!string.IsNullOrEmpty(differentialElement))
+                    {
+                        Assert.IsTrue(e.MustExpand);
+                        Assert.IsTrue(e.HasChildren);
+                    }
+                    else
+                    {
+                        Assert.AreEqual(e.MustExpand, e.HasChildren);
+                    }
+
+                    if (alwaysExpand)
+                        e.MustExpand = true;
+                }
+                else
+                {
+                    Assert.AreEqual(e.MustExpand, e.HasChildren);
+                }
+            }
+
             // Verify that the snapshot generator is capable of expanding Bundle.entry.resource,
             // if constrained to a resource type
 
@@ -6902,21 +6990,21 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Type = FHIRAllTypes.Bundle.GetLiteral(),
                 BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Bundle),
-                Name = "BundleWithList",
-                Url = @"http://example.org/fhir/StructureDefinition/BundleWithList",
-                //Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Name = "BundleWithType",
+                Url = @"http://example.org/fhir/StructureDefinition/BundleWithType",
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,
                 Differential = new StructureDefinition.DifferentialComponent()
                 {
                     Element = new List<ElementDefinition>()
                     {
-                        new ElementDefinition("Bundle.entry.resource")
+                        new ElementDefinition(BundleEntryResource)
                         {
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
                                 new ElementDefinition.TypeRefComponent()
                                 {
-                                    Code = FHIRAllTypes.List.GetLiteral()
+                                    Code = fhirType.GetLiteral(),
+                                    ProfileElement = string.IsNullOrEmpty(profileCanonical) ? null : new List<Canonical> { new Canonical(profileCanonical) }
                                 }
                             }
                         },
@@ -6924,27 +7012,31 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
+            if (!string.IsNullOrEmpty(differentialElement))
+                sd.Differential.Element.Add(new ElementDefinition($"{BundleEntryResource}.{differentialElement}") { Min = 1 });
+
             var resolver = new InMemoryProfileResolver(sd);
             var multiResolver = new MultiResolver(resolver, _testResolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             Debug.Print("===== Prepare ===== ");
-            // Prepare standard snapshots for core Bundle & List
+            // Prepare standard snapshots for core Bundle & the specified fhir type
 
             var sdBundle = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Bundle);
             Assert.IsNotNull(sdBundle);
             await _generator.UpdateAsync(sdBundle);
             Assert.IsTrue(sdBundle.HasSnapshot);
 
-            var sdList = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.List);
-            Assert.IsNotNull(sdList);
-            await _generator.UpdateAsync(sdList);
-            Assert.IsTrue(sdList.HasSnapshot);
+            var sdType = await _testResolver.FindStructureDefinitionForCoreTypeAsync(fhirType);
+            Assert.IsNotNull(sdType);
+            await _generator.UpdateAsync(sdType);
+            Assert.IsTrue(sdType.HasSnapshot);
 
             Debug.Print("===== Generate ===== ");
             // Generate custom snapshot for Bundle profile
 
             _generator.PrepareElement += elementHandler;
+            _generator.BeforeExpandElement += OnBeforeExpandElement;
             try
             {
                 var (_, expanded) = await generateSnapshotAndCompare(sd);
@@ -6958,34 +7050,38 @@ namespace Hl7.Fhir.Specification.Tests
 
                 var elems = expanded.Snapshot.Element;
 
-                // [WMR 20180115] NEW - Use alternative (iterative) approach for full expansion
+                // The snapshot generator should fully expand resource children if the resource is different from
+                // the base resource or when we override the behaviour in the event BeforeExpandElement.
                 var issues = _generator.Outcome?.Issue ?? new List<OperationOutcome.IssueComponent>();
-                elems = await fullyExpand(elems, issues);
                 Assert.AreEqual(0, issues.Count);
 
-                // Verify that Bundle.entry.resource : List was properly expanded
-                var pos = elems.FindIndex(e => e.Path == "Bundle.entry.resource");
+                // Verify that Bundle.entry.resource : fhir type was properly expanded (or not)
+                var expectExpanded = !string.IsNullOrEmpty(differentialElement) || alwaysExpand;
+                var pos = elems.FindIndex(e => e.Path == BundleEntryResource);
                 Assert.AreNotEqual(-1, pos);
                 var elem = elems[pos];
-                Assert.AreEqual(FHIRAllTypes.List.GetLiteral(), elem.Type.FirstOrDefault()?.Code);
+                Assert.AreEqual(fhirType.GetLiteral(), elem.Type.FirstOrDefault()?.Code);
 
-                // Verify that expanded child elements of Bundle.entry.resource contains all the elements in List snapshot
-                // [WMR 20180115] Full expansion will add additional grand children, not present in defaut List snapshot
-                var listElems = sdList.Snapshot.Element;
+                // Verify that expanded child elements of Bundle.entry.resource
+                var listElems = sdType.Snapshot.Element;
                 for (int i = 1; i < listElems.Count; i++)
                 {
                     var listElem = listElems[i];
-                    var rebasedPath = ElementDefinitionNavigator.ReplacePathRoot(listElem.Path, "Bundle.entry.resource");
-                    // Verify that full Bundle expansion contains the default List snapshot element
+                    var rebasedPath = ElementDefinitionNavigator.ReplacePathRoot(listElem.Path, BundleEntryResource);
                     pos = elems.FindIndex(pos + 1, e => e.Path == rebasedPath);
-                    Assert.AreNotEqual(-1, pos);
+
+                    // Verify bundle entry resource expansion in snapshot
+                    if (expectExpanded)
+                        Assert.AreNotEqual(-1, pos); // Should contain element
+                    else
+                        Assert.AreEqual(-1, pos); // Should not contain element
                 }
             }
             finally
             {
+                _generator.BeforeExpandElement -= OnBeforeExpandElement;
                 _generator.PrepareElement -= elementHandler;
             }
-
         }
 
         // [WMR 20180115]
@@ -7218,7 +7314,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20180410] Add unit tests for content references
 
-        public StructureDefinition QuestionnaireWithNestedItems = new StructureDefinition()
+        public StructureDefinition QuestionnaireWithNestedItems = new()
         {
             Type = FHIRAllTypes.Questionnaire.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Questionnaire),
@@ -7707,7 +7803,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // #827: Verify that derived profiles inherit extensions on value element of primitive types
 
-            var src = new Fhir.Validation.TestProfileArtifactSource();
+            var src = new TestProfileArtifactSource();
             var testResolver = new CachedResolver(
                 new MultiResolver(
                     _zipSource, //new ZipSource("specification.zip"),
@@ -8694,7 +8790,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestExtensionUrlFixedValueComplex()
         {
-            StructureDefinition ComplexTestExtension = new StructureDefinition()
+            StructureDefinition ComplexTestExtension = new()
             {
                 Type = FHIRAllTypes.Extension.GetLiteral(),
                 BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension),
@@ -9012,14 +9108,15 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task SnapshotSucceedsWithExtendedVariantElementDef()
         {
-            var structureDef = new StructureDefinition();
-            structureDef.BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation";
-            structureDef.Type = "Observation";
-            structureDef.Url = "http://some.canonical";
-
-            structureDef.Differential = new StructureDefinition.DifferentialComponent
+            var structureDef = new StructureDefinition
             {
-                Element = new System.Collections.Generic.List<ElementDefinition>{
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation",
+                Type = "Observation",
+                Url = "http://some.canonical",
+
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new System.Collections.Generic.List<ElementDefinition>{
                     new ElementDefinition
                     {
                         ElementId = "Observation.value[x].extension",
@@ -9054,6 +9151,7 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     }
+                }
                 }
             };
 
@@ -9119,6 +9217,86 @@ namespace Hl7.Fhir.Specification.Tests
             sutCode.Min.Should().Be(sdCode.Min);
         }
 
+        [TestMethod]
+        public async T.Task TestAbsoluteContentReferenceGeneration()
+        {
+            //prepare 
+            var zipSource = ZipSource.CreateValidationSource();
+            var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
+
+
+            //Test if core resource has relative content references.
+            var coreQuestionnaire = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Questionnaire");
+            var coreSnapshot = await generator.GenerateAsync(coreQuestionnaire);
+            var item = coreSnapshot.Where(e => e.Path == "Questionnaire.item.item").FirstOrDefault();
+            item.ContentReference.Should().Be("#Questionnaire.item");
+
+
+            //Create profile for testing creation of absolute references.
+            var profile = new StructureDefinition
+            {
+                Url = "http://firely-sdk.org/fhir/StructureDefinition/content-reference-check",
+                Status = PublicationStatus.Draft,
+                FhirVersion = FHIRVersion.N4_0_1,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Questionnaire",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Questionnaire",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent
+                {
+                    Element = new List<ElementDefinition>
+                    {
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item",
+                            Path = "Questionnaire.item",
+                            Slicing = new ElementDefinition.SlicingComponent
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                                {
+                                    new ElementDefinition.DiscriminatorComponent
+                                    {
+                                        Type = ElementDefinition.DiscriminatorType.Value,
+                                        Path = "type"
+                                    }
+                                },
+                                Rules = ElementDefinition.SlicingRules.Open
+                            }
+                        },
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item:booleanItem",
+                            Path = "Questionnaire.item",
+                            SliceName = "booleanItem",
+                            Min = 1
+                        },
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item:booleanItem.type",
+                            Path = "Questionnaire.item.type",
+                            Fixed = new Code("boolean")
+                        },
+                        new ElementDefinition
+                        {
+                            ElementId = "Questionnaire.item:booleanItem.item.type",
+                            Path = "Questionnaire.item.item.type",
+                            Fixed = new Code("string")
+                        }
+                    }
+                }
+            };
+
+            // test if profiles have absolute content references.
+            var profileSnapshot = await generator.GenerateAsync(profile);
+
+            var cref1 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item").FirstOrDefault();
+            cref1.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
+
+            var cref2 = profileSnapshot.Where(e => e.ElementId == "Questionnaire.item:booleanItem.item.item").FirstOrDefault();
+            cref2.ContentReference.Should().Be("http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item");
+        }
+
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
@@ -9158,6 +9336,143 @@ namespace Hl7.Fhir.Specification.Tests
 
             elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = new[] { @"http://example.org/fhir/StructureDefinition/MyObservation" } });
             Assert.IsNull(elem.CommonTypeCode());
+        }
+
+        /// <summary>
+        /// Test cases that have non corrected values:
+        /// [N1] Max lt Min
+        /// Test cases that have corrected values:
+        /// [C1] Max diff: * -> take Max snap: 1
+        /// [C2] Min diff lte snap -> take Min snap: 1
+        /// </summary>
+        [TestMethod]
+        [DataRow("TestExtension01", null, null, 0, "1", 0, "1")]
+        [DataRow("TestExtension01", null, "0", 0, "0", 0, "1")]
+        [DataRow("TestExtension01", null, "1", 0, "1", 0, "1")]
+        [DataRow("TestExtension01", null, "*", 0, "1", 0, "1")] // [C1]
+        [DataRow("TestExtension01", 0, null, 0, "1", 0, "1")]
+        [DataRow("TestExtension01", 0, "0", 0, "0", 0, "1")]
+        [DataRow("TestExtension01", 0, "1", 0, "1", 0, "1")]
+        [DataRow("TestExtension01", 0, "*", 0, "1", 0, "1")] // [C1]
+        [DataRow("TestExtension01", 1, null, 1, "1", 0, "1")]
+        [DataRow("TestExtension01", 1, "0", 1, "0", 0, "1")] // [N1]
+        [DataRow("TestExtension01", 1, "1", 1, "1", 0, "1")]
+        [DataRow("TestExtension01", 1, "*", 1, "1", 0, "1")] // [C1]
+
+        [DataRow("TestExtension11", null, null, 1, "1", 1, "1")]
+        [DataRow("TestExtension11", null, "0", 1, "0", 1, "1")] // [N1]
+        [DataRow("TestExtension11", null, "1", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", null, "*", 1, "1", 1, "1")] // [C1]
+        [DataRow("TestExtension11", 0, null, 1, "1", 1, "1")] // [C2]
+        [DataRow("TestExtension11", 0, "0", 1, "0", 1, "1")] // [C2][N1]
+        [DataRow("TestExtension11", 0, "1", 1, "1", 1, "1")] // [C2]
+        [DataRow("TestExtension11", 0, "*", 1, "1", 1, "1")] // [C2][C1]
+        [DataRow("TestExtension11", 1, null, 1, "1", 1, "1")]
+        [DataRow("TestExtension11", 1, "0", 1, "0", 1, "1")] // [N1]
+        [DataRow("TestExtension11", 1, "1", 1, "1", 1, "1")]
+        [DataRow("TestExtension11", 1, "*", 1, "1", 1, "1")] // [C1]
+
+        [DataRow("TestExtension0star", null, null, 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", null, "0", 0, "0", 0, "*")]
+        [DataRow("TestExtension0star", null, "1", 0, "1", 0, "*")]
+        [DataRow("TestExtension0star", null, "2", 0, "2", 0, "*")]
+        [DataRow("TestExtension0star", null, "*", 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", 0, null, 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", 0, "0", 0, "0", 0, "*")]
+        [DataRow("TestExtension0star", 0, "1", 0, "1", 0, "*")]
+        [DataRow("TestExtension0star", 0, "2", 0, "2", 0, "*")]
+        [DataRow("TestExtension0star", 0, "*", 0, "*", 0, "*")]
+        [DataRow("TestExtension0star", 1, null, 1, "*", 0, "*")]
+        [DataRow("TestExtension0star", 1, "0", 1, "0", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 1, "1", 1, "1", 0, "*")]
+        [DataRow("TestExtension0star", 1, "2", 1, "2", 0, "*")]
+        [DataRow("TestExtension0star", 1, "*", 1, "*", 0, "*")]
+        [DataRow("TestExtension0star", 2, null, 2, "*", 0, "*")]
+        [DataRow("TestExtension0star", 2, "0", 2, "0", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 2, "1", 2, "1", 0, "*")] // [N1]
+        [DataRow("TestExtension0star", 2, "2", 2, "2", 0, "*")]
+        [DataRow("TestExtension0star", 2, "*", 2, "*", 0, "*")]
+
+        [DataRow("TestExtension1star", null, null, 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", null, "0", 1, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", null, "1", 1, "1", 1, "*")]
+        [DataRow("TestExtension1star", null, "2", 1, "2", 1, "*")]
+        [DataRow("TestExtension1star", null, "*", 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 0, null, 1, "*", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "0", 1, "0", 1, "*")] // [C2][N1]
+        [DataRow("TestExtension1star", 0, "1", 1, "1", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "2", 1, "2", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 0, "*", 1, "*", 1, "*")] // [C2]
+        [DataRow("TestExtension1star", 1, null, 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 1, "0", 1, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 1, "1", 1, "1", 1, "*")]
+        [DataRow("TestExtension1star", 1, "2", 1, "2", 1, "*")]
+        [DataRow("TestExtension1star", 1, "*", 1, "*", 1, "*")]
+        [DataRow("TestExtension1star", 2, null, 2, "*", 1, "*")]
+        [DataRow("TestExtension1star", 2, "0", 2, "0", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 2, "1", 2, "1", 1, "*")] // [N1]
+        [DataRow("TestExtension1star", 2, "2", 2, "2", 1, "*")]
+        [DataRow("TestExtension1star", 2, "*", 2, "*", 1, "*")]
+        public async T.Task CardinalityOfExtension(string extension, int? diffMin, string diffMax, int extMin, string extMax, int baseMin, string baseMax)
+        {
+            // Arrange
+            string url = $"https://example.org/fhir/StructureDefinition/issue-1981-patient";
+            string parentId = "Patient.extension";
+            string elementId = "Patient.extension:test";
+
+            var sd = await _testResolver.FindStructureDefinitionAsync(url);
+
+            sd.Differential.Element.Should().HaveCount(2);
+
+            var extensionElement = sd.Differential.Element.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min = diffMin;
+            extensionElement.Max = diffMax;
+            extensionElement.Type[0].ProfileElement[0].Value = $"https://example.org/fhir/StructureDefinition/{extension}";
+
+            var snapshotGenerator = new SnapshotGenerator(_testResolver, _settings);
+
+            snapshotGenerator.PrepareElement += delegate (object _, SnapshotElementEventArgs e)
+            {
+                e.Element.Should().NotBeNull();
+
+                if (e.Element.Annotation<TestAnnotation>() != null)
+                    e.Element.RemoveAnnotations<TestAnnotation>();
+
+                e.Element.AddAnnotation(new TestAnnotation(e.BaseStructure, e.BaseElement));
+            };
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            snapshotGenerator.Outcome.Should().BeNull();
+
+            var parentElement = elements.Single(x => x.ElementId == parentId);
+
+            // Act
+            var elementsExpanded = await snapshotGenerator.ExpandElementAsync(elements, parentElement);
+
+            // Assert
+            extensionElement = elementsExpanded.Single(x => x.ElementId == elementId);
+
+            extensionElement.Min.Should().Be(extMin);
+            extensionElement.Max.Should().Be(extMax);
+
+            var baseElement = extensionElement.Annotation<TestAnnotation>().BaseElementDefinition;
+
+            baseElement.Min.Should().Be(baseMin);
+            baseElement.Max.Should().Be(baseMax);
+        }
+
+        private sealed class TestAnnotation
+        {
+            public TestAnnotation(StructureDefinition baseStructure, ElementDefinition baseElemDef)
+            {
+                BaseStructureDefinition = baseStructure;
+                BaseElementDefinition = baseElemDef;
+            }
+
+            public StructureDefinition BaseStructureDefinition { get; }
+            public ElementDefinition BaseElementDefinition { get; }
         }
     }
 }
