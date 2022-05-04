@@ -242,5 +242,36 @@ namespace Hl7.Fhir.Core.Tests.Rest
         {
             Task<HttpResponseMessage> SendAsync(HttpRequestMessage message, CancellationToken token);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(FhirOperationException))]
+        public async System.Threading.Tasks.Task TestUnauthorizedWithANonFhirJsonBody()
+        {
+            var mock = new Mock<HttpMessageHandler>();
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                Content = new StringContent(@"{""foo"": ""bar"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient?name=henry")
+            };
+
+            var authValue = AuthenticationHeaderValue.Parse("foo");
+            response.RequestMessage.Headers.Authorization = authValue;
+
+            mock
+             .Protected()
+                     .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
+                        "SendAsync",
+                        ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/Patient?name=henry")),
+                        ItExpr.IsAny<CancellationToken>())
+                     .ReturnsAsync(response);
+
+            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+            client.RequestHeaders.Authorization = authValue;
+
+            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+
+
+        }
     }
 }
