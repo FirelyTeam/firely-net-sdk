@@ -16,6 +16,7 @@ trigger:
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
+- group: CodeSigning
 - template: build-variables.yml
 - template: pipeline-variables.yml
   
@@ -71,7 +72,7 @@ stages:
       inputs:
         command: build
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration $(buildConfiguration) --no-restore
+        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
 
     - task: DotNetCoreCLI@2
       displayName: Create Test artifacts
@@ -118,6 +119,13 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
+
+    - template: codesign-nuget-packages.yml@templates
+      parameters:
+        certificateValue: $(FirelyCodeSignerCertificate)
+        certificatePasswordValue: $(CodeSigningPassword)
+        packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
+
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:

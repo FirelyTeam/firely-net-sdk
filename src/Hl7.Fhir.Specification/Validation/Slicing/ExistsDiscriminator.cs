@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Validation
 
         public string Path { get; }
 
-        public bool Matches(ITypedElement candidate)
+        public bool Matches(ITypedElement candidate, ValidationState _)
         {
             ITypedElement[] values = candidate.Select(Path).ToArray();
 

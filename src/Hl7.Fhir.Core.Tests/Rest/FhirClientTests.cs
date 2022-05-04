@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
         public static Uri testEndpoint = new Uri("https://server.fire.ly/r4");
 
-        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir"); 
+        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
         public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("https://vonk.fire.ly/r3");
 
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Tests.Rest
 		public void ReadRelativeAsyncWebClient()
 		{
 			FhirClient client = new FhirClient(testEndpoint);
-            testRelativeAsyncClient(client);			
+            testRelativeAsyncClient(client);
 		}
 
         [TestMethod, TestCategory("FhirClient")]
@@ -627,13 +627,13 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.Entry.Count <= 10);
 
-                var withSubject = 
+                var withSubject =
                     result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Resource.Subject != null);
                 Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
 
                 ResourceIdentity ri = new ResourceIdentity(withSubject.Id);
 
-                result = client.SearchByIdAsync<DiagnosticReport>(ri.Id, 
+                result = client.SearchByIdAsync<DiagnosticReport>(ri.Id,
                             includes: new string[] { "DiagnosticReport.subject" }).Result;
                 Assert.IsNotNull(result);
 
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Tests.Rest
                 Name = "Furore",
                 Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
                 Telecom = new List<ContactPoint> { new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Value = "+31-20-3467171" } }
-            };          
+            };
 
             var fe = client.CreateAsync<Organization>(furore).Result;
 
@@ -968,9 +968,9 @@ namespace Hl7.Fhir.Tests.Rest
             var fe2 = client.UpdateAsync(fe).Result;
 
             Assert.IsNotNull(fe2);
-            Assert.AreEqual(fe.Id, fe2.Id);        
+            Assert.AreEqual(fe.Id, fe2.Id);
 
-         
+
 
             fe.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
             var fe3 = client.UpdateAsync(fe2).Result;
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         /// <summary>
-        /// This test will fail if the system records AuditEvents 
+        /// This test will fail if the system records AuditEvents
         /// and counts them in the WholeSystemHistory
         /// </summary>
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
@@ -1007,7 +1007,7 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         /// <summary>
-        /// This test will fail if the system records AuditEvents 
+        /// This test will fail if the system records AuditEvents
         /// and counts them in the WholeSystemHistory
         /// </summary>
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
@@ -1041,7 +1041,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5. 
+            Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -1230,8 +1230,8 @@ namespace Hl7.Fhir.Tests.Rest
         [Obsolete]
         public void TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentException()
         {
-            // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed. 
-            // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the 
+            // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed.
+            // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the
             // name part of the parameters to be unique.
             // Fixed by using IEnumerable<KeyValuePair<string, string>> instead of Dictionary<string, string>
             var client = new LegacyFhirClient(testEndpoint);
@@ -1243,8 +1243,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentExceptionHttpClient()
         {
-            // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed. 
-            // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the 
+            // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed.
+            // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the
             // name part of the parameters to be unique.
             // Fixed by using IEnumerable<KeyValuePair<string, string>> instead of Dictionary<string, string>
             var client = new FhirClient(testEndpoint);
@@ -1394,46 +1394,176 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public void CallsCallbacksHttpClientHandler()
+        {
+            using (var handler = new HttpClientEventHandler())
+            {
+                using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
+                {
+                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+
+                    bool calledBefore = false;
+                    HttpStatusCode? status = null;
+                    byte[] body = null;
+                    byte[] bodyOut = null;
+
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        calledBefore = true;
+                        bodyOut = e.Body;
+                    };
+
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        body = e.Body;
+                        status = e.RawResponse.StatusCode;
+                    };
+
+                    var pat = client.Read<Patient>("Patient/" + patientId);
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(status);
+                    Assert.IsNotNull(body);
+
+                    var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+
+                    calledBefore = false;
+                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(bodyOut);
+
+                    bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                }
+
+                // And use another on the same handler to ensure that it wasn't disposed :O
+                using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
+                {
+                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
+
+                    bool calledBefore = false;
+                    HttpStatusCode? status = null;
+                    byte[] body = null;
+                    byte[] bodyOut = null;
+
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        calledBefore = true;
+                        bodyOut = e.Body;
+                    };
+
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        body = e.Body;
+                        status = e.RawResponse.StatusCode;
+                    };
+
+                    var pat = client.Read<Patient>("Patient/" + patientId);
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(status);
+                    Assert.IsNotNull(body);
+
+                    var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+
+                    calledBefore = false;
+                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(bodyOut);
+
+                    bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                }
+            }
+        }
+
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CallsCallbacksHttpClient()
         {
             using (var handler = new HttpClientEventHandler())
-            using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
+            using (var httpClient = new HttpClient(handler))
             {
-                client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
-
-                bool calledBefore = false;
-                HttpStatusCode? status = null;
-                byte[] body = null;
-                byte[] bodyOut = null;
-
-                handler.OnBeforeRequest += (sender, e) =>
+                using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
                 {
-                    calledBefore = true;
-                    bodyOut = e.Body;
-                };
+                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
-                handler.OnAfterResponse += (sender, e) =>
+                    bool calledBefore = false;
+                    HttpStatusCode? status = null;
+                    byte[] body = null;
+                    byte[] bodyOut = null;
+
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        calledBefore = true;
+                        bodyOut = e.Body;
+                    };
+
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        body = e.Body;
+                        status = e.RawResponse.StatusCode;
+                    };
+
+                    var pat = client.Read<Patient>("Patient/" + patientId);
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(status);
+                    Assert.IsNotNull(body);
+
+                    var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+
+                    calledBefore = false;
+                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(bodyOut);
+
+                    bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                }
+
+                // And use another on the same handler to ensure that it wasn't disposed :O
+                using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
                 {
-                    body = e.Body;
-                    status = e.RawResponse.StatusCode;
-                };
+                    client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
-                var pat = client.Read<Patient>("Patient/" + patientId);
-                Assert.IsTrue(calledBefore);
-                Assert.IsNotNull(status);
-                Assert.IsNotNull(body);
+                    bool calledBefore = false;
+                    HttpStatusCode? status = null;
+                    byte[] body = null;
+                    byte[] bodyOut = null;
 
-                var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    handler.OnBeforeRequest += (sender, e) =>
+                    {
+                        calledBefore = true;
+                        bodyOut = e.Body;
+                    };
 
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                    handler.OnAfterResponse += (sender, e) =>
+                    {
+                        body = e.Body;
+                        status = e.RawResponse.StatusCode;
+                    };
 
-                calledBefore = false;
-                client.Update(pat); // create cannot be called with an ID (which was retrieved)
-                Assert.IsTrue(calledBefore);
-                Assert.IsNotNull(bodyOut);
+                    var pat = client.Read<Patient>("Patient/" + patientId);
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(status);
+                    Assert.IsNotNull(body);
 
-                bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
-                Assert.IsTrue(bodyText.Contains("<Patient"));
+                    var bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+
+                    calledBefore = false;
+                    client.Update(pat); // create cannot be called with an ID (which was retrieved)
+                    Assert.IsTrue(calledBefore);
+                    Assert.IsNotNull(bodyOut);
+
+                    bodyText = HttpUtil.DecodeBody(body, Encoding.UTF8);
+                    Assert.IsTrue(bodyText.Contains("<Patient"));
+                }
             }
         }
 

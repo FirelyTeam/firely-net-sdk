@@ -19,12 +19,12 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         public async T.Task RunSnapshotMultiThreaded()
         {
             // Arrange
-            var source = new CachedResolver(new ZipSource("specification.zip"));
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
             var generator = new SnapshotGenerator(source);
 
             OperationOutcome GenerateSnapshot(StructureDefinition sd)
             {
-// We don't want to update ProfilePreprocessor right now
+                // We don't want to update ProfilePreprocessor right now
 #pragma warning disable CS0618 // Type or member is obsolete
                 generator.Update(sd);
 #pragma warning restore CS0618 // Type or member is obsolete
