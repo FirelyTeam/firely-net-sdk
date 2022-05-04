@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     AddOrMergeCurrentOrNext(sliceName);
                 }
 
-                if (!TypeIsSubSetOf(diffNav, snapNav))
+                if (!typeIsSubSetOf(diffNav, snapNav))
                 {
                     // diff.Types is not a subset of snap.Types, which is not allowed
                     throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(ElementMatcher)}.{nameof(constructChoiceTypeMatch)}): choice type of diff does not occur in snap, snap = '{snapNav.Path}', diff = '{diffNav.Path}'.");
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return matches;
         }
 
-        private static bool TypeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
+        private static bool typeIsSubSetOf(ElementDefinitionNavigator diffNav, ElementDefinitionNavigator snapNav)
             => !diffNav.Current.Type.Except(snapNav.Current.Type, new TypeRefEqualityComparer()).Any();
 
         private class TypeRefEqualityComparer : IEqualityComparer<ElementDefinition.TypeRefComponent>
@@ -1039,7 +1039,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         private static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
         {
             var bm = nav.Bookmark();
-            var result = new List<string>();
 
             if (nav.MoveToFirstChild())
             {

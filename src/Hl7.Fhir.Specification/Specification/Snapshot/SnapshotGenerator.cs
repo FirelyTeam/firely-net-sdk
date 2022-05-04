@@ -31,8 +31,6 @@
 // Detect and fix invalid non-null sliceNames on root elements
 #define FIX_SLICENAMES_ON_ROOT_ELEMENTS
 
-// [WMR 20180409] Resolve contentReference from core resource/datatype (StructureDefinition.type)
-#define FIX_CONTENTREFERENCE
 
 // [WMR 20190828] R4: Normalize renamed type slices in snapshot
 // e.g. diff: "valueString" => snap: "value[x]:valueString"
@@ -462,6 +460,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20170424] Inherit existing base components, generate if missing
                 await ensureBaseComponents(snapshot.Element, structure.BaseDefinition, false).ConfigureAwait(false);
 
+
                 // [WMR 20170208] Moved to *AFTER* ensureBaseComponents - emits annotations...
                 // [WMR 20160915] Derived profiles should never inherit the ChangedByDiff extension from the base structure
                 snapshot.Element.RemoveAllConstrainedByDiffExtensions();
@@ -474,6 +473,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 }
 
                 nav = new ElementDefinitionNavigator(snapshot.Element, structure);
+
+
             }
             else
             {
@@ -481,6 +482,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var snapshot = new StructureDefinition.SnapshotComponent();
                 nav = new ElementDefinitionNavigator(snapshot.Element, structure);
             }
+
+
 
             // var nav = new ElementDefinitionNavigator(snapshot.Element);
 
@@ -582,24 +585,16 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (!String.IsNullOrEmpty(defn.ContentReference))
             {
 
-#if FIX_CONTENTREFERENCE
-                // [WMR 20180409] NEW
-                // Resolve contentReference from core resource/datatype definition
-                // Specified by StructureDefinition.type == root element name
-
                 var coreStructure = await getStructureForContentReference(nav, true).ConfigureAwait(false);
+
                 // getStructureForContentReference emits issue if profile cannot be resolved
                 if (coreStructure == null) { return false; }
 
                 var sourceNav = ElementDefinitionNavigator.ForSnapshot(coreStructure);
-#else
-                // [WMR 20180409] WRONG!
-                // Resolves contentReference from current StructureDef
-                // Recursive child items should NOT inherit constraints from parent in same profile
 
-                var sourceNav = new ElementDefinitionNavigator(nav);
-#endif
-                if (!sourceNav.JumpToNameReference(defn.ContentReference))
+                var profileRef = ProfileReference.Parse(defn.ContentReference);
+
+                if (!sourceNav.JumpToNameReference("#" + profileRef.ElementName))
                 {
                     addIssueInvalidNameReference(defn);
                     return false;
@@ -999,6 +994,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Now, recursively merge the children
                 await merge(snap, diff).ConfigureAwait(false);
 
+                // [MS 20220425] Make sure newly added contentReferences (from bases, types, and contentReferences) are absolute.
+                // Except when the it's a core profile (Derivation is not a Constraint)
+                if (snap.StructureDefinition.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                    await ensureAbsoluteContentReferences(snap, snap.StructureDefinition.Type).ConfigureAwait(false);
+
+
                 // [WMR 20160720] NEW
                 // generate [...]extension.url/fixedUri if missing
                 // Ewout: [...]extension.url may be missing from differential
@@ -1007,6 +1008,39 @@ namespace Hl7.Fhir.Specification.Snapshot
                 fixExtensionUrl(snap);
             }
         }
+
+        private async T.Task ensureAbsoluteContentReferences(ElementDefinitionNavigator nav, string baseTypeUrl)
+        {
+            var bookmark = nav.Bookmark();
+
+            if (nav.MoveToFirstChild())
+            {
+                do
+                {
+                    if (!string.IsNullOrEmpty(nav.Current?.ContentReference))
+                        await ensureAbsoluteContentReference(nav.Current?.ContentReferenceElement, baseTypeUrl).ConfigureAwait(false);
+                }
+                while (nav.MoveToNext());
+            }
+
+            nav.ReturnToBookmark(bookmark);
+        }
+
+        private async T.Task ensureAbsoluteContentReference(FhirUri contentReferenceElement, string baseTypeUrl)
+        {
+            if (contentReferenceElement.Value?.StartsWith("#") == true)
+            {
+                string contentRefBase = baseTypeUrl.StartsWith("http://") ? baseTypeUrl : await getCanonicalUrlFromCoreType(baseTypeUrl).ConfigureAwait(false);
+                contentReferenceElement.Value = contentRefBase + contentReferenceElement.Value;
+            }
+        }
+
+        private async T.Task<string> getCanonicalUrlFromCoreType(string baseTypeUrl)
+        {
+            var coreType = await AsyncResolver.FindStructureDefinitionForCoreTypeAsync(baseTypeUrl).ConfigureAwait(false);
+            return coreType.Url;
+        }
+
 
         // [WMR 20170105] New: determine wether to expand the current element
         // Notify client to allow overriding the default behavior
@@ -1320,8 +1354,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                                 // Rebase before merging
                                 var rebasedRootElem = (ElementDefinition)typeRootElem.DeepCopy();
                                 rebasedRootElem.Path = diff.Path;
-                                rebasedRootElem.Min = diff.Current.Min;
-                                rebasedRootElem.Max = diff.Current.Max;
 
                                 // Merge the type profile root element; no need to expand children
                                 mergeElementDefinition(snap.Current, rebasedRootElem, false);
@@ -1993,7 +2025,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             return result;
         }
 
-
         private static ElementDefinition createExtensionSlicingEntry(ElementDefinition baseExtensionElement)
         {
             // Create the slicing entry by cloning the base Extension element
@@ -2085,7 +2116,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="resolver">An <see cref="IArtifactSource"/> reference.</param>
         /// <param name="typeCodeElement">A <see cref="ElementDefinition.TypeRefComponent.CodeElement"/> reference.</param>
         /// <returns>A <see cref="StructureDefinition"/> instance, or <c>null</c>.</returns>
-        private async static T.Task<StructureDefinition> getStructureDefinitionForTypeCode(IAsyncResourceResolver resolver, FhirUri typeCodeElement)
+        private static async T.Task<StructureDefinition> getStructureDefinitionForTypeCode(IAsyncResourceResolver resolver, FhirUri typeCodeElement)
         {
             StructureDefinition sd = null;
             var typeCode = typeCodeElement.Value;
@@ -2105,9 +2136,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             return sd;
         }
 
-
-#if FIX_CONTENTREFERENCE
-        // [WMR 20180410] Resolve the defining target structure of a contentReference
         private async T.Task<StructureDefinition> getStructureForContentReference(ElementDefinitionNavigator nav, bool ensureSnapshot)
         {
             Debug.Assert(nav != null);
@@ -2136,7 +2164,6 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             return null;
         }
-#endif
 
         private bool verifyStructure(StructureDefinition sd, string profileUrl, string location = null)
         {

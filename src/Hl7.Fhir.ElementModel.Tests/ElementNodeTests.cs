@@ -9,19 +9,19 @@
 // To introduce the DSTU2 FHIR specification
 //extern alias dstu2;
 
-using System;
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Utility;
-using System.Linq;
-using Hl7.Fhir.Serialization;
-using System.IO;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Tests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Specification.Source;
-using System.Threading.Tasks;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Tests;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.FhirPath.Tests
@@ -41,7 +41,7 @@ namespace Hl7.FhirPath.Tests
 
             var activeNode = patientRoot.Add(_provider, "active", true);
             activeNode.Add(_provider, "id", "myId1");
-               
+
             activeNode.AddAnnotation("a string annotation");
             var ext1 = activeNode.Add(_provider, "extension");
             ext1.Add(_provider, "value", 4, "integer");
@@ -320,10 +320,10 @@ namespace Hl7.FhirPath.Tests
             Assert.IsTrue(activeChild.Annotations<string>().Single() == "a string annotation");
 
             var identifierSystemChild = newElement["identifier"][0]["system"].Single();
-            
+
             // check whether we really have a clone by changing the copy
             identifierSystemChild.Value = "http://dan.nl";
-            Assert.AreEqual("http://nu.nl",patient["identifier"][0]["system"].Single().Value);
+            Assert.AreEqual("http://nu.nl", patient["identifier"][0]["system"].Single().Value);
         }
 
         [TestMethod]
@@ -386,7 +386,7 @@ namespace Hl7.FhirPath.Tests
 
             public CustomResourceResolver()
             {
-                _zipSource = new ZipSource("specification.zip");
+                _zipSource = ZipSource.CreateValidationSource();
                 _resolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
             }
 
