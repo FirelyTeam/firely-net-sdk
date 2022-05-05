@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Validation
                 if (validateProfiles)
                 {
                     // First, call Validate() for the current element (the reference itself) against the profile
-                    result.Add(validator.ValidateInternal(instance, tr.GetDeclaredProfiles(), statedCanonicals: null, statedProfiles: null, state: state));
+                    result.Add(validator.ValidateInternal(instance, tr.GetTypeProfile(), statedCanonicals: null, statedProfiles: null, state: state));
                 }
 
                 // If this is a reference, also validate the reference against the targetProfile

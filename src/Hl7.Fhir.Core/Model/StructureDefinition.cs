@@ -26,17 +26,16 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 */
+using Hl7.Fhir.Introspection;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
     // [WMR 20160803] Add common base interfaces
-    public interface IElementList : IModifierExtendable, INotifyPropertyChanged, IValidatableObject, IDeepCopyable, IDeepComparable
+    public interface IElementList : IModifierExtendable, INotifyPropertyChanged, IDeepCopyable, IDeepComparable
     {
         List<ElementDefinition> Element { get; set; }
     }
@@ -47,8 +46,8 @@ namespace Hl7.Fhir.Model
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private Rest.ResourceIdentity DebuggerDisplay => this.ResourceIdentity();
-       
-        public partial class SnapshotComponent : IElementList {}
+
+        public partial class SnapshotComponent : IElementList { }
 
         public partial class DifferentialComponent : IElementList { }
 
