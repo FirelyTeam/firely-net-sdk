@@ -275,6 +275,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "collector":
+            value = Collector;
+            return Collector is not null;
+          case "source":
+            value = Source;
+            return Source is not null;
+          case "collected":
+            value = Collected;
+            return Collected is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
+        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Collected is not null) yield return new KeyValuePair<string,object>("collected",Collected);
+      }
+
     }
 
     /// <summary>
@@ -441,6 +468,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "procedure":
+            value = Procedure;
+            return Procedure is not null;
+          case "additive":
+            value = Additive;
+            return Additive is not null;
+          case "time":
+            value = Time;
+            return Time is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Procedure is not null) yield return new KeyValuePair<string,object>("procedure",Procedure);
+        if (Additive is not null) yield return new KeyValuePair<string,object>("additive",Additive);
+        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
+      }
+
     }
 
     /// <summary>
@@ -567,6 +625,29 @@ namespace Hl7.Fhir.Model
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
           if (Time != null) yield return new ElementValue("time", Time);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "time":
+            value = Time;
+            return Time is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (Time is not null) yield return new KeyValuePair<string,object>("time",Time);
       }
 
     }
@@ -768,12 +849,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "temperature":
+            value = TemperatureElement;
+            return TemperatureElement is not null;
+          case "scale":
+            value = ScaleElement;
+            return ScaleElement is not null;
+          case "duration":
+            value = Duration;
+            return Duration is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (TemperatureElement is not null) yield return new KeyValuePair<string,object>("temperature",TemperatureElement);
+        if (ScaleElement is not null) yield return new KeyValuePair<string,object>("scale",ScaleElement);
+        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+      }
+
     }
 
     /// <summary>
     /// External ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1088,6 +1200,65 @@ namespace Hl7.Fhir.Model
         if (Manipulation != null) yield return new ElementValue("manipulation", Manipulation);
         foreach (var elem in Storage) { if (elem != null) yield return new ElementValue("storage", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "productCategory":
+          value = ProductCategoryElement;
+          return ProductCategoryElement is not null;
+        case "productCode":
+          value = ProductCode;
+          return ProductCode is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "request":
+          value = Request;
+          return Request?.Any() == true;
+        case "quantity":
+          value = QuantityElement;
+          return QuantityElement is not null;
+        case "parent":
+          value = Parent;
+          return Parent?.Any() == true;
+        case "collection":
+          value = Collection;
+          return Collection is not null;
+        case "processing":
+          value = Processing;
+          return Processing?.Any() == true;
+        case "manipulation":
+          value = Manipulation;
+          return Manipulation is not null;
+        case "storage":
+          value = Storage;
+          return Storage?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ProductCategoryElement is not null) yield return new KeyValuePair<string,object>("productCategory",ProductCategoryElement);
+      if (ProductCode is not null) yield return new KeyValuePair<string,object>("productCode",ProductCode);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Request?.Any() == true) yield return new KeyValuePair<string,object>("request",Request);
+      if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
+      if (Parent?.Any() == true) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (Collection is not null) yield return new KeyValuePair<string,object>("collection",Collection);
+      if (Processing?.Any() == true) yield return new KeyValuePair<string,object>("processing",Processing);
+      if (Manipulation is not null) yield return new KeyValuePair<string,object>("manipulation",Manipulation);
+      if (Storage?.Any() == true) yield return new KeyValuePair<string,object>("storage",Storage);
     }
 
   }

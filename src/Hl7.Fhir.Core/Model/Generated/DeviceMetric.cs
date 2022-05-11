@@ -429,12 +429,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "state":
+            value = StateElement;
+            return StateElement is not null;
+          case "time":
+            value = TimeElement;
+            return TimeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);
+        if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
+      }
+
     }
 
     /// <summary>
     /// Instance identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -448,7 +475,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identity of metric, for example Heart Rate or PEEP Setting
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100)]
+    [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -569,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// measurement | setting | calculation | unspecified
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=160)]
+    [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -731,6 +758,61 @@ namespace Hl7.Fhir.Model
         if (MeasurementPeriod != null) yield return new ElementValue("measurementPeriod", MeasurementPeriod);
         foreach (var elem in Calibration) { if (elem != null) yield return new ElementValue("calibration", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "unit":
+          value = Unit;
+          return Unit is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "parent":
+          value = Parent;
+          return Parent is not null;
+        case "operationalStatus":
+          value = OperationalStatusElement;
+          return OperationalStatusElement is not null;
+        case "color":
+          value = ColorElement;
+          return ColorElement is not null;
+        case "category":
+          value = CategoryElement;
+          return CategoryElement is not null;
+        case "measurementPeriod":
+          value = MeasurementPeriod;
+          return MeasurementPeriod is not null;
+        case "calibration":
+          value = Calibration;
+          return Calibration?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Parent is not null) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (OperationalStatusElement is not null) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatusElement);
+      if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
+      if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
+      if (MeasurementPeriod is not null) yield return new KeyValuePair<string,object>("measurementPeriod",MeasurementPeriod);
+      if (Calibration?.Any() == true) yield return new KeyValuePair<string,object>("calibration",Calibration);
     }
 
   }

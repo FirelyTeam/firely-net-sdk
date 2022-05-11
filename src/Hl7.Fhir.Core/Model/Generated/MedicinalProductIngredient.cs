@@ -200,6 +200,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "group":
+            value = Group;
+            return Group is not null;
+          case "confidentiality":
+            value = Confidentiality;
+            return Confidentiality is not null;
+          case "strength":
+            value = Strength;
+            return Strength?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Group is not null) yield return new KeyValuePair<string,object>("group",Group);
+        if (Confidentiality is not null) yield return new KeyValuePair<string,object>("confidentiality",Confidentiality);
+        if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
+      }
+
     }
 
     /// <summary>
@@ -232,7 +263,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A lower limit for the quantity of substance in the unit of presentation. For use when there is a range of strengths, this is the lower limit, with the presentation attribute becoming the upper limit
       /// </summary>
-      [FhirElement("presentationLowLimit", InSummary=true, Order=50)]
+      [FhirElement("presentationLowLimit", InSummary=true, IsModifier=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio PresentationLowLimit
       {
@@ -258,7 +289,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A lower limit for the strength per unitary volume (or mass), for when there is a range. The concentration attribute then becomes the upper limit
       /// </summary>
-      [FhirElement("concentrationLowLimit", InSummary=true, Order=70)]
+      [FhirElement("concentrationLowLimit", InSummary=true, IsModifier=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio ConcentrationLowLimit
       {
@@ -417,6 +448,49 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Country) { if (elem != null) yield return new ElementValue("country", elem); }
           foreach (var elem in ReferenceStrength) { if (elem != null) yield return new ElementValue("referenceStrength", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "presentation":
+            value = Presentation;
+            return Presentation is not null;
+          case "presentationLowLimit":
+            value = PresentationLowLimit;
+            return PresentationLowLimit is not null;
+          case "concentration":
+            value = Concentration;
+            return Concentration is not null;
+          case "concentrationLowLimit":
+            value = ConcentrationLowLimit;
+            return ConcentrationLowLimit is not null;
+          case "measurementPoint":
+            value = MeasurementPointElement;
+            return MeasurementPointElement is not null;
+          case "country":
+            value = Country;
+            return Country?.Any() == true;
+          case "referenceStrength":
+            value = ReferenceStrength;
+            return ReferenceStrength?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Presentation is not null) yield return new KeyValuePair<string,object>("presentation",Presentation);
+        if (PresentationLowLimit is not null) yield return new KeyValuePair<string,object>("presentationLowLimit",PresentationLowLimit);
+        if (Concentration is not null) yield return new KeyValuePair<string,object>("concentration",Concentration);
+        if (ConcentrationLowLimit is not null) yield return new KeyValuePair<string,object>("concentrationLowLimit",ConcentrationLowLimit);
+        if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
+        if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
+        if (ReferenceStrength?.Any() == true) yield return new KeyValuePair<string,object>("referenceStrength",ReferenceStrength);
       }
 
     }
@@ -601,6 +675,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "substance":
+            value = Substance;
+            return Substance is not null;
+          case "strength":
+            value = Strength;
+            return Strength is not null;
+          case "strengthLowLimit":
+            value = StrengthLowLimit;
+            return StrengthLowLimit is not null;
+          case "measurementPoint":
+            value = MeasurementPointElement;
+            return MeasurementPointElement is not null;
+          case "country":
+            value = Country;
+            return Country?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
+        if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
+        if (StrengthLowLimit is not null) yield return new KeyValuePair<string,object>("strengthLowLimit",StrengthLowLimit);
+        if (MeasurementPointElement is not null) yield return new KeyValuePair<string,object>("measurementPoint",MeasurementPointElement);
+        if (Country?.Any() == true) yield return new KeyValuePair<string,object>("country",Country);
+      }
+
     }
 
     /// <summary>
@@ -709,6 +818,29 @@ namespace Hl7.Fhir.Model
           if (Code != null) yield return new ElementValue("code", Code);
           foreach (var elem in Strength) { if (elem != null) yield return new ElementValue("strength", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "strength":
+            value = Strength;
+            return Strength?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Strength?.Any() == true) yield return new KeyValuePair<string,object>("strength",Strength);
       }
 
     }
@@ -899,6 +1031,45 @@ namespace Hl7.Fhir.Model
         foreach (var elem in SpecifiedSubstance) { if (elem != null) yield return new ElementValue("specifiedSubstance", elem); }
         if (Substance != null) yield return new ElementValue("substance", Substance);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "role":
+          value = Role;
+          return Role is not null;
+        case "allergenicIndicator":
+          value = AllergenicIndicatorElement;
+          return AllergenicIndicatorElement is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "specifiedSubstance":
+          value = SpecifiedSubstance;
+          return SpecifiedSubstance?.Any() == true;
+        case "substance":
+          value = Substance;
+          return Substance is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+      if (AllergenicIndicatorElement is not null) yield return new KeyValuePair<string,object>("allergenicIndicator",AllergenicIndicatorElement);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (SpecifiedSubstance?.Any() == true) yield return new KeyValuePair<string,object>("specifiedSubstance",SpecifiedSubstance);
+      if (Substance is not null) yield return new KeyValuePair<string,object>("substance",Substance);
     }
 
   }

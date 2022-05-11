@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this schedule is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High-level category
     /// </summary>
-    [FhirElement("serviceCategory", InSummary=true, Order=110)]
+    [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific service
     /// </summary>
-    [FhirElement("serviceType", InSummary=true, Order=120)]
+    [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of specialty needed
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=130)]
+    [FhirElement("specialty", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource(s) that availability information is being provided for
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=140)]
+    [FhirElement("actor", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
     [Cardinality(Min=1,Max=-1)]
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time covered by schedule
     /// </summary>
-    [FhirElement("planningHorizon", InSummary=true, Order=150)]
+    [FhirElement("planningHorizon", InSummary=true, Order=150, FiveWs="FiveWs.planned")]
     [DataMember]
     public Hl7.Fhir.Model.Period PlanningHorizon
     {
@@ -297,6 +297,53 @@ namespace Hl7.Fhir.Model
         if (PlanningHorizon != null) yield return new ElementValue("planningHorizon", PlanningHorizon);
         if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "serviceCategory":
+          value = ServiceCategory;
+          return ServiceCategory?.Any() == true;
+        case "serviceType":
+          value = ServiceType;
+          return ServiceType?.Any() == true;
+        case "specialty":
+          value = Specialty;
+          return Specialty?.Any() == true;
+        case "actor":
+          value = Actor;
+          return Actor?.Any() == true;
+        case "planningHorizon":
+          value = PlanningHorizon;
+          return PlanningHorizon is not null;
+        case "comment":
+          value = CommentElement;
+          return CommentElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (ServiceCategory?.Any() == true) yield return new KeyValuePair<string,object>("serviceCategory",ServiceCategory);
+      if (ServiceType?.Any() == true) yield return new KeyValuePair<string,object>("serviceType",ServiceType);
+      if (Specialty?.Any() == true) yield return new KeyValuePair<string,object>("specialty",Specialty);
+      if (Actor?.Any() == true) yield return new KeyValuePair<string,object>("actor",Actor);
+      if (PlanningHorizon is not null) yield return new KeyValuePair<string,object>("planningHorizon",PlanningHorizon);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
     }
 
   }

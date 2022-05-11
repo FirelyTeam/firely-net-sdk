@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical, administrative, etc.
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded or textual message to display to user
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=120)]
+    [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What is flag about?
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Location","Group","Organization","Practitioner","PlanDefinition","Medication","Procedure")]
     [Cardinality(Min=1,Max=1)]
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when flag is active
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=140)]
+    [FhirElement("period", InSummary=true, Order=140, FiveWs="FiveWs.context")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Alert relevant during encounter
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Flag creator
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=160)]
+    [FhirElement("author", InSummary=true, Order=160, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole")]
     [DataMember]
@@ -312,6 +312,53 @@ namespace Hl7.Fhir.Model
         if (Encounter != null) yield return new ElementValue("encounter", Encounter);
         if (Author != null) yield return new ElementValue("author", Author);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
     }
 
   }

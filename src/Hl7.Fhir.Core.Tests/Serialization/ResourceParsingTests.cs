@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Tests.Serialization
             // Now, allow unknown enums and check support
             pser.Settings.AllowUnrecognizedEnums = true;
             p = await pser.ParseAsync<Patient>(xml2);
-            Assert.IsNull(p.Gender);
+            Assert.ThrowsException<InvalidCastException>(() => p.Gender);
             Assert.AreEqual("superman", p.GenderElement.ObjectValue);
         }
 
