@@ -231,6 +231,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
@@ -503,6 +526,45 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "uid":
+            value = UidElement;
+            return UidElement is not null;
+          case "sopClass":
+            value = SopClass;
+            return SopClass is not null;
+          case "frameList":
+            value = FrameListElement;
+            return FrameListElement is not null;
+          case "observationUid":
+            value = ObservationUidElement;
+            return ObservationUidElement?.Any() == true;
+          case "segmentList":
+            value = SegmentListElement;
+            return SegmentListElement is not null;
+          case "roiList":
+            value = RoiListElement;
+            return RoiListElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (UidElement is not null) yield return new KeyValuePair<string,object>("uid",UidElement);
+        if (SopClass is not null) yield return new KeyValuePair<string,object>("sopClass",SopClass);
+        if (FrameListElement is not null) yield return new KeyValuePair<string,object>("frameList",FrameListElement);
+        if (ObservationUidElement?.Any() == true) yield return new KeyValuePair<string,object>("observationUid",ObservationUidElement);
+        if (SegmentListElement is not null) yield return new KeyValuePair<string,object>("segmentList",SegmentListElement);
+        if (RoiListElement is not null) yield return new KeyValuePair<string,object>("roiList",RoiListElement);
+      }
+
     }
 
     /// <summary>
@@ -688,12 +750,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "regionType":
+            value = RegionTypeElement;
+            return RegionTypeElement is not null;
+          case "coordinateType":
+            value = CoordinateTypeElement;
+            return CoordinateTypeElement is not null;
+          case "coordinates":
+            value = CoordinatesElement;
+            return CoordinatesElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RegionTypeElement is not null) yield return new KeyValuePair<string,object>("regionType",RegionTypeElement);
+        if (CoordinateTypeElement is not null) yield return new KeyValuePair<string,object>("coordinateType",CoordinateTypeElement);
+        if (CoordinatesElement?.Any() == true) yield return new KeyValuePair<string,object>("coordinates",CoordinatesElement);
+      }
+
     }
 
     /// <summary>
     /// Business Identifier for Imaging Selection
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -707,7 +796,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated request
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
+    [FhirElement("basedOn", InSummary=true, Order=100, FiveWs="FiveWs.cause")]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest","Appointment","AppointmentResponse","Task")]
     [Cardinality(Min=0,Max=-1)]
@@ -723,7 +812,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject of the selected instances and / or frames
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=110)]
+    [FhirElement("subject", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location","Organization","Procedure","Practitioner","Medication","Substance","Specimen")]
     [DataMember]
@@ -738,7 +827,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date / Time when the selection of instances was made
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=120)]
+    [FhirElement("issued", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -769,7 +858,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author (human or machine)
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=130)]
+    [FhirElement("performer", InSummary=true, Order=130, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ImagingSelection.PerformerComponent> Performer
@@ -1084,6 +1173,77 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Instance) { if (elem != null) yield return new ElementValue("instance", elem); }
         if (ImageRegion != null) yield return new ElementValue("imageRegion", ImageRegion);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "issued":
+          value = IssuedElement;
+          return IssuedElement is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "studyUid":
+          value = StudyUidElement;
+          return StudyUidElement is not null;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        case "seriesUid":
+          value = SeriesUidElement;
+          return SeriesUidElement is not null;
+        case "frameOfReferenceUid":
+          value = FrameOfReferenceUidElement;
+          return FrameOfReferenceUidElement is not null;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "instance":
+          value = Instance;
+          return Instance?.Any() == true;
+        case "imageRegion":
+          value = ImageRegion;
+          return ImageRegion is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (StudyUidElement is not null) yield return new KeyValuePair<string,object>("studyUid",StudyUidElement);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (SeriesUidElement is not null) yield return new KeyValuePair<string,object>("seriesUid",SeriesUidElement);
+      if (FrameOfReferenceUidElement is not null) yield return new KeyValuePair<string,object>("frameOfReferenceUid",FrameOfReferenceUidElement);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Instance?.Any() == true) yield return new KeyValuePair<string,object>("instance",Instance);
+      if (ImageRegion is not null) yield return new KeyValuePair<string,object>("imageRegion",ImageRegion);
     }
 
   }

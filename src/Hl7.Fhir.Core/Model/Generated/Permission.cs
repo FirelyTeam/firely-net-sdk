@@ -219,6 +219,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "partyReference":
+            value = PartyReference;
+            return PartyReference?.Any() == true;
+          case "partyCodeableConcept":
+            value = PartyCodeableConcept;
+            return PartyCodeableConcept?.Any() == true;
+          case "purpose":
+            value = Purpose;
+            return Purpose?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PartyReference?.Any() == true) yield return new KeyValuePair<string,object>("partyReference",PartyReference);
+        if (PartyCodeableConcept?.Any() == true) yield return new KeyValuePair<string,object>("partyCodeableConcept",PartyCodeableConcept);
+        if (Purpose?.Any() == true) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      }
+
     }
 
     /// <summary>
@@ -329,6 +356,29 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Evidence) { if (elem != null) yield return new ElementValue("evidence", elem); }
           foreach (var elem in Grounds) { if (elem != null) yield return new ElementValue("grounds", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "evidence":
+            value = Evidence;
+            return Evidence?.Any() == true;
+          case "grounds":
+            value = Grounds;
+            return Grounds?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Evidence?.Any() == true) yield return new KeyValuePair<string,object>("evidence",Evidence);
+        if (Grounds?.Any() == true) yield return new KeyValuePair<string,object>("grounds",Grounds);
       }
 
     }
@@ -613,6 +663,61 @@ namespace Hl7.Fhir.Model
         if (Justification != null) yield return new ElementValue("justification", Justification);
         foreach (var elem in UsageLimitations) { if (elem != null) yield return new ElementValue("usageLimitations", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = Intent;
+          return Intent is not null;
+        case "asserter":
+          value = Asserter;
+          return Asserter is not null;
+        case "assertionDate":
+          value = AssertionDateElement;
+          return AssertionDateElement?.Any() == true;
+        case "validity":
+          value = Validity;
+          return Validity is not null;
+        case "purpose":
+          value = Purpose;
+          return Purpose?.Any() == true;
+        case "dataScope":
+          value = DataScope;
+          return DataScope?.Any() == true;
+        case "processingActivity":
+          value = ProcessingActivity;
+          return ProcessingActivity?.Any() == true;
+        case "justification":
+          value = Justification;
+          return Justification is not null;
+        case "usageLimitations":
+          value = UsageLimitations;
+          return UsageLimitations?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Intent is not null) yield return new KeyValuePair<string,object>("intent",Intent);
+      if (Asserter is not null) yield return new KeyValuePair<string,object>("asserter",Asserter);
+      if (AssertionDateElement?.Any() == true) yield return new KeyValuePair<string,object>("assertionDate",AssertionDateElement);
+      if (Validity is not null) yield return new KeyValuePair<string,object>("validity",Validity);
+      if (Purpose?.Any() == true) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (DataScope?.Any() == true) yield return new KeyValuePair<string,object>("dataScope",DataScope);
+      if (ProcessingActivity?.Any() == true) yield return new KeyValuePair<string,object>("processingActivity",ProcessingActivity);
+      if (Justification is not null) yield return new KeyValuePair<string,object>("justification",Justification);
+      if (UsageLimitations?.Any() == true) yield return new KeyValuePair<string,object>("usageLimitations",UsageLimitations);
     }
 
   }

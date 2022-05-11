@@ -247,6 +247,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "collector":
+            value = Collector;
+            return Collector is not null;
+          case "source":
+            value = Source;
+            return Source is not null;
+          case "collected":
+            value = Collected;
+            return Collected is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Collector is not null) yield return new KeyValuePair<string,object>("collector",Collector);
+        if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+        if (Collected is not null) yield return new KeyValuePair<string,object>("collected",Collected);
+      }
+
     }
 
     /// <summary>
@@ -359,6 +386,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
     }
 
     /// <summary>
@@ -441,7 +491,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=130)]
+    [FhirElement("identifier", InSummary=true, Order=130, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -455,7 +505,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier that supports traceability to the biological entity that is the source of biological material in the product
     /// </summary>
-    [FhirElement("biologicalSource", InSummary=true, Order=140)]
+    [FhirElement("biologicalSource", InSummary=true, Order=140, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier BiologicalSource
     {
@@ -735,6 +785,73 @@ namespace Hl7.Fhir.Model
         if (StorageTempRequirements != null) yield return new ElementValue("storageTempRequirements", StorageTempRequirements);
         foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "productCategory":
+          value = ProductCategoryElement;
+          return ProductCategoryElement is not null;
+        case "productCode":
+          value = ProductCode;
+          return ProductCode is not null;
+        case "parent":
+          value = Parent;
+          return Parent?.Any() == true;
+        case "request":
+          value = Request;
+          return Request?.Any() == true;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "biologicalSource":
+          value = BiologicalSource;
+          return BiologicalSource is not null;
+        case "processingFacility":
+          value = ProcessingFacility;
+          return ProcessingFacility?.Any() == true;
+        case "division":
+          value = DivisionElement;
+          return DivisionElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "expirationDate":
+          value = ExpirationDateElement;
+          return ExpirationDateElement is not null;
+        case "collection":
+          value = Collection;
+          return Collection is not null;
+        case "storageTempRequirements":
+          value = StorageTempRequirements;
+          return StorageTempRequirements is not null;
+        case "property":
+          value = Property;
+          return Property?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ProductCategoryElement is not null) yield return new KeyValuePair<string,object>("productCategory",ProductCategoryElement);
+      if (ProductCode is not null) yield return new KeyValuePair<string,object>("productCode",ProductCode);
+      if (Parent?.Any() == true) yield return new KeyValuePair<string,object>("parent",Parent);
+      if (Request?.Any() == true) yield return new KeyValuePair<string,object>("request",Request);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BiologicalSource is not null) yield return new KeyValuePair<string,object>("biologicalSource",BiologicalSource);
+      if (ProcessingFacility?.Any() == true) yield return new KeyValuePair<string,object>("processingFacility",ProcessingFacility);
+      if (DivisionElement is not null) yield return new KeyValuePair<string,object>("division",DivisionElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
+      if (Collection is not null) yield return new KeyValuePair<string,object>("collection",Collection);
+      if (StorageTempRequirements is not null) yield return new KeyValuePair<string,object>("storageTempRequirements",StorageTempRequirements);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
     }
 
   }

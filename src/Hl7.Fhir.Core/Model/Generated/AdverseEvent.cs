@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who was involved in the adverse event or the potential adverse event
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -218,6 +218,29 @@ namespace Hl7.Fhir.Model
           if (Function != null) yield return new ElementValue("function", Function);
           if (Actor != null) yield return new ElementValue("actor", Actor);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
     }
@@ -330,6 +353,29 @@ namespace Hl7.Fhir.Model
           if (Instance != null) yield return new ElementValue("instance", Instance);
           if (Causality != null) yield return new ElementValue("causality", Causality);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "instance":
+            value = Instance;
+            return Instance is not null;
+          case "causality":
+            value = Causality;
+            return Causality is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Instance is not null) yield return new KeyValuePair<string,object>("instance",Instance);
+        if (Causality is not null) yield return new KeyValuePair<string,object>("causality",Causality);
       }
 
     }
@@ -460,6 +506,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "assessmentMethod":
+            value = AssessmentMethod;
+            return AssessmentMethod is not null;
+          case "entityRelatedness":
+            value = EntityRelatedness;
+            return EntityRelatedness is not null;
+          case "author":
+            value = Author;
+            return Author is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AssessmentMethod is not null) yield return new KeyValuePair<string,object>("assessmentMethod",AssessmentMethod);
+        if (EntityRelatedness is not null) yield return new KeyValuePair<string,object>("entityRelatedness",EntityRelatedness);
+        if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      }
+
     }
 
     /// <summary>
@@ -552,6 +625,25 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (Item != null) yield return new ElementValue("item", Item);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -648,6 +740,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -740,6 +851,25 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (Item != null) yield return new ElementValue("item", Item);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -836,6 +966,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -855,7 +1004,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -888,7 +1037,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// actual | potential
     /// </summary>
-    [FhirElement("actuality", InSummary=true, Order=110)]
+    [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -921,7 +1070,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// wrong-patient | procedure-mishap | medication-mishap | device | unsafe-physical-environment | hospital-aquired-infection | wrong-body-site
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -935,7 +1084,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event or incident that occurred or was averted
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -948,7 +1097,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject impacted by event
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Practitioner","RelatedPerson")]
     [Cardinality(Min=1,Max=1)]
@@ -964,7 +1113,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter associated with the start of the AdverseEvent
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -979,7 +1128,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurred
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
@@ -1025,7 +1174,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event was recorded
     /// </summary>
-    [FhirElement("recordedDate", InSummary=true, Order=180)]
+    [FhirElement("recordedDate", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
     {
@@ -1114,7 +1263,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the adverse event
     /// </summary>
-    [FhirElement("recorder", InSummary=true, Order=230)]
+    [FhirElement("recorder", InSummary=true, Order=230, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
@@ -1391,6 +1540,109 @@ namespace Hl7.Fhir.Model
         foreach (var elem in SupportingInfo) { if (elem != null) yield return new ElementValue("supportingInfo", elem); }
         foreach (var elem in Study) { if (elem != null) yield return new ElementValue("study", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "actuality":
+          value = ActualityElement;
+          return ActualityElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "detected":
+          value = DetectedElement;
+          return DetectedElement is not null;
+        case "recordedDate":
+          value = RecordedDateElement;
+          return RecordedDateElement is not null;
+        case "resultingCondition":
+          value = ResultingCondition;
+          return ResultingCondition?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "seriousness":
+          value = Seriousness;
+          return Seriousness is not null;
+        case "outcome":
+          value = Outcome;
+          return Outcome?.Any() == true;
+        case "recorder":
+          value = Recorder;
+          return Recorder is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "suspectEntity":
+          value = SuspectEntity;
+          return SuspectEntity?.Any() == true;
+        case "contributingFactor":
+          value = ContributingFactor;
+          return ContributingFactor?.Any() == true;
+        case "preventiveAction":
+          value = PreventiveAction;
+          return PreventiveAction?.Any() == true;
+        case "mitigatingAction":
+          value = MitigatingAction;
+          return MitigatingAction?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "study":
+          value = Study;
+          return Study?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ActualityElement is not null) yield return new KeyValuePair<string,object>("actuality",ActualityElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (DetectedElement is not null) yield return new KeyValuePair<string,object>("detected",DetectedElement);
+      if (RecordedDateElement is not null) yield return new KeyValuePair<string,object>("recordedDate",RecordedDateElement);
+      if (ResultingCondition?.Any() == true) yield return new KeyValuePair<string,object>("resultingCondition",ResultingCondition);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Seriousness is not null) yield return new KeyValuePair<string,object>("seriousness",Seriousness);
+      if (Outcome?.Any() == true) yield return new KeyValuePair<string,object>("outcome",Outcome);
+      if (Recorder is not null) yield return new KeyValuePair<string,object>("recorder",Recorder);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (SuspectEntity?.Any() == true) yield return new KeyValuePair<string,object>("suspectEntity",SuspectEntity);
+      if (ContributingFactor?.Any() == true) yield return new KeyValuePair<string,object>("contributingFactor",ContributingFactor);
+      if (PreventiveAction?.Any() == true) yield return new KeyValuePair<string,object>("preventiveAction",PreventiveAction);
+      if (MitigatingAction?.Any() == true) yield return new KeyValuePair<string,object>("mitigatingAction",MitigatingAction);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Study?.Any() == true) yield return new KeyValuePair<string,object>("study",Study);
     }
 
   }

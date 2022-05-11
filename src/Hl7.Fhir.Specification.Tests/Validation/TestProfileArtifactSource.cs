@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             cons.Add(new ElementDefinition("Range").OfType(FHIRAllTypes.Range));
             cons.Add(new ElementDefinition("Range.low")
-                .OfType(FHIRAllTypes.Quantity, profile: new[] { QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL })
+                .OfType(FHIRAllTypes.Quantity, profiles: new[] { QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL })
                 .Required(min: 1, max: null));   // just set min to 1 and leave max out.
 
             return result;

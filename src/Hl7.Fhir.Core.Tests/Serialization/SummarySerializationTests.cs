@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Serialization
@@ -25,6 +26,21 @@ namespace Hl7.Fhir.Tests.Serialization
         private readonly FhirXmlSerializer FhirXmlSerializer = new FhirXmlSerializer();
         private readonly FhirJsonSerializer FhirJsonSerializer = new FhirJsonSerializer();
         private readonly FhirXmlParser FhirXmlParser = new FhirXmlParser();
+
+        [TestMethod]
+        public void TestConstructSystemTextJsonSerializer()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions().ForFhir();
+            var p = new Patient
+            {
+                BirthDate = "1972-11-30",     // present in both summary and full
+                Photo = new List<Attachment>() { new Attachment() { ContentType = "text/plain" } }
+            };
+
+
+            var jsonText = JsonSerializer.Serialize(p, options);
+            Assert.IsTrue(jsonText.Contains("birthDate"));
+        }
 
         [TestMethod] // Old tests, I'm note sure we need them anymore
         public async T.Task TestSummary()
@@ -101,14 +117,14 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(qText.Contains("<date value=\"2015-09-27\""));
             Assert.IsFalse(qText.Contains("<title value=\"TITLE\""));
             Assert.IsFalse(qText.Contains("<linkId value=\"linkid\""));
-            Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.AreEqual(0, q.Meta.Tag.Where(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
 
             // Verify that reloading the content into an object...
             // make sure we accept the crappy output with empty groups
             var nav = await FhirXmlNode.ParseAsync(qText, new FhirXmlParsingSettings { PermissiveParsing = true });
 
             var qInflate = FhirXmlParser.Parse<Questionnaire>(nav);
-            Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.AreEqual(1, qInflate.Meta.Tag.Where(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
         [TestMethod]
@@ -197,7 +213,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
             pSum = await FhirXmlSerializer.SerializeToStringAsync(p, summary: Fhir.Rest.SummaryType.True);
             Assert.IsNotNull(p.Meta, "Meta should still be there");
-            Assert.AreEqual(0, p.Meta.Tag.Where(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
+            Assert.AreEqual(0, p.Meta.Tag.Where(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED").Count(), "Subsetted Tag should not still be there.");
         }
 
 
@@ -338,7 +354,7 @@ namespace Hl7.Fhir.Tests.Serialization
                 var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(patientOne, mode) :
                                     await FhirXmlSerializer.SerializeToStringAsync(patientOne, mode);
                 var expectedData = TestDataHelper.ReadTestData(expectedFile);
-                Assert.AreEqual(expectedData, actualData);
+                Assert.AreEqual(expectedData, actualData, $"SummaryType.{mode} in file {pair.Key}");
             }
         }
 

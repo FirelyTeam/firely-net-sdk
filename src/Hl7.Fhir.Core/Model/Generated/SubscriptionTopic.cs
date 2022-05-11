@@ -322,6 +322,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = Description;
+            return Description is not null;
+          case "resource":
+            value = ResourceElement;
+            return ResourceElement is not null;
+          case "supportedInteraction":
+            value = SupportedInteractionElement;
+            return SupportedInteractionElement?.Any() == true;
+          case "queryCriteria":
+            value = QueryCriteria;
+            return QueryCriteria is not null;
+          case "fhirPathCriteria":
+            value = FhirPathCriteriaElement;
+            return FhirPathCriteriaElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+        if (SupportedInteractionElement?.Any() == true) yield return new KeyValuePair<string,object>("supportedInteraction",SupportedInteractionElement);
+        if (QueryCriteria is not null) yield return new KeyValuePair<string,object>("queryCriteria",QueryCriteria);
+        if (FhirPathCriteriaElement is not null) yield return new KeyValuePair<string,object>("fhirPathCriteria",FhirPathCriteriaElement);
+      }
+
     }
 
     /// <summary>
@@ -576,6 +611,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "previous":
+            value = PreviousElement;
+            return PreviousElement is not null;
+          case "resultForCreate":
+            value = ResultForCreateElement;
+            return ResultForCreateElement is not null;
+          case "current":
+            value = CurrentElement;
+            return CurrentElement is not null;
+          case "resultForDelete":
+            value = ResultForDeleteElement;
+            return ResultForDeleteElement is not null;
+          case "requireBoth":
+            value = RequireBothElement;
+            return RequireBothElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PreviousElement is not null) yield return new KeyValuePair<string,object>("previous",PreviousElement);
+        if (ResultForCreateElement is not null) yield return new KeyValuePair<string,object>("resultForCreate",ResultForCreateElement);
+        if (CurrentElement is not null) yield return new KeyValuePair<string,object>("current",CurrentElement);
+        if (ResultForDeleteElement is not null) yield return new KeyValuePair<string,object>("resultForDelete",ResultForDeleteElement);
+        if (RequireBothElement is not null) yield return new KeyValuePair<string,object>("requireBoth",RequireBothElement);
+      }
+
     }
 
     /// <summary>
@@ -720,6 +790,33 @@ namespace Hl7.Fhir.Model
           if (Event != null) yield return new ElementValue("event", Event);
           if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = Description;
+            return Description is not null;
+          case "event":
+            value = Event;
+            return Event is not null;
+          case "resource":
+            value = ResourceElement;
+            return ResourceElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
+        if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
       }
 
     }
@@ -922,6 +1019,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = Description;
+            return Description is not null;
+          case "resource":
+            value = ResourceElement;
+            return ResourceElement is not null;
+          case "filterParameter":
+            value = FilterParameterElement;
+            return FilterParameterElement is not null;
+          case "modifier":
+            value = ModifierElement;
+            return ModifierElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+        if (FilterParameterElement is not null) yield return new KeyValuePair<string,object>("filterParameter",FilterParameterElement);
+        if (ModifierElement?.Any() == true) yield return new KeyValuePair<string,object>("modifier",ModifierElement);
+      }
+
     }
 
     /// <summary>
@@ -1105,12 +1233,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "resource":
+            value = ResourceElement;
+            return ResourceElement is not null;
+          case "include":
+            value = IncludeElement;
+            return IncludeElement?.Any() == true;
+          case "revInclude":
+            value = RevIncludeElement;
+            return RevIncludeElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+        if (IncludeElement?.Any() == true) yield return new KeyValuePair<string,object>("include",IncludeElement);
+        if (RevIncludeElement?.Any() == true) yield return new KeyValuePair<string,object>("revInclude",RevIncludeElement);
+      }
+
     }
 
     /// <summary>
     /// Logical canonical URL to reference this SubscriptionTopic (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -1142,7 +1297,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for SubscriptionTopic
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1156,7 +1311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the SubscriptionTopic
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1250,7 +1405,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1283,7 +1438,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If for testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1314,7 +1469,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date status first applied
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1345,7 +1500,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name of the individual or organization that published the SubscriptionTopic
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1431,7 +1586,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this SubscriptionTopic is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {
@@ -1750,6 +1905,109 @@ namespace Hl7.Fhir.Model
         foreach (var elem in CanFilterBy) { if (elem != null) yield return new ElementValue("canFilterBy", elem); }
         foreach (var elem in NotificationShape) { if (elem != null) yield return new ElementValue("notificationShape", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "derivedFrom":
+          value = DerivedFromElement;
+          return DerivedFromElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "jurisdiction":
+          value = Jurisdiction;
+          return Jurisdiction?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "copyright":
+          value = Copyright;
+          return Copyright is not null;
+        case "approvalDate":
+          value = ApprovalDateElement;
+          return ApprovalDateElement is not null;
+        case "lastReviewDate":
+          value = LastReviewDateElement;
+          return LastReviewDateElement is not null;
+        case "effectivePeriod":
+          value = EffectivePeriod;
+          return EffectivePeriod is not null;
+        case "resourceTrigger":
+          value = ResourceTrigger;
+          return ResourceTrigger?.Any() == true;
+        case "eventTrigger":
+          value = EventTrigger;
+          return EventTrigger?.Any() == true;
+        case "canFilterBy":
+          value = CanFilterBy;
+          return CanFilterBy?.Any() == true;
+        case "notificationShape":
+          value = NotificationShape;
+          return NotificationShape?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (DerivedFromElement?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFromElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
+      if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
+      if (EffectivePeriod is not null) yield return new KeyValuePair<string,object>("effectivePeriod",EffectivePeriod);
+      if (ResourceTrigger?.Any() == true) yield return new KeyValuePair<string,object>("resourceTrigger",ResourceTrigger);
+      if (EventTrigger?.Any() == true) yield return new KeyValuePair<string,object>("eventTrigger",EventTrigger);
+      if (CanFilterBy?.Any() == true) yield return new KeyValuePair<string,object>("canFilterBy",CanFilterBy);
+      if (NotificationShape?.Any() == true) yield return new KeyValuePair<string,object>("notificationShape",NotificationShape);
     }
 
   }

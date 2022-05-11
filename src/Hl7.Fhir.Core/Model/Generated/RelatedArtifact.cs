@@ -535,6 +535,53 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "classifier":
+          value = Classifier;
+          return Classifier?.Any() == true;
+        case "label":
+          value = LabelElement;
+          return LabelElement is not null;
+        case "display":
+          value = DisplayElement;
+          return DisplayElement is not null;
+        case "citation":
+          value = Citation;
+          return Citation is not null;
+        case "document":
+          value = Document;
+          return Document is not null;
+        case "resource":
+          value = ResourceElement;
+          return ResourceElement is not null;
+        case "resourceReference":
+          value = ResourceReference;
+          return ResourceReference is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",Classifier);
+      if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
+      if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
+      if (Citation is not null) yield return new KeyValuePair<string,object>("citation",Citation);
+      if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
+      if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
+      if (ResourceReference is not null) yield return new KeyValuePair<string,object>("resourceReference",ResourceReference);
+    }
+
   }
 
 }
