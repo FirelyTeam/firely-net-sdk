@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this evaluation is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=110)]
+    [FhirElement("patient", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date evaluation was performed
     /// </summary>
-    [FhirElement("date", Order=120)]
+    [FhirElement("date", Order=120, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -456,6 +456,73 @@ namespace Hl7.Fhir.Model
         if (DoseNumber != null) yield return new ElementValue("doseNumber", DoseNumber);
         if (SeriesDoses != null) yield return new ElementValue("seriesDoses", SeriesDoses);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "authority":
+          value = Authority;
+          return Authority is not null;
+        case "targetDisease":
+          value = TargetDisease;
+          return TargetDisease is not null;
+        case "immunizationEvent":
+          value = ImmunizationEvent;
+          return ImmunizationEvent is not null;
+        case "doseStatus":
+          value = DoseStatus;
+          return DoseStatus is not null;
+        case "doseStatusReason":
+          value = DoseStatusReason;
+          return DoseStatusReason?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "series":
+          value = SeriesElement;
+          return SeriesElement is not null;
+        case "doseNumber":
+          value = DoseNumber;
+          return DoseNumber is not null;
+        case "seriesDoses":
+          value = SeriesDoses;
+          return SeriesDoses is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+      if (TargetDisease is not null) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+      if (ImmunizationEvent is not null) yield return new KeyValuePair<string,object>("immunizationEvent",ImmunizationEvent);
+      if (DoseStatus is not null) yield return new KeyValuePair<string,object>("doseStatus",DoseStatus);
+      if (DoseStatusReason?.Any() == true) yield return new KeyValuePair<string,object>("doseStatusReason",DoseStatusReason);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+      if (DoseNumber is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumber);
+      if (SeriesDoses is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDoses);
     }
 
   }

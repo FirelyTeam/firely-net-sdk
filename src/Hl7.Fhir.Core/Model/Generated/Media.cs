@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier(s) for the image
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of media as image, video, or audio
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=130)]
+    [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of acquisition equipment/process
     /// </summary>
-    [FhirElement("modality", InSummary=true, Order=140)]
+    [FhirElement("modality", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Modality
     {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What this Media is a record of
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160)]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Group","Device","Specimen","Location")]
     [DataMember]
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter associated with media
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=170)]
+    [FhirElement("encounter", InSummary=true, Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When Media was collected
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("created", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this version was made available
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=190)]
+    [FhirElement("issued", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who generated the image
     /// </summary>
-    [FhirElement("operator", InSummary=true, Order=200)]
+    [FhirElement("operator", InSummary=true, Order=200, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
     [DataMember]
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was event performed?
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=210)]
+    [FhirElement("reasonCode", InSummary=true, Order=210, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -654,6 +654,109 @@ namespace Hl7.Fhir.Model
         if (Content != null) yield return new ElementValue("content", Content);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "modality":
+          value = Modality;
+          return Modality is not null;
+        case "view":
+          value = View;
+          return View is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "created":
+          value = Created;
+          return Created is not null;
+        case "issued":
+          value = IssuedElement;
+          return IssuedElement is not null;
+        case "operator":
+          value = Operator;
+          return Operator is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "deviceName":
+          value = DeviceNameElement;
+          return DeviceNameElement is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "height":
+          value = HeightElement;
+          return HeightElement is not null;
+        case "width":
+          value = WidthElement;
+          return WidthElement is not null;
+        case "frames":
+          value = FramesElement;
+          return FramesElement is not null;
+        case "duration":
+          value = DurationElement;
+          return DurationElement is not null;
+        case "content":
+          value = Content;
+          return Content is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Modality is not null) yield return new KeyValuePair<string,object>("modality",Modality);
+      if (View is not null) yield return new KeyValuePair<string,object>("view",View);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Created is not null) yield return new KeyValuePair<string,object>("created",Created);
+      if (IssuedElement is not null) yield return new KeyValuePair<string,object>("issued",IssuedElement);
+      if (Operator is not null) yield return new KeyValuePair<string,object>("operator",Operator);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (DeviceNameElement is not null) yield return new KeyValuePair<string,object>("deviceName",DeviceNameElement);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (HeightElement is not null) yield return new KeyValuePair<string,object>("height",HeightElement);
+      if (WidthElement is not null) yield return new KeyValuePair<string,object>("width",WidthElement);
+      if (FramesElement is not null) yield return new KeyValuePair<string,object>("frames",FramesElement);
+      if (DurationElement is not null) yield return new KeyValuePair<string,object>("duration",DurationElement);
+      if (Content is not null) yield return new KeyValuePair<string,object>("content",Content);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

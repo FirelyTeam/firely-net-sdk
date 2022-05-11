@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private readonly IAsyncResourceResolver _resolver;
         private readonly ValueSetExpander _expander;
-        
+
         private readonly string _codeAttribute = "code";
         private readonly string _systemAttribute = "system";
         private readonly string _contextAttribute = "context";
@@ -54,14 +54,14 @@ namespace Hl7.Fhir.Specification.Terminology
             if (parameters.TryGetDuplicates(out var duplicates) == true)
             {
                 //422 Unproccesable Entity
-                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}",(HttpStatusCode)422);
+                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}", (HttpStatusCode)422);
             }
             //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
             if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
                                                                                     parameters.Parameter.Any(p => p.Name == _contextAttribute)))
             {
                 //422 Unproccesable Entity
-                throw new FhirOperationException($"If a code is provided, a system or a context must be provided",(HttpStatusCode)422);
+                throw new FhirOperationException($"If a code is provided, a system or a context must be provided", (HttpStatusCode)422);
             }
 
             var validCodeParams = new ValidateCodeParameters(parameters);
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Specification.Terminology
                 //500 internal server error
                 throw new FhirOperationException(e.Message, (HttpStatusCode)500);
             }
-           
+
         }
 
         #region Not implemented methods
@@ -148,25 +148,6 @@ namespace Hl7.Fhir.Specification.Terminology
             throw new NotImplementedException();
         }
         #endregion
-
-        [Obsolete("This method is obsolete, use method with signature 'ValueSetValidateCode(Parameters, string, bool)'")]
-        public OperationOutcome ValidateCode(string canonical = null, string context = null, ValueSet valueSet = null,
-            string code = null, string system = null, string version = null, string display = null,
-            Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
-            bool? @abstract = null, string displayLanguage = null)
-        {
-            var parameters = new ValidateCodeParameters()
-                .WithValueSet(url: canonical, context: context, valueSet: valueSet)
-                .WithCode(code: code, system: system, systemVersion: version, display: display, displayLanguage: displayLanguage, context)
-                .WithCoding(coding)
-                .WithCodeableConcept(codeableConcept)
-                .WithDate(date)
-                .WithAbstract(@abstract)
-                .Build();
-
-            var parms = TaskHelper.Await(() => ValueSetValidateCode(parameters));
-            return parms.ToOperationOutcome();
-        }
 
         private async T.Task<Parameters> validateCodeVS(ValueSet vs, CodeableConcept cc, bool? abstractAllowed)
         {

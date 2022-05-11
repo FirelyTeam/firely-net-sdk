@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If this item is actually marked as deleted
       /// </summary>
-      [FhirElement("deleted", InSummary=true, Order=50)]
+      [FhirElement("deleted", IsModifier=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean DeletedElement
       {
@@ -264,12 +264,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "flag":
+            value = Flag;
+            return Flag is not null;
+          case "deleted":
+            value = DeletedElement;
+            return DeletedElement is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Flag is not null) yield return new KeyValuePair<string,object>("flag",Flag);
+        if (DeletedElement is not null) yield return new KeyValuePair<string,object>("deleted",DeletedElement);
+        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -283,7 +314,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | retired | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -316,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// working | snapshot | changes
     /// </summary>
-    [FhirElement("mode", InSummary=true, Order=110)]
+    [FhirElement("mode", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -380,7 +411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the purpose of this list is
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -393,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If all resources have the same subject
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
@@ -408,7 +439,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context in which list created
     /// </summary>
-    [FhirElement("encounter", Order=150)]
+    [FhirElement("encounter", Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -423,7 +454,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the list was prepared
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -454,7 +485,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what defined the list contents (aka Author)
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=170)]
+    [FhirElement("source", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","Device")]
     [DataMember]
@@ -640,6 +671,73 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Entry) { if (elem != null) yield return new ElementValue("entry", elem); }
         if (EmptyReason != null) yield return new ElementValue("emptyReason", EmptyReason);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "mode":
+          value = ModeElement;
+          return ModeElement is not null;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "orderedBy":
+          value = OrderedBy;
+          return OrderedBy is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "entry":
+          value = Entry;
+          return Entry?.Any() == true;
+        case "emptyReason":
+          value = EmptyReason;
+          return EmptyReason is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (OrderedBy is not null) yield return new KeyValuePair<string,object>("orderedBy",OrderedBy);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Entry?.Any() == true) yield return new KeyValuePair<string,object>("entry",Entry);
+      if (EmptyReason is not null) yield return new KeyValuePair<string,object>("emptyReason",EmptyReason);
     }
 
   }
