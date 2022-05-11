@@ -1,5 +1,5 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
+
   <!-- Solution-wide properties for NuGet packaging -->
   <PropertyGroup>
     <VersionPrefix>3.8.4</VersionPrefix>
@@ -12,23 +12,22 @@
     <RepositoryType>git</RepositoryType>
     <PackageIcon>icon-fhir-32.png</PackageIcon>
     <PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-	<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed. 
+    <!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed.
     Consider applying the 'await' operator to the result of the call.	-->
-    <WarningsAsErrors>CS4014</WarningsAsErrors>       
+    <WarningsAsErrors>CS4014</WarningsAsErrors>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
     <None Include="..\..\icon-fhir-32.png" Pack="true" PackagePath=""/>
   </ItemGroup>
-	
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
   </ItemGroup>
@@ -40,7 +39,7 @@
     <Configurations>Debug;Release;FullDebug</Configurations>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
      <DebugType>portable</DebugType>
      <DebugSymbols>True</DebugSymbols>
      <NoWarn>1591</NoWarn>
@@ -57,5 +56,5 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <NoWarn>1591</NoWarn> <!-- Missing XML comments -->
   </PropertyGroup>
-</Project>
 
+</Project>
