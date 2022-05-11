@@ -7707,6 +7707,7 @@ namespace Hl7.Fhir.Specification.Tests
             baseElement.Slicing.Discriminator[0].Type.Should().Be(ElementDefinition.DiscriminatorType.Pattern);
             baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
         }
+
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
@@ -7863,5 +7864,27 @@ namespace Hl7.Fhir.Specification.Tests
             public StructureDefinition BaseStructureDefinition { get; }
             public ElementDefinition BaseElementDefinition { get; }
         }
+
+        [TestMethod]
+        public void TestDistinctTypeCode()
+        {
+            var elem = new ElementDefinition();
+            Assert.AreEqual(null, elem.CommonTypeCode());
+
+            var patientTypeCode = FHIRAllTypes.Patient.GetLiteral();
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = @"http://example.org/fhir/StructureDefinition/MyPatient1" });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = @"http://example.org/fhir/StructureDefinition/MyPatient2" });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            // Invalid, type constraint without type code (required!)
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Profile = @"http://example.org/fhir/StructureDefinition/MyPatient3" });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = @"http://example.org/fhir/StructureDefinition/MyObservation" });
+            Assert.IsNull(elem.CommonTypeCode());
+        }
+
     }
 }

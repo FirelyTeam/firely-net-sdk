@@ -1,10 +1,6 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Model;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -21,11 +17,14 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.AreEqual(ResourceFormat.Unknown, ContentType.GetResourceFormatFromContentType("\"application\blah"));
         }
 
-        [TestMethod]
-        public void TestBuildingContentType()
+        [DataTestMethod]
+        [DataRow(ResourceFormat.Json, "3.0", "application/fhir+json; charset=utf-8; fhirVersion=3.0")]
+        [DataRow(ResourceFormat.Xml, "3.0", "application/fhir+xml; charset=utf-8; fhirVersion=3.0")]
+        [DataRow(ResourceFormat.Json, "4.0", "application/fhir+json; charset=utf-8; fhirVersion=4.0")]
+        [DataRow(ResourceFormat.Json, "", "application/fhir+json; charset=utf-8")]
+        public void TestBuildingContentType(ResourceFormat format, string fhirVersion, string expected)
         {
-            var type = ContentType.BuildContentType(ResourceFormat.Json, ModelInfo.Version);
-            Assert.AreEqual("application/fhir+json; charset=utf-8; fhirVersion=3.0", type);
+            ContentType.BuildContentType(format, fhirVersion).Should().Be(expected);
         }
     }
 }
