@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Intended "real-world" recipient for the data
       /// </summary>
-      [FhirElement("receiver", InSummary=true, Order=70)]
+      [FhirElement("receiver", InSummary=true, Order=70, FiveWs="FiveWs.subject")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [DataMember]
@@ -264,6 +264,37 @@ namespace Hl7.Fhir.Model
           if (EndpointElement != null) yield return new ElementValue("endpoint", EndpointElement);
           if (Receiver != null) yield return new ElementValue("receiver", Receiver);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "target":
+            value = Target;
+            return Target is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          case "receiver":
+            value = Receiver;
+            return Receiver is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+        if (Receiver is not null) yield return new KeyValuePair<string,object>("receiver",Receiver);
       }
 
     }
@@ -501,6 +532,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "software":
+            value = SoftwareElement;
+            return SoftwareElement is not null;
+          case "version":
+            value = VersionElement;
+            return VersionElement is not null;
+          case "contact":
+            value = Contact;
+            return Contact is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (SoftwareElement is not null) yield return new KeyValuePair<string,object>("software",SoftwareElement);
+        if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+        if (Contact is not null) yield return new KeyValuePair<string,object>("contact",Contact);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+      }
+
     }
 
     /// <summary>
@@ -668,12 +734,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = IdentifierElement;
+            return IdentifierElement is not null;
+          case "code":
+            value = CodeElement;
+            return CodeElement is not null;
+          case "details":
+            value = Details;
+            return Details is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (IdentifierElement is not null) yield return new KeyValuePair<string,object>("identifier",IdentifierElement);
+        if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+        if (Details is not null) yield return new KeyValuePair<string,object>("details",Details);
+      }
+
     }
 
     /// <summary>
     /// Code for the event this message represents or link to event definition
     /// </summary>
-    [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("event", InSummary=true, Order=90, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
@@ -689,7 +782,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message destination application(s)
     /// </summary>
-    [FhirElement("destination", InSummary=true, Order=100)]
+    [FhirElement("destination", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.MessageHeader.MessageDestinationComponent> Destination
@@ -703,7 +796,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Real world sender of the message
     /// </summary>
-    [FhirElement("sender", InSummary=true, Order=110)]
+    [FhirElement("sender", InSummary=true, Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -718,7 +811,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source of the data entry
     /// </summary>
-    [FhirElement("enterer", InSummary=true, Order=120)]
+    [FhirElement("enterer", InSummary=true, Order=120, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -733,7 +826,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source of the decision
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=130)]
+    [FhirElement("author", InSummary=true, Order=130, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -748,7 +841,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message source application
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=140)]
+    [FhirElement("source", InSummary=true, Order=140, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.MessageHeader.MessageSourceComponent Source
@@ -762,7 +855,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Final responsibility for event
     /// </summary>
-    [FhirElement("responsible", InSummary=true, Order=150)]
+    [FhirElement("responsible", InSummary=true, Order=150, FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -777,7 +870,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Cause of event
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=160)]
+    [FhirElement("reason", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {
@@ -957,6 +1050,65 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Focus) { if (elem != null) yield return new ElementValue("focus", elem); }
         if (DefinitionElement != null) yield return new ElementValue("definition", DefinitionElement);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "event":
+          value = Event;
+          return Event is not null;
+        case "destination":
+          value = Destination;
+          return Destination?.Any() == true;
+        case "sender":
+          value = Sender;
+          return Sender is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "responsible":
+          value = Responsible;
+          return Responsible is not null;
+        case "reason":
+          value = Reason;
+          return Reason is not null;
+        case "response":
+          value = Response;
+          return Response is not null;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        case "definition":
+          value = DefinitionElement;
+          return DefinitionElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Event is not null) yield return new KeyValuePair<string,object>("event",Event);
+      if (Destination?.Any() == true) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Sender is not null) yield return new KeyValuePair<string,object>("sender",Sender);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Responsible is not null) yield return new KeyValuePair<string,object>("responsible",Responsible);
+      if (Reason is not null) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Response is not null) yield return new KeyValuePair<string,object>("response",Response);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
     }
 
   }

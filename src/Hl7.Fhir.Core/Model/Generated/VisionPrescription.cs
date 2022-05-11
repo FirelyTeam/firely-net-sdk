@@ -618,6 +618,77 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "product":
+            value = Product;
+            return Product is not null;
+          case "eye":
+            value = EyeElement;
+            return EyeElement is not null;
+          case "sphere":
+            value = SphereElement;
+            return SphereElement is not null;
+          case "cylinder":
+            value = CylinderElement;
+            return CylinderElement is not null;
+          case "axis":
+            value = AxisElement;
+            return AxisElement is not null;
+          case "prism":
+            value = Prism;
+            return Prism?.Any() == true;
+          case "add":
+            value = AddElement;
+            return AddElement is not null;
+          case "power":
+            value = PowerElement;
+            return PowerElement is not null;
+          case "backCurve":
+            value = BackCurveElement;
+            return BackCurveElement is not null;
+          case "diameter":
+            value = DiameterElement;
+            return DiameterElement is not null;
+          case "duration":
+            value = Duration;
+            return Duration is not null;
+          case "color":
+            value = ColorElement;
+            return ColorElement is not null;
+          case "brand":
+            value = BrandElement;
+            return BrandElement is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
+        if (EyeElement is not null) yield return new KeyValuePair<string,object>("eye",EyeElement);
+        if (SphereElement is not null) yield return new KeyValuePair<string,object>("sphere",SphereElement);
+        if (CylinderElement is not null) yield return new KeyValuePair<string,object>("cylinder",CylinderElement);
+        if (AxisElement is not null) yield return new KeyValuePair<string,object>("axis",AxisElement);
+        if (Prism?.Any() == true) yield return new KeyValuePair<string,object>("prism",Prism);
+        if (AddElement is not null) yield return new KeyValuePair<string,object>("add",AddElement);
+        if (PowerElement is not null) yield return new KeyValuePair<string,object>("power",PowerElement);
+        if (BackCurveElement is not null) yield return new KeyValuePair<string,object>("backCurve",BackCurveElement);
+        if (DiameterElement is not null) yield return new KeyValuePair<string,object>("diameter",DiameterElement);
+        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+        if (ColorElement is not null) yield return new KeyValuePair<string,object>("color",ColorElement);
+        if (BrandElement is not null) yield return new KeyValuePair<string,object>("brand",BrandElement);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -765,12 +836,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "amount":
+            value = AmountElement;
+            return AmountElement is not null;
+          case "base":
+            value = BaseElement;
+            return BaseElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AmountElement is not null) yield return new KeyValuePair<string,object>("amount",AmountElement);
+        if (BaseElement is not null) yield return new KeyValuePair<string,object>("base",BaseElement);
+      }
+
     }
 
     /// <summary>
     /// Business Identifier for vision prescription
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -784,7 +878,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -849,7 +943,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who prescription is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120)]
+    [FhirElement("patient", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -865,7 +959,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Created during encounter / admission / stay
     /// </summary>
-    [FhirElement("encounter", Order=130)]
+    [FhirElement("encounter", Order=130, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -880,7 +974,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When prescription was authorized
     /// </summary>
-    [FhirElement("dateWritten", InSummary=true, Order=140)]
+    [FhirElement("dateWritten", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
@@ -912,7 +1006,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authorized the vision prescription
     /// </summary>
-    [FhirElement("prescriber", InSummary=true, Order=150)]
+    [FhirElement("prescriber", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=1,Max=1)]
@@ -1034,6 +1128,53 @@ namespace Hl7.Fhir.Model
         if (Prescriber != null) yield return new ElementValue("prescriber", Prescriber);
         foreach (var elem in LensSpecification) { if (elem != null) yield return new ElementValue("lensSpecification", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "dateWritten":
+          value = DateWrittenElement;
+          return DateWrittenElement is not null;
+        case "prescriber":
+          value = Prescriber;
+          return Prescriber is not null;
+        case "lensSpecification":
+          value = LensSpecification;
+          return LensSpecification?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateWrittenElement is not null) yield return new KeyValuePair<string,object>("dateWritten",DateWrittenElement);
+      if (Prescriber is not null) yield return new KeyValuePair<string,object>("prescriber",Prescriber);
+      if (LensSpecification?.Any() == true) yield return new KeyValuePair<string,object>("lensSpecification",LensSpecification);
     }
 
   }

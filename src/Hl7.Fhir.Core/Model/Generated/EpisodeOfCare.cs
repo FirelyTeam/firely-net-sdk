@@ -234,6 +234,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -252,7 +275,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Conditions/problems/diagnoses this episode of care is for
       /// </summary>
-      [FhirElement("condition", InSummary=true, Order=40)]
+      [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Condition")]
       [Cardinality(Min=1,Max=1)]
@@ -381,12 +404,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "condition":
+            value = Condition;
+            return Condition is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "rank":
+            value = RankElement;
+            return RankElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Condition is not null) yield return new KeyValuePair<string,object>("condition",Condition);
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (RankElement is not null) yield return new KeyValuePair<string,object>("rank",RankElement);
+      }
+
     }
 
     /// <summary>
     /// Business Identifier(s) relevant for this EpisodeOfCare
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -400,7 +450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -447,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120)]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -475,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient who is the focus of this episode of care
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -506,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval during responsibility is assumed
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=160)]
+    [FhirElement("period", InSummary=true, Order=160, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -694,6 +744,69 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Team) { if (elem != null) yield return new ElementValue("team", elem); }
         foreach (var elem in Account) { if (elem != null) yield return new ElementValue("account", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusHistory":
+          value = StatusHistory;
+          return StatusHistory?.Any() == true;
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "diagnosis":
+          value = Diagnosis;
+          return Diagnosis?.Any() == true;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "referralRequest":
+          value = ReferralRequest;
+          return ReferralRequest?.Any() == true;
+        case "careManager":
+          value = CareManager;
+          return CareManager is not null;
+        case "team":
+          value = Team;
+          return Team?.Any() == true;
+        case "account":
+          value = Account;
+          return Account?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusHistory?.Any() == true) yield return new KeyValuePair<string,object>("statusHistory",StatusHistory);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (Diagnosis?.Any() == true) yield return new KeyValuePair<string,object>("diagnosis",Diagnosis);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (ReferralRequest?.Any() == true) yield return new KeyValuePair<string,object>("referralRequest",ReferralRequest);
+      if (CareManager is not null) yield return new KeyValuePair<string,object>("careManager",CareManager);
+      if (Team?.Any() == true) yield return new KeyValuePair<string,object>("team",Team);
+      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
     }
 
   }

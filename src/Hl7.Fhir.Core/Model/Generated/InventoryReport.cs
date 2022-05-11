@@ -274,6 +274,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "itemStatus":
+            value = ItemStatus;
+            return ItemStatus is not null;
+          case "countingDateTime":
+            value = CountingDateTimeElement;
+            return CountingDateTimeElement is not null;
+          case "items":
+            value = Items;
+            return Items?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (ItemStatus is not null) yield return new KeyValuePair<string,object>("itemStatus",ItemStatus);
+        if (CountingDateTimeElement is not null) yield return new KeyValuePair<string,object>("countingDateTime",CountingDateTimeElement);
+        if (Items?.Any() == true) yield return new KeyValuePair<string,object>("items",Items);
+      }
+
     }
 
     /// <summary>
@@ -546,12 +577,55 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          case "lot":
+            value = LotElement;
+            return LotElement is not null;
+          case "serial":
+            value = SerialElement;
+            return SerialElement is not null;
+          case "expiry":
+            value = ExpiryElement;
+            return ExpiryElement is not null;
+          case "manufacturingDate":
+            value = ManufacturingDateElement;
+            return ManufacturingDateElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (LotElement is not null) yield return new KeyValuePair<string,object>("lot",LotElement);
+        if (SerialElement is not null) yield return new KeyValuePair<string,object>("serial",SerialElement);
+        if (ExpiryElement is not null) yield return new KeyValuePair<string,object>("expiry",ExpiryElement);
+        if (ManufacturingDateElement is not null) yield return new KeyValuePair<string,object>("manufacturingDate",ManufacturingDateElement);
+      }
+
     }
 
     /// <summary>
     /// Identifiers for the report
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -565,7 +639,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | requested | active | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -598,7 +672,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// snapshot | difference
     /// </summary>
-    [FhirElement("countType", InSummary=true, Order=110)]
+    [FhirElement("countType", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -846,6 +920,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in InventoryListing) { if (elem != null) yield return new ElementValue("inventoryListing", elem); }
         if (Note != null) yield return new ElementValue("note", Note);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "countType":
+          value = CountTypeElement;
+          return CountTypeElement is not null;
+        case "operationType":
+          value = OperationType;
+          return OperationType is not null;
+        case "operationTypeReason":
+          value = OperationTypeReason;
+          return OperationTypeReason is not null;
+        case "reportedDateTime":
+          value = ReportedDateTimeElement;
+          return ReportedDateTimeElement is not null;
+        case "reporter":
+          value = Reporter;
+          return Reporter is not null;
+        case "reportingPeriod":
+          value = ReportingPeriod;
+          return ReportingPeriod is not null;
+        case "inventoryListing":
+          value = InventoryListing;
+          return InventoryListing?.Any() == true;
+        case "note":
+          value = Note;
+          return Note is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (CountTypeElement is not null) yield return new KeyValuePair<string,object>("countType",CountTypeElement);
+      if (OperationType is not null) yield return new KeyValuePair<string,object>("operationType",OperationType);
+      if (OperationTypeReason is not null) yield return new KeyValuePair<string,object>("operationTypeReason",OperationTypeReason);
+      if (ReportedDateTimeElement is not null) yield return new KeyValuePair<string,object>("reportedDateTime",ReportedDateTimeElement);
+      if (Reporter is not null) yield return new KeyValuePair<string,object>("reporter",Reporter);
+      if (ReportingPeriod is not null) yield return new KeyValuePair<string,object>("reportingPeriod",ReportingPeriod);
+      if (InventoryListing?.Any() == true) yield return new KeyValuePair<string,object>("inventoryListing",InventoryListing);
+      if (Note is not null) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

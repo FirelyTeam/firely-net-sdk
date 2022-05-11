@@ -271,6 +271,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "contributedToDeath":
+            value = ContributedToDeathElement;
+            return ContributedToDeathElement is not null;
+          case "onset":
+            value = Onset;
+            return Onset is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (ContributedToDeathElement is not null) yield return new KeyValuePair<string,object>("contributedToDeath",ContributedToDeathElement);
+        if (Onset is not null) yield return new KeyValuePair<string,object>("onset",Onset);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
@@ -455,12 +490,47 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "outcome":
+            value = Outcome;
+            return Outcome is not null;
+          case "contributedToDeath":
+            value = ContributedToDeathElement;
+            return ContributedToDeathElement is not null;
+          case "performed":
+            value = Performed;
+            return Performed is not null;
+          case "note":
+            value = Note;
+            return Note?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Outcome is not null) yield return new KeyValuePair<string,object>("outcome",Outcome);
+        if (ContributedToDeathElement is not null) yield return new KeyValuePair<string,object>("contributedToDeath",ContributedToDeathElement);
+        if (Performed is not null) yield return new KeyValuePair<string,object>("performed",Performed);
+        if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      }
+
     }
 
     /// <summary>
     /// External Id(s) for this record
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -538,7 +608,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// partial | completed | entered-in-error | health-unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -584,7 +654,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient history is about
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -600,7 +670,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When history was recorded or last updated
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -765,7 +835,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=230)]
+    [FhirElement("reason", InSummary=true, Order=230, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -963,6 +1033,93 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Condition) { if (elem != null) yield return new ElementValue("condition", elem); }
         foreach (var elem in Procedure) { if (elem != null) yield return new ElementValue("procedure", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "dataAbsentReason":
+          value = DataAbsentReason;
+          return DataAbsentReason is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "relationship":
+          value = Relationship;
+          return Relationship is not null;
+        case "sex":
+          value = Sex;
+          return Sex is not null;
+        case "born":
+          value = Born;
+          return Born is not null;
+        case "age":
+          value = Age;
+          return Age is not null;
+        case "estimatedAge":
+          value = EstimatedAgeElement;
+          return EstimatedAgeElement is not null;
+        case "deceased":
+          value = Deceased;
+          return Deceased is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "condition":
+          value = Condition;
+          return Condition?.Any() == true;
+        case "procedure":
+          value = Procedure;
+          return Procedure?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (DataAbsentReason is not null) yield return new KeyValuePair<string,object>("dataAbsentReason",DataAbsentReason);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (Relationship is not null) yield return new KeyValuePair<string,object>("relationship",Relationship);
+      if (Sex is not null) yield return new KeyValuePair<string,object>("sex",Sex);
+      if (Born is not null) yield return new KeyValuePair<string,object>("born",Born);
+      if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+      if (EstimatedAgeElement is not null) yield return new KeyValuePair<string,object>("estimatedAge",EstimatedAgeElement);
+      if (Deceased is not null) yield return new KeyValuePair<string,object>("deceased",Deceased);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Procedure?.Any() == true) yield return new KeyValuePair<string,object>("procedure",Procedure);
     }
 
   }

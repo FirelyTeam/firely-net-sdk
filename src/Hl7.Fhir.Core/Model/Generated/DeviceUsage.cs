@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier for this record
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | not-done | entered-in-error +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient using device
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=130)]
+    [FhirElement("patient", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How often  the device was used
     /// </summary>
-    [FhirElement("timing", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("timing", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the statement was made (and recorded)
     /// </summary>
-    [FhirElement("dateAsserted", InSummary=true, Order=170)]
+    [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
     {
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who made the statement
     /// </summary>
-    [FhirElement("informationSource", InSummary=true, Order=200)]
+    [FhirElement("informationSource", InSummary=true, Order=200, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [DataMember]
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code or Reference to device used
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=210)]
+    [FhirElement("device", InSummary=true, Order=210, FiveWs="FiveWs.actor")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Device
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why device was used
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=220)]
+    [FhirElement("reason", InSummary=true, Order=220, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -509,6 +509,85 @@ namespace Hl7.Fhir.Model
         if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "dateAsserted":
+          value = DateAssertedElement;
+          return DateAssertedElement is not null;
+        case "usageStatus":
+          value = UsageStatus;
+          return UsageStatus is not null;
+        case "usageReason":
+          value = UsageReason;
+          return UsageReason?.Any() == true;
+        case "informationSource":
+          value = InformationSource;
+          return InformationSource is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+      if (DateAssertedElement is not null) yield return new KeyValuePair<string,object>("dateAsserted",DateAssertedElement);
+      if (UsageStatus is not null) yield return new KeyValuePair<string,object>("usageStatus",UsageStatus);
+      if (UsageReason?.Any() == true) yield return new KeyValuePair<string,object>("usageReason",UsageReason);
+      if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }
