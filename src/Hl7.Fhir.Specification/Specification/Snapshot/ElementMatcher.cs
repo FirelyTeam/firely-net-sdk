@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Generate a custom slice name for a type slice (type choice element constrained to a single type)
 #if GENERATE_MISSING_TYPE_SLICE_NAMES
-        static string SliceNameForTypeSlice(ElementDefinition elem)
+        private static string SliceNameForTypeSlice(ElementDefinition elem)
         {
             var elemName = elem.GetNameFromPath();
             if (elem.IsChoice() && elem.Type.Count == 1)
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // * SliceName is empty
         // * Path ends with "[x]"
         // * Element is constrained to single type
-        static string EnsureSliceNameForTypeSlice(ElementDefinition elem, MatchInfo match)
+        private static string EnsureSliceNameForTypeSlice(ElementDefinition elem, MatchInfo match)
         {
 #if GENERATE_MISSING_TYPE_SLICE_NAMES
             if (!elem.HasSlicingComponent()
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return elem.SliceName;
         }
 
-        static List<MatchInfo> constructChoiceTypeMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<MatchInfo> matches)
+        private static List<MatchInfo> constructChoiceTypeMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, List<MatchInfo> matches)
         {
             var bm = diffNav.Bookmark();
 
@@ -487,9 +487,9 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Returns <c>true</c> if the specified element has a slicing component (<see cref="ElementDefinition.Slicing"/> is not <c>null</c>).</summary>
-        static bool HasSlicingComponent(this ElementDefinition elem) => !(elem.Slicing is null);
+        private static bool HasSlicingComponent(this ElementDefinition elem) => !(elem.Slicing is null);
 
-        static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementDefinitionNavigator sliceBase = null)
+        private static List<MatchInfo> constructSliceMatch(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementDefinitionNavigator sliceBase = null)
         {
             var result = new List<MatchInfo>();
 
@@ -715,11 +715,11 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Returns true if the element has type Extension and also specifies a custom type profile.</summary>
-        static bool isExtensionSlice(ElementDefinition element) => isExtensionSlice(element.Type.FirstOrDefault());
+        private static bool isExtensionSlice(ElementDefinition element) => isExtensionSlice(element.Type.FirstOrDefault());
 
-        static readonly string EXTENSION_TYPENAME = FHIRAllTypes.Extension.GetLiteral();
+        private static readonly string EXTENSION_TYPENAME = FHIRAllTypes.Extension.GetLiteral();
 
-        static bool isExtensionSlice(ElementDefinition.TypeRefComponent type)
+        private static bool isExtensionSlice(ElementDefinition.TypeRefComponent type)
             => !(type is null)
                && SnapshotGenerator.IsEqualType(type.Code, EXTENSION_TYPENAME)
                && !(type.Profile is null);
@@ -727,7 +727,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Match current snapshot and differential slice elements
         // Returns an initialized MatchInfo with action = Merge | Add
         // defaultBase represents the base element for newly introduced slices
-        static void matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav,
+        private static void matchSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav,
                     List<ElementDefinition.DiscriminatorComponent> discriminators, MatchInfo match)
         {
             Debug.Assert(!(match is null));                         // Caller should initialize match
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // Match current snapshot and differential extension slice elements on extension type profile
         // Returns an initialized MatchInfo with action = Merge | Add
         // defaultBase represents the base element for newly introduced slices
-        static void matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav,
+        private static void matchExtensionSlice(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav,
             List<ElementDefinition.DiscriminatorComponent> discriminators, MatchInfo match)
         {
             // [WMR 20170110] Accept missing slicing component, e.g. to close the extension slice: Extension.extension { max = 0 }
@@ -845,7 +845,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Match current snapshot and differential slice elements on @type = Element.Type.Code
         // Returns an initialized MatchInfo with action = Merge | Add
-        static void matchSliceByTypeCode(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, MatchInfo match)
+        private static void matchSliceByTypeCode(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, MatchInfo match)
         {
             var diffTypeCodes = diffNav.Current.Type.Select(t => t.Code).ToList();
             if (diffTypeCodes.Count == 0)
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             match.Action = MatchAction.Add;
         }
 
-        class SliceByTypeProfileEqualityComparer : IEqualityComparer<string>
+        private class SliceByTypeProfileEqualityComparer : IEqualityComparer<string>
         {
             readonly string _sliceName;
 
@@ -903,7 +903,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // Match current snapshot and differential slice elements on @type|@profile = Element.Type.Code and Element.Type.Profile
         // Returns an initialized MatchInfo with action = Merge | Add
-        static void matchSliceByTypeProfile(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, MatchInfo match)
+        private static void matchSliceByTypeProfile(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, MatchInfo match)
         {
             matchSliceByTypeCode(snapNav, diffNav, match);
             if (match.Action == MatchAction.Merge)
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Given an extension element, return the canonical url of the associated extension definition, or <c>null</c>.</summary>
-        static string getExtensionProfileUri(ElementDefinition elem)
+        private static string getExtensionProfileUri(ElementDefinition elem)
         {
             Debug.Assert(elem.IsExtension());
             var elemTypes = elem.Type;
@@ -961,16 +961,16 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>Determines if the specified element has single type code "Extension".</summary>
-        static bool IsExtensionType(ElementDefinition elem) => elem.Type.Count == 1 && IsExtensionType(elem.Type[0].Code);
+        private static bool IsExtensionType(ElementDefinition elem) => elem.Type.Count == 1 && IsExtensionType(elem.Type[0].Code);
 
         /// <summary>Returns <c>true</c> if the specified <paramref name="typeName"/> equals <c>Extension</c>, or <c>false</c> otherwise.</summary>
-        static bool IsExtensionType(string typeName) => SnapshotGenerator.IsEqualType(typeName, EXTENSION_TYPENAME);
+        private static bool IsExtensionType(string typeName) => SnapshotGenerator.IsEqualType(typeName, EXTENSION_TYPENAME);
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type profile.</summary>
-        static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Profile;
+        private static bool isProfileDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Profile;
 
         /// <summary>Determines if the specified value equals the special predefined discriminator for slicing on element type.</summary>
-        static bool isTypeDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Type;
+        private static bool isTypeDiscriminator(ElementDefinition.DiscriminatorComponent discriminator) => discriminator?.Type == ElementDefinition.DiscriminatorType.Type;
 
         //EK: Commented out since this combination is not valid/has never been valid?  In any case we did not consider it
         //when composing the new DiscriminatorType valueset.
@@ -978,14 +978,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         //static bool isTypeAndProfileDiscriminator(string discriminator) => StringComparer.Ordinal.Equals(discriminator, TypeAndProfileDiscriminator);
 
         /// <summary>Determines if the specified value equals the fixed default discriminator for slicing extension elements.</summary>
-        static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator)
+        private static bool isUrlDiscriminator(ElementDefinition.DiscriminatorComponent discriminator)
             => !(discriminator is null)
                && discriminator.Type == ElementDefinition.DiscriminatorType.Value
                && SnapshotGenerator.IsEqualPath(discriminator.Path, ElementDefinition.DiscriminatorComponent.ExtensionDiscriminatorPath);
 
         // [WMR 20160801]
         // Determine if the specified discriminator(s) match on (type and) profile
-        static bool isTypeProfileDiscriminator(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminators)
+        private static bool isTypeProfileDiscriminator(IEnumerable<ElementDefinition.DiscriminatorComponent> discriminators)
         {
             // [WMR 20170411] TODO: update for STU3?
 
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
         /// <summary>List names of all following choice type elements ('[x]').</summary>
-        static List<string> listChoiceElements(ElementDefinitionNavigator nav)
+        private static List<string> listChoiceElements(ElementDefinitionNavigator nav)
         {
             var bm = nav.Bookmark();
 
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Find name of child element that represent a rename of the specified choice type element name.</summary>
         /// <param name="nav">An <see cref="ElementDefinitionNavigator "/> instance.</param>
         /// <param name="choiceName">Original choice type element name ending with "[x]".</param>
-        static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
+        private static string findRenamedChoiceElement(ElementDefinitionNavigator nav, string choiceName)
         {
             var bm = nav.Bookmark();
 
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             return msg;
         }
 
-        static string FormatPath(ElementDefinitionNavigator nav)
+        private static string FormatPath(ElementDefinitionNavigator nav)
         {
             if (nav.Current is null) { return "(none)"; }
             var result = nav.Path;

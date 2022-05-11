@@ -247,6 +247,49 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "manufacturedDoseForm":
+          value = ManufacturedDoseForm;
+          return ManufacturedDoseForm is not null;
+        case "unitOfPresentation":
+          value = UnitOfPresentation;
+          return UnitOfPresentation is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "physicalCharacteristics":
+          value = PhysicalCharacteristics;
+          return PhysicalCharacteristics is not null;
+        case "otherCharacteristics":
+          value = OtherCharacteristics;
+          return OtherCharacteristics?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ManufacturedDoseForm is not null) yield return new KeyValuePair<string,object>("manufacturedDoseForm",ManufacturedDoseForm);
+      if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
+      if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+    }
+
   }
 
 }

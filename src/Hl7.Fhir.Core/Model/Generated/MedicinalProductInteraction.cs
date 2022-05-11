@@ -147,6 +147,25 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -352,6 +371,49 @@ namespace Hl7.Fhir.Model
         if (Incidence != null) yield return new ElementValue("incidence", Incidence);
         if (Management != null) yield return new ElementValue("management", Management);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "interactant":
+          value = Interactant;
+          return Interactant?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "effect":
+          value = Effect;
+          return Effect is not null;
+        case "incidence":
+          value = Incidence;
+          return Incidence is not null;
+        case "management":
+          value = Management;
+          return Management is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",Interactant);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
+      if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
+      if (Management is not null) yield return new KeyValuePair<string,object>("management",Management);
     }
 
   }

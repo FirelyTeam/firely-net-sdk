@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using System;
 
 namespace Hl7.Fhir.Specification.Navigation
@@ -35,11 +36,11 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Determines if the specified element path represents a root element.</summary>
-        public static bool IsRootPath(string path) => !string.IsNullOrEmpty(path) && !path.Contains(".");
+        public static bool IsRootPath(string path) => ElementDefinitionExtensions.IsRootPath(path);
 
         /// <summary>Determines if the specified element path represents a (modifier) extension element.</summary>
         /// <returns><c>true</c> if <paramref name="path"/> ends with <c>.extension</c> or <c>.modifierExtension</c>, or <c>false</c> otherwise.</returns>
-        public static bool IsExtensionPath(string path) => !string.IsNullOrEmpty(path) && (path.EndsWith(".extension") || path.EndsWith(".modifierExtension"));
+        public static bool IsExtensionPath(string path) => ElementDefinitionExtensions.IsExtensionPath(path);
 
         /// <summary>Returns the root component of the specified element path.</summary>
         /// <param name="path">An element path.</param>

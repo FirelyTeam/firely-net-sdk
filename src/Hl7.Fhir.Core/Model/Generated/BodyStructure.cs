@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bodystructure identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Structure
     /// </summary>
-    [FhirElement("morphology", InSummary=true, Order=110)]
+    [FhirElement("morphology", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Morphology
     {
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body site
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=120)]
+    [FhirElement("location", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Location
     {
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Body site modifier
     /// </summary>
-    [FhirElement("locationQualifier", Order=130)]
+    [FhirElement("locationQualifier", Order=130, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> LocationQualifier
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Text description
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=140)]
+    [FhirElement("description", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attached images
     /// </summary>
-    [FhirElement("image", Order=150)]
+    [FhirElement("image", Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this is about
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=160)]
+    [FhirElement("patient", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -296,6 +296,53 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Image) { if (elem != null) yield return new ElementValue("image", elem); }
         if (Patient != null) yield return new ElementValue("patient", Patient);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "morphology":
+          value = Morphology;
+          return Morphology is not null;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "locationQualifier":
+          value = LocationQualifier;
+          return LocationQualifier?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "image":
+          value = Image;
+          return Image?.Any() == true;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (Morphology is not null) yield return new KeyValuePair<string,object>("morphology",Morphology);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (LocationQualifier?.Any() == true) yield return new KeyValuePair<string,object>("locationQualifier",LocationQualifier);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Image?.Any() == true) yield return new KeyValuePair<string,object>("image",Image);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
     }
 
   }

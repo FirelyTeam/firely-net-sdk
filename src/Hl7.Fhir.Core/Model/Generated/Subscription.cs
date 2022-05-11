@@ -346,12 +346,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "endpoint":
+            value = EndpointElement;
+            return EndpointElement is not null;
+          case "payload":
+            value = PayloadElement;
+            return PayloadElement is not null;
+          case "header":
+            value = HeaderElement;
+            return HeaderElement?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+        if (PayloadElement is not null) yield return new KeyValuePair<string,object>("payload",PayloadElement);
+        if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
+      }
+
     }
 
     /// <summary>
     /// requested | active | error | off
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=90)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -384,7 +415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting)
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=100)]
+    [FhirElement("contact", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -398,7 +429,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When to automatically delete the subscription
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=110)]
+    [FhirElement("end", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {
@@ -429,7 +460,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of why this subscription was created
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=120)]
+    [FhirElement("reason", InSummary=true, Order=120, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ReasonElement
@@ -625,6 +656,49 @@ namespace Hl7.Fhir.Model
         if (ErrorElement != null) yield return new ElementValue("error", ErrorElement);
         if (Channel != null) yield return new ElementValue("channel", Channel);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "reason":
+          value = ReasonElement;
+          return ReasonElement is not null;
+        case "criteria":
+          value = CriteriaElement;
+          return CriteriaElement is not null;
+        case "error":
+          value = ErrorElement;
+          return ErrorElement is not null;
+        case "channel":
+          value = Channel;
+          return Channel is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",ReasonElement);
+      if (CriteriaElement is not null) yield return new KeyValuePair<string,object>("criteria",CriteriaElement);
+      if (ErrorElement is not null) yield return new KeyValuePair<string,object>("error",ErrorElement);
+      if (Channel is not null) yield return new KeyValuePair<string,object>("channel",Channel);
     }
 
   }
