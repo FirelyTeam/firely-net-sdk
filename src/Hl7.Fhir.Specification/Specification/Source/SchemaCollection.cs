@@ -36,7 +36,8 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>The default source is the source returned by <see cref="ZipSource.CreateValidationSource()"/>.</remarks>
         public SchemaCollection()
         {
-            _validationSchemaSet = new(() => compileValidationSchemas(ZipSource.CreateValidationSource()));
+            var xmlSource = ZipSource.CreateValidationSource();
+            _validationSchemaSet = new(() => compileValidationSchemas(xmlSource));
         }
 
         private readonly Lazy<XmlSchemaSet> _validationSchemaSet;

@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -256,6 +256,45 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          case "schedule":
+            value = Schedule;
+            return Schedule?.Any() == true;
+          case "nutrient":
+            value = Nutrient;
+            return Nutrient?.Any() == true;
+          case "texture":
+            value = Texture;
+            return Texture?.Any() == true;
+          case "fluidConsistencyType":
+            value = FluidConsistencyType;
+            return FluidConsistencyType?.Any() == true;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Nutrient?.Any() == true) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
+        if (Texture?.Any() == true) yield return new KeyValuePair<string,object>("texture",Texture);
+        if (FluidConsistencyType?.Any() == true) yield return new KeyValuePair<string,object>("fluidConsistencyType",FluidConsistencyType);
+        if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -274,7 +313,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of nutrient that is being modified
       /// </summary>
-      [FhirElement("modifier", Order=40)]
+      [FhirElement("modifier", Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modifier
       {
@@ -362,6 +401,29 @@ namespace Hl7.Fhir.Model
           if (Modifier != null) yield return new ElementValue("modifier", Modifier);
           if (Amount != null) yield return new ElementValue("amount", Amount);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "modifier":
+            value = Modifier;
+            return Modifier is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 
     }
@@ -472,6 +534,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "modifier":
+            value = Modifier;
+            return Modifier is not null;
+          case "foodType":
+            value = FoodType;
+            return FoodType is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Modifier is not null) yield return new KeyValuePair<string,object>("modifier",Modifier);
+        if (FoodType is not null) yield return new KeyValuePair<string,object>("foodType",FoodType);
+      }
+
     }
 
     /// <summary>
@@ -490,7 +575,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of supplement product requested
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -671,6 +756,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "productName":
+            value = ProductNameElement;
+            return ProductNameElement is not null;
+          case "schedule":
+            value = Schedule;
+            return Schedule?.Any() == true;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "instruction":
+            value = InstructionElement;
+            return InstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
+        if (Schedule?.Any() == true) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (InstructionElement is not null) yield return new KeyValuePair<string,object>("instruction",InstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -689,7 +809,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of enteral or infant formula
       /// </summary>
-      [FhirElement("baseFormulaType", InSummary=true, Order=40)]
+      [FhirElement("baseFormulaType", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
       {
@@ -733,7 +853,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of modular component to add to the feeding
       /// </summary>
-      [FhirElement("additiveType", Order=60)]
+      [FhirElement("additiveType", Order=60, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AdditiveType
       {
@@ -960,6 +1080,57 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "baseFormulaType":
+            value = BaseFormulaType;
+            return BaseFormulaType is not null;
+          case "baseFormulaProductName":
+            value = BaseFormulaProductNameElement;
+            return BaseFormulaProductNameElement is not null;
+          case "additiveType":
+            value = AdditiveType;
+            return AdditiveType is not null;
+          case "additiveProductName":
+            value = AdditiveProductNameElement;
+            return AdditiveProductNameElement is not null;
+          case "caloricDensity":
+            value = CaloricDensity;
+            return CaloricDensity is not null;
+          case "routeofAdministration":
+            value = RouteofAdministration;
+            return RouteofAdministration is not null;
+          case "administration":
+            value = Administration;
+            return Administration?.Any() == true;
+          case "maxVolumeToDeliver":
+            value = MaxVolumeToDeliver;
+            return MaxVolumeToDeliver is not null;
+          case "administrationInstruction":
+            value = AdministrationInstructionElement;
+            return AdministrationInstructionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (BaseFormulaType is not null) yield return new KeyValuePair<string,object>("baseFormulaType",BaseFormulaType);
+        if (BaseFormulaProductNameElement is not null) yield return new KeyValuePair<string,object>("baseFormulaProductName",BaseFormulaProductNameElement);
+        if (AdditiveType is not null) yield return new KeyValuePair<string,object>("additiveType",AdditiveType);
+        if (AdditiveProductNameElement is not null) yield return new KeyValuePair<string,object>("additiveProductName",AdditiveProductNameElement);
+        if (CaloricDensity is not null) yield return new KeyValuePair<string,object>("caloricDensity",CaloricDensity);
+        if (RouteofAdministration is not null) yield return new KeyValuePair<string,object>("routeofAdministration",RouteofAdministration);
+        if (Administration?.Any() == true) yield return new KeyValuePair<string,object>("administration",Administration);
+        if (MaxVolumeToDeliver is not null) yield return new KeyValuePair<string,object>("maxVolumeToDeliver",MaxVolumeToDeliver);
+        if (AdministrationInstructionElement is not null) yield return new KeyValuePair<string,object>("administrationInstruction",AdministrationInstructionElement);
+      }
+
     }
 
     /// <summary>
@@ -1088,12 +1259,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "schedule":
+            value = Schedule;
+            return Schedule is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "rate":
+            value = Rate;
+            return Rate is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+      }
+
     }
 
     /// <summary>
     /// Identifiers assigned to this order
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1203,7 +1401,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1236,7 +1434,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=140)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1269,7 +1467,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who requires the diet, formula or nutritional supplement
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=150)]
+    [FhirElement("patient", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1285,7 +1483,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The encounter associated with this nutrition order
     /// </summary>
-    [FhirElement("encounter", Order=160)]
+    [FhirElement("encounter", Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1300,7 +1498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date and time the nutrition order was requested
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=170)]
+    [FhirElement("dateTime", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -1332,7 +1530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who ordered the diet, formula or nutritional supplement
     /// </summary>
-    [FhirElement("orderer", InSummary=true, Order=180)]
+    [FhirElement("orderer", InSummary=true, Order=180, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -1582,6 +1780,89 @@ namespace Hl7.Fhir.Model
         if (EnteralFormula != null) yield return new ElementValue("enteralFormula", EnteralFormula);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "instantiates":
+          value = InstantiatesElement;
+          return InstantiatesElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "dateTime":
+          value = DateTimeElement;
+          return DateTimeElement is not null;
+        case "orderer":
+          value = Orderer;
+          return Orderer is not null;
+        case "allergyIntolerance":
+          value = AllergyIntolerance;
+          return AllergyIntolerance?.Any() == true;
+        case "foodPreferenceModifier":
+          value = FoodPreferenceModifier;
+          return FoodPreferenceModifier?.Any() == true;
+        case "excludeFoodModifier":
+          value = ExcludeFoodModifier;
+          return ExcludeFoodModifier?.Any() == true;
+        case "oralDiet":
+          value = OralDiet;
+          return OralDiet is not null;
+        case "supplement":
+          value = Supplement;
+          return Supplement?.Any() == true;
+        case "enteralFormula":
+          value = EnteralFormula;
+          return EnteralFormula is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (InstantiatesElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiates",InstantiatesElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (DateTimeElement is not null) yield return new KeyValuePair<string,object>("dateTime",DateTimeElement);
+      if (Orderer is not null) yield return new KeyValuePair<string,object>("orderer",Orderer);
+      if (AllergyIntolerance?.Any() == true) yield return new KeyValuePair<string,object>("allergyIntolerance",AllergyIntolerance);
+      if (FoodPreferenceModifier?.Any() == true) yield return new KeyValuePair<string,object>("foodPreferenceModifier",FoodPreferenceModifier);
+      if (ExcludeFoodModifier?.Any() == true) yield return new KeyValuePair<string,object>("excludeFoodModifier",ExcludeFoodModifier);
+      if (OralDiet is not null) yield return new KeyValuePair<string,object>("oralDiet",OralDiet);
+      if (Supplement?.Any() == true) yield return new KeyValuePair<string,object>("supplement",Supplement);
+      if (EnteralFormula is not null) yield return new KeyValuePair<string,object>("enteralFormula",EnteralFormula);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

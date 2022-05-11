@@ -6,12 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System.Linq;
-using System.Collections.Generic;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
@@ -25,7 +26,7 @@ namespace Hl7.Fhir.Validation
 
             List<Match> matches = new List<Match>();
 
-            foreach(var definitionElement in definitionElements)
+            foreach (var definitionElement in definitionElements)
             {
                 var match = new Match() { Definition = definitionElement, InstanceElements = new List<ITypedElement>() };
 
@@ -34,7 +35,7 @@ namespace Hl7.Fhir.Validation
                 if (definitionElement.Current.IsPrimitiveValueConstraint())
                 {
                     if (instanceParent.Value != null)
-                        match.InstanceElements.Add( instanceParent );
+                        match.InstanceElements.Add(instanceParent);
                 }
                 else
                 {
@@ -86,7 +87,7 @@ namespace Hl7.Fhir.Validation
         {
             var definedName = name;
             // simple direct match
-            if (definedName == instance.Name) return true;   
+            if (definedName == instance.Name) return true;
 
             // match where definition path includes a type suffix (typeslice shorthand)
             // example: path Patient.deceasedBoolean matches Patient.deceased (with type 'boolean')
@@ -94,7 +95,7 @@ namespace Hl7.Fhir.Validation
 
             // match where definition path is a choice (suffix '[x]'), in this case
             // match the path without the suffix against the name
-            if(definedName.EndsWith("[x]"))
+            if (definedName.EndsWith("[x]"))
             {
                 if (definedName.Substring(0, definedName.Length - 3) == instance.Name) return true;
             }
