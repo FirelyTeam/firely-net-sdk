@@ -15,6 +15,7 @@ using System.Net;
 
 namespace Hl7.Fhir.Rest.Legacy
 {
+    [Obsolete("Use the class FhirClient instead. Will be removed in the next major release.")]       // Obsoleted on 20220210 by Marco Visser
     public partial class LegacyFhirClient : BaseFhirClient
     {
         /// <summary>
@@ -144,7 +145,7 @@ namespace Hl7.Fhir.Rest.Legacy
             get => Settings.PreferredParameterHandling;
             set => Settings.PreferredParameterHandling = value;
         }
-        
+
         /// <summary>
         /// This will do 2 things:
         /// 1. Add the header Accept-Encoding: gzip, deflate
@@ -188,9 +189,9 @@ namespace Hl7.Fhir.Rest.Legacy
         /// no longer available. Use LastBody, LastBodyAsText and LastBodyAsResource to get access to the received body (if any)</remarks>
         [Obsolete("LastResponse was already disposed, so no point in having them around", true)]
         public HttpWebResponse LastResponse;
-        
+
         #endregion
-        
+
 
         /// <summary>
         /// Called just before the Http call is done
@@ -224,7 +225,7 @@ namespace Hl7.Fhir.Rest.Legacy
             OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(webResponse, body));
         }
     }
-    
+
     public class BeforeRequestEventArgs : EventArgs
     {
         public BeforeRequestEventArgs(HttpWebRequest rawRequest, byte[] body)

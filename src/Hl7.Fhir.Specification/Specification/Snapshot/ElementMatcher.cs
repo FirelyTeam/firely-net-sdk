@@ -43,6 +43,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Snapshot
 {
+
     internal static class ElementMatcher
     {
         /// <summary>Constants that indicate how a match should be processed.</summary>

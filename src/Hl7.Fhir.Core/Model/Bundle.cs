@@ -30,36 +30,23 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
-
-using Hl7.Fhir.Validation;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Introspection;
 using System.Diagnostics;
+using System.Linq;
+
+#nullable enable
 
 namespace Hl7.Fhir.Model
-{    
-    [InvokeIValidatableObject]
-    public partial class Bundle : Hl7.Fhir.Validation.IValidatableObject
+{
+    public partial class Bundle
     {
-        [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
+        [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public partial class EntryComponent
         {
             [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-            private string DebuggerDisplay
-            {
-                get
-                {
-                    string response = (this.Response != null && !string.IsNullOrEmpty(this.Response.Status)) ? " Result: " + this.Response.Status : null;
-                    if (this.Request != null && this.Request.Method.HasValue)
-                        return String.Format("{0}: {1}", this.Request.Method.Value, this.FullUrl);
-
-                    return String.Format("FullUrl = \"{0}\"", this.FullUrl);
-                }
-            }
+            private string DebuggerDisplay =>
+                    Request?.Method.HasValue == true
+                        ? string.Format("{0}: {1}", Request.Method.Value, FullUrl)
+                        : string.Format("FullUrl = \"{0}\"", FullUrl);
         }
 
         public const string ATOM_LINKREL_SELF = "self";
@@ -72,71 +59,79 @@ namespace Hl7.Fhir.Model
         public const string ATOM_LINKREL_PREDVERSION = "predecessor-version";
         public const string ATOM_LINKREL_ALTERNATE = "alternate";
 
-        public Uri SelfLink
+        public Uri? SelfLink
         {
             get { return getLink(ATOM_LINKREL_SELF); }
             set { setLink(ATOM_LINKREL_SELF, value); }
         }
 
-        public Uri FirstLink
+        public Uri? FirstLink
         {
             get { return getLink(ATOM_LINKREL_FIRST); }
             set { setLink(ATOM_LINKREL_FIRST, value); }
         }
 
-        public Uri PreviousLink
+        public Uri? PreviousLink
         {
             get { return getLink(ATOM_LINKREL_PREVIOUS) ?? getLink(ATOM_LINKREL_PREV); }
             set { setLink(ATOM_LINKREL_PREVIOUS, value); }
         }
 
-        public Uri NextLink
+        public Uri? NextLink
         {
             get { return getLink(ATOM_LINKREL_NEXT); }
             set { setLink(ATOM_LINKREL_NEXT, value); }
         }
 
-        public Uri LastLink
+        public Uri? LastLink
         {
             get { return getLink(ATOM_LINKREL_LAST); }
             set { setLink(ATOM_LINKREL_LAST, value); }
         }
 
-        public Uri SearchLink
+        public Uri? SearchLink
         {
             get { return getLink(ATOM_LINKREL_SEARCH); }
             set { setLink(ATOM_LINKREL_SEARCH, value); }
         }
 
-        public Uri PredecessorVersionLink
+        public Uri? PredecessorVersionLink
         {
             get { return getLink(ATOM_LINKREL_PREDVERSION); }
             set { setLink(ATOM_LINKREL_PREDVERSION, value); }
         }
 
-        public Uri Alternate
+        public Uri? Alternate
         {
             get { return getLink(ATOM_LINKREL_ALTERNATE); }
             set { setLink(ATOM_LINKREL_ALTERNATE, value); }
         }
 
-        private Uri getLink(string rel)
+        private Uri? getLink(string rel)
         {
-            if (Link == null) return null;
+            if (Link is null) return null;
 
             var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
 
-            if (entry != null)
-                return new Uri(entry.Url, UriKind.RelativeOrAbsolute);
-            else
-                return null;
+            return entry != null ? new Uri(entry.Url, UriKind.RelativeOrAbsolute) : null;
         }
 
-        private void setLink(string rel, Uri uri)
+        private void setLink(string rel, Uri? uri)
         {
+            if (uri is null) throw new ArgumentNullException(nameof(uri));
+
             if (Link == null) Link = new List<LinkComponent>();
 
             var entry = Link.FirstOrDefault(e => rel.Equals(e.Relation, StringComparison.OrdinalIgnoreCase));
+
+            // Setting the link to null removes the entry
+            if (uri is null)
+            {
+                if (entry is not null)
+                    Link.Remove(entry);
+
+                return;
+            }
 
             var uriString = uri.IsAbsoluteUri ? uri.AbsoluteUri : uri.OriginalString;
             if (entry != null)
@@ -144,10 +139,7 @@ namespace Hl7.Fhir.Model
             else
                 Link.Add(new LinkComponent() { Relation = rel, Url = uriString });
         }
-
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            return base.Validate(validationContext);
-        }
-    }  
+    }
 }
+
+#nullable restore

@@ -205,6 +205,9 @@ namespace Hl7.Fhir.Specification
 
         public bool InSummary => _definition.IsSummary ?? false;
 
+        /// <inheritdoc/>
+        public bool IsModifier => _definition.IsModifier ?? false;
+
         public bool IsRequired => (_definition.Min ?? 0) >= 1;
 
         public XmlRepresentation Representation

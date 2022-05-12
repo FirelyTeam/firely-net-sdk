@@ -6,21 +6,15 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Hl7.Fhir.Model;
-using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
 using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-	public class CodeEnumTests
+    public class CodeEnumTests
     {
         [TestMethod]
         public void SetValueUpdatesRawValue()
@@ -47,7 +41,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.AreEqual(AdministrativeGender.Male, c.Value);
 
             c.ObjectValue = "maleX";
-            Assert.IsNull(c.Value);
+            Assert.ThrowsException<InvalidCastException>(() => c.Value);
 
             c.Value = AdministrativeGender.Other;
             Assert.AreEqual("other", c.ObjectValue);
@@ -74,6 +68,5 @@ namespace Hl7.Fhir.Tests.Model
         {
             IHaveNoSystem = 4
         }
-
     }
 }
