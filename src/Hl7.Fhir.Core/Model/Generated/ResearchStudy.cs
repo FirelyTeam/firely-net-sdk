@@ -293,6 +293,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      }
+
     }
 
     /// <summary>
@@ -419,12 +446,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      }
+
     }
 
     /// <summary>
     /// Business Identifier for study
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -501,7 +551,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | administratively-completed | approved | closed-to-accrual | closed-to-accrual-and-intervention | completed | disapproved | in-review | temporarily-closed-to-accrual | temporarily-closed-to-accrual-and-intervention | withdrawn
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -574,7 +624,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Drugs, devices, etc. under study
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=170)]
+    [FhirElement("focus", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Focus
@@ -588,7 +638,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition being studied
     /// </summary>
-    [FhirElement("condition", InSummary=true, Order=180)]
+    [FhirElement("condition", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Condition
@@ -671,7 +721,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Inclusion &amp; exclusion criteria
     /// </summary>
-    [FhirElement("enrollment", InSummary=true, Order=240)]
+    [FhirElement("enrollment", InSummary=true, Order=240, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Group")]
     [Cardinality(Min=0,Max=-1)]
@@ -687,7 +737,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the study began and ended
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=250)]
+    [FhirElement("period", InSummary=true, Order=250, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -700,7 +750,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that initiates and is legally responsible for the study
     /// </summary>
-    [FhirElement("sponsor", InSummary=true, Order=260)]
+    [FhirElement("sponsor", InSummary=true, Order=260, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -715,7 +765,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Researcher who oversees multiple aspects of the study
     /// </summary>
-    [FhirElement("principalInvestigator", InSummary=true, Order=270)]
+    [FhirElement("principalInvestigator", InSummary=true, Order=270, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -730,7 +780,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Facility where study activities are conducted
     /// </summary>
-    [FhirElement("site", InSummary=true, Order=280)]
+    [FhirElement("site", InSummary=true, Order=280, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
@@ -746,7 +796,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accrual-goal-met | closed-due-to-toxicity | closed-due-to-lack-of-study-progress | temporarily-closed-per-study-design
     /// </summary>
-    [FhirElement("reasonStopped", InSummary=true, Order=290)]
+    [FhirElement("reasonStopped", InSummary=true, Order=290, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ReasonStopped
     {
@@ -973,6 +1023,117 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Arm) { if (elem != null) yield return new ElementValue("arm", elem); }
         foreach (var elem in Objective) { if (elem != null) yield return new ElementValue("objective", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "protocol":
+          value = Protocol;
+          return Protocol?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "primaryPurposeType":
+          value = PrimaryPurposeType;
+          return PrimaryPurposeType is not null;
+        case "phase":
+          value = Phase;
+          return Phase is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "focus":
+          value = Focus;
+          return Focus?.Any() == true;
+        case "condition":
+          value = Condition;
+          return Condition?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "relatedArtifact":
+          value = RelatedArtifact;
+          return RelatedArtifact?.Any() == true;
+        case "keyword":
+          value = Keyword;
+          return Keyword?.Any() == true;
+        case "location":
+          value = Location;
+          return Location?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "enrollment":
+          value = Enrollment;
+          return Enrollment?.Any() == true;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "sponsor":
+          value = Sponsor;
+          return Sponsor is not null;
+        case "principalInvestigator":
+          value = PrincipalInvestigator;
+          return PrincipalInvestigator is not null;
+        case "site":
+          value = Site;
+          return Site?.Any() == true;
+        case "reasonStopped":
+          value = ReasonStopped;
+          return ReasonStopped is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "arm":
+          value = Arm;
+          return Arm?.Any() == true;
+        case "objective":
+          value = Objective;
+          return Objective?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (Protocol?.Any() == true) yield return new KeyValuePair<string,object>("protocol",Protocol);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (PrimaryPurposeType is not null) yield return new KeyValuePair<string,object>("primaryPurposeType",PrimaryPurposeType);
+      if (Phase is not null) yield return new KeyValuePair<string,object>("phase",Phase);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Focus?.Any() == true) yield return new KeyValuePair<string,object>("focus",Focus);
+      if (Condition?.Any() == true) yield return new KeyValuePair<string,object>("condition",Condition);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
+      if (Keyword?.Any() == true) yield return new KeyValuePair<string,object>("keyword",Keyword);
+      if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Enrollment?.Any() == true) yield return new KeyValuePair<string,object>("enrollment",Enrollment);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Sponsor is not null) yield return new KeyValuePair<string,object>("sponsor",Sponsor);
+      if (PrincipalInvestigator is not null) yield return new KeyValuePair<string,object>("principalInvestigator",PrincipalInvestigator);
+      if (Site?.Any() == true) yield return new KeyValuePair<string,object>("site",Site);
+      if (ReasonStopped is not null) yield return new KeyValuePair<string,object>("reasonStopped",ReasonStopped);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Arm?.Any() == true) yield return new KeyValuePair<string,object>("arm",Arm);
+      if (Objective?.Any() == true) yield return new KeyValuePair<string,object>("objective",Objective);
     }
 
   }

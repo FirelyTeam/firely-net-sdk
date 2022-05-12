@@ -49,7 +49,6 @@ namespace Hl7.Fhir.Tests.Rest
         private static string patientId = "pat1" + ModelInfo.Version;
         private static string locationId = "loc1" + ModelInfo.Version;
 
-#if !NETCOREAPP2_1
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
         {
@@ -62,20 +61,10 @@ namespace Hl7.Fhir.Tests.Rest
 
             CreateItems();
         }
-#else
-
-        [ClassInitialize]
-        public static void ClassInitialize(TestContext context)
-        {
-            CreateItems();
-        }
-
-#endif
-
 
         private static void CreateItems()
         {
-            var client = new LegacyFhirClient(testEndpoint);
+            var client = new FhirClient(testEndpoint);
 
             client.Settings.PreferredFormat = ResourceFormat.Json;
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
@@ -149,9 +138,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void FetchConformanceWebClient()
+        [Obsolete]
+        public void FetchConformance()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             TestConformance(client);
         }
 
@@ -190,6 +180,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public void PatchClient()
         {
             using var client = new LegacyFhirClient(testEndpoint);
@@ -214,6 +205,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public void CondionalPatchClient()
         {
             using var client = new LegacyFhirClient(testEndpoint);
@@ -257,9 +249,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ReadWithFormatWebClient()
+        [Obsolete]
+        public void ReadWithFormat()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             testReadWithFormat(client);
         }
 
@@ -282,9 +275,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         [ExpectedException(typeof(FhirOperationException))]
+        [Obsolete]
         public void ReadWrongResourceType()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             var loc = client.Read<Patient>("Location/" + locationId);
         }
 
@@ -302,9 +296,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public async T.Task Read()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             await testReadClientAsync(client);
         }
 
@@ -357,9 +352,10 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ReadRelativeWebClient()
+        [Obsolete]
+        public void ReadRelative()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             testReadRelative(client);
 
         }
@@ -449,11 +445,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod, Ignore]   // Something does not work with the gzip
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        [TestCategory("FhirClient"),
-            TestCategory("IntegrationTest")]
-        public void SearchWebClient()
+        [Obsolete]
+        public void Search()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             Bundle result;
 
             client.Settings.CompressRequestBody = true;
@@ -545,9 +540,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod, TestCategory("FhirClient")]
         [ExpectedException(typeof(ArgumentException))]
+        [Obsolete]
         public void SearchInvalidCriteria()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             testSearchInvalidCriteria(client);
         }
 
@@ -658,9 +654,10 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void PagingWebClient()
+        [Obsolete]
+        public void Paging()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
 
             testPaging(client);
         }
@@ -705,9 +702,10 @@ namespace Hl7.Fhir.Tests.Rest
 
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void PagingInJsonWebClient()
+        [Obsolete]
+        public void PagingInJson()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             testPagingInJson(client);
         }
 
@@ -756,9 +754,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CreateAndFullRepresentationWebClient()
+        [Obsolete]
+        public void CreateAndFullRepresentation()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             testCreateAndFullRepresentation(client);
         }
 
@@ -806,9 +805,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public async T.Task CreateEditDelete()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             client.OnBeforeRequest += Compression_OnBeforeWebRequestZipOrDeflate;
             await testCreateEditDeleteAsync(client);
         }
@@ -881,10 +881,11 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         //Test for github issue https://github.com/FirelyTeam/firely-net-sdk/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantity()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             testCreateObservationWithQuantity(client);
         }
 
@@ -997,9 +998,10 @@ namespace Hl7.Fhir.Tests.Rest
         /// and counts them in the WholeSystemHistory
         /// </summary>
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
+        [Obsolete]
         public async T.Task History()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             await testHistoryAsync(client);
         }
 
@@ -1069,7 +1071,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void TestWithParamWebClient()
+        [Obsolete]
+        public void TestWithParam()
         {
             var client = new LegacyFhirClient(testEndpoint);
             gettWithParam(client);
@@ -1092,9 +1095,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void ManipulateMetaWebClient()
+        [Obsolete]
+        public void ManipulateMeta()
         {
-            LegacyFhirClient client = new LegacyFhirClient("http://test.fhir.org/r4");
+            var client = new LegacyFhirClient("http://test.fhir.org/r4");
             testManipulateMeta(client);
         }
 
@@ -1223,6 +1227,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public void TestSearchUsingPostMultipleIncludesShouldNotThrowArgumentException()
         {
             // This test case proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/1206 is fixed.
@@ -1259,7 +1264,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void TestSearchByPersonaCodeWebClient()
+        [Obsolete]
+        public void TestSearchByPersonaCode()
         {
             var client = new LegacyFhirClient(testEndpoint);
             searchByPersonaCode(client);
@@ -1284,6 +1290,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public void TestSearchUsingPostByPersonaCode()
         {
             var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
@@ -1308,9 +1315,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public async T.Task CreateDynamic()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             await testCreateDynamicHttpClientAsync(client);
         }
 
@@ -1343,9 +1351,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void CallsCallbacksWebClient()
+        [Obsolete]
+        public void CallsCallbacks()
         {
-            LegacyFhirClient client = new LegacyFhirClient(testEndpoint);
+            var client = new LegacyFhirClient(testEndpoint);
             client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
             bool calledBefore = false;
@@ -1577,7 +1586,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void RequestFullResourceWebClient()
+        [Obsolete]
+        public void RequestFullResource()
         {
             var client = new LegacyFhirClient(testEndpoint);
             testRequestFullResource(client);
@@ -1615,7 +1625,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]   // Currently ignoring, as spark.furore.com returns Status 500.
-        public void TestReceiveHtmlIsHandledWebClient()
+        [Obsolete]
+        public void TestReceiveHtmlIsHandled()
         {
             var client = new LegacyFhirClient(testEndpoint);        // an address that returns html
 
@@ -1649,7 +1660,8 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void TestRefreshWebClient()
+        [Obsolete]
+        public void TestRefresh()
         {
             var client = new LegacyFhirClient(testEndpoint);
             clientReadRefresh(client);
@@ -1681,7 +1693,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void TestReceiveErrorStatusWithHtmlIsHandledWebClient()
+        [Obsolete]
+        public void TestReceiveErrorStatusWithHtmlIsHandled()
         {
             var client = new LegacyFhirClient("http://test.fhir.org/r4/");        // an address that returns Status 500 with HTML in its body
             testHandlingHtmlErrorStatus(client);
@@ -1740,7 +1753,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public void TestReceiveErrorStatusWithOperationOutcomeIsHandledWebClient()
+        [Obsolete]
+        public void TestReceiveErrorStatusWithOperationOutcomeIsHandled()
         {
             var client = new LegacyFhirClient(testEndpoint);  // an address that returns Status 404 with an OperationOutcome
 
@@ -1796,6 +1810,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         [TestMethod, Ignore]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [Obsolete]
         public void FhirVersionIsChecked()
         {
             var testEndpointDSTU2 = new Uri("http://spark-dstu2.furore.com/fhir");
@@ -1853,9 +1868,10 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public void TestAuthenticationOnBeforeWebClient()
+        [Obsolete]
+        public void TestAuthenticationOnBefore()
         {
-            LegacyFhirClient validationFhirClient = new LegacyFhirClient(testEndpoint);
+            var validationFhirClient = new LegacyFhirClient(testEndpoint);
             validationFhirClient.OnBeforeRequest += (object sender, BeforeRequestEventArgs e) =>
             {
                 e.RawRequest.Headers["Authorization"] = "Bearer bad-bearer";
@@ -1892,6 +1908,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// Test for showing issue https://github.com/FirelyTeam/firely-net-sdk/issues/128
         /// </summary>
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        [Obsolete]
         public void TestCreatingBinaryResource()
         {
             byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
@@ -1953,9 +1970,10 @@ namespace Hl7.Fhir.Tests.Rest
 
         [Ignore]
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public void TestOperationEverythingWebClient()
+        [Obsolete]
+        public void TestOperationEverything()
         {
-            LegacyFhirClient client = new LegacyFhirClient("http://test.fhir.org/r4", new FhirClientSettings() { UseFormatParameter = true, PreferredFormat = ResourceFormat.Json });
+            var client = new LegacyFhirClient("http://test.fhir.org/r4", new FhirClientSettings() { UseFormatParameter = true, PreferredFormat = ResourceFormat.Json });
             testOpEverything(client);
         }
 

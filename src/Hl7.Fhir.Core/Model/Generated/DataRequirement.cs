@@ -274,6 +274,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "searchParam":
+            value = SearchParamElement;
+            return SearchParamElement is not null;
+          case "valueSet":
+            value = ValueSetElement;
+            return ValueSetElement is not null;
+          case "code":
+            value = Code;
+            return Code?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
+        if (ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
+        if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
+      }
+
     }
 
     /// <summary>
@@ -438,6 +469,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "searchParam":
+            value = SearchParamElement;
+            return SearchParamElement is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (SearchParamElement is not null) yield return new KeyValuePair<string,object>("searchParam",SearchParamElement);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
     }
 
     /// <summary>
@@ -583,6 +641,29 @@ namespace Hl7.Fhir.Model
           if (PathElement != null) yield return new ElementValue("path", PathElement);
           if (DirectionElement != null) yield return new ElementValue("direction", DirectionElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "path":
+            value = PathElement;
+            return PathElement is not null;
+          case "direction":
+            value = DirectionElement;
+            return DirectionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PathElement is not null) yield return new KeyValuePair<string,object>("path",PathElement);
+        if (DirectionElement is not null) yield return new KeyValuePair<string,object>("direction",DirectionElement);
       }
 
     }
@@ -868,6 +949,53 @@ namespace Hl7.Fhir.Model
         if (LimitElement != null) yield return new ElementValue("limit", LimitElement);
         foreach (var elem in Sort) { if (elem != null) yield return new ElementValue("sort", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "profile":
+          value = ProfileElement;
+          return ProfileElement?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "mustSupport":
+          value = MustSupportElement;
+          return MustSupportElement?.Any() == true;
+        case "codeFilter":
+          value = CodeFilter;
+          return CodeFilter?.Any() == true;
+        case "dateFilter":
+          value = DateFilter;
+          return DateFilter?.Any() == true;
+        case "limit":
+          value = LimitElement;
+          return LimitElement is not null;
+        case "sort":
+          value = Sort;
+          return Sort?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (ProfileElement?.Any() == true) yield return new KeyValuePair<string,object>("profile",ProfileElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (MustSupportElement?.Any() == true) yield return new KeyValuePair<string,object>("mustSupport",MustSupportElement);
+      if (CodeFilter?.Any() == true) yield return new KeyValuePair<string,object>("codeFilter",CodeFilter);
+      if (DateFilter?.Any() == true) yield return new KeyValuePair<string,object>("dateFilter",DateFilter);
+      if (LimitElement is not null) yield return new KeyValuePair<string,object>("limit",LimitElement);
+      if (Sort?.Any() == true) yield return new KeyValuePair<string,object>("sort",Sort);
     }
 
   }

@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier for this record
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient using device
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
+    [FhirElement("subject", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How often  the device was used
     /// </summary>
-    [FhirElement("timing", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("timing", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When statement was recorded
     /// </summary>
-    [FhirElement("recordedOn", InSummary=true, Order=150)]
+    [FhirElement("recordedOn", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
     {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who made the statement
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=160)]
+    [FhirElement("source", InSummary=true, Order=160, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to device used
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=170)]
+    [FhirElement("device", InSummary=true, Order=170, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why device was used
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=180)]
+    [FhirElement("reasonCode", InSummary=true, Order=180, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was DeviceUseStatement performed?
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=190)]
+    [FhirElement("reasonReference", InSummary=true, Order=190, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport","DocumentReference","Media")]
     [Cardinality(Min=0,Max=-1)]
@@ -450,6 +450,73 @@ namespace Hl7.Fhir.Model
         if (BodySite != null) yield return new ElementValue("bodySite", BodySite);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "timing":
+          value = Timing;
+          return Timing is not null;
+        case "recordedOn":
+          value = RecordedOnElement;
+          return RecordedOnElement is not null;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "reasonCode":
+          value = ReasonCode;
+          return ReasonCode?.Any() == true;
+        case "reasonReference":
+          value = ReasonReference;
+          return ReasonReference?.Any() == true;
+        case "bodySite":
+          value = BodySite;
+          return BodySite is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Timing is not null) yield return new KeyValuePair<string,object>("timing",Timing);
+      if (RecordedOnElement is not null) yield return new KeyValuePair<string,object>("recordedOn",RecordedOnElement);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (ReasonCode?.Any() == true) yield return new KeyValuePair<string,object>("reasonCode",ReasonCode);
+      if (ReasonReference?.Any() == true) yield return new KeyValuePair<string,object>("reasonReference",ReasonReference);
+      if (BodySite is not null) yield return new KeyValuePair<string,object>("bodySite",BodySite);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

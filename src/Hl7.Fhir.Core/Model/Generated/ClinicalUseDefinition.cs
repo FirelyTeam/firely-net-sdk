@@ -260,6 +260,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "diseaseSymptomProcedure":
+            value = DiseaseSymptomProcedure;
+            return DiseaseSymptomProcedure is not null;
+          case "diseaseStatus":
+            value = DiseaseStatus;
+            return DiseaseStatus is not null;
+          case "comorbidity":
+            value = Comorbidity;
+            return Comorbidity?.Any() == true;
+          case "indication":
+            value = Indication;
+            return Indication?.Any() == true;
+          case "otherTherapy":
+            value = OtherTherapy;
+            return OtherTherapy?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
+        if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
+        if (Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
+        if (Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",Indication);
+        if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+      }
+
     }
 
     /// <summary>
@@ -368,6 +403,29 @@ namespace Hl7.Fhir.Model
           if (RelationshipType != null) yield return new ElementValue("relationshipType", RelationshipType);
           if (Therapy != null) yield return new ElementValue("therapy", Therapy);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "relationshipType":
+            value = RelationshipType;
+            return RelationshipType is not null;
+          case "therapy":
+            value = Therapy;
+            return Therapy is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RelationshipType is not null) yield return new KeyValuePair<string,object>("relationshipType",RelationshipType);
+        if (Therapy is not null) yield return new KeyValuePair<string,object>("therapy",Therapy);
       }
 
     }
@@ -573,6 +631,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "diseaseSymptomProcedure":
+            value = DiseaseSymptomProcedure;
+            return DiseaseSymptomProcedure is not null;
+          case "diseaseStatus":
+            value = DiseaseStatus;
+            return DiseaseStatus is not null;
+          case "comorbidity":
+            value = Comorbidity;
+            return Comorbidity?.Any() == true;
+          case "intendedEffect":
+            value = IntendedEffect;
+            return IntendedEffect is not null;
+          case "duration":
+            value = Duration;
+            return Duration is not null;
+          case "undesirableEffect":
+            value = UndesirableEffect;
+            return UndesirableEffect?.Any() == true;
+          case "otherTherapy":
+            value = OtherTherapy;
+            return OtherTherapy?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DiseaseSymptomProcedure is not null) yield return new KeyValuePair<string,object>("diseaseSymptomProcedure",DiseaseSymptomProcedure);
+        if (DiseaseStatus is not null) yield return new KeyValuePair<string,object>("diseaseStatus",DiseaseStatus);
+        if (Comorbidity?.Any() == true) yield return new KeyValuePair<string,object>("comorbidity",Comorbidity);
+        if (IntendedEffect is not null) yield return new KeyValuePair<string,object>("intendedEffect",IntendedEffect);
+        if (Duration is not null) yield return new KeyValuePair<string,object>("duration",Duration);
+        if (UndesirableEffect?.Any() == true) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
+        if (OtherTherapy?.Any() == true) yield return new KeyValuePair<string,object>("otherTherapy",OtherTherapy);
+      }
+
     }
 
     /// <summary>
@@ -737,6 +838,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "interactant":
+            value = Interactant;
+            return Interactant?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "effect":
+            value = Effect;
+            return Effect is not null;
+          case "incidence":
+            value = Incidence;
+            return Incidence is not null;
+          case "management":
+            value = Management;
+            return Management?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Interactant?.Any() == true) yield return new KeyValuePair<string,object>("interactant",Interactant);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Effect is not null) yield return new KeyValuePair<string,object>("effect",Effect);
+        if (Incidence is not null) yield return new KeyValuePair<string,object>("incidence",Incidence);
+        if (Management?.Any() == true) yield return new KeyValuePair<string,object>("management",Management);
+      }
+
     }
 
     /// <summary>
@@ -829,6 +965,25 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (Item != null) yield return new ElementValue("item", Item);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
       }
 
     }
@@ -957,6 +1112,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "symptomConditionEffect":
+            value = SymptomConditionEffect;
+            return SymptomConditionEffect is not null;
+          case "classification":
+            value = Classification;
+            return Classification is not null;
+          case "frequencyOfOccurrence":
+            value = FrequencyOfOccurrence;
+            return FrequencyOfOccurrence is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SymptomConditionEffect is not null) yield return new KeyValuePair<string,object>("symptomConditionEffect",SymptomConditionEffect);
+        if (Classification is not null) yield return new KeyValuePair<string,object>("classification",Classification);
+        if (FrequencyOfOccurrence is not null) yield return new KeyValuePair<string,object>("frequencyOfOccurrence",FrequencyOfOccurrence);
+      }
+
     }
 
     /// <summary>
@@ -1063,6 +1245,29 @@ namespace Hl7.Fhir.Model
           if (Description != null) yield return new ElementValue("description", Description);
           if (Code != null) yield return new ElementValue("code", Code);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "description":
+            value = Description;
+            return Description is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       }
 
     }
@@ -1348,6 +1553,65 @@ namespace Hl7.Fhir.Model
         if (UndesirableEffect != null) yield return new ElementValue("undesirableEffect", UndesirableEffect);
         if (Warning != null) yield return new ElementValue("warning", Warning);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "status":
+          value = Status;
+          return Status is not null;
+        case "contraindication":
+          value = Contraindication;
+          return Contraindication is not null;
+        case "indication":
+          value = Indication;
+          return Indication is not null;
+        case "interaction":
+          value = Interaction;
+          return Interaction is not null;
+        case "population":
+          value = Population;
+          return Population?.Any() == true;
+        case "undesirableEffect":
+          value = UndesirableEffect;
+          return UndesirableEffect is not null;
+        case "warning":
+          value = Warning;
+          return Warning is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+      if (Contraindication is not null) yield return new KeyValuePair<string,object>("contraindication",Contraindication);
+      if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
+      if (Interaction is not null) yield return new KeyValuePair<string,object>("interaction",Interaction);
+      if (Population?.Any() == true) yield return new KeyValuePair<string,object>("population",Population);
+      if (UndesirableEffect is not null) yield return new KeyValuePair<string,object>("undesirableEffect",UndesirableEffect);
+      if (Warning is not null) yield return new KeyValuePair<string,object>("warning",Warning);
     }
 
   }

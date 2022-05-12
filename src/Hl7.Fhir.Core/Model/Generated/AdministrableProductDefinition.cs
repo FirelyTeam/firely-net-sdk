@@ -182,6 +182,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "status":
+            value = Status;
+            return Status is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+      }
+
     }
 
     /// <summary>
@@ -382,6 +409,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "firstDose":
+            value = FirstDose;
+            return FirstDose is not null;
+          case "maxSingleDose":
+            value = MaxSingleDose;
+            return MaxSingleDose is not null;
+          case "maxDosePerDay":
+            value = MaxDosePerDay;
+            return MaxDosePerDay is not null;
+          case "maxDosePerTreatmentPeriod":
+            value = MaxDosePerTreatmentPeriod;
+            return MaxDosePerTreatmentPeriod is not null;
+          case "maxTreatmentPeriod":
+            value = MaxTreatmentPeriod;
+            return MaxTreatmentPeriod is not null;
+          case "targetSpecies":
+            value = TargetSpecies;
+            return TargetSpecies?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (FirstDose is not null) yield return new KeyValuePair<string,object>("firstDose",FirstDose);
+        if (MaxSingleDose is not null) yield return new KeyValuePair<string,object>("maxSingleDose",MaxSingleDose);
+        if (MaxDosePerDay is not null) yield return new KeyValuePair<string,object>("maxDosePerDay",MaxDosePerDay);
+        if (MaxDosePerTreatmentPeriod is not null) yield return new KeyValuePair<string,object>("maxDosePerTreatmentPeriod",MaxDosePerTreatmentPeriod);
+        if (MaxTreatmentPeriod is not null) yield return new KeyValuePair<string,object>("maxTreatmentPeriod",MaxTreatmentPeriod);
+        if (TargetSpecies?.Any() == true) yield return new KeyValuePair<string,object>("targetSpecies",TargetSpecies);
+      }
+
     }
 
     /// <summary>
@@ -490,6 +560,29 @@ namespace Hl7.Fhir.Model
           if (Code != null) yield return new ElementValue("code", Code);
           foreach (var elem in WithdrawalPeriod) { if (elem != null) yield return new ElementValue("withdrawalPeriod", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "withdrawalPeriod":
+            value = WithdrawalPeriod;
+            return WithdrawalPeriod?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (WithdrawalPeriod?.Any() == true) yield return new KeyValuePair<string,object>("withdrawalPeriod",WithdrawalPeriod);
       }
 
     }
@@ -638,6 +731,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "tissue":
+            value = Tissue;
+            return Tissue is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "supportingInformation":
+            value = SupportingInformationElement;
+            return SupportingInformationElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Tissue is not null) yield return new KeyValuePair<string,object>("tissue",Tissue);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (SupportingInformationElement is not null) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformationElement);
+      }
+
     }
 
     /// <summary>
@@ -657,7 +777,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -907,6 +1027,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Property) { if (elem != null) yield return new ElementValue("property", elem); }
         foreach (var elem in RouteOfAdministration) { if (elem != null) yield return new ElementValue("routeOfAdministration", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "formOf":
+          value = FormOf;
+          return FormOf?.Any() == true;
+        case "administrableDoseForm":
+          value = AdministrableDoseForm;
+          return AdministrableDoseForm is not null;
+        case "unitOfPresentation":
+          value = UnitOfPresentation;
+          return UnitOfPresentation is not null;
+        case "producedFrom":
+          value = ProducedFrom;
+          return ProducedFrom?.Any() == true;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "property":
+          value = Property;
+          return Property?.Any() == true;
+        case "routeOfAdministration":
+          value = RouteOfAdministration;
+          return RouteOfAdministration?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (FormOf?.Any() == true) yield return new KeyValuePair<string,object>("formOf",FormOf);
+      if (AdministrableDoseForm is not null) yield return new KeyValuePair<string,object>("administrableDoseForm",AdministrableDoseForm);
+      if (UnitOfPresentation is not null) yield return new KeyValuePair<string,object>("unitOfPresentation",UnitOfPresentation);
+      if (ProducedFrom?.Any() == true) yield return new KeyValuePair<string,object>("producedFrom",ProducedFrom);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (Property?.Any() == true) yield return new KeyValuePair<string,object>("property",Property);
+      if (RouteOfAdministration?.Any() == true) yield return new KeyValuePair<string,object>("routeOfAdministration",RouteOfAdministration);
     }
 
   }
