@@ -228,12 +228,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
     /// Business identifier for this dispensation
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -279,7 +302,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -339,7 +362,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What device was supplied
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=150)]
+    [FhirElement("device", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableReference Device
@@ -353,7 +376,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the dispense is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160)]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -384,7 +407,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information that supports the dispensing of the device
     /// </summary>
-    [FhirElement("supportingInformation", Order=180)]
+    [FhirElement("supportingInformation", Order=180, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -745,6 +768,101 @@ namespace Hl7.Fhir.Model
         if (UsageInstructionElement != null) yield return new ElementValue("usageInstruction", UsageInstructionElement);
         foreach (var elem in EventHistory) { if (elem != null) yield return new ElementValue("eventHistory", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "device":
+          value = Device;
+          return Device is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "preparedDate":
+          value = PreparedDateElement;
+          return PreparedDateElement is not null;
+        case "whenHandedOver":
+          value = WhenHandedOverElement;
+          return WhenHandedOverElement is not null;
+        case "destination":
+          value = Destination;
+          return Destination is not null;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "usageInstruction":
+          value = UsageInstructionElement;
+          return UsageInstructionElement is not null;
+        case "eventHistory":
+          value = EventHistory;
+          return EventHistory?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (PreparedDateElement is not null) yield return new KeyValuePair<string,object>("preparedDate",PreparedDateElement);
+      if (WhenHandedOverElement is not null) yield return new KeyValuePair<string,object>("whenHandedOver",WhenHandedOverElement);
+      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (UsageInstructionElement is not null) yield return new KeyValuePair<string,object>("usageInstruction",UsageInstructionElement);
+      if (EventHistory?.Any() == true) yield return new KeyValuePair<string,object>("eventHistory",EventHistory);
     }
 
   }

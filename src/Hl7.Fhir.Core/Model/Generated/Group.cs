@@ -266,6 +266,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "exclude":
+            value = ExcludeElement;
+            return ExcludeElement is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (ExcludeElement is not null) yield return new KeyValuePair<string,object>("exclude",ExcludeElement);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      }
+
     }
 
     /// <summary>
@@ -413,12 +444,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "entity":
+            value = Entity;
+            return Entity is not null;
+          case "period":
+            value = Period;
+            return Period is not null;
+          case "inactive":
+            value = InactiveElement;
+            return InactiveElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Entity is not null) yield return new KeyValuePair<string,object>("entity",Entity);
+        if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+        if (InactiveElement is not null) yield return new KeyValuePair<string,object>("inactive",InactiveElement);
+      }
+
     }
 
     /// <summary>
     /// Unique id
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -432,7 +490,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this group's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -463,7 +521,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// person | animal | practitioner | device | medication | substance
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -496,7 +554,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive or actual
     /// </summary>
-    [FhirElement("actual", InSummary=true, Order=120)]
+    [FhirElement("actual", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -528,7 +586,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Group members
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -748,6 +806,61 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
         foreach (var elem in Member) { if (elem != null) yield return new ElementValue("member", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "active":
+          value = ActiveElement;
+          return ActiveElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "actual":
+          value = ActualElement;
+          return ActualElement is not null;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "quantity":
+          value = QuantityElement;
+          return QuantityElement is not null;
+        case "managingEntity":
+          value = ManagingEntity;
+          return ManagingEntity is not null;
+        case "characteristic":
+          value = Characteristic;
+          return Characteristic?.Any() == true;
+        case "member":
+          value = Member;
+          return Member?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (ActiveElement is not null) yield return new KeyValuePair<string,object>("active",ActiveElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (ActualElement is not null) yield return new KeyValuePair<string,object>("actual",ActualElement);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
+      if (ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",ManagingEntity);
+      if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
+      if (Member?.Any() == true) yield return new KeyValuePair<string,object>("member",Member);
     }
 
   }

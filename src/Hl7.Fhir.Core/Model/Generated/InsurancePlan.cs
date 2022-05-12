@@ -226,6 +226,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "purpose":
+            value = Purpose;
+            return Purpose is not null;
+          case "name":
+            value = Name;
+            return Name is not null;
+          case "telecom":
+            value = Telecom;
+            return Telecom?.Any() == true;
+          case "address":
+            value = Address;
+            return Address is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+        if (Name is not null) yield return new KeyValuePair<string,object>("name",Name);
+        if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+        if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      }
+
     }
 
     /// <summary>
@@ -355,6 +386,33 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Network) { if (elem != null) yield return new ElementValue("network", elem); }
           foreach (var elem in Benefit) { if (elem != null) yield return new ElementValue("benefit", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "network":
+            value = Network;
+            return Network?.Any() == true;
+          case "benefit":
+            value = Benefit;
+            return Benefit?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+        if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
       }
 
     }
@@ -503,6 +561,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "requirement":
+            value = RequirementElement;
+            return RequirementElement is not null;
+          case "limit":
+            value = Limit;
+            return Limit?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (RequirementElement is not null) yield return new KeyValuePair<string,object>("requirement",RequirementElement);
+        if (Limit?.Any() == true) yield return new KeyValuePair<string,object>("limit",Limit);
+      }
+
     }
 
     /// <summary>
@@ -611,6 +696,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "value":
+            value = Value;
+            return Value is not null;
+          case "code":
+            value = Code;
+            return Code is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      }
+
     }
 
     /// <summary>
@@ -629,7 +737,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Business Identifier for Product
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=40)]
+      [FhirElement("identifier", InSummary=true, Order=40, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -798,6 +906,45 @@ namespace Hl7.Fhir.Model
           foreach (var elem in GeneralCost) { if (elem != null) yield return new ElementValue("generalCost", elem); }
           foreach (var elem in SpecificCost) { if (elem != null) yield return new ElementValue("specificCost", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "coverageArea":
+            value = CoverageArea;
+            return CoverageArea?.Any() == true;
+          case "network":
+            value = Network;
+            return Network?.Any() == true;
+          case "generalCost":
+            value = GeneralCost;
+            return GeneralCost?.Any() == true;
+          case "specificCost":
+            value = SpecificCost;
+            return SpecificCost?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
+        if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+        if (GeneralCost?.Any() == true) yield return new KeyValuePair<string,object>("generalCost",GeneralCost);
+        if (SpecificCost?.Any() == true) yield return new KeyValuePair<string,object>("specificCost",SpecificCost);
       }
 
     }
@@ -980,6 +1127,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "groupSize":
+            value = GroupSizeElement;
+            return GroupSizeElement is not null;
+          case "cost":
+            value = Cost;
+            return Cost is not null;
+          case "comment":
+            value = CommentElement;
+            return CommentElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (GroupSizeElement is not null) yield return new KeyValuePair<string,object>("groupSize",GroupSizeElement);
+        if (Cost is not null) yield return new KeyValuePair<string,object>("cost",Cost);
+        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      }
+
     }
 
     /// <summary>
@@ -1090,6 +1268,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "benefit":
+            value = Benefit;
+            return Benefit?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+        if (Benefit?.Any() == true) yield return new KeyValuePair<string,object>("benefit",Benefit);
+      }
+
     }
 
     /// <summary>
@@ -1198,6 +1399,29 @@ namespace Hl7.Fhir.Model
           if (Type != null) yield return new ElementValue("type", Type);
           foreach (var elem in Cost) { if (elem != null) yield return new ElementValue("cost", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "cost":
+            value = Cost;
+            return Cost?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Cost?.Any() == true) yield return new KeyValuePair<string,object>("cost",Cost);
       }
 
     }
@@ -1346,12 +1570,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "applicability":
+            value = Applicability;
+            return Applicability is not null;
+          case "qualifiers":
+            value = Qualifiers;
+            return Qualifiers?.Any() == true;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Applicability is not null) yield return new KeyValuePair<string,object>("applicability",Applicability);
+        if (Qualifiers?.Any() == true) yield return new KeyValuePair<string,object>("qualifiers",Qualifiers);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
     }
 
     /// <summary>
     /// Business Identifier for Product
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1365,7 +1620,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1397,7 +1652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of product
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1729,6 +1984,77 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Coverage) { if (elem != null) yield return new ElementValue("coverage", elem); }
         foreach (var elem in Plan) { if (elem != null) yield return new ElementValue("plan", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "alias":
+          value = AliasElement;
+          return AliasElement?.Any() == true;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "ownedBy":
+          value = OwnedBy;
+          return OwnedBy is not null;
+        case "administeredBy":
+          value = AdministeredBy;
+          return AdministeredBy is not null;
+        case "coverageArea":
+          value = CoverageArea;
+          return CoverageArea?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        case "network":
+          value = Network;
+          return Network?.Any() == true;
+        case "coverage":
+          value = Coverage;
+          return Coverage?.Any() == true;
+        case "plan":
+          value = Plan;
+          return Plan?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (OwnedBy is not null) yield return new KeyValuePair<string,object>("ownedBy",OwnedBy);
+      if (AdministeredBy is not null) yield return new KeyValuePair<string,object>("administeredBy",AdministeredBy);
+      if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
+      if (Network?.Any() == true) yield return new KeyValuePair<string,object>("network",Network);
+      if (Coverage?.Any() == true) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      if (Plan?.Any() == true) yield return new KeyValuePair<string,object>("plan",Plan);
     }
 
   }

@@ -363,6 +363,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "performedActivity":
+            value = PerformedActivity;
+            return PerformedActivity?.Any() == true;
+          case "progress":
+            value = Progress;
+            return Progress?.Any() == true;
+          case "plannedActivityReference":
+            value = PlannedActivityReference;
+            return PlannedActivityReference is not null;
+          case "plannedActivityDetail":
+            value = PlannedActivityDetail;
+            return PlannedActivityDetail is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PerformedActivity?.Any() == true) yield return new KeyValuePair<string,object>("performedActivity",PerformedActivity);
+        if (Progress?.Any() == true) yield return new KeyValuePair<string,object>("progress",Progress);
+        if (PlannedActivityReference is not null) yield return new KeyValuePair<string,object>("plannedActivityReference",PlannedActivityReference);
+        if (PlannedActivityDetail is not null) yield return new KeyValuePair<string,object>("plannedActivityDetail",PlannedActivityDetail);
+      }
+
     }
 
     /// <summary>
@@ -520,7 +551,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// not-started | scheduled | in-progress | on-hold | completed | cancelled | stopped | unknown | entered-in-error
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=100)]
+      [FhirElement("status", IsModifier=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -566,7 +597,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If true, activity is prohibiting action
       /// </summary>
-      [FhirElement("doNotPerform", InSummary=true, Order=120)]
+      [FhirElement("doNotPerform", IsModifier=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
       {
@@ -625,7 +656,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reported rather than primary record
       /// </summary>
-      [FhirElement("reported", Order=150, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("reported", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.source")]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -869,12 +900,95 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "kind":
+            value = KindElement;
+            return KindElement is not null;
+          case "instantiatesCanonical":
+            value = InstantiatesCanonicalElement;
+            return InstantiatesCanonicalElement?.Any() == true;
+          case "instantiatesUri":
+            value = InstantiatesUriElement;
+            return InstantiatesUriElement?.Any() == true;
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "reason":
+            value = Reason;
+            return Reason?.Any() == true;
+          case "goal":
+            value = Goal;
+            return Goal?.Any() == true;
+          case "status":
+            value = StatusElement;
+            return StatusElement is not null;
+          case "statusReason":
+            value = StatusReason;
+            return StatusReason is not null;
+          case "doNotPerform":
+            value = DoNotPerformElement;
+            return DoNotPerformElement is not null;
+          case "scheduled":
+            value = Scheduled;
+            return Scheduled is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "reported":
+            value = Reported;
+            return Reported is not null;
+          case "performer":
+            value = Performer;
+            return Performer?.Any() == true;
+          case "product":
+            value = Product;
+            return Product is not null;
+          case "dailyAmount":
+            value = DailyAmount;
+            return DailyAmount is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (KindElement is not null) yield return new KeyValuePair<string,object>("kind",KindElement);
+        if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+        if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+        if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
+        if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+        if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+        if (DoNotPerformElement is not null) yield return new KeyValuePair<string,object>("doNotPerform",DoNotPerformElement);
+        if (Scheduled is not null) yield return new KeyValuePair<string,object>("scheduled",Scheduled);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (Reported is not null) yield return new KeyValuePair<string,object>("reported",Reported);
+        if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+        if (Product is not null) yield return new KeyValuePair<string,object>("product",Product);
+        if (DailyAmount is not null) yield return new KeyValuePair<string,object>("dailyAmount",DailyAmount);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      }
+
     }
 
     /// <summary>
     /// External Ids for this plan
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1000,7 +1114,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=150)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1033,7 +1147,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order | option | directive
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=160)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1066,7 +1180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of plan
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=170)]
+    [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1111,7 +1225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Summary of nature of plan
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=190)]
+    [FhirElement("description", InSummary=true, Order=190, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -1142,7 +1256,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the care plan is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=200)]
+    [FhirElement("subject", InSummary=true, Order=200, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -1158,7 +1272,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Encounter during which this CarePlan was created
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=210)]
+    [FhirElement("encounter", InSummary=true, Order=210, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1173,7 +1287,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period plan covers
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=220)]
+    [FhirElement("period", InSummary=true, Order=220, FiveWs="FiveWs.planned")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1186,7 +1300,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date record was first recorded
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=230)]
+    [FhirElement("created", InSummary=true, Order=230, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -1217,7 +1331,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is the designated responsible party
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=240)]
+    [FhirElement("author", InSummary=true, Order=240, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","Device","RelatedPerson","Organization","CareTeam")]
     [DataMember]
@@ -1248,7 +1362,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who's involved in plan?
     /// </summary>
-    [FhirElement("careTeam", Order=260)]
+    [FhirElement("careTeam", Order=260, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
@@ -1264,7 +1378,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Health issues this plan addresses
     /// </summary>
-    [FhirElement("addresses", InSummary=true, Order=270)]
+    [FhirElement("addresses", InSummary=true, Order=270, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Addresses
@@ -1505,6 +1619,113 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Activity) { if (elem != null) yield return new ElementValue("activity", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "replaces":
+          value = Replaces;
+          return Replaces?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "intent":
+          value = IntentElement;
+          return IntentElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "title":
+          value = TitleElement;
+          return TitleElement is not null;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "created":
+          value = CreatedElement;
+          return CreatedElement is not null;
+        case "author":
+          value = Author;
+          return Author is not null;
+        case "contributor":
+          value = Contributor;
+          return Contributor?.Any() == true;
+        case "careTeam":
+          value = CareTeam;
+          return CareTeam?.Any() == true;
+        case "addresses":
+          value = Addresses;
+          return Addresses?.Any() == true;
+        case "supportingInfo":
+          value = SupportingInfo;
+          return SupportingInfo?.Any() == true;
+        case "goal":
+          value = Goal;
+          return Goal?.Any() == true;
+        case "activity":
+          value = Activity;
+          return Activity?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (Replaces?.Any() == true) yield return new KeyValuePair<string,object>("replaces",Replaces);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (IntentElement is not null) yield return new KeyValuePair<string,object>("intent",IntentElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);
+      if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
+      if (Contributor?.Any() == true) yield return new KeyValuePair<string,object>("contributor",Contributor);
+      if (CareTeam?.Any() == true) yield return new KeyValuePair<string,object>("careTeam",CareTeam);
+      if (Addresses?.Any() == true) yield return new KeyValuePair<string,object>("addresses",Addresses);
+      if (SupportingInfo?.Any() == true) yield return new KeyValuePair<string,object>("supportingInfo",SupportingInfo);
+      if (Goal?.Any() == true) yield return new KeyValuePair<string,object>("goal",Goal);
+      if (Activity?.Any() == true) yield return new KeyValuePair<string,object>("activity",Activity);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

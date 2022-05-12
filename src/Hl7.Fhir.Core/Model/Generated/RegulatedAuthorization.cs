@@ -218,6 +218,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "status":
+            value = Status;
+            return Status is not null;
+          case "date":
+            value = Date;
+            return Date is not null;
+          case "application":
+            value = Application;
+            return Application?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+        if (Date is not null) yield return new KeyValuePair<string,object>("date",Date);
+        if (Application?.Any() == true) yield return new KeyValuePair<string,object>("application",Application);
+      }
+
     }
 
     /// <summary>
@@ -576,6 +611,81 @@ namespace Hl7.Fhir.Model
         foreach (var elem in AttachedDocument) { if (elem != null) yield return new ElementValue("attachedDocument", elem); }
         if (Case != null) yield return new ElementValue("case", Case);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "region":
+          value = Region;
+          return Region?.Any() == true;
+        case "status":
+          value = Status;
+          return Status is not null;
+        case "statusDate":
+          value = StatusDateElement;
+          return StatusDateElement is not null;
+        case "validityPeriod":
+          value = ValidityPeriod;
+          return ValidityPeriod is not null;
+        case "indication":
+          value = Indication;
+          return Indication is not null;
+        case "intendedUse":
+          value = IntendedUse;
+          return IntendedUse is not null;
+        case "basis":
+          value = Basis;
+          return Basis?.Any() == true;
+        case "holder":
+          value = Holder;
+          return Holder is not null;
+        case "regulator":
+          value = Regulator;
+          return Regulator is not null;
+        case "attachedDocument":
+          value = AttachedDocument;
+          return AttachedDocument?.Any() == true;
+        case "case":
+          value = Case;
+          return Case is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (Region?.Any() == true) yield return new KeyValuePair<string,object>("region",Region);
+      if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+      if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
+      if (ValidityPeriod is not null) yield return new KeyValuePair<string,object>("validityPeriod",ValidityPeriod);
+      if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
+      if (IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",IntendedUse);
+      if (Basis?.Any() == true) yield return new KeyValuePair<string,object>("basis",Basis);
+      if (Holder is not null) yield return new KeyValuePair<string,object>("holder",Holder);
+      if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
+      if (AttachedDocument?.Any() == true) yield return new KeyValuePair<string,object>("attachedDocument",AttachedDocument);
+      if (Case is not null) yield return new KeyValuePair<string,object>("case",Case);
     }
 
   }

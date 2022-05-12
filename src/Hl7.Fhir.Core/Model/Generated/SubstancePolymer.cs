@@ -162,6 +162,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "ratioType":
+            value = RatioType;
+            return RatioType is not null;
+          case "startingMaterial":
+            value = StartingMaterial;
+            return StartingMaterial?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (RatioType is not null) yield return new KeyValuePair<string,object>("ratioType",RatioType);
+        if (StartingMaterial?.Any() == true) yield return new KeyValuePair<string,object>("startingMaterial",StartingMaterial);
+      }
+
     }
 
     /// <summary>
@@ -324,6 +347,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "category":
+            value = Category;
+            return Category is not null;
+          case "isDefining":
+            value = IsDefiningElement;
+            return IsDefiningElement is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Category is not null) yield return new KeyValuePair<string,object>("category",Category);
+        if (IsDefiningElement is not null) yield return new KeyValuePair<string,object>("isDefining",IsDefiningElement);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      }
+
     }
 
     /// <summary>
@@ -467,6 +521,33 @@ namespace Hl7.Fhir.Model
           if (RepeatUnitAmountType != null) yield return new ElementValue("repeatUnitAmountType", RepeatUnitAmountType);
           foreach (var elem in RepeatUnit) { if (elem != null) yield return new ElementValue("repeatUnit", elem); }
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "averageMolecularFormula":
+            value = AverageMolecularFormulaElement;
+            return AverageMolecularFormulaElement is not null;
+          case "repeatUnitAmountType":
+            value = RepeatUnitAmountType;
+            return RepeatUnitAmountType is not null;
+          case "repeatUnit":
+            value = RepeatUnit;
+            return RepeatUnit?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AverageMolecularFormulaElement is not null) yield return new KeyValuePair<string,object>("averageMolecularFormula",AverageMolecularFormulaElement);
+        if (RepeatUnitAmountType is not null) yield return new KeyValuePair<string,object>("repeatUnitAmountType",RepeatUnitAmountType);
+        if (RepeatUnit?.Any() == true) yield return new KeyValuePair<string,object>("repeatUnit",RepeatUnit);
       }
 
     }
@@ -669,6 +750,41 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "unit":
+            value = UnitElement;
+            return UnitElement is not null;
+          case "orientation":
+            value = Orientation;
+            return Orientation is not null;
+          case "amount":
+            value = AmountElement;
+            return AmountElement is not null;
+          case "degreeOfPolymerisation":
+            value = DegreeOfPolymerisation;
+            return DegreeOfPolymerisation?.Any() == true;
+          case "structuralRepresentation":
+            value = StructuralRepresentation;
+            return StructuralRepresentation?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (UnitElement is not null) yield return new KeyValuePair<string,object>("unit",UnitElement);
+        if (Orientation is not null) yield return new KeyValuePair<string,object>("orientation",Orientation);
+        if (AmountElement is not null) yield return new KeyValuePair<string,object>("amount",AmountElement);
+        if (DegreeOfPolymerisation?.Any() == true) yield return new KeyValuePair<string,object>("degreeOfPolymerisation",DegreeOfPolymerisation);
+        if (StructuralRepresentation?.Any() == true) yield return new KeyValuePair<string,object>("structuralRepresentation",StructuralRepresentation);
+      }
+
     }
 
     /// <summary>
@@ -867,6 +983,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "average":
+            value = AverageElement;
+            return AverageElement is not null;
+          case "low":
+            value = LowElement;
+            return LowElement is not null;
+          case "high":
+            value = HighElement;
+            return HighElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (AverageElement is not null) yield return new KeyValuePair<string,object>("average",AverageElement);
+        if (LowElement is not null) yield return new KeyValuePair<string,object>("low",LowElement);
+        if (HighElement is not null) yield return new KeyValuePair<string,object>("high",HighElement);
+      }
+
     }
 
     /// <summary>
@@ -1027,6 +1174,37 @@ namespace Hl7.Fhir.Model
           if (Format != null) yield return new ElementValue("format", Format);
           if (Attachment != null) yield return new ElementValue("attachment", Attachment);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "representation":
+            value = RepresentationElement;
+            return RepresentationElement is not null;
+          case "format":
+            value = Format;
+            return Format is not null;
+          case "attachment":
+            value = Attachment;
+            return Attachment is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (RepresentationElement is not null) yield return new KeyValuePair<string,object>("representation",RepresentationElement);
+        if (Format is not null) yield return new KeyValuePair<string,object>("format",Format);
+        if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
       }
 
     }
@@ -1233,6 +1411,49 @@ namespace Hl7.Fhir.Model
         foreach (var elem in MonomerSet) { if (elem != null) yield return new ElementValue("monomerSet", elem); }
         foreach (var elem in Repeat) { if (elem != null) yield return new ElementValue("repeat", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "class":
+          value = Class;
+          return Class is not null;
+        case "geometry":
+          value = Geometry;
+          return Geometry is not null;
+        case "copolymerConnectivity":
+          value = CopolymerConnectivity;
+          return CopolymerConnectivity?.Any() == true;
+        case "modification":
+          value = ModificationElement;
+          return ModificationElement is not null;
+        case "monomerSet":
+          value = MonomerSet;
+          return MonomerSet?.Any() == true;
+        case "repeat":
+          value = Repeat;
+          return Repeat?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Class is not null) yield return new KeyValuePair<string,object>("class",Class);
+      if (Geometry is not null) yield return new KeyValuePair<string,object>("geometry",Geometry);
+      if (CopolymerConnectivity?.Any() == true) yield return new KeyValuePair<string,object>("copolymerConnectivity",CopolymerConnectivity);
+      if (ModificationElement is not null) yield return new KeyValuePair<string,object>("modification",ModificationElement);
+      if (MonomerSet?.Any() == true) yield return new KeyValuePair<string,object>("monomerSet",MonomerSet);
+      if (Repeat?.Any() == true) yield return new KeyValuePair<string,object>("repeat",Repeat);
     }
 
   }

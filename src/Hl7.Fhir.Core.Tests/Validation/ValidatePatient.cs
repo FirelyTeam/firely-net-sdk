@@ -6,22 +6,19 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Serialization;
-using System.Xml;
-using System.Collections.Generic;
-using Hl7.Fhir.Validation;
-using System.ComponentModel.DataAnnotations;
 using Hl7.Fhir.Model;
-using System.Xml.Linq;
-using System.Xml.Schema;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Validation;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Xml;
 
 namespace Hl7.Fhir.Tests.Validation
 {
     [TestClass]
-	public class ValidatePatient
+    public class ValidatePatient
     {
         [TestMethod]
         public void ValidateDemoPatient()
@@ -32,7 +29,7 @@ namespace Hl7.Fhir.Tests.Validation
 
             ICollection<ValidationResult> results = new List<ValidationResult>();
 
-            foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />" };
+            foreach (var contained in patient.Contained) ((DomainResource)contained).Text = new Narrative() { Div = "<wrong />", Status = Narrative.NarrativeStatus.Generated };
 
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);
@@ -46,7 +43,7 @@ namespace Hl7.Fhir.Tests.Validation
             patient.Identifier[0].System = "urn:oid:crap really not valid";
 
             results = new List<ValidationResult>();
-            
+
             Assert.IsFalse(DotNetAttributeValidation.TryValidate(patient, results, true));
             Assert.IsTrue(results.Count > 0);
         }

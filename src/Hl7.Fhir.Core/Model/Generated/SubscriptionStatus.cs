@@ -279,12 +279,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "eventNumber":
+            value = EventNumberElement;
+            return EventNumberElement is not null;
+          case "timestamp":
+            value = TimestampElement;
+            return TimestampElement is not null;
+          case "focus":
+            value = Focus;
+            return Focus is not null;
+          case "additionalContext":
+            value = AdditionalContext;
+            return AdditionalContext?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (EventNumberElement is not null) yield return new KeyValuePair<string,object>("eventNumber",EventNumberElement);
+        if (TimestampElement is not null) yield return new KeyValuePair<string,object>("timestamp",TimestampElement);
+        if (Focus is not null) yield return new KeyValuePair<string,object>("focus",Focus);
+        if (AdditionalContext?.Any() == true) yield return new KeyValuePair<string,object>("additionalContext",AdditionalContext);
+      }
+
     }
 
     /// <summary>
     /// requested | active | error | off | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=90)]
+    [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionState> StatusElement
@@ -316,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// handshake | heartbeat | event-notification | query-status | query-event
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100)]
+    [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -425,7 +456,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the Subscription responsible for this notification
     /// </summary>
-    [FhirElement("subscription", InSummary=true, Order=140)]
+    [FhirElement("subscription", InSummary=true, Order=140, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Subscription")]
     [Cardinality(Min=1,Max=1)]
@@ -578,6 +609,53 @@ namespace Hl7.Fhir.Model
         if (TopicElement != null) yield return new ElementValue("topic", TopicElement);
         foreach (var elem in Error) { if (elem != null) yield return new ElementValue("error", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "eventsSinceSubscriptionStart":
+          value = EventsSinceSubscriptionStartElement;
+          return EventsSinceSubscriptionStartElement is not null;
+        case "eventsInNotification":
+          value = EventsInNotificationElement;
+          return EventsInNotificationElement is not null;
+        case "notificationEvent":
+          value = NotificationEvent;
+          return NotificationEvent?.Any() == true;
+        case "subscription":
+          value = Subscription;
+          return Subscription is not null;
+        case "topic":
+          value = TopicElement;
+          return TopicElement is not null;
+        case "error":
+          value = Error;
+          return Error?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (EventsSinceSubscriptionStartElement is not null) yield return new KeyValuePair<string,object>("eventsSinceSubscriptionStart",EventsSinceSubscriptionStartElement);
+      if (EventsInNotificationElement is not null) yield return new KeyValuePair<string,object>("eventsInNotification",EventsInNotificationElement);
+      if (NotificationEvent?.Any() == true) yield return new KeyValuePair<string,object>("notificationEvent",NotificationEvent);
+      if (Subscription is not null) yield return new KeyValuePair<string,object>("subscription",Subscription);
+      if (TopicElement is not null) yield return new KeyValuePair<string,object>("topic",TopicElement);
+      if (Error?.Any() == true) yield return new KeyValuePair<string,object>("error",Error);
     }
 
   }

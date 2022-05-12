@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is involved
       /// </summary>
-      [FhirElement("member", InSummary=true, Order=50)]
+      [FhirElement("member", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Organization","CareTeam")]
       [DataMember]
@@ -243,12 +243,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "member":
+            value = Member;
+            return Member is not null;
+          case "onBehalfOf":
+            value = OnBehalfOf;
+            return OnBehalfOf is not null;
+          case "coverage":
+            value = Coverage;
+            return Coverage is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Member is not null) yield return new KeyValuePair<string,object>("member",Member);
+        if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
+        if (Coverage is not null) yield return new KeyValuePair<string,object>("coverage",Coverage);
+      }
+
     }
 
     /// <summary>
     /// External Ids for this team
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -262,7 +293,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | active | suspended | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus> StatusElement
@@ -294,7 +325,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of team
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -339,7 +370,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who care team is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -354,7 +385,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period team covers
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=140)]
+    [FhirElement("period", InSummary=true, Order=140, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -381,7 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists
     /// </summary>
-    [FhirElement("reason", Order=160)]
+    [FhirElement("reason", Order=160, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -546,6 +577,65 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "participant":
+          value = Participant;
+          return Participant?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (Participant?.Any() == true) yield return new KeyValuePair<string,object>("participant",Participant);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (ManagingOrganization?.Any() == true) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }
