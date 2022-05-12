@@ -162,6 +162,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "outerPackaging":
+            value = OuterPackaging;
+            return OuterPackaging is not null;
+          case "immediatePackaging":
+            value = ImmediatePackaging;
+            return ImmediatePackaging is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (OuterPackaging is not null) yield return new KeyValuePair<string,object>("outerPackaging",OuterPackaging);
+        if (ImmediatePackaging is not null) yield return new KeyValuePair<string,object>("immediatePackaging",ImmediatePackaging);
+      }
+
     }
 
     /// <summary>
@@ -467,6 +490,69 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "material":
+            value = Material;
+            return Material?.Any() == true;
+          case "alternateMaterial":
+            value = AlternateMaterial;
+            return AlternateMaterial?.Any() == true;
+          case "device":
+            value = Device;
+            return Device?.Any() == true;
+          case "manufacturedItem":
+            value = ManufacturedItem;
+            return ManufacturedItem?.Any() == true;
+          case "packageItem":
+            value = PackageItem;
+            return PackageItem?.Any() == true;
+          case "physicalCharacteristics":
+            value = PhysicalCharacteristics;
+            return PhysicalCharacteristics is not null;
+          case "otherCharacteristics":
+            value = OtherCharacteristics;
+            return OtherCharacteristics?.Any() == true;
+          case "shelfLifeStorage":
+            value = ShelfLifeStorage;
+            return ShelfLifeStorage?.Any() == true;
+          case "manufacturer":
+            value = Manufacturer;
+            return Manufacturer?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Material?.Any() == true) yield return new KeyValuePair<string,object>("material",Material);
+        if (AlternateMaterial?.Any() == true) yield return new KeyValuePair<string,object>("alternateMaterial",AlternateMaterial);
+        if (Device?.Any() == true) yield return new KeyValuePair<string,object>("device",Device);
+        if (ManufacturedItem?.Any() == true) yield return new KeyValuePair<string,object>("manufacturedItem",ManufacturedItem);
+        if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
+        if (PhysicalCharacteristics is not null) yield return new KeyValuePair<string,object>("physicalCharacteristics",PhysicalCharacteristics);
+        if (OtherCharacteristics?.Any() == true) yield return new KeyValuePair<string,object>("otherCharacteristics",OtherCharacteristics);
+        if (ShelfLifeStorage?.Any() == true) yield return new KeyValuePair<string,object>("shelfLifeStorage",ShelfLifeStorage);
+        if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      }
+
     }
 
     /// <summary>
@@ -716,6 +802,57 @@ namespace Hl7.Fhir.Model
         foreach (var elem in BatchIdentifier) { if (elem != null) yield return new ElementValue("batchIdentifier", elem); }
         foreach (var elem in PackageItem) { if (elem != null) yield return new ElementValue("packageItem", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "legalStatusOfSupply":
+          value = LegalStatusOfSupply;
+          return LegalStatusOfSupply is not null;
+        case "marketingStatus":
+          value = MarketingStatus;
+          return MarketingStatus?.Any() == true;
+        case "marketingAuthorization":
+          value = MarketingAuthorization;
+          return MarketingAuthorization is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer?.Any() == true;
+        case "batchIdentifier":
+          value = BatchIdentifier;
+          return BatchIdentifier?.Any() == true;
+        case "packageItem":
+          value = PackageItem;
+          return PackageItem?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
+      if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
+      if (MarketingAuthorization is not null) yield return new KeyValuePair<string,object>("marketingAuthorization",MarketingAuthorization);
+      if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (BatchIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("batchIdentifier",BatchIdentifier);
+      if (PackageItem?.Any() == true) yield return new KeyValuePair<string,object>("packageItem",PackageItem);
     }
 
   }

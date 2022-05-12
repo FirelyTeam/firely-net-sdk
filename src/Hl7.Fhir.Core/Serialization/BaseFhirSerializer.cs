@@ -73,9 +73,9 @@ namespace Hl7.Fhir.Serialization
                         resource.Meta = new Meta();
                     }
 
-                    if (!resource.Meta.Tag.Any(t => t.System == "http://hl7.org/fhir/v3/ObservationValue" && t.Code == "SUBSETTED"))
+                    if (!resource.Meta.Tag.Any(t => t.System == "http://terminology.hl7.org/CodeSystem/v3-ObservationValue" && t.Code == "SUBSETTED"))
                     {
-                        var subsettedTag = new Coding("http://hl7.org/fhir/v3/ObservationValue", "SUBSETTED");
+                        var subsettedTag = new Coding("http://terminology.hl7.org/CodeSystem/v3-ObservationValue", "SUBSETTED");
                         resource.Meta.Tag.Add(subsettedTag);
                     }
                 }

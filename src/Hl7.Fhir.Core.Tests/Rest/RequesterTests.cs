@@ -54,6 +54,7 @@ namespace Hl7.Fhir.Test
         #region EntryRequest To Webclient
 
         [TestMethod]
+        [Obsolete]
         public void TestPreferSetting()
         {
             var entry = _Entry;
@@ -87,6 +88,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestRequestedBodyContent()
         {
             var entry = _Entry;
@@ -100,6 +102,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestFormatParameters()
         {
             var entry = _Entry;
@@ -111,6 +114,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestEntryRequestHeaders()
         {
             var entry = _Entry;
@@ -132,6 +136,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestSetAgent()
         {
             var entry = _Entry;
@@ -192,6 +197,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestRequestedBodyContentHttpClient()
         {
             var entry = _Entry;

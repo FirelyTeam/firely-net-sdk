@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 
@@ -251,7 +250,7 @@ namespace Hl7.Fhir.Specification.Navigation
         /// <returns>A sequence of <see cref="Bookmark"/> instances for the positions of the child slices.</returns>
         public static IEnumerable<Bookmark> FindMemberSlices(this ElementDefinitionNavigator intro)
         {
-            if (!intro.IsSlicing()) throw new ArgumentException("Member slices can only be found relative to an intro slice.");
+            if (intro.Current.Slicing is null) throw new ArgumentException("Member slices can only be found relative to an intro slice.");
 
             var bm = intro.Bookmark();
 
@@ -282,6 +281,5 @@ namespace Hl7.Fhir.Specification.Navigation
             result.CopyChildren(nav);
             return result;
         }
-
     }
 }
