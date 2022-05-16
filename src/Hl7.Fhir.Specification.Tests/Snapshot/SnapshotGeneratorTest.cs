@@ -9314,6 +9314,27 @@ namespace Hl7.Fhir.Specification.Tests
             extensionElement.Should().NotBeNull();
         }
 
+        [TestMethod]
+        public void TestDistinctTypeCode()
+        {
+            var elem = new ElementDefinition();
+            Assert.AreEqual(null, elem.CommonTypeCode());
+
+            var patientTypeCode = FHIRAllTypes.Patient.GetLiteral();
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new[] { @"http://example.org/fhir/StructureDefinition/MyPatient1" } });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new[] { @"http://example.org/fhir/StructureDefinition/MyPatient2" } });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            // Invalid, type constraint without type code (required!)
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Profile = new[] { @"http://example.org/fhir/StructureDefinition/MyPatient3" } });
+            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
+
+            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = new[] { @"http://example.org/fhir/StructureDefinition/MyObservation" } });
+            Assert.IsNull(elem.CommonTypeCode());
+        }
+
         /// <summary>
         /// Test cases that have non corrected values:
         /// [N1] Max lt Min

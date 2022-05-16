@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("SC#o TomC) and PrC-ncipe dobra")]
+      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("São Tomé and Príncipe dobra")]
       STN,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -1285,6 +1285,29 @@ namespace Hl7.Fhir.Model
         if (ValueElement != null) yield return new ElementValue("value", ValueElement);
         if (CurrencyElement != null) yield return new ElementValue("currency", CurrencyElement);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "value":
+          value = ValueElement;
+          return ValueElement is not null;
+        case "currency":
+          value = CurrencyElement;
+          return CurrencyElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+      if (CurrencyElement is not null) yield return new KeyValuePair<string,object>("currency",CurrencyElement);
     }
 
   }

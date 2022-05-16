@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Validation
                 if (validateProfiles)
                 {
                     // First, call Validate() for the current element (the reference itself) against the profile
-                    var validations = tr.GetDeclaredProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile, state));
+                    var validations = tr.GetTypeProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile, state));
                     result.Add(validator.Combine(BatchValidationMode.Any, instance, validations));
                 }
                 // If this is a reference, also validate the reference against the targetProfile
