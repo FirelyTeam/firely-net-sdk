@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// home | work | temp | old - purpose of this address
     /// </summary>
-    [FhirElement("use", InSummary=true, Order=30)]
+    [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
@@ -517,6 +517,61 @@ namespace Hl7.Fhir.Model
         if (CountryElement != null) yield return new ElementValue("country", CountryElement);
         if (Period != null) yield return new ElementValue("period", Period);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "use":
+          value = UseElement;
+          return UseElement is not null;
+        case "type":
+          value = TypeElement;
+          return TypeElement is not null;
+        case "text":
+          value = TextElement;
+          return TextElement is not null;
+        case "line":
+          value = LineElement;
+          return LineElement?.Any() == true;
+        case "city":
+          value = CityElement;
+          return CityElement is not null;
+        case "district":
+          value = DistrictElement;
+          return DistrictElement is not null;
+        case "state":
+          value = StateElement;
+          return StateElement is not null;
+        case "postalCode":
+          value = PostalCodeElement;
+          return PostalCodeElement is not null;
+        case "country":
+          value = CountryElement;
+          return CountryElement is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
+      if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
+      if (LineElement?.Any() == true) yield return new KeyValuePair<string,object>("line",LineElement);
+      if (CityElement is not null) yield return new KeyValuePair<string,object>("city",CityElement);
+      if (DistrictElement is not null) yield return new KeyValuePair<string,object>("district",DistrictElement);
+      if (StateElement is not null) yield return new KeyValuePair<string,object>("state",StateElement);
+      if (PostalCodeElement is not null) yield return new KeyValuePair<string,object>("postalCode",PostalCodeElement);
+      if (CountryElement is not null) yield return new KeyValuePair<string,object>("country",CountryElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
     }
 
   }

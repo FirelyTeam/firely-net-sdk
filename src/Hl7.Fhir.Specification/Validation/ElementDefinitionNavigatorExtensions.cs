@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
-    public static class ElementDefinitionNavigatorExtensions
+    internal static class ElementDefinitionNavigatorExtensions
     {
         internal static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
@@ -24,20 +24,6 @@ namespace Hl7.Fhir.Validation
             //    return "(children().count() > id.count()) | hasValue()";
             return cc.Expression;
         }
-
-
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
-        {
-            //TODO: There is something smarter for this in STU3
-            var path = ed.Path;
-
-            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
-        }
-
-        public static bool IsResourcePlaceholder(this ElementDefinition ed)
-            => ed.Type is not null && ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
-
-        public static bool IsSlicing(this ElementDefinitionNavigator nav) => nav.Current.Slicing != null;
 
         internal static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
