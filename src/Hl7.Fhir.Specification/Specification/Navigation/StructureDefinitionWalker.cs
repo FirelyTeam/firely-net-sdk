@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Specification
             {
                 return Current.Current.Type
                     .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
-                    .Select(group => FromCanonical(group.Key, group.SelectMany(g => g))); // no use returning multiple "reference" profiles when they only differ in targetReference
+                    .Select(group => FromCanonical(group.Key!, group.SelectMany(g => g))); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +

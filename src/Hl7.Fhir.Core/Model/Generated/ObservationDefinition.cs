@@ -337,6 +337,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "customaryUnit":
+            value = CustomaryUnit;
+            return CustomaryUnit is not null;
+          case "unit":
+            value = Unit;
+            return Unit is not null;
+          case "conversionFactor":
+            value = ConversionFactorElement;
+            return ConversionFactorElement is not null;
+          case "decimalPrecision":
+            value = DecimalPrecisionElement;
+            return DecimalPrecisionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CustomaryUnit is not null) yield return new KeyValuePair<string,object>("customaryUnit",CustomaryUnit);
+        if (Unit is not null) yield return new KeyValuePair<string,object>("unit",Unit);
+        if (ConversionFactorElement is not null) yield return new KeyValuePair<string,object>("conversionFactor",ConversionFactorElement);
+        if (DecimalPrecisionElement is not null) yield return new KeyValuePair<string,object>("decimalPrecision",DecimalPrecisionElement);
+      }
+
     }
 
     /// <summary>
@@ -610,12 +641,59 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "category":
+            value = CategoryElement;
+            return CategoryElement is not null;
+          case "range":
+            value = Range;
+            return Range is not null;
+          case "context":
+            value = Context;
+            return Context is not null;
+          case "appliesTo":
+            value = AppliesTo;
+            return AppliesTo?.Any() == true;
+          case "gender":
+            value = GenderElement;
+            return GenderElement is not null;
+          case "age":
+            value = Age;
+            return Age is not null;
+          case "gestationalAge":
+            value = GestationalAge;
+            return GestationalAge is not null;
+          case "condition":
+            value = ConditionElement;
+            return ConditionElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CategoryElement is not null) yield return new KeyValuePair<string,object>("category",CategoryElement);
+        if (Range is not null) yield return new KeyValuePair<string,object>("range",Range);
+        if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+        if (AppliesTo?.Any() == true) yield return new KeyValuePair<string,object>("appliesTo",AppliesTo);
+        if (GenderElement is not null) yield return new KeyValuePair<string,object>("gender",GenderElement);
+        if (Age is not null) yield return new KeyValuePair<string,object>("age",Age);
+        if (GestationalAge is not null) yield return new KeyValuePair<string,object>("gestationalAge",GestationalAge);
+        if (ConditionElement is not null) yield return new KeyValuePair<string,object>("condition",ConditionElement);
+      }
+
     }
 
     /// <summary>
     /// Category of observation
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=90)]
+    [FhirElement("category", InSummary=true, Order=90, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -629,7 +707,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type)
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100)]
+    [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -969,6 +1047,73 @@ namespace Hl7.Fhir.Model
         if (AbnormalCodedValueSet != null) yield return new ElementValue("abnormalCodedValueSet", AbnormalCodedValueSet);
         if (CriticalCodedValueSet != null) yield return new ElementValue("criticalCodedValueSet", CriticalCodedValueSet);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "permittedDataType":
+          value = PermittedDataTypeElement;
+          return PermittedDataTypeElement?.Any() == true;
+        case "multipleResultsAllowed":
+          value = MultipleResultsAllowedElement;
+          return MultipleResultsAllowedElement is not null;
+        case "method":
+          value = Method;
+          return Method is not null;
+        case "preferredReportName":
+          value = PreferredReportNameElement;
+          return PreferredReportNameElement is not null;
+        case "quantitativeDetails":
+          value = QuantitativeDetails;
+          return QuantitativeDetails is not null;
+        case "qualifiedInterval":
+          value = QualifiedInterval;
+          return QualifiedInterval?.Any() == true;
+        case "validCodedValueSet":
+          value = ValidCodedValueSet;
+          return ValidCodedValueSet is not null;
+        case "normalCodedValueSet":
+          value = NormalCodedValueSet;
+          return NormalCodedValueSet is not null;
+        case "abnormalCodedValueSet":
+          value = AbnormalCodedValueSet;
+          return AbnormalCodedValueSet is not null;
+        case "criticalCodedValueSet":
+          value = CriticalCodedValueSet;
+          return CriticalCodedValueSet is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (PermittedDataTypeElement?.Any() == true) yield return new KeyValuePair<string,object>("permittedDataType",PermittedDataTypeElement);
+      if (MultipleResultsAllowedElement is not null) yield return new KeyValuePair<string,object>("multipleResultsAllowed",MultipleResultsAllowedElement);
+      if (Method is not null) yield return new KeyValuePair<string,object>("method",Method);
+      if (PreferredReportNameElement is not null) yield return new KeyValuePair<string,object>("preferredReportName",PreferredReportNameElement);
+      if (QuantitativeDetails is not null) yield return new KeyValuePair<string,object>("quantitativeDetails",QuantitativeDetails);
+      if (QualifiedInterval?.Any() == true) yield return new KeyValuePair<string,object>("qualifiedInterval",QualifiedInterval);
+      if (ValidCodedValueSet is not null) yield return new KeyValuePair<string,object>("validCodedValueSet",ValidCodedValueSet);
+      if (NormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("normalCodedValueSet",NormalCodedValueSet);
+      if (AbnormalCodedValueSet is not null) yield return new KeyValuePair<string,object>("abnormalCodedValueSet",AbnormalCodedValueSet);
+      if (CriticalCodedValueSet is not null) yield return new KeyValuePair<string,object>("criticalCodedValueSet",CriticalCodedValueSet);
     }
 
   }

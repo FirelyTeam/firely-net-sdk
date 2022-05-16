@@ -37,7 +37,5 @@ namespace Hl7.Fhir.Specification.Source
         /// summary properties allow the source to identify and resolve the artifact.
         /// </remarks>
         Resource LoadBySummary(ArtifactSummary summary);
-
-
     }
 }

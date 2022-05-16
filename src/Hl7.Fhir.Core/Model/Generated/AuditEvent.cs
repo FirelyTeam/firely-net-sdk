@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How agent participated
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40, FiveWs="FiveWs.who")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Agent role in the event
       /// </summary>
-      [FhirElement("role", Order=50)]
+      [FhirElement("role", Order=50, FiveWs="FiveWs.who")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier of who
       /// </summary>
-      [FhirElement("who", InSummary=true, Order=60)]
+      [FhirElement("who", InSummary=true, Order=60, FiveWs="FiveWs.who")]
       [CLSCompliant(false)]
       [References("PractitionerRole","Practitioner","Organization","Device","Patient","RelatedPerson")]
       [DataMember]
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Alternative User identity
       /// </summary>
-      [FhirElement("altId", Order=70)]
+      [FhirElement("altId", Order=70, FiveWs="FiveWs.who")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AltIdElement
       {
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human friendly name for the agent
       /// </summary>
-      [FhirElement("name", Order=80)]
+      [FhirElement("name", Order=80, FiveWs="FiveWs.who")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether user is initiator
       /// </summary>
-      [FhirElement("requestor", InSummary=true, Order=90)]
+      [FhirElement("requestor", InSummary=true, Order=90, FiveWs="FiveWs.who")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean RequestorElement
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where
       /// </summary>
-      [FhirElement("location", Order=100)]
+      [FhirElement("location", Order=100, FiveWs="FiveWs.where[x]")]
       [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Policy that authorized event
       /// </summary>
-      [FhirElement("policy", Order=110)]
+      [FhirElement("policy", Order=110, FiveWs="FiveWs.why[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of media
       /// </summary>
-      [FhirElement("media", Order=120)]
+      [FhirElement("media", Order=120, FiveWs="FiveWs.where[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Media
       {
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Logical network location for application activity
       /// </summary>
-      [FhirElement("network", Order=130)]
+      [FhirElement("network", Order=130, FiveWs="FiveWs.where[x]")]
       [DataMember]
       public Hl7.Fhir.Model.AuditEvent.NetworkComponent Network
       {
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reason given for this user
       /// </summary>
-      [FhirElement("purposeOfUse", Order=140)]
+      [FhirElement("purposeOfUse", Order=140, FiveWs="FiveWs.why[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfUse
@@ -517,6 +517,65 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "role":
+            value = Role;
+            return Role?.Any() == true;
+          case "who":
+            value = Who;
+            return Who is not null;
+          case "altId":
+            value = AltIdElement;
+            return AltIdElement is not null;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "requestor":
+            value = RequestorElement;
+            return RequestorElement is not null;
+          case "location":
+            value = Location;
+            return Location is not null;
+          case "policy":
+            value = PolicyElement;
+            return PolicyElement?.Any() == true;
+          case "media":
+            value = Media;
+            return Media is not null;
+          case "network":
+            value = Network;
+            return Network is not null;
+          case "purposeOfUse":
+            value = PurposeOfUse;
+            return PurposeOfUse?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Role?.Any() == true) yield return new KeyValuePair<string,object>("role",Role);
+        if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
+        if (AltIdElement is not null) yield return new KeyValuePair<string,object>("altId",AltIdElement);
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (RequestorElement is not null) yield return new KeyValuePair<string,object>("requestor",RequestorElement);
+        if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+        if (PolicyElement?.Any() == true) yield return new KeyValuePair<string,object>("policy",PolicyElement);
+        if (Media is not null) yield return new KeyValuePair<string,object>("media",Media);
+        if (Network is not null) yield return new KeyValuePair<string,object>("network",Network);
+        if (PurposeOfUse?.Any() == true) yield return new KeyValuePair<string,object>("purposeOfUse",PurposeOfUse);
+      }
+
     }
 
     /// <summary>
@@ -535,7 +594,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier for the network access point of the user device
       /// </summary>
-      [FhirElement("address", Order=40)]
+      [FhirElement("address", Order=40, FiveWs="FiveWs.where[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AddressElement
       {
@@ -566,7 +625,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of network access point
       /// </summary>
-      [FhirElement("type", Order=50)]
+      [FhirElement("type", Order=50, FiveWs="FiveWs.where[x]")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> TypeElement
@@ -662,6 +721,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "address":
+            value = AddressElement;
+            return AddressElement is not null;
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (AddressElement is not null) yield return new KeyValuePair<string,object>("address",AddressElement);
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+      }
+
     }
 
     /// <summary>
@@ -680,7 +762,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Logical source location within the enterprise
       /// </summary>
-      [FhirElement("site", Order=40)]
+      [FhirElement("site", Order=40, FiveWs="FiveWs.witness")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SiteElement
       {
@@ -711,7 +793,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identity of source detecting the event
       /// </summary>
-      [FhirElement("observer", InSummary=true, Order=50)]
+      [FhirElement("observer", InSummary=true, Order=50, FiveWs="FiveWs.witness")]
       [CLSCompliant(false)]
       [References("PractitionerRole","Practitioner","Organization","Device","Patient","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -727,7 +809,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of source where event originated
       /// </summary>
-      [FhirElement("type", Order=60)]
+      [FhirElement("type", Order=60, FiveWs="FiveWs.witness")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Type
@@ -810,6 +892,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "site":
+            value = SiteElement;
+            return SiteElement is not null;
+          case "observer":
+            value = Observer;
+            return Observer is not null;
+          case "type":
+            value = Type;
+            return Type?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SiteElement is not null) yield return new KeyValuePair<string,object>("site",SiteElement);
+        if (Observer is not null) yield return new KeyValuePair<string,object>("observer",Observer);
+        if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      }
+
     }
 
     /// <summary>
@@ -828,7 +937,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific instance of resource
       /// </summary>
-      [FhirElement("what", InSummary=true, Order=40)]
+      [FhirElement("what", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
@@ -843,7 +952,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of entity involved
       /// </summary>
-      [FhirElement("type", Order=50)]
+      [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
       {
@@ -856,7 +965,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What role the entity played
       /// </summary>
-      [FhirElement("role", Order=60)]
+      [FhirElement("role", Order=60, FiveWs="FiveWs.context")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Role
       {
@@ -869,7 +978,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Life-cycle stage for the entity
       /// </summary>
-      [FhirElement("lifecycle", Order=70)]
+      [FhirElement("lifecycle", Order=70, FiveWs="FiveWs.context")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Lifecycle
       {
@@ -882,7 +991,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Security labels on the entity
       /// </summary>
-      [FhirElement("securityLabel", Order=80)]
+      [FhirElement("securityLabel", Order=80, FiveWs="FiveWs.context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -896,7 +1005,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Descriptor for entity
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=90)]
+      [FhirElement("name", InSummary=true, Order=90, FiveWs="FiveWs.context")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -927,7 +1036,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Descriptive text
       /// </summary>
-      [FhirElement("description", Order=100)]
+      [FhirElement("description", Order=100, FiveWs="FiveWs.context")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -958,7 +1067,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Query parameters
       /// </summary>
-      [FhirElement("query", InSummary=true, Order=110)]
+      [FhirElement("query", InSummary=true, Order=110, FiveWs="FiveWs.context")]
       [DataMember]
       public Hl7.Fhir.Model.Base64Binary QueryElement
       {
@@ -989,7 +1098,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional Information about the entity
       /// </summary>
-      [FhirElement("detail", Order=120)]
+      [FhirElement("detail", Order=120, FiveWs="FiveWs.context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
@@ -1102,6 +1211,57 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "what":
+            value = What;
+            return What is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "role":
+            value = Role;
+            return Role is not null;
+          case "lifecycle":
+            value = Lifecycle;
+            return Lifecycle is not null;
+          case "securityLabel":
+            value = SecurityLabel;
+            return SecurityLabel?.Any() == true;
+          case "name":
+            value = NameElement;
+            return NameElement is not null;
+          case "description":
+            value = DescriptionElement;
+            return DescriptionElement is not null;
+          case "query":
+            value = QueryElement;
+            return QueryElement is not null;
+          case "detail":
+            value = Detail;
+            return Detail?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (What is not null) yield return new KeyValuePair<string,object>("what",What);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (Role is not null) yield return new KeyValuePair<string,object>("role",Role);
+        if (Lifecycle is not null) yield return new KeyValuePair<string,object>("lifecycle",Lifecycle);
+        if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
+        if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+        if (QueryElement is not null) yield return new KeyValuePair<string,object>("query",QueryElement);
+        if (Detail?.Any() == true) yield return new KeyValuePair<string,object>("detail",Detail);
+      }
+
     }
 
     /// <summary>
@@ -1120,7 +1280,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the property
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40, FiveWs="FiveWs.context")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TypeElement
@@ -1152,7 +1312,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value
       /// </summary>
-      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.context")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Base64Binary))]
       [Cardinality(Min=1,Max=1)]
@@ -1232,12 +1392,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = TypeElement;
+            return TypeElement is not null;
+          case "value":
+            value = Value;
+            return Value is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
+        if (Value is not null) yield return new KeyValuePair<string,object>("value",Value);
+      }
+
     }
 
     /// <summary>
     /// Type/identifier of event
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=90)]
+    [FhirElement("type", InSummary=true, Order=90, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Type
@@ -1251,7 +1434,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// More specific type/id for the event
     /// </summary>
-    [FhirElement("subtype", InSummary=true, Order=100)]
+    [FhirElement("subtype", InSummary=true, Order=100, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Subtype
@@ -1265,7 +1448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of action performed during the event
     /// </summary>
-    [FhirElement("action", InSummary=true, Order=110)]
+    [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
@@ -1297,7 +1480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity occurred
     /// </summary>
-    [FhirElement("period", Order=120)]
+    [FhirElement("period", Order=120, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1310,7 +1493,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time when the event was recorded
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=130)]
+    [FhirElement("recorded", InSummary=true, Order=130, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant RecordedElement
@@ -1342,7 +1525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the event succeeded or failed
     /// </summary>
-    [FhirElement("outcome", InSummary=true, Order=140)]
+    [FhirElement("outcome", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
@@ -1374,7 +1557,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of the event outcome
     /// </summary>
-    [FhirElement("outcomeDesc", InSummary=true, Order=150)]
+    [FhirElement("outcomeDesc", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString OutcomeDescElement
     {
@@ -1405,7 +1588,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The purposeOfUse of the event
     /// </summary>
-    [FhirElement("purposeOfEvent", InSummary=true, Order=160)]
+    [FhirElement("purposeOfEvent", InSummary=true, Order=160, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfEvent
@@ -1419,7 +1602,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved in the event
     /// </summary>
-    [FhirElement("agent", Order=170)]
+    [FhirElement("agent", Order=170, FiveWs="FiveWs.who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
@@ -1433,7 +1616,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Audit Event Reporter
     /// </summary>
-    [FhirElement("source", Order=180)]
+    [FhirElement("source", Order=180, FiveWs="FiveWs.witness")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
@@ -1447,7 +1630,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data or objects used
     /// </summary>
-    [FhirElement("entity", Order=190)]
+    [FhirElement("entity", Order=190, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity
@@ -1568,6 +1751,65 @@ namespace Hl7.Fhir.Model
         if (Source != null) yield return new ElementValue("source", Source);
         foreach (var elem in Entity) { if (elem != null) yield return new ElementValue("entity", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "subtype":
+          value = Subtype;
+          return Subtype?.Any() == true;
+        case "action":
+          value = ActionElement;
+          return ActionElement is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "recorded":
+          value = RecordedElement;
+          return RecordedElement is not null;
+        case "outcome":
+          value = OutcomeElement;
+          return OutcomeElement is not null;
+        case "outcomeDesc":
+          value = OutcomeDescElement;
+          return OutcomeDescElement is not null;
+        case "purposeOfEvent":
+          value = PurposeOfEvent;
+          return PurposeOfEvent?.Any() == true;
+        case "agent":
+          value = Agent;
+          return Agent?.Any() == true;
+        case "source":
+          value = Source;
+          return Source is not null;
+        case "entity":
+          value = Entity;
+          return Entity?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Subtype?.Any() == true) yield return new KeyValuePair<string,object>("subtype",Subtype);
+      if (ActionElement is not null) yield return new KeyValuePair<string,object>("action",ActionElement);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
+      if (OutcomeElement is not null) yield return new KeyValuePair<string,object>("outcome",OutcomeElement);
+      if (OutcomeDescElement is not null) yield return new KeyValuePair<string,object>("outcomeDesc",OutcomeDescElement);
+      if (PurposeOfEvent?.Any() == true) yield return new KeyValuePair<string,object>("purposeOfEvent",PurposeOfEvent);
+      if (Agent?.Any() == true) yield return new KeyValuePair<string,object>("agent",Agent);
+      if (Source is not null) yield return new KeyValuePair<string,object>("source",Source);
+      if (Entity?.Any() == true) yield return new KeyValuePair<string,object>("entity",Entity);
     }
 
   }

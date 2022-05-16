@@ -729,45 +729,5 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Assert.AreEqual(result, ElementDefinitionNavigator.IsDirectSliceOf(child, parent));
         }
-
-
-        [TestMethod]
-        public void TestDistinctTypeCode()
-        {
-            var elem = new ElementDefinition();
-            Assert.AreEqual(null, elem.CommonTypeCode());
-
-            var patientTypeCode = FHIRAllTypes.Patient.GetLiteral();
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyPatient1" } });
-            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
-
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = patientTypeCode, Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyPatient2" } });
-            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
-
-            // Invalid, type constraint without type code (required!)
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyPatient3" } });
-            Assert.AreEqual(patientTypeCode, elem.CommonTypeCode());
-
-            elem.Type.Add(new ElementDefinition.TypeRefComponent() { Code = FHIRAllTypes.Observation.GetLiteral(), Profile = new string[] { @"http://example.org/fhir/StructureDefinition/MyObservation" } });
-            Assert.IsNull(elem.CommonTypeCode());
-        }
-
-
     }
-
-    //public static class PocoEvaluatorExtensions
-    //{
-    //    public static IEnumerable<IValueProvider> ForPoco(this PathExpression.CompiledExpression ce, Base poco)
-    //    {
-    //        var nav = new FhirPath.ModelNavigator(poco);
-
-    //        return ce(new List<IValueProvider> { nav }, poco is Resource ? new List<IValueProvider> { nav } : null);
-    //    }
-
-    //    public static IEnumerable<IValueProvider> ForNode(this PathExpression.CompiledExpression ce, IValueProvider node)
-    //    {
-    //        return ce(new List<IValueProvider> { node }, null);
-    //    }
-    //}
-
 }

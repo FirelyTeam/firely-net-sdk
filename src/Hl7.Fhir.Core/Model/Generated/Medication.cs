@@ -229,6 +229,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "item":
+            value = Item;
+            return Item is not null;
+          case "isActive":
+            value = IsActiveElement;
+            return IsActiveElement is not null;
+          case "strength":
+            value = Strength;
+            return Strength is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+        if (IsActiveElement is not null) yield return new KeyValuePair<string,object>("isActive",IsActiveElement);
+        if (Strength is not null) yield return new KeyValuePair<string,object>("strength",Strength);
+      }
+
     }
 
     /// <summary>
@@ -373,12 +400,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "lotNumber":
+            value = LotNumberElement;
+            return LotNumberElement is not null;
+          case "expirationDate":
+            value = ExpirationDateElement;
+            return ExpirationDateElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
+        if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
+      }
+
     }
 
     /// <summary>
     /// Business identifier for this medication
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -392,7 +442,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes that identify this medication
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100)]
+    [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -405,7 +455,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes> StatusElement
@@ -437,7 +487,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=120)]
+    [FhirElement("manufacturer", InSummary=true, Order=120, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -597,6 +647,53 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Ingredient) { if (elem != null) yield return new ElementValue("ingredient", elem); }
         if (Batch != null) yield return new ElementValue("batch", Batch);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer is not null;
+        case "form":
+          value = Form;
+          return Form is not null;
+        case "amount":
+          value = Amount;
+          return Amount is not null;
+        case "ingredient":
+          value = Ingredient;
+          return Ingredient?.Any() == true;
+        case "batch":
+          value = Batch;
+          return Batch is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (Form is not null) yield return new KeyValuePair<string,object>("form",Form);
+      if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+      if (Ingredient?.Any() == true) yield return new KeyValuePair<string,object>("ingredient",Ingredient);
+      if (Batch is not null) yield return new KeyValuePair<string,object>("batch",Batch);
     }
 
   }

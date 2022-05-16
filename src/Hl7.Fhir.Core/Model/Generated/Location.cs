@@ -285,6 +285,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "longitude":
+            value = LongitudeElement;
+            return LongitudeElement is not null;
+          case "latitude":
+            value = LatitudeElement;
+            return LatitudeElement is not null;
+          case "altitude":
+            value = AltitudeElement;
+            return AltitudeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (LongitudeElement is not null) yield return new KeyValuePair<string,object>("longitude",LongitudeElement);
+        if (LatitudeElement is not null) yield return new KeyValuePair<string,object>("latitude",LatitudeElement);
+        if (AltitudeElement is not null) yield return new KeyValuePair<string,object>("altitude",AltitudeElement);
+      }
+
     }
 
     /// <summary>
@@ -503,12 +530,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "daysOfWeek":
+            value = DaysOfWeekElement;
+            return DaysOfWeekElement?.Any() == true;
+          case "allDay":
+            value = AllDayElement;
+            return AllDayElement is not null;
+          case "openingTime":
+            value = OpeningTimeElement;
+            return OpeningTimeElement is not null;
+          case "closingTime":
+            value = ClosingTimeElement;
+            return ClosingTimeElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DaysOfWeekElement?.Any() == true) yield return new KeyValuePair<string,object>("daysOfWeek",DaysOfWeekElement);
+        if (AllDayElement is not null) yield return new KeyValuePair<string,object>("allDay",AllDayElement);
+        if (OpeningTimeElement is not null) yield return new KeyValuePair<string,object>("openingTime",OpeningTimeElement);
+        if (ClosingTimeElement is not null) yield return new KeyValuePair<string,object>("closingTime",ClosingTimeElement);
+      }
+
     }
 
     /// <summary>
     /// Unique code or number identifying the location to its users
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -522,7 +580,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | inactive
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
@@ -554,7 +612,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The operational status of the location (typically only for a bed/room)
     /// </summary>
-    [FhirElement("operationalStatus", InSummary=true, Order=110)]
+    [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -661,7 +719,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// instance | kind
     /// </summary>
-    [FhirElement("mode", InSummary=true, Order=150)]
+    [FhirElement("mode", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
@@ -693,7 +751,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of function performed
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=160)]
+    [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -734,7 +792,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical form of the location
     /// </summary>
-    [FhirElement("physicalType", InSummary=true, Order=190)]
+    [FhirElement("physicalType", InSummary=true, Order=190, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysicalType
     {
@@ -988,6 +1046,89 @@ namespace Hl7.Fhir.Model
         if (AvailabilityExceptionsElement != null) yield return new ElementValue("availabilityExceptions", AvailabilityExceptionsElement);
         foreach (var elem in Endpoint) { if (elem != null) yield return new ElementValue("endpoint", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "operationalStatus":
+          value = OperationalStatus;
+          return OperationalStatus is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "alias":
+          value = AliasElement;
+          return AliasElement?.Any() == true;
+        case "description":
+          value = DescriptionElement;
+          return DescriptionElement is not null;
+        case "mode":
+          value = ModeElement;
+          return ModeElement is not null;
+        case "type":
+          value = Type;
+          return Type?.Any() == true;
+        case "telecom":
+          value = Telecom;
+          return Telecom?.Any() == true;
+        case "address":
+          value = Address;
+          return Address is not null;
+        case "physicalType":
+          value = PhysicalType;
+          return PhysicalType is not null;
+        case "position":
+          value = Position;
+          return Position is not null;
+        case "managingOrganization":
+          value = ManagingOrganization;
+          return ManagingOrganization is not null;
+        case "partOf":
+          value = PartOf;
+          return PartOf is not null;
+        case "hoursOfOperation":
+          value = HoursOfOperation;
+          return HoursOfOperation?.Any() == true;
+        case "availabilityExceptions":
+          value = AvailabilityExceptionsElement;
+          return AvailabilityExceptionsElement is not null;
+        case "endpoint":
+          value = Endpoint;
+          return Endpoint?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (OperationalStatus is not null) yield return new KeyValuePair<string,object>("operationalStatus",OperationalStatus);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
+      if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
+      if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
+      if (Address is not null) yield return new KeyValuePair<string,object>("address",Address);
+      if (PhysicalType is not null) yield return new KeyValuePair<string,object>("physicalType",PhysicalType);
+      if (Position is not null) yield return new KeyValuePair<string,object>("position",Position);
+      if (ManagingOrganization is not null) yield return new KeyValuePair<string,object>("managingOrganization",ManagingOrganization);
+      if (PartOf is not null) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (HoursOfOperation?.Any() == true) yield return new KeyValuePair<string,object>("hoursOfOperation",HoursOfOperation);
+      if (AvailabilityExceptionsElement is not null) yield return new KeyValuePair<string,object>("availabilityExceptions",AvailabilityExceptionsElement);
+      if (Endpoint?.Any() == true) yield return new KeyValuePair<string,object>("endpoint",Endpoint);
     }
 
   }

@@ -236,12 +236,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = CodeElement;
+            return CodeElement is not null;
+          case "param":
+            value = ParamElement;
+            return ParamElement?.Any() == true;
+          case "documentation":
+            value = DocumentationElement;
+            return DocumentationElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+        if (ParamElement?.Any() == true) yield return new KeyValuePair<string,object>("param",ParamElement);
+        if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
+      }
+
     }
 
     /// <summary>
     /// Canonical identifier for this compartment definition, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -273,7 +300,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the compartment definition
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -336,7 +363,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -369,7 +396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=130)]
+    [FhirElement("experimental", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -400,7 +427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -431,7 +458,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=150)]
+    [FhirElement("publisher", InSummary=true, Order=150, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -503,7 +530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this compartment definition is defined
     /// </summary>
-    [FhirElement("purpose", Order=190)]
+    [FhirElement("purpose", Order=190, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {
@@ -717,6 +744,77 @@ namespace Hl7.Fhir.Model
         if (SearchElement != null) yield return new ElementValue("search", SearchElement);
         foreach (var elem in Resource) { if (elem != null) yield return new ElementValue("resource", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
+        case "version":
+          value = VersionElement;
+          return VersionElement is not null;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "experimental":
+          value = ExperimentalElement;
+          return ExperimentalElement is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "publisher":
+          value = PublisherElement;
+          return PublisherElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "useContext":
+          value = UseContext;
+          return UseContext?.Any() == true;
+        case "purpose":
+          value = Purpose;
+          return Purpose is not null;
+        case "code":
+          value = CodeElement;
+          return CodeElement is not null;
+        case "search":
+          value = SearchElement;
+          return SearchElement is not null;
+        case "resource":
+          value = Resource;
+          return Resource?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
+      if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
+      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (CodeElement is not null) yield return new KeyValuePair<string,object>("code",CodeElement);
+      if (SearchElement is not null) yield return new KeyValuePair<string,object>("search",SearchElement);
+      if (Resource?.Any() == true) yield return new KeyValuePair<string,object>("resource",Resource);
     }
 
   }

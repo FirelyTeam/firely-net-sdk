@@ -200,6 +200,33 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "productName":
+            value = ProductNameElement;
+            return ProductNameElement is not null;
+          case "namePart":
+            value = NamePart;
+            return NamePart?.Any() == true;
+          case "countryLanguage":
+            value = CountryLanguage;
+            return CountryLanguage?.Any() == true;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ProductNameElement is not null) yield return new KeyValuePair<string,object>("productName",ProductNameElement);
+        if (NamePart?.Any() == true) yield return new KeyValuePair<string,object>("namePart",NamePart);
+        if (CountryLanguage?.Any() == true) yield return new KeyValuePair<string,object>("countryLanguage",CountryLanguage);
+      }
+
     }
 
     /// <summary>
@@ -328,6 +355,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "part":
+            value = PartElement;
+            return PartElement is not null;
+          case "type":
+            value = Type;
+            return Type is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (PartElement is not null) yield return new KeyValuePair<string,object>("part",PartElement);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      }
+
     }
 
     /// <summary>
@@ -454,6 +504,33 @@ namespace Hl7.Fhir.Model
           if (Jurisdiction != null) yield return new ElementValue("jurisdiction", Jurisdiction);
           if (Language != null) yield return new ElementValue("language", Language);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "country":
+            value = Country;
+            return Country is not null;
+          case "jurisdiction":
+            value = Jurisdiction;
+            return Jurisdiction is not null;
+          case "language":
+            value = Language;
+            return Language is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Country is not null) yield return new KeyValuePair<string,object>("country",Country);
+        if (Jurisdiction is not null) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
+        if (Language is not null) yield return new KeyValuePair<string,object>("language",Language);
       }
 
     }
@@ -657,6 +734,45 @@ namespace Hl7.Fhir.Model
           foreach (var elem in Manufacturer) { if (elem != null) yield return new ElementValue("manufacturer", elem); }
           if (Regulator != null) yield return new ElementValue("regulator", Regulator);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "operationType":
+            value = OperationType;
+            return OperationType is not null;
+          case "authorisationReferenceNumber":
+            value = AuthorisationReferenceNumber;
+            return AuthorisationReferenceNumber is not null;
+          case "effectiveDate":
+            value = EffectiveDateElement;
+            return EffectiveDateElement is not null;
+          case "confidentialityIndicator":
+            value = ConfidentialityIndicator;
+            return ConfidentialityIndicator is not null;
+          case "manufacturer":
+            value = Manufacturer;
+            return Manufacturer?.Any() == true;
+          case "regulator":
+            value = Regulator;
+            return Regulator is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (OperationType is not null) yield return new KeyValuePair<string,object>("operationType",OperationType);
+        if (AuthorisationReferenceNumber is not null) yield return new KeyValuePair<string,object>("authorisationReferenceNumber",AuthorisationReferenceNumber);
+        if (EffectiveDateElement is not null) yield return new KeyValuePair<string,object>("effectiveDate",EffectiveDateElement);
+        if (ConfidentialityIndicator is not null) yield return new KeyValuePair<string,object>("confidentialityIndicator",ConfidentialityIndicator);
+        if (Manufacturer?.Any() == true) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+        if (Regulator is not null) yield return new KeyValuePair<string,object>("regulator",Regulator);
       }
 
     }
@@ -877,6 +993,49 @@ namespace Hl7.Fhir.Model
           if (DateElement != null) yield return new ElementValue("date", DateElement);
           if (Species != null) yield return new ElementValue("species", Species);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "identifier":
+            value = Identifier;
+            return Identifier?.Any() == true;
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "intendedUse":
+            value = IntendedUse;
+            return IntendedUse is not null;
+          case "indication":
+            value = Indication;
+            return Indication is not null;
+          case "status":
+            value = Status;
+            return Status is not null;
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "species":
+            value = Species;
+            return Species is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (IntendedUse is not null) yield return new KeyValuePair<string,object>("intendedUse",IntendedUse);
+        if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
+        if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
+        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (Species is not null) yield return new KeyValuePair<string,object>("species",Species);
       }
 
     }
@@ -1340,6 +1499,101 @@ namespace Hl7.Fhir.Model
         foreach (var elem in ManufacturingBusinessOperation) { if (elem != null) yield return new ElementValue("manufacturingBusinessOperation", elem); }
         foreach (var elem in SpecialDesignation) { if (elem != null) yield return new ElementValue("specialDesignation", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "domain":
+          value = Domain;
+          return Domain is not null;
+        case "combinedPharmaceuticalDoseForm":
+          value = CombinedPharmaceuticalDoseForm;
+          return CombinedPharmaceuticalDoseForm is not null;
+        case "legalStatusOfSupply":
+          value = LegalStatusOfSupply;
+          return LegalStatusOfSupply is not null;
+        case "additionalMonitoringIndicator":
+          value = AdditionalMonitoringIndicator;
+          return AdditionalMonitoringIndicator is not null;
+        case "specialMeasures":
+          value = SpecialMeasuresElement;
+          return SpecialMeasuresElement?.Any() == true;
+        case "paediatricUseIndicator":
+          value = PaediatricUseIndicator;
+          return PaediatricUseIndicator is not null;
+        case "productClassification":
+          value = ProductClassification;
+          return ProductClassification?.Any() == true;
+        case "marketingStatus":
+          value = MarketingStatus;
+          return MarketingStatus?.Any() == true;
+        case "pharmaceuticalProduct":
+          value = PharmaceuticalProduct;
+          return PharmaceuticalProduct?.Any() == true;
+        case "packagedMedicinalProduct":
+          value = PackagedMedicinalProduct;
+          return PackagedMedicinalProduct?.Any() == true;
+        case "attachedDocument":
+          value = AttachedDocument;
+          return AttachedDocument?.Any() == true;
+        case "masterFile":
+          value = MasterFile;
+          return MasterFile?.Any() == true;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "clinicalTrial":
+          value = ClinicalTrial;
+          return ClinicalTrial?.Any() == true;
+        case "name":
+          value = Name;
+          return Name?.Any() == true;
+        case "crossReference":
+          value = CrossReference;
+          return CrossReference?.Any() == true;
+        case "manufacturingBusinessOperation":
+          value = ManufacturingBusinessOperation;
+          return ManufacturingBusinessOperation?.Any() == true;
+        case "specialDesignation":
+          value = SpecialDesignation;
+          return SpecialDesignation?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Domain is not null) yield return new KeyValuePair<string,object>("domain",Domain);
+      if (CombinedPharmaceuticalDoseForm is not null) yield return new KeyValuePair<string,object>("combinedPharmaceuticalDoseForm",CombinedPharmaceuticalDoseForm);
+      if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
+      if (AdditionalMonitoringIndicator is not null) yield return new KeyValuePair<string,object>("additionalMonitoringIndicator",AdditionalMonitoringIndicator);
+      if (SpecialMeasuresElement?.Any() == true) yield return new KeyValuePair<string,object>("specialMeasures",SpecialMeasuresElement);
+      if (PaediatricUseIndicator is not null) yield return new KeyValuePair<string,object>("paediatricUseIndicator",PaediatricUseIndicator);
+      if (ProductClassification?.Any() == true) yield return new KeyValuePair<string,object>("productClassification",ProductClassification);
+      if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
+      if (PharmaceuticalProduct?.Any() == true) yield return new KeyValuePair<string,object>("pharmaceuticalProduct",PharmaceuticalProduct);
+      if (PackagedMedicinalProduct?.Any() == true) yield return new KeyValuePair<string,object>("packagedMedicinalProduct",PackagedMedicinalProduct);
+      if (AttachedDocument?.Any() == true) yield return new KeyValuePair<string,object>("attachedDocument",AttachedDocument);
+      if (MasterFile?.Any() == true) yield return new KeyValuePair<string,object>("masterFile",MasterFile);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (ClinicalTrial?.Any() == true) yield return new KeyValuePair<string,object>("clinicalTrial",ClinicalTrial);
+      if (Name?.Any() == true) yield return new KeyValuePair<string,object>("name",Name);
+      if (CrossReference?.Any() == true) yield return new KeyValuePair<string,object>("crossReference",CrossReference);
+      if (ManufacturingBusinessOperation?.Any() == true) yield return new KeyValuePair<string,object>("manufacturingBusinessOperation",ManufacturingBusinessOperation);
+      if (SpecialDesignation?.Any() == true) yield return new KeyValuePair<string,object>("specialDesignation",SpecialDesignation);
     }
 
   }
