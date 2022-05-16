@@ -1,10 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\firely-net-sdk.props" />
-  <Import Project="..\firely-net-sdk.targets" />
-  <Import Project="..\firely-net-sdk-tests.props"/>
+	<Import Project="..\firely-net-sdk-tests.props"/>
 
-  <PropertyGroup>
+	<PropertyGroup>
     <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
     <ContainsTests>true</ContainsTests>
   </PropertyGroup>

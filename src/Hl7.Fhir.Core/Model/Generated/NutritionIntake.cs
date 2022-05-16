@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the food or fluid product that was consumed
       /// </summary>
-      [FhirElement("nutritionProduct", InSummary=true, Order=50)]
+      [FhirElement("nutritionProduct", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference NutritionProduct
@@ -271,6 +271,49 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "type":
+            value = Type;
+            return Type is not null;
+          case "nutritionProduct":
+            value = NutritionProduct;
+            return NutritionProduct is not null;
+          case "schedule":
+            value = Schedule;
+            return Schedule is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          case "rate":
+            value = Rate;
+            return Rate is not null;
+          case "notConsumed":
+            value = NotConsumedElement;
+            return NotConsumedElement is not null;
+          case "notConsumedReason":
+            value = NotConsumedReason;
+            return NotConsumedReason is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+        if (NutritionProduct is not null) yield return new KeyValuePair<string,object>("nutritionProduct",NutritionProduct);
+        if (Schedule is not null) yield return new KeyValuePair<string,object>("schedule",Schedule);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
+        if (Rate is not null) yield return new KeyValuePair<string,object>("rate",Rate);
+        if (NotConsumedElement is not null) yield return new KeyValuePair<string,object>("notConsumed",NotConsumedElement);
+        if (NotConsumedReason is not null) yield return new KeyValuePair<string,object>("notConsumedReason",NotConsumedReason);
+      }
+
     }
 
     /// <summary>
@@ -379,6 +422,29 @@ namespace Hl7.Fhir.Model
           if (Nutrient != null) yield return new ElementValue("nutrient", Nutrient);
           if (Amount != null) yield return new ElementValue("amount", Amount);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "nutrient":
+            value = Nutrient;
+            return Nutrient is not null;
+          case "amount":
+            value = Amount;
+            return Amount is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Nutrient is not null) yield return new KeyValuePair<string,object>("nutrient",Nutrient);
+        if (Amount is not null) yield return new KeyValuePair<string,object>("amount",Amount);
       }
 
     }
@@ -492,12 +558,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -607,7 +696,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -654,7 +743,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of nutrition intake setting/reporting
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=160)]
+    [FhirElement("code", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -667,7 +756,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was consuming the food or fluid
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=170)]
+    [FhirElement("subject", InSummary=true, Order=170, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -698,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the food or fluid is/was consumed
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -713,7 +802,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the intake was recorded
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=200)]
+    [FhirElement("recorded", InSummary=true, Order=200, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedElement
     {
@@ -744,7 +833,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the consumption of this food or fluid
     /// </summary>
-    [FhirElement("reported", Order=210, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("reported", Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -833,7 +922,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the food or fluid is /was consumed
     /// </summary>
-    [FhirElement("reason", Order=270)]
+    [FhirElement("reason", Order=270, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableReference> Reason
@@ -1013,6 +1102,101 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Reason) { if (elem != null) yield return new ElementValue("reason", elem); }
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "recorded":
+          value = RecordedElement;
+          return RecordedElement is not null;
+        case "reported":
+          value = Reported;
+          return Reported is not null;
+        case "consumedItem":
+          value = ConsumedItem;
+          return ConsumedItem?.Any() == true;
+        case "ingredientLabel":
+          value = IngredientLabel;
+          return IngredientLabel?.Any() == true;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "derivedFrom":
+          value = DerivedFrom;
+          return DerivedFrom?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason?.Any() == true) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
+      if (Reported is not null) yield return new KeyValuePair<string,object>("reported",Reported);
+      if (ConsumedItem?.Any() == true) yield return new KeyValuePair<string,object>("consumedItem",ConsumedItem);
+      if (IngredientLabel?.Any() == true) yield return new KeyValuePair<string,object>("ingredientLabel",IngredientLabel);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (DerivedFrom?.Any() == true) yield return new KeyValuePair<string,object>("derivedFrom",DerivedFrom);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
     }
 
   }

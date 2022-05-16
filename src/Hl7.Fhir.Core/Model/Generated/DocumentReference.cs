@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who attested the composition
       /// </summary>
-      [FhirElement("party", Order=60)]
+      [FhirElement("party", Order=60, FiveWs="FiveWs.witness")]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
       [DataMember]
@@ -251,6 +251,33 @@ namespace Hl7.Fhir.Model
           if (TimeElement != null) yield return new ElementValue("time", TimeElement);
           if (Party != null) yield return new ElementValue("party", Party);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "mode":
+            value = ModeElement;
+            return ModeElement is not null;
+          case "time":
+            value = TimeElement;
+            return TimeElement is not null;
+          case "party":
+            value = Party;
+            return Party is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ModeElement is not null) yield return new KeyValuePair<string,object>("mode",ModeElement);
+        if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
+        if (Party is not null) yield return new KeyValuePair<string,object>("party",Party);
       }
 
     }
@@ -365,6 +392,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "code":
+            value = Code;
+            return Code is not null;
+          case "target":
+            value = Target;
+            return Target is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+        if (Target is not null) yield return new KeyValuePair<string,object>("target",Target);
+      }
+
     }
 
     /// <summary>
@@ -410,7 +460,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier of the attachment binary
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=60)]
+      [FhirElement("identifier", InSummary=true, Order=60, FiveWs="FiveWs.identifier")]
       [DataMember]
       public Hl7.Fhir.Model.Identifier Identifier
       {
@@ -492,12 +542,39 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "attachment":
+            value = Attachment;
+            return Attachment is not null;
+          case "format":
+            value = Format;
+            return Format is not null;
+          case "identifier":
+            value = Identifier;
+            return Identifier is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Attachment is not null) yield return new KeyValuePair<string,object>("attachment",Attachment);
+        if (Format is not null) yield return new KeyValuePair<string,object>("format",Format);
+        if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      }
+
     }
 
     /// <summary>
     /// Other identifiers for the document
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -527,7 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -560,7 +637,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | amended | entered-in-error | deprecated
     /// </summary>
-    [FhirElement("docStatus", InSummary=true, Order=120)]
+    [FhirElement("docStatus", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
@@ -592,7 +669,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of document (LOINC if possible)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=130)]
+    [FhirElement("type", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -605,7 +682,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Categorization of document
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=140)]
+    [FhirElement("category", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -619,7 +696,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what is the subject of the document
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device","PractitionerRole","Specimen","Organization","Location")]
     [DataMember]
@@ -634,7 +711,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context of the document  content
     /// </summary>
-    [FhirElement("encounter", Order=160)]
+    [FhirElement("encounter", Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [Cardinality(Min=0,Max=-1)]
@@ -703,7 +780,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this document reference was created
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=210)]
+    [FhirElement("date", InSummary=true, Order=210, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant DateElement
     {
@@ -1027,6 +1104,109 @@ namespace Hl7.Fhir.Model
         if (SourcePatientInfo != null) yield return new ElementValue("sourcePatientInfo", SourcePatientInfo);
         foreach (var elem in Related) { if (elem != null) yield return new ElementValue("related", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "docStatus":
+          value = DocStatusElement;
+          return DocStatusElement is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "category":
+          value = Category;
+          return Category?.Any() == true;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter?.Any() == true;
+        case "event":
+          value = Event;
+          return Event?.Any() == true;
+        case "facilityType":
+          value = FacilityType;
+          return FacilityType is not null;
+        case "practiceSetting":
+          value = PracticeSetting;
+          return PracticeSetting is not null;
+        case "period":
+          value = Period;
+          return Period is not null;
+        case "date":
+          value = DateElement;
+          return DateElement is not null;
+        case "author":
+          value = Author;
+          return Author?.Any() == true;
+        case "attester":
+          value = Attester;
+          return Attester?.Any() == true;
+        case "custodian":
+          value = Custodian;
+          return Custodian is not null;
+        case "relatesTo":
+          value = RelatesTo;
+          return RelatesTo?.Any() == true;
+        case "description":
+          value = Description;
+          return Description is not null;
+        case "securityLabel":
+          value = SecurityLabel;
+          return SecurityLabel?.Any() == true;
+        case "content":
+          value = Content;
+          return Content?.Any() == true;
+        case "sourcePatientInfo":
+          value = SourcePatientInfo;
+          return SourcePatientInfo is not null;
+        case "related":
+          value = Related;
+          return Related?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (DocStatusElement is not null) yield return new KeyValuePair<string,object>("docStatus",DocStatusElement);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (Category?.Any() == true) yield return new KeyValuePair<string,object>("category",Category);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Encounter?.Any() == true) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Event?.Any() == true) yield return new KeyValuePair<string,object>("event",Event);
+      if (FacilityType is not null) yield return new KeyValuePair<string,object>("facilityType",FacilityType);
+      if (PracticeSetting is not null) yield return new KeyValuePair<string,object>("practiceSetting",PracticeSetting);
+      if (Period is not null) yield return new KeyValuePair<string,object>("period",Period);
+      if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+      if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
+      if (Attester?.Any() == true) yield return new KeyValuePair<string,object>("attester",Attester);
+      if (Custodian is not null) yield return new KeyValuePair<string,object>("custodian",Custodian);
+      if (RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);
+      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
+      if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
+      if (SourcePatientInfo is not null) yield return new KeyValuePair<string,object>("sourcePatientInfo",SourcePatientInfo);
+      if (Related?.Any() == true) yield return new KeyValuePair<string,object>("related",Related);
     }
 
   }

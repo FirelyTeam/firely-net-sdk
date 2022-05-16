@@ -4,14 +4,12 @@
 	</PropertyGroup>
 
 	<Import Project="..\firely-net-sdk.props" />
-	<Import Project="..\firely-net-sdk.targets" />
 	<Import Project="..\platforms.props" />
-
 
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.R5</PackageId>
 		<Title>HL7 FHIR Core support SDK for R5</Title>	
-		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R5 (4.6.0)</Summary>
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R5 (5.0.0-snapshot1)</Summary>
 		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
 		<AssemblyName>Hl7.Fhir.R5.Core</AssemblyName>
 		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
@@ -24,11 +22,7 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
 		<Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Net.Http"/>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
-		<PackageReference Include="System.Net.Requests" Version="4.3.0" />
+		<Reference Include="System.Net.Http" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,7 +31,5 @@
 		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
 		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-		<Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-	</ItemGroup>
+
 </Project>

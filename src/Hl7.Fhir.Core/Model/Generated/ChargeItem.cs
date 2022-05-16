@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual who was performing
       /// </summary>
-      [FhirElement("actor", Order=50)]
+      [FhirElement("actor", Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","CareTeam","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -216,12 +216,35 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
+      }
+
     }
 
     /// <summary>
     /// Business Identifier for item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -299,7 +322,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -348,7 +371,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A code that identifies the charge, like a billing code
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=140)]
+    [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -362,7 +385,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual service was done for/to
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -378,7 +401,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter / Episode associated with event
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=160)]
+    [FhirElement("context", InSummary=true, Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -393,7 +416,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the charged service was applied
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
@@ -569,7 +592,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual who was entering
     /// </summary>
-    [FhirElement("enterer", InSummary=true, Order=270)]
+    [FhirElement("enterer", InSummary=true, Order=270, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","Patient","Device","RelatedPerson")]
     [DataMember]
@@ -615,7 +638,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was the charged  service rendered?
     /// </summary>
-    [FhirElement("reason", Order=290)]
+    [FhirElement("reason", Order=290, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -629,7 +652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Which rendered service is being charged?
     /// </summary>
-    [FhirElement("service", Order=300)]
+    [FhirElement("service", Order=300, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("DiagnosticReport","ImagingStudy","Immunization","MedicationAdministration","MedicationDispense","Observation","Procedure","SupplyDelivery")]
     [Cardinality(Min=0,Max=-1)]
@@ -887,6 +910,125 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in SupportingInformation) { if (elem != null) yield return new ElementValue("supportingInformation", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "definitionUri":
+          value = DefinitionUriElement;
+          return DefinitionUriElement?.Any() == true;
+        case "definitionCanonical":
+          value = DefinitionCanonicalElement;
+          return DefinitionCanonicalElement?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "code":
+          value = Code;
+          return Code is not null;
+        case "subject":
+          value = Subject;
+          return Subject is not null;
+        case "context":
+          value = Context;
+          return Context is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "performingOrganization":
+          value = PerformingOrganization;
+          return PerformingOrganization is not null;
+        case "requestingOrganization":
+          value = RequestingOrganization;
+          return RequestingOrganization is not null;
+        case "costCenter":
+          value = CostCenter;
+          return CostCenter is not null;
+        case "quantity":
+          value = Quantity;
+          return Quantity is not null;
+        case "bodysite":
+          value = Bodysite;
+          return Bodysite?.Any() == true;
+        case "factorOverride":
+          value = FactorOverrideElement;
+          return FactorOverrideElement is not null;
+        case "priceOverride":
+          value = PriceOverride;
+          return PriceOverride is not null;
+        case "overrideReason":
+          value = OverrideReasonElement;
+          return OverrideReasonElement is not null;
+        case "enterer":
+          value = Enterer;
+          return Enterer is not null;
+        case "enteredDate":
+          value = EnteredDateElement;
+          return EnteredDateElement is not null;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "service":
+          value = Service;
+          return Service?.Any() == true;
+        case "product":
+          value = Product;
+          return Product?.Any() == true;
+        case "account":
+          value = Account;
+          return Account?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "supportingInformation":
+          value = SupportingInformation;
+          return SupportingInformation?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (DefinitionUriElement?.Any() == true) yield return new KeyValuePair<string,object>("definitionUri",DefinitionUriElement);
+      if (DefinitionCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("definitionCanonical",DefinitionCanonicalElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
+      if (Subject is not null) yield return new KeyValuePair<string,object>("subject",Subject);
+      if (Context is not null) yield return new KeyValuePair<string,object>("context",Context);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (PerformingOrganization is not null) yield return new KeyValuePair<string,object>("performingOrganization",PerformingOrganization);
+      if (RequestingOrganization is not null) yield return new KeyValuePair<string,object>("requestingOrganization",RequestingOrganization);
+      if (CostCenter is not null) yield return new KeyValuePair<string,object>("costCenter",CostCenter);
+      if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+      if (Bodysite?.Any() == true) yield return new KeyValuePair<string,object>("bodysite",Bodysite);
+      if (FactorOverrideElement is not null) yield return new KeyValuePair<string,object>("factorOverride",FactorOverrideElement);
+      if (PriceOverride is not null) yield return new KeyValuePair<string,object>("priceOverride",PriceOverride);
+      if (OverrideReasonElement is not null) yield return new KeyValuePair<string,object>("overrideReason",OverrideReasonElement);
+      if (Enterer is not null) yield return new KeyValuePair<string,object>("enterer",Enterer);
+      if (EnteredDateElement is not null) yield return new KeyValuePair<string,object>("enteredDate",EnteredDateElement);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (Service?.Any() == true) yield return new KeyValuePair<string,object>("service",Service);
+      if (Product?.Any() == true) yield return new KeyValuePair<string,object>("product",Product);
+      if (Account?.Any() == true) yield return new KeyValuePair<string,object>("account",Account);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (SupportingInformation?.Any() == true) yield return new KeyValuePair<string,object>("supportingInformation",SupportingInformation);
     }
 
   }

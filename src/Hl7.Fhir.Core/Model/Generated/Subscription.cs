@@ -334,12 +334,43 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "resourceType":
+            value = ResourceTypeElement;
+            return ResourceTypeElement is not null;
+          case "searchParamName":
+            value = SearchParamNameElement;
+            return SearchParamNameElement is not null;
+          case "searchModifier":
+            value = SearchModifierElement;
+            return SearchModifierElement is not null;
+          case "value":
+            value = ValueElement;
+            return ValueElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (ResourceTypeElement is not null) yield return new KeyValuePair<string,object>("resourceType",ResourceTypeElement);
+        if (SearchParamNameElement is not null) yield return new KeyValuePair<string,object>("searchParamName",SearchParamNameElement);
+        if (SearchModifierElement is not null) yield return new KeyValuePair<string,object>("searchModifier",SearchModifierElement);
+        if (ValueElement is not null) yield return new KeyValuePair<string,object>("value",ValueElement);
+      }
+
     }
 
     /// <summary>
     /// Additional identifiers (business identifier)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -384,7 +415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -417,7 +448,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the subscription topic being subscribed to
     /// </summary>
-    [FhirElement("topic", InSummary=true, Order=120)]
+    [FhirElement("topic", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical TopicElement
@@ -449,7 +480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting)
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=130)]
+    [FhirElement("contact", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -463,7 +494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When to automatically delete the subscription
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=140)]
+    [FhirElement("end", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {
@@ -494,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of why this subscription was created
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=150)]
+    [FhirElement("reason", InSummary=true, Order=150, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ReasonElement
     {
@@ -941,6 +972,89 @@ namespace Hl7.Fhir.Model
         if (NotificationUrlLocationElement != null) yield return new ElementValue("notificationUrlLocation", NotificationUrlLocationElement);
         if (MaxCountElement != null) yield return new ElementValue("maxCount", MaxCountElement);
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "name":
+          value = NameElement;
+          return NameElement is not null;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "topic":
+          value = TopicElement;
+          return TopicElement is not null;
+        case "contact":
+          value = Contact;
+          return Contact?.Any() == true;
+        case "end":
+          value = EndElement;
+          return EndElement is not null;
+        case "reason":
+          value = ReasonElement;
+          return ReasonElement is not null;
+        case "filterBy":
+          value = FilterBy;
+          return FilterBy?.Any() == true;
+        case "channelType":
+          value = ChannelType;
+          return ChannelType is not null;
+        case "endpoint":
+          value = EndpointElement;
+          return EndpointElement is not null;
+        case "header":
+          value = HeaderElement;
+          return HeaderElement?.Any() == true;
+        case "heartbeatPeriod":
+          value = HeartbeatPeriodElement;
+          return HeartbeatPeriodElement is not null;
+        case "timeout":
+          value = TimeoutElement;
+          return TimeoutElement is not null;
+        case "contentType":
+          value = ContentTypeElement;
+          return ContentTypeElement is not null;
+        case "content":
+          value = ContentElement;
+          return ContentElement is not null;
+        case "notificationUrlLocation":
+          value = NotificationUrlLocationElement;
+          return NotificationUrlLocationElement is not null;
+        case "maxCount":
+          value = MaxCountElement;
+          return MaxCountElement is not null;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (TopicElement is not null) yield return new KeyValuePair<string,object>("topic",TopicElement);
+      if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
+      if (EndElement is not null) yield return new KeyValuePair<string,object>("end",EndElement);
+      if (ReasonElement is not null) yield return new KeyValuePair<string,object>("reason",ReasonElement);
+      if (FilterBy?.Any() == true) yield return new KeyValuePair<string,object>("filterBy",FilterBy);
+      if (ChannelType is not null) yield return new KeyValuePair<string,object>("channelType",ChannelType);
+      if (EndpointElement is not null) yield return new KeyValuePair<string,object>("endpoint",EndpointElement);
+      if (HeaderElement?.Any() == true) yield return new KeyValuePair<string,object>("header",HeaderElement);
+      if (HeartbeatPeriodElement is not null) yield return new KeyValuePair<string,object>("heartbeatPeriod",HeartbeatPeriodElement);
+      if (TimeoutElement is not null) yield return new KeyValuePair<string,object>("timeout",TimeoutElement);
+      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
+      if (ContentElement is not null) yield return new KeyValuePair<string,object>("content",ContentElement);
+      if (NotificationUrlLocationElement is not null) yield return new KeyValuePair<string,object>("notificationUrlLocation",NotificationUrlLocationElement);
+      if (MaxCountElement is not null) yield return new KeyValuePair<string,object>("maxCount",MaxCountElement);
     }
 
   }

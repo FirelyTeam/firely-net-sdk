@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual or organization who was performing
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -190,6 +190,29 @@ namespace Hl7.Fhir.Model
           if (Function != null) yield return new ElementValue("function", Function);
           if (Actor != null) yield return new ElementValue("actor", Actor);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "function":
+            value = Function;
+            return Function is not null;
+          case "actor":
+            value = Actor;
+            return Actor is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Function is not null) yield return new KeyValuePair<string,object>("function",Function);
+        if (Actor is not null) yield return new KeyValuePair<string,object>("actor",Actor);
       }
 
     }
@@ -408,6 +431,37 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "documentType":
+            value = DocumentTypeElement;
+            return DocumentTypeElement is not null;
+          case "reference":
+            value = ReferenceElement;
+            return ReferenceElement is not null;
+          case "publicationDate":
+            value = PublicationDateElement;
+            return PublicationDateElement is not null;
+          case "presentationDate":
+            value = PresentationDateElement;
+            return PresentationDateElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DocumentTypeElement is not null) yield return new KeyValuePair<string,object>("documentType",DocumentTypeElement);
+        if (ReferenceElement is not null) yield return new KeyValuePair<string,object>("reference",ReferenceElement);
+        if (PublicationDateElement is not null) yield return new KeyValuePair<string,object>("publicationDate",PublicationDateElement);
+        if (PresentationDateElement is not null) yield return new KeyValuePair<string,object>("presentationDate",PresentationDateElement);
+      }
+
     }
 
     /// <summary>
@@ -570,6 +624,33 @@ namespace Hl7.Fhir.Model
           if (Detail != null) yield return new ElementValue("detail", Detail);
           if (ReportedElement != null) yield return new ElementValue("reported", ReportedElement);
         }
+      }
+
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "date":
+            value = DateElement;
+            return DateElement is not null;
+          case "detail":
+            value = Detail;
+            return Detail is not null;
+          case "reported":
+            value = ReportedElement;
+            return ReportedElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
+        if (Detail is not null) yield return new KeyValuePair<string,object>("detail",Detail);
+        if (ReportedElement is not null) yield return new KeyValuePair<string,object>("reported",ReportedElement);
       }
 
     }
@@ -792,12 +873,47 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "series":
+            value = SeriesElement;
+            return SeriesElement is not null;
+          case "authority":
+            value = Authority;
+            return Authority is not null;
+          case "targetDisease":
+            value = TargetDisease;
+            return TargetDisease?.Any() == true;
+          case "doseNumber":
+            value = DoseNumberElement;
+            return DoseNumberElement is not null;
+          case "seriesDoses":
+            value = SeriesDosesElement;
+            return SeriesDosesElement is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (SeriesElement is not null) yield return new KeyValuePair<string,object>("series",SeriesElement);
+        if (Authority is not null) yield return new KeyValuePair<string,object>("authority",Authority);
+        if (TargetDisease?.Any() == true) yield return new KeyValuePair<string,object>("targetDisease",TargetDisease);
+        if (DoseNumberElement is not null) yield return new KeyValuePair<string,object>("doseNumber",DoseNumberElement);
+        if (SeriesDosesElement is not null) yield return new KeyValuePair<string,object>("seriesDoses",SeriesDosesElement);
+      }
+
     }
 
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -891,7 +1007,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | entered-in-error | not-done
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -937,7 +1053,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccine product administered
     /// </summary>
-    [FhirElement("vaccineCode", InSummary=true, Order=150)]
+    [FhirElement("vaccineCode", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -1028,7 +1144,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was immunized
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=190)]
+    [FhirElement("patient", InSummary=true, Order=190, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1044,7 +1160,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter immunization was part of
     /// </summary>
-    [FhirElement("encounter", Order=200)]
+    [FhirElement("encounter", Order=200, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1059,7 +1175,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccine administration date
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirString))]
     [Cardinality(Min=1,Max=1)]
@@ -1075,7 +1191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the immunization was first captured in the subject's record
     /// </summary>
-    [FhirElement("recorded", Order=220)]
+    [FhirElement("recorded", Order=220, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedElement
     {
@@ -1106,7 +1222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates context the data was recorded in
     /// </summary>
-    [FhirElement("primarySource", InSummary=true, Order=230)]
+    [FhirElement("primarySource", InSummary=true, Order=230, FiveWs="FiveWs.source")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean PrimarySourceElement
     {
@@ -1137,7 +1253,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the source of a  reported record
     /// </summary>
-    [FhirElement("informationSource", Order=240, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("informationSource", Order=240, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1153,7 +1269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where immunization occurred
     /// </summary>
-    [FhirElement("location", Order=250)]
+    [FhirElement("location", Order=250, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -1249,7 +1365,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dose potency
     /// </summary>
-    [FhirElement("isSubpotent", InSummary=true, Order=320)]
+    [FhirElement("isSubpotent", InSummary=true, IsModifier=true, Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean IsSubpotentElement
     {
@@ -1565,6 +1681,141 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Reaction) { if (elem != null) yield return new ElementValue("reaction", elem); }
         foreach (var elem in ProtocolApplied) { if (elem != null) yield return new ElementValue("protocolApplied", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier?.Any() == true;
+        case "instantiatesCanonical":
+          value = InstantiatesCanonicalElement;
+          return InstantiatesCanonicalElement?.Any() == true;
+        case "instantiatesUri":
+          value = InstantiatesUriElement;
+          return InstantiatesUriElement?.Any() == true;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "statusReason":
+          value = StatusReason;
+          return StatusReason is not null;
+        case "vaccineCode":
+          value = VaccineCode;
+          return VaccineCode is not null;
+        case "manufacturer":
+          value = Manufacturer;
+          return Manufacturer is not null;
+        case "lotNumber":
+          value = LotNumberElement;
+          return LotNumberElement is not null;
+        case "expirationDate":
+          value = ExpirationDateElement;
+          return ExpirationDateElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "encounter":
+          value = Encounter;
+          return Encounter is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "recorded":
+          value = RecordedElement;
+          return RecordedElement is not null;
+        case "primarySource":
+          value = PrimarySourceElement;
+          return PrimarySourceElement is not null;
+        case "informationSource":
+          value = InformationSource;
+          return InformationSource is not null;
+        case "location":
+          value = Location;
+          return Location is not null;
+        case "site":
+          value = Site;
+          return Site is not null;
+        case "route":
+          value = Route;
+          return Route is not null;
+        case "doseQuantity":
+          value = DoseQuantity;
+          return DoseQuantity is not null;
+        case "performer":
+          value = Performer;
+          return Performer?.Any() == true;
+        case "note":
+          value = Note;
+          return Note?.Any() == true;
+        case "reason":
+          value = Reason;
+          return Reason?.Any() == true;
+        case "isSubpotent":
+          value = IsSubpotentElement;
+          return IsSubpotentElement is not null;
+        case "subpotentReason":
+          value = SubpotentReason;
+          return SubpotentReason?.Any() == true;
+        case "education":
+          value = Education;
+          return Education?.Any() == true;
+        case "programEligibility":
+          value = ProgramEligibility;
+          return ProgramEligibility?.Any() == true;
+        case "fundingSource":
+          value = FundingSource;
+          return FundingSource is not null;
+        case "reaction":
+          value = Reaction;
+          return Reaction?.Any() == true;
+        case "protocolApplied":
+          value = ProtocolApplied;
+          return ProtocolApplied?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (InstantiatesCanonicalElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesCanonical",InstantiatesCanonicalElement);
+      if (InstantiatesUriElement?.Any() == true) yield return new KeyValuePair<string,object>("instantiatesUri",InstantiatesUriElement);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (StatusReason is not null) yield return new KeyValuePair<string,object>("statusReason",StatusReason);
+      if (VaccineCode is not null) yield return new KeyValuePair<string,object>("vaccineCode",VaccineCode);
+      if (Manufacturer is not null) yield return new KeyValuePair<string,object>("manufacturer",Manufacturer);
+      if (LotNumberElement is not null) yield return new KeyValuePair<string,object>("lotNumber",LotNumberElement);
+      if (ExpirationDateElement is not null) yield return new KeyValuePair<string,object>("expirationDate",ExpirationDateElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Encounter is not null) yield return new KeyValuePair<string,object>("encounter",Encounter);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (RecordedElement is not null) yield return new KeyValuePair<string,object>("recorded",RecordedElement);
+      if (PrimarySourceElement is not null) yield return new KeyValuePair<string,object>("primarySource",PrimarySourceElement);
+      if (InformationSource is not null) yield return new KeyValuePair<string,object>("informationSource",InformationSource);
+      if (Location is not null) yield return new KeyValuePair<string,object>("location",Location);
+      if (Site is not null) yield return new KeyValuePair<string,object>("site",Site);
+      if (Route is not null) yield return new KeyValuePair<string,object>("route",Route);
+      if (DoseQuantity is not null) yield return new KeyValuePair<string,object>("doseQuantity",DoseQuantity);
+      if (Performer?.Any() == true) yield return new KeyValuePair<string,object>("performer",Performer);
+      if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
+      if (Reason?.Any() == true) yield return new KeyValuePair<string,object>("reason",Reason);
+      if (IsSubpotentElement is not null) yield return new KeyValuePair<string,object>("isSubpotent",IsSubpotentElement);
+      if (SubpotentReason?.Any() == true) yield return new KeyValuePair<string,object>("subpotentReason",SubpotentReason);
+      if (Education?.Any() == true) yield return new KeyValuePair<string,object>("education",Education);
+      if (ProgramEligibility?.Any() == true) yield return new KeyValuePair<string,object>("programEligibility",ProgramEligibility);
+      if (FundingSource is not null) yield return new KeyValuePair<string,object>("fundingSource",FundingSource);
+      if (Reaction?.Any() == true) yield return new KeyValuePair<string,object>("reaction",Reaction);
+      if (ProtocolApplied?.Any() == true) yield return new KeyValuePair<string,object>("protocolApplied",ProtocolApplied);
     }
 
   }

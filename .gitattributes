@@ -10,6 +10,7 @@
 *.snk.enc binary
 *.zip binary
 *.exe binary
+*.tgz binary 
 
 *.ascx text
 *.cd text
