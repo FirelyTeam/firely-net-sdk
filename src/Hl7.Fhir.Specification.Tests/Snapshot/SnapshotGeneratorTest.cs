@@ -7919,7 +7919,7 @@ namespace Hl7.Fhir.Specification.Tests
         /// <param name="elementId">The element id of the profile to check (e.g. "AllergyIntolerance.code")</param>
         /// <param name="propertyName">The name of the element definition property for which to add or modify the extension in the differential (e.g. "Binding").</param>
         /// <param name="baseExtensions">The extensions that are defined in the base profile for this property.</param>
-        /// <param name="diffExtensions">The etxnsions to define in the differential for this property.</param>
+        /// <param name="diffExtensions">The extensions to define in the differential for this property.</param>
         /// <returns></returns>
         [DataTestMethod]
         [DynamicData(nameof(ElementDefinitionPropertyExtensionTestCasesStu3), DynamicDataSourceType.Property)]

@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace Hl7.Fhir.Specification.Tests
 {
     /// <summary>
-    /// Proxy for accessing a element definition property by name using reflection.
+    /// Proxy for accessing an element definition property by name using reflection.
     /// The property can also be a specific item from a property list.
     /// The property name is specified in the constructor.
     /// 
