@@ -16,28 +16,27 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageIcon>icon-firely-sdk-128.png</PackageIcon>
 		<PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
-	    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-        <RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<RunFhirPathTests>true</RunFhirPathTests> <!-- Used for CI/CD pipelines -->
 	</PropertyGroup>
 
 	<PropertyGroup>
 		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed. 
-    Consider applying the 'await' operator to the result of the call.	-->
+		Consider applying the 'await' operator to the result of the call.	-->
 		<WarningsAsErrors>CS4014</WarningsAsErrors>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
 		<None Include="..\..\icon-firely-sdk-128.png" Pack="true" PackagePath=""/>
 		<None Include="..\..\README.md" Pack="true" PackagePath=""/>
 	</ItemGroup>
 
 	<ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-    </ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+	</ItemGroup>
 
 	<!-- Compiler settings -->
 	<PropertyGroup>
@@ -47,7 +46,7 @@
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 
-	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug'  ">
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
 		<DebugType>portable</DebugType>
 		<DebugSymbols>True</DebugSymbols>
 		<NoWarn>1591</NoWarn>
@@ -62,7 +61,8 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <NoWarn>1591</NoWarn> <!-- Missing XML comments -->
+		<NoWarn>1591</NoWarn> <!-- Missing XML comments -->
 	</PropertyGroup>
+
 </Project>
 
