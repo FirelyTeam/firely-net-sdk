@@ -119,12 +119,13 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
-
-    - template: codesign-nuget-packages.yml@templates
-      parameters:
-        certificateValue: $(FirelyCodeSignerCertificate)
-        certificatePasswordValue: $(CodeSigningPassword)
-        packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
+    
+    - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - template: codesign-nuget-packages.yml@templates
+        parameters:
+          certificateValue: $(FirelyCodeSignerCertificate)
+          certificatePasswordValue: $(CodeSigningPassword)
+          packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
 
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
