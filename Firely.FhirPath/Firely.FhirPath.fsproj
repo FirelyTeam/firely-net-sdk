@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+   <TargetFrameworks>net6.0</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="CustomExpressions.fs" />
+    <Compile Include="TypeExtensions.fs" />
+    <Compile Include="CastBuilder.fs" />
+    <Compile Include="BuiltinCastBuilders.fs" />
+  </ItemGroup>
+
+</Project>
