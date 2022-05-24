@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
     /// </summary>
     internal class ComprehensiveDiscriminator : IDiscriminator
     {
-        public bool Matches(ITypedElement candidate) => true;
+        public bool Matches(ITypedElement candidate, ValidationState _) => true;
     }
 }
 

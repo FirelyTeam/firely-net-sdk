@@ -9,7 +9,6 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -23,7 +22,7 @@ namespace Hl7.Fhir.Validation
 
         public readonly string Path;
 
-        public bool Matches(ITypedElement candidate)
+        public bool Matches(ITypedElement candidate, ValidationState state)
         {
             ITypedElement[] values = candidate.Select(Path).ToArray();
 
@@ -34,9 +33,9 @@ namespace Hl7.Fhir.Validation
             else if (values.Length == 0)
                 return false;
             else
-                return MatchInternal(values.Single());
+                return MatchInternal(values.Single(), state);
         }
 
-        abstract protected bool MatchInternal(ITypedElement candidate);
+        protected abstract bool MatchInternal(ITypedElement candidate, ValidationState state);
     }
 }

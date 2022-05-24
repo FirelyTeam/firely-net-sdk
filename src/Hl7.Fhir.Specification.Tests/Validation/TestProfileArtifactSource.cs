@@ -5,8 +5,17 @@ using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Specification.Tests
 {
+    internal static class LExt
+    {
+        public static List<T> AddM<T>(this List<T> me, IEnumerable<T> them)
+        {
+            me.AddRange(them);
+            return me;
+        }
+    }
+
     internal class TestProfileArtifactSource : IResourceResolver
     {
         public List<StructureDefinition> TestProfiles = new List<StructureDefinition>
@@ -45,7 +54,7 @@ namespace Hl7.Fhir.Validation
             buildPatientWithDeceasedConstraints(),
             buildBoolean(),
             buildMyExtension()
-        };
+        }.AddM(buildPatientWithProfiledReferences());
 
         private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
         {
@@ -458,6 +467,7 @@ namespace Hl7.Fhir.Validation
         }
 
         private const string QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL = "http://validationtest.org/fhir/StructureDefinition/QuantityWithUnlimitedRootCardinality";
+        public const string PROFILED_ORG_URL = "http://validationtest.org/fhir/StructureDefinition/ProfiledOrganization";
 
         private static StructureDefinition buildQuantityWithUnlimitedRootCardinality()
         {
@@ -631,6 +641,20 @@ namespace Hl7.Fhir.Validation
                 SliceName = "range",
             }.OfType(FHIRAllTypes.Extension, "http://validationtest.org/fhir/StructureDefinition/MyRangeExtension"));
             return result;
+        }
+
+        private static IEnumerable<StructureDefinition> buildPatientWithProfiledReferences()
+        {
+            yield return createTestSD(PROFILED_ORG_URL, "A profiled organization",
+                    "A profiled Organization with no additional constraints", FHIRAllTypes.Organization);
+
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/PatientWithReferences", "Patient with References",
+                    "Test Patient which has a profiled managing organization", FHIRAllTypes.Patient);
+            var cons = result.Differential.Element;
+
+            cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
+            cons.Add(new ElementDefinition("Patient.managingOrganization").OfReference(PROFILED_ORG_URL));
+            yield return result;
         }
     }
 }

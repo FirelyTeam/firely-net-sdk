@@ -16,6 +16,7 @@ trigger:
 name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
+- group: CodeSigning
 - template: build-variables.yml
 - template: pipeline-variables.yml
   
@@ -71,7 +72,7 @@ stages:
       inputs:
         command: build
         projects: ./Hl7.Fhir.sln
-        arguments: --configuration $(buildConfiguration) --no-restore
+        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
 
     - task: DotNetCoreCLI@2
       displayName: Create Test artifacts
@@ -118,6 +119,14 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
+    
+    - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - template: codesign-nuget-packages.yml@templates
+        parameters:
+          certificateValue: $(FirelyCodeSignerCertificate)
+          certificatePasswordValue: $(CodeSigningPassword)
+          packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
+
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
@@ -247,7 +256,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
               inputs:
                   command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.*nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
                   verbosityPush: normal    
@@ -258,7 +267,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -269,7 +278,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -280,7 +289,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4B')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -291,7 +300,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal 
