@@ -270,7 +270,33 @@ namespace Hl7.Fhir.Core.Tests.Rest
             client.RequestHeaders.Authorization = authValue;
 
             var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+        }
 
+        [TestMethod]
+        public async System.Threading.Tasks.Task TestOperationWithEmptyBody()
+        {
+            var mock = new Mock<HttpMessageHandler>();
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+
+            mock
+             .Protected()
+                     .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
+                        "SendAsync",
+                        ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/fhir/$ping")),
+                        ItExpr.IsAny<CancellationToken>())
+                     .ReturnsAsync(response);
+
+            using var client = new FhirClient("http://example.com/fhir/", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+
+            var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
+
+            ((FhirString)parameters.Parameter.FirstOrDefault().Value).Value.Should().Be("connected");
 
         }
     }
