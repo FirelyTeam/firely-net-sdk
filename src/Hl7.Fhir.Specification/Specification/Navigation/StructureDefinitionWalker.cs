@@ -153,18 +153,18 @@ namespace Hl7.Fhir.Specification
                 return new[] { this };
             else if (Current.Current.ContentReference != null)
             {
-                var name = Current.Current.ContentReference;
-                var reference = Current.ShallowCopy();
+#pragma warning disable CS0618 // Type or member is obsolete
+                if (!Current.TryFollowContentReference(s => Resolver.FindStructureDefinition(s), out var reference))
+                    throw new StructureDefinitionWalkerException($"The contentReference '{reference}' cannot be resolved.");
+#pragma warning restore CS0618 // Type or member is obsolete
 
-                if (!reference.JumpToNameReference(name))
-                    throw new StructureDefinitionWalkerException($"Found a namereference '{name}' that cannot be resolved at '{Current.CanonicalPath()}'.");
-                return new[] { new StructureDefinitionWalker(reference, _resolver) };
+                return new[] { new StructureDefinitionWalker(reference!, _resolver) };
             }
             else if (Current.Current.Type.Count >= 1)
             {
                 return Current.Current.Type
                     .GroupBy(t => t.GetTypeProfile(), t => t.TargetProfile)
-                    .Select(group => FromCanonical(group.Key, group.ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
+                    .Select(group => FromCanonical(group.Key!, group.ToList())); // no use returning multiple "reference" profiles when they only differ in targetReference
             }
 
             throw new StructureDefinitionWalkerException("Invalid StructureDefinition: element misses either a type reference or " +
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification
             // types into their definitions:
             // 1) The root node of an SD for a type or constraint on the type => derive the base type
             // 2) At a non-root BackboneElement or Element => use the TypeRef.Type (After the expand, this can be only 1)
-            string? typeCanonical(ElementDefinitionNavigator nav) =>
+            static string? typeCanonical(ElementDefinitionNavigator nav) =>
                nav.Current.IsRootElement() ?
                     nav.StructureDefinition.Type
                     : nav.Current.Type.FirstOrDefault()?.Code;

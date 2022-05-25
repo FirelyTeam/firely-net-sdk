@@ -6,13 +6,16 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
+using System;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
-    public static class ElementDefinitionNavigatorExtensions
+    internal static class ElementDefinitionNavigatorExtensions
     {
         internal static string GetFhirPathConstraint(this ElementDefinition.ConstraintComponent cc)
         {
@@ -21,20 +24,6 @@ namespace Hl7.Fhir.Validation
             //    return "(children().count() > id.count()) | hasValue()";
             return cc.Expression;
         }
-
-
-        public static bool IsPrimitiveValueConstraint(this ElementDefinition ed)
-        {
-            //TODO: There is something smarter for this in STU3
-            var path = ed.Path;
-
-            return path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
-        }
-
-        public static bool IsResourcePlaceholder(this ElementDefinition ed)
-            => ed.Type is not null && ed.Type.Any(t => t.Code == "Resource" || t.Code == "DomainResource");
-
-        public static bool IsSlicing(this ElementDefinitionNavigator nav) => nav.Current.Slicing != null;
 
         internal static string ConstraintDescription(this ElementDefinition.ConstraintComponent cc)
         {
@@ -45,5 +34,36 @@ namespace Hl7.Fhir.Validation
 
             return desc;
         }
+
+        /// <summary>
+        /// Resolve a the contentReference in a navigator and returns a navigator that is located on the target of the contentReference.
+        /// </summary>
+        /// <remarks>The current navigator must be located at an element that contains a contentReference.</remarks>
+        public static bool TryFollowContentReference(this ElementDefinitionNavigator sourceNavigator, Func<string, StructureDefinition?> resolver, out ElementDefinitionNavigator? targetNavigator)
+        {
+            targetNavigator = null;
+
+            var reference = sourceNavigator.Current.ContentReference;
+            if (reference is null) return false;
+
+            var profileRef = ProfileReference.Parse(reference);
+
+            if (profileRef.IsAbsolute && profileRef.CanonicalUrl != sourceNavigator.StructureDefinition.Url)
+            {
+                // an external reference (e.g. http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item)
+
+                var profile = resolver(profileRef.CanonicalUrl!);
+                if (profile is null) return false;
+                targetNavigator = ElementDefinitionNavigator.ForSnapshot(profile);
+            }
+            else
+            {
+                // a local reference
+                targetNavigator = sourceNavigator.ShallowCopy();
+            }
+
+            return targetNavigator.JumpToNameReference("#" + profileRef.ElementName);
+        }
+
     }
 }

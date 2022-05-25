@@ -220,6 +220,29 @@ namespace Hl7.Fhir.Model
         }
       }
 
+      protected override bool TryGetValue(string key, out object value)
+      {
+        switch (key)
+        {
+          case "quantity":
+            value = Quantity;
+            return Quantity is not null;
+          case "item":
+            value = Item;
+            return Item is not null;
+          default:
+            return base.TryGetValue(key, out value);
+        };
+
+      }
+
+      protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+      {
+        foreach (var kvp in base.GetElementPairs()) yield return kvp;
+        if (Quantity is not null) yield return new KeyValuePair<string,object>("quantity",Quantity);
+        if (Item is not null) yield return new KeyValuePair<string,object>("item",Item);
+      }
+
     }
 
     /// <summary>
@@ -270,7 +293,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | abandoned | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
@@ -511,6 +534,65 @@ namespace Hl7.Fhir.Model
         if (Destination != null) yield return new ElementValue("destination", Destination);
         foreach (var elem in Receiver) { if (elem != null) yield return new ElementValue("receiver", elem); }
       }
+    }
+
+    protected override bool TryGetValue(string key, out object value)
+    {
+      switch (key)
+      {
+        case "identifier":
+          value = Identifier;
+          return Identifier is not null;
+        case "basedOn":
+          value = BasedOn;
+          return BasedOn?.Any() == true;
+        case "partOf":
+          value = PartOf;
+          return PartOf?.Any() == true;
+        case "status":
+          value = StatusElement;
+          return StatusElement is not null;
+        case "patient":
+          value = Patient;
+          return Patient is not null;
+        case "type":
+          value = Type;
+          return Type is not null;
+        case "suppliedItem":
+          value = SuppliedItem;
+          return SuppliedItem is not null;
+        case "occurrence":
+          value = Occurrence;
+          return Occurrence is not null;
+        case "supplier":
+          value = Supplier;
+          return Supplier is not null;
+        case "destination":
+          value = Destination;
+          return Destination is not null;
+        case "receiver":
+          value = Receiver;
+          return Receiver?.Any() == true;
+        default:
+          return base.TryGetValue(key, out value);
+      };
+
+    }
+
+    protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
+    {
+      foreach (var kvp in base.GetElementPairs()) yield return kvp;
+      if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
+      if (BasedOn?.Any() == true) yield return new KeyValuePair<string,object>("basedOn",BasedOn);
+      if (PartOf?.Any() == true) yield return new KeyValuePair<string,object>("partOf",PartOf);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
+      if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
+      if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
+      if (SuppliedItem is not null) yield return new KeyValuePair<string,object>("suppliedItem",SuppliedItem);
+      if (Occurrence is not null) yield return new KeyValuePair<string,object>("occurrence",Occurrence);
+      if (Supplier is not null) yield return new KeyValuePair<string,object>("supplier",Supplier);
+      if (Destination is not null) yield return new KeyValuePair<string,object>("destination",Destination);
+      if (Receiver?.Any() == true) yield return new KeyValuePair<string,object>("receiver",Receiver);
     }
 
   }

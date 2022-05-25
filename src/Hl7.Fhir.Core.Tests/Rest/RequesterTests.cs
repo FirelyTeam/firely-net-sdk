@@ -54,6 +54,7 @@ namespace Hl7.Fhir.Test
         #region EntryRequest To Webclient
 
         [TestMethod]
+        [Obsolete]
         public void TestPreferSetting()
         {
             var entry = _Entry;
@@ -66,7 +67,7 @@ namespace Hl7.Fhir.Test
             settings.PreferredReturn = Prefer.RespondAsync;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("respond-async", request.Headers["Prefer"]);
-            
+
             settings.PreferredReturn = null;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.IsNull(request.Headers["Prefer"]);
@@ -75,11 +76,11 @@ namespace Hl7.Fhir.Test
             settings.PreferredReturn = Prefer.OperationOutcome;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("handling=lenient", request.Headers["Prefer"]);
-            
+
             settings.PreferredReturn = Prefer.RespondAsync;
             request = entry.ToHttpWebRequest(_endpoint, settings);
             Assert.AreEqual("handling=lenient, respond-async", request.Headers["Prefer"]);
-            
+
             settings.PreferredReturn = Prefer.ReturnRepresentation;
             settings.PreferredParameterHandling = null;
             request = entry.ToHttpWebRequest(_endpoint, settings);
@@ -87,23 +88,25 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestRequestedBodyContent()
         {
             var entry = _Entry;
             entry.RequestBodyContent = Encoding.UTF8.GetBytes("Test body");
             var settings = _Settings;
-            
+
             ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpWebRequest(_endpoint, settings));
-            
+
             entry.Method = HTTPVerb.POST;
             var request = entry.ToHttpWebRequest(_endpoint, settings);
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestFormatParameters()
         {
             var entry = _Entry;
-            var settings = _Settings;           
+            var settings = _Settings;
 
             settings.UseFormatParameter = true;
             var request = entry.ToHttpWebRequest(_endpoint, settings);
@@ -111,6 +114,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestEntryRequestHeaders()
         {
             var entry = _Entry;
@@ -132,6 +136,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestSetAgent()
         {
             var entry = _Entry;
@@ -147,7 +152,7 @@ namespace Hl7.Fhir.Test
             {
                 Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Assert.AreEqual(EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation, false);
             }
@@ -192,6 +197,7 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [Obsolete]
         public void TestRequestedBodyContentHttpClient()
         {
             var entry = _Entry;
@@ -402,7 +408,7 @@ namespace Hl7.Fhir.Test
                 AllowUnrecognizedEnums = false,
                 DisallowXsiAttributesOnRoot = true,
                 PermissiveParsing = false
-            };  
+            };
 
             var bundleresponse = typedresponse.ToBundleEntry(settings);
 
@@ -416,4 +422,4 @@ namespace Hl7.Fhir.Test
         #endregion
     }
 }
- 
+
