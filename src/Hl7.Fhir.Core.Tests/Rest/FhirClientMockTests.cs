@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
 
-            ((FhirString)parameters.Parameter.FirstOrDefault().Value).Value.Should().Be("connected");
+            parameters.Parameter.FirstOrDefault().Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("connected");
 
         }
     }
