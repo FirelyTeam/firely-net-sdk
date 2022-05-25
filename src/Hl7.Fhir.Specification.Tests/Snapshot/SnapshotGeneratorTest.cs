@@ -7708,6 +7708,73 @@ namespace Hl7.Fhir.Specification.Tests
             baseElement.Slicing.Discriminator[0].Path.Should().Be("$this");
         }
 
+        [TestMethod]
+        public async T.Task ConstrainChoiceTypeInDerivedProfileCorrectly()
+        {
+            var baseStructureDefinition = new StructureDefinition()
+            {
+                Url = "http://fire.ly/fhir/StructureDefiniton/ObservationBaseLimitedChoiceTypes",
+                Name = "ObservationBaseLimitedChoiceTypes",
+                Status = PublicationStatus.Active,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Observation",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            Path = "Observation.value[x]",
+                            ElementId = "Observation.value[x]",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() {Code = "Quantity"},
+                                new ElementDefinition.TypeRefComponent() {Code = "CodeableConcept"}
+                            }
+                        }
+                    }
+                }
+            };
+            
+            var derivedStructureDefinition = new StructureDefinition()
+            {
+                Url = "http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes",
+                Name = "ObservationBaseDerivedChoiceTypes",
+                Status = PublicationStatus.Active,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = "Observation",
+                BaseDefinition = "http://fire.ly/fhir/StructureDefiniton/ObservationBaseLimitedChoiceTypes",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            Path = "Observation.value[x]",
+                            ElementId = "Observation.value[x]",
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent() {Code = "CodeableConcept"}
+                            }
+                        }
+                    }
+                }
+            };
+            
+            var resolver = new InMemoryProfileResolver(baseStructureDefinition, derivedStructureDefinition);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+            
+            var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
+            var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
+            Assert.AreEqual(1, valuexEld.Type.Count);
+            Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
+        }
+        
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
