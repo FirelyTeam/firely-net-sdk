@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Validation
                 // 20190703 Issue 447 - rng-2 is incorrect in DSTU2 and STU3. EK
                 // should be removed from STU3/R4 once we get the new normative version
                 // of FP up, which could do comparisons between quantities.
-                if (constraintElement.Key == "rng-2") continue;
+                if (v.Settings.ConstraintsToIgnore.Contains(constraintElement.Key)) continue;
 
                 if (constraintElement.Key == "ref-1" && constraintElement.Expression == "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))")
                 {
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Validation
                 try
                 {
                     var compiled = getExecutableConstraint(v, outcome, instance, constraintElement);
-                    success = compiled.Predicate(instance,
+                    success = compiled.IsTrue(instance,
                         new FhirEvaluationContext(instance)
                         { ElementResolver = callExternalResolver });
                 }
@@ -72,6 +72,8 @@ namespace Hl7.Fhir.Validation
                         Code = issue.Type,
                         Details = issue.ToCodeableConcept(text),
                         Diagnostics = constraintElement.GetFhirPathConstraint(), // Putting the fhirpath expression of the invariant in the diagnostics
+                        Expression = new string[] { instance.Location },
+                        // Location is deprecated, but we set this for backwards compatibility
                         Location = new string[] { instance.Location }
                     };
                     outcomeIssue.Details.Coding.Add(new Coding(structureDefinitionUrl, constraintElement.Key, constraintElement.Human));

@@ -6,13 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.Model;
-using System.Diagnostics;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Specification.Navigation
 {
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
         /// <summary>Returns a reference to the <see cref="StructureDefinition"/> instance containing the navigated elements.</summary>
-        public StructureDefinition StructureDefinition { get; private set; }
+        public StructureDefinition StructureDefinition { get; internal set; }
 
         /// <summary>Indicates if the navigator has not yet been positioned on a node.</summary>
         /// <returns><c>true</c> if <see cref="Current"/> equals <c>null</c>, or <c>false</c> otherwise.</returns>
@@ -282,17 +282,17 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (Count == 0) return false;
 
+            var profileRef = ProfileReference.Parse(nameReference);
+
+            // Namereferences should normally look like '#Questionnaire.item', but in snapshots for profiles, these can also
+            // be absolute urls pointing to an external (core) StructureDefinition, but we cannot handle those here as
+            // that should be dealt with by the caller.
+            if (profileRef.IsAbsolute && profileRef.CanonicalUrl != StructureDefinition.Url)
+                throw new NotSupportedException("Can only jump to local nameReferences, not " + nameReference);
+
             for (int pos = 0; pos < Count; pos++)
             {
-                if (nameReference.StartsWith("#"))
-                {
-                    if (Elements[pos].ElementId == nameReference.TrimStart('#'))
-                    {
-                        OrdinalPosition = pos;
-                        return true;
-                    }
-                }
-                else if (Elements[pos].ContentReference == nameReference)
+                if (Elements[pos].ElementId == profileRef.ElementName)
                 {
                     OrdinalPosition = pos;
                     return true;
@@ -309,17 +309,9 @@ namespace Hl7.Fhir.Specification.Navigation
         //
         //----------------------------------
 
-        public Bookmark Bookmark() => new Bookmark(Current, OrdinalPosition);
+        public Bookmark Bookmark() => new(Current, OrdinalPosition);
 
-        public bool IsAtBookmark(Bookmark bookmark)
-        {
-            var elem = bookmark.data as ElementDefinition;
-            if (elem == null)
-            {
-                return OrdinalPosition == null;
-            }
-            return object.ReferenceEquals(Current, elem);
-        }
+        public bool IsAtBookmark(Bookmark bookmark) => bookmark.data is ElementDefinition elem ? ReferenceEquals(Current, elem) : OrdinalPosition == null;
 
         public bool ReturnToBookmark(Bookmark bookmark)
         {
@@ -329,8 +321,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 return true;
             }
 
-            var elem = bookmark.data as ElementDefinition;
-            if (elem == null) { return false; }
+            if (bookmark.data is not ElementDefinition elem) { return false; }
 
             // If the bookmark has an index, then try to use it
             var index = bookmark.index.GetValueOrDefault(-1);
@@ -384,16 +375,7 @@ namespace Hl7.Fhir.Specification.Navigation
             return true;
         }
 
-        private bool canInsertSiblingHere()
-        {
-            // We're not positioned anywhere...
-            if (OrdinalPosition == null) return false;
-
-            // Cannot insert a sibling to the unique root element
-            if (OrdinalPosition == 0) return false;
-
-            return true;
-        }
+        private bool canInsertSiblingHere() => OrdinalPosition != null && OrdinalPosition != 0;
 
 
         /// <summary>
@@ -535,7 +517,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
         // public override string ToString()
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        string DebuggerDisplay
+        private string DebuggerDisplay
         {
             get
             {
