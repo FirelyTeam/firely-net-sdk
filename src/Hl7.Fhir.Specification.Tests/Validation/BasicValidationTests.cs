@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks.Dataflow;
 using System.Xml.Linq;
 using Xunit;
@@ -1430,6 +1431,63 @@ namespace Hl7.Fhir.Specification.Tests
             var outcome = validator.Validate(questionnaire);
             Assert.True(outcome.Success);
         }
+
+        [Fact]
+        public async void TestDateOnlyQuarterRegex()
+        {
+            // Test regex directly
+            var regex = new Regex(@"^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1|4|7]|1[0]))?$", RegexOptions.Compiled);
+            var match = regex.Match("2022-04");
+            Assert.True(match.Success);
+
+            // Test Regex by single node against Fp constraint
+            var sourceNodeWithDate = SourceNode.Valued("TestNodeWithDateValue", "2022-04");
+            var typedElementWithDate = sourceNodeWithDate.ToTypedElement();
+            Assert.True(typedElementWithDate.IsBoolean("matches('^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1|4|7]|1[0]))?$')", true));
+
+            var patientProfileCanonical = "http://fire.ly/fhir/StructureDefinition/TestProfileWithDateRestriction";
+            var patientProfileWithDateRestriction = new StructureDefinition()
+            {
+                Id = "TestProfileWithDateRestriction",
+                Url = patientProfileCanonical,
+                Name = "TestProfileWithDateRestriction",
+                Status = PublicationStatus.Active,
+                Abstract = false,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Type = "Patient",
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Patient",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            ElementId = "Patient.birthDate",
+                            Path = "Patient.birthDate",
+                            Constraint = new List<ElementDefinition.ConstraintComponent>()
+                            {
+                                new ElementDefinition.ConstraintComponent()
+                                {
+                                    Key = "TestDateWithOnlyQuarter",
+                                    Severity = ElementDefinition.ConstraintSeverity.Error,
+                                    Human = "Full date MUST NOT be present",
+                                    Expression = "toString().matches('^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1|4|7]|1[0]))?$')",
+                                    Source = patientProfileCanonical
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            var inMemoryResolver = new InMemoryProfileResolver(patientProfileWithDateRestriction);
+            var resolver = new MultiResolver(inMemoryResolver, ZipSource.CreateValidationSource());
+            
+            var patient = new Patient() {Meta = new Meta(){Profile = new []{patientProfileCanonical}}, BirthDate = "2022-04"};
+            var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = true });
+            var outcome = validator.Validate(patient);
+            Assert.True(outcome.Success);
+        }
+
 
 
         private class ClearSnapshotResolver : IResourceResolver
