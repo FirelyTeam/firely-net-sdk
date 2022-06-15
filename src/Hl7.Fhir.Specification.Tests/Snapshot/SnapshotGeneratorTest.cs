@@ -9467,5 +9467,79 @@ namespace Hl7.Fhir.Specification.Tests
             public StructureDefinition BaseStructureDefinition { get; }
             public ElementDefinition BaseElementDefinition { get; }
         }
+
+        public static IEnumerable<object[]> ElementConstraintSourceTestCases
+        {
+            get
+            {
+                yield return new object[] { FHIRAllTypes.Patient, "Patient", null, SnapshotIntendedUse.BackwardsCompatible, true };
+                yield return new object[] { FHIRAllTypes.Patient, "Patient", null, SnapshotIntendedUse.Snapshot, true };
+                yield return new object[] { FHIRAllTypes.Patient, "Patient", null, SnapshotIntendedUse.Differential, false };
+
+                yield return new object[] { FHIRAllTypes.Patient, "Patient", "https://example.org/fhir/StructureDefinition/Test", SnapshotIntendedUse.BackwardsCompatible, true };
+                yield return new object[] { FHIRAllTypes.Patient, "Patient", "https://example.org/fhir/StructureDefinition/Test", SnapshotIntendedUse.Snapshot, true };
+                yield return new object[] { FHIRAllTypes.Patient, "Patient", "https://example.org/fhir/StructureDefinition/Test", SnapshotIntendedUse.Differential, true };
+            }
+        }
+
+        /// <summary>
+        /// Tests whether element constraint source properties are initialized with the profile url if they are not specified.
+        /// </summary>
+        /// <param name="profileType">The profile type under test (e.g. FHIRAllTypes.Patient).</param>
+        /// <param name="elementId">The element id of the profile to check (e.g. "Patient")</param>
+        /// <param name="source">The element constraint source to set in the differential.</param>
+        /// <param name="intendedUse">The intended use of the snapshot generator output.</param>
+        /// <param name="expectSource">Indicates if the constraint source element should be present.</param>
+        /// <returns></returns>
+        [DataTestMethod]
+        [DynamicData(nameof(ElementConstraintSourceTestCases), DynamicDataSourceType.Property)]
+        public async T.Task ElementConstraintSourceTest(FHIRAllTypes profileType, string elementId, string source, SnapshotIntendedUse intendedUse, bool expectSource)
+        {
+            // Arrange
+            var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
+            var zipSource = ZipSource.CreateValidationSource();
+            var settings = SnapshotGeneratorSettings.CreateDefault();
+
+            settings.IntendedUse = intendedUse;
+
+            var generator = new SnapshotGenerator(zipSource, settings);
+            var diffElementDefinition = new ElementDefinition(elementId) { ElementId = elementId }; // Create element for differential
+            var constraint = new ElementDefinition.ConstraintComponent
+            {
+                Key = "123",
+                Severity = ElementDefinition.ConstraintSeverity.Error,
+                Human = "Description",
+                Source = source
+            };
+
+            diffElementDefinition.Constraint.Add(constraint);
+
+            var profile = new StructureDefinition() // Create derived profile
+            {
+                Type = profileType.GetLiteral(),
+                BaseDefinition = uri,
+                Name = "My" + elementId,
+                Url = uri + "Test",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>() { diffElementDefinition }
+                }
+            };
+
+            // Act
+            var elements = await generator.GenerateAsync(profile);
+
+            // Assert
+            var element = elements.SingleOrDefault(x => x.ElementId == diffElementDefinition.ElementId);
+            element.Should().NotBeNull();
+
+            var expectedConstraint = element.Constraint.SingleOrDefault(x => x.Key == constraint.Key);
+            expectedConstraint.Should().NotBeNull();
+
+            if (expectSource)
+                expectedConstraint.Source.Should().Be(source ?? profile.Url);
+            else
+                expectedConstraint.Source.Should().BeNull();
+        }
     }
 }

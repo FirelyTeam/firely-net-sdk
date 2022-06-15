@@ -11,7 +11,6 @@
 #define NORMALIZE_RENAMED_TYPESLICE
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -29,10 +28,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl, SnapshotIntendedUse intendedUse)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff, mergeElementId, baseUrl);
+                merger.merge(snap, diff, mergeElementId, baseUrl, intendedUse);
             }
 
             readonly SnapshotGenerator _generator;
@@ -42,7 +41,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator ?? throw new ArgumentNullException(nameof(generator));
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl, SnapshotIntendedUse intendedUse)
             {
                 // [WMR 20170421] Element.Id is NOT inherited!
                 // Merge custom Element id value from differential in same profile into snapshot
@@ -159,7 +158,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
                 // [WMR 20190723] R4 NEW: Initialize Constraint.source property
                 //snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
-                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl, intendedUse);
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -378,7 +377,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             List<ElementDefinition.ConstraintComponent> mergeConstraints(
                 List<ElementDefinition.ConstraintComponent> snap,
                 List<ElementDefinition.ConstraintComponent> diff,
-                string source)
+                string source,
+                SnapshotIntendedUse intendedUse)
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -418,15 +418,21 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
 
                     // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-                    InitializeConstraintSource(result, source);
+                    InitializeConstraintSource(result, source, intendedUse);
 
                 }
                 return result;
             }
 
             // [WMR 20190723] FIX #1052: Initialize ElementDefinition.constraint.source
-            internal static void InitializeConstraintSource(IEnumerable<ElementDefinition.ConstraintComponent> constraints, string source)
+            internal static void InitializeConstraintSource(IEnumerable<ElementDefinition.ConstraintComponent> constraints, string source, SnapshotIntendedUse intendedUse)
             {
+                // Issue #2111
+                // If an element.constraint.source points to itself then the source should only be set for the snapshot, not the differential
+                // See also: https://chat.fhir.org/#narrow/stream/179177-conformance/topic/STU3.20Qustionnaire.20snapshot.20generation/near/279683046
+                if (!intendedUse.HasFlag(SnapshotIntendedUse.Snapshot))
+                    return;
+                
                 foreach (var constraint in constraints)
                 {
                     if (string.IsNullOrEmpty(constraint.Source))

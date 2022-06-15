@@ -45,6 +45,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
+            other.IntendedUse = IntendedUse;
             // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
@@ -80,6 +81,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Enable this setting to automatically generate missing element id values.</summary>
         public bool GenerateElementIds { get; set; } = true;
+
+        /// <summary>
+        /// Indicates the intended use of the snapshot generator output: snapshot or differential.
+        /// Snapshot generator business logic may vary depending on the intended use.
+        /// The default value is set to a backwards compatible setting (i.e. snapshot and differential).
+        /// </summary>
+        public SnapshotIntendedUse IntendedUse { get; set; } = SnapshotIntendedUse.BackwardsCompatible;
 
         // [WMR 20161004] Always try to merge element type profiles
 
