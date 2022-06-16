@@ -353,6 +353,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         snap.StrengthElement = mergePrimitiveElement(snap.StrengthElement, diff.StrengthElement);
                         snap.DescriptionElement = mergePrimitiveElement(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSetElement = mergeComplexAttribute(snap.ValueSetElement, diff.ValueSetElement);
+                        snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
                 }
