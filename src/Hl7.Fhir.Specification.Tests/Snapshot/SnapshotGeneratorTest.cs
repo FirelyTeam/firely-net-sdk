@@ -7953,5 +7953,140 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.CommonTypeCode());
         }
 
+        public static IEnumerable<object[]> ElementDefinitionPropertyExtensionTestCasesStu3
+        {
+            get
+            {
+                // Modify an existing Binding extension
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding",
+                    new[] {
+                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
+                    new[] {
+                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("Test")) }};
+
+                // Adding a new Binding extension
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance.code", "Binding",
+                    new[] {
+                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bindingName", new FhirString("AllergyIntoleranceCode")) },
+                    new[] {
+                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-isCommonBinding", new FhirBoolean(true)) }};
+
+                // Adding a new Constraint extension
+                yield return new object[] { FHIRAllTypes.AllergyIntolerance, "AllergyIntolerance", "Constraint[Key:dom-2]",
+                    Array.Empty<Extension>(),
+                    new[] {
+                        new Extension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice", new FhirBoolean(true)) }};
+            }
+        }
+
+        /// <summary>
+        /// Tests whether element definition property extensions in the differential are properly merged by the snapshot generator.
+        /// </summary>
+        /// <param name="profileType">The profile type under test (e.g. FHIRAllTypes.AllergyIntolerance).</param>
+        /// <param name="elementId">The element id of the profile to check (e.g. "AllergyIntolerance.code")</param>
+        /// <param name="propertyName">The name of the element definition property for which to add or modify the extension in the differential (e.g. "Binding").</param>
+        /// <param name="baseExtensions">The extensions that are defined in the base profile for this property.</param>
+        /// <param name="diffExtensions">The extensions to define in the differential for this property.</param>
+        /// <returns></returns>
+        [DataTestMethod]
+        [DynamicData(nameof(ElementDefinitionPropertyExtensionTestCasesStu3), DynamicDataSourceType.Property)]
+        public async T.Task ElementDefinitionPropertyExtensionTest(FHIRAllTypes profileType, string elementId, string propertyName, Extension[] baseExtensions, Extension[] diffExtensions)
+        {
+            // Arrange
+            var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
+            var zipSource = ZipSource.CreateValidationSource();
+            var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
+            var propertyProxy = new ElementDefinitionPropertyProxy(propertyName);
+
+            var sd = await _testResolver.FindStructureDefinitionAsync(uri); // Find base profile
+            var snapElementDefinition = sd.Snapshot.Element.SingleOrDefault(x => x.ElementId == elementId); // Find specified element in snapshot of base profile
+            snapElementDefinition.Should().NotBeNull();
+            var snapElementDefinitionProperty = propertyProxy.GetValueAsElement(snapElementDefinition); // Get the property from the snapshot element (typed)
+
+            if (snapElementDefinitionProperty != null)
+            {
+                logExtensions("Base extensions", baseExtensions);
+
+                snapElementDefinitionProperty.Extension.Should().HaveCount(baseExtensions.Length); // Check extensions in element
+                snapElementDefinitionProperty.Extension.OrderBy(x => x.Url).Should().Equal(baseExtensions.OrderBy(x => x.Url), (e1, e2) => e1.IsExactly(e2));
+            }
+            else
+            {
+                baseExtensions.Should().BeNull();
+            }
+
+            var diffElementDefinition = new ElementDefinition(elementId) { ElementId = elementId }; // Create element for differential
+            propertyProxy.SetValue(diffElementDefinition, propertyProxy.CreateInstance(snapElementDefinitionProperty)); // Set property for differential element
+            var diffElementDefinitionProperty = propertyProxy.GetValueAsElement(diffElementDefinition); // Get the property from the differential element (typed)
+
+            // Add extensions for the element definition properties in the differential
+            foreach (Extension diffExtension in diffExtensions)
+            {
+                var extension = diffElementDefinitionProperty.Extension.SingleOrDefault(x => x.Url == diffExtension.Url);
+
+                if (extension != null)
+                {
+                    var index = diffElementDefinitionProperty.Extension.IndexOf(extension);
+                    diffElementDefinitionProperty.Extension[index] = diffExtension; // Modification on base extension
+                }
+                else
+                {
+                    diffElementDefinitionProperty.Extension.AddRange(diffExtensions); // New extension (i.e. does not exist in base)
+                }
+            }
+
+            var profile = new StructureDefinition() // Create derived profile
+            {
+                Type = profileType.GetLiteral(),
+                BaseDefinition = uri,
+                Name = "My" + elementId,
+                Url = uri + "Test",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>() { diffElementDefinition }
+                }
+            };
+
+            // Act
+            var elements = await generator.GenerateAsync(profile);
+
+            // Assert
+            var element = elements.SingleOrDefault(x => x.ElementId == diffElementDefinition.ElementId);
+            element.Should().NotBeNull();
+            var elementProperty = propertyProxy.GetValueAsElement(element);
+
+            var expectedExtensions = new List<Extension>(diffElementDefinitionProperty.Extension); // Determine expected extensions
+
+            foreach (Extension snapExtension in snapElementDefinitionProperty.Extension)
+            {
+                if (expectedExtensions.SingleOrDefault(x => x.Url == snapExtension.Url) == null)
+                    expectedExtensions.Add(snapExtension); // Extension from snapshot element property should be in expected extensions
+            }
+
+            logExtensions("Expected extensions", expectedExtensions);
+            logExtensions("Actual extensions", elementProperty.Extension);
+
+            elementProperty.Extension.Should().HaveCount(expectedExtensions.Count);
+            elementProperty.Extension.OrderBy(x => x.Url).Should().Equal(expectedExtensions.OrderBy(x => x.Url), (e1, e2) => e1.IsExactly(e2));
+        }
+
+        private void logExtensions(string title, IEnumerable<Extension> extensions, int level = 1)
+        {
+            Debug.WriteLine(title);
+
+            if (!extensions.Any())
+            {
+                Debug.WriteLine($"{new string(' ', level * 3)}none");
+                return;
+            }
+            
+            foreach (Extension extension in extensions)
+            {
+                if (extension.Extension != null && extension.Extension.Count > 0)
+                    logExtensions(extension.Url, extension.Extension, level + 1);
+                else
+                    Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
+            }
+        }
     }
 }
