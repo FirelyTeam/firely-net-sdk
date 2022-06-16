@@ -45,6 +45,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             other.GenerateExtensionsOnConstraints = GenerateExtensionsOnConstraints;
             other.GenerateAnnotationsOnConstraints = GenerateAnnotationsOnConstraints;
             other.GenerateElementIds = GenerateElementIds;
+            other.IntendedUse = IntendedUse;
             // other.MergeTypeProfiles = MergeTypeProfiles;
         }
 
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// to elements and properties in the snapshot that are constrained by the differential with respect to the base profile.
         /// <br />
         /// Note that this extension only applies to the containing profile and should NOT be inherited by derived profiles.
-        /// The FHIR API snapshot generator explicitly removes and re-generates these extensions for each profile.
+        /// The FHIR SDK snapshot generator explicitly removes and re-generates these extensions for each profile.
         /// The <seealso cref="SnapshotGeneratorExtensions"/> class provides utility methods to read and/or remove the generated extensions.
         /// </summary>
         public bool GenerateExtensionsOnConstraints { get; set; } = false; // MarkChanges
@@ -80,6 +81,13 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         /// <summary>Enable this setting to automatically generate missing element id values.</summary>
         public bool GenerateElementIds { get; set; } = true;
+
+        /// <summary>
+        /// Indicates the intended use of the snapshot generator output: snapshot or differential.
+        /// Snapshot generator business logic may vary depending on the intended use.
+        /// The default value is set to a backwards compatible setting (i.e. snapshot and differential).
+        /// </summary>
+        public SnapshotIntendedUse IntendedUse { get; set; } = SnapshotIntendedUse.BackwardsCompatible;
 
         // [WMR 20161004] Always try to merge element type profiles
 
