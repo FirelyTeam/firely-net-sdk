@@ -109,14 +109,14 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// The client can modify the value of the <paramref name="mustExpand"/> parameter to control expansion of specific elements.
         /// Warning: recursively expanding all profile elements may cause infinite recursion!
         /// </summary>
-        internal void OnBeforeExpandElement(ElementDefinition element, bool hasChildren, ref bool mustExpand)
+        internal void OnBeforeExpandElement(ElementDefinition element, bool hasChildren, StructureDefinition typeProfile, ref bool mustExpand)
         {
             if (element == null) { throw new ArgumentNullException(nameof(element)); }
 
             var handler = BeforeExpandElement;
             if (handler != null)
             {
-                var args = new SnapshotExpandElementEventArgs(element, hasChildren, mustExpand);
+                var args = new SnapshotExpandElementEventArgs(element, hasChildren, typeProfile, mustExpand);
                 handler(this, args);
                 mustExpand = args.MustExpand;
             }
@@ -185,20 +185,25 @@ namespace Hl7.Fhir.Specification.Snapshot
     /// <summary>Event arguments for the <see cref="SnapshotExpandElementHandler"/> event delegate.</summary>
     public sealed class SnapshotExpandElementEventArgs : EventArgs
     {
-        internal SnapshotExpandElementEventArgs(ElementDefinition element, bool hasChildren, bool mustExpand) : base()
+        internal SnapshotExpandElementEventArgs(ElementDefinition element, bool hasChildren,
+            StructureDefinition typeProfile, bool mustExpand) : base()
         {
             Element = element;
             HasChildren = hasChildren;
+            TypeProfile = typeProfile;
             MustExpand = mustExpand;
         }
 
         /// <summary>Returns a reference to the current element.</summary>
         public ElementDefinition Element { get; }
 
-        /// <summary>Indicates wether the current element has any child elements.</summary>
+        /// <summary>Indicates whether the current element has any child elements.</summary>
         public bool HasChildren { get; }
 
-        /// <summary>Gets or sets a boolean value that determines wether the snapshot generator should expand children of the current element.</summary>
+        /// <summary>Optional type profile associated with the current element.</summary>
+        public StructureDefinition TypeProfile { get; }
+
+        /// <summary>Gets or sets a boolean value that determines whether the snapshot generator should expand children of the current element.</summary>
         public bool MustExpand { get; set; }
     }
 

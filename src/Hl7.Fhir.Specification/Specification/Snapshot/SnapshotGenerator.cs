@@ -1016,13 +1016,19 @@ namespace Hl7.Fhir.Specification.Snapshot
         }
 
 
-        // [WMR 20170105] New: determine wether to expand the current element
+        // [WMR 20170105] New: determine whether to expand the current element
         // Notify client to allow overriding the default behavior
-        private bool mustExpandElement(ElementDefinitionNavigator diffNav)
+        private bool mustExpandElement(ElementDefinitionNavigator diffNav, StructureDefinition typeProfile = null)
         {
             var hasChildren = diffNav.HasChildren;
             bool mustExpand = hasChildren;
-            OnBeforeExpandElement(diffNav.Current, hasChildren, ref mustExpand);
+
+            // If a type profile is associated with the current element then we need to
+            // expand the current element if the type profile has a differential.
+            if (!mustExpand && typeProfile?.Differential?.Element != null)
+                mustExpand = typeProfile.Differential.Element.Any();
+
+            OnBeforeExpandElement(diffNav.Current, hasChildren, typeProfile, ref mustExpand);
             return mustExpand;
         }
 
@@ -1181,7 +1187,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     {
                         // [WMR 20170207] Notify observers, allow event subscribers to force expansion (even if no diff constraints)
                         // Note: if the element is to be expanded, then always merge full snapshot of the external type profile (!)
-                        if (mustExpandElement(diff))
+                        if (mustExpandElement(diff, typeStructure))
                         {
                             if (!await ensureSnapshot(typeStructure, primaryDiffTypeProfile, diffNode).ConfigureAwait(false))
                             {

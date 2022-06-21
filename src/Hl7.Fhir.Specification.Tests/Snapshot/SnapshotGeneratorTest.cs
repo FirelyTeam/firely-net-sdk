@@ -41,6 +41,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using Xunit;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -9610,6 +9612,24 @@ namespace Hl7.Fhir.Specification.Tests
                 else
                     Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
             }
+        }
+
+        [Theory]
+        [MemberData(nameof(TestContextIssue2117.TestCases), MemberType = typeof(TestContextIssue2117))]
+        public async T.Task TestExtensionWithMappingIsInSnapshotOfProfile(string url, string elementId)
+        {
+            // Arrange
+            using var context = new TestContextIssue2117();
+            var sd = context.GetResource<StructureDefinition>(url);
+            var generator = new SnapshotGenerator(context.Resolver, SnapshotGeneratorSettings.CreateDefault());
+
+            // Act
+            await generator.UpdateAsync(sd);
+
+            // Assert
+            var element = context.GetElement(sd.Snapshot.Element, elementId);
+
+            element.Should().NotBeNull();
         }
     }
 }
