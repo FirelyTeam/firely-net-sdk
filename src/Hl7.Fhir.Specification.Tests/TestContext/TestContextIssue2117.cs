@@ -10,6 +10,7 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 yield return new object[] { "https://example.org/fhir/StructureDefinition/MyZibAdvanceDirective", "Consent.extension:comment.value[x]" };
                 yield return new object[] { "https://example.org/fhir/StructureDefinition/MyZibAdvanceDirective", "Consent.extension:disorder.value[x]" };
+                yield return new object[] { "http://nictiz.nl/fhir/StructureDefinition/zib-AdvanceDirective", "Consent.extension:comment.value[x]" };
                 yield return new object[] { "http://nictiz.nl/fhir/StructureDefinition/zib-AdvanceDirective", "Consent.extension:disorder.value[x]" };
             }
         }

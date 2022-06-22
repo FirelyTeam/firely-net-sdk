@@ -1023,7 +1023,6 @@ namespace Hl7.Fhir.Specification.Snapshot
         {
             var hasChildren = diffNav.HasChildren;
             bool mustExpand = hasChildren || typeProfile is { IsExtension: true };
-
             OnBeforeExpandElement(diffNav.Current, hasChildren, typeProfile, ref mustExpand);
             return mustExpand;
         }
