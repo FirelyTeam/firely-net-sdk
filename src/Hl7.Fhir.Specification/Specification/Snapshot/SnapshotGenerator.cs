@@ -1018,15 +1018,11 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         // [WMR 20170105] New: determine whether to expand the current element
         // Notify client to allow overriding the default behavior
+        // If an extension is associated with the current element then we need to expand the current element too.
         private bool mustExpandElement(ElementDefinitionNavigator diffNav, StructureDefinition typeProfile = null)
         {
             var hasChildren = diffNav.HasChildren;
-            bool mustExpand = hasChildren;
-
-            // If a type profile is associated with the current element then we need to
-            // expand the current element if the type profile has a differential.
-            if (!mustExpand && typeProfile?.Differential?.Element != null)
-                mustExpand = typeProfile.Differential.Element.Any();
+            bool mustExpand = hasChildren || typeProfile is { IsExtension: true };
 
             OnBeforeExpandElement(diffNav.Current, hasChildren, typeProfile, ref mustExpand);
             return mustExpand;
