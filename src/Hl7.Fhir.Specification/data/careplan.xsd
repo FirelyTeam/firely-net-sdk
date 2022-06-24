@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sat, May 28, 2022 12:47+1000 for FHIR v4.3.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -330,7 +330,6 @@
       <xs:enumeration value="Appointment">
         <xs:annotation>
           <xs:documentation xml:lang="en">Appointment</xs:documentation>
-          <xs:documentation xml:lang="en">Appointment</xs:documentation>
           <xs:documentation xml:lang="it">Appuntamento</xs:documentation>
           <xs:documentation xml:lang="fr">RendezVous</xs:documentation>
           <xs:documentation xml:lang="es">Cita</xs:documentation>
@@ -339,7 +338,6 @@
       </xs:enumeration>
       <xs:enumeration value="CommunicationRequest">
         <xs:annotation>
-          <xs:documentation xml:lang="en">CommunicationRequest</xs:documentation>
           <xs:documentation xml:lang="en">CommunicationRequest</xs:documentation>
           <xs:documentation xml:lang="it">RichiestaDiComunicazione</xs:documentation>
           <xs:documentation xml:lang="fr">DemandeDeCommunication</xs:documentation>
@@ -350,7 +348,6 @@
       <xs:enumeration value="DeviceRequest">
         <xs:annotation>
           <xs:documentation xml:lang="en">DeviceRequest</xs:documentation>
-          <xs:documentation xml:lang="en">DeviceRequest</xs:documentation>
           <xs:documentation xml:lang="it">RichiestaDispositivo</xs:documentation>
           <xs:documentation xml:lang="fr">DemandeUtilisationDispositif</xs:documentation>
           <xs:documentation xml:lang="es">SolicitudDeDispositivo</xs:documentation>
@@ -360,7 +357,6 @@
       <xs:enumeration value="MedicationRequest">
         <xs:annotation>
           <xs:documentation xml:lang="en">MedicationRequest</xs:documentation>
-          <xs:documentation xml:lang="en">MedicationRequest</xs:documentation>
           <xs:documentation xml:lang="fr">PrescriptionMédicamenteuseTODO</xs:documentation>
           <xs:documentation xml:lang="zh">药物请求</xs:documentation>
           <xs:documentation xml:lang="es">PrescripciónMedicaciónTODO  /PrescripcionMedicamento</xs:documentation>
@@ -368,7 +364,6 @@
       </xs:enumeration>
       <xs:enumeration value="NutritionOrder">
         <xs:annotation>
-          <xs:documentation xml:lang="en">NutritionOrder</xs:documentation>
           <xs:documentation xml:lang="en">NutritionOrder</xs:documentation>
           <xs:documentation xml:lang="fr">OrdreNutrition</xs:documentation>
           <xs:documentation xml:lang="es">OrdenNutrición</xs:documentation>
@@ -378,14 +373,12 @@
       <xs:enumeration value="Task">
         <xs:annotation>
           <xs:documentation xml:lang="en">Task</xs:documentation>
-          <xs:documentation xml:lang="en">Task</xs:documentation>
           <xs:documentation xml:lang="es">Tarea</xs:documentation>
           <xs:documentation xml:lang="zh">任务</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
       <xs:enumeration value="ServiceRequest">
         <xs:annotation>
-          <xs:documentation xml:lang="en">ServiceRequest</xs:documentation>
           <xs:documentation xml:lang="en">ServiceRequest</xs:documentation>
           <xs:documentation xml:lang="it">RichiestaDiServizio</xs:documentation>
           <xs:documentation xml:lang="fr">DemandeService</xs:documentation>
@@ -395,7 +388,6 @@
       </xs:enumeration>
       <xs:enumeration value="VisionPrescription">
         <xs:annotation>
-          <xs:documentation xml:lang="en">VisionPrescription</xs:documentation>
           <xs:documentation xml:lang="en">VisionPrescription</xs:documentation>
           <xs:documentation xml:lang="fr">PrescriptionVision</xs:documentation>
           <xs:documentation xml:lang="es">PrescripcionDeVision</xs:documentation>

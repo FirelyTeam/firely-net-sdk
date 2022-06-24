@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sat, May 28, 2022 12:47+1000 for FHIR v4.3.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -71,7 +71,7 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Unique identifier.</xs:documentation>
+              <xs:documentation xml:lang="en">A unique identifier for this package as whole. Unique instance identifiers assigned to a package by manufacturers, regulators, drug catalogue custodians or other organizations.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
@@ -101,7 +101,7 @@
           </xs:element>
           <xs:element name="containedItemQuantity" minOccurs="0" maxOccurs="unbounded" type="Quantity">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A total of the amount of items in the package, per item type. This can be considered as the pack size. This attribute differs from containedItem.amount in that it can give a single aggregated count of all tablet types in a pack, even when these are different manufactured items. For example a pill pack of 21 tablets plus 7 sugar tablets, can be denoted here as '28 tablets'. This attribute is repeatable so that the different item types in one pack type can be counted (e.g. a count of vials and count of syringes). Each repeat must have different units, so that it is clear what the different sets of counted items are, and it is not intended to allow different counts of similar items (e.g. not '2 tubes and 3 tubes'). Repeats are not to be used to represent different pack sizes (e.g. 20 pack vs. 50 pack) - which would be different instances of this resource.</xs:documentation>
+              <xs:documentation xml:lang="en">A total of the complete count of contained items of a particular type/form, independent of sub-packaging or organization. This can be considered as the pack size. This attribute differs from containedItem.amount in that it can give a single aggregated count of all tablet types in a pack, even when these are different manufactured items. For example a pill pack of 21 tablets plus 7 sugar tablets, can be denoted here as '28 tablets'. This attribute is repeatable so that the different item types in one pack type can be counted (e.g. a count of vials and count of syringes). Each repeat must have different units, so that it is clear what the different sets of counted items are, and it is not intended to allow different counts of similar items (e.g. not '2 tubes and 3 tubes'). Repeats are not to be used to represent different pack sizes (e.g. 20 pack vs. 50 pack) - which would be different instances of this resource.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
@@ -116,7 +116,7 @@
           </xs:element>
           <xs:element name="marketingStatus" minOccurs="0" maxOccurs="unbounded" type="MarketingStatus">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Marketing information.</xs:documentation>
+              <xs:documentation xml:lang="en">Allows specifying that an item is on the market for sale, or that it is not available, and the dates and locations associated.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="characteristic" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -152,7 +152,7 @@
         <xs:sequence>
           <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The actual status of supply. In what situation this package type may be supplied for use.</xs:documentation>
+              <xs:documentation xml:lang="en">The actual status of supply. Conveys in what situation this package type may be supplied for use.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="jurisdiction" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -173,7 +173,7 @@
         <xs:sequence>
           <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Including possibly Data Carrier Identifier.</xs:documentation>
+              <xs:documentation xml:lang="en">An identifier that is specific to this particular part of the packaging. Including possibly Data Carrier Identifier (a GS1 barcode).</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -193,10 +193,10 @@
           </xs:element>
           <xs:element name="alternateMaterial" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">A possible alternate material for the packaging.</xs:documentation>
+              <xs:documentation xml:lang="en">A possible alternate material for this part of the packaging, that is allowed to be used instead of the usual material (e.g. different types of plastic for a blister sleeve).</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="shelfLifeStorage" minOccurs="0" maxOccurs="unbounded" type="ProductShelfLife">
+          <xs:element name="shelfLifeStorage" type="PackagedProductDefinition.ShelfLifeStorage" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Shelf Life and storage information.</xs:documentation>
            </xs:annotation>
@@ -219,6 +219,34 @@
           <xs:element name="package" type="PackagedProductDefinition.Package" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
               <xs:documentation xml:lang="en">Allows containers (and parts of containers) parwithin containers, still a single packaged product.  See also PackagedProductDefinition.package.containedItem.item(PackagedProductDefinition).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="PackagedProductDefinition.ShelfLifeStorage">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A medically related item or items, in a container or package.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">This describes the shelf life, taking into account various scenarios such as shelf life of the packaged Medicinal Product itself, shelf life after transformation where necessary and shelf life after the first opening of a bottle, etc. The shelf life type shall be specified using an appropriate controlled vocabulary The controlled term and the controlled term identifier shall be specified.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The shelf life time period can be specified using a numerical value for the period of time and its unit of time measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="periodDuration" type="Duration"/>
+            <xs:element name="periodString" type="string"/>
+          </xs:choice>
+          <xs:element name="specialPrecautionsForStorage" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Special precautions for storage, if any, can be specified using an appropriate controlled vocabulary. The controlled term and the controlled term identifier shall be specified.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>

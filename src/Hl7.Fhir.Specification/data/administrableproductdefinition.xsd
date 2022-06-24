@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sat, May 28, 2022 12:47+1000 for FHIR v4.3.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -81,7 +81,7 @@
           </xs:element>
           <xs:element name="formOf" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The medicinal product that this is a prepared administrable form of. This element is not a reference to the item(s) that make up this administrable form (for which see AdministrableProductDefinition.producedFrom). It is medicinal product as a whole, which may have several components (as well as packaging, devices etc.), that are given to the patient in this final administrable form. A single medicinal product may have several different administrable products (e.g. a tablet and a cream), and these could have different administrable forms (e.g. tablet as oral solid, or tablet crushed).</xs:documentation>
+              <xs:documentation xml:lang="en">References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product.  If this administrable product describes the administration of a crushed tablet, the 'formOf' would be the product representing a distribution containing tablets and possibly also a cream.  This is distinct from the 'producedFrom' which refers to the specific components of the product that are used in this preparation, rather than the product as a whole.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="administrableDoseForm" minOccurs="0" maxOccurs="1" type="CodeableConcept">
@@ -96,7 +96,7 @@
           </xs:element>
           <xs:element name="producedFrom" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The constituent manufactured item(s) that this administrable product is produced from. Either a single item, or several that are mixed before administration (e.g. a power item and a solvent item, to make a consumable solution). Note the items this is produced from are not raw ingredients (see AdministrableProductDefinition.ingredient), but manufactured medication items (ManufacturedItemDefinitions), which may be combined or prepared and transformed for patient use. The constituent items that this administrable form is produced from are all part of the product (for which see AdministrableProductDefinition.formOf).</xs:documentation>
+              <xs:documentation xml:lang="en">Indicates the specific manufactured items that are part of the 'formOf' product that are used in the preparation of this specific administrable form.  In some cases, an administrable form might use all of the items from the overall product (or there might only be one item), while in other cases, an administrable form might use only a subset of the items available in the overall product.  For example, an administrable form might involve combining a liquid and a powder available as part of an overall product, but not involve applying the also supplied cream.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="ingredient" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -111,12 +111,12 @@
           </xs:element>
           <xs:element name="property" type="AdministrableProductDefinition.Property" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Characteristics e.g. a products onset of action.</xs:documentation>
+              <xs:documentation xml:lang="en">Characteristics e.g. a product's onset of action.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="routeOfAdministration" type="AdministrableProductDefinition.RouteOfAdministration" minOccurs="1" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The path by which the product is taken into or makes contact with the body. In some regions this is referred to as the licenced or approved route.</xs:documentation>
+              <xs:documentation xml:lang="en">The path by which the product is taken into or makes contact with the body. In some regions this is referred to as the licenced or approved route. RouteOfAdministration cannot be used when the 'formOf' product already uses MedicinalProductDefinition.route (and vice versa).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -173,7 +173,7 @@
           </xs:element>
           <xs:element name="maxSingleDose" minOccurs="0" maxOccurs="1" type="Quantity">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The maximum single dose that can be administered, can be specified using a numerical value and its unit of measurement.</xs:documentation>
+              <xs:documentation xml:lang="en">The maximum single dose that can be administered, specified using a numerical value and its unit of measurement.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="maxDosePerDay" minOccurs="0" maxOccurs="1" type="Quantity">
@@ -188,7 +188,7 @@
           </xs:element>
           <xs:element name="maxTreatmentPeriod" minOccurs="0" maxOccurs="1" type="Duration">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The maximum treatment period during which an Investigational Medicinal Product can be administered.</xs:documentation>
+              <xs:documentation xml:lang="en">The maximum treatment period during which the product can be administered.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="targetSpecies" type="AdministrableProductDefinition.TargetSpecies" minOccurs="0" maxOccurs="unbounded">
@@ -230,7 +230,7 @@
         <xs:sequence>
           <xs:element name="tissue" minOccurs="1" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Coded expression for the type of tissue for which the withdrawal period applues, e.g. meat, milk.</xs:documentation>
+              <xs:documentation xml:lang="en">Coded expression for the type of tissue for which the withdrawal period applies, e.g. meat, milk.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="value" minOccurs="1" maxOccurs="1" type="Quantity">
