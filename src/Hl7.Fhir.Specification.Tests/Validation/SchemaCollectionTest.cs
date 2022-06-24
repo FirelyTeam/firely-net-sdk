@@ -20,7 +20,6 @@ namespace Hl7.Fhir.Specification.Tests
     public class SchemaCollectionTest
     {
         [TestMethod]
-        [Ignore("fhir-single.xsd contains multiple complexType 'fhir:SubscriptionStatus'")]
         public void TestSchemaCompilation()
         {
             var schemas = SchemaCollection.ValidationSchemaSet;
@@ -47,7 +46,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        [Ignore("fhir-single.xsd contains multiple complexType 'fhir:SubscriptionStatus'")]
         public void TestSchemaCollectionValidation()
         {
             var s = File.ReadAllText(Path.Combine("TestData", "TestPatient.xml"));

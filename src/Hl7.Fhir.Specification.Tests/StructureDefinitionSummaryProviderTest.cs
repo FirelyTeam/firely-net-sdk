@@ -13,7 +13,6 @@ namespace Hl7.Fhir.Specification.Tests
     public class StructureDefinitionSummaryProviderTest
     {
         [TestMethod]
-        [Ignore("This should be fixex in 4.0.0-beta2:  type of Account.coverage.id differ! poco: string, sd: id")]
         public void PocoAndSdSummaryProvidersShouldBeEqual()
         {
             IStructureDefinitionSummaryProvider pocoSdProvider = new PocoStructureDefinitionSummaryProvider();
