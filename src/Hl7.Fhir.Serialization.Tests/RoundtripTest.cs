@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Tasks = System.Threading.Tasks;
 #if NET40
 using ICSharpCode.SharpZipLib.Zip;
@@ -45,7 +46,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Fhir version 4.3.0-snapshot1 has 198 parse errors in examples-json.zip")]
         public void FullRoundtripOfAllExamplesJsonPoco()
         {
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
@@ -54,7 +54,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Fhir version 4.3.0-snapshot1 has 198 parse errors in examples-json.zip")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonPocoAsync()
         {
             await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
@@ -79,7 +78,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Fhir version 4.3.0-snapshot1 has 198 parse errors in examples-json.zip")]
         public void FullRoundtripOfAllExamplesJsonNavPocoProvider()
         {
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
@@ -88,7 +86,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Fhir version 4.3.0-snapshot1 has 198 parse errors in examples-json.zip")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonNavPocoProviderAsync()
         {
             await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
@@ -115,7 +112,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Fhir version 4.3.0-snapshot1 has 198 parse errors in examples-json.zip")]
         public void FullRoundtripOfAllExamplesJsonNavSdProvider()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
@@ -125,7 +121,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Fhir version 4.3.0-snapshot1 has 198 parse errors in examples-json.zip")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonNavSdProviderAsync()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
@@ -373,27 +368,27 @@ namespace Hl7.Fhir.Serialization.Tests
 
             if (file.Contains("v2-tables"))
                 return true; // this file is known to have a single dud valueset - have reported on Zulip
-                             // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
-            if (file.Contains("sc-valueset-") || file.EndsWith("conceptmaps.xml") || file.EndsWith("valuesets.xml"))
-                return true; // these files contain conceptmaps with incorrect relationship element
-            if (file.EndsWith("activitydefinition-medicationorder-example(citalopramPrescription).xml") ||
-                file.EndsWith("plandefinition-example(low-suicide-risk-order-set).xml") ||
-                file.EndsWith("plandefinition-example-cardiology-os(example-cardiology-os).xml"))
-                return true; // this file contains an incorrect strengthRatio element
-            if (file.EndsWith("ingredient-example(example).xml"))
-                return true; // this file contains an incorrect coding element
-            if (file.EndsWith("medicationrequest0301(medrx0301).xml"))
-                return true; // this file contains an incorrect dispenser element
-            if (file.EndsWith("subscriptionstatus-example(example).xml"))
-                return true; // this file contains an incorrect focus element
+            if (file.EndsWith("notification-empty(9601c07a-e34f-4945-93ca-6efb5394c995).xml"))
+                return true;
+
             return false;
+        }
+
+        private static IEnumerable<string> getFiles(string path,
+                      string[] searchPatterns,
+                      SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            return searchPatterns.AsParallel()
+                   .SelectMany(searchPattern =>
+                          Directory.EnumerateFiles(path, searchPattern, searchOption));
         }
 
         private static int convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
-            var files = Directory.EnumerateFiles(inputPath);
+            var files = getFiles(inputPath, new[] { "*.xml", "*.json" }, SearchOption.AllDirectories);
+
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
@@ -431,7 +426,7 @@ namespace Hl7.Fhir.Serialization.Tests
         private static async Tasks.Task<int> convertFilesAsync(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
-            var files = Directory.EnumerateFiles(inputPath);
+            var files = getFiles(inputPath, new[] { "*.xml", "*.json" }, SearchOption.AllDirectories);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
