@@ -307,8 +307,9 @@ namespace Hl7.Fhir.Specification.Tests
             // [MV 20200911] use complete dataelements.xml again
             // [MV 20210423] R4.1.0 (R4B)
             // [MV 20210423] 4.3.0-snapshot1 (R4B) summaries from 3613 to 3607, and SDs from 644 to 646
-            Assert.AreEqual(3607, summaries.Count); // STU3: 7941
-            Assert.AreEqual(646, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
+            // [MV 20220624] 4.3.0 (R4B) summaries from 3607 to 3775, and SDs from 646 to 644
+            Assert.AreEqual(3775, summaries.Count); // STU3: 7941
+            Assert.AreEqual(644, summaries.OfResourceType(ResourceType.StructureDefinition).Count()); // STU3: 581
             Assert.IsTrue(!summaries.Errors().Any());
         }
 
@@ -406,7 +407,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20190305] Belongs to pull request #890
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestSummarizeAnonymousResources()
         {
             // Parse anonymous resources & bundles entries (w/o ResourceId)
