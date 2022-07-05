@@ -15,6 +15,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         private const string FHIR_CORE_PACKAGE_NAME = "hl7.fhir.r3.corexml@3.0.2";
         private const string FHIR_CORE_EXPANSIONS_PACKAGE_NAME = "hl7.fhir.r3.expansions@3.0.2";
+        private const string FHIR_PACKAGE_SERVER = "http://packages.fhir.org";
 
         private CommonFhirPackageSource _resolver;
 
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <returns>A new <see cref="FhirPackageSource"/> that includes all Core FHIR definitions/artifacts including the expanded value sets.</returns>
         public static FhirPackageSource CreateFhirCorePackageSource()
         {
-            return new FhirPackageSource("http://packages.fhir.org", new string[] { FHIR_CORE_PACKAGE_NAME, FHIR_CORE_EXPANSIONS_PACKAGE_NAME });
+            return new FhirPackageSource(FHIR_PACKAGE_SERVER, new string[] { FHIR_CORE_PACKAGE_NAME, FHIR_CORE_EXPANSIONS_PACKAGE_NAME });
         }
 
         ///<inheritdoc/>
