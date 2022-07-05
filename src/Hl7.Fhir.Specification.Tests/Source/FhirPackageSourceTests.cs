@@ -27,7 +27,7 @@ namespace Firely.Fhir.Packages.Tests
             adm_gender.Expansion.Contains.Should().Contain(c => c.System == "http://hl7.org/fhir/administrative-gender" && c.Code == "other");
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public async System.Threading.Tasks.Task TestCorePackageSource()
         {
             var corePackageSource = FhirPackageSource.CreateFhirCorePackageSource();
