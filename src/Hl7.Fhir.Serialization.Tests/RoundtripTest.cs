@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System;
 using Hl7.Fhir.Tests;
 using Tasks = System.Threading.Tasks;
+using System.Linq;
 #if NET40
 using ICSharpCode.SharpZipLib.Zip;
 using System.Linq;
@@ -370,11 +371,20 @@ namespace Hl7.Fhir.Serialization.Tests
                              // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
             return false;
         }
-        
+
+        private static IEnumerable<string> getFiles(string path,
+                      string[] searchPatterns,
+                      SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            return searchPatterns.AsParallel()
+                   .SelectMany(searchPattern =>
+                          Directory.EnumerateFiles(path, searchPattern, searchOption));
+        }
+
         private static int convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
-            var files = Directory.EnumerateFiles(inputPath);
+            var files = getFiles(inputPath, new[] { "*.xml", "*.json" }, SearchOption.AllDirectories);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
@@ -412,7 +422,7 @@ namespace Hl7.Fhir.Serialization.Tests
         private static async Tasks.Task<int> convertFilesAsync(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
-            var files = Directory.EnumerateFiles(inputPath);
+            var files = getFiles(inputPath, new[] { "*.xml", "*.json" }, SearchOption.AllDirectories);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
