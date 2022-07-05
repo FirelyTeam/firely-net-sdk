@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Rest
                 if (!Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {ModelInfo.Version}?" + "" +
+                        $"Are you connected to a FHIR server with FHIR version {ModelInfo.Version}?" +
                         "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
                         ste.InnerException);
 
