@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20190305] Belongs to pull request #890
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestSummarizeAnonymousResources()
         {
             // Parse anonymous resources & bundles entries (w/o ResourceId)
