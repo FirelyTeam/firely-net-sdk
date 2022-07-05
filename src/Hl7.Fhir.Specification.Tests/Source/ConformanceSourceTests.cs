@@ -39,14 +39,14 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindConceptMaps()
         {
             var conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use").ToList();
-            Assert.AreEqual(2, conceptMaps.Count());
+            Assert.AreEqual(3, conceptMaps.Count());
             Assert.IsNotNull(conceptMaps.First().GetOrigin());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v2-0190").ToList();
             Assert.AreEqual(1, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v3-AddressUse").ToList();
-            Assert.AreEqual(1, conceptMaps.Count());
+            Assert.AreEqual(2, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/somethingelse").ToList();
             Assert.AreEqual(0, conceptMaps.Count());

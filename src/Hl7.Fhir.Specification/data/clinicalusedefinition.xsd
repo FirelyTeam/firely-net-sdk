@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sat, May 28, 2022 12:47+1000 for FHIR v4.3.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -74,7 +74,7 @@
               <xs:documentation xml:lang="en">Business identifier for this issue.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="type" minOccurs="1" maxOccurs="1" type="ClinicalUseIssueType">
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="ClinicalUseDefinitionType">
             <xs:annotation>
               <xs:documentation xml:lang="en">indication | contraindication | interaction | undesirable-effect | warning.</xs:documentation>
            </xs:annotation>
@@ -116,7 +116,7 @@
           </xs:element>
           <xs:element name="undesirableEffect" type="ClinicalUseDefinition.UndesirableEffect" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Describe the undesirable effects of the medicinal product.</xs:documentation>
+              <xs:documentation xml:lang="en">Describe the possible undesirable effects (negative outcomes) from the use of the medicinal product as treatment.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="warning" type="ClinicalUseDefinition.Warning" minOccurs="0" maxOccurs="1">
@@ -142,7 +142,7 @@
           </xs:element>
           <xs:element name="diseaseStatus" minOccurs="0" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the disease or symptom for the contraindication.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of the disease or symptom for the contraindication, for example &quot;chronic&quot; or &quot;metastatic&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="comorbidity" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
@@ -199,7 +199,7 @@
           </xs:element>
           <xs:element name="diseaseStatus" minOccurs="0" maxOccurs="1" type="CodeableReference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status of the disease or symptom for the indication.</xs:documentation>
+              <xs:documentation xml:lang="en">The status of the disease or symptom for the indication, for example &quot;chronic&quot; or &quot;metastatic&quot;.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="comorbidity" minOccurs="0" maxOccurs="unbounded" type="CodeableReference">
@@ -212,14 +212,16 @@
               <xs:documentation xml:lang="en">The intended effect, aim or strategy to be achieved.</xs:documentation>
            </xs:annotation>
           </xs:element>
-          <xs:element name="duration" minOccurs="0" maxOccurs="1" type="Quantity">
+          <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Timing or duration information.</xs:documentation>
-           </xs:annotation>
-          </xs:element>
+              <xs:documentation xml:lang="en">Timing or duration information, that may be associated with use with the indicated condition e.g. Adult patients suffering from myocardial infarction (from a few days until less than 35 days), ischaemic stroke (from 7 days until less than 6 months).</xs:documentation>
+            </xs:annotation>
+            <xs:element name="durationRange" type="Range"/>
+            <xs:element name="durationString" type="string"/>
+          </xs:choice>
           <xs:element name="undesirableEffect" minOccurs="0" maxOccurs="unbounded" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The specific undesirable effects of the medicinal product.</xs:documentation>
+              <xs:documentation xml:lang="en">An unwanted side effect or negative outcome that may happen if you use the drug (or other subject of this resource) for this indication.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="otherTherapy" type="ClinicalUseDefinition.OtherTherapy" minOccurs="0" maxOccurs="unbounded">
@@ -332,7 +334,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:simpleType name="ClinicalUseIssueTypeEnum">
+  <xs:simpleType name="ClinicalUseDefinitionTypeEnum">
     <xs:restriction base="code-primitive">
       <xs:enumeration value="indication">
         <xs:annotation>
@@ -361,14 +363,14 @@
       </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="ClinicalUseIssueType">
+  <xs:complexType name="ClinicalUseDefinitionType">
     <xs:annotation>
       <xs:documentation xml:lang="en"></xs:documentation>
       <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
     </xs:annotation>
     <xs:complexContent>
       <xs:extension base="Element">
-        <xs:attribute name="value" type="ClinicalUseIssueTypeEnum" use="optional"/>
+        <xs:attribute name="value" type="ClinicalUseDefinitionTypeEnum" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

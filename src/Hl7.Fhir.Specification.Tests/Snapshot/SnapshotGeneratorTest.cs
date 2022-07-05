@@ -424,7 +424,6 @@ namespace Hl7.Fhir.Specification.Tests
 
         // [WMR 20170424] For debugging SnapshotBaseComponentGenerator
         [TestMethod]
-        [Ignore("In release 4B the extensions are not empty. Still to be investigated")]
         public async T.Task TestFullyExpandCoreOrganization()
         {
             // [WMR 20161005] This simulates custom Forge post-processing logic

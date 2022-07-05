@@ -213,6 +213,10 @@ namespace Hl7.Fhir.Specification
                     // [EK 20200423] xhtml.id is missing the structuredefinition-fhir-type extension
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
                 }
+                else if (basePath == "Element.id" || nav.Current?.Path == "Element.id")
+                {
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
+                }
                 else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
                 {
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };

@@ -47,7 +47,7 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 
-  Generated on Mon, Dec 20, 2021 14:08+1100 for FHIR v4.3.0-snapshot1 
+  Generated on Sat, May 28, 2022 12:47+1000 for FHIR v4.3.0 
 
   Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
   valid. Implementers will still need to be familiar with the content of the specification and with
@@ -96,7 +96,7 @@
           </xs:element>
           <xs:element name="status" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The status that is authorised e.g. approved. Intermediate states can be tracked with cases and applications.</xs:documentation>
+              <xs:documentation xml:lang="en">The status that is authorised e.g. approved. Intermediate states and actions can be tracked with cases and applications.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="statusDate" minOccurs="0" maxOccurs="1" type="dateTime">
@@ -116,7 +116,7 @@
           </xs:element>
           <xs:element name="intendedUse" minOccurs="0" maxOccurs="1" type="CodeableConcept">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The intended use of the product, e.g. prevention, treatment.</xs:documentation>
+              <xs:documentation xml:lang="en">The intended use of the product, e.g. prevention, treatment, diagnosis.</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="basis" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
@@ -126,7 +126,7 @@
           </xs:element>
           <xs:element name="holder" minOccurs="0" maxOccurs="1" type="Reference">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The organization that holds the granted authorization.</xs:documentation>
+              <xs:documentation xml:lang="en">The organization that has been granted this authorization, by some authoritative body (the 'regulator').</xs:documentation>
            </xs:annotation>
           </xs:element>
           <xs:element name="regulator" minOccurs="0" maxOccurs="1" type="Reference">
@@ -136,7 +136,7 @@
           </xs:element>
           <xs:element name="case" type="RegulatedAuthorization.Case" minOccurs="0" maxOccurs="1">
             <xs:annotation>
-              <xs:documentation xml:lang="en">The case or regulatory procedure for granting or amending a marketing authorization. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page).</xs:documentation>
+              <xs:documentation xml:lang="en">The case or regulatory procedure for granting or amending a regulated authorization. An authorization is granted in response to submissions/applications by those seeking authorization. A case is the administrative process that deals with the application(s) that relate to this and assesses them. Note: This area is subject to ongoing review and the workgroup is seeking implementer feedback on its use (see link at bottom of page).</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
@@ -167,14 +167,14 @@
           </xs:element>
           <xs:choice minOccurs="0" maxOccurs="1" >
             <xs:annotation>
-              <xs:documentation xml:lang="en">Relevant date for this of case.</xs:documentation>
+              <xs:documentation xml:lang="en">Relevant date for this case.</xs:documentation>
             </xs:annotation>
             <xs:element name="datePeriod" type="Period"/>
             <xs:element name="dateDateTime" type="dateTime"/>
           </xs:choice>
           <xs:element name="application" type="RegulatedAuthorization.Case" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
-              <xs:documentation xml:lang="en">Applications submitted to obtain a marketing authorization. Steps within the longer running case or procedure.</xs:documentation>
+              <xs:documentation xml:lang="en">A regulatory submission from an organization to a regulator, as part of an assessing case. Multiple applications may occur over time, with more or different information to support or modify the submission or the authorization. The applications can be considered as steps within the longer running case or procedure for this authorization process.</xs:documentation>
            </xs:annotation>
           </xs:element>
         </xs:sequence>
