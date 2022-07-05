@@ -28,6 +28,22 @@ namespace Firely.Fhir.Packages.Tests
             adm_gender.Expansion.Contains.Should().Contain(c => c.System == "http://hl7.org/fhir/administrative-gender" && c.Code == "other");
         }
 
+        [TestMethod, TestCategory("IntegrationTest")]
+        public async System.Threading.Tasks.Task TestCorePackageSource()
+        {
+            var corePackageSource = FhirPackageSource.CreateFhirCorePackageSource();
+
+            //check StructureDefinitions
+            var pat = await corePackageSource.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Patient").ConfigureAwait(false) as StructureDefinition;
+            pat.Should().NotBeNull();
+            pat.Url.Should().Be("http://hl7.org/fhir/StructureDefinition/Patient");
+
+            //check expansions
+            var adm_gender = await corePackageSource.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/administrative-gender").ConfigureAwait(false) as ValueSet;
+            adm_gender.Should().NotBeNull();
+            adm_gender.Expansion.Contains.Should().Contain(c => c.System == "http://hl7.org/fhir/administrative-gender" && c.Code == "other");
+        }
+
         [TestMethod]
         public void TestListFileNames()
         {
