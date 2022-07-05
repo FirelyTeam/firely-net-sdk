@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
@@ -995,6 +996,7 @@ namespace Hl7.Fhir.Rest
             }
 
 
+
             Bundle.EntryComponent response = null;
             try
             {
@@ -1013,6 +1015,19 @@ namespace Hl7.Fhir.Rest
             catch (AggregateException ae)
             {
                 throw ae.GetBaseException();
+            }
+            catch (StructuralTypeException ste)
+            {
+                if (!Settings.VerifyFhirVersion)
+                {
+                    throw new StructuralTypeException(ste.Message + Environment.NewLine +
+                        $"Are you connected to a FHIR server with FHIR version {ModelInfo.Version}?" + "" +
+                        "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
+                        ste.InnerException);
+
+                }
+                throw;
+
             }
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
@@ -1055,12 +1070,12 @@ namespace Hl7.Fhir.Rest
             else
                 return result as TResource;
         }
+
         private bool isPostOrPut(Bundle.EntryComponent interaction)
         {
             var method = interaction.Request.Method;
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
         }
-
 
         private bool versionChecked = false;
 
@@ -1071,24 +1086,34 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            CapabilityStatement conf;
+            string serverVersion;
+            var settings = Settings;
+
             try
             {
-                conf = CapabilityStatement(SummaryType.True); // don't get the full version as its huge just to read the fhir version
+                Settings = Settings.Clone();
+                Settings.ParserSettings = new Serialization.ParserSettings() { AllowUnrecognizedEnums = true };
+                CapabilityStatement conf = CapabilityStatement(SummaryType.True);
+                serverVersion = conf.FhirVersionElement?.ObjectValue as string;
             }
             catch (FormatException)
             {
                 // Mmmm...cannot even read the body. Probably not so good.
                 throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
             }
+            finally
+            {
+                // put back the original settings
+                Settings = settings;
+            }
 
-            if (conf.FhirVersion == null)
+            if (serverVersion == null)
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!ModelInfo.CheckMinorVersionCompatibility(conf.FhirVersion))
+            else if (!ModelInfo.CheckMinorVersionCompatibility(serverVersion))
             {
-                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {conf.Version}");
+                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {serverVersion}");
             }
 
         }
