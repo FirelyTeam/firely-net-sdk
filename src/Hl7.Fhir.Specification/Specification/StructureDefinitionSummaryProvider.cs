@@ -79,11 +79,7 @@ namespace Hl7.Fhir.Specification
         public bool IsResource => false;
 
         public IReadOnlyCollection<IElementDefinitionSummary> GetElements() =>
-#if NET40
-            StructureDefinitionComplexTypeSerializationInfo.getElements(_nav).ToReadOnlyCollection();
-#else
             StructureDefinitionComplexTypeSerializationInfo.getElements(_nav).ToList();
-#endif
     }
 
     internal struct StructureDefinitionComplexTypeSerializationInfo : IStructureDefinitionSummary
@@ -101,15 +97,6 @@ namespace Hl7.Fhir.Specification
 
         public bool IsResource => _nav.StructureDefinition.Kind == StructureDefinition.StructureDefinitionKind.Resource;
 
-#if NET40
-        public IReadOnlyCollection<IElementDefinitionSummary> GetElements()
-        {
-            if (_nav.Current == null && !_nav.MoveToFirstChild())
-                return new ReadOnlyList<IElementDefinitionSummary>();
-
-            return getElements(_nav).ToReadOnlyCollection();
-        }
-#else
         public IReadOnlyCollection<IElementDefinitionSummary> GetElements()
         {
             if (_nav.Current == null && !_nav.MoveToFirstChild())
@@ -117,7 +104,6 @@ namespace Hl7.Fhir.Specification
 
             return getElements(_nav).ToList();
         }
-#endif
 
         private static bool isPrimitiveValueConstraint(ElementDefinition ed) => ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code == null);
 
