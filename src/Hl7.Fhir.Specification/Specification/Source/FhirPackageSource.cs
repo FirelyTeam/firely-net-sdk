@@ -21,6 +21,10 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Reads FHIR version specific artifacts (Profiles, ValueSets, ...) from the FHIR Packages</summary>
     public class FhirPackageSource : IAsyncResourceResolver, IArtifactSource, IConformanceSource
     {
+        private const string FHIR_CORE_PACKAGE_NAME = "hl7.fhir.r5.core";
+        private const string FHIR_CORE_EXPANSIONS_PACKAGE_NAME = "hl7.fhir.r5.expansions";
+        private const string FHIR_PACKAGE_SERVER = "http://packages2.fhir.org/packages";
+
         private CommonFhirPackageSource _resolver;
 
         /// <summary>Create a new <see cref="FhirPackageSource"/> instance to read FHIR artifacts from the referenced FHIR packages.</summary>
@@ -40,6 +44,15 @@ namespace Hl7.Fhir.Specification.Source
             _resolver = new CommonFhirPackageSource(inspector, packageServer, packageNames);
         }
 
+        /// <summary>
+        /// Create a new <see cref="FhirPackageSource"/> that includes the all Core FHIR artifacts including the expanded value sets.
+        /// </summary>
+        /// <remarks>Needs an active internet connection for first installation, FHIR packages will be cached locally after</remarks>
+        /// <returns>A new <see cref="FhirPackageSource"/> that includes all Core FHIR definitions/artifacts including the expanded value sets.</returns>
+        public static FhirPackageSource CreateFhirCorePackageSource()
+        {
+            return new FhirPackageSource(FHIR_PACKAGE_SERVER, new string[] { FHIR_CORE_PACKAGE_NAME, FHIR_CORE_EXPANSIONS_PACKAGE_NAME });
+        }
 
         ///<inheritdoc/>
         public async Task<Resource?> ResolveByCanonicalUriAsync(string uri)
