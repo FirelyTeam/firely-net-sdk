@@ -19,10 +19,6 @@
     <PackageReference Include="System.AppContext" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <PackageReference Include="SharpZipLib" Version="1.3.3" />
-  </ItemGroup>
-
   <ItemGroup>
     <Content Include="TestData\**\*.xml;TestData\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

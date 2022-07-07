@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -20,21 +21,21 @@ namespace Hl7.Fhir.Core.Tests.Rest
     [TestClass]
     public class FhirClientMockTest
     {
-        [TestMethod]
-        public async System.Threading.Tasks.Task VerifyFhirVersionTest()
+
+        private static async System.Threading.Tasks.Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)
         {
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(@"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}", Encoding.UTF8, "application/json"),
+                Content = new StringContent(capabilityStatementResponseJson, Encoding.UTF8, "application/json"),
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com"),
             };
 
             var patientResponse = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(@"{""resourceType"": ""Patient"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
+                Content = new StringContent(patientResponseJson, Encoding.UTF8, "application/json"),
                 RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient/1"),
             };
 
@@ -56,56 +57,68 @@ namespace Hl7.Fhir.Core.Tests.Rest
                           It.IsAny<CancellationToken>()))
                        .ReturnsAsync(patientResponse);
 
-            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = true }, mock.Object);
-            try
-            {
-                await client.ReadAsync<Patient>("Patient/1");
-            }
-            catch (NotSupportedException ex)
-            {
-                Assert.Fail($"Expected no exception, but got: {ex.Message}");
-            }
+            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = verifyFhirVersion }, mock.Object);
+            await client.ReadAsync<Patient>("Patient/1");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NotSupportedException))]
-        public async System.Threading.Tasks.Task VerifyFhirVersionTestErrorThrown()
+        public async System.Threading.Tasks.Task VerifyFhirVersionTest()
         {
-            var mock = new Mock<HttpMessageHandler>();
-            var response = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(@"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": ""0.0.0""}", Encoding.UTF8, "application/json"),
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com"),
-            };
+            // the usual use case
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
+            var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:""}";
+            Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson);
 
-            var patientResponse = new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent(@"{""resourceType"": ""Patient"",  ""id"": ""example:""}", Encoding.UTF8, "application/json"),
-                RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://example.com/Patient/1"),
-            };
+            await act
+               .Should().NotThrowAsync();
+        }
 
-            //Two mocks, since response messages get disposed after each "SendAsync()", and the test required two rest calls.
-            mock
-               .Protected()
-                       .As<IHttpResponseMessage>()
-                       .Setup(m => m.SendAsync(
-                          It.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/metadata?_summary=true")), //the call to check capabilitystatement
-                          It.IsAny<CancellationToken>()))
-                       .ReturnsAsync(response);
+        [TestMethod]
+        public async System.Threading.Tasks.Task VerifyFhirVersionTestUnknownVersion()
+        {
+            // Verify server version with an unknow version
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": ""0.0.0""}";
+            var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:""}";
+            Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson);
+            await act
+                .Should().ThrowAsync<NotSupportedException>()
+                .WithMessage($"This client supports FHIR version {ModelInfo.Version} but the server uses version 0.0.0");
+        }
 
-            mock
-               .Protected()
-                       .As<IHttpResponseMessage>()
-                       .Setup(m => m.SendAsync(
-                          It.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/Patient/1")),  //the GET Patient
-                          It.IsAny<CancellationToken>()))
-                       .ReturnsAsync(patientResponse);
+        [TestMethod]
+        public async System.Threading.Tasks.Task VerifyFhirVersionTestNoVersion()
+        {
+            // Verify server version with no version returned
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:""}";
+            var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:""}";
+            Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson);
+            await act
+                .Should().ThrowAsync<NotSupportedException>()
+                .WithMessage("This CapabilityStatement of the server doesn't state its FHIR version");
+        }
 
-            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = true }, mock.Object);
+        [TestMethod]
+        public async System.Threading.Tasks.Task NoVerifyFhirVersionWithIncorrectPatient()
+        {
+            // No server version check, but incorrect patient. This could be a wrong FHIR version. So we check the extra appended message
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
+            var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:"", ""unknownMember"": ""value""}";
+            Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson, false);
+            await act
+                .Should().ThrowAsync<StructuralTypeException>()
+                .Where(e => e.Message.EndsWith("FHIR server with the correct FHIR version."));
+        }
 
-            var patient = await client.ReadAsync<Patient>("Patient/1");
+        [TestMethod]
+        public async System.Threading.Tasks.Task VerifyFhirVersionWithIncorrectPatient()
+        {
+            // Server version check with an incorrect patient. So the error is legit
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
+            var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:"", ""unknownMember"": ""value""}";
+            Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson, true);
+            await act
+                .Should().ThrowAsync<StructuralTypeException>()
+                .Where(e => !e.Message.EndsWith("FHIR server with the correct FHIR version."));
         }
 
 
@@ -270,7 +283,33 @@ namespace Hl7.Fhir.Core.Tests.Rest
             client.RequestHeaders.Authorization = authValue;
 
             var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+        }
 
+        [TestMethod]
+        public async System.Threading.Tasks.Task TestOperationWithEmptyBody()
+        {
+            var mock = new Mock<HttpMessageHandler>();
+            var response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = new StringContent(@"{""resourceType"": ""Parameters"",  ""parameter"": [ { ""name"": ""result"", ""valueString"": ""connected""}]  }", Encoding.UTF8, "application/json"),
+                RequestMessage = new HttpRequestMessage(HttpMethod.Post, "http://example.com/fhir/$ping")
+            };
+
+
+            mock
+             .Protected()
+                     .Setup<System.Threading.Tasks.Task<HttpResponseMessage>>(
+                        "SendAsync",
+                        ItExpr.Is<HttpRequestMessage>(h => h.RequestUri == new Uri("http://example.com/fhir/$ping")),
+                        ItExpr.IsAny<CancellationToken>())
+                     .ReturnsAsync(response);
+
+            using var client = new FhirClient("http://example.com/fhir/", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+
+            var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
+
+            parameters.Parameter.FirstOrDefault().Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("connected");
 
         }
     }
