@@ -86,31 +86,19 @@ namespace Hl7.Fhir.Tests.Validation
             var oidWithZero = "urn:oid:1.2.0.3.4";
 
             FhirUri uri = new(oidUrl);
-#if NET40
-            Validator.ValidateObject(uri, new ValidationContext(uri, null, null), true);
-#else
             Validator.ValidateObject(uri, new ValidationContext(uri), true);
-#endif
 
             uri = new FhirUri(illOidUrl);
             validateErrorOrFail(uri);
 
             uri = new FhirUri(uuidUrl);
-#if NET40
-            Validator.ValidateObject(uri, new ValidationContext(uri, null, null), true);
-#else
             Validator.ValidateObject(uri, new ValidationContext(uri), true);
-#endif
 
             uri = new FhirUri(illUuidUrl);
             validateErrorOrFail(uri);
 
             uri = new FhirUri(oidWithZero);
-#if NET40
-            Validator.ValidateObject(uri, new ValidationContext(uri, null, null), true);
-#else
             Validator.ValidateObject(uri, new ValidationContext(uri), true);
-#endif
 
             Assert.IsTrue(Uri.Equals(new Uri("http://nu.nl"), new Uri("http://nu.nl")));
         }
