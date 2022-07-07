@@ -5,7 +5,7 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/4.3.0-snapshot1/";
+$server = "https://hl7.org/fhir/R4B/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -221,7 +221,7 @@ function ExtractXsdZipFile($destPath)
 		RemoveIncorrectXsdElements $xsdFile
 	}
 	Write-Host -ForegroundColor White "Copy extracted files to $destPath ..."
-	Copy-Item -Path $extractPath\* -Destination $destPath
+	Copy-Item -Path $extractPath\* -Recurse -Container:$false -Destination $destPath
 }
 
 function ChangeValueElementOfFhirType($name)

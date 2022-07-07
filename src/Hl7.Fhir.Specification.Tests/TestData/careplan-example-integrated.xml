@@ -43,7 +43,7 @@
           <tr>
             <td>27 Aug 2012</td>
             <td>Eve will increase her energy by being more active</td>
-            <td>Eve will walk her friend&#39;s dog up and down a big hill 15-30 minutes 3 days a week</td>
+            <td>Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week</td>
             <td>In Process</td>
             <td>10 Sep 2012</td>
             <td>8/27/12 Eve would like to try for 5 days a week.  9/10/12 Eve is still walking the dogs.</td>
@@ -374,7 +374,7 @@
       <scheduledPeriod>
         <start value="2012-08-27"/>
       </scheduledPeriod>
-      <description value="Eve will walk her friend&#39;s dog up and down a big hill 15-30 minutes 3 days a week"/>
+      <description value="Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week"/>
     </detail>
   </activity>
   <activity>

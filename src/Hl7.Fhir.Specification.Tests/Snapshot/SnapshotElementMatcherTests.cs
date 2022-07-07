@@ -7,15 +7,14 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Snapshot;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Diagnostics;
 using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
-using Hl7.Fhir.Utility;
-using System.Linq;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -30,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true } );
+            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true });
             _testResolver = new CachedResolver(dirSource);
         }
 
@@ -1474,7 +1473,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         // [WMR 20190211] For STU3
-        [TestMethod, Ignore]
+        [TestMethod]
         public void TestElementMatcher_ChoiceType4()
         {
             // Base profile renames value[x] to valueString
@@ -1695,7 +1694,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(diffNav.MoveToNext());
             Assert.IsTrue(snapNav.MoveToNext());
             var match = matches[1];
-            assertMatch(match, ElementMatcher.MatchAction.Invalid, snapNav, diffNav);  
+            assertMatch(match, ElementMatcher.MatchAction.Invalid, snapNav, diffNav);
             Assert.AreEqual("bsn", diffNav.Current.SliceName);
             Assert.AreEqual("bsn", snapNav.Current.SliceName);
             // Verify generated outcome issue

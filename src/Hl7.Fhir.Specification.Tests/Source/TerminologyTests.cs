@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             expander.Settings.MaxExpansionSize = 50;
             await expander.ExpandAsync(testVs);
-            Assert.Equal(25, testVs.Expansion.Total);
+            Assert.Equal(27, testVs.Expansion.Total);
         }
 
         [Fact]

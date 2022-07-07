@@ -79,11 +79,7 @@ namespace Hl7.Fhir.Specification
         public bool IsResource => false;
 
         public IReadOnlyCollection<IElementDefinitionSummary> GetElements() =>
-#if NET40
-            StructureDefinitionComplexTypeSerializationInfo.getElements(_nav).ToReadOnlyCollection();
-#else
             StructureDefinitionComplexTypeSerializationInfo.getElements(_nav).ToList();
-#endif
     }
 
     internal struct StructureDefinitionComplexTypeSerializationInfo : IStructureDefinitionSummary
@@ -101,15 +97,6 @@ namespace Hl7.Fhir.Specification
 
         public bool IsResource => _nav.StructureDefinition.Kind == StructureDefinition.StructureDefinitionKind.Resource;
 
-#if NET40
-        public IReadOnlyCollection<IElementDefinitionSummary> GetElements()
-        {
-            if (_nav.Current == null && !_nav.MoveToFirstChild())
-                return new ReadOnlyList<IElementDefinitionSummary>();
-
-            return getElements(_nav).ToReadOnlyCollection();
-        }
-#else
         public IReadOnlyCollection<IElementDefinitionSummary> GetElements()
         {
             if (_nav.Current == null && !_nav.MoveToFirstChild())
@@ -117,7 +104,6 @@ namespace Hl7.Fhir.Specification
 
             return getElements(_nav).ToList();
         }
-#endif
 
         private static bool isPrimitiveValueConstraint(ElementDefinition ed) => (ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code == null)) ||
             (ed.Path.EndsWith(".value") && ed.Type.All(t => t.Code.StartsWith("http://hl7.org/fhirpath/System.")));
@@ -211,6 +197,10 @@ namespace Hl7.Fhir.Specification
                 else if(basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
                 {
                     // [EK 20200423] xhtml.id is missing the structuredefinition-fhir-type extension
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
+                }
+                else if (basePath == "Element.id" || nav.Current?.Path == "Element.id")
+                {
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
                 }
                 else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)

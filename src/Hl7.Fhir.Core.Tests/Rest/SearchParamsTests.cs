@@ -430,7 +430,6 @@ namespace Hl7.Fhir.Test.Rest
         }
 
         [TestMethod]
-        [Ignore("In release 4B there are no searchparameters provided. Only experimental search parameters which are not generated. Still to be investigated")]
         public void CheckManualFixesOfTemplateModelInfo()
         {
             //Manualy removed target of EpisodeOfCare from searchparameter DiagnosticReport.encounter
@@ -483,10 +482,6 @@ namespace Hl7.Fhir.Test.Rest
             var sp12 = ModelInfo.SearchParameters.Where(s => s.Resource == "Procedure" && s.Name == "encounter").FirstOrDefault();
             Assert.IsNotNull(sp12);
             Assert.IsFalse(sp12.Target.Contains(ResourceType.EpisodeOfCare));
-
-            var sp13 = ModelInfo.SearchParameters.Where(s => s.Resource == "DocumentReference" && s.Name == "encounter").FirstOrDefault();
-            Assert.IsNotNull(sp13);
-            Assert.IsTrue(sp13.Target.Contains(ResourceType.EpisodeOfCare));
         }
     }
 }
