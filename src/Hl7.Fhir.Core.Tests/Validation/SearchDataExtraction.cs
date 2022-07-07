@@ -55,9 +55,11 @@ namespace Hl7.Fhir.Test.Validation
                 {
                     // Verified examples that fail validations
 
-                    //// vsd-3, vsd-8
-                    //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                    //    continue;
+                    if (entry.Name.Contains("v2-tables"))
+                        continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                  // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+                    if (entry.Name == "observation-decimal(decimal).xml")
+                        continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
 
                     testFileCount++;
 
