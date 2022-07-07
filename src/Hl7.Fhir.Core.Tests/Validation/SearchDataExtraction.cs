@@ -21,9 +21,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
-#if NET40
-using ICSharpCode.SharpZipLib.Zip;
-#endif
 
 namespace Hl7.Fhir.Test.Validation
 {
@@ -49,52 +46,46 @@ namespace Hl7.Fhir.Test.Validation
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-#if NET40
-            var zip = new ZipArchive(new ZipFile(examplesZip));
-#else
-            var zip = ZipFile.OpenRead(examplesZip);
-#endif
-            using (zip)
+
+            using var zip = ZipFile.OpenRead(examplesZip);
+            foreach (var entry in zip.Entries)
             {
-                foreach (var entry in zip.Entries)
+                Stream file = entry.Open();
+                using (file)
                 {
-                    Stream file = entry.Open();
-                    using (file)
+                    // Verified examples that fail validations
+
+                    if (entry.Name.Contains("v2-tables"))
+                        continue; // this file is known to have a single dud valueset - have reported on Zulip
+                                  // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
+                    if (entry.Name == "observation-decimal(decimal).xml")
+                        continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
+
+                    testFileCount++;
+
+                    try
                     {
-                        // Verified examples that fail validations
+                        // Debug.WriteLine(String.Format("Validating {0}", file));
+                        var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
+                        var resource = parser.Parse<Resource>(reader);
 
-                        if (entry.Name.Contains("v2-tables"))
-                            continue; // this file is known to have a single dud valueset - have reported on Zulip
-                                      // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
-                        if (entry.Name == "observation-decimal(decimal).xml")
-                            continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
+                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 
-                        testFileCount++;
-
-                        try
+                        if (resource is Bundle)
                         {
-                            // Debug.WriteLine(String.Format("Validating {0}", file));
-                            var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                            var resource = parser.Parse<Resource>(reader);
-
-                            ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
-
-                            if (resource is Bundle)
+                            foreach (var item in (resource as Bundle).Entry)
                             {
-                                foreach (var item in (resource as Bundle).Entry)
+                                if (item.Resource != null)
                                 {
-                                    if (item.Resource != null)
-                                    {
-                                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
-                                    }
+                                    ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
                                 }
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
-                            parserErrorCount++;
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
+                        parserErrorCount++;
                     }
                 }
             }

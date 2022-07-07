@@ -6,41 +6,38 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
 using Hl7.Fhir.Model;
-using System.IO.Compression;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
-using System.Collections.Generic;
-using System;
 using Hl7.Fhir.Tests;
-using Tasks = System.Threading.Tasks;
-#if NET40
-using ICSharpCode.SharpZipLib.Zip;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
-#endif
+using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public class RoundtripTest
-    { 
+    {
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesXmlPoco()
         {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml", 
-                "Roundtripping xml->json->xml", usingPoco: true, provider:null);
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
         }
-        
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public async Tasks.Task FullRoundtripOfAllExamplesXmlPocoAsync()
         {
-            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml", 
-                "Roundtripping xml->json->xml", usingPoco: true, provider:null);
+            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
         }
 
         [TestMethod]
@@ -50,7 +47,7 @@ namespace Hl7.Fhir.Serialization.Tests
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
                 "Roundtripping json->xml->json", usingPoco: true, provider: null);
         }
-        
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonPocoAsync()
@@ -66,7 +63,7 @@ namespace Hl7.Fhir.Serialization.Tests
             FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
                 "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
         }
-        
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public async Tasks.Task FullRoundtripOfAllExamplesXmlNavPocoProviderAsync()
@@ -82,7 +79,7 @@ namespace Hl7.Fhir.Serialization.Tests
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
                 "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
         }
-        
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonNavPocoProviderAsync()
@@ -99,7 +96,7 @@ namespace Hl7.Fhir.Serialization.Tests
             FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
                 "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
         }
-        
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public async Tasks.Task FullRoundtripOfAllExamplesXmlNavSdProviderAsync()
@@ -117,7 +114,7 @@ namespace Hl7.Fhir.Serialization.Tests
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
                 "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
         }
-        
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonNavSdProviderAsync()
@@ -129,97 +126,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
         private static string GetFullPathForExample(string filename) => Path.Combine("TestData", filename);
 
-#if NET40
-        public static ZipArchive ReadTestZip(string filename)
-        {
-            string file = GetFullPathForExample(filename);
-            return new ZipArchive(new ZipFile(file));
-        }
-
-        public class ZipArchiveEntry
-        {
-            private ZipFile _zip;
-            private ZipEntry _zipEntry;
-
-            public ZipArchiveEntry(ZipEntry zipEntry, ZipFile zipFile)
-            {
-                _zipEntry = zipEntry;
-                _zip = zipFile;
-            }
-
-            public string Name
-            {
-                get
-                {
-                    return _zipEntry.Name;
-                }
-            }
-
-            public Stream Open()
-            {
-                return _zip.GetInputStream(_zipEntry);
-            }
-        }
-
-        public class ZipArchive : IDisposable
-        {
-            private ZipFile _zip;
-
-            public ZipArchive(ZipFile zip)
-            {
-                _zip = zip;
-            }
-
-            public IEnumerable<ZipArchiveEntry> Entries
-            {
-                get
-                {
-                    return _zip.Cast<ZipEntry>().Select(e => new ZipArchiveEntry(e, _zip));
-                }
-            }
-
-            public void Dispose()
-            {
-                ((IDisposable)_zip).Dispose();
-            }
-
-            public void ExtractToDirectory(string directory)
-            {
-                byte[] buffer = new byte[4096];
-
-                foreach (ZipEntry entry in _zip)
-                {
-                    using (Stream entryStream = _zip.GetInputStream(entry))
-                    {
-                        string fullPath = Path.Combine(directory, entry.Name.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar));
-                        FileInfo entryFileInfo = new FileInfo(fullPath);
-
-                        if (!Directory.Exists(entryFileInfo.DirectoryName))
-                        {
-                            Directory.CreateDirectory(entryFileInfo.DirectoryName);
-                        }
-
-                        using (FileStream entryOutputStream = File.Create(fullPath))
-                        {
-                            int bytesRead = entryStream.Read(buffer, 0, 4096);
-
-                            while (bytesRead > 0)
-                            {
-                                entryOutputStream.Write(buffer, 0, bytesRead);
-                                bytesRead = entryStream.Read(buffer, 0, 4096);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-#else
         public static ZipArchive ReadTestZip(string filename)
         {
             string file = GetFullPathForExample(filename);
             return ZipFile.OpenRead(file);
         }
-#endif
 
         public static void FullRoundtripOfAllExamples(string zipname, string dirname, string label, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
@@ -233,7 +144,7 @@ namespace Hl7.Fhir.Serialization.Tests
             createEmptyDir(baseTestPath);
             doRoundTrip(examples, baseTestPath, usingPoco, provider);
         }
-        
+
         public static async Tasks.Task FullRoundtripOfAllExamplesAsync(string zipname, string dirname, string label, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             ZipArchive examples = ReadTestZip(zipname);
@@ -273,7 +184,7 @@ namespace Hl7.Fhir.Serialization.Tests
             if (Directory.Exists(baseTestPath)) Directory.Delete(baseTestPath, true);
             Directory.CreateDirectory(baseTestPath);
         }
-        
+
         private static void doRoundTrip(ZipArchive examplesZip, string baseTestPath, bool usingPoco, IStructureDefinitionSummaryProvider provider)
         {
             var examplePath = Path.Combine(baseTestPath, "input");
@@ -370,11 +281,20 @@ namespace Hl7.Fhir.Serialization.Tests
                              // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
             return false;
         }
-        
+
+        private static IEnumerable<string> getFiles(string path,
+                      string[] searchPatterns,
+                      SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            return searchPatterns.AsParallel()
+                   .SelectMany(searchPattern =>
+                          Directory.EnumerateFiles(path, searchPattern, searchOption));
+        }
+
         private static int convertFiles(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
-            var files = Directory.EnumerateFiles(inputPath);
+            var files = getFiles(inputPath, new[] { "*.xml", "*.json" }, SearchOption.AllDirectories);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
@@ -399,7 +319,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     else
                         convertResourceNav(file, outputFile, provider);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     errors.Add($"{exampleName}{ext}: " + ex.Message);
                 }
@@ -412,7 +332,7 @@ namespace Hl7.Fhir.Serialization.Tests
         private static async Tasks.Task<int> convertFilesAsync(string inputPath, string outputPath, bool usingPoco, IStructureDefinitionSummaryProvider provider, List<string> errors)
         {
             int fileCount = 0;
-            var files = Directory.EnumerateFiles(inputPath);
+            var files = getFiles(inputPath, new[] { "*.xml", "*.json" }, SearchOption.AllDirectories);
             if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
             foreach (string file in files)
@@ -437,7 +357,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     else
                         await convertResourceNavAsync(file, outputFile, provider);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     errors.Add($"{exampleName}{ext}: " + ex.Message);
                 }
@@ -539,7 +459,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 await File.WriteAllTextAsync(outputFile, xml);
             }
         }
-        
+
         private static void convertResourceNav(string inputFile, string outputFile, IStructureDefinitionSummaryProvider provider)
         {
             if (inputFile.EndsWith(".xml"))
@@ -552,8 +472,8 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = File.ReadAllText(inputFile);
-                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider, 
-                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true } );
+                var nav = JsonParsingHelpers.ParseToTypedElement(json, provider,
+                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true });
                 var xml = nav.ToXml();
                 File.WriteAllText(outputFile, xml);
             }
@@ -571,8 +491,8 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = await File.ReadAllTextAsync(inputFile);
-                var nav = await JsonParsingHelpers.ParseToTypedElementAsync(json, provider, 
-                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true } );
+                var nav = await JsonParsingHelpers.ParseToTypedElementAsync(json, provider,
+                    settings: new FhirJsonParsingSettings { AllowJsonComments = true, PermissiveParsing = true });
                 var xml = await nav.ToXmlAsync();
                 await File.WriteAllTextAsync(outputFile, xml);
             }

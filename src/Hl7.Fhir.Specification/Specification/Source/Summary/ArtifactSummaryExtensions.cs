@@ -10,9 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
@@ -58,7 +56,7 @@ namespace Hl7.Fhir.Specification.Source
 
             var version = values.Length == 2 ? values[1] : string.Empty;
 
-            return summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == values[0] && 
+            return summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == values[0] &&
                                                                (string.IsNullOrEmpty(version) || r.GetConformanceVersion() == version));
         }
 
@@ -104,10 +102,10 @@ namespace Hl7.Fhir.Specification.Source
         public static ArtifactSummary ResolveNamingSystem(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
             => summaries.FindNamingSystems(uniqueId).SingleOrDefault(NamingSystemUrlConflictExceptionFactory);
 
-/// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="CodeSystem"/> resource with the specified ValueSet uri.</summary>
+        /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="CodeSystem"/> resource with the specified ValueSet uri.</summary>
         public static ArtifactSummary ResolveCodeSystem(this IEnumerable<ArtifactSummary> summaries, string uri)
             => summaries.FindCodeSystems(uri).SingleOrDefault(CodeSystemConflictExceptionFactory);
-            
+
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="ConceptMap"/> resource with the specified source and/or target uri(s).</summary>
         public static ArtifactSummary ResolveConceptMap(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
             => summaries.FindConceptMaps(sourceUri, targetUri).SingleOrDefault(ConceptMapUrlConflictExceptionFactory);
@@ -252,107 +250,4 @@ namespace Hl7.Fhir.Specification.Source
 
         #endregion
     }
-
-#if NET40
-    public interface IReadOnlyDictionary<TKey, TValue> : IReadOnlyCollection<KeyValuePair<TKey, TValue>>, IEnumerable<KeyValuePair<TKey, TValue>>, IEnumerable
-    {
-        //
-        // Summary:
-        //     Gets the element that has the specified key in the read-only dictionary.
-        //
-        // Parameters:
-        //   key:
-        //     The key to locate.
-        //
-        // Returns:
-        //     The element that has the specified key in the read-only dictionary.
-        //
-        // Exceptions:
-        //   T:System.ArgumentNullException:
-        //     key is null.
-        //
-        //   T:System.Collections.Generic.KeyNotFoundException:
-        //     The property is retrieved and key is not found.
-        TValue this[TKey key] { get; }
-
-        //
-        // Summary:
-        //     Gets an enumerable collection that contains the keys in the read-only dictionary.
-        //
-        // Returns:
-        //     An enumerable collection that contains the keys in the read-only dictionary.
-        IEnumerable<TKey> Keys { get; }
-        //
-        // Summary:
-        //     Gets an enumerable collection that contains the values in the read-only dictionary.
-        //
-        // Returns:
-        //     An enumerable collection that contains the values in the read-only dictionary.
-        IEnumerable<TValue> Values { get; }
-
-        //
-        // Summary:
-        //     Determines whether the read-only dictionary contains an element that has the
-        //     specified key.
-        //
-        // Parameters:
-        //   key:
-        //     The key to locate.
-        //
-        // Returns:
-        //     true if the read-only dictionary contains an element that has the specified key;
-        //     otherwise, false.
-        //
-        // Exceptions:
-        //   T:System.ArgumentNullException:
-        //     key is null.
-        bool ContainsKey(TKey key);
-        //
-        // Summary:
-        //     Gets the value that is associated with the specified key.
-        //
-        // Parameters:
-        //   key:
-        //     The key to locate.
-        //
-        //   value:
-        //     When this method returns, the value associated with the specified key, if the
-        //     key is found; otherwise, the default value for the type of the value parameter.
-        //     This parameter is passed uninitialized.
-        //
-        // Returns:
-        //     true if the object that implements the System.Collections.Generic.IReadOnlyDictionary`2
-        //     interface contains an element that has the specified key; otherwise, false.
-        //
-        // Exceptions:
-        //   T:System.ArgumentNullException:
-        //     key is null.
-        bool TryGetValue(TKey key, out TValue value);
-    }
-
-    //
-    // Summary:
-    //     Represents a read-only collection of elements that can be accessed by index.
-    //
-    // Type parameters:
-    //   T:
-    //     The type of elements in the read-only list. This type parameter is covariant.
-    //     That is, you can use either the type you specified or any type that is more derived.
-    //     For more information about covariance and contravariance, see Covariance and
-    //     Contravariance in Generics.
-    public interface IReadOnlyList<out T> : IReadOnlyCollection<T>, IEnumerable<T>, IEnumerable
-    {
-        //
-        // Summary:
-        //     Gets the element at the specified index in the read-only list.
-        //
-        // Parameters:
-        //   index:
-        //     The zero-based index of the element to get.
-        //
-        // Returns:
-        //     The element at the specified index in the read-only list.
-        T this[int index] { get; }
-    }
-#endif
 }
