@@ -221,7 +221,7 @@ function ExtractXsdZipFile($destPath)
 		RemoveIncorrectXsdElements $xsdFile
 	}
 	Write-Host -ForegroundColor White "Copy extracted files to $destPath ..."
-	Copy-Item -Path $extractPath\* -Destination $destPath
+	Copy-Item -Path $extractPath\* -Recurse -Container:$false -Destination $destPath
 }
 
 function ChangeValueElementOfFhirType($name)

@@ -7,9 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-#if NET40
-using ICSharpCode.SharpZipLib.Zip;
-#endif
 
 namespace Hl7.Fhir.Support.Tests.Serialization
 {
@@ -123,15 +120,6 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             // ZipDeflateStream does not support seeking (forward-only stream)
             // Therefore this only works for the XmlNavigatorStream, as the ctor does NOT (need to) call Reset()
             // JsonNavigatorStream cannot support zip streams; ctor needs to call Reset after scanning resourceType
-#if NET40
-            using (var archive = new ZipFile(ZipSource.SpecificationZipFileName))
-            {
-                var entry = archive.Cast<ZipEntry>().FirstOrDefault(e => e.Name == "profiles-resources.xml");
-                Assert.IsNotNull(entry);
-
-                using (var entryStream = archive.GetInputStream(entry))
-                {
-#else
             using var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read);
             var entry = archive.Entries.FirstOrDefault(e => e.Name == "profiles-resources.xml");
             Assert.IsNotNull(entry);
@@ -144,7 +132,6 @@ namespace Hl7.Fhir.Support.Tests.Serialization
                 Assert.IsTrue(navStream.IsBundle);
                 Assert.AreEqual(ResourceType.Bundle.GetLiteral(), navStream.ResourceType);
             };
-#endif
         }
     }
 }

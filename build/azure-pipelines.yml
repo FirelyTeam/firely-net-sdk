@@ -256,7 +256,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
               inputs:
                   command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.*nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
                   verbosityPush: normal    
@@ -267,7 +267,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -278,7 +278,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -289,7 +289,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4B')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal  
@@ -300,7 +300,7 @@ stages:
               condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
               inputs:
                 command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.nupkg'
+                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.*nupkg'
                 nuGetFeedType: external
                 publishFeedCredentials: NuGet
                 verbosityPush: normal 
