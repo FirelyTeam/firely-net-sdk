@@ -6,24 +6,20 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using System.Xml;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using System.IO.Compression;
-using Hl7.Fhir.FhirPath;
-using Hl7.FhirPath;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.ElementModel;
-#if NET40
-using ICSharpCode.SharpZipLib.Zip;
-#endif
-using Hl7.Fhir.Tests;
+using Hl7.FhirPath;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Xml;
 
 namespace Hl7.Fhir.Test.Validation
 {
@@ -46,50 +42,44 @@ namespace Hl7.Fhir.Test.Validation
             int testFileCount = 0;
             Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
             Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
-#if NET40
-            var zip = new ZipArchive(new ZipFile(examplesZip));
-#else
-            var zip = ZipFile.OpenRead(examplesZip);
-#endif
-            using (zip)
+
+            using var zip = ZipFile.OpenRead(examplesZip);
+            foreach (var entry in zip.Entries)
             {
-                foreach (var entry in zip.Entries)
+                Stream file = entry.Open();
+                using (file)
                 {
-                    Stream file = entry.Open();
-                    using (file)
+                    // Verified examples that fail validations
+
+                    //// vsd-3, vsd-8
+                    //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
+                    //    continue;
+
+                    testFileCount++;
+
+                    try
                     {
-                        // Verified examples that fail validations
+                        // Debug.WriteLine(String.Format("Validating {0}", file));
+                        var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
+                        var resource = parser.Parse<Resource>(reader);
 
-                        //// vsd-3, vsd-8
-                        //if (file.EndsWith("valueset-ucum-common(ucum-common).xml"))
-                        //    continue;
+                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
 
-                        testFileCount++;
-
-                        try
+                        if (resource is Bundle)
                         {
-                            // Debug.WriteLine(String.Format("Validating {0}", file));
-                            var reader = SerializationUtil.WrapXmlReader(XmlReader.Create(file));
-                            var resource = parser.Parse<Resource>(reader);
-
-                            ExtractValuesForSearchParameterFromFile(exampleSearchValues, resource);
-
-                            if (resource is Bundle)
+                            foreach (var item in (resource as Bundle).Entry)
                             {
-                                foreach (var item in (resource as Bundle).Entry)
+                                if (item.Resource != null)
                                 {
-                                    if (item.Resource != null)
-                                    {
-                                        ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
-                                    }
+                                    ExtractValuesForSearchParameterFromFile(exampleSearchValues, item.Resource);
                                 }
                             }
                         }
-                        catch (Exception ex)
-                        {
-                            System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
-                            parserErrorCount++;
-                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Diagnostics.Trace.WriteLine("Error processing file " + entry.Name + ": " + ex.Message);
+                        parserErrorCount++;
                     }
                 }
             }

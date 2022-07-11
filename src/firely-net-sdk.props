@@ -6,7 +6,7 @@
 
 	<!-- Solution-wide properties for NuGet packaging -->
 	<PropertyGroup>
-		<VersionPrefix>4.0.1</VersionPrefix>
+		<VersionPrefix>4.1.1</VersionPrefix>
 		<VersionSuffix>alpha</VersionSuffix>
 		<Authors>Firely (info@fire.ly) and contributors</Authors>
 		<Company>Firely (https://fire.ly)</Company>

@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -18,8 +17,8 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient
     {
-        #pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
-        #pragma warning disable CS1658 // Warning is overriding an error
+#pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
+#pragma warning disable CS1658 // Warning is overriding an error
 
         #region Search Execution
 
@@ -509,7 +508,7 @@ namespace Hl7.Fhir.Rest
             return SearchByIdUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
-       
+
         public Task<Bundle> SearchByIdUsingPostAsync<TResource>(string id, string[] includes = null, int? pageSize = null,
              string[] revIncludes = null) where TResource : Resource, new()
         {
@@ -688,16 +687,10 @@ namespace Hl7.Fhir.Rest
             {
                 // Return a null bundle, can not return simply null because this is a task
                 Bundle nullValue = null;
-#if NET40
-                TaskCompletionSource<Bundle> completionSource = new TaskCompletionSource<Bundle>();
-                completionSource.SetResult(nullValue);
-
-                return completionSource.Task;
-#else
                 return System.Threading.Tasks.Task.FromResult(nullValue);
-#endif
             }
         }
+
         /// <summary>
         /// Uses the FHIR paging mechanism to go navigate around a series of paged result Bundles
         /// </summary>
@@ -748,13 +741,13 @@ namespace Hl7.Fhir.Rest
 
         private (string path, IncludeModifier modifier)[] stringToIncludeTuple(string[] includes)
         {
-            if(includes != null && includes.Any())
+            if (includes != null && includes.Any())
                 return includes.Select(i => (i, IncludeModifier.None)).ToArray();
             else
                 return new (string path, IncludeModifier modifier)[] { };
         }
     }
-        #endregion
+    #endregion
     public enum PageDirection
     {
         First,
@@ -762,5 +755,5 @@ namespace Hl7.Fhir.Rest
         Next,
         Last
     }
-   
+
 }
