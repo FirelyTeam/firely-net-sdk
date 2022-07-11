@@ -7738,7 +7738,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             var derivedStructureDefinition = new StructureDefinition()
             {
                 Url = "http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes",
@@ -7764,17 +7764,17 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             var resolver = new InMemoryProfileResolver(baseStructureDefinition, derivedStructureDefinition);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            
+
             var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
             Assert.AreEqual(1, valuexEld.Type.Count);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
         }
-        
+
         [TestMethod]
         public async T.Task ConstrainChoiceTypeWithExplicitSlicesInDerivedProfileCorrectly()
         {
@@ -7800,6 +7800,19 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 new ElementDefinition.TypeRefComponent() {Code = "Quantity"},
                                 new ElementDefinition.TypeRefComponent() {Code = "CodeableConcept"}
+                            },
+                            Slicing = new ElementDefinition.SlicingComponent
+                            {
+                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>
+                                {
+                                    new ElementDefinition.DiscriminatorComponent
+                                    {
+                                        Path = "$this",
+                                        Type = ElementDefinition.DiscriminatorType.Type
+                                    }
+                                },
+                                Ordered = false,
+                                Rules = ElementDefinition.SlicingRules.Closed
                             }
                         },
                         new ElementDefinition()
@@ -7811,6 +7824,12 @@ namespace Hl7.Fhir.Specification.Tests
                             {
                                 new ElementDefinition.TypeRefComponent() {Code = "Quantity"},
                             }
+                        },
+                         new ElementDefinition()
+                        {
+                            Path = "Observation.value[x].system",
+                            ElementId = "Observation.value[x]:valueQuantity.system",
+                            Fixed = new FhirUri("http://unitsofmeasure.org")
                         },
                         new ElementDefinition()
                         {
@@ -7825,19 +7844,13 @@ namespace Hl7.Fhir.Specification.Tests
                         new ElementDefinition()
                         {
                             Path = "Observation.value[x].system",
-                            ElementId = "Observation.value[x]:valueQuantity.system",
-                            Fixed = new FhirUri("http://unitsofmeasure.org")
-                        },
-                        new ElementDefinition()
-                        {
-                            Path = "Observation.value[x].system",
                             ElementId = "Observation.value[x]:valueCodeableConcept.system",
                             Fixed = new FhirUri("http://fire.ly/fhir/sid/test")
                         }
                     }
                 }
             };
-            
+
             var derivedStructureDefinition = new StructureDefinition()
             {
                 Url = "http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes",
@@ -7863,20 +7876,20 @@ namespace Hl7.Fhir.Specification.Tests
                     }
                 }
             };
-            
+
             var resolver = new InMemoryProfileResolver(baseStructureDefinition, derivedStructureDefinition);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
-            
+
             var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
             Assert.AreEqual(1, valuexEld.Type.Count);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
-            
+
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
         }
-        
+
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
@@ -8181,7 +8194,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"{new string(' ', level * 3)}none");
                 return;
             }
-            
+
             foreach (Extension extension in extensions)
             {
                 if (extension.Extension != null && extension.Extension.Count > 0)
