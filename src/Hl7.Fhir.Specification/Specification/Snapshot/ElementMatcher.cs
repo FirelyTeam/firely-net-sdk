@@ -653,6 +653,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Strictly not valid according to FHIR rules, but we can cope
             if (baseIsSliced)
             {
+                // Always consume the base slice entry
+                snapNav.MoveToNextSliceAtAnyLevel();
 
                 // [WMR 20170718] NEW - Accept & handle diff constraints on base slice entry
                 // Note: snapSliceBase still points to slice entry in snapNav base profile
@@ -678,9 +680,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                         SliceBase = sliceBase
                     };
                     result.Add(match);
-
-                    // Always consume the base slice entry
-                    snapNav.MoveToNextSliceAtAnyLevel();
 
                     // Consume the diff constraint
                     if (!diffNav.MoveToNextSliceAtAnyLevel())
