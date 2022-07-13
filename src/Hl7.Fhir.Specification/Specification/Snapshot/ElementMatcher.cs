@@ -60,7 +60,10 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             // [WMR 20161212] NEW
             /// <summary>The element constraint is invalid and should be discarded.</summary>
-            Invalid
+            Invalid,
+
+            //[MS 20220712] New, introduced to remove existing type slices that are removed by contraining the type list of the slice intro
+            Remove
         }
 
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
@@ -266,6 +269,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                         break;
                     }
                 }
+
+
             }
             return result;
         }
@@ -330,8 +335,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     match.Issue = SnapshotGenerator.CreateIssueInvalidChoiceTypeName(diffNav.Current, candidate);
                 }
             }
-
-
             snapNav.ReturnToBookmark(bm);
             return match;
         }
@@ -420,8 +423,6 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Strictly not valid according to FHIR rules, but we can cope
             if (baseIsSliced)
             {
-                // Always consume the base slice entry
-                snapNav.MoveToNextSliceAtAnyLevel();
 
                 // [WMR 20170718] NEW - Accept & handle diff constraints on base slice entry
                 // Note: snapSliceBase still points to slice entry in snapNav base profile
@@ -447,6 +448,19 @@ namespace Hl7.Fhir.Specification.Snapshot
                         SliceBase = sliceBase
                     };
                     result.Add(match);
+
+
+                    var removedTypes = checkForRemovedTypes(snapNav.Current.Type, elem.Type);
+                    if (removedTypes.Any())
+                    {
+                        var slicedToBeRemoved = findRedundantTypeSliceEntries(snapNav, removedTypes);
+                        result.AddRange(slicedToBeRemoved);
+
+                    }
+
+
+                    // Always consume the base slice entry
+                    snapNav.MoveToNextSliceAtAnyLevel();
 
                     // Consume the diff constraint
                     if (!diffNav.MoveToNextSliceAtAnyLevel())
@@ -520,6 +534,52 @@ namespace Hl7.Fhir.Specification.Snapshot
             } while (diffNav.MoveToNextSliceAtAnyLevel());
 
             return result;
+        }
+        private static List<string> checkForRemovedTypes(List<ElementDefinition.TypeRefComponent> snapTypes, List<ElementDefinition.TypeRefComponent> diffTypes)
+        {
+            var snapTypeNames = snapTypes.Select(t => t.Code).ToList();
+            var diffTypeNames = diffTypes.Select(t => t.Code).ToList();
+
+            if (diffTypeNames.Any())
+            {
+                diffTypeNames.ForEach(d => snapTypeNames.Remove(d));
+                return snapTypeNames;
+            }
+            else
+            {
+                return diffTypeNames;
+            }
+        }
+
+
+        private static List<MatchInfo> findRedundantTypeSliceEntries(ElementDefinitionNavigator snapNav, List<string> removedTypes)
+        {
+            var snapSliceBase = snapNav.Bookmark();
+            var redundantSlices = new List<MatchInfo>();
+            var slicesBmks = snapNav.FindMemberSlices().ToList();
+            foreach (var slice in slicesBmks)
+            {
+                if (snapNav.ReturnToBookmark(slice))
+                {
+                    if (isRedundantTypeSliceEntry(snapNav, removedTypes))
+                    {
+                        var redundantSlice = new MatchInfo()
+                        {
+                            Action = MatchAction.Remove,
+                            BaseBookmark = slice
+                        };
+                        redundantSlices.Add(redundantSlice);
+                    }
+                }
+            }
+            snapNav.ReturnToBookmark(snapSliceBase);
+            return redundantSlices;
+        }
+
+        private static bool isRedundantTypeSliceEntry(ElementDefinitionNavigator nav, List<string> removedTypes)
+        {
+            var currentSliceTypes = nav.Current.Type.Select(t => t.Code).ToList();
+            return !removedTypes.Except(currentSliceTypes).Any();
         }
 
         /// <summary>
