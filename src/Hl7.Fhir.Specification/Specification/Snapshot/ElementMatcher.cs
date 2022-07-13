@@ -423,6 +423,18 @@ namespace Hl7.Fhir.Specification.Snapshot
             // Strictly not valid according to FHIR rules, but we can cope
             if (baseIsSliced)
             {
+                var elem = diffNav.Current;
+
+                var removedTypes = checkForRemovedTypes(snapNav.Current.Type, elem.Type);
+                if (removedTypes.Any())
+                {
+                    var slicedToBeRemoved = findRedundantTypeSliceEntries(snapNav, removedTypes);
+                    result.AddRange(slicedToBeRemoved);
+
+                }
+
+                // Always consume the base slice entry
+                snapNav.MoveToNextSliceAtAnyLevel();
 
                 // [WMR 20170718] NEW - Accept & handle diff constraints on base slice entry
                 // Note: snapSliceBase still points to slice entry in snapNav base profile
@@ -436,7 +448,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // slice entry element, however this is very obscure.
                 // => if the element has type extension and a type profile, we assume it represents
                 // a concrete extension slice and not the extension slicing entry.
-                var elem = diffNav.Current;
+
                 if (elem.SliceName == null && !isExtensionSlice(elem))
                 {
                     // Generate match for constraint on existing slice entry
@@ -450,18 +462,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                     result.Add(match);
 
 
-                    var removedTypes = checkForRemovedTypes(snapNav.Current.Type, elem.Type);
-                    if (removedTypes.Any())
-                    {
-                        var slicedToBeRemoved = findRedundantTypeSliceEntries(snapNav, removedTypes);
-                        result.AddRange(slicedToBeRemoved);
-
-                    }
-
-
-                    // Always consume the base slice entry
-                    snapNav.MoveToNextSliceAtAnyLevel();
-
                     // Consume the diff constraint
                     if (!diffNav.MoveToNextSliceAtAnyLevel())
                     {
@@ -470,6 +470,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     }
                     // Merge named slices in diff
                 }
+
+
             }
 
             // snapNav and diffNav are now positioned on the first concrete slices, if they exist (?)
