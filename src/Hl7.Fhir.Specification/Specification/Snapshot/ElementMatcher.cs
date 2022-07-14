@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             {
                 if (snapNav.ReturnToBookmark(slice))
                 {
-                    if (isRedundantTypeSliceEntry(snapNav, removedTypes))
+                    if (!isRelevantTypeSliceEntry(snapNav, removedTypes))
                     {
                         var redundantSlice = new MatchInfo()
                         {
@@ -277,10 +277,10 @@ namespace Hl7.Fhir.Specification.Snapshot
             return redundantSlices;
         }
 
-        private static bool isRedundantTypeSliceEntry(ElementDefinitionNavigator nav, List<string> removedTypes)
+        private static bool isRelevantTypeSliceEntry(ElementDefinitionNavigator nav, List<string> removedTypes)
         {
             var currentSliceTypes = nav.Current.Type.Select(t => t.Code).ToList();
-            return !removedTypes.Except(currentSliceTypes).Any();
+            return currentSliceTypes.Except(removedTypes).Any();
         }
 
 
