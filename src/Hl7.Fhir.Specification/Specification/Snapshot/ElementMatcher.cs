@@ -223,12 +223,15 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (baseIsSliced)
                 {
-                    var removedTypes = checkForRemovedTypes(snapNav.Current.Type, diffNav.Current.Type);
-                    if (removedTypes.Any())
+                    if (diffNav.Current.Slicing != null)
                     {
-                        var slicedToBeRemoved = findRedundantTypeSliceEntries(snapNav, removedTypes);
-                        result.AddRange(slicedToBeRemoved);
+                        var removedTypes = checkForRemovedTypes(snapNav.Current.Type, diffNav.Current.Type);
+                        if (removedTypes.Any())
+                        {
+                            var slicedToBeRemoved = findRedundantTypeSliceEntries(snapNav, removedTypes);
+                            result.AddRange(slicedToBeRemoved);
 
+                        }
                     }
                 }
 
