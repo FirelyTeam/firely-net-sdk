@@ -690,6 +690,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                         case ElementMatcher.MatchAction.Invalid:
                             // Collect issue and ignore invalid element
                             break;
+                        case ElementMatcher.MatchAction.Remove:
+                            removeElement(snap);
+                            break;
                     }
                 }
             }
@@ -698,6 +701,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.ReturnToBookmark(snapPos);
                 diff.ReturnToBookmark(diffPos);
             }
+        }
+
+        private void removeElement(ElementDefinitionNavigator snap)
+        {
+            snap.DeleteTree();
         }
 
         // Create a new resource element without a base element definition (for core type & resource profiles)
