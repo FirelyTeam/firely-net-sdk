@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 if (baseIsSliced)
                 {
-                    if (diffNav.Current.Slicing != null)
+                    if (string.IsNullOrEmpty(diffNav.Current.SliceName)) //only check for removed items on slice intro, not on slice entries
                     {
                         var removedTypes = checkForRemovedTypes(snapNav.Current.Type, diffNav.Current.Type);
                         if (removedTypes.Any())
