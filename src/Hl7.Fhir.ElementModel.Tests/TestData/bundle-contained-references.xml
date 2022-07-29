@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Bundle xmlns="http://hl7.org/fhir">
-  <type value="collection"/>
+	<meta>
+		<lastUpdated value="2014-08-18T01:43:30Z"/>
+		<!--    when the search was executed    -->
+	</meta>
+	
+	<type value="collection"/>
 
   <!-- An organization that already has an id on a server -->
   <entry>

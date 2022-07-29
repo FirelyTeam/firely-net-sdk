@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Validation
                 // of FP up, which could do comparisons between quantities.
                 if (v.Settings.ConstraintsToIgnore.Contains(constraintElement.Key)) continue;
 
+                // This constraint got repaired in R4B - pre-apply it for other R3+ here as well.
                 if (constraintElement.Key == "ref-1" && constraintElement.Expression == "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))")
                 {
                     constraintElement.Expression = "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %rootResource.contained.id.trace('ids'))";
