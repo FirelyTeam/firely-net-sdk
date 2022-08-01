@@ -8071,12 +8071,12 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task BindingRemovedAfterTypeSlicing()
         {
-
+            // Arrange
             var resolver = new CachedResolver(
                     new MultiResolver(
                         new TestProfileArtifactSource(),
                         ZipSource.CreateValidationSource()));
-            // Arrange
+
             string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132";
 
             var sd = await resolver.FindStructureDefinitionAsync(url);
