@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Issue Date Time
       /// </summary>
-      [FhirElement("issued", InSummary=true, Order=50 , FiveWs="FiveWs.recorded")]
+      [FhirElement("issued", InSummary=true, Order=50, FiveWs="FiveWs.recorded")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime IssuedElement
       {
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Effective Time
       /// </summary>
-      [FhirElement("applies", InSummary=true, Order=60 , FiveWs="FiveWs.done[x]")]
+      [FhirElement("applies", InSummary=true, Order=60, FiveWs="FiveWs.done[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Period Applies
       {
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Type or Form
       /// </summary>
-      [FhirElement("type", Order=80 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("type", Order=80, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Term Type specific classification
       /// </summary>
-      [FhirElement("subType", Order=90 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("subType", Order=90, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept SubType
       {
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested Contract Term Group
       /// </summary>
-      [FhirElement("group", Order=150 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("group", Order=150, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Contract.TermComponent> Group
@@ -1166,7 +1166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Offer Type or Form
       /// </summary>
-      [FhirElement("type", Order=70 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("type", Order=70, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -1179,7 +1179,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Accepting party choice
       /// </summary>
-      [FhirElement("decision", Order=80 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("decision", Order=80, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Decision
       {
@@ -2416,7 +2416,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Type
       /// </summary>
-      [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
+      [FhirElement("entity", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -2445,7 +2445,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Effective Tiem
       /// </summary>
-      [FhirElement("effectiveTime", Order=60 , FiveWs="FiveWs.done[x]")]
+      [FhirElement("effectiveTime", Order=60, FiveWs="FiveWs.done[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime EffectiveTimeElement
       {
@@ -2476,7 +2476,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Count of Contract Valued Items
       /// </summary>
-      [FhirElement("quantity", Order=70 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("quantity", Order=70, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Quantity
       {
@@ -2489,7 +2489,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item fee, charge, or cost
       /// </summary>
-      [FhirElement("unitPrice", Order=80 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("unitPrice", Order=80, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Money UnitPrice
       {
@@ -2502,7 +2502,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Price Scaling Factor
       /// </summary>
-      [FhirElement("factor", Order=90 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("factor", Order=90, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal FactorElement
       {
@@ -2533,7 +2533,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Valued Item Difficulty Scaling Factor
       /// </summary>
-      [FhirElement("points", Order=100 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("points", Order=100, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal PointsElement
       {
@@ -2564,7 +2564,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Total Contract Valued Item Value
       /// </summary>
-      [FhirElement("net", Order=110 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("net", Order=110, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.Money Net
       {
@@ -3005,7 +3005,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Purpose for the Contract Term Action
       /// </summary>
-      [FhirElement("intent", Order=70 , FiveWs="FiveWs.why[x]")]
+      [FhirElement("intent", Order=70, FiveWs="FiveWs.why[x]")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Intent
@@ -3799,7 +3799,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Signatory Role
       /// </summary>
-      [FhirElement("type", Order=40 , FiveWs="FiveWs.actor")]
+      [FhirElement("type", Order=40, FiveWs="FiveWs.actor")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
@@ -3813,7 +3813,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Signatory Party
       /// </summary>
-      [FhirElement("party", Order=50 , FiveWs="FiveWs.author")]
+      [FhirElement("party", Order=50, FiveWs="FiveWs.author")]
       [CLSCompliant(false)]
       [References("Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -3829,7 +3829,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Documentation Signature
       /// </summary>
-      [FhirElement("signature", Order=60 , FiveWs="FiveWs.author")]
+      [FhirElement("signature", Order=60, FiveWs="FiveWs.author")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Signature> Signature
@@ -3957,7 +3957,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Easily comprehended representation of this Contract
       /// </summary>
-      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
+      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Composition","DocumentReference","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -4070,7 +4070,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contract Legal Text
       /// </summary>
-      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
+      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Composition","DocumentReference","QuestionnaireResponse")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -4183,7 +4183,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Computable Contract Rules
       /// </summary>
-      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
+      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("DocumentReference")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -4359,7 +4359,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// amended | appended | cancelled | disputed | entered-in-error | executable | executed | negotiable | offered | policy | rejected | renewed | revoked | resolved | terminated
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes> StatusElement
@@ -4450,7 +4450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Content derived from the basal information
     /// </summary>
-    [FhirElement("contentDerivative", Order=160 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("contentDerivative", Order=160, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ContentDerivative
     {
@@ -4753,7 +4753,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Legal instrument category
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=310 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("type", InSummary=true, Order=310, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -4766,7 +4766,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subtype within the context of type
     /// </summary>
-    [FhirElement("subType", InSummary=true, Order=320 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("subType", InSummary=true, Order=320, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
@@ -4793,7 +4793,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Term List
     /// </summary>
-    [FhirElement("term", Order=340 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("term", Order=340, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.TermComponent> Term
@@ -4853,7 +4853,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Friendly Language
     /// </summary>
-    [FhirElement("friendly", Order=380 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("friendly", Order=380, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.FriendlyLanguageComponent> Friendly
@@ -4867,7 +4867,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Legal Language
     /// </summary>
-    [FhirElement("legal", Order=390 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("legal", Order=390, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.LegalLanguageComponent> Legal
@@ -4881,7 +4881,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Computable Contract Language
     /// </summary>
-    [FhirElement("rule", Order=400 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("rule", Order=400, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Contract.ComputableLanguageComponent> Rule

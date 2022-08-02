@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this medication
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes that identify this medication
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=100 , FiveWs="FiveWs.class")]
+    [FhirElement("code", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=120 , FiveWs="FiveWs.actor")]
+    [FhirElement("manufacturer", InSummary=true, Order=120, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | not-done | on-hold | completed | entered-in-error | stopped | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What was administered
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
+    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who received medication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or Episode of Care administered as part of
     /// </summary>
-    [FhirElement("context", Order=170 , FiveWs="FiveWs.context")]
+    [FhirElement("context", Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -653,7 +653,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support administration
     /// </summary>
-    [FhirElement("supportingInformation", Order=180 , FiveWs="FiveWs.context")]
+    [FhirElement("supportingInformation", Order=180, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -669,7 +669,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end time of administration
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.done[x]")]
+    [FhirElement("effective", InSummary=true, Order=190, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [Cardinality(Min=1,Max=1)]
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who performed the medication administration and what they did
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=200 , FiveWs="FiveWs.actor")]
+    [FhirElement("performer", InSummary=true, Order=200, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.MedicationAdministration.PerformerComponent> Performer
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition or observation that supports why the medication was administered
     /// </summary>
-    [FhirElement("reasonReference", Order=220 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonReference", Order=220, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport")]
     [Cardinality(Min=0,Max=-1)]

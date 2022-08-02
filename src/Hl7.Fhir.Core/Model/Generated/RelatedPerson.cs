@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this related person's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The nature of the relationship
     /// </summary>
-    [FhirElement("relationship", InSummary=true, Order=120 , FiveWs="FiveWs.class")]
+    [FhirElement("relationship", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time that this relationship is considered valid
     /// </summary>
-    [FhirElement("period", Order=190 , FiveWs="FiveWs.done[x]")]
+    [FhirElement("period", Order=190, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {

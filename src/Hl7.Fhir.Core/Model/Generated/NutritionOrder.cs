@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of oral diet or diet restrictions that describe what can be consumed orally
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of nutrient that is being modified
       /// </summary>
-      [FhirElement("modifier", Order=40 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("modifier", Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Modifier
       {
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of supplement product requested
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("type", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -809,7 +809,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of enteral or infant formula
       /// </summary>
-      [FhirElement("baseFormulaType", InSummary=true, Order=40 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("baseFormulaType", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept BaseFormulaType
       {
@@ -853,7 +853,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of modular component to add to the feeding
       /// </summary>
-      [FhirElement("additiveType", Order=60 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("additiveType", Order=60, FiveWs="FiveWs.what[x]")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AdditiveType
       {
@@ -1291,7 +1291,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifiers assigned to this order
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1401,7 +1401,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | on-hold | revoked | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1434,7 +1434,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | directive | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
-    [FhirElement("intent", InSummary=true, IsModifier=true, Order=140 , FiveWs="FiveWs.class")]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1467,7 +1467,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who requires the diet, formula or nutritional supplement
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=150 , FiveWs="FiveWs.subject")]
+    [FhirElement("patient", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1483,7 +1483,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The encounter associated with this nutrition order
     /// </summary>
-    [FhirElement("encounter", Order=160 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1498,7 +1498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date and time the nutrition order was requested
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=170 , FiveWs="FiveWs.recorded")]
+    [FhirElement("dateTime", InSummary=true, Order=170, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
@@ -1530,7 +1530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who ordered the diet, formula or nutritional supplement
     /// </summary>
-    [FhirElement("orderer", InSummary=true, Order=180 , FiveWs="FiveWs.author")]
+    [FhirElement("orderer", InSummary=true, Order=180, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]

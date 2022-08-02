@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual who was involved
       /// </summary>
-      [FhirElement("actor", Order=50 , FiveWs="FiveWs.actor")]
+      [FhirElement("actor", Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization","Patient","PractitionerRole","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | issued | balanced | cancelled | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of Invoice
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Recipient(s) of goods and services
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -742,7 +742,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Invoice date / posting date
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150 , FiveWs="FiveWs.done[x]")]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {

@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this compartment definition, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the compartment definition
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100 , FiveWs="FiveWs.version")]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=130 , FiveWs="FiveWs.class")]
+    [FhirElement("experimental", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140 , FiveWs="FiveWs.recorded")]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=150 , FiveWs="FiveWs.witness")]
+    [FhirElement("publisher", InSummary=true, Order=150, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this compartment definition is defined
     /// </summary>
-    [FhirElement("purpose", Order=190 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("purpose", Order=190, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {

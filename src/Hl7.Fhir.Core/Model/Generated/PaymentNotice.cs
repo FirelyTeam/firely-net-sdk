@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for the payment noctice
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request reference
     /// </summary>
-    [FhirElement("request", Order=110 , FiveWs="FiveWs.subject")]
+    [FhirElement("request", Order=110, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response reference
     /// </summary>
-    [FhirElement("response", Order=120 , FiveWs="FiveWs.subject")]
+    [FhirElement("response", Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=130 , FiveWs="FiveWs.recorded")]
+    [FhirElement("created", InSummary=true, Order=130, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=140 , FiveWs="FiveWs.source")]
+    [FhirElement("provider", Order=140, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]

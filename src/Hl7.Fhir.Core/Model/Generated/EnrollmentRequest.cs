@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=130 , FiveWs="FiveWs.actor")]
+    [FhirElement("provider", Order=130, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject to be enrolled
     /// </summary>
-    [FhirElement("candidate", Order=140 , FiveWs="FiveWs.actor")]
+    [FhirElement("candidate", Order=140, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
