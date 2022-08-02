@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The age of the specific population
     /// </summary>
-    [FhirElement("age", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("age", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The gender of the specific population
     /// </summary>
-    [FhirElement("gender", InSummary=true, Order=50)]
+    [FhirElement("gender", InSummary=true, Order=50 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Gender
     {
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Race of the specific population
     /// </summary>
-    [FhirElement("race", InSummary=true, Order=60)]
+    [FhirElement("race", InSummary=true, Order=60 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Race
     {
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The existing physiological conditions of the specific population to which this applies
     /// </summary>
-    [FhirElement("physiologicalCondition", InSummary=true, Order=70)]
+    [FhirElement("physiologicalCondition", InSummary=true, Order=70 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysiologicalCondition
     {

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indication of the reason the entity signed the object(s)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30)]
+    [FhirElement("type", InSummary=true, Order=30 , FiveWs="")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Type
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the signature was created
     /// </summary>
-    [FhirElement("when", InSummary=true, Order=40)]
+    [FhirElement("when", InSummary=true, Order=40 , FiveWs="")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant WhenElement
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who signed
     /// </summary>
-    [FhirElement("who", InSummary=true, Order=50)]
+    [FhirElement("who", InSummary=true, Order=50 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
     [Cardinality(Min=1,Max=1)]
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The party represented
     /// </summary>
-    [FhirElement("onBehalfOf", InSummary=true, Order=60)]
+    [FhirElement("onBehalfOf", InSummary=true, Order=60 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
     [DataMember]
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical format of the signed resources
     /// </summary>
-    [FhirElement("targetFormat", Order=70)]
+    [FhirElement("targetFormat", Order=70 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Code TargetFormatElement
     {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical format of the signature
     /// </summary>
-    [FhirElement("sigFormat", Order=80)]
+    [FhirElement("sigFormat", Order=80 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Code SigFormatElement
     {
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual signature content (XML DigSig. JWS, picture, etc.)
     /// </summary>
-    [FhirElement("data", Order=90)]
+    [FhirElement("data", Order=90 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary DataElement
     {

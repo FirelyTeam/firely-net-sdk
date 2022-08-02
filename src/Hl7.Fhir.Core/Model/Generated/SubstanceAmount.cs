@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lower limit possible or expected
       /// </summary>
-      [FhirElement("lowLimit", InSummary=true, Order=30)]
+      [FhirElement("lowLimit", InSummary=true, Order=30 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity LowLimit
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Upper limit possible or expected
       /// </summary>
-      [FhirElement("highLimit", InSummary=true, Order=40)]
+      [FhirElement("highLimit", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity HighLimit
       {
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field
     /// </summary>
-    [FhirElement("amount", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("amount", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Most elements that require a quantitative value will also have a field called amount type. Amount type should always be specified because the actual value of the amount is often dependent on it. EXAMPLE: In capturing the actual relative amounts of substances or molecular fragments it is essential to indicate whether the amount refers to a mole ratio or weight ratio. For any given element an effort should be made to use same the amount type for all related definitional elements
     /// </summary>
-    [FhirElement("amountType", InSummary=true, Order=50)]
+    [FhirElement("amountType", InSummary=true, Order=50 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AmountType
     {
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A textual comment on a numeric value
     /// </summary>
-    [FhirElement("amountText", InSummary=true, Order=60)]
+    [FhirElement("amountText", InSummary=true, Order=60 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString AmountTextElement
     {
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference range of possible or expected values
     /// </summary>
-    [FhirElement("referenceRange", InSummary=true, Order=70)]
+    [FhirElement("referenceRange", InSummary=true, Order=70 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.SubstanceAmount.ReferenceRangeComponent ReferenceRange
     {

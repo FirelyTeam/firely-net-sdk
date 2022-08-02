@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("ratioType", InSummary=true, Order=40)]
+      [FhirElement("ratioType", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RatioType
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("startingMaterial", InSummary=true, Order=50)]
+      [FhirElement("startingMaterial", InSummary=true, Order=50 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.StartingMaterialComponent> StartingMaterial
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("material", InSummary=true, Order=40)]
+      [FhirElement("material", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Material
       {
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=50)]
+      [FhirElement("type", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("isDefining", InSummary=true, Order=60)]
+      [FhirElement("isDefining", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean IsDefiningElement
       {
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("amount", InSummary=true, Order=70)]
+      [FhirElement("amount", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceAmount Amount
       {
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("numberOfUnits", InSummary=true, Order=40)]
+      [FhirElement("numberOfUnits", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Integer NumberOfUnitsElement
       {
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("averageMolecularFormula", InSummary=true, Order=50)]
+      [FhirElement("averageMolecularFormula", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AverageMolecularFormulaElement
       {
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("repeatUnitAmountType", InSummary=true, Order=60)]
+      [FhirElement("repeatUnitAmountType", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RepeatUnitAmountType
       {
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("repeatUnit", InSummary=true, Order=70)]
+      [FhirElement("repeatUnit", InSummary=true, Order=70 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.RepeatUnitComponent> RepeatUnit
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("orientationOfPolymerisation", InSummary=true, Order=40)]
+      [FhirElement("orientationOfPolymerisation", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OrientationOfPolymerisation
       {
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("repeatUnit", InSummary=true, Order=50)]
+      [FhirElement("repeatUnit", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString RepeatUnitElement
       {
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("amount", InSummary=true, Order=60)]
+      [FhirElement("amount", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceAmount Amount
       {
@@ -665,7 +665,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("degreeOfPolymerisation", InSummary=true, Order=70)]
+      [FhirElement("degreeOfPolymerisation", InSummary=true, Order=70 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.DegreeOfPolymerisationComponent> DegreeOfPolymerisation
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("structuralRepresentation", InSummary=true, Order=80)]
+      [FhirElement("structuralRepresentation", InSummary=true, Order=80 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SubstancePolymer.StructuralRepresentationComponent> StructuralRepresentation
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("degree", InSummary=true, Order=40)]
+      [FhirElement("degree", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Degree
       {
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("amount", InSummary=true, Order=50)]
+      [FhirElement("amount", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceAmount Amount
       {
@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("representation", InSummary=true, Order=50)]
+      [FhirElement("representation", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString RepresentationElement
       {
@@ -1000,7 +1000,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Todo
       /// </summary>
-      [FhirElement("attachment", InSummary=true, Order=60)]
+      [FhirElement("attachment", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Attachment Attachment
       {
@@ -1114,7 +1114,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirElement("class", InSummary=true, Order=90)]
+    [FhirElement("class", InSummary=true, Order=90 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Class
     {
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirElement("geometry", InSummary=true, Order=100)]
+    [FhirElement("geometry", InSummary=true, Order=100 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Geometry
     {
@@ -1140,7 +1140,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirElement("copolymerConnectivity", InSummary=true, Order=110)]
+    [FhirElement("copolymerConnectivity", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CopolymerConnectivity
@@ -1154,7 +1154,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirElement("modification", InSummary=true, Order=120)]
+    [FhirElement("modification", InSummary=true, Order=120 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ModificationElement
@@ -1186,7 +1186,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirElement("monomerSet", InSummary=true, Order=130)]
+    [FhirElement("monomerSet", InSummary=true, Order=130 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SubstancePolymer.MonomerSetComponent> MonomerSet
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Todo
     /// </summary>
-    [FhirElement("repeat", InSummary=true, Order=140)]
+    [FhirElement("repeat", InSummary=true, Order=140 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SubstancePolymer.RepeatComponent> Repeat

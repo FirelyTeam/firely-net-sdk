@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The party(s), such as insurances, that may contribute to the payment of this account
       /// </summary>
-      [FhirElement("coverage", InSummary=true, Order=40)]
+      [FhirElement("coverage", InSummary=true, Order=40 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The priority of the coverage in the context of this account
       /// </summary>
-      [FhirElement("priority", InSummary=true, Order=50)]
+      [FhirElement("priority", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt PriorityElement
       {
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Responsible entity
       /// </summary>
-      [FhirElement("party", Order=40)]
+      [FhirElement("party", Order=40 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Credit or other hold applied
       /// </summary>
-      [FhirElement("onHold", Order=50)]
+      [FhirElement("onHold", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean OnHoldElement
       {
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Guarantee account during
       /// </summary>
-      [FhirElement("period", Order=60)]
+      [FhirElement("period", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Account number
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error | on-hold | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. patient, expense, depreciation
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable label
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [FhirElement("name", InSummary=true, Order=120 , FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The entity that caused the expenses
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=130 , FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Device","Practitioner","PractitionerRole","Location","HealthcareService","Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Transaction window
     /// </summary>
-    [FhirElement("servicePeriod", InSummary=true, Order=140, FiveWs="FiveWs.done[x]")]
+    [FhirElement("servicePeriod", InSummary=true, Order=140 , FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period ServicePeriod
     {
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
     /// </summary>
-    [FhirElement("coverage", InSummary=true, Order=150)]
+    [FhirElement("coverage", InSummary=true, Order=150 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entity managing the Account
     /// </summary>
-    [FhirElement("owner", InSummary=true, Order=160)]
+    [FhirElement("owner", InSummary=true, Order=160 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Explanation of purpose/use
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=170)]
+    [FhirElement("description", InSummary=true, Order=170 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parties ultimately responsible for balancing the Account
     /// </summary>
-    [FhirElement("guarantor", Order=180)]
+    [FhirElement("guarantor", Order=180 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to a parent Account
     /// </summary>
-    [FhirElement("partOf", Order=190)]
+    [FhirElement("partOf", Order=190 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Account")]
     [DataMember]

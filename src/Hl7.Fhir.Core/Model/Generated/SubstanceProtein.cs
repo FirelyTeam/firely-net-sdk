@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Index of primary sequences of amino acids linked through peptide bonds in order of decreasing length. Sequences of the same length will be ordered by molecular weight. Subunits that have identical sequences will be repeated and have sequential subscripts
       /// </summary>
-      [FhirElement("subunit", InSummary=true, Order=40)]
+      [FhirElement("subunit", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Integer SubunitElement
       {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence
       /// </summary>
-      [FhirElement("sequence", InSummary=true, Order=50)]
+      [FhirElement("sequence", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SequenceElement
       {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Length of linear sequences of amino acids contained in the subunit
       /// </summary>
-      [FhirElement("length", InSummary=true, Order=60)]
+      [FhirElement("length", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Integer LengthElement
       {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The sequence information shall be provided enumerating the amino acids from N- to C-terminal end using standard single-letter amino acid codes. Uppercase shall be used for L-amino acids and lowercase for D-amino acids. Transcribed SubstanceProteins will always be described using the translated sequence; for synthetic peptide containing amino acids that are not represented with a single letter code an X should be used within the sequence. The modified amino acids will be distinguished by their position in the sequence
       /// </summary>
-      [FhirElement("sequenceAttachment", InSummary=true, Order=70)]
+      [FhirElement("sequenceAttachment", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Attachment SequenceAttachment
       {
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique identifier for molecular fragment modification based on the ISO 11238 Substance ID
       /// </summary>
-      [FhirElement("nTerminalModificationId", InSummary=true, Order=80)]
+      [FhirElement("nTerminalModificationId", InSummary=true, Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Identifier NTerminalModificationId
       {
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the fragment modified at the N-terminal of the SubstanceProtein shall be specified
       /// </summary>
-      [FhirElement("nTerminalModification", InSummary=true, Order=90)]
+      [FhirElement("nTerminalModification", InSummary=true, Order=90 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NTerminalModificationElement
       {
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique identifier for molecular fragment modification based on the ISO 11238 Substance ID
       /// </summary>
-      [FhirElement("cTerminalModificationId", InSummary=true, Order=100)]
+      [FhirElement("cTerminalModificationId", InSummary=true, Order=100 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Identifier CTerminalModificationId
       {
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The modification at the C-terminal shall be specified
       /// </summary>
-      [FhirElement("cTerminalModification", InSummary=true, Order=110)]
+      [FhirElement("cTerminalModification", InSummary=true, Order=110 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CTerminalModificationElement
       {
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The SubstanceProtein descriptive elements will only be used when a complete or partial amino acid sequence is available or derivable from a nucleic acid sequence
     /// </summary>
-    [FhirElement("sequenceType", InSummary=true, Order=90)]
+    [FhirElement("sequenceType", InSummary=true, Order=90 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SequenceType
     {
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of linear sequences of amino acids linked through peptide bonds. The number of subunits constituting the SubstanceProtein shall be described. It is possible that the number of subunits can be variable
     /// </summary>
-    [FhirElement("numberOfSubunits", InSummary=true, Order=100)]
+    [FhirElement("numberOfSubunits", InSummary=true, Order=100 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Integer NumberOfSubunitsElement
     {
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The disulphide bond between two cysteine residues either on the same subunit or on two different subunits shall be described. The position of the disulfide bonds in the SubstanceProtein shall be listed in increasing order of subunit number and position within subunit followed by the abbreviation of the amino acids involved. The disulfide linkage positions shall actually contain the amino acid Cysteine at the respective positions
     /// </summary>
-    [FhirElement("disulfideLinkage", InSummary=true, Order=110)]
+    [FhirElement("disulfideLinkage", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> DisulfideLinkageElement
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This subclause refers to the description of each subunit constituting the SubstanceProtein. A subunit is a linear sequence of amino acids linked through peptide bonds. The Subunit information shall be provided when the finished SubstanceProtein is a complex of multiple sequences; subunits are not used to delineate domains within a single sequence. Subunits are listed in order of decreasing length; sequences of the same length will be ordered by decreasing molecular weight; subunits that have identical sequences will be repeated multiple times
     /// </summary>
-    [FhirElement("subunit", InSummary=true, Order=120)]
+    [FhirElement("subunit", InSummary=true, Order=120 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceProtein.SubunitComponent> Subunit
