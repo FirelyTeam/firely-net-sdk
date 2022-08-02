@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | alternate | historical
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource being linked
       /// </summary>
-      [FhirElement("resource", InSummary=true, Order=50)]
+      [FhirElement("resource", InSummary=true, Order=50 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this linkage assertion is active or not
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=90, FiveWs="FiveWs.status")]
+    [FhirElement("active", InSummary=true, Order=90 , FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for linkages
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=100, FiveWs="FiveWs.author")]
+    [FhirElement("author", InSummary=true, Order=100 , FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item to be linked
     /// </summary>
-    [FhirElement("item", InSummary=true, Order=110)]
+    [FhirElement("item", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Linkage.ItemComponent> Item

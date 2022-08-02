@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// unspecified | offset | gain | two-point
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> TypeElement
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// not-calibrated | calibration-required | calibrated | unspecified
       /// </summary>
-      [FhirElement("state", InSummary=true, Order=50)]
+      [FhirElement("state", InSummary=true, Order=50 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> StateElement
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Describes the time last calibration has been performed
       /// </summary>
-      [FhirElement("time", InSummary=true, Order=60)]
+      [FhirElement("time", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Instant TimeElement
       {
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identity of metric, for example Heart Rate or PEEP Setting
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=100 , FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unit of Measure for the Metric
     /// </summary>
-    [FhirElement("unit", InSummary=true, Order=110)]
+    [FhirElement("unit", InSummary=true, Order=110 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Unit
     {
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the link to the source Device
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=120)]
+    [FhirElement("source", InSummary=true, Order=120 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the link to the parent Device
     /// </summary>
-    [FhirElement("parent", InSummary=true, Order=130)]
+    [FhirElement("parent", InSummary=true, Order=130 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// on | off | standby | entered-in-error
     /// </summary>
-    [FhirElement("operationalStatus", InSummary=true, Order=140)]
+    [FhirElement("operationalStatus", InSummary=true, Order=140 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> OperationalStatusElement
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// black | red | green | yellow | blue | magenta | cyan | white
     /// </summary>
-    [FhirElement("color", InSummary=true, Order=150)]
+    [FhirElement("color", InSummary=true, Order=150 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricColor> ColorElement
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// measurement | setting | calculation | unspecified
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=160 , FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the measurement repetition time
     /// </summary>
-    [FhirElement("measurementPeriod", InSummary=true, Order=170)]
+    [FhirElement("measurementPeriod", InSummary=true, Order=170 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Timing MeasurementPeriod
     {
@@ -642,7 +642,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the calibrations that have been performed or that are required to be performed
     /// </summary>
-    [FhirElement("calibration", InSummary=true, Order=180)]
+    [FhirElement("calibration", InSummary=true, Order=180 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DeviceMetric.CalibrationComponent> Calibration

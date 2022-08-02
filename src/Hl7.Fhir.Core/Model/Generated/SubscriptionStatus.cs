@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Event number
       /// </summary>
-      [FhirElement("eventNumber", Order=40)]
+      [FhirElement("eventNumber", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString EventNumberElement
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The instant this event occurred
       /// </summary>
-      [FhirElement("timestamp", Order=50)]
+      [FhirElement("timestamp", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Instant TimestampElement
       {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The focus of this event
       /// </summary>
-      [FhirElement("focus", Order=60)]
+      [FhirElement("focus", Order=60 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional context for this event
       /// </summary>
-      [FhirElement("additionalContext", Order=70)]
+      [FhirElement("additionalContext", Order=70 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, Order=90 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatusCodes> StatusElement
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// handshake | heartbeat | event-notification | query-status | query-event
     /// </summary>
-    [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [FhirElement("type", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Events since the Subscription was created
     /// </summary>
-    [FhirElement("eventsSinceSubscriptionStart", InSummary=true, Order=110)]
+    [FhirElement("eventsSinceSubscriptionStart", InSummary=true, Order=110 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString EventsSinceSubscriptionStartElement
     {
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed information about any events relevant to this notification
     /// </summary>
-    [FhirElement("notificationEvent", Order=120)]
+    [FhirElement("notificationEvent", Order=120 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SubscriptionStatus.NotificationEventComponent> NotificationEvent
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the Subscription responsible for this notification
     /// </summary>
-    [FhirElement("subscription", InSummary=true, Order=130, FiveWs="FiveWs.why[x]")]
+    [FhirElement("subscription", InSummary=true, Order=130 , FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Subscription")]
     [Cardinality(Min=1,Max=1)]
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to the SubscriptionTopic this notification relates to
     /// </summary>
-    [FhirElement("topic", InSummary=true, Order=140)]
+    [FhirElement("topic", InSummary=true, Order=140 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Canonical TopicElement
     {
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// List of errors on the subscription
     /// </summary>
-    [FhirElement("error", InSummary=true, Order=150)]
+    [FhirElement("error", InSummary=true, Order=150 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Error

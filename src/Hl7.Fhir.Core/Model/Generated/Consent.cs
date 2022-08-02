@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Enforcement source for policy
       /// </summary>
-      [FhirElement("authority", Order=40)]
+      [FhirElement("authority", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri AuthorityElement
       {
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific policy covered by this consent
       /// </summary>
-      [FhirElement("uri", Order=50)]
+      [FhirElement("uri", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri UriElement
       {
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Has been verified
       /// </summary>
-      [FhirElement("verified", InSummary=true, Order=40)]
+      [FhirElement("verified", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean VerifiedElement
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Person who verified
       /// </summary>
-      [FhirElement("verifiedWith", Order=50)]
+      [FhirElement("verifiedWith", Order=50 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson")]
       [DataMember]
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When consent verified
       /// </summary>
-      [FhirElement("verificationDate", Order=60)]
+      [FhirElement("verificationDate", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime VerificationDateElement
       {
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// deny | permit
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timeframe for this rule
       /// </summary>
-      [FhirElement("period", InSummary=true, Order=50)]
+      [FhirElement("period", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who|what controlled by this rule (or group, by role)
       /// </summary>
-      [FhirElement("actor", Order=60)]
+      [FhirElement("actor", Order=60 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.provisionActorComponent> Actor
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actions controlled by this rule
       /// </summary>
-      [FhirElement("action", InSummary=true, Order=70)]
+      [FhirElement("action", InSummary=true, Order=70 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Action
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Security Labels that define affected resources
       /// </summary>
-      [FhirElement("securityLabel", InSummary=true, Order=80)]
+      [FhirElement("securityLabel", InSummary=true, Order=80 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Context of activities covered by this rule
       /// </summary>
-      [FhirElement("purpose", InSummary=true, Order=90)]
+      [FhirElement("purpose", InSummary=true, Order=90 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Purpose
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// e.g. Resource Type, Profile, CDA, etc.
       /// </summary>
-      [FhirElement("class", InSummary=true, Order=100)]
+      [FhirElement("class", InSummary=true, Order=100 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Class
@@ -647,7 +647,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// e.g. LOINC or SNOMED CT code, etc. in the content
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=110)]
+      [FhirElement("code", InSummary=true, Order=110 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timeframe for data controlled by this rule
       /// </summary>
-      [FhirElement("dataPeriod", InSummary=true, Order=120)]
+      [FhirElement("dataPeriod", InSummary=true, Order=120 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Period DataPeriod
       {
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Data controlled by this rule
       /// </summary>
-      [FhirElement("data", InSummary=true, Order=130)]
+      [FhirElement("data", InSummary=true, Order=130 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.provisionDataComponent> Data
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested Exception Rules
       /// </summary>
-      [FhirElement("provision", Order=140)]
+      [FhirElement("provision", Order=140 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Consent.provisionComponent> Provision
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the actor is involved
       /// </summary>
-      [FhirElement("role", Order=40)]
+      [FhirElement("role", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource for the actor (or group, by role)
       /// </summary>
-      [FhirElement("reference", Order=50)]
+      [FhirElement("reference", Order=50 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Device","Group","CareTeam","Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
       [Cardinality(Min=1,Max=1)]
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// instance | related | dependents | authoredby
       /// </summary>
-      [FhirElement("meaning", InSummary=true, Order=40)]
+      [FhirElement("meaning", InSummary=true, Order=40 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1056,7 +1056,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual data reference
       /// </summary>
-      [FhirElement("reference", InSummary=true, Order=50)]
+      [FhirElement("reference", InSummary=true, Order=50 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for this record (external references)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1178,7 +1178,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | proposed | active | rejected | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1211,7 +1211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Which of the four areas this resource covers (extensible)
     /// </summary>
-    [FhirElement("scope", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("scope", InSummary=true, IsModifier=true, Order=110 , FiveWs="")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scope
@@ -1225,7 +1225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=120 , FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the consent applies to
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
+    [FhirElement("patient", InSummary=true, Order=130 , FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this Consent was created or indexed
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
+    [FhirElement("dateTime", InSummary=true, Order=140 , FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
@@ -1285,7 +1285,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is agreeing to the policy and rules
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=150, FiveWs="FiveWs.actor")]
+    [FhirElement("performer", InSummary=true, Order=150 , FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Organization","Patient","Practitioner","RelatedPerson","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Custodian of the consent
     /// </summary>
-    [FhirElement("organization", InSummary=true, Order=160, FiveWs="FiveWs.witness")]
+    [FhirElement("organization", InSummary=true, Order=160 , FiveWs="FiveWs.witness")]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -1317,7 +1317,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Source from which this consent is taken
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("source", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
     [CLSCompliant(false)]
     [References("Consent","DocumentReference","Contract","QuestionnaireResponse")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1333,7 +1333,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Policies covered by this consent
     /// </summary>
-    [FhirElement("policy", Order=180)]
+    [FhirElement("policy", Order=180 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.PolicyComponent> Policy
@@ -1347,7 +1347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Regulation that this consents to
     /// </summary>
-    [FhirElement("policyRule", InSummary=true, Order=190)]
+    [FhirElement("policyRule", InSummary=true, Order=190 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PolicyRule
     {
@@ -1360,7 +1360,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Consent Verified by patient or family
     /// </summary>
-    [FhirElement("verification", InSummary=true, Order=200)]
+    [FhirElement("verification", InSummary=true, Order=200 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.VerificationComponent> Verification
@@ -1374,7 +1374,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Constraints to the base Consent.policyRule
     /// </summary>
-    [FhirElement("provision", InSummary=true, Order=210)]
+    [FhirElement("provision", InSummary=true, Order=210 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Consent.provisionComponent Provision
     {

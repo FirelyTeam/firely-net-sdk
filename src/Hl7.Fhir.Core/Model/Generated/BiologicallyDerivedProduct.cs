@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual performing collection
       /// </summary>
-      [FhirElement("collector", Order=40)]
+      [FhirElement("collector", Order=40 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is product from
       /// </summary>
-      [FhirElement("source", Order=50)]
+      [FhirElement("source", Order=50 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Patient","Organization")]
       [DataMember]
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of product collection
       /// </summary>
-      [FhirElement("collected", Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("collected", Order=60, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of of processing
       /// </summary>
-      [FhirElement("description", Order=40)]
+      [FhirElement("description", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Procesing code
       /// </summary>
-      [FhirElement("procedure", Order=50)]
+      [FhirElement("procedure", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Procedure
       {
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Substance added during processing
       /// </summary>
-      [FhirElement("additive", Order=60)]
+      [FhirElement("additive", Order=60 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Substance")]
       [DataMember]
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of processing
       /// </summary>
-      [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("time", Order=70, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of manipulation
       /// </summary>
-      [FhirElement("description", Order=40)]
+      [FhirElement("description", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time of manipulation
       /// </summary>
-      [FhirElement("time", Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("time", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of storage
       /// </summary>
-      [FhirElement("description", Order=40)]
+      [FhirElement("description", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Storage temperature
       /// </summary>
-      [FhirElement("temperature", Order=50)]
+      [FhirElement("temperature", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal TemperatureElement
       {
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// farenheit | celsius | kelvin
       /// </summary>
-      [FhirElement("scale", Order=60)]
+      [FhirElement("scale", Order=60 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale> ScaleElement
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Storage timeperiod
       /// </summary>
-      [FhirElement("duration", Order=70)]
+      [FhirElement("duration", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Period Duration
       {
@@ -885,7 +885,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -899,7 +899,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// organ | tissue | fluid | cells | biologicalAgent
     /// </summary>
-    [FhirElement("productCategory", Order=100)]
+    [FhirElement("productCategory", Order=100 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory> ProductCategoryElement
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What this biologically derived product is
     /// </summary>
-    [FhirElement("productCode", Order=110)]
+    [FhirElement("productCode", Order=110 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ProductCode
     {
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// available | unavailable
     /// </summary>
-    [FhirElement("status", Order=120)]
+    [FhirElement("status", Order=120 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus> StatusElement
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Procedure request
     /// </summary>
-    [FhirElement("request", Order=130)]
+    [FhirElement("request", Order=130 , FiveWs="")]
     [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The amount of this biologically derived product
     /// </summary>
-    [FhirElement("quantity", Order=140)]
+    [FhirElement("quantity", Order=140 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Integer QuantityElement
     {
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// BiologicallyDerivedProduct parent
     /// </summary>
-    [FhirElement("parent", Order=150)]
+    [FhirElement("parent", Order=150 , FiveWs="")]
     [CLSCompliant(false)]
     [References("BiologicallyDerivedProduct")]
     [Cardinality(Min=0,Max=-1)]
@@ -1039,7 +1039,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How this product was collected
     /// </summary>
-    [FhirElement("collection", Order=160)]
+    [FhirElement("collection", Order=160 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.CollectionComponent Collection
     {
@@ -1052,7 +1052,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any processing of the product during collection
     /// </summary>
-    [FhirElement("processing", Order=170)]
+    [FhirElement("processing", Order=170 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.ProcessingComponent> Processing
@@ -1066,7 +1066,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any manipulation of product post-collection
     /// </summary>
-    [FhirElement("manipulation", Order=180)]
+    [FhirElement("manipulation", Order=180 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.BiologicallyDerivedProduct.ManipulationComponent Manipulation
     {
@@ -1079,7 +1079,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Product storage
     /// </summary>
-    [FhirElement("storage", Order=190)]
+    [FhirElement("storage", Order=190 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.BiologicallyDerivedProduct.StorageComponent> Storage

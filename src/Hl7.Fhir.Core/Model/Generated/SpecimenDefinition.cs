@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Primary or secondary specimen
       /// </summary>
-      [FhirElement("isDerived", Order=40)]
+      [FhirElement("isDerived", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean IsDerivedElement
       {
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of intended specimen
       /// </summary>
-      [FhirElement("type", Order=50)]
+      [FhirElement("type", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// preferred | alternate
       /// </summary>
-      [FhirElement("preference", Order=60)]
+      [FhirElement("preference", Order=60 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specimen's container
       /// </summary>
-      [FhirElement("container", Order=70)]
+      [FhirElement("container", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.SpecimenDefinition.ContainerComponent Container
       {
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen requirements
       /// </summary>
-      [FhirElement("requirement", Order=80)]
+      [FhirElement("requirement", Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString RequirementElement
       {
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen retention time
       /// </summary>
-      [FhirElement("retentionTime", Order=90)]
+      [FhirElement("retentionTime", Order=90 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Duration RetentionTime
       {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rejection criterion
       /// </summary>
-      [FhirElement("rejectionCriterion", Order=100)]
+      [FhirElement("rejectionCriterion", Order=100 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> RejectionCriterion
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen handling before testing
       /// </summary>
-      [FhirElement("handling", Order=110)]
+      [FhirElement("handling", Order=110 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SpecimenDefinition.HandlingComponent> Handling
@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Container material
       /// </summary>
-      [FhirElement("material", Order=40)]
+      [FhirElement("material", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Material
       {
@@ -427,7 +427,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of container associated with the kind of specimen
       /// </summary>
-      [FhirElement("type", Order=50)]
+      [FhirElement("type", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Color of container cap
       /// </summary>
-      [FhirElement("cap", Order=60)]
+      [FhirElement("cap", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Cap
       {
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Container description
       /// </summary>
-      [FhirElement("description", Order=70)]
+      [FhirElement("description", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Container capacity
       /// </summary>
-      [FhirElement("capacity", Order=80)]
+      [FhirElement("capacity", Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Capacity
       {
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum volume
       /// </summary>
-      [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("minimumVolume", Order=90, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additive associated with container
       /// </summary>
-      [FhirElement("additive", Order=100)]
+      [FhirElement("additive", Order=100 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SpecimenDefinition.AdditiveComponent> Additive
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specimen container preparation
       /// </summary>
-      [FhirElement("preparation", Order=110)]
+      [FhirElement("preparation", Order=110 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString PreparationElement
       {
@@ -716,7 +716,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additive associated with container
       /// </summary>
-      [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("additive", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -829,7 +829,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Temperature qualifier
       /// </summary>
-      [FhirElement("temperatureQualifier", Order=40)]
+      [FhirElement("temperatureQualifier", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept TemperatureQualifier
       {
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Temperature range
       /// </summary>
-      [FhirElement("temperatureRange", Order=50)]
+      [FhirElement("temperatureRange", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Range TemperatureRange
       {
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum preservation time
       /// </summary>
-      [FhirElement("maxDuration", Order=60)]
+      [FhirElement("maxDuration", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Duration MaxDuration
       {
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Preservation instruction
       /// </summary>
-      [FhirElement("instruction", Order=70)]
+      [FhirElement("instruction", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString InstructionElement
       {
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier of a kind of specimen
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of material to collect
     /// </summary>
-    [FhirElement("typeCollected", InSummary=true, Order=100)]
+    [FhirElement("typeCollected", InSummary=true, Order=100 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TypeCollected
     {
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient preparation for collection
     /// </summary>
-    [FhirElement("patientPreparation", InSummary=true, Order=110)]
+    [FhirElement("patientPreparation", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PatientPreparation
@@ -1049,7 +1049,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time aspect for collection
     /// </summary>
-    [FhirElement("timeAspect", InSummary=true, Order=120)]
+    [FhirElement("timeAspect", InSummary=true, Order=120 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TimeAspectElement
     {
@@ -1080,7 +1080,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen collection procedure
     /// </summary>
-    [FhirElement("collection", InSummary=true, Order=130)]
+    [FhirElement("collection", InSummary=true, Order=130 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Collection
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specimen in container intended for testing by lab
     /// </summary>
-    [FhirElement("typeTested", Order=140)]
+    [FhirElement("typeTested", Order=140 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> TypeTested

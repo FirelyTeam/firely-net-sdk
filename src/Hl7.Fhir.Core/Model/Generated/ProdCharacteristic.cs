@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the height can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
     /// </summary>
-    [FhirElement("height", InSummary=true, Order=40)]
+    [FhirElement("height", InSummary=true, Order=40 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Height
     {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the width can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
     /// </summary>
-    [FhirElement("width", InSummary=true, Order=50)]
+    [FhirElement("width", InSummary=true, Order=50 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Width
     {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the depth can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
     /// </summary>
-    [FhirElement("depth", InSummary=true, Order=60)]
+    [FhirElement("depth", InSummary=true, Order=60 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Depth
     {
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the weight can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
     /// </summary>
-    [FhirElement("weight", InSummary=true, Order=70)]
+    [FhirElement("weight", InSummary=true, Order=70 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Weight
     {
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the nominal volume can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
     /// </summary>
-    [FhirElement("nominalVolume", InSummary=true, Order=80)]
+    [FhirElement("nominalVolume", InSummary=true, Order=80 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Quantity NominalVolume
     {
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the external diameter can be specified using a numerical value and its unit of measurement The unit of measurement shall be specified in accordance with ISO 11240 and the resulting terminology The symbol and the symbol identifier shall be used
     /// </summary>
-    [FhirElement("externalDiameter", InSummary=true, Order=90)]
+    [FhirElement("externalDiameter", InSummary=true, Order=90 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Quantity ExternalDiameter
     {
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the shape can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
     /// </summary>
-    [FhirElement("shape", InSummary=true, Order=100)]
+    [FhirElement("shape", InSummary=true, Order=100 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ShapeElement
     {
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the color can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
     /// </summary>
-    [FhirElement("color", InSummary=true, Order=110)]
+    [FhirElement("color", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ColorElement
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the imprint can be specified as text
     /// </summary>
-    [FhirElement("imprint", InSummary=true, Order=120)]
+    [FhirElement("imprint", InSummary=true, Order=120 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ImprintElement
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the image can be provided The format of the image attachment shall be specified by regional implementations
     /// </summary>
-    [FhirElement("image", InSummary=true, Order=130)]
+    [FhirElement("image", InSummary=true, Order=130 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where applicable, the scoring can be specified An appropriate controlled vocabulary shall be used The term and the term identifier shall be used
     /// </summary>
-    [FhirElement("scoring", InSummary=true, Order=140)]
+    [FhirElement("scoring", InSummary=true, Order=140 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scoring
     {

@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code expressing the type of characteristic
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40)]
+      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the characteristic
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("value", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Attachment))]
       [DataMember]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of characteristic e.g. assigned or pending
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=60)]
+      [FhirElement("status", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Status
       {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded expression for the route
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The first dose (dose quantity) administered can be specified for the product
       /// </summary>
-      [FhirElement("firstDose", InSummary=true, Order=50)]
+      [FhirElement("firstDose", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity FirstDose
       {
@@ -254,7 +254,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum single dose that can be administered
       /// </summary>
-      [FhirElement("maxSingleDose", InSummary=true, Order=60)]
+      [FhirElement("maxSingleDose", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity MaxSingleDose
       {
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum dose quantity to be administered in any one 24-h period
       /// </summary>
-      [FhirElement("maxDosePerDay", InSummary=true, Order=70)]
+      [FhirElement("maxDosePerDay", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity MaxDosePerDay
       {
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum dose per treatment period that can be administered
       /// </summary>
-      [FhirElement("maxDosePerTreatmentPeriod", InSummary=true, Order=80)]
+      [FhirElement("maxDosePerTreatmentPeriod", InSummary=true, Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Ratio MaxDosePerTreatmentPeriod
       {
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The maximum treatment period during which the product can be administered
       /// </summary>
-      [FhirElement("maxTreatmentPeriod", InSummary=true, Order=90)]
+      [FhirElement("maxTreatmentPeriod", InSummary=true, Order=90 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Duration MaxTreatmentPeriod
       {
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A species for which this route applies
       /// </summary>
-      [FhirElement("targetSpecies", InSummary=true, Order=100)]
+      [FhirElement("targetSpecies", InSummary=true, Order=100 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.AdministrableProductDefinition.TargetSpeciesComponent> TargetSpecies
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded expression for the species
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A species specific time during which consumption of animal product is not appropriate
       /// </summary>
-      [FhirElement("withdrawalPeriod", InSummary=true, Order=50)]
+      [FhirElement("withdrawalPeriod", InSummary=true, Order=50 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.AdministrableProductDefinition.WithdrawalPeriodComponent> WithdrawalPeriod
@@ -603,7 +603,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of tissue for which the withdrawal period applies, e.g. meat, milk
       /// </summary>
-      [FhirElement("tissue", InSummary=true, Order=40)]
+      [FhirElement("tissue", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Tissue
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A value for the time
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50)]
+      [FhirElement("value", InSummary=true, Order=50 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Value
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extra information about the withdrawal period
       /// </summary>
-      [FhirElement("supportingInformation", InSummary=true, Order=60)]
+      [FhirElement("supportingInformation", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SupportingInformationElement
       {
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for the administrable product
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// References a product from which one or more of the constituent parts of that product can be prepared and used as described by this administrable product
     /// </summary>
-    [FhirElement("formOf", InSummary=true, Order=110)]
+    [FhirElement("formOf", InSummary=true, Order=110 , FiveWs="")]
     [CLSCompliant(false)]
     [References("MedicinalProductDefinition")]
     [Cardinality(Min=0,Max=-1)]
@@ -826,7 +826,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The dose form of the final product after necessary reconstitution or processing
     /// </summary>
-    [FhirElement("administrableDoseForm", InSummary=true, Order=120)]
+    [FhirElement("administrableDoseForm", InSummary=true, Order=120 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AdministrableDoseForm
     {
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The presentation type in which this item is given to a patient. e.g. for a spray - 'puff'
     /// </summary>
-    [FhirElement("unitOfPresentation", InSummary=true, Order=130)]
+    [FhirElement("unitOfPresentation", InSummary=true, Order=130 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
     {
@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the specific manufactured items that are part of the 'formOf' product that are used in the preparation of this specific administrable form
     /// </summary>
-    [FhirElement("producedFrom", InSummary=true, Order=140)]
+    [FhirElement("producedFrom", InSummary=true, Order=140 , FiveWs="")]
     [CLSCompliant(false)]
     [References("ManufacturedItemDefinition")]
     [Cardinality(Min=0,Max=-1)]
@@ -868,7 +868,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The ingredients of this administrable medicinal product. This is only needed if the ingredients are not specified either using ManufacturedItemDefiniton, or using by incoming references from the Ingredient resource
     /// </summary>
-    [FhirElement("ingredient", InSummary=true, Order=150)]
+    [FhirElement("ingredient", InSummary=true, Order=150 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Ingredient
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A device that is integral to the medicinal product, in effect being considered as an "ingredient" of the medicinal product
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=160)]
+    [FhirElement("device", InSummary=true, Order=160 , FiveWs="")]
     [CLSCompliant(false)]
     [References("DeviceDefinition")]
     [DataMember]
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Characteristics e.g. a product's onset of action
     /// </summary>
-    [FhirElement("property", InSummary=true, Order=170)]
+    [FhirElement("property", InSummary=true, Order=170 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AdministrableProductDefinition.PropertyComponent> Property
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The path by which the product is taken into or makes contact with the body
     /// </summary>
-    [FhirElement("routeOfAdministration", InSummary=true, Order=180)]
+    [FhirElement("routeOfAdministration", InSummary=true, Order=180 , FiveWs="")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent> RouteOfAdministration

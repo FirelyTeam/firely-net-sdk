@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to a concept (by class)
     /// </summary>
-    [FhirElement("concept", InSummary=true, Order=30)]
+    [FhirElement("concept", InSummary=true, Order=30 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Concept
     {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to a resource (by instance)
     /// </summary>
-    [FhirElement("reference", InSummary=true, Order=40)]
+    [FhirElement("reference", InSummary=true, Order=40 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.ResourceReference Reference
     {

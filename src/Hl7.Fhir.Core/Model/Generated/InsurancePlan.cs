@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of contact
       /// </summary>
-      [FhirElement("purpose", Order=40)]
+      [FhirElement("purpose", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Purpose
       {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A name associated with the contact
       /// </summary>
-      [FhirElement("name", Order=50)]
+      [FhirElement("name", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.HumanName Name
       {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact details (telephone, email, etc.)  for a contact
       /// </summary>
-      [FhirElement("telecom", Order=60)]
+      [FhirElement("telecom", Order=60 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Visiting or postal addresses for the contact
       /// </summary>
-      [FhirElement("address", Order=70)]
+      [FhirElement("address", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Address Address
       {
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of coverage
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What networks provide coverage
       /// </summary>
-      [FhirElement("network", Order=50)]
+      [FhirElement("network", Order=50 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// List of benefits
       /// </summary>
-      [FhirElement("benefit", Order=60)]
+      [FhirElement("benefit", Order=60 , FiveWs="")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.CoverageBenefitComponent> Benefit
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of benefit
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Referral requirements
       /// </summary>
-      [FhirElement("requirement", Order=50)]
+      [FhirElement("requirement", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString RequirementElement
       {
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit limits
       /// </summary>
-      [FhirElement("limit", Order=60)]
+      [FhirElement("limit", Order=60 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.LimitComponent> Limit
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum value allowed
       /// </summary>
-      [FhirElement("value", Order=40)]
+      [FhirElement("value", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Value
       {
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit limit details
       /// </summary>
-      [FhirElement("code", Order=50)]
+      [FhirElement("code", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Business Identifier for Product
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=40, FiveWs="FiveWs.identifier")]
+      [FhirElement("identifier", InSummary=true, Order=40 , FiveWs="FiveWs.identifier")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of plan
       /// </summary>
-      [FhirElement("type", Order=50)]
+      [FhirElement("type", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -764,7 +764,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where product applies
       /// </summary>
-      [FhirElement("coverageArea", InSummary=true, Order=60)]
+      [FhirElement("coverageArea", InSummary=true, Order=60 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Location")]
       [Cardinality(Min=0,Max=-1)]
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What networks provide coverage
       /// </summary>
-      [FhirElement("network", Order=70)]
+      [FhirElement("network", Order=70 , FiveWs="")]
       [CLSCompliant(false)]
       [References("Organization")]
       [Cardinality(Min=0,Max=-1)]
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Overall costs
       /// </summary>
-      [FhirElement("generalCost", Order=80)]
+      [FhirElement("generalCost", Order=80 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.GeneralCostComponent> GeneralCost
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific costs
       /// </summary>
-      [FhirElement("specificCost", Order=90)]
+      [FhirElement("specificCost", Order=90 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.SpecificCostComponent> SpecificCost
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of cost
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -978,7 +978,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of enrollees
       /// </summary>
-      [FhirElement("groupSize", Order=50)]
+      [FhirElement("groupSize", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt GroupSizeElement
       {
@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Cost value
       /// </summary>
-      [FhirElement("cost", Order=60)]
+      [FhirElement("cost", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Money Cost
       {
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional cost information
       /// </summary>
-      [FhirElement("comment", Order=70)]
+      [FhirElement("comment", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CommentElement
       {
@@ -1176,7 +1176,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// General category of benefit
       /// </summary>
-      [FhirElement("category", Order=40)]
+      [FhirElement("category", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
@@ -1190,7 +1190,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefits list
       /// </summary>
-      [FhirElement("benefit", Order=50)]
+      [FhirElement("benefit", Order=50 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.PlanBenefitComponent> Benefit
@@ -1309,7 +1309,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of specific benefit
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1323,7 +1323,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// List of the costs
       /// </summary>
-      [FhirElement("cost", Order=50)]
+      [FhirElement("cost", Order=50 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.InsurancePlan.CostComponent> Cost
@@ -1442,7 +1442,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of cost
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -1456,7 +1456,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// in-network | out-of-network | other
       /// </summary>
-      [FhirElement("applicability", Order=50)]
+      [FhirElement("applicability", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Applicability
       {
@@ -1469,7 +1469,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional information about the cost
       /// </summary>
-      [FhirElement("qualifiers", Order=60)]
+      [FhirElement("qualifiers", Order=60 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Qualifiers
@@ -1483,7 +1483,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The actual cost value
       /// </summary>
-      [FhirElement("value", Order=70)]
+      [FhirElement("value", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Value
       {
@@ -1606,7 +1606,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for Product
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1620,7 +1620,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1652,7 +1652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of product
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1666,7 +1666,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Official name
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120)]
+    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -1697,7 +1697,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Alternate names
     /// </summary>
-    [FhirElement("alias", Order=130)]
+    [FhirElement("alias", Order=130 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
@@ -1729,7 +1729,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the product is available
     /// </summary>
-    [FhirElement("period", Order=140)]
+    [FhirElement("period", Order=140 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1742,7 +1742,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plan issuer
     /// </summary>
-    [FhirElement("ownedBy", InSummary=true, Order=150)]
+    [FhirElement("ownedBy", InSummary=true, Order=150 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -1757,7 +1757,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Product administrator
     /// </summary>
-    [FhirElement("administeredBy", InSummary=true, Order=160)]
+    [FhirElement("administeredBy", InSummary=true, Order=160 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -1772,7 +1772,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where product applies
     /// </summary>
-    [FhirElement("coverageArea", InSummary=true, Order=170)]
+    [FhirElement("coverageArea", InSummary=true, Order=170 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
@@ -1788,7 +1788,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact for the product
     /// </summary>
-    [FhirElement("contact", Order=180)]
+    [FhirElement("contact", Order=180 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.InsurancePlan.ContactComponent> Contact
@@ -1802,7 +1802,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoint
     /// </summary>
-    [FhirElement("endpoint", Order=190)]
+    [FhirElement("endpoint", Order=190 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]
@@ -1818,7 +1818,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What networks are Included
     /// </summary>
-    [FhirElement("network", Order=200)]
+    [FhirElement("network", Order=200 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -1834,7 +1834,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coverage details
     /// </summary>
-    [FhirElement("coverage", Order=210)]
+    [FhirElement("coverage", Order=210 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.InsurancePlan.CoverageComponent> Coverage
@@ -1848,7 +1848,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plan details
     /// </summary>
-    [FhirElement("plan", Order=220)]
+    [FhirElement("plan", Order=220 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.InsurancePlan.PlanComponent> Plan

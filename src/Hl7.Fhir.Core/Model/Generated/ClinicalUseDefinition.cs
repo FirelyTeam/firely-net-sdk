@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The situation that is being documented as contraindicating against this item
       /// </summary>
-      [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40)]
+      [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseSymptomProcedure
       {
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of the disease or symptom for the contraindication
       /// </summary>
-      [FhirElement("diseaseStatus", InSummary=true, Order=50)]
+      [FhirElement("diseaseStatus", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseStatus
       {
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A comorbidity (concurrent condition) or coinfection
       /// </summary>
-      [FhirElement("comorbidity", InSummary=true, Order=60)]
+      [FhirElement("comorbidity", InSummary=true, Order=60 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The indication which this is a contraidication for
       /// </summary>
-      [FhirElement("indication", InSummary=true, Order=70)]
+      [FhirElement("indication", InSummary=true, Order=70 , FiveWs="")]
       [CLSCompliant(false)]
       [References("ClinicalUseDefinition")]
       [Cardinality(Min=0,Max=-1)]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Information about use of the product in relation to other therapies described as part of the contraindication
       /// </summary>
-      [FhirElement("otherTherapy", InSummary=true, Order=80)]
+      [FhirElement("otherTherapy", InSummary=true, Order=80 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
@@ -313,7 +313,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of relationship between the product indication/contraindication and another therapy
       /// </summary>
-      [FhirElement("relationshipType", InSummary=true, Order=40)]
+      [FhirElement("relationshipType", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept RelationshipType
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to a specific medication as part of an indication or contraindication
       /// </summary>
-      [FhirElement("therapy", InSummary=true, Order=50)]
+      [FhirElement("therapy", InSummary=true, Order=50 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Therapy
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The situation that is being documented as an indicaton for this item
       /// </summary>
-      [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40)]
+      [FhirElement("diseaseSymptomProcedure", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseSymptomProcedure
       {
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The status of the disease or symptom for the indication
       /// </summary>
-      [FhirElement("diseaseStatus", InSummary=true, Order=50)]
+      [FhirElement("diseaseStatus", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference DiseaseStatus
       {
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A comorbidity or coinfection as part of the indication
       /// </summary>
-      [FhirElement("comorbidity", InSummary=true, Order=60)]
+      [FhirElement("comorbidity", InSummary=true, Order=60 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableReference> Comorbidity
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The intended effect, aim or strategy to be achieved
       /// </summary>
-      [FhirElement("intendedEffect", InSummary=true, Order=70)]
+      [FhirElement("intendedEffect", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference IntendedEffect
       {
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timing or duration information
       /// </summary>
-      [FhirElement("duration", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("duration", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
@@ -514,7 +514,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An unwanted side effect or negative outcome of the subject of this resource when being used for this indication
       /// </summary>
-      [FhirElement("undesirableEffect", InSummary=true, Order=90)]
+      [FhirElement("undesirableEffect", InSummary=true, Order=90 , FiveWs="")]
       [CLSCompliant(false)]
       [References("ClinicalUseDefinition")]
       [Cardinality(Min=0,Max=-1)]
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The use of the medicinal product in relation to other therapies described as part of the indication
       /// </summary>
-      [FhirElement("otherTherapy", InSummary=true, Order=100)]
+      [FhirElement("otherTherapy", InSummary=true, Order=100 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.OtherTherapyComponent> OtherTherapy
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific medication, food, substance or laboratory test that interacts
       /// </summary>
-      [FhirElement("interactant", InSummary=true, Order=40)]
+      [FhirElement("interactant", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ClinicalUseDefinition.InteractantComponent> Interactant
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of the interaction e.g. drug-drug interaction, drug-lab test interaction
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=50)]
+      [FhirElement("type", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -721,7 +721,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The effect of the interaction, for example "reduced gastric absorption of primary medication"
       /// </summary>
-      [FhirElement("effect", InSummary=true, Order=60)]
+      [FhirElement("effect", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Effect
       {
@@ -734,7 +734,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The incidence of the interaction, e.g. theoretical, observed
       /// </summary>
-      [FhirElement("incidence", InSummary=true, Order=70)]
+      [FhirElement("incidence", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Incidence
       {
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actions for managing the interaction
       /// </summary>
-      [FhirElement("management", InSummary=true, Order=80)]
+      [FhirElement("management", InSummary=true, Order=80 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Management
@@ -893,7 +893,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific medication, food or laboratory test that interacts
       /// </summary>
-      [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("item", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [References("MedicinalProductDefinition","Medication","Substance","ObservationDefinition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.CodeableConcept))]
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The situation in which the undesirable effect may manifest
       /// </summary>
-      [FhirElement("symptomConditionEffect", InSummary=true, Order=40)]
+      [FhirElement("symptomConditionEffect", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference SymptomConditionEffect
       {
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// High level classification of the effect
       /// </summary>
-      [FhirElement("classification", InSummary=true, Order=50)]
+      [FhirElement("classification", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Classification
       {
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How often the effect is seen
       /// </summary>
-      [FhirElement("frequencyOfOccurrence", InSummary=true, Order=60)]
+      [FhirElement("frequencyOfOccurrence", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept FrequencyOfOccurrence
       {
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A textual definition of this warning, with formatting
       /// </summary>
-      [FhirElement("description", InSummary=true, Order=40)]
+      [FhirElement("description", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Description
       {
@@ -1172,7 +1172,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A coded or unformatted textual definition of this warning
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=50)]
+      [FhirElement("code", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -1277,7 +1277,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for this issue
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1291,7 +1291,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// indication | contraindication | interaction | undesirable-effect | warning
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100)]
+    [FhirElement("type", InSummary=true, Order=100 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1324,7 +1324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A categorisation of the issue, primarily for dividing warnings into subject heading areas such as "Pregnancy", "Overdose"
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The medication or procedure for which this is an indication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
+    [FhirElement("subject", InSummary=true, Order=120 , FiveWs="")]
     [CLSCompliant(false)]
     [References("MedicinalProductDefinition","Medication","ActivityDefinition","PlanDefinition","Device","DeviceDefinition","Substance")]
     [Cardinality(Min=0,Max=-1)]
@@ -1354,7 +1354,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this is a current issue or one that has been retired etc
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=130)]
+    [FhirElement("status", InSummary=true, Order=130 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
     {
@@ -1367,7 +1367,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifics for when this is a contraindication
     /// </summary>
-    [FhirElement("contraindication", InSummary=true, Order=140)]
+    [FhirElement("contraindication", InSummary=true, Order=140 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.ContraindicationComponent Contraindication
     {
@@ -1380,7 +1380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifics for when this is an indication
     /// </summary>
-    [FhirElement("indication", InSummary=true, Order=150)]
+    [FhirElement("indication", InSummary=true, Order=150 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.IndicationComponent Indication
     {
@@ -1393,7 +1393,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specifics for when this is an interaction
     /// </summary>
-    [FhirElement("interaction", InSummary=true, Order=160)]
+    [FhirElement("interaction", InSummary=true, Order=160 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.InteractionComponent Interaction
     {
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The population group to which this applies
     /// </summary>
-    [FhirElement("population", InSummary=true, Order=170)]
+    [FhirElement("population", InSummary=true, Order=170 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Group")]
     [Cardinality(Min=0,Max=-1)]
@@ -1422,7 +1422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A possible negative outcome from the use of this treatment
     /// </summary>
-    [FhirElement("undesirableEffect", InSummary=true, Order=180)]
+    [FhirElement("undesirableEffect", InSummary=true, Order=180 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.UndesirableEffectComponent UndesirableEffect
     {
@@ -1435,7 +1435,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Critical environmental, health or physical risks or hazards. For example 'Do not operate heavy machinery', 'May cause drowsiness'
     /// </summary>
-    [FhirElement("warning", InSummary=true, Order=190)]
+    [FhirElement("warning", InSummary=true, Order=190 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent Warning
     {

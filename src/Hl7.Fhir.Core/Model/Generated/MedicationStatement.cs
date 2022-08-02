@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfils plan, proposal or order
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
+    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
     [CLSCompliant(false)]
     [References("MedicationRequest","CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=110)]
+    [FhirElement("partOf", InSummary=true, Order=110 , FiveWs="")]
     [CLSCompliant(false)]
     [References("MedicationAdministration","MedicationDispense","MedicationStatement","Procedure","Observation")]
     [Cardinality(Min=0,Max=-1)]
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error | intended | stopped | on-hold | unknown | not-taken
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status
     /// </summary>
-    [FhirElement("statusReason", Order=130)]
+    [FhirElement("statusReason", Order=130 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> StatusReason
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of medication usage
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=140, FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=140 , FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What medication was taken
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
+    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was taking  the medication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=160, FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=160 , FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter / Episode associated with MedicationStatement
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=170)]
+    [FhirElement("context", InSummary=true, Order=170 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the medication is/was/will be taken
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
+    [FhirElement("effective", InSummary=true, Order=180, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the statement was asserted?
     /// </summary>
-    [FhirElement("dateAsserted", InSummary=true, Order=190, FiveWs="FiveWs.recorded")]
+    [FhirElement("dateAsserted", InSummary=true, Order=190 , FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
     {
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the taking of this medication
     /// </summary>
-    [FhirElement("informationSource", Order=200, FiveWs="FiveWs.source")]
+    [FhirElement("informationSource", Order=200 , FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [DataMember]
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional supporting information
     /// </summary>
-    [FhirElement("derivedFrom", Order=210)]
+    [FhirElement("derivedFrom", Order=210 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the medication is being/was taken
     /// </summary>
-    [FhirElement("reasonCode", Order=220, FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonCode", Order=220 , FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition or observation that supports why the medication is being/was taken
     /// </summary>
-    [FhirElement("reasonReference", Order=230, FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonReference", Order=230 , FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport")]
     [Cardinality(Min=0,Max=-1)]
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Further information about the statement
     /// </summary>
-    [FhirElement("note", Order=240)]
+    [FhirElement("note", Order=240 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details of how medication is/was taken or should be taken
     /// </summary>
-    [FhirElement("dosage", Order=250)]
+    [FhirElement("dosage", Order=250 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage> Dosage
