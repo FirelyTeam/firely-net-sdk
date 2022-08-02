@@ -648,7 +648,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Instance Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | requested | received | accepted | +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=150 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// unknown | proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=180 , FiveWs="FiveWs.class")]
+    [FhirElement("intent", InSummary=true, Order=180, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -861,7 +861,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// routine | urgent | asap | stat
     /// </summary>
-    [FhirElement("priority", Order=190 , FiveWs="FiveWs.grade")]
+    [FhirElement("priority", Order=190, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
@@ -893,7 +893,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Type
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=200 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("code", InSummary=true, Order=200, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What task is acting on
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=220 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("focus", InSummary=true, Order=220, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -952,7 +952,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Beneficiary of the Task
     /// </summary>
-    [FhirElement("for", InSummary=true, Order=230 , FiveWs="FiveWs.subject")]
+    [FhirElement("for", InSummary=true, Order=230, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -967,7 +967,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this task originated
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=240 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", InSummary=true, Order=240, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end time of execution
     /// </summary>
-    [FhirElement("executionPeriod", InSummary=true, Order=250 , FiveWs="FiveWs.done[x]")]
+    [FhirElement("executionPeriod", InSummary=true, Order=250, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period ExecutionPeriod
     {
@@ -995,7 +995,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Creation Date
     /// </summary>
-    [FhirElement("authoredOn", Order=260 , FiveWs="FiveWs.recorded")]
+    [FhirElement("authoredOn", Order=260, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
     {
@@ -1057,7 +1057,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is asking for task to be done
     /// </summary>
-    [FhirElement("requester", InSummary=true, Order=280 , FiveWs="FiveWs.author")]
+    [FhirElement("requester", InSummary=true, Order=280, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
@@ -1072,7 +1072,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Requested performer
     /// </summary>
-    [FhirElement("performerType", Order=290 , FiveWs="FiveWs.actor")]
+    [FhirElement("performerType", Order=290, FiveWs="FiveWs.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PerformerType
@@ -1086,7 +1086,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible individual
     /// </summary>
-    [FhirElement("owner", InSummary=true, Order=300 , FiveWs="FiveWs.actor")]
+    [FhirElement("owner", InSummary=true, Order=300, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization","CareTeam","HealthcareService","Patient","Device","RelatedPerson")]
     [DataMember]
@@ -1101,7 +1101,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where task occurs
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=310 , FiveWs="FiveWs.where[x]")]
+    [FhirElement("location", InSummary=true, Order=310, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why task is needed
     /// </summary>
-    [FhirElement("reasonCode", Order=320 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonCode", Order=320, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ReasonCode
     {
@@ -1129,7 +1129,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why task is needed
     /// </summary>
-    [FhirElement("reasonReference", Order=330 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonReference", Order=330, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]

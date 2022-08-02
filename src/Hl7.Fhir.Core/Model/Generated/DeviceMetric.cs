@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identity of metric, for example Heart Rate or PEEP Setting
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100 , FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// measurement | setting | calculation | unspecified
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=160 , FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]

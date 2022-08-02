@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this schedule is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High-level category
     /// </summary>
-    [FhirElement("serviceCategory", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
+    [FhirElement("serviceCategory", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific service
     /// </summary>
-    [FhirElement("serviceType", InSummary=true, Order=120 , FiveWs="FiveWs.class")]
+    [FhirElement("serviceType", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of specialty needed
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=130 , FiveWs="FiveWs.class")]
+    [FhirElement("specialty", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource(s) that availability information is being provided for
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=140 , FiveWs="FiveWs.subject")]
+    [FhirElement("actor", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Device","HealthcareService","Location")]
     [Cardinality(Min=1,Max=-1)]
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time covered by schedule
     /// </summary>
-    [FhirElement("planningHorizon", InSummary=true, Order=150 , FiveWs="FiveWs.planned")]
+    [FhirElement("planningHorizon", InSummary=true, Order=150, FiveWs="FiveWs.planned")]
     [DataMember]
     public Hl7.Fhir.Model.Period PlanningHorizon
     {

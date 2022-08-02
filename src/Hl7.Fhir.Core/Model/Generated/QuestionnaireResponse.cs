@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for this set of answers
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | amended | entered-in-error | stopped
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the questions
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date the answers were gathered
     /// </summary>
-    [FhirElement("authored", InSummary=true, Order=160 , FiveWs="FiveWs.recorded")]
+    [FhirElement("authored", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredElement
     {
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person who received and recorded the answers
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=170 , FiveWs="FiveWs.author")]
+    [FhirElement("author", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Device","Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [DataMember]
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who answered the questions
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=180 , FiveWs="FiveWs.source")]
+    [FhirElement("source", InSummary=true, Order=180, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]

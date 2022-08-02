@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who attested the composition
       /// </summary>
-      [FhirElement("party", Order=60 , FiveWs="FiveWs.witness")]
+      [FhirElement("party", Order=60, FiveWs="FiveWs.witness")]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Practitioner","PractitionerRole","Organization")]
       [DataMember]
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who and/or what authored the section
       /// </summary>
-      [FhirElement("author", Order=60 , FiveWs="FiveWs.author")]
+      [FhirElement("author", Order=60, FiveWs="FiveWs.author")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Device","Patient","RelatedPerson","Organization")]
       [Cardinality(Min=0,Max=-1)]
@@ -795,7 +795,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// working | snapshot | changes
       /// </summary>
-      [FhirElement("mode", Order=90 , FiveWs="FiveWs.class")]
+      [FhirElement("mode", Order=90, FiveWs="FiveWs.class")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version-independent identifier for the Composition
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preliminary | final | amended | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of composition (LOINC if possible)
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Categorization of Composition
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120 , FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1121,7 +1121,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what the composition is about
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -1136,7 +1136,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context of the Composition
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=140 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", InSummary=true, Order=140, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1151,7 +1151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition editing time
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150 , FiveWs="FiveWs.done[x]")]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -1183,7 +1183,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what authored the composition
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=160 , FiveWs="FiveWs.author")]
+    [FhirElement("author", InSummary=true, Order=160, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device","Patient","RelatedPerson","Organization")]
     [Cardinality(Min=1,Max=-1)]

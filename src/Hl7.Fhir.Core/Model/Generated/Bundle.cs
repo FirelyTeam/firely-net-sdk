@@ -1375,7 +1375,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Persistent identifier for the bundle
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=50 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1388,7 +1388,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// document | message | transaction | transaction-response | batch | batch-response | history | searchset | collection
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=60 , FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1421,7 +1421,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the bundle was assembled
     /// </summary>
-    [FhirElement("timestamp", InSummary=true, Order=70 , FiveWs="FiveWs.init")]
+    [FhirElement("timestamp", InSummary=true, Order=70, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant TimestampElement
     {

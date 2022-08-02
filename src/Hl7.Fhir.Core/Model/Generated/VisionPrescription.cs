@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for vision prescription
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who prescription is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120 , FiveWs="FiveWs.subject")]
+    [FhirElement("patient", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Created during encounter / admission / stay
     /// </summary>
-    [FhirElement("encounter", Order=130 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", Order=130, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -974,7 +974,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When prescription was authorized
     /// </summary>
-    [FhirElement("dateWritten", InSummary=true, Order=140 , FiveWs="FiveWs.recorded")]
+    [FhirElement("dateWritten", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authorized the vision prescription
     /// </summary>
-    [FhirElement("prescriber", InSummary=true, Order=150 , FiveWs="FiveWs.author")]
+    [FhirElement("prescriber", InSummary=true, Order=150, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=1,Max=1)]

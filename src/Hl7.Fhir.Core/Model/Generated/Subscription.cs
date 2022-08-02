@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requested | active | error | off
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=90 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting)
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=100 , FiveWs="FiveWs.subject")]
+    [FhirElement("contact", InSummary=true, Order=100, FiveWs="FiveWs.subject")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When to automatically delete the subscription
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=110 , FiveWs="FiveWs.done[x]")]
+    [FhirElement("end", InSummary=true, Order=110, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of why this subscription was created
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=120 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reason", InSummary=true, Order=120, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ReasonElement

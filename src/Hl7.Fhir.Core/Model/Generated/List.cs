@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | retired | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// working | snapshot | changes
     /// </summary>
-    [FhirElement("mode", InSummary=true, IsModifier=true, Order=110 , FiveWs="FiveWs.class")]
+    [FhirElement("mode", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the purpose of this list is
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If all resources have the same subject
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context in which list created
     /// </summary>
-    [FhirElement("encounter", Order=150 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", Order=150, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the list was prepared
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160 , FiveWs="FiveWs.recorded")]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what defined the list contents (aka Author)
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=170 , FiveWs="FiveWs.author")]
+    [FhirElement("source", InSummary=true, Order=170, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Patient","Device")]
     [DataMember]

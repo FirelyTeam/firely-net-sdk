@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | cancelled | on-hold | completed | entered-in-error | stopped | declined | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What medication was supplied
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.what[x]")]
+    [FhirElement("medication", InSummary=true, Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.what[x]")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the dispense is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information that supports the dispensing of the medication
     /// </summary>
-    [FhirElement("supportingInformation", Order=170 , FiveWs="FiveWs.context")]
+    [FhirElement("supportingInformation", Order=170, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
