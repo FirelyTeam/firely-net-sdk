@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// author | editor | reviewer | endorser
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30)]
+    [FhirElement("type", InSummary=true, Order=30 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who contributed the content
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=40)]
+    [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details of the contributor
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=50)]
+    [FhirElement("contact", InSummary=true, Order=50 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact

@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=110)]
+    [FhirElement("created", Order=110 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target
     /// </summary>
-    [FhirElement("insurer", Order=120)]
+    [FhirElement("insurer", Order=120 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=130, FiveWs="FiveWs.actor")]
+    [FhirElement("provider", Order=130 , FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject to be enrolled
     /// </summary>
-    [FhirElement("candidate", Order=140, FiveWs="FiveWs.actor")]
+    [FhirElement("candidate", Order=140 , FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance information
     /// </summary>
-    [FhirElement("coverage", Order=150)]
+    [FhirElement("coverage", Order=150 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Coverage")]
     [DataMember]

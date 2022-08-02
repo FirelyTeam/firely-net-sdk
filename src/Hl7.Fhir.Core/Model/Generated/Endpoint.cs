@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies this endpoint across multiple systems
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | error | off | entered-in-error | test
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Protocol/Profile/Standard to be used with this endpoint connection
     /// </summary>
-    [FhirElement("connectionType", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [FhirElement("connectionType", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ConnectionType
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name that this endpoint can be identified by
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [FhirElement("name", InSummary=true, Order=120 , FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that manages this endpoint (might not be the organization that exposes the endpoint)
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=130)]
+    [FhirElement("managingOrganization", InSummary=true, Order=130 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for source (e.g. troubleshooting)
     /// </summary>
-    [FhirElement("contact", Order=140)]
+    [FhirElement("contact", Order=140 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval the endpoint is expected to be operational
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=150, FiveWs="FiveWs.done[x]")]
+    [FhirElement("period", InSummary=true, Order=150 , FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of content that may be used at this endpoint (e.g. XDS Discharge summaries)
     /// </summary>
-    [FhirElement("payloadType", InSummary=true, Order=160)]
+    [FhirElement("payloadType", InSummary=true, Order=160 , FiveWs="")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PayloadType
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
     /// </summary>
-    [FhirElement("payloadMimeType", InSummary=true, Order=170)]
+    [FhirElement("payloadMimeType", InSummary=true, Order=170 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The technical base address for connecting to this endpoint
     /// </summary>
-    [FhirElement("address", InSummary=true, Order=180)]
+    [FhirElement("address", InSummary=true, Order=180 , FiveWs="")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUrl AddressElement
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Usage depends on the channel type
     /// </summary>
-    [FhirElement("header", Order=190)]
+    [FhirElement("header", Order=190 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> HeaderElement

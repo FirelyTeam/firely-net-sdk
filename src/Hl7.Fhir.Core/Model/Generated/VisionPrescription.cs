@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product to be supplied
       /// </summary>
-      [FhirElement("product", InSummary=true, Order=40)]
+      [FhirElement("product", InSummary=true, Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Product
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// right | left
       /// </summary>
-      [FhirElement("eye", InSummary=true, Order=50)]
+      [FhirElement("eye", InSummary=true, Order=50 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Power of the lens
       /// </summary>
-      [FhirElement("sphere", Order=60)]
+      [FhirElement("sphere", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal SphereElement
       {
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens power for astigmatism
       /// </summary>
-      [FhirElement("cylinder", Order=70)]
+      [FhirElement("cylinder", Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal CylinderElement
       {
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens meridian which contain no power for astigmatism
       /// </summary>
-      [FhirElement("axis", Order=80)]
+      [FhirElement("axis", Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Integer AxisElement
       {
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Eye alignment compensation
       /// </summary>
-      [FhirElement("prism", Order=90)]
+      [FhirElement("prism", Order=90 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.VisionPrescription.PrismComponent> Prism
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Added power for multifocal levels
       /// </summary>
-      [FhirElement("add", Order=100)]
+      [FhirElement("add", Order=100 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal AddElement
       {
@@ -312,7 +312,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact lens power
       /// </summary>
-      [FhirElement("power", Order=110)]
+      [FhirElement("power", Order=110 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal PowerElement
       {
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact lens back curvature
       /// </summary>
-      [FhirElement("backCurve", Order=120)]
+      [FhirElement("backCurve", Order=120 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal BackCurveElement
       {
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Contact lens diameter
       /// </summary>
-      [FhirElement("diameter", Order=130)]
+      [FhirElement("diameter", Order=130 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal DiameterElement
       {
@@ -405,7 +405,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Lens wear duration
       /// </summary>
-      [FhirElement("duration", Order=140)]
+      [FhirElement("duration", Order=140 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Duration
       {
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Color required
       /// </summary>
-      [FhirElement("color", Order=150)]
+      [FhirElement("color", Order=150 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ColorElement
       {
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Brand required
       /// </summary>
-      [FhirElement("brand", Order=160)]
+      [FhirElement("brand", Order=160 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString BrandElement
       {
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Notes for coatings
       /// </summary>
-      [FhirElement("note", Order=170)]
+      [FhirElement("note", Order=170 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of adjustment
       /// </summary>
-      [FhirElement("amount", Order=40)]
+      [FhirElement("amount", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal AmountElement
@@ -739,7 +739,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// up | down | in | out
       /// </summary>
-      [FhirElement("base", Order=50)]
+      [FhirElement("base", Order=50 , FiveWs="")]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for vision prescription
     /// </summary>
-    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -911,7 +911,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response creation date
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=110)]
+    [FhirElement("created", InSummary=true, Order=110 , FiveWs="")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who prescription is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120, FiveWs="FiveWs.subject")]
+    [FhirElement("patient", InSummary=true, Order=120 , FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Created during encounter / admission / stay
     /// </summary>
-    [FhirElement("encounter", Order=130, FiveWs="FiveWs.context")]
+    [FhirElement("encounter", Order=130 , FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -974,7 +974,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When prescription was authorized
     /// </summary>
-    [FhirElement("dateWritten", InSummary=true, Order=140, FiveWs="FiveWs.recorded")]
+    [FhirElement("dateWritten", InSummary=true, Order=140 , FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authorized the vision prescription
     /// </summary>
-    [FhirElement("prescriber", InSummary=true, Order=150, FiveWs="FiveWs.author")]
+    [FhirElement("prescriber", InSummary=true, Order=150 , FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=1,Max=1)]
@@ -1022,7 +1022,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vision lens authorization
     /// </summary>
-    [FhirElement("lensSpecification", InSummary=true, Order=160)]
+    [FhirElement("lensSpecification", InSummary=true, Order=160 , FiveWs="")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> LensSpecification

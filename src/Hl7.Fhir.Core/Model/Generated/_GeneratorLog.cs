@@ -68,15 +68,6 @@
   // Used in model class (resource): Composition.status
   // Used in model class (resource): DocumentReference.docStatus
 
-// Generated Shared Enumeration: ConceptMapEquivalence (http://hl7.org/fhir/ValueSet/concept-map-equivalence)
-  // Used in model class (resource): ConceptMap.group.element.target.equivalence
-  // Used in model class (type): Extension.value[x]
-
-// Generated Shared Enumeration: DataAbsentReason (http://hl7.org/fhir/ValueSet/data-absent-reason)
-  // Used in model class (resource): Observation.dataAbsentReason
-  // Used in model class (resource): Observation.component.dataAbsentReason
-  // Used in model class (type): Extension.value[x]
-
 // Generated Shared Enumeration: DaysOfWeek (http://hl7.org/fhir/ValueSet/days-of-week)
   // Used in model class (type): Timing.repeat.dayOfWeek
   // Used in model class (resource): HealthcareService.availableTime.daysOfWeek
@@ -105,13 +96,13 @@
   // Used in model class (resource): Communication.status
   // Used in model class (resource): Media.status
   // Used in model class (resource): Procedure.status
+  // Used in model class (resource): Event.status
 
 // Generated Shared Enumeration: FHIRVersion (http://hl7.org/fhir/ValueSet/FHIR-version)
   // Used in model class (resource): CapabilityStatement.fhirVersion
   // Used in model class (resource): ImplementationGuide.fhirVersion
   // Used in model class (resource): ImplementationGuide.definition.resource.fhirVersion
   // Used in model class (resource): StructureDefinition.fhirVersion
-  // Used in model class (type): Extension.value[x]
 
 // Deferred generation of Shared Enumeration (will be generated in common): FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
   // Used in model class (resource): CodeSystem.filter.operator
@@ -145,10 +136,6 @@
 // Generated Shared Enumeration: MeasureImprovementNotation (http://hl7.org/fhir/ValueSet/measure-improvement-notation)
   // Used in model class (resource): Measure.improvementNotation
   // Used in model class (resource): MeasureReport.improvementNotation
-
-// Generated Shared Enumeration: messageheader_response_request (http://hl7.org/fhir/ValueSet/messageheader-response-request)
-  // Used in model class (resource): MessageDefinition.responseRequired
-  // Used in model class (type): Extension.value[x]
 
 // Generated Shared Enumeration: NoteType (http://hl7.org/fhir/ValueSet/note-type)
   // Used in model class (resource): ClaimResponse.processNote.type
@@ -200,6 +187,8 @@
   // Used in model class (resource): TerminologyCapabilities.status
   // Used in model class (resource): TestScript.status
   // Used in model class (resource): ValueSet.status
+  // Used in model class (resource): Definition.status
+  // Used in model class (resource): MetadataResource.status
 
 // Generated Shared Enumeration: ClaimProcessingCodes (http://hl7.org/fhir/ValueSet/remittance-outcome)
   // Used in model class (resource): ClaimResponse.outcome
@@ -214,6 +203,7 @@
   // Used in model class (resource): NutritionOrder.intent
   // Used in model class (resource): RequestGroup.intent
   // Used in model class (resource): ServiceRequest.intent
+  // Used in model class (resource): Request.intent
 
 // Generated Shared Enumeration: RequestPriority (http://hl7.org/fhir/ValueSet/request-priority)
   // Used in model class (resource): ActivityDefinition.priority
@@ -227,6 +217,7 @@
   // Used in model class (resource): ServiceRequest.priority
   // Used in model class (resource): SupplyRequest.priority
   // Used in model class (resource): Task.priority
+  // Used in model class (resource): Request.priority
 
 // Generated Shared Enumeration: RequestStatus (http://hl7.org/fhir/ValueSet/request-status)
   // Used in model class (resource): CarePlan.status
@@ -235,6 +226,7 @@
   // Used in model class (resource): NutritionOrder.status
   // Used in model class (resource): RequestGroup.status
   // Used in model class (resource): ServiceRequest.status
+  // Used in model class (resource): Request.status
 
 // Generated Shared Enumeration: ResourceType (http://hl7.org/fhir/ValueSet/resource-types)
   // Used in model class (type): Reference.type
@@ -249,7 +241,6 @@
   // Used in model class (resource): Questionnaire.subjectType
   // Used in model class (resource): SearchParameter.base
   // Used in model class (resource): SearchParameter.target
-  // Used in model class (type): Extension.value[x]
 
 // Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type

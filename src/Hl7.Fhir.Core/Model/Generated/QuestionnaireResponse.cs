@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item from Questionnaire
       /// </summary>
-      [FhirElement("linkId", Order=40)]
+      [FhirElement("linkId", Order=40 , FiveWs="")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString LinkIdElement
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ElementDefinition - details for the item
       /// </summary>
-      [FhirElement("definition", Order=50)]
+      [FhirElement("definition", Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri DefinitionElement
       {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for group or question text
       /// </summary>
-      [FhirElement("text", Order=60)]
+      [FhirElement("text", Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TextElement
       {
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The response(s) to the question
       /// </summary>
-      [FhirElement("answer", Order=70)]
+      [FhirElement("answer", Order=70 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested questionnaire response items
       /// </summary>
-      [FhirElement("item", Order=80)]
+      [FhirElement("item", Order=80 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Single-valued answer to the question
       /// </summary>
-      [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested groups and questions
       /// </summary>
-      [FhirElement("item", Order=50)]
+      [FhirElement("item", Order=50 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id for this set of answers
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this QuestionnaireResponse
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100)]
+    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of this action
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=110)]
+    [FhirElement("partOf", InSummary=true, Order=110 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Observation","Procedure")]
     [Cardinality(Min=0,Max=-1)]
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Form being answered
     /// </summary>
-    [FhirElement("questionnaire", InSummary=true, Order=120)]
+    [FhirElement("questionnaire", InSummary=true, Order=120 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Canonical QuestionnaireElement
     {
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | amended | entered-in-error | stopped
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130 , FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -596,7 +596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the questions
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=140 , FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="FiveWs.context")]
+    [FhirElement("encounter", InSummary=true, Order=150 , FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date the answers were gathered
     /// </summary>
-    [FhirElement("authored", InSummary=true, Order=160, FiveWs="FiveWs.recorded")]
+    [FhirElement("authored", InSummary=true, Order=160 , FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredElement
     {
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person who received and recorded the answers
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=170, FiveWs="FiveWs.author")]
+    [FhirElement("author", InSummary=true, Order=170 , FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Device","Practitioner","PractitionerRole","Patient","RelatedPerson","Organization")]
     [DataMember]
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The person who answered the questions
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=180, FiveWs="FiveWs.source")]
+    [FhirElement("source", InSummary=true, Order=180 , FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson")]
     [DataMember]
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Groups and questions
     /// </summary>
-    [FhirElement("item", Order=190)]
+    [FhirElement("item", Order=190 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item

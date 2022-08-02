@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// MimeType of the binary content
     /// </summary>
-    [FhirElement("contentType", InSummary=true, Order=50)]
+    [FhirElement("contentType", InSummary=true, Order=50 , FiveWs="")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code ContentTypeElement
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies another resource to use as proxy when enforcing access control
     /// </summary>
-    [FhirElement("securityContext", InSummary=true, Order=60)]
+    [FhirElement("securityContext", InSummary=true, Order=60 , FiveWs="")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual content
     /// </summary>
-    [FhirElement("data", Order=70)]
+    [FhirElement("data", Order=70 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary DataElement
     {

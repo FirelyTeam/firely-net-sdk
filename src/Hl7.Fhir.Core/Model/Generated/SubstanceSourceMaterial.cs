@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// This element is capturing information about the fraction of a plant part, or human plasma for fractionation
       /// </summary>
-      [FhirElement("fraction", InSummary=true, Order=40)]
+      [FhirElement("fraction", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString FractionElement
       {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The specific type of the material constituting the component. For Herbal preparations the particulars of the extracts (liquid/dry) is described in Specified Substance Group 1
       /// </summary>
-      [FhirElement("materialType", InSummary=true, Order=50)]
+      [FhirElement("materialType", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept MaterialType
       {
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The family of an organism shall be specified
       /// </summary>
-      [FhirElement("family", InSummary=true, Order=40)]
+      [FhirElement("family", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Family
       {
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The genus of an organism shall be specified; refers to the Latin epithet of the genus element of the plant/animal scientific name; it is present in names for genera, species and infraspecies
       /// </summary>
-      [FhirElement("genus", InSummary=true, Order=50)]
+      [FhirElement("genus", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Genus
       {
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The species of an organism shall be specified; refers to the Latin epithet of the species of the plant/animal; it is present in names for species and infraspecies
       /// </summary>
-      [FhirElement("species", InSummary=true, Order=60)]
+      [FhirElement("species", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Species
       {
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Intraspecific type of an organism shall be specified
       /// </summary>
-      [FhirElement("intraspecificType", InSummary=true, Order=70)]
+      [FhirElement("intraspecificType", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept IntraspecificType
       {
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The intraspecific description of an organism shall be specified based on a controlled vocabulary. For Influenza Vaccine, the intraspecific description shall contain the syntax of the antigen in line with the WHO convention
       /// </summary>
-      [FhirElement("intraspecificDescription", InSummary=true, Order=80)]
+      [FhirElement("intraspecificDescription", InSummary=true, Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString IntraspecificDescriptionElement
       {
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 4.9.13.6.1 Author type (Conditional)
       /// </summary>
-      [FhirElement("author", InSummary=true, Order=90)]
+      [FhirElement("author", InSummary=true, Order=90 , FiveWs="")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.SubstanceSourceMaterial.AuthorComponent> Author
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 4.9.13.8.1 Hybrid species maternal organism ID (Optional)
       /// </summary>
-      [FhirElement("hybrid", InSummary=true, Order=100)]
+      [FhirElement("hybrid", InSummary=true, Order=100 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceSourceMaterial.HybridComponent Hybrid
       {
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// 4.9.13.7.1 Kingdom (Conditional)
       /// </summary>
-      [FhirElement("organismGeneral", InSummary=true, Order=110)]
+      [FhirElement("organismGeneral", InSummary=true, Order=110 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismGeneralComponent OrganismGeneral
       {
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of author of an organism species shall be specified. The parenthetical author of an organism species refers to the first author who published the plant/animal name (of any rank). The primary author of an organism species refers to the first author(s), who validly published the plant/animal name
       /// </summary>
-      [FhirElement("authorType", InSummary=true, Order=40)]
+      [FhirElement("authorType", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept AuthorType
       {
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The author of an organism species shall be specified. The author year of an organism shall also be specified when applicable; refers to the year in which the first author(s) published the infraspecific plant/animal name (of any rank)
       /// </summary>
-      [FhirElement("authorDescription", InSummary=true, Order=50)]
+      [FhirElement("authorDescription", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AuthorDescriptionElement
       {
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier of the maternal species constituting the hybrid organism shall be specified based on a controlled vocabulary. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
       /// </summary>
-      [FhirElement("maternalOrganismId", InSummary=true, Order=40)]
+      [FhirElement("maternalOrganismId", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MaternalOrganismIdElement
       {
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the maternal species constituting the hybrid organism shall be specified. For plants, the parents aren’t always known, and it is unlikely that it will be known which is maternal and which is paternal
       /// </summary>
-      [FhirElement("maternalOrganismName", InSummary=true, Order=50)]
+      [FhirElement("maternalOrganismName", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MaternalOrganismNameElement
       {
@@ -713,7 +713,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identifier of the paternal species constituting the hybrid organism shall be specified based on a controlled vocabulary
       /// </summary>
-      [FhirElement("paternalOrganismId", InSummary=true, Order=60)]
+      [FhirElement("paternalOrganismId", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString PaternalOrganismIdElement
       {
@@ -744,7 +744,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The name of the paternal species constituting the hybrid organism shall be specified
       /// </summary>
-      [FhirElement("paternalOrganismName", InSummary=true, Order=70)]
+      [FhirElement("paternalOrganismName", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString PaternalOrganismNameElement
       {
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The hybrid type of an organism shall be specified
       /// </summary>
-      [FhirElement("hybridType", InSummary=true, Order=80)]
+      [FhirElement("hybridType", InSummary=true, Order=80 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept HybridType
       {
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The kingdom of an organism shall be specified
       /// </summary>
-      [FhirElement("kingdom", InSummary=true, Order=40)]
+      [FhirElement("kingdom", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Kingdom
       {
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The phylum of an organism shall be specified
       /// </summary>
-      [FhirElement("phylum", InSummary=true, Order=50)]
+      [FhirElement("phylum", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Phylum
       {
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The class of an organism shall be specified
       /// </summary>
-      [FhirElement("class", InSummary=true, Order=60)]
+      [FhirElement("class", InSummary=true, Order=60 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Class
       {
@@ -959,7 +959,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The order of an organism shall be specified,
       /// </summary>
-      [FhirElement("order", InSummary=true, Order=70)]
+      [FhirElement("order", InSummary=true, Order=70 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Order
       {
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity of anatomical origin of source material within an organism
       /// </summary>
-      [FhirElement("part", InSummary=true, Order=40)]
+      [FhirElement("part", InSummary=true, Order=40 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Part
       {
@@ -1108,7 +1108,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The detailed anatomic location when the part can be extracted from different anatomical locations of the organism. Multiple alternative locations may apply
       /// </summary>
-      [FhirElement("partLocation", InSummary=true, Order=50)]
+      [FhirElement("partLocation", InSummary=true, Order=50 , FiveWs="")]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept PartLocation
       {
@@ -1213,7 +1213,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General high level classification of the source material specific to the origin of the material
     /// </summary>
-    [FhirElement("sourceMaterialClass", InSummary=true, Order=90)]
+    [FhirElement("sourceMaterialClass", InSummary=true, Order=90 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SourceMaterialClass
     {
@@ -1226,7 +1226,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of the source material shall be specified based on a controlled vocabulary. For vaccines, this subclause refers to the class of infectious agent
     /// </summary>
-    [FhirElement("sourceMaterialType", InSummary=true, Order=100)]
+    [FhirElement("sourceMaterialType", InSummary=true, Order=100 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SourceMaterialType
     {
@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The state of the source material when extracted
     /// </summary>
-    [FhirElement("sourceMaterialState", InSummary=true, Order=110)]
+    [FhirElement("sourceMaterialState", InSummary=true, Order=110 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SourceMaterialState
     {
@@ -1252,7 +1252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The unique identifier associated with the source material parent organism shall be specified
     /// </summary>
-    [FhirElement("organismId", InSummary=true, Order=120)]
+    [FhirElement("organismId", InSummary=true, Order=120 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier OrganismId
     {
@@ -1265,7 +1265,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The organism accepted Scientific name shall be provided based on the organism taxonomy
     /// </summary>
-    [FhirElement("organismName", InSummary=true, Order=130)]
+    [FhirElement("organismName", InSummary=true, Order=130 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString OrganismNameElement
     {
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parent of the herbal drug Ginkgo biloba, Leaf is the substance ID of the substance (fresh) of Ginkgo biloba L. or Ginkgo biloba L. (Whole plant)
     /// </summary>
-    [FhirElement("parentSubstanceId", InSummary=true, Order=140)]
+    [FhirElement("parentSubstanceId", InSummary=true, Order=140 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> ParentSubstanceId
@@ -1310,7 +1310,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parent substance of the Herbal Drug, or Herbal preparation
     /// </summary>
-    [FhirElement("parentSubstanceName", InSummary=true, Order=150)]
+    [FhirElement("parentSubstanceName", InSummary=true, Order=150 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ParentSubstanceNameElement
@@ -1342,7 +1342,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The country where the plant material is harvested or the countries where the plasma is sourced from as laid down in accordance with the Plasma Master File. For “Plasma-derived substances” the attribute country of origin provides information about the countries used for the manufacturing of the Cryopoor plama or Crioprecipitate
     /// </summary>
-    [FhirElement("countryOfOrigin", InSummary=true, Order=160)]
+    [FhirElement("countryOfOrigin", InSummary=true, Order=160 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> CountryOfOrigin
@@ -1356,7 +1356,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The place/region where the plant is harvested or the places/regions where the animal source material has its habitat
     /// </summary>
-    [FhirElement("geographicalLocation", InSummary=true, Order=170)]
+    [FhirElement("geographicalLocation", InSummary=true, Order=170 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> GeographicalLocationElement
@@ -1388,7 +1388,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Stage of life for animals, plants, insects and microorganisms. This information shall be provided only when the substance is significantly different in these stages (e.g. foetal bovine serum)
     /// </summary>
-    [FhirElement("developmentStage", InSummary=true, Order=180)]
+    [FhirElement("developmentStage", InSummary=true, Order=180 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DevelopmentStage
     {
@@ -1401,7 +1401,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Many complex materials are fractions of parts of plants, animals, or minerals. Fraction elements are often necessary to define both Substances and Specified Group 1 Substances. For substances derived from Plants, fraction information will be captured at the Substance information level ( . Oils, Juices and Exudates). Additional information for Extracts, such as extraction solvent composition, will be captured at the Specified Substance Group 1 information level. For plasma-derived products fraction information will be captured at the Substance and the Specified Substance Group 1 levels
     /// </summary>
-    [FhirElement("fractionDescription", InSummary=true, Order=190)]
+    [FhirElement("fractionDescription", InSummary=true, Order=190 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.FractionDescriptionComponent> FractionDescription
@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This subclause describes the organism which the substance is derived from. For vaccines, the parent organism shall be specified based on these subclause elements. As an example, full taxonomy will be described for the Substance Name: ., Leaf
     /// </summary>
-    [FhirElement("organism", InSummary=true, Order=200)]
+    [FhirElement("organism", InSummary=true, Order=200 , FiveWs="")]
     [DataMember]
     public Hl7.Fhir.Model.SubstanceSourceMaterial.OrganismComponent Organism
     {
@@ -1428,7 +1428,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// To do
     /// </summary>
-    [FhirElement("partDescription", InSummary=true, Order=210)]
+    [FhirElement("partDescription", InSummary=true, Order=210 , FiveWs="")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.SubstanceSourceMaterial.PartDescriptionComponent> PartDescription
