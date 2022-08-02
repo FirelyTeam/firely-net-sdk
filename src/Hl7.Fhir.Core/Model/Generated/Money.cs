@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("SC#o TomC) and PrC-ncipe dobra")]
+      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("São Tomé and Príncipe dobra")]
       STN,
       /// <summary>
       /// MISSING DESCRIPTION
