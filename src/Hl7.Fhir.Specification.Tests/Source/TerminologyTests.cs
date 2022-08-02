@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
+using static Hl7.Fhir.Model.ConceptMap;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
