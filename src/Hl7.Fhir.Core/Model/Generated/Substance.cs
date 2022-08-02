@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier of the package/container
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("identifier", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier Identifier
       {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When no longer valid to use
       /// </summary>
-      [FhirElement("expiry", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("expiry", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime ExpiryElement
       {
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of substance in the package
       /// </summary>
-      [FhirElement("quantity", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("quantity", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Quantity
       {
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Optional amount (concentration)
       /// </summary>
-      [FhirElement("quantity", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("quantity", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Ratio Quantity
       {
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A component of the substance
       /// </summary>
-      [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("substance", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Substance")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> StatusElement
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What class/type of substance this is
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What substance this is
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=120 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Textual description of the substance, comments
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this describes a specific package/container of the substance
     /// </summary>
-    [FhirElement("instance", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("instance", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Substance.InstanceComponent> Instance
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition information about the substance
     /// </summary>
-    [FhirElement("ingredient", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("ingredient", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Substance.IngredientComponent> Ingredient

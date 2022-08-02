@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Mime type of the content, with charset etc.
     /// </summary>
-    [FhirElement("contentType", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("contentType", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Code ContentTypeElement
     {
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human language of the content (BCP-47)
     /// </summary>
-    [FhirElement("language", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("language", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Code LanguageElement
     {
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data inline, base64ed
     /// </summary>
-    [FhirElement("data", Order=50 , FiveWs="")]
+    [FhirElement("data", Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary DataElement
     {
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Uri where the data can be found
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=60 , FiveWs="")]
+    [FhirElement("url", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUrl UrlElement
     {
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of bytes of content (if url provided)
     /// </summary>
-    [FhirElement("size", InSummary=true, Order=70 , FiveWs="")]
+    [FhirElement("size", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt SizeElement
     {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Hash of the data (sha-1, base64ed)
     /// </summary>
-    [FhirElement("hash", InSummary=true, Order=80 , FiveWs="")]
+    [FhirElement("hash", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.Base64Binary HashElement
     {
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Label to display in place of the data
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date attachment was first created
     /// </summary>
-    [FhirElement("creation", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("creation", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreationElement
     {

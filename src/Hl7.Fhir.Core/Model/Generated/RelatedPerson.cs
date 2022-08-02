@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The language which can be used to communicate with the patient about his or her health
       /// </summary>
-      [FhirElement("language", Order=40 , FiveWs="")]
+      [FhirElement("language", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Language
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Language preference indicator
       /// </summary>
-      [FhirElement("preferred", Order=50 , FiveWs="")]
+      [FhirElement("preferred", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean PreferredElement
       {
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this related person's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient this person is related to
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("patient", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The nature of the relationship
     /// </summary>
-    [FhirElement("relationship", InSummary=true, Order=120 , FiveWs="FiveWs.class")]
+    [FhirElement("relationship", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Relationship
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name associated with the person
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the person
     /// </summary>
-    [FhirElement("telecom", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("telecom", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown
     /// </summary>
-    [FhirElement("gender", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("gender", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date on which the related person was born
     /// </summary>
-    [FhirElement("birthDate", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("birthDate", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Date BirthDateElement
     {
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Address where the related person can be contacted or visited
     /// </summary>
-    [FhirElement("address", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("address", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Address> Address
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the person
     /// </summary>
-    [FhirElement("photo", Order=180 , FiveWs="")]
+    [FhirElement("photo", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Photo
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time that this relationship is considered valid
     /// </summary>
-    [FhirElement("period", Order=190 , FiveWs="FiveWs.done[x]")]
+    [FhirElement("period", Order=190, FiveWs="FiveWs.done[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A language which may be used to communicate with about the patient's health
     /// </summary>
-    [FhirElement("communication", Order=200 , FiveWs="")]
+    [FhirElement("communication", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedPerson.CommunicationComponent> Communication

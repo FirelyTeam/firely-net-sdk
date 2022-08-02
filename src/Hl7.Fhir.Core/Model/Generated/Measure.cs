@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Meaning of the group
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Summary description
       /// </summary>
-      [FhirElement("description", Order=50 , FiveWs="")]
+      [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Population criteria
       /// </summary>
-      [FhirElement("population", Order=60 , FiveWs="")]
+      [FhirElement("population", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Measure.PopulationComponent> Population
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratifier criteria for the measure
       /// </summary>
-      [FhirElement("stratifier", Order=70 , FiveWs="")]
+      [FhirElement("stratifier", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Measure.StratifierComponent> Stratifier
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// initial-population | numerator | numerator-exclusion | denominator | denominator-exclusion | denominator-exception | measure-population | measure-population-exclusion | measure-observation
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The human readable description of this population criteria
       /// </summary>
-      [FhirElement("description", Order=50 , FiveWs="")]
+      [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The criteria that defines this population
       /// </summary>
-      [FhirElement("criteria", Order=60 , FiveWs="")]
+      [FhirElement("criteria", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Expression Criteria
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Meaning of the stratifier
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The human readable description of this stratifier
       /// </summary>
-      [FhirElement("description", Order=50 , FiveWs="")]
+      [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the measure should be stratified
       /// </summary>
-      [FhirElement("criteria", Order=60 , FiveWs="")]
+      [FhirElement("criteria", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Expression Criteria
       {
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Stratifier criteria component for the measure
       /// </summary>
-      [FhirElement("component", Order=70 , FiveWs="")]
+      [FhirElement("component", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Measure.ComponentComponent> Component
@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Meaning of the stratifier component
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The human readable description of this stratifier component
       /// </summary>
-      [FhirElement("description", Order=50 , FiveWs="")]
+      [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Component of how the measure should be stratified
       /// </summary>
-      [FhirElement("criteria", Order=60 , FiveWs="")]
+      [FhirElement("criteria", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Expression Criteria
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Meaning of the supplemental data
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// supplemental-data | risk-adjustment-factor
       /// </summary>
-      [FhirElement("usage", Order=50 , FiveWs="")]
+      [FhirElement("usage", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Usage
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The human readable description of this supplemental data
       /// </summary>
-      [FhirElement("description", Order=60 , FiveWs="")]
+      [FhirElement("description", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Expression describing additional data to be reported
       /// </summary>
-      [FhirElement("criteria", Order=70 , FiveWs="")]
+      [FhirElement("criteria", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Expression Criteria
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this measure, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -1017,7 +1017,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the measure
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the measure
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110 , FiveWs="FiveWs.version")]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1062,7 +1062,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this measure (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this measure (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -1124,7 +1124,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the measure
     /// </summary>
-    [FhirElement("subtitle", Order=140 , FiveWs="")]
+    [FhirElement("subtitle", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString SubtitleElement
     {
@@ -1155,7 +1155,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=150 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1188,7 +1188,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=160 , FiveWs="FiveWs.class")]
+    [FhirElement("experimental", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Patient, Practitioner, RelatedPerson, Organization, Location, Device
     /// </summary>
-    [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("subject", Order=170, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1235,7 +1235,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=180 , FiveWs="FiveWs.recorded")]
+    [FhirElement("date", InSummary=true, Order=180, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1266,7 +1266,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=190 , FiveWs="FiveWs.witness")]
+    [FhirElement("publisher", InSummary=true, Order=190, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1297,7 +1297,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -1311,7 +1311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the measure
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -1324,7 +1324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for measure (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1352,7 +1352,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this measure is defined
     /// </summary>
-    [FhirElement("purpose", Order=240 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("purpose", Order=240, FiveWs="FiveWs.why[x]")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Purpose
     {
@@ -1365,7 +1365,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the measure
     /// </summary>
-    [FhirElement("usage", Order=250 , FiveWs="")]
+    [FhirElement("usage", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString UsageElement
     {
@@ -1396,7 +1396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=260 , FiveWs="")]
+    [FhirElement("copyright", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -1409,7 +1409,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the measure was approved by publisher
     /// </summary>
-    [FhirElement("approvalDate", Order=270 , FiveWs="")]
+    [FhirElement("approvalDate", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Date ApprovalDateElement
     {
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the measure was last reviewed
     /// </summary>
-    [FhirElement("lastReviewDate", Order=280 , FiveWs="")]
+    [FhirElement("lastReviewDate", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Date LastReviewDateElement
     {
@@ -1471,7 +1471,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the measure is expected to be used
     /// </summary>
-    [FhirElement("effectivePeriod", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("effectivePeriod", InSummary=true, Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Period EffectivePeriod
     {
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The category of the measure, such as Education, Treatment, Assessment, etc.
     /// </summary>
-    [FhirElement("topic", Order=300 , FiveWs="")]
+    [FhirElement("topic", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1498,7 +1498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content
     /// </summary>
-    [FhirElement("author", Order=310 , FiveWs="")]
+    [FhirElement("author", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
@@ -1512,7 +1512,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content
     /// </summary>
-    [FhirElement("editor", Order=320 , FiveWs="")]
+    [FhirElement("editor", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
@@ -1526,7 +1526,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content
     /// </summary>
-    [FhirElement("reviewer", Order=330 , FiveWs="")]
+    [FhirElement("reviewer", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
@@ -1540,7 +1540,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content
     /// </summary>
-    [FhirElement("endorser", Order=340 , FiveWs="")]
+    [FhirElement("endorser", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
@@ -1554,7 +1554,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [FhirElement("relatedArtifact", Order=350 , FiveWs="")]
+    [FhirElement("relatedArtifact", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
@@ -1568,7 +1568,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logic used by the measure
     /// </summary>
-    [FhirElement("library", Order=360 , FiveWs="")]
+    [FhirElement("library", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> LibraryElement
@@ -1600,7 +1600,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Disclaimer for use of the measure or its referenced content
     /// </summary>
-    [FhirElement("disclaimer", InSummary=true, Order=370 , FiveWs="")]
+    [FhirElement("disclaimer", InSummary=true, Order=370)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Disclaimer
     {
@@ -1613,7 +1613,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proportion | ratio | continuous-variable | cohort
     /// </summary>
-    [FhirElement("scoring", InSummary=true, Order=380 , FiveWs="")]
+    [FhirElement("scoring", InSummary=true, Order=380)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Scoring
     {
@@ -1626,7 +1626,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// opportunity | all-or-nothing | linear | weighted
     /// </summary>
-    [FhirElement("compositeScoring", InSummary=true, Order=390 , FiveWs="")]
+    [FhirElement("compositeScoring", InSummary=true, Order=390)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CompositeScoring
     {
@@ -1639,7 +1639,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// process | outcome | structure | patient-reported-outcome | composite
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=400 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=400)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -1653,7 +1653,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How risk adjustment is applied for this measure
     /// </summary>
-    [FhirElement("riskAdjustment", InSummary=true, Order=410 , FiveWs="")]
+    [FhirElement("riskAdjustment", InSummary=true, Order=410)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString RiskAdjustmentElement
     {
@@ -1684,7 +1684,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How is rate aggregation performed for this measure
     /// </summary>
-    [FhirElement("rateAggregation", InSummary=true, Order=420 , FiveWs="")]
+    [FhirElement("rateAggregation", InSummary=true, Order=420)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString RateAggregationElement
     {
@@ -1715,7 +1715,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed description of why the measure exists
     /// </summary>
-    [FhirElement("rationale", InSummary=true, Order=430 , FiveWs="")]
+    [FhirElement("rationale", InSummary=true, Order=430)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Rationale
     {
@@ -1728,7 +1728,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Summary of clinical guidelines
     /// </summary>
-    [FhirElement("clinicalRecommendationStatement", InSummary=true, Order=440 , FiveWs="")]
+    [FhirElement("clinicalRecommendationStatement", InSummary=true, Order=440)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown ClinicalRecommendationStatement
     {
@@ -1741,7 +1741,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// increase | decrease
     /// </summary>
-    [FhirElement("improvementNotation", InSummary=true, Order=450 , FiveWs="")]
+    [FhirElement("improvementNotation", InSummary=true, Order=450)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ImprovementNotation
     {
@@ -1754,7 +1754,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Defined terms used in the measure documentation
     /// </summary>
-    [FhirElement("definition", InSummary=true, Order=460 , FiveWs="")]
+    [FhirElement("definition", InSummary=true, Order=460)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Markdown> Definition
@@ -1768,7 +1768,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional guidance for implementers
     /// </summary>
-    [FhirElement("guidance", InSummary=true, Order=470 , FiveWs="")]
+    [FhirElement("guidance", InSummary=true, Order=470)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Guidance
     {
@@ -1781,7 +1781,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Population criteria group
     /// </summary>
-    [FhirElement("group", Order=480 , FiveWs="")]
+    [FhirElement("group", Order=480)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Measure.GroupComponent> Group
@@ -1795,7 +1795,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What other data should be reported with the measure
     /// </summary>
-    [FhirElement("supplementalData", Order=490 , FiveWs="")]
+    [FhirElement("supplementalData", Order=490)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Measure.SupplementalDataComponent> SupplementalData
