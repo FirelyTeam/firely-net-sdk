@@ -9735,6 +9735,33 @@ namespace Hl7.Fhir.Specification.Tests
 
         }
 
+        [TestMethod]
+        public async T.Task BindingRemovedAfterTypeConstraint()
+        {
+            // Arrange
+            var resolver = new CachedResolver(
+                    new MultiResolver(
+                        new TestProfileArtifactSource(),
+                        ZipSource.CreateValidationSource()));
+
+            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132-2";
+
+            var sd = await resolver.FindStructureDefinitionAsync(url);
+
+            var snapshotGenerator = new SnapshotGenerator(resolver, _settings);
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            var element = elements.Should().ContainSingle(e => e.Path == "MedicationStatement.dosage.asNeeded[x]").Subject;
+            element.Type.Should().OnlyContain(t => t.Code == "boolean");
+            element.Binding.Should().BeNull();
+
+            //element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept").Subject;
+            //element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
+            //element.Binding.Should().NotBeNull();
+
+        }
+
         private void logExtensions(string title, IEnumerable<Extension> extensions, int level = 1)
         {
             Debug.WriteLine(title);
