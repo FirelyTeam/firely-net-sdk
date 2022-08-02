@@ -54,7 +54,8 @@ namespace Hl7.Fhir.Specification.Tests
             buildPatientWithDeceasedConstraints(),
             buildBoolean(),
             buildMyExtension(),
-            buildSliceOnChoice()
+            buildSliceOnChoice(),
+            buildConstrainBindableType()
         }.AddM(buildPatientWithProfiledReferences());
 
         private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
@@ -681,6 +682,20 @@ namespace Hl7.Fhir.Specification.Tests
                 ElementId = "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept",
                 SliceName = "asNeededCodeableConcept",
             }.OfType(FHIRAllTypes.CodeableConcept));
+
+            return result;
+        }
+
+        private static StructureDefinition buildConstrainBindableType()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132-2", "MedicationStatement-issue-2132",
+                "MedicationStatement sliced on asNeeded[x]", FHIRAllTypes.MedicationStatement);
+
+            var cons = result.Differential.Element;
+
+            var typeConstraint = new ElementDefinition("MedicationStatement.dosage.asNeededBoolean").OfType(FHIRAllTypes.Boolean);
+
+            cons.Add(typeConstraint);
 
             return result;
         }
