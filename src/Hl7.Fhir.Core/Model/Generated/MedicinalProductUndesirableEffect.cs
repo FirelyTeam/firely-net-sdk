@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The medication for which this is an indication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("subject", InSummary=true, Order=90)]
     [CLSCompliant(false)]
     [References("MedicinalProduct","Medication")]
     [Cardinality(Min=0,Max=-1)]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The symptom, condition or undesirable effect
     /// </summary>
-    [FhirElement("symptomConditionEffect", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("symptomConditionEffect", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept SymptomConditionEffect
     {
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the effect
     /// </summary>
-    [FhirElement("classification", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("classification", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Classification
     {
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The frequency of occurrence of the effect
     /// </summary>
-    [FhirElement("frequencyOfOccurrence", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("frequencyOfOccurrence", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept FrequencyOfOccurrence
     {
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The population group to which this applies
     /// </summary>
-    [FhirElement("population", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("population", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Population> Population

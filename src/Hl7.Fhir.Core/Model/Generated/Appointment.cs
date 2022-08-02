@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role of participant in the appointment
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | optional | information-only
       /// </summary>
-      [FhirElement("required", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("required", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> RequiredElement
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// accepted | declined | tentative | needs-action
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("status", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Participation period of the actor
       /// </summary>
-      [FhirElement("period", Order=80 , FiveWs="")]
+      [FhirElement("period", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The coded reason for the appointment being cancelled
     /// </summary>
-    [FhirElement("cancelationReason", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("cancelationReason", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CancelationReason
     {
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A broad categorization of the service that is to be performed during this appointment
     /// </summary>
-    [FhirElement("serviceCategory", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("serviceCategory", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceCategory
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specific service that is to be performed during this appointment
     /// </summary>
-    [FhirElement("serviceType", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("serviceType", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The style of appointment or patient that has been booked in the slot (not service type)
     /// </summary>
-    [FhirElement("appointmentType", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("appointmentType", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AppointmentType
     {
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded reason this appointment is scheduled
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("reasonCode", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason the appointment is to take place (resource)
     /// </summary>
-    [FhirElement("reasonReference", Order=170 , FiveWs="")]
+    [FhirElement("reasonReference", Order=170)]
     [CLSCompliant(false)]
     [References("Condition","Procedure","Observation","ImmunizationRecommendation")]
     [Cardinality(Min=0,Max=-1)]
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Shown on a subject line in a meeting request, or appointment list
     /// </summary>
-    [FhirElement("description", Order=190 , FiveWs="")]
+    [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Can be less than start/end (e.g. estimate)
     /// </summary>
-    [FhirElement("minutesDuration", Order=230 , FiveWs="")]
+    [FhirElement("minutesDuration", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt MinutesDurationElement
     {
@@ -712,7 +712,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The slots that this appointment is filling
     /// </summary>
-    [FhirElement("slot", Order=240 , FiveWs="")]
+    [FhirElement("slot", Order=240)]
     [CLSCompliant(false)]
     [References("Slot")]
     [Cardinality(Min=0,Max=-1)]
@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date that this appointment was initially created
     /// </summary>
-    [FhirElement("created", Order=250 , FiveWs="")]
+    [FhirElement("created", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments
     /// </summary>
-    [FhirElement("comment", Order=260 , FiveWs="")]
+    [FhirElement("comment", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CommentElement
     {
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Detailed information and instructions for the patient
     /// </summary>
-    [FhirElement("patientInstruction", Order=270 , FiveWs="")]
+    [FhirElement("patientInstruction", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PatientInstructionElement
     {
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The service request this appointment is allocated to assess
     /// </summary>
-    [FhirElement("basedOn", Order=280 , FiveWs="")]
+    [FhirElement("basedOn", Order=280)]
     [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participants involved in appointment
     /// </summary>
-    [FhirElement("participant", Order=290 , FiveWs="")]
+    [FhirElement("participant", Order=290)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Appointment.ParticipantComponent> Participant
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Potential date/time interval(s) requested to allocate the appointment within
     /// </summary>
-    [FhirElement("requestedPeriod", Order=300 , FiveWs="")]
+    [FhirElement("requestedPeriod", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Period> RequestedPeriod

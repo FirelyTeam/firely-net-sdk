@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The party(s), such as insurances, that may contribute to the payment of this account
       /// </summary>
-      [FhirElement("coverage", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("coverage", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The priority of the coverage in the context of this account
       /// </summary>
-      [FhirElement("priority", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("priority", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt PriorityElement
       {
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Responsible entity
       /// </summary>
-      [FhirElement("party", Order=40 , FiveWs="")]
+      [FhirElement("party", Order=40)]
       [CLSCompliant(false)]
       [References("Patient","RelatedPerson","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Credit or other hold applied
       /// </summary>
-      [FhirElement("onHold", Order=50 , FiveWs="")]
+      [FhirElement("onHold", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean OnHoldElement
       {
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Guarantee account during
       /// </summary>
-      [FhirElement("period", Order=60 , FiveWs="")]
+      [FhirElement("period", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The party(s) that are responsible for covering the payment of this account, and what order should they be applied to the account
     /// </summary>
-    [FhirElement("coverage", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("coverage", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Account.CoverageComponent> Coverage
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entity managing the Account
     /// </summary>
-    [FhirElement("owner", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("owner", InSummary=true, Order=160)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Explanation of purpose/use
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The parties ultimately responsible for balancing the Account
     /// </summary>
-    [FhirElement("guarantor", Order=180 , FiveWs="")]
+    [FhirElement("guarantor", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Account.GuarantorComponent> Guarantor
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to a parent Account
     /// </summary>
-    [FhirElement("partOf", Order=190 , FiveWs="")]
+    [FhirElement("partOf", Order=190)]
     [CLSCompliant(false)]
     [References("Account")]
     [DataMember]

@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan, proposal or order
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting information
     /// </summary>
-    [FhirElement("derivedFrom", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("derivedFrom", InSummary=true, Order=130)]
     [CLSCompliant(false)]
     [References("ServiceRequest","Procedure","Claim","Observation","QuestionnaireResponse","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target body site
     /// </summary>
-    [FhirElement("bodySite", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("bodySite", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Addition details (comments, instructions)
     /// </summary>
-    [FhirElement("note", Order=210 , FiveWs="")]
+    [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note

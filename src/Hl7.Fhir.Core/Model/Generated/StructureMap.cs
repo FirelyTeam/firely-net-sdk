@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Canonical reference to structure definition
       /// </summary>
-      [FhirElement("url", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("url", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical UrlElement
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | queried | target | produced
       /// </summary>
-      [FhirElement("mode", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("mode", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for type in this map
       /// </summary>
-      [FhirElement("alias", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("alias", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AliasElement
       {
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation on use of structure
       /// </summary>
-      [FhirElement("documentation", Order=70 , FiveWs="")]
+      [FhirElement("documentation", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DocumentationElement
       {
@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human-readable label
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id NameElement
@@ -645,7 +645,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Another group that this group adds rules to
       /// </summary>
-      [FhirElement("extends", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("extends", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Id ExtendsElement
       {
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// none | types | type-and-types
       /// </summary>
-      [FhirElement("typeMode", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("typeMode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -709,7 +709,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional description/explanation for group
       /// </summary>
-      [FhirElement("documentation", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("documentation", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DocumentationElement
       {
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named instance provided when invoking the map
       /// </summary>
-      [FhirElement("input", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("input", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.InputComponent> Input
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Transform Rule from source to target
       /// </summary>
-      [FhirElement("rule", InSummary=true, Order=90 , FiveWs="")]
+      [FhirElement("rule", InSummary=true, Order=90)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for this instance of data
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id NameElement
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type for this instance of data
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TypeElement
       {
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | target
       /// </summary>
-      [FhirElement("mode", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("mode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation for this instance of data
       /// </summary>
-      [FhirElement("documentation", Order=70 , FiveWs="")]
+      [FhirElement("documentation", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DocumentationElement
       {
@@ -1159,7 +1159,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the rule for internal references
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id NameElement
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Source inputs to the mapping
       /// </summary>
-      [FhirElement("source", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("source", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.SourceComponent> Source
@@ -1205,7 +1205,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Content to create because of this mapping rule
       /// </summary>
-      [FhirElement("target", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("target", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.TargetComponent> Target
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rules contained in this rule
       /// </summary>
-      [FhirElement("rule", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("rule", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.RuleComponent> Rule
@@ -1233,7 +1233,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Which other rules to apply in the context of this rule
       /// </summary>
-      [FhirElement("dependent", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("dependent", InSummary=true, Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.DependentComponent> Dependent
@@ -1247,7 +1247,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Documentation for this instance of data
       /// </summary>
-      [FhirElement("documentation", Order=90 , FiveWs="")]
+      [FhirElement("documentation", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DocumentationElement
       {
@@ -1419,7 +1419,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type or variable this rule applies to
       /// </summary>
-      [FhirElement("context", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("context", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id ContextElement
@@ -1451,7 +1451,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specified minimum cardinality
       /// </summary>
-      [FhirElement("min", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("min", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Integer MinElement
       {
@@ -1482,7 +1482,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specified maximum cardinality (number or *)
       /// </summary>
-      [FhirElement("max", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("max", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MaxElement
       {
@@ -1513,7 +1513,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Rule only applies if source has this type
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TypeElement
       {
@@ -1544,7 +1544,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Default value if no value exists
       /// </summary>
-      [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("defaultValue", InSummary=true, Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Base64Binary),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.Instant),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Markdown),typeof(Hl7.Fhir.Model.Oid),typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.Uuid),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Annotation),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.ContactPoint),typeof(Hl7.Fhir.Model.Count),typeof(Hl7.Fhir.Model.Distance),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.HumanName),typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.Money),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.SampledData),typeof(Hl7.Fhir.Model.Signature),typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ContactDetail),typeof(Hl7.Fhir.Model.Contributor),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.ParameterDefinition),typeof(Hl7.Fhir.Model.RelatedArtifact),typeof(Hl7.Fhir.Model.TriggerDefinition),typeof(Hl7.Fhir.Model.UsageContext),typeof(Hl7.Fhir.Model.Dosage),typeof(Hl7.Fhir.Model.Meta))]
       [DataMember]
@@ -1559,7 +1559,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Optional field for this source
       /// </summary>
-      [FhirElement("element", InSummary=true, Order=90 , FiveWs="")]
+      [FhirElement("element", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ElementElement
       {
@@ -1590,7 +1590,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// first | not_first | last | not_last | only_one
       /// </summary>
-      [FhirElement("listMode", InSummary=true, Order=100 , FiveWs="")]
+      [FhirElement("listMode", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapSourceListMode> ListModeElement
@@ -1622,7 +1622,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named context for field, if a field is specified
       /// </summary>
-      [FhirElement("variable", InSummary=true, Order=110 , FiveWs="")]
+      [FhirElement("variable", InSummary=true, Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.Id VariableElement
       {
@@ -1653,7 +1653,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath expression  - must be true or the rule does not apply
       /// </summary>
-      [FhirElement("condition", InSummary=true, Order=120 , FiveWs="")]
+      [FhirElement("condition", InSummary=true, Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ConditionElement
       {
@@ -1684,7 +1684,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// FHIRPath expression  - must be true or the mapping engine throws an error instead of completing
       /// </summary>
-      [FhirElement("check", InSummary=true, Order=130 , FiveWs="")]
+      [FhirElement("check", InSummary=true, Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CheckElement
       {
@@ -1715,7 +1715,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Message to put in log if source exists (FHIRPath)
       /// </summary>
-      [FhirElement("logMessage", InSummary=true, Order=140 , FiveWs="")]
+      [FhirElement("logMessage", InSummary=true, Order=140)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString LogMessageElement
       {
@@ -1932,7 +1932,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type or variable this rule applies to
       /// </summary>
-      [FhirElement("context", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("context", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Id ContextElement
       {
@@ -1963,7 +1963,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// type | variable
       /// </summary>
-      [FhirElement("contextType", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("contextType", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapContextType> ContextTypeElement
@@ -1995,7 +1995,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Field to create in the context
       /// </summary>
-      [FhirElement("element", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("element", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ElementElement
       {
@@ -2026,7 +2026,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Named context for field, if desired, and a field is specified
       /// </summary>
-      [FhirElement("variable", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("variable", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Id VariableElement
       {
@@ -2057,7 +2057,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// first | share | last | collate
       /// </summary>
-      [FhirElement("listMode", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("listMode", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -2090,7 +2090,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internal rule reference for shared list items
       /// </summary>
-      [FhirElement("listRuleId", InSummary=true, Order=90 , FiveWs="")]
+      [FhirElement("listRuleId", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Id ListRuleIdElement
       {
@@ -2121,7 +2121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// create | copy +
       /// </summary>
-      [FhirElement("transform", InSummary=true, Order=100 , FiveWs="")]
+      [FhirElement("transform", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureMap.StructureMapTransform> TransformElement
@@ -2153,7 +2153,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Parameters to the transform
       /// </summary>
-      [FhirElement("parameter", InSummary=true, Order=110 , FiveWs="")]
+      [FhirElement("parameter", InSummary=true, Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.StructureMap.ParameterComponent> Parameter
@@ -2326,7 +2326,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Parameter value - variable or literal
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("value", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Id),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirDecimal))]
       [Cardinality(Min=1,Max=1)]
@@ -2438,7 +2438,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of a rule or group to apply
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("name", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id NameElement
@@ -2470,7 +2470,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Variable to pass to the rule or group
       /// </summary>
-      [FhirElement("variable", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("variable", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> VariableElement
@@ -2671,7 +2671,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure map (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
@@ -2703,7 +2703,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure map (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -2860,7 +2860,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -2874,7 +2874,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the structure map
     /// </summary>
-    [FhirElement("description", Order=190 , FiveWs="")]
+    [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -2887,7 +2887,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -2901,7 +2901,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for structure map (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -2928,7 +2928,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=230 , FiveWs="")]
+    [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -2941,7 +2941,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Structure Definition used by this map
     /// </summary>
-    [FhirElement("structure", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("structure", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.StructureMap.StructureComponent> Structure
@@ -2955,7 +2955,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other maps used by this map (canonical URLs)
     /// </summary>
-    [FhirElement("import", InSummary=true, Order=250 , FiveWs="")]
+    [FhirElement("import", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ImportElement
@@ -2987,7 +2987,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Named sections for reader convenience
     /// </summary>
-    [FhirElement("group", InSummary=true, Order=260 , FiveWs="")]
+    [FhirElement("group", InSummary=true, Order=260)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.StructureMap.GroupComponent> Group

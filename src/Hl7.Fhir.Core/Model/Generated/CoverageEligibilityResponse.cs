@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Insurance information
       /// </summary>
-      [FhirElement("coverage", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("coverage", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("Coverage")]
       [Cardinality(Min=1,Max=1)]
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coverage inforce indicator
       /// </summary>
-      [FhirElement("inforce", Order=50 , FiveWs="")]
+      [FhirElement("inforce", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean InforceElement
       {
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the benefits are applicable
       /// </summary>
-      [FhirElement("benefitPeriod", Order=60 , FiveWs="")]
+      [FhirElement("benefitPeriod", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period BenefitPeriod
       {
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefits and authorization details
       /// </summary>
-      [FhirElement("item", Order=70 , FiveWs="")]
+      [FhirElement("item", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CoverageEligibilityResponse.ItemsComponent> Item
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification
       /// </summary>
-      [FhirElement("category", Order=40 , FiveWs="")]
+      [FhirElement("category", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Category
       {
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Billing, service, product, or drug code
       /// </summary>
-      [FhirElement("productOrService", Order=50 , FiveWs="")]
+      [FhirElement("productOrService", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ProductOrService
       {
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Product or service billing modifiers
       /// </summary>
-      [FhirElement("modifier", Order=60 , FiveWs="")]
+      [FhirElement("modifier", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Modifier
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Excluded from the plan
       /// </summary>
-      [FhirElement("excluded", Order=80 , FiveWs="")]
+      [FhirElement("excluded", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ExcludedElement
       {
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Short name for the benefit
       /// </summary>
-      [FhirElement("name", Order=90 , FiveWs="")]
+      [FhirElement("name", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of the benefit or services covered
       /// </summary>
-      [FhirElement("description", Order=100 , FiveWs="")]
+      [FhirElement("description", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// In or out of network
       /// </summary>
-      [FhirElement("network", Order=110 , FiveWs="")]
+      [FhirElement("network", Order=110)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Network
       {
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual or family
       /// </summary>
-      [FhirElement("unit", Order=120 , FiveWs="")]
+      [FhirElement("unit", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Unit
       {
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Annual or lifetime
       /// </summary>
-      [FhirElement("term", Order=130 , FiveWs="")]
+      [FhirElement("term", Order=130)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Term
       {
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit Summary
       /// </summary>
-      [FhirElement("benefit", Order=140 , FiveWs="")]
+      [FhirElement("benefit", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CoverageEligibilityResponse.BenefitComponent> Benefit
@@ -503,7 +503,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Authorization required flag
       /// </summary>
-      [FhirElement("authorizationRequired", Order=150 , FiveWs="")]
+      [FhirElement("authorizationRequired", Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean AuthorizationRequiredElement
       {
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of required supporting materials
       /// </summary>
-      [FhirElement("authorizationSupporting", Order=160 , FiveWs="")]
+      [FhirElement("authorizationSupporting", Order=160)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> AuthorizationSupporting
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Preauthorization requirements endpoint
       /// </summary>
-      [FhirElement("authorizationUrl", Order=170 , FiveWs="")]
+      [FhirElement("authorizationUrl", Order=170)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri AuthorizationUrlElement
       {
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefit classification
       /// </summary>
-      [FhirElement("type", Order=40 , FiveWs="")]
+      [FhirElement("type", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefits allowed
       /// </summary>
-      [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("allowed", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Money))]
       [DataMember]
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Benefits used
       /// </summary>
-      [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("used", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.UnsignedInt),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Money))]
       [DataMember]
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Error code detailing processing issues
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -1221,7 +1221,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// queued | complete | error | partial
     /// </summary>
-    [FhirElement("outcome", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("outcome", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Disposition Message
     /// </summary>
-    [FhirElement("disposition", Order=180 , FiveWs="")]
+    [FhirElement("disposition", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DispositionElement
     {
@@ -1285,7 +1285,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coverage issuer
     /// </summary>
-    [FhirElement("insurer", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("insurer", InSummary=true, Order=190)]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
@@ -1301,7 +1301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient insurance information
     /// </summary>
-    [FhirElement("insurance", Order=200 , FiveWs="")]
+    [FhirElement("insurance", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.InsuranceComponent> Insurance
@@ -1315,7 +1315,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Preauthorization reference
     /// </summary>
-    [FhirElement("preAuthRef", Order=210 , FiveWs="")]
+    [FhirElement("preAuthRef", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PreAuthRefElement
     {
@@ -1346,7 +1346,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Printed form identifier
     /// </summary>
-    [FhirElement("form", Order=220 , FiveWs="")]
+    [FhirElement("form", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Form
     {
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Processing errors
     /// </summary>
-    [FhirElement("error", Order=230 , FiveWs="")]
+    [FhirElement("error", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CoverageEligibilityResponse.ErrorsComponent> Error

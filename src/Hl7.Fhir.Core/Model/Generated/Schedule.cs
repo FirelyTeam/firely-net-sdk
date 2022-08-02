@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments on availability
     /// </summary>
-    [FhirElement("comment", Order=160 , FiveWs="")]
+    [FhirElement("comment", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CommentElement
     {

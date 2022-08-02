@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of resource
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Profile that must be adhered to by focus
       /// </summary>
-      [FhirElement("profile", Order=50 , FiveWs="")]
+      [FhirElement("profile", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical ProfileElement
       {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum number of focuses of this type
       /// </summary>
-      [FhirElement("min", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("min", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt MinElement
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum number of focuses of this type
       /// </summary>
-      [FhirElement("max", Order=70 , FiveWs="")]
+      [FhirElement("max", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MaxElement
       {
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to allowed message definition response
       /// </summary>
-      [FhirElement("message", Order=40 , FiveWs="")]
+      [FhirElement("message", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical MessageElement
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When should this response be used
       /// </summary>
-      [FhirElement("situation", Order=50 , FiveWs="")]
+      [FhirElement("situation", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Situation
       {
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this message definition (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this message definition (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Takes the place of
     /// </summary>
-    [FhirElement("replaces", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("replaces", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ReplacesElement
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -797,7 +797,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the message definition
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for message definition (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=240 , FiveWs="")]
+    [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition this one is based on
     /// </summary>
-    [FhirElement("base", InSummary=true, Order=250 , FiveWs="")]
+    [FhirElement("base", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical BaseElement
     {
@@ -895,7 +895,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Protocol/workflow this is part of
     /// </summary>
-    [FhirElement("parent", InSummary=true, Order=260 , FiveWs="")]
+    [FhirElement("parent", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ParentElement
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Event code  or link to the EventDefinition
     /// </summary>
-    [FhirElement("event", InSummary=true, Order=270, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("event", InSummary=true, Order=270, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirUri))]
     [Cardinality(Min=1,Max=1)]
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// consequence | currency | notification
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("category", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory> CategoryElement
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Resource(s) that are the subject of the event
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("focus", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.MessageDefinition.FocusComponent> Focus
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// always | on-error | never | on-success
     /// </summary>
-    [FhirElement("responseRequired", Order=300 , FiveWs="")]
+    [FhirElement("responseRequired", Order=300)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.messageheader_response_request> ResponseRequiredElement
@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responses to this message
     /// </summary>
-    [FhirElement("allowedResponse", Order=310 , FiveWs="")]
+    [FhirElement("allowedResponse", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent> AllowedResponse
@@ -1035,7 +1035,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical reference to a GraphDefinition
     /// </summary>
-    [FhirElement("graph", Order=320 , FiveWs="")]
+    [FhirElement("graph", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> GraphElement

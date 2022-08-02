@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// named-event | periodic | data-changed | data-added | data-modified | data-removed | data-accessed | data-access-ended
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name or URI that identifies the event
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Timing of the event
     /// </summary>
-    [FhirElement("timing", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("timing", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Schedule")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime))]
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Triggering data of the event (multiple = 'and')
     /// </summary>
-    [FhirElement("data", InSummary=true, Order=60 , FiveWs="")]
+    [FhirElement("data", InSummary=true, Order=60)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement> Data
@@ -210,7 +210,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the event triggers (boolean expression)
     /// </summary>
-    [FhirElement("condition", InSummary=true, Order=70 , FiveWs="")]
+    [FhirElement("condition", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.Expression Condition
     {

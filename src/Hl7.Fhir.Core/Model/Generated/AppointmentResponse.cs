@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Appointment this response relates to
     /// </summary>
-    [FhirElement("appointment", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("appointment", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("Appointment")]
     [Cardinality(Min=1,Max=1)]
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Role of participant in the appointment
     /// </summary>
-    [FhirElement("participantType", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("participantType", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ParticipantType
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// accepted | declined | tentative | needs-action
     /// </summary>
-    [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150 , FiveWs="")]
+    [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional comments
     /// </summary>
-    [FhirElement("comment", Order=160 , FiveWs="")]
+    [FhirElement("comment", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CommentElement
     {

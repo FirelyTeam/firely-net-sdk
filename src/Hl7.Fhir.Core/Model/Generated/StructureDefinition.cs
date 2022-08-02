@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Internal id when this mapping is used
       /// </summary>
-      [FhirElement("identity", Order=40 , FiveWs="")]
+      [FhirElement("identity", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id IdentityElement
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies what this mapping refers to
       /// </summary>
-      [FhirElement("uri", Order=50 , FiveWs="")]
+      [FhirElement("uri", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri UriElement
       {
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Names what this mapping refers to
       /// </summary>
-      [FhirElement("name", Order=60 , FiveWs="")]
+      [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Versions, Issues, Scope limitations etc.
       /// </summary>
-      [FhirElement("comment", Order=70 , FiveWs="")]
+      [FhirElement("comment", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CommentElement
       {
@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// fhirpath | element | extension
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the extension can be used in instances
       /// </summary>
-      [FhirElement("expression", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("expression", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ExpressionElement
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition)
       /// </summary>
-      [FhirElement("element", Order=40 , FiveWs="")]
+      [FhirElement("element", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Definition of elements in the resource (if no StructureDefinition)
       /// </summary>
-      [FhirElement("element", Order=40 , FiveWs="")]
+      [FhirElement("element", Order=40)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition> Element
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure definition (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this structure definition (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -1046,7 +1046,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the structure definition
     /// </summary>
-    [FhirElement("description", Order=190 , FiveWs="")]
+    [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -1073,7 +1073,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -1087,7 +1087,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for structure definition (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1114,7 +1114,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=230 , FiveWs="")]
+    [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Assist with indexing and finding
     /// </summary>
-    [FhirElement("keyword", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("keyword", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Keyword
@@ -1141,7 +1141,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Version this StructureDefinition targets
     /// </summary>
-    [FhirElement("fhirVersion", InSummary=true, Order=250 , FiveWs="")]
+    [FhirElement("fhirVersion", InSummary=true, Order=250)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRVersion> FhirVersionElement
@@ -1173,7 +1173,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External specification that the content is mapped to
     /// </summary>
-    [FhirElement("mapping", Order=260 , FiveWs="")]
+    [FhirElement("mapping", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.StructureDefinition.MappingComponent> Mapping
@@ -1187,7 +1187,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// primitive-type | complex-type | resource | logical
     /// </summary>
-    [FhirElement("kind", InSummary=true, Order=270 , FiveWs="")]
+    [FhirElement("kind", InSummary=true, Order=270)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the structure is abstract
     /// </summary>
-    [FhirElement("abstract", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("abstract", InSummary=true, Order=280)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean AbstractElement
@@ -1252,7 +1252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If an extension, where it can be used in instances
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("context", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.StructureDefinition.ContextComponent> Context
@@ -1266,7 +1266,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIRPath invariants - when the extension can be used
     /// </summary>
-    [FhirElement("contextInvariant", InSummary=true, Order=300 , FiveWs="")]
+    [FhirElement("contextInvariant", InSummary=true, Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> ContextInvariantElement
@@ -1298,7 +1298,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type defined or constrained by this structure
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=310 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=310)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri TypeElement
@@ -1330,7 +1330,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Definition that this type is constrained/specialized from
     /// </summary>
-    [FhirElement("baseDefinition", InSummary=true, Order=320 , FiveWs="")]
+    [FhirElement("baseDefinition", InSummary=true, Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical BaseDefinitionElement
     {
@@ -1361,7 +1361,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// specialization | constraint - How relates to base definition
     /// </summary>
-    [FhirElement("derivation", InSummary=true, Order=330 , FiveWs="")]
+    [FhirElement("derivation", InSummary=true, Order=330)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule> DerivationElement
@@ -1393,7 +1393,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Snapshot view of the structure
     /// </summary>
-    [FhirElement("snapshot", Order=340 , FiveWs="")]
+    [FhirElement("snapshot", Order=340)]
     [DataMember]
     public Hl7.Fhir.Model.StructureDefinition.SnapshotComponent Snapshot
     {
@@ -1406,7 +1406,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Differential view of the structure
     /// </summary>
-    [FhirElement("differential", Order=350 , FiveWs="")]
+    [FhirElement("differential", Order=350)]
     [DataMember]
     public Hl7.Fhir.Model.StructureDefinition.DifferentialComponent Differential
     {

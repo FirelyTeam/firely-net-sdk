@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of involvement
       /// </summary>
-      [FhirElement("role", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("role", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization of the practitioner
       /// </summary>
-      [FhirElement("onBehalfOf", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("onBehalfOf", InSummary=true, Order=60)]
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time period of participant
       /// </summary>
-      [FhirElement("period", Order=70 , FiveWs="")]
+      [FhirElement("period", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the team, such as crisis assessment team
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Members of the team
     /// </summary>
-    [FhirElement("participant", Order=160 , FiveWs="")]
+    [FhirElement("participant", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CareTeam.ParticipantComponent> Participant
@@ -456,7 +456,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for the care team
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("managingOrganization", InSummary=true, Order=190)]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the care team (that applies to all members)
     /// </summary>
-    [FhirElement("telecom", Order=200 , FiveWs="")]
+    [FhirElement("telecom", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the CareTeam
     /// </summary>
-    [FhirElement("note", Order=210 , FiveWs="")]
+    [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note

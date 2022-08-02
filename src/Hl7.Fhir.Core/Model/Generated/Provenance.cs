@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the agent participated
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What the agents role was
       /// </summary>
-      [FhirElement("role", Order=50 , FiveWs="")]
+      [FhirElement("role", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who the agent is representing
       /// </summary>
-      [FhirElement("onBehalfOf", Order=70 , FiveWs="")]
+      [FhirElement("onBehalfOf", Order=70)]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
       [DataMember]
@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// derivation | revision | quotation | source | removal
       /// </summary>
-      [FhirElement("role", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identity of entity
       /// </summary>
-      [FhirElement("what", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("what", InSummary=true, Order=50)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Entity is attributed to this agent
       /// </summary>
-      [FhirElement("agent", Order=60 , FiveWs="")]
+      [FhirElement("agent", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Policy or plan the activity was defined by
     /// </summary>
-    [FhirElement("policy", Order=120 , FiveWs="")]
+    [FhirElement("policy", Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An entity used in this activity
     /// </summary>
-    [FhirElement("entity", Order=170 , FiveWs="")]
+    [FhirElement("entity", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Provenance.EntityComponent> Entity
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Signature on target
     /// </summary>
-    [FhirElement("signature", Order=180 , FiveWs="")]
+    [FhirElement("signature", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Signature> Signature

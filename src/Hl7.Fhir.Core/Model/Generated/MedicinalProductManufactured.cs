@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dose form as manufactured and before any transformation into the pharmaceutical product
     /// </summary>
-    [FhirElement("manufacturedDoseForm", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("manufacturedDoseForm", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ManufacturedDoseForm
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The “real world” units in which the quantity of the manufactured item is described
     /// </summary>
-    [FhirElement("unitOfPresentation", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("unitOfPresentation", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept UnitOfPresentation
     {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The quantity or "count number" of the manufactured item
     /// </summary>
-    [FhirElement("quantity", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("quantity", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Quantity
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item (Note that this should be named "manufacturer" but it currently causes technical issues)
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("manufacturer", InSummary=true, Order=120)]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ingredient
     /// </summary>
-    [FhirElement("ingredient", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("ingredient", InSummary=true, Order=130)]
     [CLSCompliant(false)]
     [References("MedicinalProductIngredient")]
     [Cardinality(Min=0,Max=-1)]
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dimensions, color etc.
     /// </summary>
-    [FhirElement("physicalCharacteristics", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("physicalCharacteristics", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.ProdCharacteristic PhysicalCharacteristics
     {
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other codeable characteristics
     /// </summary>
-    [FhirElement("otherCharacteristics", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("otherCharacteristics", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> OtherCharacteristics

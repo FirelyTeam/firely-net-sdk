@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What mitigation?
       /// </summary>
-      [FhirElement("action", Order=40 , FiveWs="")]
+      [FhirElement("action", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date committed
       /// </summary>
-      [FhirElement("date", Order=50 , FiveWs="")]
+      [FhirElement("date", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime DateElement
       {
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is committing?
       /// </summary>
-      [FhirElement("author", Order=60 , FiveWs="")]
+      [FhirElement("author", Order=60)]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole")]
       [DataMember]
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Problem resource
     /// </summary>
-    [FhirElement("implicated", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("implicated", InSummary=true, Order=160)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -562,7 +562,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description and context
     /// </summary>
-    [FhirElement("detail", Order=180 , FiveWs="")]
+    [FhirElement("detail", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DetailElement
     {
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authority for issue
     /// </summary>
-    [FhirElement("reference", Order=190 , FiveWs="")]
+    [FhirElement("reference", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri ReferenceElement
     {
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Step taken to address
     /// </summary>
-    [FhirElement("mitigation", Order=200 , FiveWs="")]
+    [FhirElement("mitigation", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DetectedIssue.MitigationComponent> Mitigation

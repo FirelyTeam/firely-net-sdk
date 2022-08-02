@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for study arm
       /// </summary>
-      [FhirElement("name", Order=40 , FiveWs="")]
+      [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Categorization of study arm
       /// </summary>
-      [FhirElement("type", Order=50 , FiveWs="")]
+      [FhirElement("type", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Short explanation of study path
       /// </summary>
-      [FhirElement("description", Order=60 , FiveWs="")]
+      [FhirElement("description", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for the objective
       /// </summary>
-      [FhirElement("name", Order=40 , FiveWs="")]
+      [FhirElement("name", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// primary | secondary | exploratory
       /// </summary>
-      [FhirElement("type", Order=50 , FiveWs="")]
+      [FhirElement("type", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -488,7 +488,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this study
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=100)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Steps followed in executing study
     /// </summary>
-    [FhirElement("protocol", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("protocol", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("PlanDefinition")]
     [Cardinality(Min=0,Max=-1)]
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of larger study
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("partOf", InSummary=true, Order=120)]
     [CLSCompliant(false)]
     [References("ResearchStudy")]
     [Cardinality(Min=0,Max=-1)]
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// treatment | prevention | diagnostic | supportive-care | screening | health-services-research | basic-science | device-feasibility
     /// </summary>
-    [FhirElement("primaryPurposeType", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("primaryPurposeType", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PrimaryPurposeType
     {
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// n-a | early-phase-1 | phase-1 | phase-1-phase-2 | phase-2 | phase-2-phase-3 | phase-3 | phase-4
     /// </summary>
-    [FhirElement("phase", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("phase", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Phase
     {
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classifications for the study
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("category", InSummary=true, Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the study
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// References and dependencies
     /// </summary>
-    [FhirElement("relatedArtifact", Order=200 , FiveWs="")]
+    [FhirElement("relatedArtifact", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
@@ -680,7 +680,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to search for the study
     /// </summary>
-    [FhirElement("keyword", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("keyword", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Keyword
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Geographic region(s) for study
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("location", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Location
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What this is study doing
     /// </summary>
-    [FhirElement("description", Order=230 , FiveWs="")]
+    [FhirElement("description", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -809,7 +809,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the study
     /// </summary>
-    [FhirElement("note", Order=300 , FiveWs="")]
+    [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -823,7 +823,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Defined path through the study for a subject
     /// </summary>
-    [FhirElement("arm", Order=310 , FiveWs="")]
+    [FhirElement("arm", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ResearchStudy.ArmComponent> Arm
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A goal for the study
     /// </summary>
-    [FhirElement("objective", Order=320 , FiveWs="")]
+    [FhirElement("objective", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ResearchStudy.ObjectiveComponent> Objective

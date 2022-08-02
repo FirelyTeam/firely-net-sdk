@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// First fill details
       /// </summary>
-      [FhirElement("initialFill", Order=40 , FiveWs="")]
+      [FhirElement("initialFill", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.MedicationRequest.InitialFillComponent InitialFill
       {
@@ -200,7 +200,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum period of time between dispenses
       /// </summary>
-      [FhirElement("dispenseInterval", Order=50 , FiveWs="")]
+      [FhirElement("dispenseInterval", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Duration DispenseInterval
       {
@@ -213,7 +213,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time period supply is authorized for
       /// </summary>
-      [FhirElement("validityPeriod", Order=60 , FiveWs="")]
+      [FhirElement("validityPeriod", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period ValidityPeriod
       {
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of refills authorized
       /// </summary>
-      [FhirElement("numberOfRepeatsAllowed", Order=70 , FiveWs="")]
+      [FhirElement("numberOfRepeatsAllowed", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.UnsignedInt NumberOfRepeatsAllowedElement
       {
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount of medication to supply per dispense
       /// </summary>
-      [FhirElement("quantity", Order=80 , FiveWs="")]
+      [FhirElement("quantity", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Quantity
       {
@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Number of days supply per dispense
       /// </summary>
-      [FhirElement("expectedSupplyDuration", Order=90 , FiveWs="")]
+      [FhirElement("expectedSupplyDuration", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Duration ExpectedSupplyDuration
       {
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// First fill quantity
       /// </summary>
-      [FhirElement("quantity", Order=40 , FiveWs="")]
+      [FhirElement("quantity", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Quantity
       {
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// First fill duration
       /// </summary>
-      [FhirElement("duration", Order=50 , FiveWs="")]
+      [FhirElement("duration", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Duration Duration
       {
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether substitution is allowed or not
       /// </summary>
-      [FhirElement("allowed", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("allowed", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.CodeableConcept))]
       [Cardinality(Min=1,Max=1)]
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why should (not) substitution be made
       /// </summary>
-      [FhirElement("reason", Order=50 , FiveWs="")]
+      [FhirElement("reason", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Reason
       {
@@ -747,7 +747,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status
     /// </summary>
-    [FhirElement("statusReason", Order=110 , FiveWs="")]
+    [FhirElement("statusReason", Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if request is prohibiting action
     /// </summary>
-    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=150 , FiveWs="")]
+    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
     {
@@ -870,7 +870,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reported rather than primary record
     /// </summary>
-    [FhirElement("reported", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("reported", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","PractitionerRole","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -1011,7 +1011,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Desired kind of performer of the medication administration
     /// </summary>
-    [FhirElement("performerType", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("performerType", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PerformerType
     {
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition
     /// </summary>
-    [FhirElement("instantiatesCanonical", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("instantiatesCanonical", InSummary=true, Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
@@ -1101,7 +1101,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition
     /// </summary>
-    [FhirElement("instantiatesUri", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("instantiatesUri", InSummary=true, Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
@@ -1133,7 +1133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What request fulfills
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=300 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=300)]
     [CLSCompliant(false)]
     [References("CarePlan","MedicationRequest","ServiceRequest","ImmunizationRecommendation")]
     [Cardinality(Min=0,Max=-1)]
@@ -1149,7 +1149,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composite request this is part of
     /// </summary>
-    [FhirElement("groupIdentifier", InSummary=true, Order=310 , FiveWs="")]
+    [FhirElement("groupIdentifier", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier GroupIdentifier
     {
@@ -1162,7 +1162,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Overall pattern of medication administration
     /// </summary>
-    [FhirElement("courseOfTherapyType", Order=320 , FiveWs="")]
+    [FhirElement("courseOfTherapyType", Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept CourseOfTherapyType
     {
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated insurance coverage
     /// </summary>
-    [FhirElement("insurance", Order=330 , FiveWs="")]
+    [FhirElement("insurance", Order=330)]
     [CLSCompliant(false)]
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about the prescription
     /// </summary>
-    [FhirElement("note", Order=340 , FiveWs="")]
+    [FhirElement("note", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -1205,7 +1205,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How the medication should be taken
     /// </summary>
-    [FhirElement("dosageInstruction", Order=350 , FiveWs="")]
+    [FhirElement("dosageInstruction", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Dosage> DosageInstruction
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Medication supply authorization
     /// </summary>
-    [FhirElement("dispenseRequest", Order=360 , FiveWs="")]
+    [FhirElement("dispenseRequest", Order=360)]
     [DataMember]
     public Hl7.Fhir.Model.MedicationRequest.DispenseRequestComponent DispenseRequest
     {
@@ -1232,7 +1232,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any restrictions on medication substitution
     /// </summary>
-    [FhirElement("substitution", Order=370 , FiveWs="")]
+    [FhirElement("substitution", Order=370)]
     [DataMember]
     public Hl7.Fhir.Model.MedicationRequest.SubstitutionComponent Substitution
     {
@@ -1245,7 +1245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An order/prescription that is being replaced
     /// </summary>
-    [FhirElement("priorPrescription", Order=380 , FiveWs="")]
+    [FhirElement("priorPrescription", Order=380)]
     [CLSCompliant(false)]
     [References("MedicationRequest")]
     [DataMember]
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical Issue with action
     /// </summary>
-    [FhirElement("detectedIssue", Order=390 , FiveWs="")]
+    [FhirElement("detectedIssue", Order=390)]
     [CLSCompliant(false)]
     [References("DetectedIssue")]
     [Cardinality(Min=0,Max=-1)]
@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of events of interest in the lifecycle
     /// </summary>
-    [FhirElement("eventHistory", Order=400 , FiveWs="")]
+    [FhirElement("eventHistory", Order=400)]
     [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]

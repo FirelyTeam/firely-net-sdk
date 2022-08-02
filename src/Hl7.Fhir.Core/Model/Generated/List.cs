@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Status/Workflow information about this item
       /// </summary>
-      [FhirElement("flag", Order=40 , FiveWs="")]
+      [FhirElement("flag", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Flag
       {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If this item is actually marked as deleted
       /// </summary>
-      [FhirElement("deleted", IsModifier=true, Order=50 , FiveWs="")]
+      [FhirElement("deleted", IsModifier=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean DeletedElement
       {
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When item added to list
       /// </summary>
-      [FhirElement("date", Order=60 , FiveWs="")]
+      [FhirElement("date", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime DateElement
       {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual entry
       /// </summary>
-      [FhirElement("item", Order=70 , FiveWs="")]
+      [FhirElement("item", Order=70)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive name for the list
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What order the list has
     /// </summary>
-    [FhirElement("orderedBy", Order=180 , FiveWs="")]
+    [FhirElement("orderedBy", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept OrderedBy
     {
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments about the list
     /// </summary>
-    [FhirElement("note", Order=190 , FiveWs="")]
+    [FhirElement("note", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entries in the list
     /// </summary>
-    [FhirElement("entry", Order=200 , FiveWs="")]
+    [FhirElement("entry", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.List.EntryComponent> Entry
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why list is empty
     /// </summary>
-    [FhirElement("emptyReason", Order=210 , FiveWs="")]
+    [FhirElement("emptyReason", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept EmptyReason
     {

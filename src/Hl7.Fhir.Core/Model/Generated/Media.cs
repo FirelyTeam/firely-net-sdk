@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Procedure that caused this media to be created
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("ServiceRequest","CarePlan")]
     [Cardinality(Min=0,Max=-1)]
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Imaging view, e.g. Lateral or Antero-posterior
     /// </summary>
-    [FhirElement("view", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("view", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept View
     {
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observed body part
     /// </summary>
-    [FhirElement("bodySite", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("bodySite", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept BodySite
     {
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the device/manufacturer
     /// </summary>
-    [FhirElement("deviceName", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("deviceName", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DeviceNameElement
     {
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Observing Device
     /// </summary>
-    [FhirElement("device", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("device", InSummary=true, Order=240)]
     [CLSCompliant(false)]
     [References("Device","DeviceMetric")]
     [DataMember]
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Height of the image in pixels (photo/video)
     /// </summary>
-    [FhirElement("height", InSummary=true, Order=250 , FiveWs="")]
+    [FhirElement("height", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt HeightElement
     {
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Width of the image in pixels (photo/video)
     /// </summary>
-    [FhirElement("width", InSummary=true, Order=260 , FiveWs="")]
+    [FhirElement("width", InSummary=true, Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt WidthElement
     {
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of frames if &gt; 1 (photo)
     /// </summary>
-    [FhirElement("frames", InSummary=true, Order=270 , FiveWs="")]
+    [FhirElement("frames", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt FramesElement
     {
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Length in seconds (audio / video)
     /// </summary>
-    [FhirElement("duration", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("duration", InSummary=true, Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal DurationElement
     {
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actual Media - reference or data
     /// </summary>
-    [FhirElement("content", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("content", InSummary=true, Order=290)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment Content
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about the media
     /// </summary>
-    [FhirElement("note", Order=300 , FiveWs="")]
+    [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note

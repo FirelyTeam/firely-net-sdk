@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Medication, Substance, or Device requested to be supplied
     /// </summary>
-    [FhirElement("item", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("item", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Medication","Substance","Device")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -351,7 +351,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The requested amount of the item indicated
     /// </summary>
-    [FhirElement("quantity", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("quantity", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Quantity
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The origin of the supply
     /// </summary>
-    [FhirElement("deliverFrom", Order=220 , FiveWs="")]
+    [FhirElement("deliverFrom", Order=220)]
     [CLSCompliant(false)]
     [References("Organization","Location")]
     [DataMember]
@@ -501,7 +501,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The destination of the supply
     /// </summary>
-    [FhirElement("deliverTo", Order=230 , FiveWs="")]
+    [FhirElement("deliverTo", Order=230)]
     [CLSCompliant(false)]
     [References("Organization","Location","Patient")]
     [DataMember]

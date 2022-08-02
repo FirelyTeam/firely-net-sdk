@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Message part content
       /// </summary>
-      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("content", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan or proposal
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request(s) replaced by this request
     /// </summary>
-    [FhirElement("replaces", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("replaces", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("CommunicationRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composite request this is part of
     /// </summary>
-    [FhirElement("groupIdentifier", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("groupIdentifier", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier GroupIdentifier
     {
@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status
     /// </summary>
-    [FhirElement("statusReason", Order=140 , FiveWs="")]
+    [FhirElement("statusReason", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if request is prohibiting action
     /// </summary>
-    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=170 , FiveWs="")]
+    [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
     {
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A channel of communication
     /// </summary>
-    [FhirElement("medium", Order=180 , FiveWs="")]
+    [FhirElement("medium", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Medium
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Message payload
     /// </summary>
-    [FhirElement("payload", Order=220 , FiveWs="")]
+    [FhirElement("payload", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CommunicationRequest.PayloadComponent> Payload
@@ -549,7 +549,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments made about communication request
     /// </summary>
-    [FhirElement("note", Order=300 , FiveWs="")]
+    [FhirElement("note", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note

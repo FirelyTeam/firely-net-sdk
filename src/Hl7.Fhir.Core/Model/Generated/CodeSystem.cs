@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies the filter
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How or why the filter is used
       /// </summary>
-      [FhirElement("description", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("description", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// = | is-a | descendent-of | is-not-a | regex | in | not-in | generalizes | exists
       /// </summary>
-      [FhirElement("operator", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("operator", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What to use for the value
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("value", InSummary=true, Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -448,7 +448,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifies the property on the concepts, and when referred to in operations
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal identifier for the property
       /// </summary>
-      [FhirElement("uri", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("uri", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri UriElement
       {
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the property is defined, and/or what it conveys
       /// </summary>
-      [FhirElement("description", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("description", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// code | Coding | string | integer | boolean | dateTime | decimal
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code that identifies concept
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -730,7 +730,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text to display to the user
       /// </summary>
-      [FhirElement("display", Order=50 , FiveWs="")]
+      [FhirElement("display", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DisplayElement
       {
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal definition
       /// </summary>
-      [FhirElement("definition", Order=60 , FiveWs="")]
+      [FhirElement("definition", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DefinitionElement
       {
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional representations for the concept
       /// </summary>
-      [FhirElement("designation", Order=70 , FiveWs="")]
+      [FhirElement("designation", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeSystem.DesignationComponent> Designation
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value for the concept
       /// </summary>
-      [FhirElement("property", Order=80 , FiveWs="")]
+      [FhirElement("property", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeSystem.ConceptPropertyComponent> Property
@@ -820,7 +820,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Child Concepts (is-a/contains/categorizes)
       /// </summary>
-      [FhirElement("concept", Order=90 , FiveWs="")]
+      [FhirElement("concept", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human language of the designation
       /// </summary>
-      [FhirElement("language", Order=40 , FiveWs="")]
+      [FhirElement("language", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1006,7 +1006,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Details how this designation would be used
       /// </summary>
-      [FhirElement("use", Order=50 , FiveWs="")]
+      [FhirElement("use", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Use
       {
@@ -1019,7 +1019,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The text value for this designation
       /// </summary>
-      [FhirElement("value", Order=60 , FiveWs="")]
+      [FhirElement("value", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference to CodeSystem.property.code
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -1197,7 +1197,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value of the property for this concept
       /// </summary>
-      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("value", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Code),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.FhirDecimal))]
       [Cardinality(Min=1,Max=1)]
@@ -1381,7 +1381,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this code system (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -1412,7 +1412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this code system (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -1569,7 +1569,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -1583,7 +1583,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the code system
     /// </summary>
-    [FhirElement("description", Order=190 , FiveWs="")]
+    [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -1596,7 +1596,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -1610,7 +1610,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for code system (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1637,7 +1637,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=230 , FiveWs="")]
+    [FhirElement("copyright", Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -1650,7 +1650,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If code comparison is case sensitive
     /// </summary>
-    [FhirElement("caseSensitive", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("caseSensitive", InSummary=true, Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean CaseSensitiveElement
     {
@@ -1681,7 +1681,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical reference to the value set with entire code system
     /// </summary>
-    [FhirElement("valueSet", InSummary=true, Order=250 , FiveWs="")]
+    [FhirElement("valueSet", InSummary=true, Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical ValueSetElement
     {
@@ -1712,7 +1712,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// grouped-by | is-a | part-of | classified-with
     /// </summary>
-    [FhirElement("hierarchyMeaning", InSummary=true, Order=260 , FiveWs="")]
+    [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> HierarchyMeaningElement
@@ -1744,7 +1744,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If code system defines a compositional grammar
     /// </summary>
-    [FhirElement("compositional", InSummary=true, Order=270 , FiveWs="")]
+    [FhirElement("compositional", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean CompositionalElement
     {
@@ -1775,7 +1775,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If definitions are not stable
     /// </summary>
-    [FhirElement("versionNeeded", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("versionNeeded", InSummary=true, Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean VersionNeededElement
     {
@@ -1806,7 +1806,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// not-present | example | fragment | complete | supplement
     /// </summary>
-    [FhirElement("content", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("content", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1839,7 +1839,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical URL of Code System this adds designations and properties to
     /// </summary>
-    [FhirElement("supplements", InSummary=true, Order=300 , FiveWs="")]
+    [FhirElement("supplements", InSummary=true, Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical SupplementsElement
     {
@@ -1870,7 +1870,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Total concepts in the code system
     /// </summary>
-    [FhirElement("count", InSummary=true, Order=310 , FiveWs="")]
+    [FhirElement("count", InSummary=true, Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt CountElement
     {
@@ -1901,7 +1901,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Filter that can be used in a value set
     /// </summary>
-    [FhirElement("filter", InSummary=true, Order=320 , FiveWs="")]
+    [FhirElement("filter", InSummary=true, Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeSystem.FilterComponent> Filter
@@ -1915,7 +1915,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information supplied about each concept
     /// </summary>
-    [FhirElement("property", InSummary=true, Order=330 , FiveWs="")]
+    [FhirElement("property", InSummary=true, Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeSystem.PropertyComponent> Property
@@ -1929,7 +1929,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Concepts in the code system
     /// </summary>
-    [FhirElement("concept", Order=340 , FiveWs="")]
+    [FhirElement("concept", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeSystem.ConceptDefinitionComponent> Concept

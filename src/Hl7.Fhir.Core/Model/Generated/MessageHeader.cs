@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of system
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("name", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Particular delivery destination within the destination
       /// </summary>
-      [FhirElement("target", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("target", InSummary=true, Order=50)]
       [CLSCompliant(false)]
       [References("Device")]
       [DataMember]
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual destination address or id
       /// </summary>
-      [FhirElement("endpoint", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("endpoint", InSummary=true, Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUrl EndpointElement
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of system
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("name", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of software running the system
       /// </summary>
-      [FhirElement("software", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("software", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SoftwareElement
       {
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Version of software running
       /// </summary>
-      [FhirElement("version", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("version", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString VersionElement
       {
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human contact for problems
       /// </summary>
-      [FhirElement("contact", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("contact", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.ContactPoint Contact
       {
@@ -421,7 +421,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Actual message source address or id
       /// </summary>
-      [FhirElement("endpoint", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("endpoint", InSummary=true, Order=80)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUrl EndpointElement
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Id of original message
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("identifier", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id IdentifierElement
@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ok | transient-error | fatal-error
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific list of hints/warnings/errors
       /// </summary>
-      [FhirElement("details", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("details", InSummary=true, Order=60)]
       [CLSCompliant(false)]
       [References("OperationOutcome")]
       [DataMember]
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If this is a reply to prior message
     /// </summary>
-    [FhirElement("response", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("response", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.MessageHeader.ResponseComponent Response
     {
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The actual content of the message
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("focus", InSummary=true, Order=180)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -912,7 +912,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Link to the definition for this message
     /// </summary>
-    [FhirElement("definition", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("definition", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical DefinitionElement
     {

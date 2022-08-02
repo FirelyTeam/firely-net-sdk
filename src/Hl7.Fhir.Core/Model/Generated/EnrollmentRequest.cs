@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="")]
+    [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=110 , FiveWs="")]
+    [FhirElement("created", Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target
     /// </summary>
-    [FhirElement("insurer", Order=120 , FiveWs="")]
+    [FhirElement("insurer", Order=120)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurance information
     /// </summary>
-    [FhirElement("coverage", Order=150 , FiveWs="")]
+    [FhirElement("coverage", Order=150)]
     [CLSCompliant(false)]
     [References("Coverage")]
     [DataMember]
