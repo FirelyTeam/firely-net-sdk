@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Zero value and units
     /// </summary>
-    [FhirElement("origin", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("origin", InSummary=true, Order=30)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Origin
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of milliseconds between samples
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("period", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal PeriodElement
@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Multiply data by this before adding to origin
     /// </summary>
-    [FhirElement("factor", InSummary=true, Order=50 , FiveWs="")]
+    [FhirElement("factor", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal FactorElement
     {
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Lower limit of detection
     /// </summary>
-    [FhirElement("lowerLimit", InSummary=true, Order=60 , FiveWs="")]
+    [FhirElement("lowerLimit", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal LowerLimitElement
     {
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Upper limit of detection
     /// </summary>
-    [FhirElement("upperLimit", InSummary=true, Order=70 , FiveWs="")]
+    [FhirElement("upperLimit", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal UpperLimitElement
     {
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Number of sample points at each time point
     /// </summary>
-    [FhirElement("dimensions", InSummary=true, Order=80 , FiveWs="")]
+    [FhirElement("dimensions", InSummary=true, Order=80)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt DimensionsElement
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Decimal values with spaces, or "E" | "U" | "L"
     /// </summary>
-    [FhirElement("data", Order=90 , FiveWs="")]
+    [FhirElement("data", Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DataElement
     {

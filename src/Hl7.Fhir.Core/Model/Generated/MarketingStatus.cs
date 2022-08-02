@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The country in which the marketing authorisation has been granted shall be specified It should be specified using the ISO 3166 ‑ 1 alpha-2 code elements
     /// </summary>
-    [FhirElement("country", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("country", InSummary=true, Order=40)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Country
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where a Medicines Regulatory Agency has granted a marketing authorisation for which specific provisions within a jurisdiction apply, the jurisdiction can be specified using an appropriate controlled terminology The controlled term and the controlled term identifier shall be specified
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=50 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Jurisdiction
     {
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This attribute provides information on the status of the marketing of the medicinal product See ISO/TS 20443 for more information and examples
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=60 , FiveWs="")]
+    [FhirElement("status", InSummary=true, Order=60)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Status
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
     /// </summary>
-    [FhirElement("dateRange", InSummary=true, Order=70 , FiveWs="")]
+    [FhirElement("dateRange", InSummary=true, Order=70)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Period DateRange
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date when the Medicinal Product is placed on the market by the Marketing Authorisation Holder (or where applicable, the manufacturer/distributor) in a country and/or jurisdiction shall be provided A complete date consisting of day, month and year shall be specified using the ISO 8601 date format NOTE “Placed on the market” refers to the release of the Medicinal Product into the distribution chain
     /// </summary>
-    [FhirElement("restoreDate", InSummary=true, Order=80 , FiveWs="")]
+    [FhirElement("restoreDate", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RestoreDateElement
     {

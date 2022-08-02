@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this library (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this library (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the library
     /// </summary>
-    [FhirElement("subtitle", Order=140 , FiveWs="")]
+    [FhirElement("subtitle", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString SubtitleElement
     {
@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of individual the library content is focused on
     /// </summary>
-    [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("subject", Order=180, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Group")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the library
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for library (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Describes the clinical usage of the library
     /// </summary>
-    [FhirElement("usage", Order=260 , FiveWs="")]
+    [FhirElement("usage", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString UsageElement
     {
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=270 , FiveWs="")]
+    [FhirElement("copyright", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the library was approved by publisher
     /// </summary>
-    [FhirElement("approvalDate", Order=280 , FiveWs="")]
+    [FhirElement("approvalDate", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.Date ApprovalDateElement
     {
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the library was last reviewed
     /// </summary>
-    [FhirElement("lastReviewDate", Order=290 , FiveWs="")]
+    [FhirElement("lastReviewDate", Order=290)]
     [DataMember]
     public Hl7.Fhir.Model.Date LastReviewDateElement
     {
@@ -557,7 +557,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the library is expected to be used
     /// </summary>
-    [FhirElement("effectivePeriod", InSummary=true, Order=300 , FiveWs="")]
+    [FhirElement("effectivePeriod", InSummary=true, Order=300)]
     [DataMember]
     public Hl7.Fhir.Model.Period EffectivePeriod
     {
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
-    [FhirElement("topic", Order=310 , FiveWs="")]
+    [FhirElement("topic", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content
     /// </summary>
-    [FhirElement("author", Order=320 , FiveWs="")]
+    [FhirElement("author", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content
     /// </summary>
-    [FhirElement("editor", Order=330 , FiveWs="")]
+    [FhirElement("editor", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content
     /// </summary>
-    [FhirElement("reviewer", Order=340 , FiveWs="")]
+    [FhirElement("reviewer", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content
     /// </summary>
-    [FhirElement("endorser", Order=350 , FiveWs="")]
+    [FhirElement("endorser", Order=350)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
@@ -640,7 +640,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [FhirElement("relatedArtifact", Order=360 , FiveWs="")]
+    [FhirElement("relatedArtifact", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
@@ -654,7 +654,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parameters defined by the library
     /// </summary>
-    [FhirElement("parameter", Order=370 , FiveWs="")]
+    [FhirElement("parameter", Order=370)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ParameterDefinition> Parameter
@@ -668,7 +668,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What data is referenced by this library
     /// </summary>
-    [FhirElement("dataRequirement", Order=380 , FiveWs="")]
+    [FhirElement("dataRequirement", Order=380)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DataRequirement> DataRequirement
@@ -682,7 +682,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contents of the library, either embedded or referenced
     /// </summary>
-    [FhirElement("content", InSummary=true, Order=390 , FiveWs="")]
+    [FhirElement("content", InSummary=true, Order=390)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Content

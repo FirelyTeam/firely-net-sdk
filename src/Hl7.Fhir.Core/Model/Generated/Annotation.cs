@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual responsible for the annotation
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("author", InSummary=true, Order=30, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [References("Practitioner","Patient","RelatedPerson","Organization")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.FhirString))]
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the annotation was made
     /// </summary>
-    [FhirElement("time", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("time", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime TimeElement
     {
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The annotation  - text content (as markdown)
     /// </summary>
-    [FhirElement("text", InSummary=true, Order=50 , FiveWs="")]
+    [FhirElement("text", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Text

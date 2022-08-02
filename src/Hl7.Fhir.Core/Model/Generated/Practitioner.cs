@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An identifier for this qualification for the practitioner
       /// </summary>
-      [FhirElement("identifier", Order=40 , FiveWs="")]
+      [FhirElement("identifier", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded representation of the qualification
       /// </summary>
-      [FhirElement("code", Order=50 , FiveWs="")]
+      [FhirElement("code", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Period during which the qualification is valid
       /// </summary>
-      [FhirElement("period", Order=60 , FiveWs="")]
+      [FhirElement("period", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization that regulates and issues the qualification
       /// </summary>
-      [FhirElement("issuer", Order=70 , FiveWs="")]
+      [FhirElement("issuer", Order=70)]
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The name(s) associated with the practitioner
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.HumanName> Name
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A contact detail for the practitioner (that apply to all roles)
     /// </summary>
-    [FhirElement("telecom", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("telecom", InSummary=true, Order=120)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Address(es) of the practitioner that are not role specific (typically home address)
     /// </summary>
-    [FhirElement("address", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("address", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Address> Address
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown
     /// </summary>
-    [FhirElement("gender", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("gender", InSummary=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date  on which the practitioner was born
     /// </summary>
-    [FhirElement("birthDate", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("birthDate", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.Date BirthDateElement
     {
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Image of the person
     /// </summary>
-    [FhirElement("photo", Order=160 , FiveWs="")]
+    [FhirElement("photo", Order=160)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Photo
@@ -401,7 +401,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Certification, licenses, or training pertaining to the provision of care
     /// </summary>
-    [FhirElement("qualification", Order=170 , FiveWs="")]
+    [FhirElement("qualification", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Practitioner.QualificationComponent> Qualification
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A language the practitioner can use in patient communication
     /// </summary>
-    [FhirElement("communication", Order=180 , FiveWs="")]
+    [FhirElement("communication", Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication

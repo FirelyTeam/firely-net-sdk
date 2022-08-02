@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition
     /// </summary>
-    [FhirElement("instantiatesCanonical", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition
     /// </summary>
-    [FhirElement("instantiatesUri", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What request fulfills
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=120)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What request replaces
     /// </summary>
-    [FhirElement("priorRequest", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("priorRequest", InSummary=true, Order=130)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier of composite request
     /// </summary>
-    [FhirElement("groupIdentifier", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("groupIdentifier", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier GroupIdentifier
     {
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Associated insurance coverage
     /// </summary>
-    [FhirElement("insurance", Order=290 , FiveWs="")]
+    [FhirElement("insurance", Order=290)]
     [CLSCompliant(false)]
     [References("Coverage","ClaimResponse")]
     [Cardinality(Min=0,Max=-1)]
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional clinical information
     /// </summary>
-    [FhirElement("supportingInfo", Order=300 , FiveWs="")]
+    [FhirElement("supportingInfo", Order=300)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Notes or comments
     /// </summary>
-    [FhirElement("note", Order=310 , FiveWs="")]
+    [FhirElement("note", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request provenance
     /// </summary>
-    [FhirElement("relevantHistory", Order=320 , FiveWs="")]
+    [FhirElement("relevantHistory", Order=320)]
     [CLSCompliant(false)]
     [References("Provenance")]
     [Cardinality(Min=0,Max=-1)]

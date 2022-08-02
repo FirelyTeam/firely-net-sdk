@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// rest-hook | websocket | email | sms | message
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the channel points to
       /// </summary>
-      [FhirElement("endpoint", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("endpoint", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUrl EndpointElement
       {
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// MIME type to send, or omit for no payload
       /// </summary>
-      [FhirElement("payload", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("payload", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Code PayloadElement
       {
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Usage depends on the channel type
       /// </summary>
-      [FhirElement("header", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("header", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> HeaderElement
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Rule for server push
     /// </summary>
-    [FhirElement("criteria", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("criteria", InSummary=true, Order=130)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CriteriaElement
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Latest error note
     /// </summary>
-    [FhirElement("error", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("error", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ErrorElement
     {
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The channel on which to report matches to the criteria
     /// </summary>
-    [FhirElement("channel", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("channel", InSummary=true, Order=150)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Subscription.ChannelComponent Channel

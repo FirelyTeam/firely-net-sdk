@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for publishing the recommendations
     /// </summary>
-    [FhirElement("authority", Order=130 , FiveWs="")]
+    [FhirElement("authority", Order=130)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evaluation target disease
     /// </summary>
-    [FhirElement("targetDisease", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("targetDisease", InSummary=true, Order=140)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept TargetDisease
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Immunization being evaluated
     /// </summary>
-    [FhirElement("immunizationEvent", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("immunizationEvent", InSummary=true, Order=150)]
     [CLSCompliant(false)]
     [References("Immunization")]
     [Cardinality(Min=1,Max=1)]
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Status of the dose relative to published recommendations
     /// </summary>
-    [FhirElement("doseStatus", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("doseStatus", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DoseStatus
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for the dose status
     /// </summary>
-    [FhirElement("doseStatusReason", Order=170 , FiveWs="")]
+    [FhirElement("doseStatusReason", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> DoseStatusReason
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evaluation notes
     /// </summary>
-    [FhirElement("description", Order=180 , FiveWs="")]
+    [FhirElement("description", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of vaccine series
     /// </summary>
-    [FhirElement("series", Order=190 , FiveWs="")]
+    [FhirElement("series", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString SeriesElement
     {
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dose number within series
     /// </summary>
-    [FhirElement("doseNumber", Order=200, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("doseNumber", Order=200, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Recommended number of doses for immunity
     /// </summary>
-    [FhirElement("seriesDoses", Order=210, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("seriesDoses", Order=210, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.PositiveInt),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]

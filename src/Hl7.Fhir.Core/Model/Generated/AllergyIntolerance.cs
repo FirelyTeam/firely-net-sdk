@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific substance or pharmaceutical product considered to be responsible for event
       /// </summary>
-      [FhirElement("substance", Order=40 , FiveWs="")]
+      [FhirElement("substance", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Substance
       {
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Clinical symptoms/signs associated with the Event
       /// </summary>
-      [FhirElement("manifestation", Order=50 , FiveWs="")]
+      [FhirElement("manifestation", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Manifestation
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of the event as a whole
       /// </summary>
-      [FhirElement("description", Order=60 , FiveWs="")]
+      [FhirElement("description", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date(/time) when manifestations showed
       /// </summary>
-      [FhirElement("onset", Order=70 , FiveWs="")]
+      [FhirElement("onset", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime OnsetElement
       {
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mild | moderate | severe (of event as a whole)
       /// </summary>
-      [FhirElement("severity", Order=80 , FiveWs="")]
+      [FhirElement("severity", Order=80)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> SeverityElement
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// How the subject was exposed to the substance
       /// </summary>
-      [FhirElement("exposureRoute", Order=90 , FiveWs="")]
+      [FhirElement("exposureRoute", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept ExposureRoute
       {
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text about event not captured in other fields
       /// </summary>
-      [FhirElement("note", Order=100 , FiveWs="")]
+      [FhirElement("note", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date(/time) of last known occurrence of a reaction
     /// </summary>
-    [FhirElement("lastOccurrence", Order=220 , FiveWs="")]
+    [FhirElement("lastOccurrence", Order=220)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime LastOccurrenceElement
     {
@@ -818,7 +818,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional text not captured in other fields
     /// </summary>
-    [FhirElement("note", Order=230 , FiveWs="")]
+    [FhirElement("note", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Adverse Reaction Events linked to exposure to substance
     /// </summary>
-    [FhirElement("reaction", Order=240 , FiveWs="")]
+    [FhirElement("reaction", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> Reaction

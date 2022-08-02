@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
       /// </summary>
-      [FhirElement("relation", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("relation", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString RelationElement
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reference details for the link
       /// </summary>
-      [FhirElement("url", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri UrlElement
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Links related to this entry
       /// </summary>
-      [FhirElement("link", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("link", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// URI for resource (Absolute URL server address or URI for UUID/OID)
       /// </summary>
-      [FhirElement("fullUrl", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("fullUrl", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri FullUrlElement
       {
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A resource in the bundle
       /// </summary>
-      [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice , FiveWs="")]
+      [FhirElement("resource", InSummary=true, Order=60, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search related information
       /// </summary>
-      [FhirElement("search", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("search", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Bundle.SearchComponent Search
       {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional execution information (transaction/batch/history)
       /// </summary>
-      [FhirElement("request", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("request", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Bundle.RequestComponent Request
       {
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Results of execution (transaction/batch/history)
       /// </summary>
-      [FhirElement("response", InSummary=true, Order=90 , FiveWs="")]
+      [FhirElement("response", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Bundle.ResponseComponent Response
       {
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// match | include | outcome - why this is in the result set
       /// </summary>
-      [FhirElement("mode", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Search ranking (between 0 and 1)
       /// </summary>
-      [FhirElement("score", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("score", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal ScoreElement
       {
@@ -786,7 +786,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// GET | HEAD | POST | PUT | DELETE | PATCH
       /// </summary>
-      [FhirElement("method", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("method", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// URL for HTTP equivalent of this entry
       /// </summary>
-      [FhirElement("url", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("url", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri UrlElement
@@ -851,7 +851,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For managing cache currency
       /// </summary>
-      [FhirElement("ifNoneMatch", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("ifNoneMatch", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString IfNoneMatchElement
       {
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For managing cache currency
       /// </summary>
-      [FhirElement("ifModifiedSince", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("ifModifiedSince", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Instant IfModifiedSinceElement
       {
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For managing update contention
       /// </summary>
-      [FhirElement("ifMatch", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("ifMatch", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString IfMatchElement
       {
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// For conditional creates
       /// </summary>
-      [FhirElement("ifNoneExist", InSummary=true, Order=90 , FiveWs="")]
+      [FhirElement("ifNoneExist", InSummary=true, Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString IfNoneExistElement
       {
@@ -1116,7 +1116,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Status response code (text optional)
       /// </summary>
-      [FhirElement("status", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("status", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString StatusElement
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The location (if the operation returns a location)
       /// </summary>
-      [FhirElement("location", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("location", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri LocationElement
       {
@@ -1179,7 +1179,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Etag for the resource (if relevant)
       /// </summary>
-      [FhirElement("etag", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("etag", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString EtagElement
       {
@@ -1210,7 +1210,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Server's date time modified
       /// </summary>
-      [FhirElement("lastModified", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("lastModified", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Instant LastModifiedElement
       {
@@ -1241,7 +1241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// OperationOutcome with hints and warnings (for batch/transaction)
       /// </summary>
-      [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice , FiveWs="")]
+      [FhirElement("outcome", InSummary=true, Order=80, Choice=ChoiceType.ResourceChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
       [DataMember]
@@ -1452,7 +1452,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If search, the total number of matches
     /// </summary>
-    [FhirElement("total", InSummary=true, Order=80 , FiveWs="")]
+    [FhirElement("total", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt TotalElement
     {
@@ -1483,7 +1483,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Links related to this Bundle
     /// </summary>
-    [FhirElement("link", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("link", InSummary=true, Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.LinkComponent> Link
@@ -1497,7 +1497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Entry in the bundle - will have a resource or information
     /// </summary>
-    [FhirElement("entry", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("entry", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Bundle.EntryComponent> Entry
@@ -1511,7 +1511,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Digital Signature
     /// </summary>
-    [FhirElement("signature", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("signature", InSummary=true, Order=110)]
     [DataMember]
     public Hl7.Fhir.Model.Signature Signature
     {

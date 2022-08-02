@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment reference
     /// </summary>
-    [FhirElement("payment", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("payment", InSummary=true, Order=150)]
     [CLSCompliant(false)]
     [References("PaymentReconciliation")]
     [Cardinality(Min=1,Max=1)]
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment or clearing date
     /// </summary>
-    [FhirElement("paymentDate", Order=160 , FiveWs="")]
+    [FhirElement("paymentDate", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.Date PaymentDateElement
     {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party being paid
     /// </summary>
-    [FhirElement("payee", Order=170 , FiveWs="")]
+    [FhirElement("payee", Order=170)]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party being notified
     /// </summary>
-    [FhirElement("recipient", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("recipient", InSummary=true, Order=180)]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=1,Max=1)]
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Monetary amount of the payment
     /// </summary>
-    [FhirElement("amount", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("amount", InSummary=true, Order=190)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Money Amount
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issued or cleared Status of the payment
     /// </summary>
-    [FhirElement("paymentStatus", Order=200 , FiveWs="")]
+    [FhirElement("paymentStatus", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PaymentStatus
     {

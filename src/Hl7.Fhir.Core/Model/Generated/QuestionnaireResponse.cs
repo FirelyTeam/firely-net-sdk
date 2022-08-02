@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Pointer to specific item from Questionnaire
       /// </summary>
-      [FhirElement("linkId", Order=40 , FiveWs="")]
+      [FhirElement("linkId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString LinkIdElement
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ElementDefinition - details for the item
       /// </summary>
-      [FhirElement("definition", Order=50 , FiveWs="")]
+      [FhirElement("definition", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUri DefinitionElement
       {
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name for group or question text
       /// </summary>
-      [FhirElement("text", Order=60 , FiveWs="")]
+      [FhirElement("text", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TextElement
       {
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The response(s) to the question
       /// </summary>
-      [FhirElement("answer", Order=70 , FiveWs="")]
+      [FhirElement("answer", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.AnswerComponent> Answer
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested questionnaire response items
       /// </summary>
-      [FhirElement("item", Order=80 , FiveWs="")]
+      [FhirElement("item", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Single-valued answer to the question
       /// </summary>
-      [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("value", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Resource")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Integer),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Time),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.Attachment),typeof(Hl7.Fhir.Model.Coding),typeof(Hl7.Fhir.Model.Quantity),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested groups and questions
       /// </summary>
-      [FhirElement("item", Order=50 , FiveWs="")]
+      [FhirElement("item", Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this QuestionnaireResponse
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -516,7 +516,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of this action
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("Observation","Procedure")]
     [Cardinality(Min=0,Max=-1)]
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Form being answered
     /// </summary>
-    [FhirElement("questionnaire", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("questionnaire", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical QuestionnaireElement
     {
@@ -687,7 +687,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Groups and questions
     /// </summary>
-    [FhirElement("item", Order=190 , FiveWs="")]
+    [FhirElement("item", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.QuestionnaireResponse.ItemComponent> Item

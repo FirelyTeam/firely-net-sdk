@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifiers of things that are related
       /// </summary>
-      [FhirElement("identifier", Order=40 , FiveWs="")]
+      [FhirElement("identifier", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier Identifier
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Related Resource
       /// </summary>
-      [FhirElement("ref", Order=50 , FiveWs="")]
+      [FhirElement("ref", Order=50)]
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The source system/application/software
     /// </summary>
-    [FhirElement("source", Order=170 , FiveWs="")]
+    [FhirElement("source", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri SourceElement
     {
@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human-readable description (title)
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Items in manifest
     /// </summary>
-    [FhirElement("content", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("content", InSummary=true, Order=190)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related things
     /// </summary>
-    [FhirElement("related", Order=200 , FiveWs="")]
+    [FhirElement("related", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DocumentManifest.RelatedComponent> Related

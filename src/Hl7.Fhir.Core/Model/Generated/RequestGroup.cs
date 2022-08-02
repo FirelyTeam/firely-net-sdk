@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// User-visible prefix for the action (e.g. 1. or A.)
       /// </summary>
-      [FhirElement("prefix", Order=40 , FiveWs="")]
+      [FhirElement("prefix", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString PrefixElement
       {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// User-visible title
       /// </summary>
-      [FhirElement("title", Order=50 , FiveWs="")]
+      [FhirElement("title", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TitleElement
       {
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Short description of the action
       /// </summary>
-      [FhirElement("description", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("description", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Static text equivalent of the action, used if the dynamic aspects cannot be interpreted by the receiving system
       /// </summary>
-      [FhirElement("textEquivalent", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("textEquivalent", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TextEquivalentElement
       {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// routine | urgent | asap | stat
       /// </summary>
-      [FhirElement("priority", Order=80 , FiveWs="")]
+      [FhirElement("priority", Order=80)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code representing the meaning of the action or sub-actions
       /// </summary>
-      [FhirElement("code", Order=90 , FiveWs="")]
+      [FhirElement("code", Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Supporting documentation for the intended performer of the action
       /// </summary>
-      [FhirElement("documentation", Order=100 , FiveWs="")]
+      [FhirElement("documentation", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.RelatedArtifact> Documentation
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether or not the action is applicable
       /// </summary>
-      [FhirElement("condition", Order=110 , FiveWs="")]
+      [FhirElement("condition", Order=110)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.RequestGroup.ConditionComponent> Condition
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relationship to another action
       /// </summary>
-      [FhirElement("relatedAction", Order=120 , FiveWs="")]
+      [FhirElement("relatedAction", Order=120)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.RequestGroup.RelatedActionComponent> RelatedAction
@@ -283,7 +283,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the action should take place
       /// </summary>
-      [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// create | update | remove | fire-event
       /// </summary>
-      [FhirElement("type", Order=150 , FiveWs="")]
+      [FhirElement("type", Order=150)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// visual-group | logical-group | sentence-group
       /// </summary>
-      [FhirElement("groupingBehavior", Order=160 , FiveWs="")]
+      [FhirElement("groupingBehavior", Order=160)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
@@ -359,7 +359,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// any | all | all-or-none | exactly-one | at-most-one | one-or-more
       /// </summary>
-      [FhirElement("selectionBehavior", Order=170 , FiveWs="")]
+      [FhirElement("selectionBehavior", Order=170)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// must | could | must-unless-documented
       /// </summary>
-      [FhirElement("requiredBehavior", Order=180 , FiveWs="")]
+      [FhirElement("requiredBehavior", Order=180)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// yes | no
       /// </summary>
-      [FhirElement("precheckBehavior", Order=190 , FiveWs="")]
+      [FhirElement("precheckBehavior", Order=190)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
@@ -455,7 +455,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// single | multiple
       /// </summary>
-      [FhirElement("cardinalityBehavior", Order=200 , FiveWs="")]
+      [FhirElement("cardinalityBehavior", Order=200)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The target of the action
       /// </summary>
-      [FhirElement("resource", Order=210 , FiveWs="")]
+      [FhirElement("resource", Order=210)]
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Sub action
       /// </summary>
-      [FhirElement("action", Order=220 , FiveWs="")]
+      [FhirElement("action", Order=220)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.RequestGroup.ActionComponent> Action
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// applicability | start | stop
       /// </summary>
-      [FhirElement("kind", Order=40 , FiveWs="")]
+      [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Boolean-valued expression
       /// </summary>
-      [FhirElement("expression", Order=50 , FiveWs="")]
+      [FhirElement("expression", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Expression Expression
       {
@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What action this is related to
       /// </summary>
-      [FhirElement("actionId", Order=40 , FiveWs="")]
+      [FhirElement("actionId", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Id ActionIdElement
@@ -957,7 +957,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// before-start | before | before-end | concurrent-with-start | concurrent | concurrent-with-end | after-start | after | after-end
       /// </summary>
-      [FhirElement("relationship", Order=50 , FiveWs="")]
+      [FhirElement("relationship", Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -990,7 +990,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time offset for the relationship
       /// </summary>
-      [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("offset", Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition
     /// </summary>
-    [FhirElement("instantiatesCanonical", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
@@ -1152,7 +1152,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition
     /// </summary>
-    [FhirElement("instantiatesUri", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
@@ -1184,7 +1184,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan, proposal, or order
     /// </summary>
-    [FhirElement("basedOn", Order=120 , FiveWs="")]
+    [FhirElement("basedOn", Order=120)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request(s) replaced by this request
     /// </summary>
-    [FhirElement("replaces", Order=130 , FiveWs="")]
+    [FhirElement("replaces", Order=130)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composite request this is part of
     /// </summary>
-    [FhirElement("groupIdentifier", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("groupIdentifier", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier GroupIdentifier
     {
@@ -1446,7 +1446,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional notes about the response
     /// </summary>
-    [FhirElement("note", Order=250 , FiveWs="")]
+    [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -1460,7 +1460,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Proposed actions, if any
     /// </summary>
-    [FhirElement("action", Order=260 , FiveWs="")]
+    [FhirElement("action", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RequestGroup.ActionComponent> Action

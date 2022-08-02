@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Longitude with WGS84 datum
       /// </summary>
-      [FhirElement("longitude", Order=40 , FiveWs="")]
+      [FhirElement("longitude", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal LongitudeElement
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Latitude with WGS84 datum
       /// </summary>
-      [FhirElement("latitude", Order=50 , FiveWs="")]
+      [FhirElement("latitude", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal LatitudeElement
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Altitude with WGS84 datum
       /// </summary>
-      [FhirElement("altitude", Order=60 , FiveWs="")]
+      [FhirElement("altitude", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal AltitudeElement
       {
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
       /// </summary>
-      [FhirElement("daysOfWeek", Order=40 , FiveWs="")]
+      [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The Location is open all day
       /// </summary>
-      [FhirElement("allDay", Order=50 , FiveWs="")]
+      [FhirElement("allDay", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean AllDayElement
       {
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time that the Location opens
       /// </summary>
-      [FhirElement("openingTime", Order=60 , FiveWs="")]
+      [FhirElement("openingTime", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Time OpeningTimeElement
       {
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Time that the Location closes
       /// </summary>
-      [FhirElement("closingTime", Order=70 , FiveWs="")]
+      [FhirElement("closingTime", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Time ClosingTimeElement
       {
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the location as used by humans
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A list of alternate names that the location is known as, or was known as, in the past
     /// </summary>
-    [FhirElement("alias", Order=130 , FiveWs="")]
+    [FhirElement("alias", Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirString> AliasElement
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional details about the location that could be displayed as further information to identify the location beyond its name
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details of the location
     /// </summary>
-    [FhirElement("telecom", Order=170 , FiveWs="")]
+    [FhirElement("telecom", Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -779,7 +779,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical location
     /// </summary>
-    [FhirElement("address", Order=180 , FiveWs="")]
+    [FhirElement("address", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Address Address
     {
@@ -805,7 +805,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The absolute geographic location
     /// </summary>
-    [FhirElement("position", Order=200 , FiveWs="")]
+    [FhirElement("position", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Location.PositionComponent Position
     {
@@ -818,7 +818,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for provisioning and upkeep
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("managingOrganization", InSummary=true, Order=210)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -833,7 +833,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Another Location this one is physically a part of
     /// </summary>
-    [FhirElement("partOf", Order=220 , FiveWs="")]
+    [FhirElement("partOf", Order=220)]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What days/times during a week is this location usually open
     /// </summary>
-    [FhirElement("hoursOfOperation", Order=230 , FiveWs="")]
+    [FhirElement("hoursOfOperation", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Location.HoursOfOperationComponent> HoursOfOperation
@@ -862,7 +862,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of availability exceptions
     /// </summary>
-    [FhirElement("availabilityExceptions", Order=240 , FiveWs="")]
+    [FhirElement("availabilityExceptions", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
     {
@@ -893,7 +893,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to services operated for the location
     /// </summary>
-    [FhirElement("endpoint", Order=250 , FiveWs="")]
+    [FhirElement("endpoint", Order=250)]
     [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]

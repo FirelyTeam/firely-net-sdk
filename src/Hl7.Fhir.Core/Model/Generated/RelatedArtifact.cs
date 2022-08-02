@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// documentation | justification | citation | predecessor | successor | derived-from | depends-on | composed-of
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Short label
     /// </summary>
-    [FhirElement("label", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("label", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString LabelElement
     {
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Brief description of the related artifact
     /// </summary>
-    [FhirElement("display", InSummary=true, Order=50 , FiveWs="")]
+    [FhirElement("display", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DisplayElement
     {
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bibliographic citation for the artifact
     /// </summary>
-    [FhirElement("citation", InSummary=true, Order=60 , FiveWs="")]
+    [FhirElement("citation", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Citation
     {
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the artifact can be accessed
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=70 , FiveWs="")]
+    [FhirElement("url", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUrl UrlElement
     {
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What document is being referenced
     /// </summary>
-    [FhirElement("document", InSummary=true, Order=80 , FiveWs="")]
+    [FhirElement("document", InSummary=true, Order=80)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment Document
     {
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What resource is being referenced
     /// </summary>
-    [FhirElement("resource", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("resource", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical ResourceElement
     {

@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Simple summary (disease specific)
       /// </summary>
-      [FhirElement("summary", Order=40 , FiveWs="")]
+      [FhirElement("summary", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Summary
       {
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Formal record of assessment
       /// </summary>
-      [FhirElement("assessment", Order=50 , FiveWs="")]
+      [FhirElement("assessment", Order=50)]
       [CLSCompliant(false)]
       [References("ClinicalImpression","DiagnosticReport","Observation")]
       [Cardinality(Min=0,Max=-1)]
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of staging
       /// </summary>
-      [FhirElement("type", Order=60 , FiveWs="")]
+      [FhirElement("type", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Type
       {
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Anatomical location, if relevant
     /// </summary>
-    [FhirElement("bodySite", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("bodySite", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -657,7 +657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Stage/grade, usually assessed formally
     /// </summary>
-    [FhirElement("stage", Order=230 , FiveWs="")]
+    [FhirElement("stage", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.StageComponent> Stage
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Supporting evidence
     /// </summary>
-    [FhirElement("evidence", Order=240 , FiveWs="")]
+    [FhirElement("evidence", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Condition.EvidenceComponent> Evidence
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information about the Condition
     /// </summary>
-    [FhirElement("note", Order=250 , FiveWs="")]
+    [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note

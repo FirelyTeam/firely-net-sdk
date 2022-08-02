@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// source | alternate | historical
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource being linked
       /// </summary>
-      [FhirElement("resource", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("resource", InSummary=true, Order=50)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Item to be linked
     /// </summary>
-    [FhirElement("item", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("item", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Linkage.ItemComponent> Item

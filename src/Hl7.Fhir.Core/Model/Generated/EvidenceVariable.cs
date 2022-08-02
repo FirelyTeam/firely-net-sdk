@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Natural language description of the characteristic
       /// </summary>
-      [FhirElement("description", Order=40 , FiveWs="")]
+      [FhirElement("description", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code or expression defines members?
       /// </summary>
-      [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("definition", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Group")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.ResourceReference),typeof(Hl7.Fhir.Model.Canonical),typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Expression),typeof(Hl7.Fhir.Model.DataRequirement),typeof(Hl7.Fhir.Model.TriggerDefinition))]
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What code/value pairs define members?
       /// </summary>
-      [FhirElement("usageContext", Order=60 , FiveWs="")]
+      [FhirElement("usageContext", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.UsageContext> UsageContext
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the characteristic includes or excludes members
       /// </summary>
-      [FhirElement("exclude", Order=70 , FiveWs="")]
+      [FhirElement("exclude", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ExcludeElement
       {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What time period do participants cover
       /// </summary>
-      [FhirElement("participantEffective", Order=80, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("participantEffective", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Duration),typeof(Hl7.Fhir.Model.Timing))]
       [DataMember]
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Observation time from study start
       /// </summary>
-      [FhirElement("timeFromStart", Order=90 , FiveWs="")]
+      [FhirElement("timeFromStart", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Duration TimeFromStart
       {
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
-      [FhirElement("groupMeasure", Order=100 , FiveWs="")]
+      [FhirElement("groupMeasure", Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasure> GroupMeasureElement
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this evidence variable (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -468,7 +468,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this evidence variable (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Title for use in informal contexts
     /// </summary>
-    [FhirElement("shortTitle", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("shortTitle", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ShortTitleElement
     {
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subordinate title of the EvidenceVariable
     /// </summary>
-    [FhirElement("subtitle", Order=150 , FiveWs="")]
+    [FhirElement("subtitle", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString SubtitleElement
     {
@@ -656,7 +656,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the evidence variable
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("description", InSummary=true, Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used for footnotes or explanatory notes
     /// </summary>
-    [FhirElement("note", Order=210 , FiveWs="")]
+    [FhirElement("note", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -697,7 +697,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for evidence variable (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=240 , FiveWs="")]
+    [FhirElement("copyright", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the evidence variable was approved by publisher
     /// </summary>
-    [FhirElement("approvalDate", Order=250 , FiveWs="")]
+    [FhirElement("approvalDate", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Date ApprovalDateElement
     {
@@ -769,7 +769,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the evidence variable was last reviewed
     /// </summary>
-    [FhirElement("lastReviewDate", Order=260 , FiveWs="")]
+    [FhirElement("lastReviewDate", Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Date LastReviewDateElement
     {
@@ -800,7 +800,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the evidence variable is expected to be used
     /// </summary>
-    [FhirElement("effectivePeriod", InSummary=true, Order=270 , FiveWs="")]
+    [FhirElement("effectivePeriod", InSummary=true, Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.Period EffectivePeriod
     {
@@ -813,7 +813,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The category of the EvidenceVariable, such as Education, Treatment, Assessment, etc.
     /// </summary>
-    [FhirElement("topic", Order=280 , FiveWs="")]
+    [FhirElement("topic", Order=280)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authored the content
     /// </summary>
-    [FhirElement("author", Order=290 , FiveWs="")]
+    [FhirElement("author", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who edited the content
     /// </summary>
-    [FhirElement("editor", Order=300 , FiveWs="")]
+    [FhirElement("editor", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who reviewed the content
     /// </summary>
-    [FhirElement("reviewer", Order=310 , FiveWs="")]
+    [FhirElement("reviewer", Order=310)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who endorsed the content
     /// </summary>
-    [FhirElement("endorser", Order=320 , FiveWs="")]
+    [FhirElement("endorser", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional documentation, citations, etc.
     /// </summary>
-    [FhirElement("relatedArtifact", Order=330 , FiveWs="")]
+    [FhirElement("relatedArtifact", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// dichotomous | continuous | descriptive
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=340 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=340)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableType> TypeElement
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What defines the members of the evidence element
     /// </summary>
-    [FhirElement("characteristic", InSummary=true, Order=350 , FiveWs="")]
+    [FhirElement("characteristic", InSummary=true, Order=350)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent> Characteristic

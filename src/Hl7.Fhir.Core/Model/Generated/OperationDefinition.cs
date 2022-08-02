@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name in Parameters.parameter.name or in URL
       /// </summary>
-      [FhirElement("name", Order=40 , FiveWs="")]
+      [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code NameElement
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// in | out
       /// </summary>
-      [FhirElement("use", Order=50 , FiveWs="")]
+      [FhirElement("use", Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Minimum Cardinality
       /// </summary>
-      [FhirElement("min", Order=60 , FiveWs="")]
+      [FhirElement("min", Order=60)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Integer MinElement
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Maximum Cardinality (a number or *)
       /// </summary>
-      [FhirElement("max", Order=70 , FiveWs="")]
+      [FhirElement("max", Order=70)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MaxElement
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Description of meaning/use
       /// </summary>
-      [FhirElement("documentation", Order=80 , FiveWs="")]
+      [FhirElement("documentation", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DocumentationElement
       {
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What type this parameter has
       /// </summary>
-      [FhirElement("type", Order=90 , FiveWs="")]
+      [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// If type is Reference | canonical, allowed targets
       /// </summary>
-      [FhirElement("targetProfile", Order=100 , FiveWs="")]
+      [FhirElement("targetProfile", Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Canonical> TargetProfileElement
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// number | date | string | token | reference | composite | quantity | uri | special
       /// </summary>
-      [FhirElement("searchType", Order=110 , FiveWs="")]
+      [FhirElement("searchType", Order=110)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> SearchTypeElement
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// ValueSet details if this is coded
       /// </summary>
-      [FhirElement("binding", Order=120 , FiveWs="")]
+      [FhirElement("binding", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.OperationDefinition.BindingComponent Binding
       {
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// References to this parameter
       /// </summary>
-      [FhirElement("referencedFrom", Order=130 , FiveWs="")]
+      [FhirElement("referencedFrom", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.OperationDefinition.ReferencedFromComponent> ReferencedFrom
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Parts of a nested Parameter
       /// </summary>
-      [FhirElement("part", Order=140 , FiveWs="")]
+      [FhirElement("part", Order=140)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Part
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// required | extensible | preferred | example
       /// </summary>
-      [FhirElement("strength", Order=40 , FiveWs="")]
+      [FhirElement("strength", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Source of value set
       /// </summary>
-      [FhirElement("valueSet", Order=50 , FiveWs="")]
+      [FhirElement("valueSet", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical ValueSetElement
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Referencing parameter
       /// </summary>
-      [FhirElement("source", Order=40 , FiveWs="")]
+      [FhirElement("source", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SourceElement
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Element id of reference
       /// </summary>
-      [FhirElement("sourceId", Order=50 , FiveWs="")]
+      [FhirElement("sourceId", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SourceIdElement
       {
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of parameter to include in overload
       /// </summary>
-      [FhirElement("parameterName", Order=40 , FiveWs="")]
+      [FhirElement("parameterName", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> ParameterNameElement
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Comments to go on overload
       /// </summary>
-      [FhirElement("comment", Order=50 , FiveWs="")]
+      [FhirElement("comment", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CommentElement
       {
@@ -1131,7 +1131,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this operation definition (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
@@ -1163,7 +1163,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this operation definition (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -1353,7 +1353,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -1367,7 +1367,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the operation definition
     /// </summary>
-    [FhirElement("description", Order=190 , FiveWs="")]
+    [FhirElement("description", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -1380,7 +1380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -1394,7 +1394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for operation definition (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -1421,7 +1421,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether content is changed by the operation
     /// </summary>
-    [FhirElement("affectsState", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("affectsState", InSummary=true, Order=230)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean AffectsStateElement
     {
@@ -1452,7 +1452,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used to invoke the operation
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("code", InSummary=true, Order=240)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information about use
     /// </summary>
-    [FhirElement("comment", Order=250 , FiveWs="")]
+    [FhirElement("comment", Order=250)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Comment
     {
@@ -1497,7 +1497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Marks this as a profile of the base
     /// </summary>
-    [FhirElement("base", InSummary=true, Order=260 , FiveWs="")]
+    [FhirElement("base", InSummary=true, Order=260)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical BaseElement
     {
@@ -1528,7 +1528,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Types this operation applies to
     /// </summary>
-    [FhirElement("resource", InSummary=true, Order=270 , FiveWs="")]
+    [FhirElement("resource", InSummary=true, Order=270)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
@@ -1561,7 +1561,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Invoke at the system level?
     /// </summary>
-    [FhirElement("system", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("system", InSummary=true, Order=280)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean SystemElement
@@ -1593,7 +1593,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Invoke at the type level?
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=290 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=290)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean TypeElement
@@ -1625,7 +1625,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Invoke on an instance?
     /// </summary>
-    [FhirElement("instance", InSummary=true, Order=300 , FiveWs="")]
+    [FhirElement("instance", InSummary=true, Order=300)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean InstanceElement
@@ -1657,7 +1657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Validation information for in parameters
     /// </summary>
-    [FhirElement("inputProfile", Order=310 , FiveWs="")]
+    [FhirElement("inputProfile", Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical InputProfileElement
     {
@@ -1688,7 +1688,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Validation information for out parameters
     /// </summary>
-    [FhirElement("outputProfile", Order=320 , FiveWs="")]
+    [FhirElement("outputProfile", Order=320)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical OutputProfileElement
     {
@@ -1719,7 +1719,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Parameters for the operation/query
     /// </summary>
-    [FhirElement("parameter", Order=330 , FiveWs="")]
+    [FhirElement("parameter", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.OperationDefinition.ParameterComponent> Parameter
@@ -1733,7 +1733,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Define overloaded variants for when  generating code
     /// </summary>
-    [FhirElement("overload", Order=340 , FiveWs="")]
+    [FhirElement("overload", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.OperationDefinition.OverloadComponent> Overload

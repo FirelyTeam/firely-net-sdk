@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The schedule resource that this slot defines an interval of status information
     /// </summary>
-    [FhirElement("schedule", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("schedule", InSummary=true, Order=140)]
     [CLSCompliant(false)]
     [References("Schedule")]
     [Cardinality(Min=1,Max=1)]
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// busy | free | busy-unavailable | busy-tentative | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("status", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This slot has already been overbooked, appointments are unlikely to be accepted for this time
     /// </summary>
-    [FhirElement("overbooked", Order=180 , FiveWs="")]
+    [FhirElement("overbooked", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean OverbookedElement
     {
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments on the slot to describe any extended information. Such as custom constraints on the slot
     /// </summary>
-    [FhirElement("comment", Order=190 , FiveWs="")]
+    [FhirElement("comment", Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CommentElement
     {

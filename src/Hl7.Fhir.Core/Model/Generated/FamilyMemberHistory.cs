@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Condition suffered by relation
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// deceased | permanent disability | etc.
       /// </summary>
-      [FhirElement("outcome", Order=50 , FiveWs="")]
+      [FhirElement("outcome", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
       {
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether the condition contributed to the cause of death
       /// </summary>
-      [FhirElement("contributedToDeath", Order=60 , FiveWs="")]
+      [FhirElement("contributedToDeath", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ContributedToDeathElement
       {
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When condition first manifested
       /// </summary>
-      [FhirElement("onset", Order=70, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("onset", Order=70, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString))]
       [DataMember]
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Extra information about condition
       /// </summary>
-      [FhirElement("note", Order=80 , FiveWs="")]
+      [FhirElement("note", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Annotation> Note
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition
     /// </summary>
-    [FhirElement("instantiatesCanonical", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition
     /// </summary>
-    [FhirElement("instantiatesUri", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// subject-unknown | withheld | unable-to-obtain | deferred
     /// </summary>
-    [FhirElement("dataAbsentReason", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("dataAbsentReason", InSummary=true, Order=130)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept DataAbsentReason
     {
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The family member described
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationship to the subject
     /// </summary>
-    [FhirElement("relationship", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("relationship", InSummary=true, Order=170)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// male | female | other | unknown
     /// </summary>
-    [FhirElement("sex", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("sex", InSummary=true, Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Sex
     {
@@ -540,7 +540,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (approximate) date of birth
     /// </summary>
-    [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("born", Order=190, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// (approximate) age
     /// </summary>
-    [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("age", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Age is estimated?
     /// </summary>
-    [FhirElement("estimatedAge", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("estimatedAge", InSummary=true, Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean EstimatedAgeElement
     {
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dead? How old/when?
     /// </summary>
-    [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+    [FhirElement("deceased", InSummary=true, Order=220, Choice=ChoiceType.DatatypeChoice)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range),typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.FhirString))]
     [DataMember]
@@ -646,7 +646,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// General note about related person
     /// </summary>
-    [FhirElement("note", Order=250 , FiveWs="")]
+    [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -660,7 +660,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition that the related person had
     /// </summary>
-    [FhirElement("condition", Order=260 , FiveWs="")]
+    [FhirElement("condition", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FamilyMemberHistory.ConditionComponent> Condition

@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Coded value for the eligibility
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Describes the eligibility conditions for the service
       /// </summary>
-      [FhirElement("comment", Order=50 , FiveWs="")]
+      [FhirElement("comment", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Comment
       {
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// mon | tue | wed | thu | fri | sat | sun
       /// </summary>
-      [FhirElement("daysOfWeek", Order=40 , FiveWs="")]
+      [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Always available? e.g. 24 hour service
       /// </summary>
-      [FhirElement("allDay", Order=50 , FiveWs="")]
+      [FhirElement("allDay", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean AllDayElement
       {
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Opening time of day (ignored if allDay = true)
       /// </summary>
-      [FhirElement("availableStartTime", Order=60 , FiveWs="")]
+      [FhirElement("availableStartTime", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.Time AvailableStartTimeElement
       {
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Closing time of day (ignored if allDay = true)
       /// </summary>
-      [FhirElement("availableEndTime", Order=70 , FiveWs="")]
+      [FhirElement("availableEndTime", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.Time AvailableEndTimeElement
       {
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reason presented to the user explaining why time not available
       /// </summary>
-      [FhirElement("description", Order=40 , FiveWs="")]
+      [FhirElement("description", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Service not available from this date
       /// </summary>
-      [FhirElement("during", Order=50 , FiveWs="")]
+      [FhirElement("during", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period During
       {
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that provides this service
     /// </summary>
-    [FhirElement("providedBy", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("providedBy", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -662,7 +662,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of service that may be delivered or performed
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -676,7 +676,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specialties handled by the HealthcareService
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("specialty", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -706,7 +706,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of service as presented to a consumer while searching
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -737,7 +737,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional description and/or any specific issues not covered elsewhere
     /// </summary>
-    [FhirElement("comment", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("comment", InSummary=true, Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CommentElement
     {
@@ -768,7 +768,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Extra details about the service that can't be placed in the other fields
     /// </summary>
-    [FhirElement("extraDetails", Order=180 , FiveWs="")]
+    [FhirElement("extraDetails", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown ExtraDetails
     {
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Facilitates quick identification of the service
     /// </summary>
-    [FhirElement("photo", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("photo", InSummary=true, Order=190)]
     [DataMember]
     public Hl7.Fhir.Model.Attachment Photo
     {
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contacts related to the healthcare service
     /// </summary>
-    [FhirElement("telecom", Order=200 , FiveWs="")]
+    [FhirElement("telecom", Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Telecom
@@ -808,7 +808,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Location(s) service is intended for/available to
     /// </summary>
-    [FhirElement("coverageArea", Order=210 , FiveWs="")]
+    [FhirElement("coverageArea", Order=210)]
     [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]
@@ -824,7 +824,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Conditions under which service is available/offered
     /// </summary>
-    [FhirElement("serviceProvisionCode", Order=220 , FiveWs="")]
+    [FhirElement("serviceProvisionCode", Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceProvisionCode
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Specific eligibility requirements required to use the service
     /// </summary>
-    [FhirElement("eligibility", Order=230 , FiveWs="")]
+    [FhirElement("eligibility", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.HealthcareService.EligibilityComponent> Eligibility
@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Programs that this service is applicable to
     /// </summary>
-    [FhirElement("program", Order=240 , FiveWs="")]
+    [FhirElement("program", Order=240)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Program
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Collection of characteristics (attributes)
     /// </summary>
-    [FhirElement("characteristic", Order=250 , FiveWs="")]
+    [FhirElement("characteristic", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Characteristic
@@ -880,7 +880,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The language that this service is offered in
     /// </summary>
-    [FhirElement("communication", Order=260 , FiveWs="")]
+    [FhirElement("communication", Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Communication
@@ -894,7 +894,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Ways that the service accepts referrals
     /// </summary>
-    [FhirElement("referralMethod", Order=270 , FiveWs="")]
+    [FhirElement("referralMethod", Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReferralMethod
@@ -908,7 +908,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If an appointment is required for access to this service
     /// </summary>
-    [FhirElement("appointmentRequired", Order=280 , FiveWs="")]
+    [FhirElement("appointmentRequired", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean AppointmentRequiredElement
     {
@@ -939,7 +939,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Times the Service Site is available
     /// </summary>
-    [FhirElement("availableTime", Order=290 , FiveWs="")]
+    [FhirElement("availableTime", Order=290)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.HealthcareService.AvailableTimeComponent> AvailableTime
@@ -953,7 +953,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Not available during this time due to provided reason
     /// </summary>
-    [FhirElement("notAvailable", Order=300 , FiveWs="")]
+    [FhirElement("notAvailable", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.HealthcareService.NotAvailableComponent> NotAvailable
@@ -967,7 +967,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of availability exceptions
     /// </summary>
-    [FhirElement("availabilityExceptions", Order=310 , FiveWs="")]
+    [FhirElement("availabilityExceptions", Order=310)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString AvailabilityExceptionsElement
     {
@@ -998,7 +998,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Technical endpoints providing access to electronic services operated for the healthcare service
     /// </summary>
-    [FhirElement("endpoint", Order=320 , FiveWs="")]
+    [FhirElement("endpoint", Order=320)]
     [CLSCompliant(false)]
     [References("Endpoint")]
     [Cardinality(Min=0,Max=-1)]

@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// personal | professional | legal | official
       /// </summary>
-      [FhirElement("mode", Order=40 , FiveWs="")]
+      [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When the composition was attested
       /// </summary>
-      [FhirElement("time", Order=50 , FiveWs="")]
+      [FhirElement("time", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDateTime TimeElement
       {
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// replaces | transforms | signs | appends
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Target of the relationship
       /// </summary>
-      [FhirElement("target", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("target", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Composition")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Identifier),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Code(s) that apply to the event being documented
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Code
@@ -564,7 +564,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The period covered by the documentation
       /// </summary>
-      [FhirElement("period", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("period", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The event(s) being documented
       /// </summary>
-      [FhirElement("detail", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("detail", InSummary=true, Order=60)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Label for section (e.g. for ToC)
       /// </summary>
-      [FhirElement("title", Order=40 , FiveWs="")]
+      [FhirElement("title", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TitleElement
       {
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Classification of section (recommended)
       /// </summary>
-      [FhirElement("code", Order=50 , FiveWs="")]
+      [FhirElement("code", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
       {
@@ -767,7 +767,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who/what the section is about, when it is not about the subject of composition
       /// </summary>
-      [FhirElement("focus", Order=70 , FiveWs="")]
+      [FhirElement("focus", Order=70)]
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text summary of the section, for human interpretation
       /// </summary>
-      [FhirElement("text", Order=80 , FiveWs="")]
+      [FhirElement("text", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Narrative Text
       {
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Order of section entries
       /// </summary>
-      [FhirElement("orderedBy", Order=100 , FiveWs="")]
+      [FhirElement("orderedBy", Order=100)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept OrderedBy
       {
@@ -840,7 +840,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A reference to data that supports this section
       /// </summary>
-      [FhirElement("entry", Order=110 , FiveWs="")]
+      [FhirElement("entry", Order=110)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=0,Max=-1)]
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Why the section is empty
       /// </summary>
-      [FhirElement("emptyReason", Order=120 , FiveWs="")]
+      [FhirElement("emptyReason", Order=120)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept EmptyReason
       {
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested Section
       /// </summary>
-      [FhirElement("section", Order=130 , FiveWs="")]
+      [FhirElement("section", Order=130)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
@@ -1199,7 +1199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Human Readable name/title
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=170)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// As defined by affinity domain
     /// </summary>
-    [FhirElement("confidentiality", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("confidentiality", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification> ConfidentialityElement
@@ -1263,7 +1263,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attests to accuracy of composition
     /// </summary>
-    [FhirElement("attester", Order=190 , FiveWs="")]
+    [FhirElement("attester", Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.AttesterComponent> Attester
@@ -1277,7 +1277,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization which maintains the composition
     /// </summary>
-    [FhirElement("custodian", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("custodian", InSummary=true, Order=200)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -1292,7 +1292,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Relationships to other compositions/documents
     /// </summary>
-    [FhirElement("relatesTo", Order=210 , FiveWs="")]
+    [FhirElement("relatesTo", Order=210)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.RelatesToComponent> RelatesTo
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The clinical service(s) being documented
     /// </summary>
-    [FhirElement("event", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("event", InSummary=true, Order=220)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.EventComponent> Event
@@ -1320,7 +1320,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Composition is broken into sections
     /// </summary>
-    [FhirElement("section", Order=230 , FiveWs="")]
+    [FhirElement("section", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Composition.SectionComponent> Section
