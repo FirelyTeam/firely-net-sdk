@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of performance
       /// </summary>
-      [FhirElement("function", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("function", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Function
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The reference to the practitioner
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50 , FiveWs="FiveWs.actor")]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="FiveWs.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","PractitionerRole","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization the device or practitioner was acting for
       /// </summary>
-      [FhirElement("onBehalfOf", Order=60 , FiveWs="")]
+      [FhirElement("onBehalfOf", Order=60)]
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Kind of change to device
       /// </summary>
-      [FhirElement("action", Order=40 , FiveWs="")]
+      [FhirElement("action", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Action
       {
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Device that was changed
       /// </summary>
-      [FhirElement("manipulated", Order=50 , FiveWs="")]
+      [FhirElement("manipulated", Order=50)]
       [CLSCompliant(false)]
       [References("Device")]
       [Cardinality(Min=1,Max=1)]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Identifiers for this procedure
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates FHIR protocol or definition
     /// </summary>
-    [FhirElement("instantiatesCanonical", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("instantiatesCanonical", InSummary=true, Order=100)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> InstantiatesCanonicalElement
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instantiates external protocol or definition
     /// </summary>
-    [FhirElement("instantiatesUri", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("instantiatesUri", InSummary=true, Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.FhirUri> InstantiatesUriElement
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A request for this procedure
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=120)]
     [CLSCompliant(false)]
     [References("CarePlan","ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("partOf", InSummary=true, Order=130)]
     [CLSCompliant(false)]
     [References("Procedure","Observation","MedicationAdministration")]
     [Cardinality(Min=0,Max=-1)]
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | not-done | on-hold | stopped | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=140 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for current status
     /// </summary>
-    [FhirElement("statusReason", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("statusReason", InSummary=true, Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept StatusReason
     {
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the procedure
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=160 , FiveWs="FiveWs.class")]
+    [FhirElement("category", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identification of the procedure
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=170 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("code", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the procedure was performed on
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=180 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=180, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter created as part of
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=190 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", InSummary=true, Order=190, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the procedure was performed
     /// </summary>
-    [FhirElement("performed", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.done[x]")]
+    [FhirElement("performed", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Age),typeof(Hl7.Fhir.Model.Range))]
     [DataMember]
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the procedure
     /// </summary>
-    [FhirElement("recorder", InSummary=true, Order=210 , FiveWs="FiveWs.author")]
+    [FhirElement("recorder", InSummary=true, Order=210, FiveWs="FiveWs.author")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner","PractitionerRole")]
     [DataMember]
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person who asserts this procedure
     /// </summary>
-    [FhirElement("asserter", InSummary=true, Order=220 , FiveWs="FiveWs.source")]
+    [FhirElement("asserter", InSummary=true, Order=220, FiveWs="FiveWs.source")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Practitioner","PractitionerRole")]
     [DataMember]
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The people who performed the procedure
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("performer", InSummary=true, Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Procedure.PerformerComponent> Performer
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the procedure happened
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=240 , FiveWs="FiveWs.where[x]")]
+    [FhirElement("location", InSummary=true, Order=240, FiveWs="FiveWs.where[x]")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded reason procedure performed
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=250 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonCode", InSummary=true, Order=250, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -651,7 +651,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The justification that the procedure was performed
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=260 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonReference", InSummary=true, Order=260, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","Procedure","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target body sites
     /// </summary>
-    [FhirElement("bodySite", InSummary=true, Order=270 , FiveWs="")]
+    [FhirElement("bodySite", InSummary=true, Order=270)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> BodySite
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The result of procedure
     /// </summary>
-    [FhirElement("outcome", InSummary=true, Order=280 , FiveWs="")]
+    [FhirElement("outcome", InSummary=true, Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Outcome
     {
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Any report resulting from the procedure
     /// </summary>
-    [FhirElement("report", Order=290 , FiveWs="")]
+    [FhirElement("report", Order=290)]
     [CLSCompliant(false)]
     [References("DiagnosticReport","DocumentReference","Composition")]
     [Cardinality(Min=0,Max=-1)]
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Complication following the procedure
     /// </summary>
-    [FhirElement("complication", Order=300 , FiveWs="")]
+    [FhirElement("complication", Order=300)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Complication
@@ -724,7 +724,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A condition that is a result of the procedure
     /// </summary>
-    [FhirElement("complicationDetail", Order=310 , FiveWs="")]
+    [FhirElement("complicationDetail", Order=310)]
     [CLSCompliant(false)]
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instructions for follow up
     /// </summary>
-    [FhirElement("followUp", Order=320 , FiveWs="")]
+    [FhirElement("followUp", Order=320)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> FollowUp
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information about the procedure
     /// </summary>
-    [FhirElement("note", Order=330 , FiveWs="")]
+    [FhirElement("note", Order=330)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note
@@ -768,7 +768,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manipulated, implanted, or removed device
     /// </summary>
-    [FhirElement("focalDevice", Order=340 , FiveWs="")]
+    [FhirElement("focalDevice", Order=340)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Procedure.FocalDeviceComponent> FocalDevice
@@ -782,7 +782,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Items used during procedure
     /// </summary>
-    [FhirElement("usedReference", Order=350 , FiveWs="")]
+    [FhirElement("usedReference", Order=350)]
     [CLSCompliant(false)]
     [References("Device","Medication","Substance")]
     [Cardinality(Min=0,Max=-1)]
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded items used during the procedure
     /// </summary>
-    [FhirElement("usedCode", Order=360 , FiveWs="")]
+    [FhirElement("usedCode", Order=360)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> UsedCode

@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// allowed | possible | actual
       /// </summary>
-      [FhirElement("role", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole> RoleElement
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// An organization that manufactures this ingredient
       /// </summary>
-      [FhirElement("manufacturer", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("manufacturer", InSummary=true, Order=50)]
       [CLSCompliant(false)]
       [References("Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A code or full resource that represents the ingredient substance
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("code", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Code
@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of substance, per presentation, or per volume or mass, and type of quantity
       /// </summary>
-      [FhirElement("strength", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("strength", InSummary=true, Order=50)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Ingredient.StrengthComponent> Strength
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The quantity of substance in the unit of presentation
       /// </summary>
-      [FhirElement("presentation", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("presentation", InSummary=true, Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange))]
       [DataMember]
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text of either the whole presentation strength or a part of it (rest being in Strength.presentation as a ratio)
       /// </summary>
-      [FhirElement("textPresentation", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("textPresentation", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TextPresentationElement
       {
@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The strength per unitary volume (or mass)
       /// </summary>
-      [FhirElement("concentration", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("concentration", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange))]
       [DataMember]
@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Text of either the whole concentration strength or a part of it (rest being in Strength.concentration as a ratio)
       /// </summary>
-      [FhirElement("textConcentration", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("textConcentration", InSummary=true, Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TextConcentrationElement
       {
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When strength is measured at a particular point or distance
       /// </summary>
-      [FhirElement("measurementPoint", InSummary=true, Order=80 , FiveWs="")]
+      [FhirElement("measurementPoint", InSummary=true, Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MeasurementPointElement
       {
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the strength range applies
       /// </summary>
-      [FhirElement("country", InSummary=true, Order=90 , FiveWs="")]
+      [FhirElement("country", InSummary=true, Order=90)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Strength expressed in terms of a reference substance
       /// </summary>
-      [FhirElement("referenceStrength", InSummary=true, Order=100 , FiveWs="")]
+      [FhirElement("referenceStrength", InSummary=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Ingredient.ReferenceStrengthComponent> ReferenceStrength
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relevant reference substance
       /// </summary>
-      [FhirElement("substance", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("substance", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableReference Substance
       {
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Strength expressed in terms of a reference substance
       /// </summary>
-      [FhirElement("strength", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("strength", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Ratio),typeof(Hl7.Fhir.Model.RatioRange))]
       [Cardinality(Min=1,Max=1)]
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When strength is measured at a particular point or distance
       /// </summary>
-      [FhirElement("measurementPoint", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("measurementPoint", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString MeasurementPointElement
       {
@@ -746,7 +746,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where the strength range applies
       /// </summary>
-      [FhirElement("country", InSummary=true, Order=70 , FiveWs="")]
+      [FhirElement("country", InSummary=true, Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Country
@@ -870,7 +870,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier or code by which the ingredient can be referenced
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("identifier", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -883,7 +883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The product which this ingredient is a constituent part of
     /// </summary>
-    [FhirElement("for", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("for", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("MedicinalProductDefinition","AdministrableProductDefinition","ManufacturedItemDefinition")]
     [Cardinality(Min=0,Max=-1)]
@@ -932,7 +932,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Purpose of the ingredient within the product, e.g. active, inactive
     /// </summary>
-    [FhirElement("role", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("role", InSummary=true, Order=120)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Role
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Precise action within the drug product, e.g. antioxidant, alkalizing agent
     /// </summary>
-    [FhirElement("function", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("function", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Function
@@ -960,7 +960,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If the ingredient is a known or suspected allergen
     /// </summary>
-    [FhirElement("allergenicIndicator", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("allergenicIndicator", InSummary=true, Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean AllergenicIndicatorElement
     {
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An organization that manufactures this ingredient
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("manufacturer", InSummary=true, Order=150)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Ingredient.ManufacturerComponent> Manufacturer
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The substance that comprises this ingredient
     /// </summary>
-    [FhirElement("substance", InSummary=true, Order=160 , FiveWs="")]
+    [FhirElement("substance", InSummary=true, Order=160)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Ingredient.SubstanceComponent Substance

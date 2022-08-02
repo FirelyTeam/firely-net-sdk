@@ -1160,7 +1160,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Numerical value (with implicit precision)
     /// </summary>
-    [FhirElement("value", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("value", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal ValueElement
     {
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ISO 4217 Currency Code
     /// </summary>
-    [FhirElement("currency", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("currency", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.Money.Currencies> CurrencyElement

@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Amount dispensed
       /// </summary>
-      [FhirElement("quantity", Order=40 , FiveWs="")]
+      [FhirElement("quantity", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.Quantity Quantity
       {
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Medication, Substance, or Device supplied
       /// </summary>
-      [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("item", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Medication","Substance","Device")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="")]
+    [FhirElement("identifier", Order=90)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Fulfills plan, proposal or order
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=100 , FiveWs="")]
+    [FhirElement("basedOn", InSummary=true, Order=100)]
     [CLSCompliant(false)]
     [References("SupplyRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of referenced event
     /// </summary>
-    [FhirElement("partOf", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("partOf", InSummary=true, Order=110)]
     [CLSCompliant(false)]
     [References("SupplyDelivery","Contract")]
     [Cardinality(Min=0,Max=-1)]
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in-progress | completed | abandoned | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120 , FiveWs="")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient for whom the item is supplied
     /// </summary>
-    [FhirElement("patient", Order=130 , FiveWs="")]
+    [FhirElement("patient", Order=130)]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Category of dispense event
     /// </summary>
-    [FhirElement("type", Order=140 , FiveWs="")]
+    [FhirElement("type", Order=140)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The item that is delivered or supplied
     /// </summary>
-    [FhirElement("suppliedItem", Order=150 , FiveWs="")]
+    [FhirElement("suppliedItem", Order=150)]
     [DataMember]
     public Hl7.Fhir.Model.SupplyDelivery.SuppliedItemComponent SuppliedItem
     {
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When event occurred
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.done[x]")]
+    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Dispenser
     /// </summary>
-    [FhirElement("supplier", Order=170 , FiveWs="")]
+    [FhirElement("supplier", Order=170)]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Organization")]
     [DataMember]
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the Supply was sent
     /// </summary>
-    [FhirElement("destination", Order=180 , FiveWs="")]
+    [FhirElement("destination", Order=180)]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who collected the Supply
     /// </summary>
-    [FhirElement("receiver", Order=190 , FiveWs="")]
+    [FhirElement("receiver", Order=190)]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [Cardinality(Min=0,Max=-1)]
