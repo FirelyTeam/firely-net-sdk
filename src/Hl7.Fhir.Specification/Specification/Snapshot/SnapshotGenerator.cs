@@ -1702,17 +1702,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
             result = snap.ReturnToBookmark(lastSlice);
             // Copy the original (unmerged) slice base element to snapshot
-            if (result)
-            {
-                result = snap.InsertAfter((ElementDefinition)sliceBase.Current.DeepCopy());
-
-                // snapshot has a binding, but not a bindable type
-                if (result && snap.Current.Binding is not null && !diff.Current.Type.Any(t => ModelInfo.IsBindable(t.Code)))
-                {
-                    // remove the binding then
-                    snap.Current.Binding = null;
-                }
-            }
+            result = snap.InsertAfter((ElementDefinition)sliceBase.Current.DeepCopy());
             // Recursively copy the original (unmerged) child elements, if necessary
             if (result && sliceBase.HasChildren)
             {

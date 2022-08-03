@@ -8092,7 +8092,6 @@ namespace Hl7.Fhir.Specification.Tests
             element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
             element.Binding.Should().NotBeNull();
-
         }
 
 
@@ -8116,11 +8115,6 @@ namespace Hl7.Fhir.Specification.Tests
             var element = elements.Should().ContainSingle(e => e.Path == "MedicationStatement.dosage.asNeededBoolean").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "boolean");
             element.Binding.Should().BeNull();
-
-            //element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept").Subject;
-            //element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
-            //element.Binding.Should().NotBeNull();
-
         }
 
         public static IEnumerable<object[]> ElementDefinitionPropertyExtensionTestCasesStu3
