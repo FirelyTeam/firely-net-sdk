@@ -11,7 +11,6 @@
 #define NORMALIZE_RENAMED_TYPESLICE
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -171,6 +170,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.IsSummaryElement = mergePrimitiveElement(snap.IsSummaryElement, diff.IsSummaryElement);
 
                 snap.Binding = mergeBinding(snap.Binding, diff.Binding);
+
+                // [MV 20220803] Remove Binding when the element has no bindable type
+                if (snap.Binding is not null && !snap.Type.Any(t => ModelInfo.IsBindable(t.Code)))
+                {
+                    snap.Binding = null;
+                }
 
                 // Mappings are cumulative, but keep unique on full contents
                 snap.Mapping = mergeCollection(snap.Mapping, diff.Mapping, matchExactly);
