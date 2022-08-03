@@ -9755,11 +9755,6 @@ namespace Hl7.Fhir.Specification.Tests
             var element = elements.Should().ContainSingle(e => e.Path == "MedicationStatement.dosage.asNeeded[x]").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "boolean");
             element.Binding.Should().BeNull();
-
-            //element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept").Subject;
-            //element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
-            //element.Binding.Should().NotBeNull();
-
         }
 
         private void logExtensions(string title, IEnumerable<Extension> extensions, int level = 1)
