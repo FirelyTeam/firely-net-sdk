@@ -60,6 +60,9 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             var extensions = p.Select("Patient.active[0].extension");
             Assert.AreEqual(2, extensions.Count());
+
+            var boolValue = p.Select("Patient.active");
+            Assert.IsTrue(boolValue.All(bv => bv is FhirBoolean));
         }
 
         [TestMethod]
