@@ -8083,6 +8083,55 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(elem.CommonTypeCode());
         }
 
+        [TestMethod]
+        public async T.Task BindingRemovedAfterTypeSlicing()
+        {
+            // Arrange
+            var resolver = new CachedResolver(
+                    new MultiResolver(
+                        new TestProfileArtifactSource(),
+                        ZipSource.CreateValidationSource()));
+
+            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132";
+
+            var sd = await resolver.FindStructureDefinitionAsync(url);
+
+            var snapshotGenerator = new SnapshotGenerator(resolver, _settings);
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            var element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededBoolean").Subject;
+            element.Type.Should().OnlyContain(t => t.Code == "boolean");
+            element.Binding.Should().BeNull();
+
+            element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept").Subject;
+            element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
+            element.Binding.Should().NotBeNull();
+        }
+
+
+        [TestMethod]
+        public async T.Task BindingRemovedAfterTypeConstraint()
+        {
+            // Arrange
+            var resolver = new CachedResolver(
+                    new MultiResolver(
+                        new TestProfileArtifactSource(),
+                        ZipSource.CreateValidationSource()));
+
+            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132-2";
+
+            var sd = await resolver.FindStructureDefinitionAsync(url);
+
+            var snapshotGenerator = new SnapshotGenerator(resolver, _settings);
+
+            var elements = await snapshotGenerator.GenerateAsync(sd);
+
+            var element = elements.Should().ContainSingle(e => e.Path == "MedicationStatement.dosage.asNeededBoolean").Subject;
+            element.Type.Should().OnlyContain(t => t.Code == "boolean");
+            element.Binding.Should().BeNull();
+        }
+
         public static IEnumerable<object[]> ElementDefinitionPropertyExtensionTestCasesStu3
         {
             get
