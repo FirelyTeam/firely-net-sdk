@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 OnPrepareElement(newElement, typeStructure, baseElement);
 
                 // [WMR 20170421] Merge custom element Id from diff
-                mergeElementDefinition(newElement, diff.Current, true);
+                mergeElementDefinition(newElement, diff.Current, true, diff?.StructureDefinition?.Url ?? _stack.CurrentProfileUri);
 
                 snap.AppendChild(newElement);
             }
@@ -834,7 +834,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Then merge diff constraints from profile
                 // [WMR 20170424] Merge custom element Id from diff, if specified
-                mergeElementDefinition(snap.Current, diffElem, true);
+                mergeElementDefinition(snap.Current, diffElem, true, diff?.StructureDefinition?.Url ?? _stack.CurrentProfileUri);
 
                 // [WMR 20170710] NEW: Generate element IDs while processing
                 // Generate id if not explicitly specified in diff (don't inherit from base)
@@ -951,11 +951,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <param name="snap"></param>
         /// <param name="diff"></param>
         /// <param name="mergeElementId">Determines if the snapshot should inherit Element.id values from the differential.</param>
-        private void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+        /// <param name="diffBaseUrl">The base url of the differential, this might be needed to set Constraint.Source</param>
+        private void mergeElementDefinition(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string diffBaseUrl)
         {
 
             // [WMR 20170421] Add parameter to control when (not) to inherit Element.id
-            ElementDefnMerger.Merge(this, snap, diff, mergeElementId);
+            ElementDefnMerger.Merge(this, snap, diff, mergeElementId, diffBaseUrl);
         }
 
         // [WMR 20160720] Merge custom element type profiles, e.g. Patient.name with type.profile = "MyHumanName"
@@ -1198,7 +1199,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             rebasedRootElem.Path = diff.Path;
 
                             // Merge the type profile root element; no need to expand children
-                            mergeElementDefinition(snap.Current, rebasedRootElem, false);
+                            mergeElementDefinition(snap.Current, rebasedRootElem, false, typeStructure.Url);
                         }
                     }
                 }
@@ -1571,7 +1572,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 {
                     // Merge newly created slicing entry onto snap
                     // [WMR 20170421] Don't merge element Id from slice entry
-                    mergeElementDefinition(snap.Current, slicingEntry, false);
+                    mergeElementDefinition(snap.Current, slicingEntry, false, diff?.StructureDefinition?.Url ?? _stack.CurrentProfileUri);
 
                     // [WMR 20170711] Explicitly re-generate the extension element id
                     if (_settings.GenerateElementIds)
@@ -2102,7 +2103,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 // Merge differential constraints onto base root element definition
                 // [WMR 20170421] Merge element Id from differential
-                mergeElementDefinition(rebasedRoot, diffRoot, true);
+                mergeElementDefinition(rebasedRoot, diffRoot, true, profileUri);
             }
 
 
