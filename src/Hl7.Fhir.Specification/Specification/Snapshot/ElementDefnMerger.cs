@@ -430,8 +430,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                             onConstraint(mergedItem);
                         }
                     }
+                    if (!string.IsNullOrEmpty(source)
+                    {
+                        InitializeConstraintSource(result, source);
+                    }
 
-                    InitializeConstraintSource(result, source);
                 }
                 return result;
             }
