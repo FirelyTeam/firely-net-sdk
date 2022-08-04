@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
 using System.IO;
@@ -44,10 +45,13 @@ namespace Hl7.Fhir.Specification.Tests
         private readonly IAsyncResourceResolver _asyncResolver;
         private readonly IResourceResolver _resolver;
 
+        public ValidationFixture Fixture { get; }
+
         public ProfileAssertionTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
             _asyncResolver = fixture.AsyncResolver;
+            Fixture = fixture;
         }
 
         [Fact]
@@ -183,7 +187,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = assertion.Validate();
             Assert.True(report.Success);
             Assert.Equal(2, assertion.MinimalProfiles.Count());
-            Assert.Equal(assertion.MinimalProfiles, assertion.StatedProfiles.Skip(1));
+            Assert.Equal(assertion.MinimalProfiles, assertion.ResolvedStatedProfiles.Skip(1));
 
             assertion.SetDeclaredType(FHIRAllTypes.Procedure);
             report = assertion.Validate();
@@ -191,6 +195,38 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(report.Success);
             Assert.Contains("is incompatible with the declared type", report.ToString());
         }
+
+        [Fact]
+        public void UnresolvableExtensionAreJustWarnings()
+        {
+            var p = new Patient
+            {
+                Active = true
+            };
+
+            p.AddExtension("http://nu.nl", new FhirBoolean(false), isModifier: false);
+            var result = Fixture.Validator.Validate(p);
+            result.Warnings.Should().Be(1);
+            result.Errors.Should().Be(0);
+
+
+            p.AddExtension("http://nu.nl/modifier", new FhirBoolean(false), isModifier: true);
+            result = Fixture.Validator.Validate(p);
+            result.Warnings.Should().Be(1);
+            result.Errors.Should().Be(1);
+
+            var newP = new Patient
+            {
+                Active = true
+            };
+
+            newP.Meta = new();
+            newP.Meta.ProfileElement.Add(new FhirUri("http://example.org/unresolvable"));
+            result = Fixture.Validator.Validate(newP);
+            result.Warnings.Should().Be(0);
+            result.Errors.Should().Be(1);
+        }
+
     }
 
 }
