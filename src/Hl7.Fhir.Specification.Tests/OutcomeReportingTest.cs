@@ -6,12 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.FhirPath;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
         private OperationOutcome _report;
         private string _location;
 
-        [TestMethod]
+        [TestMethod, Ignore("The way we used hierarchy was broken, piloting another strategy now")]
         public void IssueHierarchy()
         {
             Assert.AreEqual(5, _report.Issue.Count());
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, _report.AtLevel(1).Count());
             Assert.AreEqual(2, _report.AtLevel(2).Count());
 
-            CollectionAssert.AreEquivalent(new int[] { 0, 1, 2, 2, 0 }, _report.Issue.Select(i=>i.GetHierarchyLevel()).ToArray());
+            CollectionAssert.AreEquivalent(new int[] { 0, 1, 2, 2, 0 }, _report.Issue.Select(i => i.GetHierarchyLevel()).ToArray());
         }
 
         [TestMethod]
