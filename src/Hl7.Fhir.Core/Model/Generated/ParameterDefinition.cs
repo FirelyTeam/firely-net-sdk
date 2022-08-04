@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name used to access the parameter value
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Code NameElement
     {
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// in | out
     /// </summary>
-    [FhirElement("use", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("use", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Minimum cardinality
     /// </summary>
-    [FhirElement("min", InSummary=true, Order=50 , FiveWs="")]
+    [FhirElement("min", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Integer MinElement
     {
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Maximum cardinality (a number of *)
     /// </summary>
-    [FhirElement("max", InSummary=true, Order=60 , FiveWs="")]
+    [FhirElement("max", InSummary=true, Order=60)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString MaxElement
     {
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A brief description of the parameter
     /// </summary>
-    [FhirElement("documentation", InSummary=true, Order=70 , FiveWs="")]
+    [FhirElement("documentation", InSummary=true, Order=70)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DocumentationElement
     {
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What type of value
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=80 , FiveWs="")]
+    [FhirElement("type", InSummary=true, Order=80)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What profile the value is expected to be
     /// </summary>
-    [FhirElement("profile", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("profile", InSummary=true, Order=90)]
     [DataMember]
     public Hl7.Fhir.Model.Canonical ProfileElement
     {

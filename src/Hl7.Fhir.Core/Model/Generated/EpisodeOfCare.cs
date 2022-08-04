@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
       /// </summary>
-      [FhirElement("status", Order=40 , FiveWs="")]
+      [FhirElement("status", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Duration the EpisodeOfCare was in the specified status
       /// </summary>
-      [FhirElement("period", Order=50 , FiveWs="")]
+      [FhirElement("period", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Conditions/problems/diagnoses this episode of care is for
       /// </summary>
-      [FhirElement("condition", InSummary=true, Order=40 , FiveWs="FiveWs.what[x]")]
+      [FhirElement("condition", InSummary=true, Order=40, FiveWs="FiveWs.what[x]")]
       [CLSCompliant(false)]
       [References("Condition")]
       [Cardinality(Min=1,Max=1)]
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Role that this diagnosis has within the episode of care (e.g. admission, billing, discharge …)
       /// </summary>
-      [FhirElement("role", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("role", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Role
       {
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Ranking of the diagnosis (for each role type)
       /// </summary>
-      [FhirElement("rank", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("rank", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.PositiveInt RankElement
       {
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier(s) relevant for this EpisodeOfCare
     /// </summary>
-    [FhirElement("identifier", Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | waitlist | active | onhold | finished | cancelled | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -483,7 +483,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Past list of status codes (the current status may be included to cover the start date of the status)
     /// </summary>
-    [FhirElement("statusHistory", Order=110 , FiveWs="")]
+    [FhirElement("statusHistory", Order=110)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.StatusHistoryComponent> StatusHistory
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120 , FiveWs="FiveWs.class")]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The list of diagnosis relevant to this episode of care
     /// </summary>
-    [FhirElement("diagnosis", InSummary=true, Order=130 , FiveWs="")]
+    [FhirElement("diagnosis", InSummary=true, Order=130)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.EpisodeOfCare.DiagnosisComponent> Diagnosis
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The patient who is the focus of this episode of care
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140 , FiveWs="FiveWs.subject")]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization that assumes care
     /// </summary>
-    [FhirElement("managingOrganization", InSummary=true, Order=150 , FiveWs="")]
+    [FhirElement("managingOrganization", InSummary=true, Order=150)]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval during responsibility is assumed
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=160 , FiveWs="FiveWs.init")]
+    [FhirElement("period", InSummary=true, Order=160, FiveWs="FiveWs.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -569,7 +569,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Originating Referral Request(s)
     /// </summary>
-    [FhirElement("referralRequest", Order=170 , FiveWs="")]
+    [FhirElement("referralRequest", Order=170)]
     [CLSCompliant(false)]
     [References("ServiceRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Care manager/care coordinator for the patient
     /// </summary>
-    [FhirElement("careManager", Order=180 , FiveWs="")]
+    [FhirElement("careManager", Order=180)]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole")]
     [DataMember]
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other practitioners facilitating this episode of care
     /// </summary>
-    [FhirElement("team", Order=190 , FiveWs="")]
+    [FhirElement("team", Order=190)]
     [CLSCompliant(false)]
     [References("CareTeam")]
     [Cardinality(Min=0,Max=-1)]
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The set of accounts that may be used for billing for this EpisodeOfCare
     /// </summary>
-    [FhirElement("account", Order=200 , FiveWs="")]
+    [FhirElement("account", Order=200)]
     [CLSCompliant(false)]
     [References("Account")]
     [Cardinality(Min=0,Max=-1)]

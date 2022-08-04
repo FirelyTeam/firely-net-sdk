@@ -2261,7 +2261,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identity of the IG that this depends on
       /// </summary>
-      [FhirElement("uri", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("uri", InSummary=true, Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical UriElement
@@ -2293,7 +2293,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// NPM Package name for IG this depends on
       /// </summary>
-      [FhirElement("packageId", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("packageId", InSummary=true, Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.Id PackageIdElement
       {
@@ -2324,7 +2324,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Version of the IG
       /// </summary>
-      [FhirElement("version", InSummary=true, Order=60 , FiveWs="")]
+      [FhirElement("version", InSummary=true, Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString VersionElement
       {
@@ -2469,7 +2469,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type this profile applies to
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2502,7 +2502,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Profile that all resources must conform to
       /// </summary>
-      [FhirElement("profile", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("profile", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical ProfileElement
@@ -2639,7 +2639,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Grouping used to present related resources in the IG
       /// </summary>
-      [FhirElement("grouping", Order=40 , FiveWs="")]
+      [FhirElement("grouping", Order=40)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.GroupingComponent> Grouping
@@ -2653,7 +2653,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource in the implementation guide
       /// </summary>
-      [FhirElement("resource", Order=50 , FiveWs="")]
+      [FhirElement("resource", Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.ResourceComponent> Resource
@@ -2667,7 +2667,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Page/Section in the Guide
       /// </summary>
-      [FhirElement("page", Order=60 , FiveWs="")]
+      [FhirElement("page", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.ImplementationGuide.PageComponent Page
       {
@@ -2680,7 +2680,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Defines how IG is built by tools
       /// </summary>
-      [FhirElement("parameter", Order=70 , FiveWs="")]
+      [FhirElement("parameter", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.ParameterComponent> Parameter
@@ -2694,7 +2694,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A template for building resources
       /// </summary>
-      [FhirElement("template", Order=80 , FiveWs="")]
+      [FhirElement("template", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.TemplateComponent> Template
@@ -2840,7 +2840,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Descriptive name for the package
       /// </summary>
-      [FhirElement("name", Order=40 , FiveWs="")]
+      [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
@@ -2872,7 +2872,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human readable text describing the package
       /// </summary>
-      [FhirElement("description", Order=50 , FiveWs="")]
+      [FhirElement("description", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -3008,7 +3008,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Location of the resource
       /// </summary>
-      [FhirElement("reference", Order=40 , FiveWs="")]
+      [FhirElement("reference", Order=40)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -3024,7 +3024,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Versions this applies to (if different to IG)
       /// </summary>
-      [FhirElement("fhirVersion", Order=50 , FiveWs="")]
+      [FhirElement("fhirVersion", Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
@@ -3057,7 +3057,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human Name for the resource
       /// </summary>
-      [FhirElement("name", Order=60 , FiveWs="")]
+      [FhirElement("name", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -3088,7 +3088,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reason why included in guide
       /// </summary>
-      [FhirElement("description", Order=70 , FiveWs="")]
+      [FhirElement("description", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -3119,7 +3119,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Is an example/What is this an example of?
       /// </summary>
-      [FhirElement("example", Order=80, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("example", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
       [DataMember]
@@ -3134,7 +3134,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Grouping this is part of
       /// </summary>
-      [FhirElement("groupingId", Order=90 , FiveWs="")]
+      [FhirElement("groupingId", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.Id GroupingIdElement
       {
@@ -3306,7 +3306,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where to find that page
       /// </summary>
-      [FhirElement("name", Order=40, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("name", Order=40, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [References("Binary")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUrl),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -3323,7 +3323,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Short title shown for navigational assistance
       /// </summary>
-      [FhirElement("title", Order=50 , FiveWs="")]
+      [FhirElement("title", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TitleElement
@@ -3355,7 +3355,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// html | markdown | xml | generated
       /// </summary>
-      [FhirElement("generation", Order=60 , FiveWs="")]
+      [FhirElement("generation", Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3388,7 +3388,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Nested Pages / Sections
       /// </summary>
-      [FhirElement("page", Order=70 , FiveWs="")]
+      [FhirElement("page", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.PageComponent> Page
@@ -3525,7 +3525,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// apply | path-resource | path-pages | path-tx-cache | expansion-parameter | rule-broken-links | generate-xml | generate-json | generate-turtle | html-template
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3558,7 +3558,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Value for named type
       /// </summary>
-      [FhirElement("value", Order=50 , FiveWs="")]
+      [FhirElement("value", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -3695,7 +3695,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of template specified
       /// </summary>
-      [FhirElement("code", Order=40 , FiveWs="")]
+      [FhirElement("code", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Code CodeElement
@@ -3727,7 +3727,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The source location for the template
       /// </summary>
-      [FhirElement("source", Order=50 , FiveWs="")]
+      [FhirElement("source", Order=50)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SourceElement
@@ -3759,7 +3759,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The scope in which the template applies
       /// </summary>
-      [FhirElement("scope", Order=60 , FiveWs="")]
+      [FhirElement("scope", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ScopeElement
       {
@@ -3904,7 +3904,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Location of rendered implementation guide
       /// </summary>
-      [FhirElement("rendering", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("rendering", InSummary=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUrl RenderingElement
       {
@@ -3935,7 +3935,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Resource in the implementation guide
       /// </summary>
-      [FhirElement("resource", InSummary=true, Order=50 , FiveWs="")]
+      [FhirElement("resource", InSummary=true, Order=50)]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.ManifestResourceComponent> Resource
@@ -3949,7 +3949,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// HTML page within the parent IG
       /// </summary>
-      [FhirElement("page", Order=60 , FiveWs="")]
+      [FhirElement("page", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ImplementationGuide.ManifestPageComponent> Page
@@ -3963,7 +3963,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Image within the IG
       /// </summary>
-      [FhirElement("image", Order=70 , FiveWs="")]
+      [FhirElement("image", Order=70)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> ImageElement
@@ -3995,7 +3995,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional linkable file in IG
       /// </summary>
-      [FhirElement("other", Order=80 , FiveWs="")]
+      [FhirElement("other", Order=80)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> OtherElement
@@ -4159,7 +4159,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Location of the resource
       /// </summary>
-      [FhirElement("reference", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("reference", InSummary=true, Order=40)]
       [CLSCompliant(false)]
       [References("Resource")]
       [Cardinality(Min=1,Max=1)]
@@ -4175,7 +4175,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Is an example/What is this an example of?
       /// </summary>
-      [FhirElement("example", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("example", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean),typeof(Hl7.Fhir.Model.Canonical))]
       [DataMember]
@@ -4190,7 +4190,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relative path for page in IG
       /// </summary>
-      [FhirElement("relativePath", Order=60 , FiveWs="")]
+      [FhirElement("relativePath", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirUrl RelativePathElement
       {
@@ -4335,7 +4335,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// HTML page name
       /// </summary>
-      [FhirElement("name", Order=40 , FiveWs="")]
+      [FhirElement("name", Order=40)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
@@ -4367,7 +4367,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Title of the page, for references
       /// </summary>
-      [FhirElement("title", Order=50 , FiveWs="")]
+      [FhirElement("title", Order=50)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TitleElement
       {
@@ -4398,7 +4398,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Anchor available on the page
       /// </summary>
-      [FhirElement("anchor", Order=60 , FiveWs="")]
+      [FhirElement("anchor", Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirString> AnchorElement
@@ -4531,7 +4531,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Canonical identifier for this implementation guide, represented as a URI (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -4563,7 +4563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the implementation guide
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100 , FiveWs="FiveWs.version")]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="FiveWs.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -4594,7 +4594,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this implementation guide (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=110 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=110)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
@@ -4626,7 +4626,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this implementation guide (human friendly)
     /// </summary>
-    [FhirElement("title", InSummary=true, Order=120 , FiveWs="")]
+    [FhirElement("title", InSummary=true, Order=120)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString TitleElement
     {
@@ -4657,7 +4657,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -4690,7 +4690,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, Order=140 , FiveWs="FiveWs.class")]
+    [FhirElement("experimental", InSummary=true, Order=140, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -4721,7 +4721,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150 , FiveWs="FiveWs.recorded")]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="FiveWs.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -4752,7 +4752,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=160 , FiveWs="FiveWs.witness")]
+    [FhirElement("publisher", InSummary=true, Order=160, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -4783,7 +4783,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=170 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=170)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -4797,7 +4797,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the implementation guide
     /// </summary>
-    [FhirElement("description", Order=180 , FiveWs="")]
+    [FhirElement("description", Order=180)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -4810,7 +4810,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -4824,7 +4824,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for implementation guide (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=200 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=200)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -4838,7 +4838,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Use and/or publishing restrictions
     /// </summary>
-    [FhirElement("copyright", Order=210 , FiveWs="")]
+    [FhirElement("copyright", Order=210)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Copyright
     {
@@ -4851,7 +4851,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// NPM Package name for IG
     /// </summary>
-    [FhirElement("packageId", InSummary=true, Order=220 , FiveWs="")]
+    [FhirElement("packageId", InSummary=true, Order=220)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Id PackageIdElement
@@ -4883,7 +4883,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// SPDX license code for this IG (or not-open-source)
     /// </summary>
-    [FhirElement("license", InSummary=true, Order=230 , FiveWs="")]
+    [FhirElement("license", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense> LicenseElement
@@ -4915,7 +4915,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// FHIR Version(s) this Implementation Guide targets
     /// </summary>
-    [FhirElement("fhirVersion", InSummary=true, Order=240 , FiveWs="")]
+    [FhirElement("fhirVersion", InSummary=true, Order=240)]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
@@ -4948,7 +4948,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Another Implementation guide this depends on
     /// </summary>
-    [FhirElement("dependsOn", InSummary=true, Order=250 , FiveWs="")]
+    [FhirElement("dependsOn", InSummary=true, Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ImplementationGuide.DependsOnComponent> DependsOn
@@ -4962,7 +4962,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Profiles that apply globally
     /// </summary>
-    [FhirElement("global", InSummary=true, Order=260 , FiveWs="")]
+    [FhirElement("global", InSummary=true, Order=260)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ImplementationGuide.GlobalComponent> Global
@@ -4976,7 +4976,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information needed to build the IG
     /// </summary>
-    [FhirElement("definition", Order=270 , FiveWs="")]
+    [FhirElement("definition", Order=270)]
     [DataMember]
     public Hl7.Fhir.Model.ImplementationGuide.DefinitionComponent Definition
     {
@@ -4989,7 +4989,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information about an assembled IG
     /// </summary>
-    [FhirElement("manifest", Order=280 , FiveWs="")]
+    [FhirElement("manifest", Order=280)]
     [DataMember]
     public Hl7.Fhir.Model.ImplementationGuide.ManifestComponent Manifest
     {
