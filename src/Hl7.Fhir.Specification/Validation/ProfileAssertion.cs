@@ -6,42 +6,43 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Specification;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Validation
 {
 
     internal class ProfileAssertion
     {
+        internal enum ResolutionContext
+        {
+            InExtension,
+            InModifierExtension,
+            Elsewhere
+        }
+
         private readonly string _path;
         private readonly Func<string, StructureDefinition> _resolver;
         private readonly StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
-
+        private readonly ResolutionContext _resolutionContext;
         private readonly List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
         public ProfileAssertion(string path, Func<string, StructureDefinition> resolver,
-            StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
+            StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null, ResolutionContext resolutionContext = ResolutionContext.Elsewhere)
         {
             _path = path;
             _resolver = resolver;
             _typeNameMapper = typeNameMapper;
+            _resolutionContext = resolutionContext;
         }
 
         private ProfileEntry _instanceType;
-        public StructureDefinition InstanceType
-        {
-            get
-            {
-                return _instanceType?.StructureDefinition;
-            }
-        }
+        public StructureDefinition InstanceType => _instanceType?.StructureDefinition;
 
 
         private ProfileEntry addEntry(string canonical)
@@ -124,15 +125,9 @@ namespace Hl7.Fhir.Validation
 
 
 
-        private readonly List<ProfileEntry> _statedProfiles = new List<ProfileEntry>();
+        private readonly List<ProfileEntry> _statedProfiles = new();
 
-        public IEnumerable<StructureDefinition> StatedProfiles
-        {
-            get
-            {
-                return _statedProfiles.Select(pe => pe.StructureDefinition);
-            }
-        }
+        public IEnumerable<StructureDefinition> ResolvedStatedProfiles => _statedProfiles.Where(sp => sp.Unresolved is false).Select(pe => pe.StructureDefinition);
 
         public void AddStatedProfile(StructureDefinition structureDefinition)
         {
@@ -167,18 +162,11 @@ namespace Hl7.Fhir.Validation
             foreach (var sd in definitions) AddStatedProfile(sd);
         }
 
-        public IEnumerable<StructureDefinition> AllProfiles
-        {
-            get
-            {
-                return _allEntries.Select(e => e.StructureDefinition);
-            }
-        }
+        public IEnumerable<StructureDefinition> AllProfiles => _allEntries.Select(e => e.StructureDefinition);
 
-
-        OperationOutcome _lastResolutionOutcome = null;
-        OperationOutcome _lastValidationOutcome = null;
-        IEnumerable<StructureDefinition> _lastMinimalSet = null;
+        private OperationOutcome _lastResolutionOutcome = null;
+        private OperationOutcome _lastValidationOutcome = null;
+        private IEnumerable<StructureDefinition> _lastMinimalSet = null;
 
         private void inputsChanged()
         {
@@ -199,7 +187,7 @@ namespace Hl7.Fhir.Validation
             var outcome = new OperationOutcome();
 
             // Go through all entries to find those that don't yet have a StructureDefinition
-            foreach (var entry in _allEntries.Where(e => e.Unresolved))
+            foreach (var entry in _allEntries.Where(e => e.Unresolved).ToList())
             {
                 StructureDefinition structureDefinition = null;
 
@@ -210,7 +198,16 @@ namespace Hl7.Fhir.Validation
                     structureDefinition = _resolver(entry.Reference);
 
                     if (structureDefinition == null)
-                        outcome.AddIssue($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
+                    {
+                        // This whole inModifierExtension is a bit of a hack - it makes sense to protest when we cannot resolve the
+                        // url in an modifier extension - but we're not sure this is about the url itself, or about another profile (from the typeRef)
+                        // on the extension.... then again, if you don't understand those, do you "understand" the modifierExtension?
+                        // I don't know, but at least this improves the situation for all-non-modifier extensions.
+                        if (_resolutionContext == ResolutionContext.InExtension)
+                            outcome.AddIssue($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE_WARNING, _path);
+                        else
+                            outcome.AddIssue($"Unable to resolve reference to profile '{entry.Reference}'", Issue.UNAVAILABLE_REFERENCED_PROFILE, _path);
+                    }
                     else
                     {
                         entry.StructureDefinition = structureDefinition;
@@ -254,7 +251,7 @@ namespace Hl7.Fhir.Validation
                             Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, _path);
                 }
 
-                foreach (var type in StatedProfiles)
+                foreach (var type in ResolvedStatedProfiles)
                 {
                     if (!IsInstanceTypeFor(type.Type, InstanceType.Type))
                         outcome.AddIssue($"Instance of type '{InstanceType.ReadableName()}' is incompatible with the stated profile '{type.Url}' which is constraining constrained type '{type.ReadableName()}'",
@@ -263,9 +260,9 @@ namespace Hl7.Fhir.Validation
             }
 
             // All stated profiles should be profiling the same core type
-            if (StatedProfiles.Any())
+            if (ResolvedStatedProfiles.Any())
             {
-                var baseTypes = StatedProfiles.Select(p => p.Type).Distinct().ToList();
+                var baseTypes = ResolvedStatedProfiles.Select(p => p.Type).Distinct().ToList();
 
                 if (baseTypes.Count > 1)
                 {
@@ -303,88 +300,88 @@ namespace Hl7.Fhir.Validation
             return false;
         }
 
-    public IEnumerable<StructureDefinition> MinimalProfiles
-    {
-        get
-        {
-            if (_lastMinimalSet != null)
-                return _lastMinimalSet;
-
-            // Provided validation was done, IF there are stated profiles, they are correct constraints on the instance, and compatible with the declared type
-            // so we can just return that list (we might even remove the ones that are constraints on constraints)
-            if (StatedProfiles.Any())
-            {
-                // Remove redundant bases, since the snapshots will contain their constraints anyway.
-                // Note: we're not doing a full closure by resolving all bases for performance sake 
-                var result = StatedProfiles.ToList();
-                var bases = StatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
-                bases.AddRange(StatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                    .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type)).Distinct());
-                result.RemoveAll(r => bases.Contains(r.Url));
-                _lastMinimalSet = result;
-            }
-
-            // If there are no stated profiles, then:
-            //  * If the declared type is a profile, it is more specific than the instance
-            //  * If the declared type is a concrete core type, it is as specific as the instance
-            // In both cases return the declared type.
-            else if (DeclaredType != null &&
-                        (DeclaredType.IsConstraint ||
-                          (DeclaredType.IsCoreDefinition && DeclaredType.Abstract == false)))
-                _lastMinimalSet = new[] { DeclaredType };
-
-            // Else, all we have left is the instance type
-            // If there is no known instance type, we have no profile to validate against
-            else if (InstanceType != null)
-                _lastMinimalSet = new[] { InstanceType };
-            else
-                _lastMinimalSet = Enumerable.Empty<StructureDefinition>();
-
-            return _lastMinimalSet;
-        }
-
-    }
-
-    private class ProfileEntry
-    {
-        public ProfileEntry(StructureDefinition def)
-        {
-            this.StructureDefinition = def;
-        }
-
-        public ProfileEntry(string url)
-        {
-            this.Reference = url;
-        }
-
-        public string Reference { get; private set; }
-
-        private StructureDefinition _structureDefinition;
-
-        public StructureDefinition StructureDefinition
+        public IEnumerable<StructureDefinition> MinimalProfiles
         {
             get
             {
-                if (_structureDefinition == null)
-                    return new StructureDefinition { Url = Reference };
+                if (_lastMinimalSet != null)
+                    return _lastMinimalSet;
+
+                // Provided validation was done, IF there are stated profiles, they are correct constraints on the instance, and compatible with the declared type
+                // so we can just return that list (we might even remove the ones that are constraints on constraints)
+                if (ResolvedStatedProfiles.Any())
+                {
+                    // Remove redundant bases, since the snapshots will contain their constraints anyway.
+                    // Note: we're not doing a full closure by resolving all bases for performance sake 
+                    var result = ResolvedStatedProfiles.ToList();
+                    var bases = ResolvedStatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
+                    bases.AddRange(ResolvedStatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
+                        .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type)).Distinct());
+                    result.RemoveAll(r => bases.Contains(r.Url));
+                    _lastMinimalSet = result;
+                }
+
+                // If there are no stated profiles, then:
+                //  * If the declared type is a profile, it is more specific than the instance
+                //  * If the declared type is a concrete core type, it is as specific as the instance
+                // In both cases return the declared type.
+                else if (DeclaredType != null &&
+                            (DeclaredType.IsConstraint ||
+                              (DeclaredType.IsCoreDefinition && DeclaredType.Abstract == false)))
+                    _lastMinimalSet = new[] { DeclaredType };
+
+                // Else, all we have left is the instance type
+                // If there is no known instance type, we have no profile to validate against
+                else if (InstanceType != null)
+                    _lastMinimalSet = new[] { InstanceType };
                 else
-                    return _structureDefinition;
+                    _lastMinimalSet = Enumerable.Empty<StructureDefinition>();
+
+                return _lastMinimalSet;
             }
-            set
-            {
-                _structureDefinition = value;
-                Reference = value.Url;
-            }
+
         }
 
-        public bool Unresolved
+        private class ProfileEntry
         {
-            get
+            public ProfileEntry(StructureDefinition def)
             {
-                return _structureDefinition == null;
+                this.StructureDefinition = def;
+            }
+
+            public ProfileEntry(string url)
+            {
+                this.Reference = url;
+            }
+
+            public string Reference { get; private set; }
+
+            private StructureDefinition _structureDefinition;
+
+            public StructureDefinition StructureDefinition
+            {
+                get
+                {
+                    if (_structureDefinition == null)
+                        return new StructureDefinition { Url = Reference };
+                    else
+                        return _structureDefinition;
+                }
+                set
+                {
+                    _structureDefinition = value;
+                    Reference = value.Url;
+                }
+            }
+
+            public bool Unresolved
+            {
+                get
+                {
+                    return _structureDefinition == null;
+                }
             }
         }
-    }
 
-}
+    }
 }
