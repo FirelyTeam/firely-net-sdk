@@ -57,6 +57,10 @@ namespace Hl7.Fhir.Validation
                                               => @"element.where(type.code='Reference' and id.endsWith('.reference') and type.targetProfile.exists() and id.substring(0,id.length()-10) in %context.element.where(type.code='CodeableReference').id).exists().not()')",
                     { Key: "sdf-25", Expression: @"element.where(type.code='CodeableConcept' and id.endsWith('.concept') and binding.exists() and id.substring(0,$this.length()-8) in %context.element.where(type.code='CodeableReference').id).exists().not()" }
                                               => @"element.where(type.code='CodeableConcept' and id.endsWith('.concept') and binding.exists() and id.substring(0,id.length()-8) in %context.element.where(type.code='CodeableReference').id).exists().not()",
+
+                    // correct datatype in expression:
+                    { Key: "que-7", Expression: @"operator = 'exists' implies (answer is Boolean)" }
+                                             => @"operator = 'exists' implies (answer is boolean)",
                     var ce => ce.Expression
                 };
 
