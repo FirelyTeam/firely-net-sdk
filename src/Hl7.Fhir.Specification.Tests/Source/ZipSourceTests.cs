@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
         }
 
 
-        //issue #36678
+        //issue #2031
         [TestMethod]
         public void TestIncorrectFullUrlForValuesetComposeIncludeValueSetTitle()
         {
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests.Source
             extensionEntry.Should().NotBeNull();
             var sd = extensionEntry.Resource as StructureDefinition;
             sd.Url.Should().Be("http://hl7.org/fhir/StructureDefinition/valueset-compose-include-valueSetTitle");
-
+            sd.Id.Should().Be("valueset-compose-include-valueSetTitle");
         }
 
     }
