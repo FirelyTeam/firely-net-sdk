@@ -28,14 +28,14 @@ namespace Hl7.Fhir.Validation
         public ProfilePreprocessor(Func<string, StructureDefinition> profileResolver, Func<StructureDefinition, OperationOutcome> snapshotGenerator,
                 ITypedElement instance, string declaredTypeProfile,
                 IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals,
-                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null)
+                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper, ProfileAssertion.ResolutionContext resolutionContext)
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
             _typeNameMapper = typeNameMapper;
             _path = instance.Location;
 
-            _profiles = new ProfileAssertion(_path, _profileResolver, typeNameMapper);
+            _profiles = new ProfileAssertion(_path, _profileResolver, typeNameMapper, resolutionContext);
 
             if (instance.InstanceType != null)
             {
@@ -52,9 +52,9 @@ namespace Hl7.Fhir.Validation
             //Almost identically, extensions can declare adherance to a profile using the 'url' attribute
             if (declaredTypeProfile == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension))
             {
-                if (instance.Children("url").FirstOrDefault()?.Value is string urlDeclaration 
-                    && urlDeclaration.StartsWith("http://", StringComparison.OrdinalIgnoreCase)) 
-                        _profiles.AddStatedProfile(urlDeclaration);
+                if (instance.Children("url").FirstOrDefault()?.Value is string urlDeclaration
+                    && urlDeclaration.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+                    _profiles.AddStatedProfile(urlDeclaration);
             }
 
             if (additionalProfiles != null) _profiles.AddStatedProfile(additionalProfiles);

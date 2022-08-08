@@ -128,7 +128,14 @@ namespace Hl7.Fhir.Validation
             IEnumerable<StructureDefinition> statedProfiles,
             ValidationState state)
         {
-            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
+            var resolutionContext = instance switch
+            {
+                { InstanceType: "Extension" } when instance.Name == "modifierExtension" => ProfileAssertion.ResolutionContext.InModifierExtension,
+                { InstanceType: "Extension" } => ProfileAssertion.ResolutionContext.InExtension,
+                _ => ProfileAssertion.ResolutionContext.Elsewhere
+            };
+
+            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping, resolutionContext);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent

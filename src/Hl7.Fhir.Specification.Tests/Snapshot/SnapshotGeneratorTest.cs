@@ -7890,6 +7890,21 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(valueQuantityEld);
         }
 
+        [TestMethod]
+        public async T.Task TestConstraintSource()
+        {
+            var observation = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Observation");
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            var snapshot = await _generator.GenerateAsync(observation);
+
+            var element = snapshot.Should().Contain(e => e.Path == "Observation.subject").Subject;
+            var constraint = element.Constraint.Where(c => c.Key == "ref-1").FirstOrDefault();
+            constraint.Source.Should().Be("http://hl7.org/fhir/StructureDefinition/Reference");
+
+        }
+
+
         [DataTestMethod]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatient", "Patient.deceased[x].extension:range")]
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
