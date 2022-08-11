@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.ElementModel;
+using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -1430,6 +1431,82 @@ namespace Hl7.Fhir.Specification.Tests
             var outcome = validator.Validate(questionnaire);
             Assert.True(outcome.Success);
         }
+
+        [Theory]
+        [MemberData(nameof(InvariantTestcases))]
+        public void InvariantValidation(FHIRAllTypes type, string key, Base poco, bool successExpected)
+        {
+            var outcome = _validator.Validate(poco);
+            var issues = outcome.Issue.Where(i => i.ToString().Contains(key));
+
+            issues.Should().HaveCount(successExpected ? 0 : 1);
+        }
+
+        public static IEnumerable<object[]> InvariantTestcases =>
+        new List<object[]>
+        {
+            new object[] { FHIRAllTypes.Reference, "ref-1", new ResourceReference{ Display = "Only a display element" }, true },
+            
+            /* Tests for R4+
+            new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = ":.ContainingSpecialCharacters" }, false},
+            new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = "NoSpecialCharacters" }, true },
+            new object[] { FHIRAllTypes.ElementDefinition, "eld-20", new ElementDefinition { Path = "   leadingSpaces" }, false},
+            new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = "NoSpaces.withADot" }, true },
+            new object[] { FHIRAllTypes.StructureDefinition, "sdf-0", new StructureDefinition { Name = " leadingSpaces" }, false },
+            new object[] { FHIRAllTypes.StructureDefinition, "sdf-0", new StructureDefinition { Name = "Name" }, true },
+            new object[] { FHIRAllTypes.StructureDefinition, "sdf-24",
+                    new StructureDefinition.SnapshotComponent
+                        {
+                            Element = new List<ElementDefinition> {
+                                new ElementDefinition
+                                {
+                                    ElementId = "coderef.reference",
+                                    Type = new List<ElementDefinition.TypeRefComponent>
+                                           {
+                                                new ElementDefinition.TypeRefComponent { Code = "Reference", TargetProfile = "http://example.com/profile" }
+                                           }
+                                },
+                                new ElementDefinition
+                                {
+                                    ElementId = "coderef",
+                                    Type = new List<ElementDefinition.TypeRefComponent>
+                                           {
+                                                new ElementDefinition.TypeRefComponent { Code = "CodeableReference"}
+                                           }
+                                },
+                             }
+                    }, false },
+            new object[] { FHIRAllTypes.StructureDefinition, "sdf-25",
+                    new StructureDefinition.SnapshotComponent
+                        {
+                            Element = new List<ElementDefinition> {
+                                new ElementDefinition
+                                {
+                                    ElementId = "coderef.concept",
+                                    Type = new List<ElementDefinition.TypeRefComponent>
+                                           {
+                                                new ElementDefinition.TypeRefComponent { Code = "CodeableConcept" }
+                                           },
+                                    Binding = new ElementDefinition.ElementDefinitionBindingComponent { Description = "Just a description" }
+                                },
+                                new ElementDefinition
+                                {
+                                    ElementId = "coderef",
+                                    Type = new List<ElementDefinition.TypeRefComponent>
+                                           {
+                                                new ElementDefinition.TypeRefComponent { Code = "CodeableReference"}
+                                           }
+                                },
+                             }
+                    }, false },
+            new object[] { FHIRAllTypes.Questionnaire, "que-7",
+                    new Questionnaire.EnableWhenComponent
+                        {
+                            Operator = Questionnaire.QuestionnaireItemOperator.Exists,
+                            Answer = new FhirBoolean(true)
+                    }, true },
+            */
+        };
 
 
         private class ClearSnapshotResolver : IResourceResolver
