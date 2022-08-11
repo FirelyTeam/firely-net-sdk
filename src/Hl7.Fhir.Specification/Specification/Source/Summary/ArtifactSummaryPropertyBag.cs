@@ -38,11 +38,6 @@ namespace Hl7.Fhir.Specification.Summary
         /// <summary>Returns an empty <see cref="ArtifactSummaryPropertyBag"/> instance.</summary>
         public static ArtifactSummaryPropertyBag Empty => new ArtifactSummaryPropertyBag();
 
-#if NET40
-        IEnumerable<string> IReadOnlyDictionary<string, object>.Keys => this.Keys;
-
-        IEnumerable<object> IReadOnlyDictionary<string, object>.Values => this.Values;
-#endif
 
         /// <summary>Default initial capacity.</summary>
         public const int DefaultCapacity = 8;

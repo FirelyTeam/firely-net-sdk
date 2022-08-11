@@ -25,10 +25,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl = null)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff, mergeElementId);
+                merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
             readonly SnapshotGenerator _generator;
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator;
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
                 // Caller should make sure that existing extensions have been removed from snap,
@@ -144,10 +144,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Constraints are cumulative, so they are always "new" (hence a constant false for the comparer)
                 // [WMR 20160917] Note: constraint keys must be unique. The validator will detect duplicate keys, so the derived
                 // profile author can correct the conflicting constraint key.
-                // [WMR 20160918] MUST merge indentical constraints, otherwise each derived profile accumulates
+                // [WMR 20160918] MUST merge identical constraints, otherwise each derived profile accumulates
                 // additional identical constraints inherited from e.g. BackboneElement.
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
-                snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => a.IsExactly(b));
+                // [Backported from R4] Use of mergeConstraints.
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
 
                 // [WMR 20160907] merge conditions
                 snap.ConditionElement = mergeCollection(snap.ConditionElement, diff.ConditionElement, (a, b) => a.Value == b.Value);
@@ -165,6 +166,12 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
+                // [MV 20220803] Remove Binding when the element has no bindable type
+                if (snap.Binding is not null && !snap.Type.Any(t => ModelInfo.IsBindable(t.Code)))
+                {
+                    snap.Binding = null;
+                }
+
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
@@ -173,9 +180,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20160817] TODO: Merge extensions
                 // Debug.WriteLineIf(diff.Extension != null && diff.GetChangedByDiff() == null, "[ElementDefnMerger] Warning: Extension merging is not supported yet...");
 
-                // TODO: What happens to extensions present on an ElementDefinition that is overriding another?
-                // [WMR 20160907] Merge extensions... match on url, diff completely overrides snapshot
-                snap.Extension = mergeCollection(snap.Extension, diff.Extension, (s, d) => s.Url == d.Url);
+                // [WMR 20160907] Merge extensions, match on url
+                // [Backported from R4] Use of mergeExtensions
+                snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
 
                 // [EK 20170301] Added this after comparison with Java generated snapshot
                 snap.RepresentationElement = mergeCollection(snap.RepresentationElement, diff.RepresentationElement, (s, d) => s.IsExactly(d));
@@ -194,6 +201,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             void onConstraint(Element snap)
             {
                 _generator?.OnConstraint(snap);
+            }
+
+            /// <summary>Notify clients about a snapshot collection element with differential constraints.</summary>
+            void onConstraint<T>(List<T> snap) where T : Element
+            {
+                foreach (var item in snap)
+                {
+                    onConstraint(item);
+                }
             }
 
             /// <summary>
@@ -230,7 +246,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                         result.ObjectValue = diffText;
                     }
-
+                    // Also merge extensions on primitives
+                    // [Backported from R4] 
+                    result.Extension = mergeExtensions(snap?.Extension, diff.Extension);
                     onConstraint(result);
                     return result;
                 }
@@ -291,7 +309,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     if (int.TryParse(snap.Value, out var sv) &&
                         int.TryParse(diff.Value, out var dv))
                     {
-                        // compare them if they are both numerics
+                        // compare them if they are both numeric
                         return dv < sv ? deepCopyAndRaiseOnConstraint(diff) : snap;
                     }
 
@@ -370,27 +388,107 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return result;
             }
 
-            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> elemComparer) where T : Element
+            // [Backported from R4] 
+            List<ElementDefinition.ConstraintComponent> mergeConstraints(
+                List<ElementDefinition.ConstraintComponent> snap,
+                List<ElementDefinition.ConstraintComponent> diff,
+                string source)
             {
-                if (!diff.IsNullOrEmpty() && !diff.IsExactly(snap))
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
                 {
-                    var result = snap == null ? new List<T>() : new List<T>(snap.DeepCopy());
-
-                    // Just add new elements to the result, never replace existing ones
-                    foreach (var element in diff)
+                    if (snap.IsNullOrEmpty())
                     {
-                        if (!result.Any(e => elemComparer(e, element)))
+                        result = (List<ElementDefinition.ConstraintComponent>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        result = new List<ElementDefinition.ConstraintComponent>(snap.DeepCopy());
+                        // Properly merge matching collection items
+                        foreach (var diffItem in diff)
                         {
-                            var newElement = (T)element.DeepCopy();
-                            onConstraint(newElement);
-                            result.Add(newElement);
+                            // [WMR 20190723] FIX #1052: WRONG! Initializing .source breaks matching...
+                            // Instead, match element constraints on id
+                            //var idx = snap.FindIndex(e => matchExactly(e, diffItem));
+                            var idx = snap.FindIndex(e => isEqualString(e.Key, diffItem.Key));
+
+                            ElementDefinition.ConstraintComponent mergedItem;
+                            if (idx < 0)
+                            {
+                                // No match; add diff item
+                                mergedItem = (ElementDefinition.ConstraintComponent)diffItem.DeepCopy();
+                                result.Add(mergedItem);
+                            }
+                            else
+                            {
+                                // Match; merge diff with snap
+                                var snapItem = result[idx];
+                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                result[idx] = mergedItem;
+                            }
+                            onConstraint(mergedItem);
                         }
                     }
+                    if (!string.IsNullOrEmpty(source))
+                    {
+                        InitializeConstraintSource(result, source);
+                    }
 
-                    return result;
                 }
-                else
-                    return snap;
+                return result;
+            }
+
+            internal static void InitializeConstraintSource(IEnumerable<ElementDefinition.ConstraintComponent> constraints, string source)
+            {
+                foreach (var constraint in constraints)
+                {
+                    if (string.IsNullOrEmpty(constraint.Source))
+                    {
+                        constraint.Source = source;
+                    }
+                }
+            }
+
+            // Merge two collections
+            // Differential collection items replace/overwrite matching snapshot collection items
+            // [Backported from R4] 
+            List<T> mergeCollection<T>(List<T> snap, List<T> diff, Func<T, T, bool> matchItems) where T : Element
+            {
+                var result = snap;
+                if (!diff.IsNullOrEmpty())
+                {
+                    if (snap.IsNullOrEmpty())
+                    {
+                        result = (List<T>)diff.DeepCopy();
+                        onConstraint(result);
+                    }
+                    else if (!diff.IsExactly(snap))
+                    {
+                        result = new List<T>(snap.DeepCopy());
+                        // Properly merge matching collection items
+                        foreach (var diffItem in diff)
+                        {
+                            var idx = snap.FindIndex(e => matchItems(e, diffItem));
+                            T mergedItem;
+                            if (idx < 0)
+                            {
+                                // No match; add diff item
+                                mergedItem = (T)diffItem.DeepCopy();
+                                result.Add(mergedItem);
+                            }
+                            else
+                            {
+                                // Match; merge diff with snap
+                                var snapItem = result[idx];
+                                mergedItem = mergeComplexAttribute(snapItem, diffItem);
+                                result[idx] = mergedItem;
+                            }
+                            onConstraint(mergedItem);
+                        }
+                    }
+                }
+                return result;
             }
 
 
@@ -411,11 +509,17 @@ namespace Hl7.Fhir.Specification.Snapshot
                         snap.StrengthElement = mergePrimitiveAttribute(snap.StrengthElement, diff.StrengthElement);
                         snap.DescriptionElement = mergePrimitiveAttribute(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSet = mergeComplexAttribute(snap.ValueSet, diff.ValueSet);
+                        snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);
                     }
                 }
                 return result;
             }
+
+            // Merge differential extensions with snapshot extensions
+            // Match extensions on url
+            List<Extension> mergeExtensions(List<Extension> snap, List<Extension> diff)
+                => mergeCollection(snap, diff, matchExtensions);
 
             string mergeId(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
             {
@@ -460,7 +564,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return c.Display == d.Display;
             }
 
+            static bool matchExtensions(Extension x, Extension y) => !(x is null) && !(y is null) && (x.Url == y.Url);
+
+            static bool isEqualString(string x, string y) => StringComparer.Ordinal.Equals(x, y);
         }
     }
-
 }

@@ -1,5 +1,8 @@
-﻿using Hl7.Fhir.Model;
+using FluentAssertions;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System.IO;
 using System.Linq;
@@ -44,10 +47,13 @@ namespace Hl7.Fhir.Specification.Tests
         private readonly IAsyncResourceResolver _asyncResolver;
         private readonly IResourceResolver _resolver;
 
+        public ValidationFixture Fixture { get; }
+
         public ProfileAssertionTests(ValidationFixture fixture)
         {
             _resolver = fixture.Resolver;
             _asyncResolver = fixture.AsyncResolver;
+            Fixture = fixture;
         }
 
         [Fact]
@@ -167,6 +173,19 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Contains("is incompatible with that of the instance", report.ToString());
         }
 
+        [Fact]
+        public void TestIssue2105()
+        {
+            var json = File.ReadAllText(Path.Combine("TestData", "validation", "Delana41_Dibbert-first-part.json"));
+            var bundle = new FhirJsonParser().Parse<Bundle>(json);
+            var outcome = Fixture.Validator.Validate(bundle);
+
+            // The last two issues are details and should have a hierarchy +1 compared to the parent issue (its parent)
+            var rest = outcome.Issue.SkipWhile(i => i.Details.Coding.First().Code != Issue.PROCESSING_PROGRESS.Code.ToString());
+            var parentHierarchy = rest.First().HierarchyLevel;
+            Assert.True(rest.Skip(1).All(c => c.HierarchyLevel == parentHierarchy + 1));
+        }
+
 
         [Fact]
         public void ResourceWithStatedProfiles()
@@ -183,7 +202,7 @@ namespace Hl7.Fhir.Specification.Tests
             var report = assertion.Validate();
             Assert.True(report.Success);
             Assert.Equal(2, assertion.MinimalProfiles.Count());
-            Assert.Equal(assertion.MinimalProfiles, assertion.StatedProfiles.Skip(1));
+            Assert.Equal(assertion.MinimalProfiles, assertion.ResolvedStatedProfiles.Skip(1));
 
             assertion.SetDeclaredType(FHIRAllTypes.Procedure);
             report = assertion.Validate();
@@ -191,6 +210,38 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.False(report.Success);
             Assert.Contains("is incompatible with the declared type", report.ToString());
         }
+
+        [Fact]
+        public void UnresolvableExtensionAreJustWarnings()
+        {
+            var p = new Patient
+            {
+                Active = true
+            };
+
+            p.AddExtension("http://nu.nl", new FhirBoolean(false), isModifier: false);
+            var result = Fixture.Validator.Validate(p);
+            result.Warnings.Should().Be(1);
+            result.Errors.Should().Be(0);
+
+
+            p.AddExtension("http://nu.nl/modifier", new FhirBoolean(false), isModifier: true);
+            result = Fixture.Validator.Validate(p);
+            result.Warnings.Should().Be(1);
+            result.Errors.Should().Be(1);
+
+            var newP = new Patient
+            {
+                Active = true
+            };
+
+            newP.Meta = new();
+            newP.Meta.ProfileElement.Add(new FhirUri("http://example.org/unresolvable"));
+            result = Fixture.Validator.Validate(newP);
+            result.Warnings.Should().Be(0);
+            result.Errors.Should().Be(1);
+        }
+
     }
 
 }
