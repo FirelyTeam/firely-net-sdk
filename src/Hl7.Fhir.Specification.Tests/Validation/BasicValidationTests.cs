@@ -1434,7 +1434,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         [Theory]
         [MemberData(nameof(InvariantTestcases))]
-        public void InvariantValidation(FHIRAllTypes type, string key, Base poco, bool successExpected)
+        public void InvariantValidation(string key, Base poco, bool successExpected)
         {
             var outcome = _validator.Validate(poco);
             var issues = outcome.Issue.Where(i => i.ToString().Contains(key));
@@ -1445,15 +1445,18 @@ namespace Hl7.Fhir.Specification.Tests
         public static IEnumerable<object[]> InvariantTestcases =>
         new List<object[]>
         {
-            new object[] { FHIRAllTypes.Reference, "ref-1", new ResourceReference{ Display = "Only a display element" }, true },
-            new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = ":.ContainingSpecialCharacters" }, false},
-            new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = "NoSpecialCharacters" }, true },
-            new object[] { FHIRAllTypes.ElementDefinition, "eld-20", new ElementDefinition { Path = "   leadingSpaces" }, false},
-            new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = "NoSpaces.withADot" }, true },
-            new object[] { FHIRAllTypes.StructureDefinition, "sdf-0", new StructureDefinition { Name = " leadingSpaces" }, false },
-            new object[] { FHIRAllTypes.StructureDefinition, "sdf-0", new StructureDefinition { Name = "Name" }, true },
+            new object[] { "ref-1", new ResourceReference{ Display = "Only a display element" }, true },
+            new object[] { "eld-19", new ElementDefinition { Path = ":.ContainingSpecialCharacters" }, false},
+            new object[] { "eld-19", new ElementDefinition { Path = "NoSpecialCharacters" }, true },
+            new object[] { "eld-20", new ElementDefinition { Path = "   leadingSpaces" }, false},
+            new object[] { "eld-19", new ElementDefinition { Path = "NoSpaces.withADot" }, true },
+            new object[] { "sdf-0", new StructureDefinition { Name = " leadingSpaces" }, false },
+            new object[] { "sdf-0", new StructureDefinition { Name = "Name" }, true },
             /* Tests for R4B+
-            new object[] { FHIRAllTypes.StructureDefinition, "sdf-24",
+            new object[] { "sdf-24",
+                new StructureDefinition
+                {
+                    Snapshot =
                     new StructureDefinition.SnapshotComponent
                         {
                             Element = new List<ElementDefinition> {
@@ -1462,7 +1465,7 @@ namespace Hl7.Fhir.Specification.Tests
                                     ElementId = "coderef.reference",
                                     Type = new List<ElementDefinition.TypeRefComponent>
                                            {
-                                                new ElementDefinition.TypeRefComponent { Code = "Reference", TargetProfile = new [] { "http://example.com/profile" } }
+                                                new ElementDefinition.TypeRefComponent { Code = "Reference", TargetProfile = new[] { "http://example.com/profile" }  }
                                            }
                                 },
                                 new ElementDefinition
@@ -1474,8 +1477,12 @@ namespace Hl7.Fhir.Specification.Tests
                                            }
                                 },
                              }
-                    }, false },
-            new object[] { FHIRAllTypes.StructureDefinition, "sdf-25",
+                    }
+                }, false },
+            new object[] { "sdf-25",
+                new StructureDefinition
+                {
+                    Snapshot =
                     new StructureDefinition.SnapshotComponent
                         {
                             Element = new List<ElementDefinition> {
@@ -1497,9 +1504,10 @@ namespace Hl7.Fhir.Specification.Tests
                                            }
                                 },
                              }
-                    }, false },
+                    }
+                }, false },
             */
-            new object[] { FHIRAllTypes.Questionnaire, "que-7",
+            new object[] { "que-7",
                     new Questionnaire.EnableWhenComponent
                         {
                             Operator = Questionnaire.QuestionnaireItemOperator.Exists,
