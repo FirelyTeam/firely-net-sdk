@@ -1446,14 +1446,13 @@ namespace Hl7.Fhir.Specification.Tests
         new List<object[]>
         {
             new object[] { FHIRAllTypes.Reference, "ref-1", new ResourceReference{ Display = "Only a display element" }, true },
-            
-            /* Tests for R4+
             new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = ":.ContainingSpecialCharacters" }, false},
             new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = "NoSpecialCharacters" }, true },
             new object[] { FHIRAllTypes.ElementDefinition, "eld-20", new ElementDefinition { Path = "   leadingSpaces" }, false},
             new object[] { FHIRAllTypes.ElementDefinition, "eld-19", new ElementDefinition { Path = "NoSpaces.withADot" }, true },
             new object[] { FHIRAllTypes.StructureDefinition, "sdf-0", new StructureDefinition { Name = " leadingSpaces" }, false },
             new object[] { FHIRAllTypes.StructureDefinition, "sdf-0", new StructureDefinition { Name = "Name" }, true },
+            /* Tests for R4B+
             new object[] { FHIRAllTypes.StructureDefinition, "sdf-24",
                     new StructureDefinition.SnapshotComponent
                         {
@@ -1463,7 +1462,7 @@ namespace Hl7.Fhir.Specification.Tests
                                     ElementId = "coderef.reference",
                                     Type = new List<ElementDefinition.TypeRefComponent>
                                            {
-                                                new ElementDefinition.TypeRefComponent { Code = "Reference", TargetProfile = "http://example.com/profile" }
+                                                new ElementDefinition.TypeRefComponent { Code = "Reference", TargetProfile = new [] { "http://example.com/profile" } }
                                            }
                                 },
                                 new ElementDefinition
@@ -1499,13 +1498,13 @@ namespace Hl7.Fhir.Specification.Tests
                                 },
                              }
                     }, false },
+            */
             new object[] { FHIRAllTypes.Questionnaire, "que-7",
                     new Questionnaire.EnableWhenComponent
                         {
                             Operator = Questionnaire.QuestionnaireItemOperator.Exists,
                             Answer = new FhirBoolean(true)
                     }, true },
-            */
         };
 
 
