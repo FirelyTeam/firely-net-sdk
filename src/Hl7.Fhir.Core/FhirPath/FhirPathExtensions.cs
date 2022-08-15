@@ -38,6 +38,14 @@ namespace Hl7.Fhir.FhirPath
             }
         }
 
+        /// <summary>
+        /// Expose the SymbolTable of the compiler, so we can add extra symbols to it.
+        /// </summary>
+        /// <returns>The SymbolTable of the internal FP compiler</returns>
+        /// <remarks>This function is still internal and not public, because it is not sure the function will remain in the SDK. It is 
+        /// now used by 1 unit test FhirPathScaleTest</remarks>
+        internal static SymbolTable GetSymbols() => COMPILER.Symbols;
+
         /// <inheritdoc cref="FhirPathCompilerCache.Select(ITypedElement, string, EvaluationContext?)"/>
         public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
             => CACHE.Select(input.ToTypedElement(), expression, ctx ?? FhirEvaluationContext.CreateDefault()).ToFhirValues();
