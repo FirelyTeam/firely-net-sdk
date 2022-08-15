@@ -23,7 +23,7 @@ namespace Hl7.Fhir
 
             var qr = (new FhirXmlParser()).Parse<QuestionnaireResponse>(xml);
 
-            SymbolTableExtensions.Add(Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable, "dateadd",
+            FhirPathExtensions.GetSymbols().Add("dateadd",
                 (P.Date f, string field, long amount) =>
                 {
                     DateTimeOffset dto = f.ToDateTimeOffset(0, 0, 0, TimeSpan.Zero).ToUniversalTime();
