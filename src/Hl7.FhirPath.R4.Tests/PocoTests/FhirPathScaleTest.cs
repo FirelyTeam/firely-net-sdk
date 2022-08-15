@@ -1,14 +1,14 @@
-﻿using Hl7.Fhir.FhirPath;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
-using Hl7.Fhir.ElementModel;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
+using System.Linq;
 using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir
@@ -16,18 +16,17 @@ namespace Hl7.Fhir
     [TestClass]
     public class FhirPathPerformanceTests
     {
-        [TestMethod] 
+        [TestMethod]
         public void QuestionnaireResponseFhirpathPocoTest()
         {
             var xml = File.ReadAllText(@"TestData\Large-QuestionnaireResponse.xml");
 
             var qr = (new FhirXmlParser()).Parse<QuestionnaireResponse>(xml);
 
-            var trace = Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable.Filter("trace", 2);
             SymbolTableExtensions.Add(Hl7.FhirPath.FhirPathCompiler.DefaultSymbolTable, "dateadd",
                 (P.Date f, string field, long amount) =>
                 {
-                    DateTimeOffset dto = f.ToDateTimeOffset(0,0,0,TimeSpan.Zero).ToUniversalTime();
+                    DateTimeOffset dto = f.ToDateTimeOffset(0, 0, 0, TimeSpan.Zero).ToUniversalTime();
                     int value = (int)amount;
 
                     // Need to convert the amount and field to compensate for partials
@@ -38,9 +37,9 @@ namespace Hl7.Fhir
                         case "yy": dto = dto.AddYears(value); break;
                         case "mm": dto = dto.AddMonths(value); break;
                         case "dd": dto = dto.AddDays(value); break;
-                        //case "hh": dto = dto.AddHours(value); break;
-                        //case "mi": dto = dto.AddMinutes(value); break;
-                        //case "ss": dto = dto.AddSeconds(value); break;
+                            //case "hh": dto = dto.AddHours(value); break;
+                            //case "mi": dto = dto.AddMinutes(value); break;
+                            //case "ss": dto = dto.AddSeconds(value); break;
                     }
                     P.Date changedDate = P.Date.Parse(P.Date.FromDateTimeOffset(dto).ToString().Substring(0, f.ToString().Length));
                     return changedDate;
