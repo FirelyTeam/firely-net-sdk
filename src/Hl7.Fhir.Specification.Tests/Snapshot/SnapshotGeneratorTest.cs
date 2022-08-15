@@ -69,8 +69,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
             var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true });
             _source = new TimingSource(dirSource);
             // [WMR 20170810] Order is important!
@@ -9756,8 +9754,8 @@ namespace Hl7.Fhir.Specification.Tests
             element.Type.Should().OnlyContain(t => t.Code == "boolean");
             element.Binding.Should().BeNull();
         }
-        
- 		[TestMethod]
+
+        [TestMethod]
         public async T.Task TestConstraintSource()
         {
             var observation = await _testResolver.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/Observation");
