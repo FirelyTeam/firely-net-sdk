@@ -30,14 +30,33 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
+        public void RetainsInstanceUri()
+        {
+            var exampleUri = "http://example.org/fhir/Bundle/1";
+            var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
+
+            var bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
+            var bundleNode = new ScopedNode(bundle.ToTypedElement(), exampleUri);
+            Assert.AreEqual(exampleUri, bundleNode.InstanceUri);
+
+            var children = bundleNode.Children("entry").Children("resource");
+            Assert.IsTrue(children.All(c => c is ScopedNode s && s.InstanceUri == exampleUri));
+        }
+
+        [TestMethod]
         public void KeepScopes()
         {
             Assert.IsNull(_bundleNode!.ParentResource);
             Assert.AreEqual("Bundle", _bundleNode.InstanceType);
             Assert.AreEqual("Bundle", _bundleNode.NearestResourceType);
+            Assert.IsNull(_bundleNode.ParentResource);
+
+            var meta = (ScopedNode)_bundleNode.Children("meta").First();
+            Assert.AreEqual("Bundle", meta.NearestResourceType);
 
             var entry = (ScopedNode)_bundleNode.Children("entry").First();
             Assert.IsNotNull(entry);
+            Assert.IsNotNull(entry.ParentResource);
             Assert.AreEqual("Bundle.entry[0]", entry.Location);
             Assert.AreEqual("Bundle.entry[0]", entry.LocalLocation);
             Assert.AreEqual("Bundle", entry.ParentResource!.Location);
@@ -96,7 +115,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void GetChildResources()
+        public void GetContainedAndBundledResources()
         {
             Assert.AreEqual(0, _bundleNode!.ContainedResources().Count());
 
@@ -152,28 +171,43 @@ namespace Hl7.Fhir.ElementModel.Tests
 
             var inner1 = _bundleNode.Children("entry").Skip(1).First().Children("resource").Children("active").SingleOrDefault() as ScopedNode;
 
-            Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d/3", inner1.MakeAbsolute("Patient/3"));
-            Assert.AreEqual("http://nu.nl/myPat/3x", inner1.MakeAbsolute("http://nu.nl/myPat/3x"));
-            Assert.AreEqual("http://example.org/fhir/Organization/5", inner1.MakeAbsolute("http://example.org/fhir/Organization/5"));
+            Assert.AreEqual("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d/3", inner1!.MakeAbsolute("Patient/3"));
+            Assert.AreEqual("http://nu.nl/myPat/3x", inner1!.MakeAbsolute("http://nu.nl/myPat/3x"));
+            Assert.AreEqual("http://example.org/fhir/Organization/5", inner1!.MakeAbsolute("http://example.org/fhir/Organization/5"));
+        }
+
+        [TestMethod]
+        public void TestContainedCanResolveToContainer()
+        {
+            Assert.IsNull(_bundleNode!.Resolve("#"));
+
+            var patient = _bundleNode!.Children("entry").Skip(6).Children("resource").First();
+            Assert.IsNull(patient.Resolve("#"));
+
+            var containedOrg = patient.Children("contained").First();
+            Assert.AreEqual("Patient", containedOrg.Resolve("#")!.InstanceType);
+
+            var containedId = containedOrg.Children("id").First();
+            Assert.AreEqual("Patient", containedId.Resolve("#")!.InstanceType);
         }
 
         [TestMethod]
         public void TestResolve()
         {
-            var inner7 = _bundleNode!.Children("entry").Skip(6).First().Children("resource").Children("managingOrganization").SingleOrDefault() as ScopedNode;
+            ScopedNode inner7 = (_bundleNode!.Children("entry").Skip(6).First().Children("resource").Children("managingOrganization").SingleOrDefault() as ScopedNode)!;
 
-            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7!.Resolve("http://example.org/fhir/Patient/e").Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7!.Resolve("#orgY").Location);
-            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7!.Resolve("#e").Location);
-            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7!.Resolve("http://example.org/fhir/Patient/d").Location);
-            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7!.Resolve("Patient/d").Location);
-            Assert.AreEqual("Bundle.entry[1].resource[0]", inner7!.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d").Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/e")!.Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7!.Resolve("#orgY")!.Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0]", inner7.Resolve("#e")!.Location);
+            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("http://example.org/fhir/Patient/d")!.Location);
+            Assert.AreEqual("Bundle.entry[5].resource[0]", inner7.Resolve("Patient/d")!.Location);
+            Assert.AreEqual("Bundle.entry[1].resource[0]", inner7.Resolve("urn:uuid:04121321-4af5-424c-a0e1-ed3aab1c349d")!.Location);
             Assert.IsNull(inner7.Resolve("#d"));
             Assert.IsNull(inner7.Resolve("http://nu.nl/3"));
 
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7!.Resolve().Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Resolve()!.Location);
             Assert.IsTrue(inner7!.Children("reference").Any());
-            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Children("reference").First().Resolve().Location);
+            Assert.AreEqual("Bundle.entry[6].resource[0].contained[1]", inner7.Children("reference").First().Resolve()!.Location);
 
             string lastUrlResolved = "";
 
@@ -206,12 +240,11 @@ namespace Hl7.Fhir.ElementModel.Tests
         [TestMethod]
         public void CcdaWithXhtmlTag()
         {
-            bool CCDATypeNameMapper(string typeName, out string canonical)
+            static bool CCDATypeNameMapper(string typeName, out string canonical)
             {
-                if (ModelInfo.IsPrimitive(typeName))
-                    canonical = "http://hl7.org/fhir/StructureDefinition/" + typeName;
-                else
-                    canonical = "http://hl7.org/fhir/cda/StructureDefinition/" + typeName;
+                canonical = ModelInfo.IsPrimitive(typeName)
+                    ? "http://hl7.org/fhir/StructureDefinition/" + typeName
+                    : "http://hl7.org/fhir/cda/StructureDefinition/" + typeName;
 
                 return true;
             }

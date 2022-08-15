@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class BatchValidationExtensions
     {
-        public static OperationOutcome Combine(this Validator validator, BatchValidationMode mode, ITypedElement instance, IEnumerable<Func<OperationOutcome>> validations)
+        public static OperationOutcome Combine(this Validator validator, string subjects, BatchValidationMode mode, ITypedElement instance, IEnumerable<Func<OperationOutcome>> validations)
         {
             if (validations.Count() == 0)
                 return new OperationOutcome();
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Validation
                 return validations.First()();
             }
 
-            OperationOutcome combinedResult = new OperationOutcome();
+            var combinedResult = new OperationOutcome();
 
             var modeLabel = mode == BatchValidationMode.All ? "ALL" : "ANY";
             validator.Trace(combinedResult, $"Combination of {validations.Count()} child validation runs, {modeLabel} must succeed", Issue.PROCESSING_PROGRESS, instance);
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Validation
             int failures = 0;
             int successes = 0;
 
-            List<OperationOutcome> results = new List<OperationOutcome>();
+            var results = new List<OperationOutcome>();
 
             // Run the given validations one by one, short circuiting when ANY success is enough
             foreach (var validation in validations)
@@ -63,6 +63,11 @@ namespace Hl7.Fhir.Validation
 
 
             // Now, build final report
+            var prefix = $"Validation against {mode.ToString().ToLower()} of {subjects}";
+
+            var parent = success ?
+                    validator.Trace(combinedResult, prefix + " succeeded", Issue.PROCESSING_PROGRESS, instance)
+                    : combinedResult.AddIssue(prefix + $" failed, {failures} child validation runs failed, {successes} succeeded. Details follow below", Issue.PROCESSING_PROGRESS, instance);
 
             for (var index = 0; index < results.Count; index++)
             {
@@ -76,14 +81,8 @@ namespace Hl7.Fhir.Validation
                     if (!result.Success) result.MakeInformational();
                 }
 
-                combinedResult.Include(result);
+                combinedResult.Include(result, parent);
             }
-
-            if (success)
-                validator.Trace(combinedResult, "Combined validation succeeded", Issue.PROCESSING_PROGRESS, instance);
-            else
-                combinedResult.AddIssue($"Combined {modeLabel} validation failed, {failures} child validation runs failed, {successes} succeeded", Issue.PROCESSING_PROGRESS, instance);
-
 
             return combinedResult;
         }
