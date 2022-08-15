@@ -11,6 +11,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +19,7 @@ namespace Hl7.Fhir.FhirPath
 {
     public static class FhirPathExtensions
     {
-        private static readonly FhirPathCompiler COMPILER = new(FhirPathCompiler.DefaultSymbolTable.AddFhirExtensions());
+        private static readonly FhirPathCompiler COMPILER = new(new SymbolTable().AddStandardFP().AddFhirExtensions());
         private static readonly FhirPathCompilerCache CACHE = new(COMPILER);
 
         /// <summary>
@@ -36,6 +37,14 @@ namespace Hl7.Fhir.FhirPath
                 return resource?.ToTypedElement();
             }
         }
+
+        /// <summary>
+        /// Expose the SymbolTable of the compiler, so we can add extra symbols to it.
+        /// </summary>
+        /// <returns>The SymbolTable of the internal FP compiler</returns>
+        /// <remarks>This function is still internal and not public, because it is not sure the function will remain in the SDK. It is 
+        /// now used by 1 unit test FhirPathScaleTest</remarks>
+        internal static SymbolTable GetSymbols() => COMPILER.Symbols;
 
         /// <inheritdoc cref="FhirPathCompilerCache.Select(ITypedElement, string, EvaluationContext?)"/>
         public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
