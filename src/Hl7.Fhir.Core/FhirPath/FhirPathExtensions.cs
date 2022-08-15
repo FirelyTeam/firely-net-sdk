@@ -11,7 +11,6 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.FhirPath;
-using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
 
@@ -19,7 +18,7 @@ namespace Hl7.Fhir.FhirPath
 {
     public static class FhirPathExtensions
     {
-        private static readonly FhirPathCompiler COMPILER = new(new SymbolTable().AddStandardFP().AddFhirExtensions());
+        private static readonly FhirPathCompiler COMPILER = new(FhirPathCompiler.DefaultSymbolTable.AddFhirExtensions());
         private static readonly FhirPathCompilerCache CACHE = new(COMPILER);
 
         /// <summary>
