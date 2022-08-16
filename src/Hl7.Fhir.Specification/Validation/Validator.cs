@@ -128,7 +128,14 @@ namespace Hl7.Fhir.Validation
             IEnumerable<StructureDefinition> statedProfiles,
             ValidationState state)
         {
-            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping);
+            var resolutionContext = instance switch
+            {
+                { InstanceType: "Extension" } when instance.Name == "modifierExtension" => ProfileAssertion.ResolutionContext.InModifierExtension,
+                { InstanceType: "Extension" } => ProfileAssertion.ResolutionContext.InExtension,
+                _ => ProfileAssertion.ResolutionContext.Elsewhere
+            };
+
+            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping, resolutionContext);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
@@ -165,7 +172,7 @@ namespace Hl7.Fhir.Validation
                 else
                 {
                     var validators = allDefinitions.Select(nav => createValidator(nav));
-                    outcome.Add(this.Combine(BatchValidationMode.All, instance, validators));
+                    outcome.Add(this.Combine("the list of profiles", BatchValidationMode.All, instance, validators));
                 }
             }
             catch (Exception e)
@@ -283,9 +290,6 @@ namespace Hl7.Fhir.Validation
                 outcome.Add(this.ValidateFp(definition.StructureDefinition.Url, elementConstraints, instance));
                 outcome.Add(this.validateExtension(elementConstraints, instance, "http://hl7.org/fhir/StructureDefinition/regex"));
                 outcome.Add(this.ValidateBinding(elementConstraints, instance, context));
-
-                // If the report only has partial information, no use to show the hierarchy, so flatten it.
-                if (Settings.Trace == false) outcome.Flatten();
 
                 return outcome;
             }

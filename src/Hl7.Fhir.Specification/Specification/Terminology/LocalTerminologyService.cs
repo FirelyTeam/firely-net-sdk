@@ -43,8 +43,33 @@ namespace Hl7.Fhir.Specification.Terminology
 
         internal async T.Task<ValueSet> FindValueset(string canonical)
         {
-            return await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
+            var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
+
+            if (valueset == null && _resolver is IConformanceSource source)
+            {
+                var cs = source.FindCodeSystemByValueSet(canonical);
+                if (cs != null)
+                {
+                    valueset = new ValueSet
+                    {
+                        Url = canonical,
+                        Compose = new()
+                        {
+                            Include = new()
+                            {
+                                new()
+                                {
+                                    System = cs.Url
+                                }
+                            }
+                        }
+                    };
+                    await _expander.ExpandAsync(valueset);
+                }
+            }
+            return valueset;
         }
+
 
         ///<inheritdoc />
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)

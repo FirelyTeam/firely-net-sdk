@@ -25,10 +25,10 @@ namespace Hl7.Fhir.Specification.Snapshot
         internal struct ElementDefnMerger
         {
             /// <summary>Merge two <see cref="ElementDefinition"/> instances. Existing diff properties override associated snap properties.</summary>
-            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            public static void Merge(SnapshotGenerator generator, ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl = null)
             {
                 var merger = new ElementDefnMerger(generator);
-                merger.merge(snap, diff, mergeElementId);
+                merger.merge(snap, diff, mergeElementId, baseUrl);
             }
 
             readonly SnapshotGenerator _generator;
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 _generator = generator;
             }
 
-            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId)
+            void merge(ElementDefinition snap, ElementDefinition diff, bool mergeElementId, string baseUrl)
             {
                 // [WMR 20160915] Important! Derived profiles should never inherit the ChangedByDiff extension
                 // Caller should make sure that existing extensions have been removed from snap,
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // additional identical constraints inherited from e.g. BackboneElement.
                 // snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, (a, b) => false);
                 // [Backported from R4] Use of mergeConstraints.
-                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint);
+                snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
 
                 // [WMR 20160907] merge conditions
                 snap.ConditionElement = mergeCollection(snap.ConditionElement, diff.ConditionElement, (a, b) => a.Value == b.Value);
@@ -165,6 +165,12 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.IsSummaryElement = mergePrimitiveAttribute(snap.IsSummaryElement, diff.IsSummaryElement);
 
                 snap.Binding = mergeBinding(snap.Binding, diff.Binding);
+
+                // [MV 20220803] Remove Binding when the element has no bindable type
+                if (snap.Binding is not null && !snap.Type.Any(t => ModelInfo.IsBindable(t.Code)))
+                {
+                    snap.Binding = null;
+                }
 
                 // [AE 20200129] Merging only fails for lists on a nested level. Slicing.Discriminator is the only case where this happens
                 var originalDiscriminator = snap.Slicing?.Discriminator;
@@ -382,10 +388,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return result;
             }
 
-            // [Backported from R4] Does not include InitializeConstraintSource!
+            // [Backported from R4] 
             List<ElementDefinition.ConstraintComponent> mergeConstraints(
                 List<ElementDefinition.ConstraintComponent> snap,
-                List<ElementDefinition.ConstraintComponent> diff)
+                List<ElementDefinition.ConstraintComponent> diff,
+                string source)
             {
                 var result = snap;
                 if (!diff.IsNullOrEmpty())
@@ -423,8 +430,24 @@ namespace Hl7.Fhir.Specification.Snapshot
                             onConstraint(mergedItem);
                         }
                     }
+                    if (!string.IsNullOrEmpty(source))
+                    {
+                        InitializeConstraintSource(result, source);
+                    }
+
                 }
                 return result;
+            }
+
+            internal static void InitializeConstraintSource(IEnumerable<ElementDefinition.ConstraintComponent> constraints, string source)
+            {
+                foreach (var constraint in constraints)
+                {
+                    if (string.IsNullOrEmpty(constraint.Source))
+                    {
+                        constraint.Source = source;
+                    }
+                }
             }
 
             // Merge two collections

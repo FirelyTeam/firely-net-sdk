@@ -130,11 +130,11 @@ namespace Hl7.Fhir.Test.Validation
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var node = resource.ToTypedElement();
-            var results = node.Select(index.Expression, new FhirEvaluationContext(node));
-            if (results.Count() > 0)
+            var results = resource.Select(index.Expression, new FhirEvaluationContext(resource.ToTypedElement()));
+            if (results.Any())
             {
-                foreach (var t2 in results)
+                // we perform the Select on a Poco, because then we get the FHIR dialect of FhirPath as well.
+                foreach (var t2 in results.Select(r => r.ToTypedElement()))
                 {
                     if (t2 != null)
                     {
