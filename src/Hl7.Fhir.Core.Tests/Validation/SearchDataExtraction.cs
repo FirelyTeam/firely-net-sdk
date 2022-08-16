@@ -27,13 +27,6 @@ namespace Hl7.Fhir.Test.Validation
     [TestClass]
     public class ValidateSearchExtractionAllExamplesTest
     {
-        [TestInitialize]
-        public void Setup()
-        {
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-        }
-
-
         [TestMethod]
         [TestCategory("LongRunner")]
         public void SearchExtractionAllExamples()
@@ -149,21 +142,20 @@ namespace Hl7.Fhir.Test.Validation
 
         private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
         {
-            var resourceModel = new ScopedNode(resource.ToTypedElement());
-
-            IEnumerable<ITypedElement> results;
+            IEnumerable<Base> results;
             try
             {
-                results = resourceModel.Select(index.Expression, new FhirEvaluationContext(resourceModel) { ElementResolver = mockResolver });
+                // we perform the Select on a Poco, because then we get the FHIR dialect of FhirPath as well.
+                results = resource.Select(index.Expression, new FhirEvaluationContext(resource.ToTypedElement()) { ElementResolver = mockResolver });
             }
             catch (Exception)
             {
                 Trace.WriteLine($"Failed processing search expression {index.Name}: {index.Expression}");
                 throw;
             }
-            if (results.Count() > 0)
+            if (results.Any())
             {
-                foreach (var t2 in results)
+                foreach (var t2 in results.Select(r => r.ToTypedElement()))
                 {
                     if (t2 != null)
                     {

@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Possible outcome for the subject
       /// </summary>
-      [FhirElement("outcome", Order=40 , FiveWs="")]
+      [FhirElement("outcome", Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Outcome
       {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Likelihood of specified outcome
       /// </summary>
-      [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("probability", Order=50, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDecimal),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Likelihood of specified outcome as a qualitative value
       /// </summary>
-      [FhirElement("qualitativeRisk", Order=60 , FiveWs="")]
+      [FhirElement("qualitativeRisk", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept QualitativeRisk
       {
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Relative likelihood
       /// </summary>
-      [FhirElement("relativeRisk", Order=70 , FiveWs="")]
+      [FhirElement("relativeRisk", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirDecimal RelativeRiskElement
       {
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Timeframe or age range
       /// </summary>
-      [FhirElement("when", Order=80, Choice=ChoiceType.DatatypeChoice , FiveWs="")]
+      [FhirElement("when", Order=80, Choice=ChoiceType.DatatypeChoice)]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Range))]
       [DataMember]
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Explanation of prediction
       /// </summary>
-      [FhirElement("rationale", Order=90 , FiveWs="")]
+      [FhirElement("rationale", Order=90)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString RationaleElement
       {
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier for the assessment
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90 , FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="FiveWs.identifier")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled by this assessment
     /// </summary>
-    [FhirElement("basedOn", Order=100 , FiveWs="")]
+    [FhirElement("basedOn", Order=100)]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Part of this occurrence
     /// </summary>
-    [FhirElement("parent", Order=110 , FiveWs="")]
+    [FhirElement("parent", Order=110)]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=120 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evaluation mechanism
     /// </summary>
-    [FhirElement("method", InSummary=true, Order=130 , FiveWs="FiveWs.class")]
+    [FhirElement("method", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of assessment
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=140 , FiveWs="FiveWs.what[x]")]
+    [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -420,7 +420,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what does assessment apply to?
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150 , FiveWs="FiveWs.subject")]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="FiveWs.subject")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where was assessment performed?
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=160 , FiveWs="FiveWs.context")]
+    [FhirElement("encounter", InSummary=true, Order=160, FiveWs="FiveWs.context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -451,7 +451,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When was assessment made?
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice , FiveWs="FiveWs.done[x]")]
+    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="FiveWs.done[x]")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition assessed
     /// </summary>
-    [FhirElement("condition", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("condition", InSummary=true, Order=180)]
     [CLSCompliant(false)]
     [References("Condition")]
     [DataMember]
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who did assessment?
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=190 , FiveWs="FiveWs.actor")]
+    [FhirElement("performer", InSummary=true, Order=190, FiveWs="FiveWs.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","PractitionerRole","Device")]
     [DataMember]
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?
     /// </summary>
-    [FhirElement("reasonCode", Order=200 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonCode", Order=200, FiveWs="FiveWs.why[x]")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -510,7 +510,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?
     /// </summary>
-    [FhirElement("reasonReference", Order=210 , FiveWs="FiveWs.why[x]")]
+    [FhirElement("reasonReference", Order=210, FiveWs="FiveWs.why[x]")]
     [CLSCompliant(false)]
     [References("Condition","Observation","DiagnosticReport","DocumentReference")]
     [Cardinality(Min=0,Max=-1)]
@@ -526,7 +526,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information used in assessment
     /// </summary>
-    [FhirElement("basis", Order=220 , FiveWs="")]
+    [FhirElement("basis", Order=220)]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Outcome predicted
     /// </summary>
-    [FhirElement("prediction", Order=230 , FiveWs="")]
+    [FhirElement("prediction", Order=230)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RiskAssessment.PredictionComponent> Prediction
@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How to reduce risk
     /// </summary>
-    [FhirElement("mitigation", Order=240 , FiveWs="")]
+    [FhirElement("mitigation", Order=240)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString MitigationElement
     {
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Comments on the risk assessment
     /// </summary>
-    [FhirElement("note", Order=250 , FiveWs="")]
+    [FhirElement("note", Order=250)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Annotation> Note

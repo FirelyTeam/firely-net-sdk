@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Low Numerator limit
     /// </summary>
-    [FhirElement("lowNumerator", InSummary=true, Order=30 , FiveWs="")]
+    [FhirElement("lowNumerator", InSummary=true, Order=30)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity LowNumerator
     {
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// High Numerator limit
     /// </summary>
-    [FhirElement("highNumerator", InSummary=true, Order=40 , FiveWs="")]
+    [FhirElement("highNumerator", InSummary=true, Order=40)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity HighNumerator
     {
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Denominator value
     /// </summary>
-    [FhirElement("denominator", InSummary=true, Order=50 , FiveWs="")]
+    [FhirElement("denominator", InSummary=true, Order=50)]
     [DataMember]
     public Hl7.Fhir.Model.Quantity Denominator
     {

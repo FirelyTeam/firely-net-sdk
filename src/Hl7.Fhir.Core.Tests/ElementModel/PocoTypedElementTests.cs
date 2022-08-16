@@ -6,6 +6,7 @@ using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -59,14 +60,26 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             var extensions = p.Select("Patient.active[0].extension");
             Assert.AreEqual(2, extensions.Count());
+
+            var boolValue = p.Select("Patient.active");
+            Assert.IsTrue(boolValue.All(bv => bv is FhirBoolean));
+        }
+
+        [TestMethod]
+        public void TestFpFunctions()
+        {
+            // FHIR specific function exists on POCO
+            var fhirData = new FhirString("hello!");
+            Assert.IsTrue(fhirData.IsTrue("hasValue()"));
+
+            // FHIR specific function does not work for ITypedElement extension methods
+            var data = ElementNode.ForPrimitive("hello!");
+            Assert.ThrowsException<ArgumentException>(() => data.IsTrue("hasValue()"));
         }
 
         [TestMethod]
         public void PocoHasValueTest()
         {
-            // Ensure the FHIR extensions are registered
-            FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
             Patient p = new Patient();
 
             Assert.AreEqual(false, p.Predicate("Patient.active.hasValue()"));
@@ -153,7 +166,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
             }
             sw.Stop();
 
-            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5 } micros");
+            Debug.WriteLine($"Navigating took {sw.ElapsedMilliseconds / 5} micros");
 
             void extract()
             {

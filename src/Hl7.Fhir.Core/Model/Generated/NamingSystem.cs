@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// oid | uuid | uri | other
       /// </summary>
-      [FhirElement("type", InSummary=true, Order=40 , FiveWs="")]
+      [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The unique identifier
       /// </summary>
-      [FhirElement("value", InSummary=true, Order=50 , FiveWs="FiveWs.identifier")]
+      [FhirElement("value", InSummary=true, Order=50, FiveWs="FiveWs.identifier")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Is this the id that should be used for this type
       /// </summary>
-      [FhirElement("preferred", Order=60 , FiveWs="")]
+      [FhirElement("preferred", Order=60)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean PreferredElement
       {
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Notes about identifier usage
       /// </summary>
-      [FhirElement("comment", Order=70 , FiveWs="")]
+      [FhirElement("comment", Order=70)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CommentElement
       {
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// When is identifier valid?
       /// </summary>
-      [FhirElement("period", Order=80 , FiveWs="")]
+      [FhirElement("period", Order=80)]
       [DataMember]
       public Hl7.Fhir.Model.Period Period
       {
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name for this naming system (computer friendly)
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=90 , FiveWs="")]
+    [FhirElement("name", InSummary=true, Order=90)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100 , FiveWs="FiveWs.status")]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// codesystem | identifier | root
     /// </summary>
-    [FhirElement("kind", InSummary=true, Order=110 , FiveWs="FiveWs.class")]
+    [FhirElement("kind", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=120 , FiveWs="FiveWs.recorded")]
+    [FhirElement("date", InSummary=true, Order=120, FiveWs="FiveWs.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=130 , FiveWs="FiveWs.witness")]
+    [FhirElement("publisher", InSummary=true, Order=130, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contact details for the publisher
     /// </summary>
-    [FhirElement("contact", InSummary=true, Order=140 , FiveWs="")]
+    [FhirElement("contact", InSummary=true, Order=140)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Contact
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who maintains system namespace?
     /// </summary>
-    [FhirElement("responsible", Order=150 , FiveWs="FiveWs.witness")]
+    [FhirElement("responsible", Order=150, FiveWs="FiveWs.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ResponsibleElement
     {
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// e.g. driver,  provider,  patient, bank etc.
     /// </summary>
-    [FhirElement("type", Order=160 , FiveWs="")]
+    [FhirElement("type", Order=160)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Natural language description of the naming system
     /// </summary>
-    [FhirElement("description", Order=170 , FiveWs="")]
+    [FhirElement("description", Order=170)]
     [DataMember]
     public Hl7.Fhir.Model.Markdown Description
     {
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The context that the content is intended to support
     /// </summary>
-    [FhirElement("useContext", InSummary=true, Order=180 , FiveWs="")]
+    [FhirElement("useContext", InSummary=true, Order=180)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.UsageContext> UseContext
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended jurisdiction for naming system (if applicable)
     /// </summary>
-    [FhirElement("jurisdiction", InSummary=true, Order=190 , FiveWs="")]
+    [FhirElement("jurisdiction", InSummary=true, Order=190)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Jurisdiction
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How/where is it used
     /// </summary>
-    [FhirElement("usage", Order=200 , FiveWs="")]
+    [FhirElement("usage", Order=200)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString UsageElement
     {
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifiers used for system
     /// </summary>
-    [FhirElement("uniqueId", InSummary=true, Order=210 , FiveWs="")]
+    [FhirElement("uniqueId", InSummary=true, Order=210)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.NamingSystem.UniqueIdComponent> UniqueId

@@ -10,16 +10,18 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.Fhir.FhirPath
 {
     public static class FhirPathExtensions
     {
+        private static readonly FhirPathCompiler COMPILER = new(new SymbolTable().AddStandardFP().AddFhirExtensions());
+        private static readonly FhirPathCompilerCache CACHE = new(COMPILER);
+
         /// <summary>
         /// Converts results of a resolver from Resource to ITypedElement
         /// </summary>
@@ -35,72 +37,34 @@ namespace Hl7.Fhir.FhirPath
                 return resource?.ToTypedElement();
             }
         }
+
         /// <summary>
-        /// Evaluates an expression against a given context and returns the result(s)
+        /// Expose the SymbolTable of the compiler, so we can add extra symbols to it.
         /// </summary>
-        /// <param name="input">Input on which the expression is being evaluated</param>
-        /// <param name="expression">Expression which is to be evaluated</param>
-        /// <param name="ctx">Context of the evaluation</param>
-        /// <returns>The result(s) of the expression</returns>
+        /// <returns>The SymbolTable of the internal FP compiler</returns>
+        /// <remarks>This function is still internal and not public, because it is not sure the function will remain in the SDK. It is 
+        /// now used by 1 unit test FhirPathScaleTest</remarks>
+        internal static SymbolTable GetSymbols() => COMPILER.Symbols;
+
+        /// <inheritdoc cref="FhirPathCompilerCache.Select(ITypedElement, string, EvaluationContext?)"/>
         public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
-        {
-            var inputNav = input.ToTypedElement();
-            var result = inputNav.Select(expression, ctx ?? FhirEvaluationContext.CreateDefault());
-            return result.ToFhirValues();
-        }
+            => CACHE.Select(input.ToTypedElement(), expression, ctx ?? FhirEvaluationContext.CreateDefault()).ToFhirValues();
 
-        /// <summary>
-        /// Evaluates an expression against a given context and returns a single result
-        /// </summary>
-        /// <param name="input">Input on which the expression is being evaluated</param>
-        /// <param name="expression">Expression which is to be evaluated</param>
-        /// <param name="ctx">Context of the evaluation</param>
-        /// <returns>The single result of the expression, and null if the expression returns multiple results</returns>
+        /// <inheritdoc cref="FhirPathCompilerCache.Scalar(ITypedElement, string, EvaluationContext?)"/>
         public static object? Scalar(this Base input, string expression, FhirEvaluationContext? ctx = null)
-        {
-            var inputNav = input.ToTypedElement();
-            return inputNav.Scalar(expression, ctx ?? FhirEvaluationContext.CreateDefault());
-        }
+            => CACHE.Scalar(input.ToTypedElement(), expression, ctx ?? FhirEvaluationContext.CreateDefault());
 
-        /// <summary>
-        /// Evaluates an expression and returns true for expression being evaluated as true or empty, otherwise false.
-        /// </summary>
-        /// <param name="input">Input on which the expression is being evaluated</param>
-        /// <param name="expression">Expression which is to be evaluated</param>
-        /// <param name="ctx">Context of the evaluation</param>
-        /// <returns>True if expression returns true of empty, otheriwse false</returns>
+        /// <inheritdoc cref="FhirPathCompilerCache.Predicate(ITypedElement, string, EvaluationContext?)"/>
         public static bool Predicate(this Base input, string expression, FhirEvaluationContext? ctx = null)
-        {
-            var inputNav = input.ToTypedElement();
-            return inputNav.Predicate(expression, ctx ?? FhirEvaluationContext.CreateDefault());
-        }
+            => CACHE.Predicate(input.ToTypedElement(), expression, ctx ?? FhirEvaluationContext.CreateDefault());
 
-        /// <summary>
-        /// Evaluates an expression and returns true for expression being evaluated as true, and false if the expression returns false or empty.
-        /// </summary>
-        /// <param name="input">Input on which the expression is being evaluated</param>
-        /// <param name="expression">Expression which is to be evaluated</param>
-        /// <param name="ctx">Context of the evaluation</param>
-        /// <returns>True if expression returns true , and false if expression returns empty of false.</returns>
+        /// <inheritdoc cref="FhirPathCompilerCache.IsTrue(ITypedElement, string, EvaluationContext?)"/>
         public static bool IsTrue(this Base input, string expression, FhirEvaluationContext? ctx = null)
-        {
-            var inputNav = input.ToTypedElement();
-            return inputNav.IsTrue(expression, ctx ?? FhirEvaluationContext.CreateDefault());
-        }
+            => CACHE.IsTrue(input.ToTypedElement(), expression, ctx ?? FhirEvaluationContext.CreateDefault());
 
-        /// <summary>
-        ///Evaluates if the result of an expression is equal to a given boolean.
-        /// </summary>
-        /// <param name="input">Input on which the expression is being evaluated</param>
-        /// <param name="value">Boolean that is to be compared to the result of the expression</param>
-        /// <param name="expression">Expression which is to be evaluated</param>
-        /// <param name="ctx">Context of the evaluation</param>
-        /// <returns>True if the result of an expression is equal to a given boolean, otherwise false</returns>
+        /// <inheritdoc cref="FhirPathCompilerCache.IsBoolean(ITypedElement, string, bool, EvaluationContext?) "/>
         public static bool IsBoolean(this Base input, string expression, bool value, FhirEvaluationContext? ctx = null)
-        {
-            var inputNav = input.ToTypedElement();
-            return inputNav.IsBoolean(expression, value, ctx ?? FhirEvaluationContext.CreateDefault());
-        }
+            => CACHE.IsBoolean(input.ToTypedElement(), expression, value, ctx ?? FhirEvaluationContext.CreateDefault());
     }
 }
 
