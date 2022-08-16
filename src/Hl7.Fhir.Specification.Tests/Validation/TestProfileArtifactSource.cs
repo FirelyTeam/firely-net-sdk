@@ -53,7 +53,9 @@ namespace Hl7.Fhir.Specification.Tests
             buildPatientWithDeceasedConstraints("RequiredBoolean"),
             buildPatientWithDeceasedConstraints(),
             buildBoolean(),
-            buildMyExtension()
+            buildMyExtension(),
+            buildSliceOnChoice(),
+            buildConstrainBindableType()
         }.AddM(buildPatientWithProfiledReferences());
 
         private static StructureDefinition buildObservationWithTargetProfilesAndChildDefs()
@@ -101,7 +103,7 @@ namespace Hl7.Fhir.Specification.Tests
             cons.Add(new ElementDefinition("Observation.code")
             {
                 ElementId = "Observation.code"
-            }.OfType(FHIRAllTypes.CodeableConcept, new[] { "http://validationtest.org/fhir/StructureDefinition/CodeableConceptTranslatable" }));
+            }.OfType(FHIRAllTypes.CodeableConcept, "http://validationtest.org/fhir/StructureDefinition/CodeableConceptTranslatable"));
 
             return result;
         }
@@ -152,6 +154,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             return result;
         }
+
 
         private static StructureDefinition buildPatientWithIdentifierSlicing()
         {
@@ -318,7 +321,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
             cons.Add(new ElementDefinition("Patient.identifier").Required(max: "*")
-                        .OfType(FHIRAllTypes.Identifier, new[] { "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN", "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL" }));
+                        .OfType(FHIRAllTypes.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN")
+                        .OrType(FHIRAllTypes.Identifier, "http://validationtest.org/fhir/StructureDefinition/IdentifierWithDL"));
 
             return result;
         }
@@ -401,7 +405,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             cons.Add(new ElementDefinition("Observation").OfType(FHIRAllTypes.Observation));
             cons.Add(new ElementDefinition("Observation.value[x]")
-                .OfType(FHIRAllTypes.Quantity, new[] { "http://validationtest.org/fhir/StructureDefinition/WeightQuantity", "http://validationtest.org/fhir/StructureDefinition/HeightQuantity" })
+                .OfType(FHIRAllTypes.Quantity, "http://validationtest.org/fhir/StructureDefinition/WeightQuantity")
+                .OrType(FHIRAllTypes.Quantity, "http://validationtest.org/fhir/StructureDefinition/HeightQuantity")
                 .OrType(FHIRAllTypes.String));
 
             return result;
@@ -418,7 +423,7 @@ namespace Hl7.Fhir.Specification.Tests
             cons.Add(new ElementDefinition("Bundle").OfType(FHIRAllTypes.Bundle));
             cons.Add(new ElementDefinition("Bundle.entry.resource")
                 .OfType(FHIRAllTypes.Organization)
-                .OrType(FHIRAllTypes.Patient, new[] { $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization" }));
+                .OrType(FHIRAllTypes.Patient, $"http://validationtest.org/fhir/StructureDefinition/PatientWith{prefix}Organization"));
 
             return result;
         }
@@ -447,7 +452,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             cons.Add(new ElementDefinition("Patient").OfType(FHIRAllTypes.Patient));
             cons.Add(new ElementDefinition("Patient.managingOrganization")
-                .OfReference(new[] { (string)ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization) }, aggregation));
+                .OfReference(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Organization), aggregation));
 
             return result;
         }
@@ -493,7 +498,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             cons.Add(new ElementDefinition("Range").OfType(FHIRAllTypes.Range));
             cons.Add(new ElementDefinition("Range.low")
-                .OfType(FHIRAllTypes.Quantity, profiles: new[] { QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL })
+                .OfType(FHIRAllTypes.Quantity, profile: QUANTITY_WITH_UNLIMITED_ROOT_CARDINALITY_CANONICAL)
                 .Required(min: 1, max: null));   // just set min to 1 and leave max out.
 
             return result;
@@ -656,5 +661,47 @@ namespace Hl7.Fhir.Specification.Tests
             cons.Add(new ElementDefinition("Patient.managingOrganization").OfReference(PROFILED_ORG_URL));
             yield return result;
         }
+
+        private static StructureDefinition buildSliceOnChoice()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132", "MedicationRequest-issue-2132",
+                "MedicationRequest sliced on substitution.allowed[x]", FHIRAllTypes.MedicationRequest);
+
+            var cons = result.Differential.Element;
+
+            var slicingIntro = new ElementDefinition("MedicationRequest.substitution.allowed[x]")
+               .WithSlicingIntro(ElementDefinition.SlicingRules.Closed, (ElementDefinition.DiscriminatorType.Type, "$this"));
+
+            cons.Add(slicingIntro);
+
+            cons.Add(new ElementDefinition("MedicationRequest.substitution.allowed[x]")
+            {
+                ElementId = "MedicationRequest.substitution.allowed[x]:allowedBoolean",
+                SliceName = "allowedBoolean",
+            }.OfType(FHIRAllTypes.Boolean));
+
+            cons.Add(new ElementDefinition("MedicationRequest.substitution.allowed[x]")
+            {
+                ElementId = "MedicationRequest.substitution.allowed[x]:allowedCodeableConcept",
+                SliceName = "allowedCodeableConcept",
+            }.OfType(FHIRAllTypes.CodeableConcept));
+
+            return result;
+        }
+
+        private static StructureDefinition buildConstrainBindableType()
+        {
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132-2", "MedicationRequest-issue-2132",
+                "MedicationRequest sliced on substitution.allowed[x]", FHIRAllTypes.MedicationRequest);
+
+            var cons = result.Differential.Element;
+
+            var typeConstraint = new ElementDefinition("MedicationRequest.substitution.allowed[x]").OfType(FHIRAllTypes.Boolean);
+
+            cons.Add(typeConstraint);
+
+            return result;
+        }
+
     }
 }

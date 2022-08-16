@@ -353,6 +353,21 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [Fact]
+        public async T.Task LocalTermServiceValidateCodeFromImplicitValueSet()
+        {
+            var csUrl = "http://fire.ly/CodeSystem/test-cs";
+            var customResolver = new OnlyCodeSystemResolver(csUrl);
+            var svc = new LocalTerminologyService(customResolver);
+            var inParams = new ValidateCodeParameters()
+               .WithValueSet(url: "http://fire.ly/ValueSet/test-vs")
+               .WithCode(code: "alpha", system: csUrl);
+
+            var result = await svc.ValueSetValidateCode(inParams);
+            isSuccess(result).Should().BeTrue();
+        }
+
+
+        [Fact]
         public async T.Task TestOperationOutcomesAsync()
         {
             var svc = new LocalTerminologyService(_resolver);
@@ -950,6 +965,59 @@ namespace Hl7.Fhir.Specification.Tests
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
+        private class OnlyCodeSystemResolver : IAsyncResourceResolver, IConformanceSource
+        {
+            private CodeSystem _onlyCs;
+
+            public OnlyCodeSystemResolver(string csUrl)
+            {
+                _onlyCs = createCodeSystem(csUrl);
+            }
+
+            private CodeSystem createCodeSystem(string csUrl)
+            {
+                return new CodeSystem
+                {
+                    Url = csUrl,
+                    Status = PublicationStatus.Unknown,
+                    Content = CodeSystem.CodeSystemContentMode.Example,
+                    Concept = new()
+                    {
+                        new()
+                        {
+                            Code = "alpha",
+                            Display = "Alpha"
+                        },
+                        new()
+                        {
+                            Code = "beta",
+                            Display = "Beta"
+                        },
+                        new()
+                        {
+                            Code = "gamma",
+                            Display = "Gamma"
+                        }
+                    }
+                };
+            }
+
+            public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
+            {
+                _onlyCs.ValueSet = valueSetUri;
+                return _onlyCs;
+            }
+            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
+            public NamingSystem FindNamingSystem(string uniqueId) => throw new NotImplementedException();
+            public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => throw new NotImplementedException();
+            public Resource ResolveByCanonicalUri(string uri) => throw new NotImplementedException();
+            public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
+            {
+                return await T.Task.FromResult(uri == _onlyCs.Url ? _onlyCs : null);
+            }
+            public Resource ResolveByUri(string uri) => throw new NotImplementedException();
+            public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+        }
     }
 }
 
