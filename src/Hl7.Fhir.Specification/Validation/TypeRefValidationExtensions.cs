@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Validation
             //when a reference cannot be resolved.  (this happens in a choice type where there are multiple references with multiple profiles)
 
             IEnumerable<Func<OperationOutcome>> validations = typeRefs.Select(tr => createValidatorForTypeRef(validator, instance, tr, validateProfiles, state));
-            return validator.Combine(BatchValidationMode.Any, instance, validations);
+            return validator.Combine("type and targetprofiles", BatchValidationMode.Any, instance, validations);
         }
 
         private static Func<OperationOutcome> createValidatorForTypeRef(
@@ -107,9 +107,9 @@ namespace Hl7.Fhir.Validation
                 if (validateProfiles)
                 {
                     // First, call Validate() for the current element (the reference itself) against the profile
-                    var validations = tr.GetTypeProfiles()?.Select(profile => createValidatorForDeclaredProfile(validator, instance, profile, state));
-                    result.Add(validator.Combine(BatchValidationMode.Any, instance, validations));
+                    result.Add(validator.ValidateInternal(instance, tr.GetTypeProfile(), statedCanonicals: null, statedProfiles: null, state: state));
                 }
+
                 // If this is a reference, also validate the reference against the targetProfile
                 if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
                     result.Add(validator.ValidateResourceReference(instance, tr, state));
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Validation
                     ? targetProfiles.Select(tp => createValidatorForReferenceResource(tp))
                     : targetProfiles.Select(tp => createValidatorForExternalReferenceResource(tp));
 
-            return validator.Combine(BatchValidationMode.Any, referencedResource, validations);
+            return validator.Combine("references and targetprofiles", BatchValidationMode.Any, referencedResource, validations);
 
             Func<OperationOutcome> createValidatorForReferenceResource(string targetProfile)
             {

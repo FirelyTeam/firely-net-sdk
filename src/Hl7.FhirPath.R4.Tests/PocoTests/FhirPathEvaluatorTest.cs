@@ -9,7 +9,6 @@
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -27,9 +26,9 @@ namespace Hl7.FhirPath.R4.Tests
 {
     public class PatientFixture : IDisposable
     {
-        public ITypedElement TestInput;
-        public ITypedElement Questionnaire;
-        public ITypedElement UuidProfile;
+        public Patient TestInput;
+        public Questionnaire Questionnaire;
+        public StructureDefinition UuidProfile;
         public int Counter = 0;
         public XDocument Xdoc;
 
@@ -38,16 +37,13 @@ namespace Hl7.FhirPath.R4.Tests
             var parser = new FhirXmlParser();
             var tpXml = TestData.ReadTextFile("fp-test-patient.xml");
 
-            var patient = parser.Parse<Patient>(tpXml);
-            TestInput = patient.ToTypedElement();
+            TestInput = parser.Parse<Patient>(tpXml);
 
             tpXml = TestData.ReadTextFile("questionnaire-example.xml");
-            var quest = parser.Parse<Questionnaire>(tpXml);
-            Questionnaire = quest.ToTypedElement();
+            Questionnaire = parser.Parse<Questionnaire>(tpXml);
 
             tpXml = TestData.ReadTextFile("uuid.profile.xml");
-            var uuid = parser.Parse<StructureDefinition>(tpXml);
-            UuidProfile = uuid.ToTypedElement();
+            UuidProfile = parser.Parse<StructureDefinition>(tpXml);
 
             Xdoc = new XDocument(new XElement("group", new XAttribute("name", "CSharpTests")));
         }
@@ -80,7 +76,7 @@ namespace Hl7.FhirPath.R4.Tests
             var testXml = new XElement("test",
                         new XAttribute("name", testName), new XAttribute("inputfile", fileName),
                         new XElement("expression", new XText(expr)),
-                        new XElement("output", new XAttribute("type", "boolean"), new XText(result ? "true" :  "false")));
+                        new XElement("output", new XAttribute("type", "boolean"), new XText(result ? "true" : "false")));
             Xdoc.Elements().First().Add(testXml);
 
             Assert.IsTrue(TestInput.IsBoolean(expr, result));
@@ -88,7 +84,7 @@ namespace Hl7.FhirPath.R4.Tests
 
 
 
-        public void IsTrue(string expr, ITypedElement input)
+        public void IsTrue(string expr, Base input)
         {
             Assert.IsTrue(input.IsBoolean(expr, true));
         }
@@ -102,7 +98,6 @@ namespace Hl7.FhirPath.R4.Tests
         [ClassInitialize]
         public static void Initialize(TestContext ctx)
         {
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
             fixture = new PatientFixture();
         }
 
@@ -117,7 +112,7 @@ namespace Hl7.FhirPath.R4.Tests
 
         [TestMethod]
         public void TestExistence()
-        {          
+        {
             fixture.IsTrue(@"Patient.identifier.exists()");
             fixture.IsTrue(@"Patient.dientifeir.exists().not()");
             fixture.IsTrue(@"Patient.telecom.rank.exists()");
@@ -187,7 +182,7 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void TestEquality()
         {
-    
+
             fixture.IsTrue(@"Patient.identifier = Patient.identifier");
             fixture.IsTrue(@"Patient.identifier.first() != Patient.identifier.skip(1)");
             fixture.IsTrue(@"4 = 4");
@@ -236,7 +231,7 @@ namespace Hl7.FhirPath.R4.Tests
             fixture.IsTrue(@"(Patient.identifier | Patient.name).count() = Patient.identifier.count() + Patient.name.count()");
             fixture.IsTrue(@"Patient.select(identifier | name).count() = Patient.select(identifier.count() + name.count())");
         }
-      
+
 
         [TestMethod]
         public void TestWhere()
@@ -315,7 +310,7 @@ namespace Hl7.FhirPath.R4.Tests
                     .select('m' + $this.substring(1,4) + $this.substring(5)) = 'metrosexual'");
 
         }
-   
+
         [TestMethod]
         public void TestStringOps()
         {
