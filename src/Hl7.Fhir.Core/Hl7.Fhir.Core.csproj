@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
 	<PropertyGroup>
 		<TargetFrameworks>net5.0;net452;netstandard1.6;netstandard2.0</TargetFrameworks>
 	</PropertyGroup>
@@ -7,11 +8,11 @@
 	<Import Project="..\platforms.props" />
 
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.R5</PackageId>
-		<Title>HL7 FHIR Core support SDK for R5</Title>	
-		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R5 (5.0.0-snapshot1)</Summary>
+		<PackageId>Hl7.Fhir.R4B</PackageId>
+		<Title>HL7 FHIR Core support SDK for R4B</Title>	
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4B (4.3.0-snapshot1)</Summary>
 		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
-		<AssemblyName>Hl7.Fhir.R5.Core</AssemblyName>
+		<AssemblyName>Hl7.Fhir.R4B.Core</AssemblyName>
 		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
 		<RootNamespace>Hl7.Fhir</RootNamespace>
 	</PropertyGroup>
