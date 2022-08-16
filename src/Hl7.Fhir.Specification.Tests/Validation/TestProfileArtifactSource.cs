@@ -664,26 +664,26 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static StructureDefinition buildSliceOnChoice()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132", "MedicationStatement-issue-2132",
-                "MedicationStatement sliced on asNeeded[x]", FHIRAllTypes.MedicationStatement);
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132", "MedicationRequest-issue-2132",
+                "MedicationRequest sliced on substitution.allowed[x]", FHIRAllTypes.MedicationRequest);
 
             var cons = result.Differential.Element;
 
-            var slicingIntro = new ElementDefinition("MedicationStatement.dosage.asNeeded[x]")
+            var slicingIntro = new ElementDefinition("MedicationRequest.substitution.allowed[x]")
                .WithSlicingIntro(ElementDefinition.SlicingRules.Closed, (ElementDefinition.DiscriminatorType.Type, "$this"));
 
             cons.Add(slicingIntro);
 
-            cons.Add(new ElementDefinition("MedicationStatement.dosage.asNeeded[x]")
+            cons.Add(new ElementDefinition("MedicationRequest.substitution.allowed[x]")
             {
-                ElementId = "MedicationStatement.dosage.asNeeded[x]:asNeededBoolean",
-                SliceName = "asNeededBoolean",
+                ElementId = "MedicationRequest.substitution.allowed[x]:allowedBoolean",
+                SliceName = "allowedBoolean",
             }.OfType(FHIRAllTypes.Boolean));
 
-            cons.Add(new ElementDefinition("MedicationStatement.dosage.asNeeded[x]")
+            cons.Add(new ElementDefinition("MedicationRequest.substitution.allowed[x]")
             {
-                ElementId = "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept",
-                SliceName = "asNeededCodeableConcept",
+                ElementId = "MedicationRequest.substitution.allowed[x]:allowedCodeableConcept",
+                SliceName = "allowedCodeableConcept",
             }.OfType(FHIRAllTypes.CodeableConcept));
 
             return result;
@@ -691,12 +691,12 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static StructureDefinition buildConstrainBindableType()
         {
-            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132-2", "MedicationStatement-issue-2132",
-                "MedicationStatement sliced on asNeeded[x]", FHIRAllTypes.MedicationStatement);
+            var result = createTestSD("http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132-2", "MedicationRequest-issue-2132",
+                "MedicationRequest sliced on substitution.allowed[x]", FHIRAllTypes.MedicationRequest);
 
             var cons = result.Differential.Element;
 
-            var typeConstraint = new ElementDefinition("MedicationStatement.dosage.asNeeded[x]").OfType(FHIRAllTypes.Boolean);
+            var typeConstraint = new ElementDefinition("MedicationRequest.substitution.allowed[x]").OfType(FHIRAllTypes.Boolean);
 
             cons.Add(typeConstraint);
 

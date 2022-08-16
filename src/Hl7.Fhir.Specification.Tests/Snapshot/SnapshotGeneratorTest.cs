@@ -9722,7 +9722,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new TestProfileArtifactSource(),
                         ZipSource.CreateValidationSource()));
 
-            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132";
+            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132";
 
             var sd = await resolver.FindStructureDefinitionAsync(url);
 
@@ -9730,11 +9730,11 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elements = await snapshotGenerator.GenerateAsync(sd);
 
-            var element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededBoolean").Subject;
+            var element = elements.Should().ContainSingle(e => e.ElementId == "MedicationRequest.substitution.allowed[x]:allowedBoolean").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "boolean");
             element.Binding.Should().BeNull();
 
-            element = elements.Should().ContainSingle(e => e.ElementId == "MedicationStatement.dosage.asNeeded[x]:asNeededCodeableConcept").Subject;
+            element = elements.Should().ContainSingle(e => e.ElementId == "MedicationRequest.substitution.allowed[x]:allowedCodeableConcept").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "CodeableConcept");
             element.Binding.Should().NotBeNull();
 
@@ -9749,7 +9749,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new TestProfileArtifactSource(),
                         ZipSource.CreateValidationSource()));
 
-            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationStatement-issue-2132-2";
+            string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132-2";
 
             var sd = await resolver.FindStructureDefinitionAsync(url);
 
@@ -9757,7 +9757,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var elements = await snapshotGenerator.GenerateAsync(sd);
 
-            var element = elements.Should().ContainSingle(e => e.Path == "MedicationStatement.dosage.asNeeded[x]").Subject;
+            var element = elements.Should().ContainSingle(e => e.Path == "MedicationRequest.substitution.allowed[x]").Subject;
             element.Type.Should().OnlyContain(t => t.Code == "boolean");
             element.Binding.Should().BeNull();
         }
