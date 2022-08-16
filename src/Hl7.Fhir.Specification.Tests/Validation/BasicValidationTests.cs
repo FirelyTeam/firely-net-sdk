@@ -38,9 +38,6 @@ namespace Hl7.Fhir.Specification.Tests
             _asyncSource = fixture.AsyncResolver;
             _validator = fixture.Validator;
             this.output = output;
-
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
         }
 
         //[TestInitialize]
