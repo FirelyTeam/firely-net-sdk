@@ -106,8 +106,6 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            FhirPath.ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
-
             var symbols = new SymbolTable();
             symbols.AddStandardFP();
             SnapshotEvaluationContext.AddSymbols(symbols);
