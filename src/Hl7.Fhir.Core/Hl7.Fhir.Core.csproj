@@ -6,7 +6,7 @@
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.STU3</PackageId>
 		<Title>HL7 FHIR Core support SDK for STU3</Title>
-		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0)</Summary>
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0.2)</Summary>
 		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
 		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
 		<AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
