@@ -316,7 +316,6 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void TestFhirPathResolve()
         {
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
             var bundle = new Bundle
             {
                 Entry = new List<Bundle.EntryComponent>

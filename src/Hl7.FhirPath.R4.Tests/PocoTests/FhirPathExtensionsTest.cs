@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
@@ -20,17 +21,14 @@ namespace Hl7.Fhir.Tests.Introspection
     [TestClass]
     public class FhirPathExtensionTest
     {
-        ITypedElement _bundleElement;
-        Bundle _parsed;
+        Bundle _bundle;
 
         [TestInitialize]
         public void SetupSource()
         {
-            ElementNavFhirExtensions.PrepareFhirSymbolTableFunctions();
             var bundleXml = File.ReadAllText(Path.Combine("TestData", "bundle-contained-references.xml"));
 
-            _parsed = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
-            _bundleElement = new ScopedNode(_parsed.ToTypedElement());
+            _bundle = (new FhirXmlParser()).Parse<Bundle>(bundleXml);
         }
 
 
@@ -40,9 +38,8 @@ namespace Hl7.Fhir.Tests.Introspection
             var statement = "Bundle.entry.where(fullUrl = 'http://example.org/fhir/Patient/e')" +
                          ".resource.managingOrganization.resolve().id";
 
-            var result = _bundleElement.Select(statement);
-            Assert.AreEqual(1, result.Count());
-            Assert.AreEqual("orgY", result.First().Value);
+            var result = _bundle.Select(statement);
+            result.SingleOrDefault().Should().BeOfType<Id>().Which.Value.Should().Be("orgY");
 
             //var resultPoco = _parsed.Select(statement).SingleOrDefault() as Organization;
             //Assert.IsNotNull(resultPoco);
@@ -54,7 +51,7 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             var statement = "'http://example.org/doesntexist'.resolve().id";
             var called = false;
-            var result = _bundleElement.Select(statement, new FhirEvaluationContext() { ElementResolver = resolver });
+            var result = _bundle.Select(statement, new FhirEvaluationContext() { ElementResolver = resolver });
             Assert.IsTrue(called);
 
             ITypedElement resolver(string url)
