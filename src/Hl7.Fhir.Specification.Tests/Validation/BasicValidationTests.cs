@@ -1420,6 +1420,7 @@ namespace Hl7.Fhir.Specification.Tests
             new object[] { "eld-19", new ElementDefinition { Path = "NoSpecialCharacters" }, true },
             new object[] { "eld-20", new ElementDefinition { Path = "   leadingSpaces" }, false},
             new object[] { "eld-19", new ElementDefinition { Path = "NoSpaces.withADot" }, true },
+            /* Only for R4B
             new object[] { "sdf-0", new StructureDefinition { Name = " leadingSpaces" }, false },
             new object[] { "sdf-0", new StructureDefinition { Name = "Name" }, true },
             new object[] { "sdf-24",
@@ -1475,6 +1476,7 @@ namespace Hl7.Fhir.Specification.Tests
                              }
                     }
                 }, false },
+            */
             new object[] { "que-7",
                     new Questionnaire.EnableWhenComponent
                         {
