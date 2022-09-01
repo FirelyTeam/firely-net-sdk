@@ -37,6 +37,16 @@
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Folder Include="TestData\snapshot-test\Issue-2211\" />
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <None Update="TestData\snapshot-test\Issue-2211\Resources.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>  
 
 </Project>

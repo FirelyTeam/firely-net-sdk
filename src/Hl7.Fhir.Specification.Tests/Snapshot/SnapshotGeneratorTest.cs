@@ -8267,5 +8267,29 @@ namespace Hl7.Fhir.Specification.Tests
                     Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
             }
         }
+
+        [DataTestMethod]
+        public void Issue2211Test()
+        {
+            // Arrange
+            var context = new TestContextIssue2211();
+
+            var sd = context.GetResource<StructureDefinition>("http://nictiz.nl/fhir/StructureDefinition/bc-Birth-test");
+
+            sd.Differential.Should().BeNull();
+
+            // Forge fix for the differential (is this allowed????)
+            sd.Differential = new();
+            sd.Differential.Element = sd.Snapshot.Element;
+            sd.Snapshot = null;
+
+            var generator = new SnapshotGenerator(context.Resolver, context.Settings);
+
+            // Act
+            var act = () => generator.Generate(sd);
+
+            // Assert
+            act.Should().NotThrow();
+        }
     }
 }
