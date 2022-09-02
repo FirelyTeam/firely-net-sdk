@@ -699,17 +699,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 matches.DumpMatches(snap, diff);
 #endif
 
-                foreach (var match in matches)
+                //First do all the new elements and merges. (Save removals for later)
+                foreach (var match in matches.Where(m => m.Action != ElementMatcher.MatchAction.Remove))
                 {
                     // Navigate to the matched elements
-                    if (!snap.ReturnToBookmark(match.BaseBookmark))
-                    {
-                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
-                    }
-                    if (!diff.ReturnToBookmark(match.DiffBookmark))
-                    {
-                        throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in diff is no longer available");
-                    }
+                    NavigateToMatchedElements(snap, diff, match);
 
                     // Collect any reported issue
                     if (match.Issue != null)
@@ -737,16 +731,40 @@ namespace Hl7.Fhir.Specification.Snapshot
                         case ElementMatcher.MatchAction.Invalid:
                             // Collect issue and ignore invalid element
                             break;
-                        case ElementMatcher.MatchAction.Remove:
-                            removeElement(snap);
-                            break;
                     }
                 }
+
+                //Then do the removals
+                foreach (var match in matches.Where(m => m.Action == ElementMatcher.MatchAction.Remove))
+                {
+                    // Navigate to the matched elements
+                    NavigateToMatchedElements(snap, diff, match);
+
+                    // Collect any reported issue
+                    if (match.Issue != null)
+                    {
+                        addIssue(match.Issue);
+                    }
+                    removeElement(snap);
+                }
+
             }
             finally
             {
                 snap.ReturnToBookmark(snapPos);
                 diff.ReturnToBookmark(diffPos);
+            }
+        }
+
+        private static void NavigateToMatchedElements(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff, ElementMatcher.MatchInfo match)
+        {
+            if (!snap.ReturnToBookmark(match.BaseBookmark))
+            {
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.BaseBookmark}' in snap is no longer available");
+            }
+            if (!diff.ReturnToBookmark(match.DiffBookmark))
+            {
+                throw Error.InvalidOperation($"Internal error in snapshot generator ({nameof(merge)}): bookmark '{match.DiffBookmark}' in diff is no longer available");
             }
         }
 
