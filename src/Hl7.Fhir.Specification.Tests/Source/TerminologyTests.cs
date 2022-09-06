@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Specification.Tests
     public class TerminologyTests : IClassFixture<ValidationFixture>
     {
         private readonly IAsyncResourceResolver _resolver;
-        private static Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
+        private static Uri _externalTerminologyServerEndpoint = new("https://r4.ontoserver.csiro.au/fhir");
 
         public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
