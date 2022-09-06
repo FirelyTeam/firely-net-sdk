@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Terminology
 {
     public class LocalTerminologyService : ITerminologyService
     {
-        private static readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
         private readonly IAsyncResourceResolver _resolver;
         private readonly ValueSetExpander _expander;
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Specification.Terminology
             _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
 
             var settings = expanderSettings ?? ValueSetExpanderSettings.CreateDefault();
-            if (settings.ValueSetSource == null) settings.ValueSetSource = resolver;
+            settings.ValueSetSource ??= resolver;
 
             _expander = new ValueSetExpander(settings);
         }
@@ -226,9 +226,11 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (code is null)
             {
-                var resultParam = new Parameters();
-                resultParam.Add("message", new FhirString("No code supplied."));
-                resultParam.Add("result", new FhirBoolean(false));
+                var resultParam = new Parameters
+                {
+                    { "message", new FhirString("No code supplied.") },
+                    { "result", new FhirBoolean(false) }
+                };
                 return resultParam;
             }
 
@@ -249,7 +251,7 @@ namespace Hl7.Fhir.Specification.Terminology
             }
 
             var component = vs.FindInExpansion(code, system);
-            var codeLabel = $"Code '{code}' from system '{system}'";
+            var codeLabel = $"Code '{code}'" + (string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'");
             var result = new Parameters();
             var success = true;
             var messages = new StringBuilder();
@@ -280,7 +282,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             result.Add("result", new FhirBoolean(success));
             if (messages.Length > 0)
-                result.Add("message", new FhirString(messages.ToString()));
+                result.Add("message", new FhirString(messages.ToString().TrimEnd()));
             return result;
         }
     }
