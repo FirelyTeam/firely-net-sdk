@@ -8267,5 +8267,21 @@ namespace Hl7.Fhir.Specification.Tests
                     Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
             }
         }
+
+        [TestMethod]
+        public async T.Task TestMergingAPreviouslyRemovedElement()
+        {
+            var structure = await _testResolver.FindStructureDefinitionAsync("http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes");
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            var elementDefinitions = await _generator.GenerateAsync(structure);
+            var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
+            Assert.AreEqual(1, valuexEld.Type.Count);
+            Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
+
+            var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
+            Assert.IsNull(valueQuantityEld);
+
+        }
     }
 }
