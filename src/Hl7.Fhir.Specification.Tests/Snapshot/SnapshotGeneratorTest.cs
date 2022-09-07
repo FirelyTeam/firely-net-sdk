@@ -9787,128 +9787,20 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        //Tests Github issue #2211, see TestData/Issue-2211 for test artifacts.
         [TestMethod]
         public async T.Task TestMergingAPreviouslyRemovedElement()
         {
-            var baseStructureDefinition = new StructureDefinition()
-            {
-                Url = "http://fire.ly/fhir/StructureDefiniton/ObservationBaseLimitedChoiceTypes",
-                Name = "ObservationBaseLimitedChoiceTypes",
-                Status = PublicationStatus.Active,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                Abstract = false,
-                Type = "Observation",
-                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation",
-                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-                Differential = new StructureDefinition.DifferentialComponent()
-                {
-                    Element = new List<ElementDefinition>()
-                    {
-                        new ElementDefinition()
-                        {
-                            Path = "Observation.value[x]",
-                            ElementId = "Observation.value[x]",
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() {Code = "Quantity"},
-                                new ElementDefinition.TypeRefComponent() {Code = "CodeableConcept"}
-                            },
-                            Slicing = new ElementDefinition.SlicingComponent
-                            {
-                                Discriminator = new List<ElementDefinition.DiscriminatorComponent>
-                                {
-                                    new ElementDefinition.DiscriminatorComponent
-                                    {
-                                        Path = "$this",
-                                        Type = ElementDefinition.DiscriminatorType.Type
-                                    }
-                                },
-                                Ordered = false,
-                                Rules = ElementDefinition.SlicingRules.Closed
-                            }
-                        },
-                        new ElementDefinition()
-                        {
-                            Path = "Observation.value[x]",
-                            ElementId = "Observation.value[x]:valueQuantity",
-                            SliceName = "valueQuantity",
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() {Code = "Quantity"},
-                            }
-                        },
-                         new ElementDefinition()
-                        {
-                            Path = "Observation.value[x].system",
-                            ElementId = "Observation.value[x]:valueQuantity.system",
-                            Fixed = new FhirUri("http://unitsofmeasure.org")
-                        },
-                        new ElementDefinition()
-                        {
-                            Path = "Observation.value[x]",
-                            ElementId = "Observation.value[x]:valueCodeableConcept",
-                            SliceName = "valueCodeableConcept",
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() {Code = "CodeableConcept"},
-                            }
-                        },
-                        new ElementDefinition()
-                        {
-                            Path = "Observation.value[x].coding.system",
-                            ElementId = "Observation.value[x]:valueCodeableConcept.system",
-                            Fixed = new FhirUri("http://fire.ly/fhir/sid/test")
-                        }
-                    }
-                }
-            };
+            var structure = await _testResolver.FindStructureDefinitionAsync("http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes");
+            _generator = new SnapshotGenerator(_testResolver, _settings);
 
-            var derivedStructureDefinition = new StructureDefinition()
-            {
-                Url = "http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes",
-                Name = "ObservationBaseDerivedChoiceTypes",
-                Status = PublicationStatus.Active,
-                Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                Abstract = false,
-                Type = "Observation",
-                BaseDefinition = "http://fire.ly/fhir/StructureDefiniton/ObservationBaseLimitedChoiceTypes",
-                Differential = new StructureDefinition.DifferentialComponent()
-                {
-                    Element = new List<ElementDefinition>()
-                    {
-                        new ElementDefinition()
-                        {
-                            Path = "Observation.value[x]",
-                            ElementId = "Observation.value[x]",
-                            Type = new List<ElementDefinition.TypeRefComponent>()
-                            {
-                                new ElementDefinition.TypeRefComponent() {Code = "CodeableConcept"}
-                            }
-                        },
-                         new ElementDefinition()
-                        {
-                            Path = "Observation.value[x].system",
-                            ElementId = "Observation.value[x]:valueQuantity.system",
-                            Fixed = new FhirUri("http://foo.org/bar"),
-                        },
-                    }
-                }
-            };
-
-            var resolver = new InMemoryProfileResolver(baseStructureDefinition, derivedStructureDefinition);
-            var multiResolver = new MultiResolver(_testResolver, resolver);
-            _generator = new SnapshotGenerator(multiResolver, _settings);
-
-            var elementDefinitions = await _generator.GenerateAsync(derivedStructureDefinition);
+            var elementDefinitions = await _generator.GenerateAsync(structure);
             var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
             Assert.AreEqual(1, valuexEld.Type.Count);
             Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
-
-
-
         }
     }
 }
