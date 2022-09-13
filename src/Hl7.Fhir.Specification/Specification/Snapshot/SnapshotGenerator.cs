@@ -1838,17 +1838,19 @@ namespace Hl7.Fhir.Specification.Snapshot
 
 
             bool isRenamed = !IsEqualPath(snap.PathName, diff.PathName);
+            bool isImplicitTypeSlice = snap.PathName == diff.PathName && snap.Current.IsChoice() && !string.IsNullOrEmpty(diff.Current.SliceName);
 
-            // [WMR 20190822] R4 TODO
             // Emit default Slicing component for type slices, if omitted
-            if (isRenamed && snap.Current.Slicing is null)
+            if ((isRenamed || isImplicitTypeSlice) && snap.Current.Slicing is null)
             {
                 snap.Current.Slicing = new ElementDefinition.SlicingComponent()
                 {
                     Discriminator = new List<ElementDefinition.DiscriminatorComponent>()
                     {
                         ElementDefinition.DiscriminatorComponent.ForTypeSlice()
-                    }
+                    },
+                    Rules = ElementDefinition.SlicingRules.Open,    // since in R4, we can just have a slice with constraints for one of the types
+                    Ordered = false
                 };
             };
 

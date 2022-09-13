@@ -5955,6 +5955,44 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
+
+        [TestMethod]
+        public async T.Task TestNamedTypeSlice()
+        {
+            var derivedObs = MyNamedTypeSlice;
+            var resolver = new InMemoryProfileResolver(derivedObs);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var (_, expanded) = await generateSnapshotAndCompare(derivedObs);
+
+            Assert.IsTrue(expanded.HasSnapshot);
+        }
+
+
+        private static StructureDefinition MyNamedTypeSlice => new()
+        {
+            Type = FHIRAllTypes.Observation.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+            Name = "MyNamedTypeSlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MyNamedTypeSlice",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation"),
+                    new ElementDefinition("Observation.value[x]")
+                    {
+                        ElementId = "Observation.value[x]:valueString",
+                        SliceName = "valueString"
+                    }.OfType(FHIRAllTypes.String)
+                }
+            }
+        };
+
         [TestMethod]
         public async T.Task TestMoreDerivedObservation()
         {

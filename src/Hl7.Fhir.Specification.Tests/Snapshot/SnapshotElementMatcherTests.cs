@@ -7,15 +7,15 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Snapshot;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Navigation;
+using Hl7.Fhir.Specification.Snapshot;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Diagnostics;
-using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
-using Hl7.Fhir.Utility;
 using System.Linq;
+using static Hl7.Fhir.Model.ElementDefinition.DiscriminatorComponent;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -25,16 +25,16 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass, TestCategory("Snapshot")]
     public class SnapshotElementMatcherTests
     {
-        IAsyncResourceResolver _testResolver;
+        private IAsyncResourceResolver _testResolver;
 
         [TestInitialize]
         public void Setup()
         {
-            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true } );
+            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true });
             _testResolver = new CachedResolver(dirSource);
         }
 
-        static List<ElementMatcher.MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        private static List<ElementMatcher.MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             Debug.WriteLine($"Match base '{snapNav.Path}' to diff '{diffNav.Path}':");
             var matches = ElementMatcher.Match(snapNav, diffNav);
@@ -1420,6 +1420,62 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+        public void TestElementMatcher_ChoiceTypeNoSlicingIntro()
+        {
+            var baseProfile = new StructureDefinition()
+            {
+                Snapshot = new StructureDefinition.SnapshotComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.value[x]").OfType(FHIRAllTypes.Quantity).OrType(FHIRAllTypes.String)
+                    }
+                }
+            };
+
+            var userProfile = new StructureDefinition()
+            {
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Observation"),
+                        new ElementDefinition("Observation.value[x]")
+                        {
+                            ElementId = "Observation.value[x]:valueString",
+                            SliceName = "valueString"
+                        }.OfType(FHIRAllTypes.String)
+                    }
+                }
+            };
+
+            var snapNav = ElementDefinitionNavigator.ForSnapshot(baseProfile);
+            var diffNav = ElementDefinitionNavigator.ForDifferential(userProfile);
+
+            // Merge: Observation root
+            var matches = Match(snapNav, diffNav);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+            assertMatch(matches, ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+
+            // Merge: Observation.valueString
+            matches = Match(snapNav, diffNav);
+            Assert.IsNotNull(matches);
+
+            // Verify: B:value[x] <-- merge --> D:valueString
+            Assert.AreEqual(1, matches.Count);
+            Assert.IsTrue(diffNav.MoveToFirstChild());
+            Assert.IsTrue(snapNav.MoveToFirstChild());
+
+            // STU3: renamed element implies constraint to a single type (0...1)
+            //assertMatch(matches[0], ElementMatcher.MatchAction.Merge, snapNav, diffNav);
+            // R4: renamed element only applies to specified type (0...*)
+            // Add as separate constraint; do not merge with base [x] element definition
+            assertMatch(matches[0], ElementMatcher.MatchAction.Add, snapNav, diffNav);
+        }
+
+        [TestMethod]
         public void TestElementMatcher_ChoiceType3()
         {
             var baseProfile = new StructureDefinition()
@@ -1695,7 +1751,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(diffNav.MoveToNext());
             Assert.IsTrue(snapNav.MoveToNext());
             var match = matches[1];
-            assertMatch(match, ElementMatcher.MatchAction.Invalid, snapNav, diffNav);  
+            assertMatch(match, ElementMatcher.MatchAction.Invalid, snapNav, diffNav);
             Assert.AreEqual("bsn", diffNav.Current.SliceName);
             Assert.AreEqual("bsn", snapNav.Current.SliceName);
             // Verify generated outcome issue
@@ -1817,7 +1873,7 @@ namespace Hl7.Fhir.Specification.Tests
         // ========== Helper functions ==========
 
         // Recursively match diffNav to snapNav and verify that all matches return the specified action (def. Merged)
-        static List<ElementMatcher.MatchInfo> matchAndVerify(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementMatcher.MatchAction action = ElementMatcher.MatchAction.Merge)
+        private static List<ElementMatcher.MatchInfo> matchAndVerify(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav, ElementMatcher.MatchAction action = ElementMatcher.MatchAction.Merge)
         {
             List<ElementMatcher.MatchInfo> matches = Match(snapNav, diffNav);
             Assert.IsTrue(diffNav.MoveToFirstChild());
@@ -1846,7 +1902,7 @@ namespace Hl7.Fhir.Specification.Tests
             return matches;
         }
 
-        static void assertMatch(List<ElementMatcher.MatchInfo> matches, ElementMatcher.MatchAction action, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
+        private static void assertMatch(List<ElementMatcher.MatchInfo> matches, ElementMatcher.MatchAction action, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)
         {
             Assert.IsNotNull(matches);
             //matches.DumpMatches(snapNav, diffNav);
@@ -1854,12 +1910,12 @@ namespace Hl7.Fhir.Specification.Tests
             assertMatch(matches[0], action, snapNav, diffNav);
         }
 
-        static void assertMatch(ElementMatcher.MatchInfo match, ElementMatcher.MatchAction action, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav = null, ElementDefinition sliceBase = null)
+        private static void assertMatch(ElementMatcher.MatchInfo match, ElementMatcher.MatchAction action, ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav = null, ElementDefinition sliceBase = null)
         {
             assertMatch(match, action, snapNav.Bookmark(), diffNav != null ? diffNav.Bookmark() : Bookmark.Empty, sliceBase);
         }
 
-        static void assertMatch(ElementMatcher.MatchInfo match, ElementMatcher.MatchAction action, Bookmark snap, Bookmark diff, ElementDefinition sliceBase)
+        private static void assertMatch(ElementMatcher.MatchInfo match, ElementMatcher.MatchAction action, Bookmark snap, Bookmark diff, ElementDefinition sliceBase)
         {
             Assert.IsNotNull(match);
             Assert.AreEqual(action, match.Action);
