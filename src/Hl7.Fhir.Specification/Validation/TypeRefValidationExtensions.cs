@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Validation
 {
     internal static class TypeRefValidationExtensions
     {
-        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance, ValidationState state)
+        internal static OperationOutcome ValidateType(this Validator validator, ElementDefinition definition, ScopedNode instance, ValidationState state, bool validateProfiles)
         {
             var outcome = new OperationOutcome();
 
@@ -32,26 +32,26 @@ namespace Hl7.Fhir.Validation
             var typeRefs = definition.Type.Where(tr => tr.Code != null);
             var choices = typeRefs.Select(tr => tr.Code).Distinct();
 
-            if (choices.Count() > 1)
+
+            if (instance.InstanceType != null)
             {
-                if (instance.InstanceType != null)
+                //find out what type is present in the instance data
+                // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
+                var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
+                if (instanceType is not null)
                 {
-                    // This is a choice type, find out what type is present in the instance data
-                    // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                    var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
-                    if (instanceType != null)
+                    if (choices.Count() > 1)
                     {
-                        // In fact, the next statements are just an optimalization, without them, we would do an ANY validation
+                        // The next statements are just an optimalization, without them, we would do an ANY validation
                         // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
                         // any.
                         var applicableChoices = typeRefs.Where(tr => !tr.Code.StartsWith("http:"))
-                                        .Where(tr => ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(tr.Code).Value,
-                                            instanceType.Value));
+                                        .Where(tr => ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(tr.Code).Value, instanceType.Value));
 
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
                         {
-                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance, state));
+                            outcome.Include(validator.ValidateTypeReferences(applicableChoices, instance, state, validateProfiles));
                         }
                         else
                         {
@@ -60,18 +60,29 @@ namespace Hl7.Fhir.Validation
                                      Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
                         }
                     }
-                    else
-                        validator.Trace(outcome, $"Instance indicates the element is of type '{instance.InstanceType}', which is not a known FHIR core type.",
-                                Issue.CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE, instance);
+                    else if (choices.Count() == 1)
+                    {
+                        // Check if instance is of correct type
+                        var isCorrectType = ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(choices.Single()).Value, instanceType.Value);
+                        if (!isCorrectType)
+                        {
+                            validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceType}') is not of the expected type ('{choices.Single()}')",
+                                           Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE, instance);
+                        }
+                        // Only one type present in list of typerefs, all of the typerefs are candidates
+                        outcome.Include(validator.ValidateTypeReferences(typeRefs, instance, state, validateProfiles));
+                    }
                 }
                 else
-                    validator.Trace(outcome, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
-                        Issue.CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE, instance);
+                {
+                    validator.Trace(outcome, $"Instance indicates the element is of type '{instance.InstanceType}', which is not a known FHIR core type.",
+                                 Issue.CONTENT_ELEMENT_CHOICE_INVALID_INSTANCE_TYPE, instance);
+                }
             }
-            else if (choices.Count() == 1)
+            else
             {
-                // Only one type present in list of typerefs, all of the typerefs are candidates
-                outcome.Include(validator.ValidateTypeReferences(typeRefs, instance, state));
+                validator.Trace(outcome, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
+                    Issue.CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE, instance);
             }
 
             return outcome;

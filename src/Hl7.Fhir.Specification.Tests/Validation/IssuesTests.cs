@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Validation;
@@ -30,5 +31,79 @@ namespace Hl7.Fhir.Specification.Tests
             var report = validator.Validate(pat);
             Assert.IsTrue(report.Success);
         }
+
+
+        //Test for issue #2183 on Github, type check didn't fail because definition has children.
+        [TestMethod]
+        public void Issue2183TypeCheck()
+        {
+
+            var observationDef = new StructureDefinition()
+            {
+                Url = "http://fire.ly/fhir/Sd/observationQuantity",
+                Name = "observationQuantity",
+                Type = "Observation",
+                Status = PublicationStatus.Draft,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                FhirVersion = "3.0.2",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation",
+                Abstract = false,
+                Differential = new()
+                {
+                    Element = new()
+                    {
+                        new()
+                        {
+                            Path = "Observation.valueQuantity",
+                            SliceName = "valueQuantity",
+                            Type = new()
+                            {
+                                new()
+                                {
+                                    Code = "Quantity"
+                                }
+                            }
+                        },
+                        new()
+                        {
+                            Path = "Observation.valueQuantity.code",
+                            Fixed = new Code("mm[Hg]")
+                        }
+                    }
+                }
+            };
+
+            var observation = new Observation
+            {
+                Meta = new()
+                {
+                    Profile = new[] { "http://fire.ly/fhir/Sd/observationQuantity" }
+                },
+                Status = ObservationStatus.Unknown,
+                Code = new()
+                {
+                    Text = "test"
+                },
+                Value = new FhirString("foo")
+            };
+
+            var settings = new ValidationSettings()
+            {
+                ResourceResolver = new MultiResolver(new InMemoryProfileResolver(observationDef), ZipSource.CreateValidationSource()),
+                GenerateSnapshot = true,
+                GenerateSnapshotSettings = new()
+                {
+                    GenerateSnapshotForExternalProfiles = true,
+                    ForceRegenerateSnapshots = true
+                }
+            };
+
+            var validator = new Validator(settings);
+            var outcome = validator.Validate(observation);
+
+            outcome.Success.Should().Be(false);
+        }
     }
 }
+
