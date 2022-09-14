@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Tasks = System.Threading.Tasks;
 using Hl7.Fhir.ElementModel;
+using Hl7.FhirPath.Functions;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -31,8 +32,8 @@ namespace Hl7.Fhir.Tests.Serialization
                 Debug.WriteLine(args.Message);
                 if (args.Exception is StructuralTypeException && args.Severity == Utility.ExceptionSeverity.Error)
                 {
+                    Assert.IsTrue(args.Exception.Message.Contains("Type checking the data: "), "Error message detected");
                     throw new StructuralTypeException(args.Exception.Message.Replace("Type checking the data: ", ""), args.Exception.InnerException);
-                    // throw args.Exception;
                 }
             };
 
@@ -44,6 +45,7 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (StructuralTypeException ste)
             {
                 Debug.WriteLine(ste.Message);
+                Assert.IsFalse(ste.Message.Contains("Type checking the data: "), "Custom error message should have removed the prefix");
             }
 
             parser.Settings.AcceptUnknownMembers = true;
