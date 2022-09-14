@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2018, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -26,6 +26,7 @@ namespace Hl7.Fhir.Serialization
             {
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
                 IgnoreUnknownMembers = ps.AcceptUnknownMembers,
+                ExceptionHandler = ps.ExceptionHandler,
 #pragma warning disable CS0618 // Type or member is obsolete
                 TruncateDateTimeToDate = ps.TruncateDateTimeToDate
 #pragma warning restore CS0618 // Type or member is obsolete
