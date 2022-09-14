@@ -82,12 +82,10 @@ namespace Hl7.Fhir.Validation
                     // Only one type present in list of typerefs, all of the typerefs are candidates
                     outcome.Include(validator.ValidateTypeReferences(typeRefs, instance, state, validateProfiles));
                 }
-
-
             }
             else
             {
-                validator.Trace(outcome, "ElementDefinition is a choice or contains a polymorphic type constraint, but the instance does not indicate its actual type",
+                validator.Trace(outcome, "Cannot determine the data type of this instance.",
                     Issue.CONTENT_ELEMENT_CANNOT_DETERMINE_TYPE, instance);
             }
 
