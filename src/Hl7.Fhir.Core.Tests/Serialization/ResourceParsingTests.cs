@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -24,20 +24,30 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ConfigureFailOnUnknownMember()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><daytona></daytona></Patient>";
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
             var parser = new FhirXmlParser();
+            parser.Settings.AllowUnrecognizedEnums = true;
+            parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) => {
+                Debug.WriteLine(args.Message);
+                if (args.Exception is StructuralTypeException && args.Severity == Utility.ExceptionSeverity.Error)
+                {
+                    throw new StructuralTypeException(args.Exception.Message.Replace("Type checking the data: ", ""), args.Exception.InnerException);
+                    // throw args.Exception;
+                }
+            };
 
             try
             {
-                parser.Parse<Resource>(xml);
+                var r2 = parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
-            catch (FormatException)
+            catch (StructuralTypeException ste)
             {
+                Debug.WriteLine(ste.Message);
             }
 
             parser.Settings.AcceptUnknownMembers = true;
-            parser.Parse<Resource>(xml);
+            var resource = parser.Parse<Resource>(xml);
         }
 
 
@@ -55,7 +65,7 @@ namespace Hl7.Fhir.Tests.Serialization
             catch(FormatException fe)
             {
                 Assert.IsFalse(fe.Message.Contains("pos -1"));
-            }            
+            }
         }
 
         [TestMethod]
@@ -72,7 +82,7 @@ namespace Hl7.Fhir.Tests.Serialization
             catch (FormatException fe)
             {
                 Assert.IsFalse(fe.Message.Contains("pos -1"));
-            }            
+            }
         }
 
 
@@ -93,7 +103,7 @@ namespace Hl7.Fhir.Tests.Serialization
             }
 
             xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
-            
+
             try
             {
                 parser.Parse<Resource>(xml);
@@ -192,7 +202,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Debug.WriteLine($"Parsing took {sw.ElapsedMilliseconds / 500.0 * 1000} micros");
         }
 
-     
+
         [TestMethod]
         public async Tasks.Task AcceptUnknownEnums()
         {
