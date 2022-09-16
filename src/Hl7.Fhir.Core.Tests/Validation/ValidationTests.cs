@@ -182,17 +182,6 @@ namespace Hl7.Fhir.Tests.Validation
 
             // Contained resources should not themselves contain resources
             validateErrorOrFail(pat);
-
-            patn.Contained = null;
-            DotNetAttributeValidation.Validate(pat);
-
-            patn.Text = new Narrative
-            {
-                Div = "<div>Narrative in contained resource</div>"
-            };
-
-            // Contained resources should not contain narrative
-            validateErrorOrFail(pat);
         }
 
         [TestMethod]
