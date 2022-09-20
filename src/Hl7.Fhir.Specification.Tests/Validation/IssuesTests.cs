@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new()
                         {
-                            Path = "Observation.valueQuantity",
+                            Path = "Observation.value[x]",
                             SliceName = "valueQuantity",
                             Type = new()
                             {
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Specification.Tests
                         },
                         new()
                         {
-                            Path = "Observation.valueQuantity.code",
+                            Path = "Observation.value[x].code",
                             Fixed = new Code("mm[Hg]")
                         }
                     }
