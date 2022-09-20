@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Validation
                         // we need to validate based on the actual type of the instance
                         if (isInlineChildren && elementConstraints.IsResourcePlaceholder())
                         {
-                            outcome.Add(this.ValidateType(elementConstraints, instance, state));
+                            outcome.Add(this.ValidateType(elementConstraints, instance, state, true));
                         }
                     }
 
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Validation
                         // No inline-children, so validation depends on the presence of a <type> or <contentReference>
                         if (elementConstraints.Type != null || elementConstraints.ContentReference != null)
                         {
-                            outcome.Add(this.ValidateType(elementConstraints, instance, state));
+                            outcome.Add(this.ValidateType(elementConstraints, instance, state, true));
                             outcome.Add(ValidateNameReference(elementConstraints, definition, instance, state));
                         }
                         else
