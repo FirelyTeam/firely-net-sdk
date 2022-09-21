@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Type = "Observation",
                 Status = PublicationStatus.Draft,
                 Kind = StructureDefinition.StructureDefinitionKind.Resource,
-                FhirVersion = FHIRVersion.N4_0_1,
+                FhirVersion = FHIRVersion.N4_3_0,
                 Derivation = StructureDefinition.TypeDerivationRule.Constraint,
                 BaseDefinition = "http://hl7.org/fhir/StructureDefinition/Observation",
                 Abstract = false,
