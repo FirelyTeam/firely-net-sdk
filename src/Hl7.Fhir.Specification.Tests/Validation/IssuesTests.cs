@@ -2,8 +2,10 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -101,8 +103,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var validator = new Validator(settings);
             var outcome = validator.Validate(observation);
-
-            outcome.Success.Should().Be(false);
+            outcome.Issue.Should().OnlyContain(i => i.Details.Coding.Any(c => c.Code == Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE.Code.ToString()));
         }
     }
 }
