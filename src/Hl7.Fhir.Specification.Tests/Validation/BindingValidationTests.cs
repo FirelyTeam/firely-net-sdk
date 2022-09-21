@@ -263,13 +263,13 @@ namespace Hl7.Fhir.Specification.Tests
             var result = val.Validate(code.ToTypedElement(), vc);
 
             result.Issue.Should()
-                .OnlyContain(i => i.Details.Text == "Terminology service failed while validating code 'aValue'");
+                .OnlyContain(i => i.Details.Text.StartsWith("Terminology service failed while validating code 'aValue': Error"));
 
             var coding = new Coding("aSystem", "aValue");
             result = val.Validate(coding.ToTypedElement(), vc);
 
             result.Issue.Should()
-                .OnlyContain(i => i.Details.Text == "Terminology service failed while validating code 'aValue' (system 'aSystem')");
+                .OnlyContain(i => i.Details.Text.StartsWith("Terminology service failed while validating code 'aValue' (system 'aSystem'): Error"));
 
         }
     }
