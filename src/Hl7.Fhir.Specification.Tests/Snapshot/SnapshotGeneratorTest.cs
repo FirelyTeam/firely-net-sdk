@@ -5958,6 +5958,44 @@ namespace Hl7.Fhir.Specification.Tests
             }
         };
 
+
+        [TestMethod]
+        public async T.Task TestNamedTypeSlice()
+        {
+            var derivedObs = MyNamedTypeSlice;
+            var resolver = new InMemoryProfileResolver(derivedObs);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var (_, expanded) = await generateSnapshotAndCompare(derivedObs);
+
+            Assert.IsTrue(expanded.HasSnapshot);
+        }
+
+
+        private static StructureDefinition MyNamedTypeSlice => new()
+        {
+            Type = FHIRAllTypes.Observation.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation),
+            Name = "MyNamedTypeSlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MyNamedTypeSlice",
+            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+            Kind = StructureDefinition.StructureDefinitionKind.Resource,
+            Differential = new StructureDefinition.DifferentialComponent()
+            {
+                Element = new List<ElementDefinition>()
+                {
+                    new ElementDefinition("Observation"),
+                    new ElementDefinition("Observation.value[x]")
+                    {
+                        ElementId = "Observation.value[x]:valueString",
+                        SliceName = "valueString"
+                    }.OfType(FHIRAllTypes.String)
+                }
+            }
+        };
+
         [TestMethod]
         public async T.Task TestMoreDerivedObservation()
         {
@@ -9788,6 +9826,22 @@ namespace Hl7.Fhir.Specification.Tests
                 else
                     Debug.WriteLine($"{new string(' ', level * 3)}{extension.Url} : {extension.Value}");
             }
+        }
+
+        //Tests Github issue #2211, see TestData/Issue-2211 for test artifacts.
+        [TestMethod]
+        public async T.Task TestMergingAPreviouslyRemovedElement()
+        {
+            var structure = await _testResolver.FindStructureDefinitionAsync("http://fire.ly/fhir/StructureDefiniton/ObservationDerivedLimitedChoiceTypes");
+            _generator = new SnapshotGenerator(_testResolver, _settings);
+
+            var elementDefinitions = await _generator.GenerateAsync(structure);
+            var valuexEld = elementDefinitions.First(eld => "Observation.value[x]".Equals((eld.ElementId)));
+            Assert.AreEqual(1, valuexEld.Type.Count);
+            Assert.AreEqual("CodeableConcept", valuexEld.Type.First().Code);
+
+            var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
+            Assert.IsNull(valueQuantityEld);
         }
     }
 }
