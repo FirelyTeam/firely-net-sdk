@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Specification.Schema
                     var codeText = code ?? coding?.Code ?? cc?.Coding[0]?.Code;
                     var systemName = system ?? coding?.System ?? cc?.Coding[0]?.System;
                     var systemText = systemName is null ? string.Empty : $" (system '{systemName}')";
-                    message = $"Terminology service failed while validating code '{codeText}'{systemText}";
+                    message = $"Terminology service failed while validating code '{codeText}'{systemText}: {tse.Message}";
                 }
                 else
                 {
