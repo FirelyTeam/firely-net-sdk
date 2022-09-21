@@ -58,7 +58,6 @@ namespace Hl7.Fhir.Specification.Tests
                         new()
                         {
                             Path = "Observation.valueQuantity",
-                            SliceName = "valueQuantity",
                             Type = new()
                             {
                                 new()
