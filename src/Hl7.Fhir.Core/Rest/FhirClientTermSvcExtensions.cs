@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Rest
 
             var par = new Parameters();
 
-            par.Add("identifier", identifier);
+            par.Add("url", identifier);
             if (filter != null) par.Add("filter", filter);
             if (date != null) par.Add("date", date);
 

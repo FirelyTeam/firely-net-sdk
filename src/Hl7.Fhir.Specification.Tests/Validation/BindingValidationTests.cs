@@ -1,10 +1,13 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Schema;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
+using Moq;
 using System.Linq;
 using Xunit;
 
@@ -205,7 +208,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var cc = new CodeableConcept();
             cc.Coding.Add(new Coding("http://non-existing.code.system", "01.015"));
-          
+
             var result = val.Validate(cc.ToTypedElement(), vc);
             Assert.False(result.Success);
             Assert.True(result.Issue.Count == 1);
@@ -215,10 +218,58 @@ namespace Hl7.Fhir.Specification.Tests
             result = val.Validate(cc.ToTypedElement(), vc);
             Assert.False(result.Success);
             Assert.True(result.Issue.Count == 1);
-            Assert.StartsWith("None of the Codings in the CodeableConcept were valid for the binding. Details follow.\r\n" +
-                              "Code '01.015' from system 'http://non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'\r\n\r\n" +
-                              "Code '01.016' from system 'http://another-non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'",
-                              result.Issue[0].Details.Text);
+            result.Issue[0].Details.Text.Should().StartWith(
+                $"None of the Codings in the CodeableConcept were valid for the binding. Details follow.{System.Environment.NewLine}" +
+                $"Code '01.015' from system 'http://non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'{System.Environment.NewLine}" +
+                 "Code '01.016' from system 'http://another-non-existing.code.system' does not exist in valueset 'http://hl7.org/fhir/ValueSet/address-type'");
+
+        }
+
+        //MS 2021-16-08: Tests issue https://github.com/FirelyTeam/firely-net-sdk/issues/1857
+        [Fact]
+        public void TestCurrenciesValidation()
+        {
+            var binding = new ElementDefinition.ElementDefinitionBindingComponent
+            {
+                ValueSet = new Canonical("http://hl7.org/fhir/ValueSet/currencies"),
+                Strength = BindingStrength.Required
+            };
+
+            var val = binding.ToValidatable();
+            var vc = new ValidationContext() { TerminologyService = _termService };
+
+            var v = new Money() { Value = 1, Currency = Money.Currencies.EUR };
+            var node = v.ToTypedElement();
+            Assert.True(val.Validate(node, vc).Success);
+        }
+
+        [Fact]
+        public void ErrorMessageAtExceptionInService()
+        {
+            Mock<ITerminologyService> service = new();
+            service.Setup(s => s.ValueSetValidateCode(It.IsAny<Parameters>(), null, false))
+                .Throws(new FhirOperationException("Error", System.Net.HttpStatusCode.InternalServerError));
+            var binding = new ElementDefinition.ElementDefinitionBindingComponent
+            {
+                ValueSet = "http://hl7.org/fhir/ValueSet/data-absent-reason",
+                Strength = BindingStrength.Required
+            };
+
+            var val = binding.ToValidatable();
+            var vc = new ValidationContext() { TerminologyService = service.Object };
+
+            var code = new Code("aValue");
+
+            var result = val.Validate(code.ToTypedElement(), vc);
+
+            result.Issue.Should()
+                .OnlyContain(i => i.Details.Text == "Terminology service failed while validating code 'aValue'");
+
+            var coding = new Coding("aSystem", "aValue");
+            result = val.Validate(coding.ToTypedElement(), vc);
+
+            result.Issue.Should()
+                .OnlyContain(i => i.Details.Text == "Terminology service failed while validating code 'aValue' (system 'aSystem')");
 
         }
     }
