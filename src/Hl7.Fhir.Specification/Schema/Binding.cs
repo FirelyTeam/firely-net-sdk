@@ -159,9 +159,18 @@ namespace Hl7.Fhir.Specification.Schema
             }
             catch (FhirOperationException tse)
             {
-                string message = (cc?.Coding == null || cc.Coding.Count == 1)
-                    ? $"Terminology service failed while validating code '{code ?? coding?.Code ?? cc?.Coding[0]?.Code}' (system '{system ?? coding?.System ?? cc?.Coding[0]?.System}'): {tse.Message}"
-                    : $"Terminology service failed while validating the codes: {tse.Message}";
+                string message;
+                if (cc?.Coding is null || cc.Coding.Count == 1)
+                {
+                    var codeText = code ?? coding?.Code ?? cc?.Coding[0]?.Code;
+                    var systemName = system ?? coding?.System ?? cc?.Coding[0]?.System;
+                    var systemText = systemName is null ? string.Empty : $" (system '{systemName}')";
+                    message = $"Terminology service failed while validating code '{codeText}'{systemText}: {tse.Message}";
+                }
+                else
+                {
+                    message = $"Terminology service failed while validating the codes: {tse.Message}";
+                }
 
                 return Issue.TERMINOLOGY_SERVICE_FAILED
                         .NewOutcomeWithIssue(message, location);
