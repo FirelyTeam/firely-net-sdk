@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -73,7 +73,12 @@ namespace Hl7.Fhir.Tests.Rest
 
         private static void expandExistingValueset(BaseFhirClient client)
         {
+            // expand via instance level operation
             var vs = client.ExpandValueSet(ResourceIdentity.Build("ValueSet", "administrative-gender"));
+            Assert.IsTrue(vs.Expansion.Contains.Any());
+
+            // expand via Canonical URI
+            vs = client.ExpandValueSet(new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender"));
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 

@@ -230,7 +230,6 @@ namespace Hl7.Fhir.Specification.Snapshot
                         {
                             var slicedToBeRemoved = findRedundantTypeSliceEntries(snapNav, removedTypes);
                             result.AddRange(slicedToBeRemoved);
-
                         }
                     }
                 }
@@ -935,7 +934,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
         private class SliceByTypeProfileEqualityComparer : IEqualityComparer<string>
         {
-            readonly string _sliceName;
+            private readonly string _sliceName;
 
             public SliceByTypeProfileEqualityComparer(string sliceName)
             {
