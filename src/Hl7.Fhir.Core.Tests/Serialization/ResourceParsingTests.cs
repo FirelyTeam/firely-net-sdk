@@ -1,7 +1,7 @@
-﻿/* 
+﻿/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
- * 
+ *
  * This file is licensed under the BSD 3-Clause license
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
@@ -25,20 +25,31 @@ namespace Hl7.Fhir.Tests.Serialization
         [TestMethod]
         public void ConfigureFailOnUnknownMember()
         {
-            var xml = "<Patient xmlns='http://hl7.org/fhir'><daytona></daytona></Patient>";
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
             var parser = new FhirXmlParser();
+            parser.Settings.AllowUnrecognizedEnums = true;
+            parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) => {
+                Debug.WriteLine(args.Message);
+                if (args.Exception is StructuralTypeException && args.Severity == Utility.ExceptionSeverity.Error)
+                {
+                    Assert.IsTrue(args.Exception.Message.Contains("Type checking the data: "), "Error message detected");
+                    throw new StructuralTypeException(args.Exception.Message.Replace("Type checking the data: ", ""), args.Exception.InnerException);
+                }
+            };
 
             try
             {
-                parser.Parse<Resource>(xml);
+                var r2 = parser.Parse<Resource>(xml);
                 Assert.Fail("Should have failed on unknown member");
             }
-            catch (FormatException)
+            catch (StructuralTypeException ste)
             {
+                Debug.WriteLine(ste.Message);
+                Assert.IsFalse(ste.Message.Contains("Type checking the data: "), "Custom error message should have removed the prefix");
             }
 
             parser.Settings.AcceptUnknownMembers = true;
-            parser.Parse<Resource>(xml);
+            var resource = parser.Parse<Resource>(xml);
         }
 
 
