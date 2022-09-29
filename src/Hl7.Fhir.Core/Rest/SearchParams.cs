@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Rest
     {
         public SearchParams()
         {
-            Include = new List<string>();
+            Include = new List<Tuple<string,List<string>>>();
             RevInclude = new List<string>();
             Sort = new List<Tuple<string, SortOrder>>();
             Parameters = new List<Tuple<string, string>>();
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Rest
                 if ( !Int32.TryParse(value, out count) || count <= 0) throw Error.Format("Invalid {0}: '{1}' is not a positive integer".FormatWith(name, value));
                 Count = count;
             }
-            else if (name == SEARCH_PARAM_INCLUDE) addNonEmpty(name, Include, value);
+            else if (name == SEARCH_PARAM_INCLUDE || name == SEARCH_PARAM_INCLUDE_ITERATE) addNonEmptyInclude(name, Include, value);
             else if (name == SEARCH_PARAM_REVINCLUDE) addNonEmpty(name, RevInclude, value);
             else if (name.StartsWith(SEARCH_PARAM_SORT + SEARCH_MODIFIERSEPARATOR))
             {
@@ -164,6 +164,12 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        public SearchParams AddInclude(string includeValue, params string[] iterativeIncludeValues)
+        {
+            Include.Add(Tuple.Create(includeValue, iterativeIncludeValues.ToList()));
+            return this;
+        }
+
         private static string nonEmptySingleValue(string paramName, string currentValue, string newValue)
         {
             if (String.IsNullOrEmpty(newValue)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
@@ -175,6 +181,20 @@ namespace Hl7.Fhir.Rest
         {
             if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
             values.Add(value);
+        }
+
+        private static void addNonEmptyInclude(string paramName, IList<Tuple<string,List<string>>> values, string value)
+        {
+            if (String.IsNullOrEmpty(value)) throw Error.Format("Invalid {0} value: it cannot be empty".FormatWith(paramName));
+            if ( paramName == SEARCH_PARAM_INCLUDE)
+            {
+                values.Add(new Tuple<string, List<string>>(value, new List<string>()));
+            }
+            else // ITERATIVE INCLUDE
+            {
+                if ( !values.Any() ) throw Error.Format("Invalid {0}: must be preceded by a regular include".FormatWith(paramName));
+                values[values.Count - 1].Item2.Add(value);
+            }
         }
 
         private void addNonEmptySort(string value, SortOrder sortOrder)
@@ -287,13 +307,15 @@ namespace Hl7.Fhir.Rest
 
         public const string SEARCH_PARAM_INCLUDE = "_include";
 
+        public const string SEARCH_PARAM_INCLUDE_ITERATE = "_include:iterate";
+
         /// <summary>
         /// Returns a modifiable collection of _include parameters. These are used to include
         /// resources in the search result that the matched resources refer to.
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public IList<string> Include { get; private set; }
+        public IList<Tuple<string, List<string>>> Include { get; private set; }
 
 
         public const string SEARCH_PARAM_REVINCLUDE = "_revinclude";
@@ -355,7 +377,17 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(Text)) result.Add(Tuple.Create(SEARCH_PARAM_TEXT, Text));
             if (!String.IsNullOrEmpty(Content)) result.Add(Tuple.Create(SEARCH_PARAM_CONTENT, Content));
             if (Count != null) result.Add(Tuple.Create(SEARCH_PARAM_COUNT, Count.Value.ToString()));
-            if (Include.Any()) result.AddRange(Include.Select(i => Tuple.Create(SEARCH_PARAM_INCLUDE, i)));
+            if (Include.Any())
+            {
+                foreach(var include in Include)
+                {
+                    result.Add(Tuple.Create(SEARCH_PARAM_INCLUDE, include.Item1));
+                    foreach(var iterativeInclude in include.Item2)
+                    {
+                        result.Add(Tuple.Create(SEARCH_PARAM_INCLUDE_ITERATE, iterativeInclude));
+                    }
+                }
+            }
             if (RevInclude.Any()) result.AddRange(RevInclude.Select(i => Tuple.Create(SEARCH_PARAM_REVINCLUDE, i)));
             if (Sort.Any())
             {

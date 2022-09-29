@@ -116,8 +116,8 @@ namespace Hl7.Fhir.Test.Rest
             q.Count = 31;
             q.Summary = SummaryType.Data;
             q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
-            q.Include.Add("Patient.name");
-            q.Include.Add("Observation.subject");
+            q.AddInclude("Patient.name");
+            q.AddInclude("Observation.subject");
             q.Elements.Add("field1");
 
             Assert.AreEqual("special", q.Query);
@@ -125,8 +125,8 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(SummaryType.Data, q.Summary);
             Assert.AreEqual(Tuple.Create("sorted", SortOrder.Descending), q.Sort.Single());
             Assert.AreEqual(2, q.Include.Count);
-            Assert.AreEqual("Patient.name", q.Include.First());
-            Assert.AreEqual("Observation.subject", q.Include.Skip(1).First());
+            Assert.AreEqual("Patient.name", q.Include.First().Item1);
+            Assert.AreEqual("Observation.subject", q.Include.Skip(1).First().Item1);
             Assert.AreEqual(1, q.Elements.Count);
             Assert.AreEqual("field1", q.Elements.First());
             
@@ -134,9 +134,9 @@ namespace Hl7.Fhir.Test.Rest
             q.Count = 32;
             q.Summary = SummaryType.True;
             q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
-            q.Include.Add("Patient.name2");
-            q.Include.Remove("Patient.name");
-            q.Include.Add("Observation.subject2");
+            q.AddInclude("Patient.name2");
+            q.Include.Remove(q.Include.First(t => t.Item1 == "Patient.name"));
+            q.AddInclude("Observation.subject2");
             q.Elements.Add("field2");
 
             Assert.AreEqual("special2", q.Query);
@@ -145,10 +145,10 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(2,q.Sort.Count);
             Assert.AreEqual(Tuple.Create("sorted2", SortOrder.Ascending), q.Sort.Skip(1).Single());
             Assert.AreEqual(3, q.Include.Count);
-            Assert.IsTrue(q.Include.Contains("Patient.name2"));
-            Assert.IsFalse(q.Include.Contains("Patient.name"));
-            Assert.IsTrue(q.Include.Contains("Observation.subject"));
-            Assert.IsTrue(q.Include.Contains("Observation.subject2"));
+            Assert.IsTrue(q.Include.Any(t => t.Item1 == "Patient.name2"));
+            Assert.IsFalse(q.Include.Any(t => t.Item1 == "Patient.name"));
+            Assert.IsTrue(q.Include.Any(t => t.Item1 == "Observation.subject"));
+            Assert.IsTrue(q.Include.Any(t => t.Item1 == "Observation.subject2"));
             Assert.AreEqual(2, q.Elements.Count);
             Assert.AreEqual("field1", q.Elements.First());
             Assert.AreEqual("field2", q.Elements.Skip(1).First());
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(2, q.Elements.Count);
 
             Assert.AreEqual(q.Summary, SummaryType.True);
-            Assert.IsTrue(q.Include.Contains("Patient.managingOrganization"));
+            Assert.IsTrue(q.Include.Any(t => t.Item1 == "Patient.managingOrganization"));
             Assert.AreEqual(20, q.Count);
         }
 
@@ -277,8 +277,8 @@ namespace Hl7.Fhir.Test.Rest
             q.Summary = SummaryType.Text;
             q.Sort.Add(Tuple.Create("sorted", SortOrder.Descending));
             q.Sort.Add(Tuple.Create("sorted2", SortOrder.Ascending));
-            q.Include.Add("Patient.name");
-            q.Include.Add("Observation.subject");
+            q.AddInclude("Patient.name");
+            q.AddInclude("Observation.subject");
             q.Elements.Add("field1");
             q.Elements.Add("field2");
 
@@ -302,8 +302,8 @@ namespace Hl7.Fhir.Test.Rest
             q.Add("_summary", "data");
             q.Add("_sort:desc", "sorted");
             q.Add("_sort", "sorted2");
-            q.Add("_include", "Patient.name");
-            q.Add("_include", "Observation.subject");
+            q.AddInclude("Patient.name");
+            q.AddInclude("Observation.subject");
             q.Add("image:missing", "true");
             q.Add("_elements", "field1,field2");
             var output = q.ToUriParamList(version).ToQueryString();
@@ -316,7 +316,12 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(q.Summary, q2.Summary);
 
             CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList());
-            CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
+            Assert.AreEqual(q.Include.Count, q2.Include.Count);
+            for (var i = 0; i < q.Include.Count; i++)
+            {
+                Assert.AreEqual(q.Include[i].Item1, q2.Include[i].Item1);
+                CollectionAssert.AreEquivalent(q.Include[i].Item2, q2.Include[i].Item2);
+            }
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
             CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
         }
@@ -350,7 +355,12 @@ namespace Hl7.Fhir.Test.Rest
             Assert.AreEqual(q.Summary, q2.Summary);
 
             CollectionAssert.AreEquivalent(q.Sort.ToList(), q2.Sort.ToList());
-            CollectionAssert.AreEquivalent(q.Include.ToList(), q2.Include.ToList());
+            Assert.AreEqual(q.Include.Count, q2.Include.Count);
+            for(var i=0; i<q.Include.Count; i++)
+            {
+                Assert.AreEqual(q.Include[i].Item1, q2.Include[i].Item1);
+                CollectionAssert.AreEquivalent(q.Include[i].Item2, q2.Include[i].Item2);
+            }
             CollectionAssert.AreEquivalent(q.Parameters.ToList(), q2.Parameters.ToList());
             CollectionAssert.AreEquivalent(q.Elements.ToList(), q2.Elements.ToList());
         }
@@ -410,6 +420,14 @@ namespace Hl7.Fhir.Test.Rest
             var q = new SearchParams();
             var formatException = AssertThrows<FormatException>(() => q.Add("_include", String.Empty));
             Assert.AreEqual("Invalid _include value: it cannot be empty", formatException.Message);
+        }
+
+        [TestMethod]
+        public void FormatExceptionOnIterativeIncludeWithoutPrecedingIncludeParam()
+        {
+            var q = new SearchParams();
+            var formatException = AssertThrows<FormatException>(() => q.Add("_include:iterate", "Encounter:location"));
+            Assert.AreEqual("Invalid _include:iterate: must be preceded by a regular include", formatException.Message);
         }
 
         [TestMethod]

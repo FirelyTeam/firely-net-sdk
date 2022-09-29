@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Rest
     {
         public static SearchParams Include(this SearchParams qry, string path)
         {
-            qry.Include.Add(path);
+            qry.AddInclude(path);
 
             return qry;
         }
