@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Test.Serialization
 
             var test = SearchParams.FromUriParamList(uriParams);
 
-            Assert.IsTrue(test.Include.Any(t => t.Item1 == "Subject"));
+            Assert.IsTrue(test.Include.Contains("Subject"));
         }
 
         [TestMethod]
@@ -49,14 +49,13 @@ namespace Hl7.Fhir.Test.Serialization
             var test = SearchParams.FromUriParamList(uriParams);
 
             Assert.AreEqual(3,test.Include.Count);
-            Assert.AreEqual("Claim:encounter", test.Include[0].Item1);
-            Assert.AreEqual(2, test.Include[0].Item2.Count);
-            Assert.AreEqual("Encounter:based-on", test.Include[0].Item2[0]);
-            Assert.AreEqual("Appointment:practitioner", test.Include[0].Item2[1]);
-            Assert.AreEqual("Claim:facility", test.Include[1].Item1);
-            Assert.AreEqual("Claim:detail-udi", test.Include[2].Item1);
-            Assert.AreEqual(1, test.Include[2].Item2.Count);
-            Assert.AreEqual("Device:location", test.Include[2].Item2[0]);
+            Assert.AreEqual(3, test.IterativeInclude.Count);
+            Assert.AreEqual("Claim:encounter", test.Include[0]);
+            Assert.AreEqual("Encounter:based-on", test.IterativeInclude[0]);
+            Assert.AreEqual("Appointment:practitioner", test.IterativeInclude[1]);
+            Assert.AreEqual("Claim:facility", test.Include[1]);
+            Assert.AreEqual("Claim:detail-udi", test.Include[2]);
+            Assert.AreEqual("Device:location", test.IterativeInclude[2]);
         }
 
         [TestMethod]

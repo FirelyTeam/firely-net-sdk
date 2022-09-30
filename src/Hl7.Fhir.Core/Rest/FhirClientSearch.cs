@@ -201,15 +201,16 @@ namespace Hl7.Fhir.Rest
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <param name="revIncludes">Optional. A list of reverse include paths</param>
+        /// <param name="iterativeIncludes">Optional. A list of iterative include paths</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
         public Task<TBundle> SearchAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null, 
-                SummaryType? summary = null, string[] revIncludes = null)
+                SummaryType? summary = null, string[] revIncludes = null, string[] iterativeIncludes = null)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-            return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource);
+            return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes, iterativeIncludes), resource);
         }
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -240,15 +241,16 @@ namespace Hl7.Fhir.Rest
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <param name="revIncludes">Optional. A list of reverse include paths</param>
+        /// <param name="iterativeIncludes">Optional. A list of iterative include paths</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
         public Task<TBundle> SearchUsingPostAsync(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null,
-                SummaryType? summary = null, string[] revIncludes = null)
+                SummaryType? summary = null, string[] revIncludes = null, string[] iterativeIncludes = null)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-            return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes), resource);
+            return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes, iterativeIncludes), resource);
         }
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
@@ -282,13 +284,14 @@ namespace Hl7.Fhir.Rest
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <param name="revIncludes">Optional. A list of reverse include paths</param>
+        /// <param name="iterativeIncludes">Optional. A list of iterative include paths</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
         public Task<TBundle> WholeSystemSearchAsync(string[] criteria = null, string[] includes = null, int? pageSize = null, 
-            SummaryType? summary = null, string[] revIncludes = null)
+            SummaryType? summary = null, string[] revIncludes = null, string[] iterativeIncludes = null)
         {
-            return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes));
+            return SearchAsync(toQuery(criteria, includes, pageSize, summary, revIncludes, iterativeIncludes));
         }
 
         /// <summary>
@@ -318,13 +321,14 @@ namespace Hl7.Fhir.Rest
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="summary">Optional. Whether to include only return a summary of the resources in the Bundle</param>
         /// <param name="revIncludes">Optional. A list of reverse include paths</param>
+        /// <param name="iterativeIncludes">Optional. A list of iterative include paths</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
         public Task<TBundle> WholeSystemSearchUsingPostAsync(string[] criteria = null, string[] includes = null, int? pageSize = null,
-            SummaryType? summary = null, string[] revIncludes = null)
+            SummaryType? summary = null, string[] revIncludes = null, string[] iterativeIncludes = null)
         {
-            return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes));
+            return SearchUsingPostAsync(toQuery(criteria, includes, pageSize, summary, revIncludes, iterativeIncludes));
         }
 
         /// <summary>
@@ -439,18 +443,19 @@ namespace Hl7.Fhir.Rest
         /// <param name="includes">Zero or more include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="revIncludes">Optional. A list of reverse include paths</param>
+        /// <param name="iterativeIncludes">Optional. A list of iterative include paths</param>
         /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
         /// Bundle if the resource wasn't found.</returns>
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<TBundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        public Task<TBundle> SearchByIdAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null, string[] iterativeIncludes = null)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
             string criterium = "_id=" + id;
-            return SearchAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource);
+            return SearchAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes, iterativeIncludes: iterativeIncludes), resource);
         }
         /// <summary>
         /// Search for resources based on a resource's id.
@@ -478,18 +483,19 @@ namespace Hl7.Fhir.Rest
         /// <param name="includes">Zero or more include paths</param>
         /// <param name="pageSize">Optional. Asks server to limit the number of entries per page returned</param>
         /// <param name="revIncludes">Optional. A list of reverse include paths</param>
+        /// <param name="iterativeIncludes">Optional. A list of iterative include paths</param>
         /// <returns>A Bundle with the BundleEntry as identified by the id parameter or an empty
         /// Bundle if the resource wasn't found.</returns>
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Task<TBundle> SearchByIdUsingPostAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null)
+        public Task<TBundle> SearchByIdUsingPostAsync(string resource, string id, string[] includes = null, int? pageSize = null, string[] revIncludes = null, string[] iterativeIncludes = null)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
             string criterium = "_id=" + id;
-            return SearchUsingPostAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes), resource);
+            return SearchUsingPostAsync(toQuery(new string[] { criterium }, includes, pageSize, summary: null, revIncludes: revIncludes, iterativeIncludes: iterativeIncludes), resource);
         }
         /// <summary>
         /// Search for resources based on a resource's id.
@@ -566,7 +572,7 @@ namespace Hl7.Fhir.Rest
 
         #region Private Methods
 
-        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType? summary, string[] revIncludes)
+        private SearchParams toQuery(string[] criteria, string[] includes, int? pageSize, SummaryType? summary, string[] revIncludes, string[] iterativeIncludes)
         {
             var q = new SearchParams()
             {
@@ -574,7 +580,10 @@ namespace Hl7.Fhir.Rest
             };
 
             if (includes != null)
-                foreach (var inc in includes) q.AddInclude(inc);
+                foreach (var inc in includes) q.Include.Add(inc);
+
+            if (iterativeIncludes != null)
+                foreach (var itInc in iterativeIncludes) q.IterativeInclude.Add(itInc);
 
             if (revIncludes != null)
                 foreach (var revInc in revIncludes) q.RevInclude.Add(revInc);
