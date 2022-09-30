@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "src\Benchmark
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "common\src\Benchmarks\Benchmarks.csproj", "{12D4C7CE-68D5-404C-B794-256887CB9653}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.NewSerialization.Tests", "src\Hl7.Fhir.NewSerialization.Tests\Hl7.Fhir.NewSerialization.Tests.csproj", "{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +162,12 @@ Global
 		{12D4C7CE-68D5-404C-B794-256887CB9653}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
 		{12D4C7CE-68D5-404C-B794-256887CB9653}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D4C7CE-68D5-404C-B794-256887CB9653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +189,7 @@ Global
 		{88E59825-ADF2-4B46-892F-BCC95B68559F} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E} = {7089FA86-6527-4DFA-8018-AFEF25D74A48}
 		{12D4C7CE-68D5-404C-B794-256887CB9653} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
+		{3B719D1A-1D08-44EC-9F7E-4E47D9BD1C8C} = {7089FA86-6527-4DFA-8018-AFEF25D74A48}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD5B5B64-FEB1-4E05-90A1-64F3A1A0EB75}
