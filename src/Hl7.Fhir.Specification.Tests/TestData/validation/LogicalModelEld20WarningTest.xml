@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="HdBe-AbilityToDressOneself" />
+  <language value="en-US" />
+  <extension url="http://hl7.org/fhir/StructureDefinition/resource-effectivePeriod">
+    <valuePeriod>
+      <start value="2020-09-01T00:00:00+02:00" />
+    </valuePeriod>
+  </extension>
+  <url value="https://fhir.healthdata.be/StructureDefinition/LogicalModel/HdBe-AbilityToDressOneself" />
+  <name value="HdBeAbilityToDressOneself">
+    <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+      <extension url="lang">
+        <valueCode value="nl-NL" />
+      </extension>
+      <extension url="content">
+        <valueMarkdown value="HdBe-VermogenTotZichKleden" />
+      </extension>
+    </extension>
+  </name>
+  <title value="HdBe AbilityToDressOneself" />
+  <status value="draft" />
+  <date value="2022-07-07T15:04:03.2592055+00:00" />
+  <publisher value="Healthdata.be (Sciensano)" />
+  <contact>
+    <name value="Service portal – healthdata.be" />
+    <telecom>
+      <system value="url" />
+      <value value="https://sciensano.service-now.com/sp" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="**Concept**&#xD;&#xA;Being able to get dressed independently is part of self-care. Limitations in this ability indicate a reduced ability to cope for oneself. &#xD;&#xA;This activity and activities such as those including eating, drinking, and bathing are also known as activities of daily living (ADL). These are the activities people go through in daily life. The extent to which a person is able to do all these activities by themselves is a measure for their total ability to do things independently.&#xD;&#xA;&#xD;&#xA;**Purpose**&#xD;&#xA;Information on limitations in a patient’s ability to dress themselves is important in determining the nature and intensity of the care the patient needs. In a transfer situation, it gives the receiving organization the ability to anticipate the intensity of the care to be given to the patient, enabling continuity in healthcare for the patient. &#xD;&#xA;If policy has been implemented to improve a patient’s ability to do things independently, the entered extent of independence helps to determine the efficiency of the treatment.&#xD;&#xA;&#xD;&#xA;**Evidence Base**&#xD;&#xA;The definitions of the concepts were (partially) taken from the ICNP definitions. &#xD;&#xA;In addition to this information model, there are other tools to record independence, such as the KATZ-ADL and the BarthelIndex. The KATZ-ADL is mainly used for vulnerable seniors and the BarthelIndex is mainly used for patients who have had a stroke. &#xD;&#xA;This information model evaluates the ability to get dressed on a three-point scale. In the KATZ-ADL and in the BarthelIndex, this falls under the aspect of Dressing. In these two tools, the ability is scored on a scale with fewer points.&#xD;&#xA;**Example Instances**">
+    <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+      <extension url="lang">
+        <valueCode value="nl-NL" />
+      </extension>
+      <extension url="content">
+        <valueMarkdown value="**Concept**&#xD;&#xA;Zelfstandig zich kunnen kleden is een onderdeel van zelfzorg. Beperkingen in dit vermogen duiden op een verminderde zelfredzaamheid op dit gebied.&#xD;&#xA;Deze activiteit wordt samen met activiteiten zoals onder andere eten, drinken en zich wassen, ook aangeduid als algemene dagelijkse levensverrichtingen (ADL). Dit zijn de handelingen die mensen dagelijks in het gewone leven verrichten. De mate waarin een persoon al deze activiteiten zelfstandig kan verrichten zijn een maat voor de totale zelfredzaamheid.&#xD;&#xA;**Purpose**&#xD;&#xA;Informatie over beperkingen in het vermogen om zich zelfstandig te kunnen kleden is van belang bij het bepalen van de aard en intensiteit van de zorg die aan de patiënt geboden moet worden. In een overdrachtsituatie biedt het de ontvangende organisatie de mogelijkheid te anticiperen op de zwaarte van de te leveren zorg waardoor continuïteit van de zorgverlening gerealiseerd kan worden.&#xD;&#xA;Indien beleid is ingezet om de zelfredzaamheid te verbeteren, biedt de vastgelegde mate van zelfstandigheid de mogelijkheid de doeltreffendheid van de behandeling vast te stellen.&#xD;&#xA;**Evidence Base**&#xD;&#xA;De definities van de concepten zijn (deels) ontleend aan de Nederlandse vertaling van de ICNP begrippen.&#xD;&#xA;Naast deze bouwsteen zijn er meer instrumenten om zelfredzaamheid vast te leggen, zoals KATZ-ADL en de BarthelIndex. De KATZ-ADL wordt vooral gebruikt bij kwetsbare ouderen en de BarthelIndex wordt met name gebruikt voor patiënten met een beroerte. &#xD;&#xA;Deze bouwsteen evalueert het vermogen tot zich kleden met een driepuntsschaal. Bij KATZ-ADL valt dit onder het aspect Kleden en bij de BarthelIndex onder het aspect AanUitKleden. Het vermogen wordt bij deze twee instrumenten gescoord op een schaal met minder punten.&#xD;&#xA;**Example Instances**&#xD;&#xA;&#xD;&#xA;**References**&#xD;&#xA;1. International Classification of Functioning Disability and Health (ICF) [Online] Beschikbaar op: [http:/www.rivm.nl/who-fic/icf.htm](http:/www.rivm.nl/who-fic/icf.htm) [Geraadpleegd: 13 februari 2015]&#xD;&#xA;**Revision History**&#xD;&#xA;Publicatieversie 1.0 (01-07-2015)&#xD;&#xA;&#xD;&#xA;Publicatieversie 3.0 (01-05-2016)&#xD;&#xA;Bevat: [ZIB-453](https://bits.nictiz.nl/browse/ZIB-453)&#xD;&#xA;&#xD;&#xA;Publicatieversie 3.1 (04-09-2017)&#xD;&#xA;Bevat: [ZIB-530](https://bits.nictiz.nl/browse/ZIB-530), [ZIB-531](https://bits.nictiz.nl/browse/ZIB-531), [ZIB-541](https://bits.nictiz.nl/browse/ZIB-541), [ZIB-549](https://bits.nictiz.nl/browse/ZIB-549)&#xD;&#xA;&#xD;&#xA;Publicatieversie 3.1.1 (01-09-2020)&#xD;&#xA; Bevat: [ZIB-1115](https://bits.nictiz.nl/browse/ZIB-1115)." />
+      </extension>
+    </extension>
+  </description>
+  <copyright value="Copyright and related rights waived via CC0, https://creativecommons.org/publicdomain/zero/1.0/. This does not apply to information from third parties, for example a medical terminology system. The implementer alone is responsible for identifying and obtaining any necessary licenses or authorizations to utilize third party IP in connection with the specification or otherwise." />
+  <fhirVersion value="4.0.1" />
+  <kind value="logical" />
+  <abstract value="true" />
+  <type value="https://fhir.healthdata.be/StructureDefinition/LogicalModel/AbilityToDressOneself" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Element" />
+  <derivation value="specialization" />
+  <differential>
+    <element id="AbilityToDressOneself">
+      <path value="AbilityToDressOneself" />
+      <short value="AbilityToDressOneself">
+        <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+          <extension url="lang">
+            <valueCode value="nl-NL" />
+          </extension>
+          <extension url="content">
+            <valueMarkdown value="VermogenTotZichKleden" />
+          </extension>
+        </extension>
+      </short>
+      <definition value="Root concept of the AbilityToDressOneself information model. This root concept contains all data elements of the AbilityToDressOneself information model.">
+        <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+          <extension url="lang">
+            <valueCode value="nl-NL" />
+          </extension>
+          <extension url="content">
+            <valueMarkdown value="Rootconcept van de bouwsteen VermogenTotZichKleden. Dit rootconcept bevat alle gegevenselementen van de bouwsteen VermogenTotZichKleden." />
+          </extension>
+        </extension>
+      </definition>
+      <min value="0" />
+      <max value="*" />
+    </element>
+    <element id="AbilityToDressOneself.DressingOneself">
+      <path value="AbilityToDressOneself.DressingOneself" />
+      <short value="DressingOneself">
+        <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+          <extension url="lang">
+            <valueCode value="nl-NL" />
+          </extension>
+          <extension url="content">
+            <valueMarkdown value="ZichKleden" />
+          </extension>
+        </extension>
+      </short>
+      <definition value="Putting on or removing clothes. &#xD;&#xA;The BodyPartToBeDressed concept offers the option to specify to which part of the body the limitation applies.">
+        <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+          <extension url="lang">
+            <valueCode value="nl-NL" />
+          </extension>
+          <extension url="content">
+            <valueMarkdown value="Aan- en uittrekken van (passende) kleding.&#xD;&#xA;In het concept TeKledenLichaamsdeel kan nader aangegeven worden voor welk lichaamsdeel de beperking geldt." />
+          </extension>
+        </extension>
+      </definition>
+      <min value="1" />
+      <max value="1" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="required" />
+        <description value="DressingOneself codes" />
+        <valueSet value="https://fhir.healthdata.be/ValueSet/ZichKleden" />
+      </binding>
+    </element>
+    <element id="AbilityToDressOneself.BodyPartToBeDressed">
+      <path value="AbilityToDressOneself.BodyPartToBeDressed" />
+      <short value="BodyPartToBeDressed">
+        <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+          <extension url="lang">
+            <valueCode value="nl-NL" />
+          </extension>
+          <extension url="content">
+            <valueMarkdown value="TeKledenLichaamsdeel" />
+          </extension>
+        </extension>
+      </short>
+      <definition value="The part or parts of the body for which help getting dressed is wanted/necessary.">
+        <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+          <extension url="lang">
+            <valueCode value="nl-NL" />
+          </extension>
+          <extension url="content">
+            <valueMarkdown value="Het lichaamsdeel of de lichaamsdelen waarvoor ondersteuning bij het zich kleden gewenst/noodzakelijk is." />
+          </extension>
+        </extension>
+      </definition>
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="required" />
+        <description value="BodyPartToBeDressed codes" />
+        <valueSet value="https://fhir.healthdata.be/ValueSet/TeKledenLichaamsdeel" />
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,12 +1,17 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
+using Hl7.FhirPath;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 using Tasks = System.Threading.Tasks;
+using Validator = Hl7.Fhir.Validation.Validator;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -103,6 +108,41 @@ namespace Hl7.Fhir.Specification.Tests
             var validator = new Validator(settings);
             var outcome = validator.Validate(observation);
             outcome.Issue.Should().OnlyContain(i => i.Details.Coding.Any(c => c.Code == Issue.CONTENT_ELEMENT_HAS_INCORRECT_TYPE.Code.ToString()));
+        }
+
+        [TestMethod]
+        public async Tasks.Task Issue2260LogicalModelValidationEld20Test()
+        {
+            // Arrange
+            var resolver = new MultiResolver(
+                new DirectorySource(@"TestData\validation"),
+                ZipSource.CreateValidationSource());
+
+            var settings = ValidationSettings.CreateDefault();
+            settings.ResourceResolver = resolver;
+            settings.GenerateSnapshot = true;
+            settings.ResolveExternalReferences = true;
+            settings.TerminologyService = new LocalTerminologyService(resolver.AsAsync());
+            settings.GenerateSnapshotSettings = new SnapshotGeneratorSettings
+            {
+                GenerateSnapshotForExternalProfiles = true,
+                ForceRegenerateSnapshots = true,
+                GenerateAnnotationsOnConstraints = false,
+                GenerateElementIds = true,
+                GenerateExtensionsOnConstraints = false,
+            };
+
+            var validator = new Validator(settings);
+
+            var resource = await resolver.ResolveByCanonicalUriAsync("https://fhir.healthdata.be/StructureDefinition/LogicalModel/HdBe-AbilityToDressOneself");
+
+            // Act
+            var result = validator.Validate(resource).ToTypedElement();
+
+            // Assert
+            var issues = result.Select("issue");
+
+            issues.Should().HaveCount(0);
         }
     }
 }
