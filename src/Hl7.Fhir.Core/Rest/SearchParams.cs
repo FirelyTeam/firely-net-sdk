@@ -49,6 +49,7 @@ namespace Hl7.Fhir.Rest
         public SearchParams()
         {
             Include = new List<string>();
+            IterativeInclude = new List<string>();
             RevInclude = new List<string>();
             Sort = new List<Tuple<string, SortOrder>>();
             Parameters = new List<Tuple<string, string>>();
@@ -118,6 +119,7 @@ namespace Hl7.Fhir.Rest
                 Count = count;
             }
             else if (name == SEARCH_PARAM_INCLUDE) addNonEmpty(name, Include, value);
+            else if (name == SEARCH_PARAM_INCLUDE_ITERATE) addNonEmpty(name, IterativeInclude, value);
             else if (name == SEARCH_PARAM_REVINCLUDE) addNonEmpty(name, RevInclude, value);
             else if (name.StartsWith(SEARCH_PARAM_SORT + SEARCH_MODIFIERSEPARATOR))
             {
@@ -296,6 +298,16 @@ namespace Hl7.Fhir.Rest
         public IList<string> Include { get; private set; }
 
 
+        public const string SEARCH_PARAM_INCLUDE_ITERATE = "_include:iterate";
+
+        /// <summary>
+        /// Returns a modifiable collection of _include:iterative parameters. These are used to include
+        /// resources in the search result that the included resources refer to.
+        /// </summary>
+        [NotMapped]
+        [IgnoreDataMemberAttribute]
+        public IList<string> IterativeInclude { get; private set; }
+
         public const string SEARCH_PARAM_REVINCLUDE = "_revinclude";
 
         [NotMapped]
@@ -356,6 +368,7 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(Content)) result.Add(Tuple.Create(SEARCH_PARAM_CONTENT, Content));
             if (Count != null) result.Add(Tuple.Create(SEARCH_PARAM_COUNT, Count.Value.ToString()));
             if (Include.Any()) result.AddRange(Include.Select(i => Tuple.Create(SEARCH_PARAM_INCLUDE, i)));
+            if (IterativeInclude.Any()) result.AddRange(IterativeInclude.Select(i => Tuple.Create(SEARCH_PARAM_INCLUDE_ITERATE, i)));
             if (RevInclude.Any()) result.AddRange(RevInclude.Select(i => Tuple.Create(SEARCH_PARAM_REVINCLUDE, i)));
             if (Sort.Any())
             {

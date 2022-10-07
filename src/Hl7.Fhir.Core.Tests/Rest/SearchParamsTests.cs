@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Test.Rest
         {
             var q = new SearchParams()
                .Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
-                .SummaryOnly().Include("Patient.managingOrganization").Select("field1", "field2")
+                .SummaryOnly().Include("Patient.managingOrganization").IterativeInclude("Organization:partof").Select("field1", "field2")
                 .LimitTo(20);
 
             var parameters = q.ToUriParamList(version);
@@ -239,6 +239,7 @@ namespace Hl7.Fhir.Test.Rest
 
             Assert.AreEqual(q.Summary, SummaryType.True);
             Assert.IsTrue(q.Include.Contains("Patient.managingOrganization"));
+            Assert.IsTrue(q.IterativeInclude.Contains("Organization:partof"));
             Assert.AreEqual(20, q.Count);
         }
 

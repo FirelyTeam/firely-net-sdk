@@ -42,6 +42,23 @@ namespace Hl7.Fhir.Test.Serialization
         }
 
         [TestMethod]
+        public void TestParseQueryFromUriParametersIterativeInclude()
+        {
+            var uriParams = parseParams("_include=Claim:encounter&_include:iterate=Encounter:based-on&_include:iterate=Appointment:practitioner&_include=Claim:facility&_include=Claim:detail-udi&_include:iterate=Device:location");
+
+            var test = SearchParams.FromUriParamList(uriParams);
+
+            Assert.AreEqual(3,test.Include.Count);
+            Assert.AreEqual(3, test.IterativeInclude.Count);
+            Assert.AreEqual("Claim:encounter", test.Include[0]);
+            Assert.AreEqual("Encounter:based-on", test.IterativeInclude[0]);
+            Assert.AreEqual("Appointment:practitioner", test.IterativeInclude[1]);
+            Assert.AreEqual("Claim:facility", test.Include[1]);
+            Assert.AreEqual("Claim:detail-udi", test.Include[2]);
+            Assert.AreEqual("Device:location", test.IterativeInclude[2]);
+        }
+
+        [TestMethod]
         public void TestParseQueryFromUriParametersChain()
         {
             var uriParams = parseParams("Observation.Subject.name=Teun");

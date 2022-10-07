@@ -25,7 +25,14 @@ namespace Hl7.Fhir.Rest
             return qry;
         }
 
-	    public static SearchParams Where(this SearchParams qry, string criterium)
+        public static SearchParams IterativeInclude(this SearchParams qry, string path)
+        {
+            qry.IterativeInclude.Add(path);
+
+            return qry;
+        }
+
+        public static SearchParams Where(this SearchParams qry, string criterium)
         {
             var keyVal = criterium.SplitLeft('=');
             qry.Add(keyVal.Item1, keyVal.Item2);

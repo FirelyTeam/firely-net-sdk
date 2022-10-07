@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Introspection
             return null;
         }
 
-        public ClassMapping FindClassMappingForFhirDataType(Model.Version version, string name, Type[] allowedTypes)
+        public ClassMapping FindClassMappingForFhirDataType(Model.Version version, string name, Type[] allowedTypes = null)
         {
             var allMappings = new List<ClassMapping>();
             var key = Tuple.Create(version, name.ToUpperInvariant());
