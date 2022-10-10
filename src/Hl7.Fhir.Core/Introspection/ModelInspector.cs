@@ -164,12 +164,12 @@ namespace Hl7.Fhir.Introspection
 
             ClassMapping FindMapping( List<ClassMapping> mappings )
             {
-                // If we know what the allowed types are look for one of those...
+                // If we do not know what the allowed types are look for the type with the specified name - so that we use the Quantity overall type instead of the specific variants like SimpleQuantity...
                 if (allowedTypes == null || !allowedTypes.Any())
                 {
                     return mappings.FirstOrDefault(mapping => mapping.NativeType.Name == name);
                 }
-                // Otherwise look for the type with the specified name - so that we use the Quantity overall type instead of the specific variants like SimpleQuantity
+                // Otherwise look for one of the allowed types
                 return mappings.FirstOrDefault(mapping => allowedTypes.Contains(mapping.NativeType));
             }
         }

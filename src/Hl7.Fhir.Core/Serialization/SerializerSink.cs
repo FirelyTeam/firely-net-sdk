@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
-        /// Check if the element should be skipped (no output) - based on the element FHIR verions and the summrization settings
+        /// Check if the element should be skipped (no output) - based on the element FHIR versions and the summarization settings
         /// </summary>
         /// <param name="name">Element name</param>
         /// <param name="elementVersions">FHIR versions this element applies to</param>
