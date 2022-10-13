@@ -18,12 +18,11 @@ namespace Hl7.Fhir.Rest
 {
     public static class BundleToEntryRequest
     {
-        /// <inheritdoc cref="ToEntryRequestAsync(Bundle.EntryComponent, FhirClientSettings)" />
-        public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings)
+        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, string fhirVersion)
         {
             var result = new EntryRequest
             {
-                Agent = ModelInfoNEW.Version,
+                Agent = fhirVersion,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -38,7 +37,7 @@ namespace Hl7.Fhir.Rest
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfoNEW.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, fhirVersion);
             }
 
             if (entry.Resource != null)
@@ -47,41 +46,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost));
-            }
-
-            return result;
-        }
-
-        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings)
-        {
-            var result = new EntryRequest
-            {
-                Agent = ModelInfoNEW.Version,
-                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
-                Type = entry.Annotation<InteractionType>(),
-                Url = entry.Request.Url,
-                Headers = new EntryRequestHeaders
-                {
-                    IfMatch = entry.Request.IfMatch,
-                    IfModifiedSince = entry.Request.IfModifiedSince,
-                    IfNoneExist = entry.Request.IfNoneExist,
-                    IfNoneMatch = entry.Request.IfNoneMatch
-                }
-            };
-
-            if (!settings.UseFormatParameter)
-            {
-                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfoNEW.Version);
-            }
-
-            if (entry.Resource != null)
-            {
-                bool searchUsingPost =
-                    result.Method == HTTPVerb.POST
-                    && entry.Annotation<InteractionType>() == InteractionType.Search
-                    && entry.Resource is Parameters;
-                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost).ConfigureAwait(false);
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, fhirVersion).ConfigureAwait(false);
             }
 
             return result;
@@ -118,7 +83,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, bool searchUsingPost)
+        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, bool searchUsingPost, string fhirVersion)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -161,7 +126,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(settings, ModelInfoNEW.Version);
+                request.ContentType = ContentType.BuildContentType(settings, fhirVersion);
             }
         }
     }

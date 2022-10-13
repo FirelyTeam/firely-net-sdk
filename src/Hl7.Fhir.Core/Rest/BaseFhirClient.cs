@@ -13,11 +13,14 @@ namespace Hl7.Fhir.Rest
     public abstract partial class BaseFhirClient : IDisposable
     {
         private readonly IStructureDefinitionSummaryProvider _provider;
-        protected BaseFhirClient(Uri endpoint, IStructureDefinitionSummaryProvider provider, FhirClientSettings settings = null)
+        private readonly string _fhirVersion;
+
+        protected BaseFhirClient(Uri endpoint, IStructureDefinitionSummaryProvider provider, string fhirVersion, FhirClientSettings settings = null)
         {
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
             _provider = provider;
+            _fhirVersion = fhirVersion;
         }
 
         protected IClientRequester Requester { get; set; }
@@ -966,7 +969,7 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = await request.ToEntryRequestAsync(Settings).ConfigureAwait(false);
+            var entryRequest = await request.ToEntryRequestAsync(Settings, _fhirVersion).ConfigureAwait(false);
 
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
@@ -1021,7 +1024,7 @@ namespace Hl7.Fhir.Rest
                 if (!Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {ModelInfoNEW.Version}? " +
+                        $"Are you connected to a FHIR server with FHIR version {_fhirVersion}? " +
                         "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
                         ste.InnerException);
 
@@ -1111,12 +1114,41 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!ModelInfoNEW.CheckMinorVersionCompatibility(serverVersion))
+            else if (!CheckMinorVersionCompatibility(_fhirVersion, serverVersion))
             {
-                throw Error.NotSupported($"This client supports FHIR version {ModelInfoNEW.Version} but the server uses version {serverVersion}");
+                throw Error.NotSupported($"This client supports FHIR version {_fhirVersion} but the server uses version {serverVersion}");
             }
 
         }
+
+        private static bool CheckMinorVersionCompatibility(string version, string externalVersion)
+        {
+            if (string.IsNullOrEmpty(externalVersion))
+            {
+                throw new ArgumentNullException();
+            }
+
+            var minorFhirVersion = getMajorAndMinorVersion(version);
+            var externalMinorVersion = getMajorAndMinorVersion(externalVersion);
+
+            return string.IsNullOrEmpty(minorFhirVersion) || string.IsNullOrEmpty(externalVersion)
+                ? false
+                : minorFhirVersion == externalMinorVersion;
+        }
+
+        private static string getMajorAndMinorVersion(string version)
+        {
+            var versionnumbers = version.Split('.');
+            if (versionnumbers.Count() >= 2)
+            {
+                return string.Join(".", versionnumbers[0], versionnumbers[1]);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #region IDisposable Support
         protected bool disposedValue = false; // To detect redundant calls
 

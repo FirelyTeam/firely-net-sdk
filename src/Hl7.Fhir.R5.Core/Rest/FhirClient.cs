@@ -6,6 +6,7 @@
 * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
 */
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using System;
 using System.Net;
@@ -30,7 +31,8 @@ namespace Hl7.Fhir.Rest
         /// </param>
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null) : base(endpoint, new PocoStructureDefinitionSummaryProvider(), settings)
+        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null)
+            : base(endpoint, new PocoStructureDefinitionSummaryProvider(), ModelInfo.Version, settings)
         {
             // If user does not supply message handler, create our own and add decompression strategy in default handler.
             var handler = messageHandler ?? new HttpClientHandler()
@@ -58,7 +60,8 @@ namespace Hl7.Fhir.Rest
         /// </param>
         /// <param name="settings"></param>
         /// <param name="httpClient"></param>
-        public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null) : base(endpoint, new PocoStructureDefinitionSummaryProvider(), settings)
+        public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null)
+            : base(endpoint, new PocoStructureDefinitionSummaryProvider(), ModelInfo.Version, settings)
         {
             HttpClientRequester requester = new HttpClientRequester(Endpoint, Settings, httpClient);
             Requester = requester;
