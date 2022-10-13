@@ -91,12 +91,6 @@ namespace Hl7.Fhir.Validation
             _instanceType = addEntry(instanceType);
         }
 
-        public void SetInstanceType(FHIRAllTypes instanceType)
-        {
-            SetInstanceType(ModelInfoNEW.CanonicalUriForFhirCoreType(instanceType));
-        }
-
-
         private ProfileEntry _declaredType;
         public StructureDefinition DeclaredType
         {
@@ -117,13 +111,6 @@ namespace Hl7.Fhir.Validation
             inputsChanged();
             _declaredType = addEntry(declaredType);
         }
-
-        public void SetDeclaredType(FHIRAllTypes declaredType)
-        {
-            SetDeclaredType(ModelInfoNEW.CanonicalUriForFhirCoreType(declaredType));
-        }
-
-
 
         private readonly List<ProfileEntry> _statedProfiles = new();
 

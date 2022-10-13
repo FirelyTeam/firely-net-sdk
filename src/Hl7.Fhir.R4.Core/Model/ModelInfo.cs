@@ -382,23 +382,6 @@ namespace Hl7.Fhir.Model
             return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
         }
 
-        public static bool IsBindable(string type)
-        {
-            switch (type)
-            {
-                // This is the fixed list, for all FHIR versions
-                case "code":
-                case "Coding":
-                case "CodeableConcept":
-                case "Quantity":
-                case "string":
-                case "uri":
-                case "Extension":       // for backwards compat with DSTU2
-                    return true;
-                default:
-                    return false;
-            }
-        }
 
         [Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         public static bool IsProfiledQuantity(string type)

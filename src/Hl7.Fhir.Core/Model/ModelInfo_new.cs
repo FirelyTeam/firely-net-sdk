@@ -28,80 +28,60 @@
 
 */
 
+#nullable enable
+
+using Hl7.Fhir.Introspection;
 using System;
-using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
     public partial class ModelInfoNEW
     {
-        public static string Version => "4.3.0";
+        public static readonly Uri FhirCoreProfileBaseUri = new(@"http://hl7.org/fhir/StructureDefinition/");
+        public static Canonical CanonicalUriForFhirCoreType(string typename) => new(FhirCoreProfileBaseUri.OriginalString + typename);
 
-        public static readonly Uri FhirCoreProfileBaseUri = new Uri(@"http://hl7.org/fhir/StructureDefinition/");
-
+        #region TODO
         public static bool IsInstanceTypeFor(string superclass, string subclass) => true;
-        public static bool IsInstanceTypeFor(Type superclass, Type subclass) => true;
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass) => true;
-
-        public static Canonical CanonicalUriForFhirCoreType(string typename) => new();
-        public static Canonical CanonicalUriForFhirCoreType(Type type) => new();
-        public static Canonical CanonicalUriForFhirCoreType(FHIRAllTypes type) => new();
-
         public static FHIRAllTypes? FhirTypeNameToFhirType(string typeName) => null;
 
-        public static string FhirTypeToFhirTypeName(FHIRAllTypes type) => null;
-        public static string GetFhirTypeNameForType(Type type) => null;
+        public static string? FhirTypeToFhirTypeName(FHIRAllTypes type) => null;
+
 
         public static ResourceType? FhirTypeNameToResourceType(string typeName) => null;
 
         public static bool IsDataType(string name) => true;
 
         public static bool IsPrimitive(string name) => true;
-        public static bool IsPrimitive(Type type) => true;
-        public static bool IsPrimitive(FHIRAllTypes type) => true;
 
-        public static bool IsBindable(string type) => true;
         public static bool IsCoreModelType(string name) => true;
+        #endregion
 
+        public static string? GetFhirTypeNameForType(Type type)
+        {
+            var inspector = ModelInspector.ForAssembly(type.Assembly);
+            var mapping = inspector.FindClassMapping(type);
+            return mapping?.Name;
+        }
 
+        public static bool IsPrimitive(Type type)
+        {
+            var inspector = ModelInspector.ForAssembly(type.Assembly);
+            var mapping = inspector.FindClassMapping(type);
+            return mapping?.IsPrimitive ?? false;
+        }
 
-        public static bool IsConformanceResource(Type type) => true;
+        public static bool IsBindable(string type)
+            => type switch
+            {
+                // This is the fixed list, for all FHIR versions
+                "code" or "Coding" or "CodeableConcept" or "Quantity" or "string" or "uri" or "Extension" => true,
+                _ => false,
+            };
+
+        // Used in ArtifactSummary. Do we still want to support that?
         public static bool IsConformanceResource(string name) => true;
-        public static bool IsConformanceResource(ResourceType type) => true;
         public static bool IsConformanceResource(ResourceType? type) => true;
-
-
-
-        public static bool CheckMinorVersionCompatibility(string externalVersion)
-        {
-            if (string.IsNullOrEmpty(externalVersion))
-            {
-                throw new ArgumentNullException();
-            }
-
-            var minorFhirVersion = getMajorAndMinorVersion(Version);
-            var externalMinorVersion = getMajorAndMinorVersion(externalVersion);
-
-            if (string.IsNullOrEmpty(minorFhirVersion) || string.IsNullOrEmpty(externalVersion))
-            {
-                return false;
-            }
-            else
-            {
-                return minorFhirVersion == externalMinorVersion;
-            }
-        }
-        private static string getMajorAndMinorVersion(string version)
-        {
-            var versionnumbers = version.Split('.');
-            if (versionnumbers.Count() >= 2)
-            {
-                return string.Join(".", versionnumbers[0], versionnumbers[1]);
-            }
-            else
-            {
-                return null;
-            }
-        }
     }
 }
+#nullable restore
