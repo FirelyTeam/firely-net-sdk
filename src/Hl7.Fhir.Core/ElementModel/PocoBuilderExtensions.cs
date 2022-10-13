@@ -17,7 +17,7 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoBuilderExtensions
     {
         public static Base ToPoco(this ISourceNode source, Type pocoType = null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(ModelInspector.ForType(source.GetResourceTypeIndicator()), settings).BuildFrom(source, pocoType);
+            new PocoBuilder(ModelInspector.ForAssembly(pocoType.Assembly), settings).BuildFrom(source, pocoType);
 
         public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
                (T)source.ToPoco(typeof(T), settings);
