@@ -43,14 +43,14 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc cref="ParseAsync(string, Type)" />
         public Base Parse(string json, Type dataType = null)
         {
-            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var rootName = dataType != null ? ModelInfoNEW.GetFhirTypeNameForType(dataType) : null;
             var jsonReader = FhirJsonNode.Parse(json, rootName, buildNodeSettings(Settings));
             return Parse(jsonReader, dataType);
         }
 
         public async Tasks.Task<Base> ParseAsync(string json, Type dataType = null)
         {
-            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var rootName = dataType != null ? ModelInfoNEW.GetFhirTypeNameForType(dataType) : null;
             var jsonReader = await FhirJsonNode.ParseAsync(json, rootName, buildNodeSettings(Settings)).ConfigureAwait(false);
             return Parse(jsonReader, dataType);
         }
@@ -58,14 +58,14 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc cref="ParseAsync(JsonReader, Type)" />
         public Base Parse(JsonReader reader, Type dataType = null)
         {
-            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var rootName = dataType != null ? ModelInfoNEW.GetFhirTypeNameForType(dataType) : null;
             var jsonReader = FhirJsonNode.Read(reader, rootName, buildNodeSettings(Settings));
             return Parse(jsonReader, dataType);
         }
 
         public async Tasks.Task<Base> ParseAsync(JsonReader reader, Type dataType = null)
         {
-            var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
+            var rootName = dataType != null ? ModelInfoNEW.GetFhirTypeNameForType(dataType) : null;
             var jsonReader = await FhirJsonNode.ReadAsync(reader, rootName, buildNodeSettings(Settings)).ConfigureAwait(false);
             return Parse(jsonReader, dataType);
         }

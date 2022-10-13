@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Specification.Source
             var typeName = ResourceTypeName;
             if (typeName != null)
             {
-                ResourceType = ModelInfo.FhirTypeNameToResourceType(ResourceTypeName);
+                ResourceType = ModelInfoNEW.FhirTypeNameToResourceType(ResourceTypeName);
             }
         }
 

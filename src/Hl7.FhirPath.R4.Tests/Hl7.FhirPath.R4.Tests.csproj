@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<Import Project="..\firely-net-sdk-tests.props"/>
+	<Import Project="..\firely-net-sdk-tests.props" />
 
 	<PropertyGroup>
     <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
@@ -19,7 +19,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.R5.Core\Hl7.Fhir.R5.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.FhirPath.Tests\HL7.FhirPath.Tests.csproj" />

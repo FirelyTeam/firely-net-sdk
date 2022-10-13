@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Validator = System.ComponentModel.DataAnnotations.Validator;
 
 namespace Hl7.Fhir.Tests.Validation
 {

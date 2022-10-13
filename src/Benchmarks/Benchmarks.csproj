@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.ElementModel\Hl7.Fhir.ElementModel.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.R5.Core\Hl7.Fhir.R5.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
   </ItemGroup>
 

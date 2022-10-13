@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
             {
                 //find out what type is present in the instance data
                 // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                var instanceType = ModelInfo.FhirTypeNameToFhirType(instance.InstanceType);
+                var instanceType = ModelInfoNEW.FhirTypeNameToFhirType(instance.InstanceType);
 
                 if (choices.Count() > 1)
                 {
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Validation
                         // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
                         // any.
                         var applicableChoices = typeRefs.Where(tr => !tr.Code.StartsWith("http:"))
-                                    .Where(tr => ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(tr.Code).Value, instanceType.Value));
+                                    .Where(tr => ModelInfoNEW.IsInstanceTypeFor(ModelInfoNEW.FhirTypeNameToFhirType(tr.Code).Value, instanceType.Value));
 
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Validation
                     if (instanceType is not null)
                     {
                         // Check if instance is of correct type
-                        var isCorrectType = ModelInfo.IsInstanceTypeFor(ModelInfo.FhirTypeNameToFhirType(choices.Single()).Value, instanceType.Value);
+                        var isCorrectType = ModelInfoNEW.IsInstanceTypeFor(ModelInfoNEW.FhirTypeNameToFhirType(choices.Single()).Value, instanceType.Value);
                         if (!isCorrectType)
                         {
                             validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceType}') is not of the expected type ('{choices.Single()}')",
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Validation
                 }
 
                 // If this is a reference, also validate the reference against the targetProfile
-                if (ModelInfo.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
+                if (ModelInfoNEW.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
                     result.Add(validator.ValidateResourceReference(instance, tr, state));
 
                 return result;

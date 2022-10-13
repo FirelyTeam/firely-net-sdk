@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Rest
         {
             // [WMR 20160421] GetResourceNameForType is obsolete
             // return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
-            return SearchAsync(q, ModelInfo.GetFhirTypeNameForType(typeof(TResource)));
+            return SearchAsync(q, ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource)));
         }
         /// <summary>
         /// Search for Resources based on criteria specified in a Query resource
@@ -97,12 +97,12 @@ namespace Hl7.Fhir.Rest
 
         public Task<Bundle> SearchUsingPostAsync<TResource>(SearchParams q) where TResource : Resource
         {
-            return SearchUsingPostAsync(q, ModelInfo.GetFhirTypeNameForType(typeof(TResource)));
+            return SearchUsingPostAsync(q, ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource)));
         }
 
         public Bundle SearchUsingPost<TResource>(SearchParams q) where TResource : Resource
         {
-            return SearchUsingPostAsync(q, ModelInfo.GetFhirTypeNameForType(typeof(TResource))).WaitResult();
+            return SearchUsingPostAsync(q, ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource))).WaitResult();
         }
 
         #endregion
@@ -126,7 +126,7 @@ namespace Hl7.Fhir.Rest
             SummaryType? summary, (string path, IncludeModifier modifier)[] revIncludes)
             where TResource : Resource, new()
         {
-            return SearchAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
+            return SearchAsync(ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
         }
 
         public Task<Bundle> SearchAsync<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null,
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Rest
             SummaryType? summary, (string path, IncludeModifier modifier)[] revIncludes)
             where TResource : Resource, new()
         {
-            return SearchUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
+            return SearchUsingPostAsync(ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource)), criteria, includes, pageSize, summary, revIncludes);
         }
 
 
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
-            return SearchByIdAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
+            return SearchByIdAsync(ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
         ///<inheritdoc cref="SearchByIdAsync{TResource}(string, (string path, IncludeModifier modifier)[], int?, (string path, IncludeModifier modifier)[])"/>
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Rest
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
-            return SearchByIdUsingPostAsync(ModelInfo.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
+            return SearchByIdUsingPostAsync(ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource)), id, includes, pageSize, revIncludes);
         }
 
 

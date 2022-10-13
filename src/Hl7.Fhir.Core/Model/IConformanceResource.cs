@@ -28,7 +28,6 @@
 */
 
 using System;
-using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
@@ -42,46 +41,7 @@ namespace Hl7.Fhir.Model
 
     }
 
-    public partial class SearchParameter : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class OperationDefinition : IVersionableConformanceResource
-    {
-
-    }
-
     public partial class CapabilityStatement : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class MessageDefinition : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class ImplementationGuide : IVersionableConformanceResource
-    {
-        //I think ImplementationGuide should have a purpose element.
-        [Obsolete("This property is not a part of the official FHIR specification", true)]
-        public Markdown Purpose
-        {
-            get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-    }
-
-    public partial class CompartmentDefinition : IVersionableConformanceResource
-    {
-
-    }
-    public partial class StructureMap : IVersionableConformanceResource
-    {
-
-    }
-    public partial class GraphDefinition : IVersionableConformanceResource
     {
 
     }
@@ -92,30 +52,6 @@ namespace Hl7.Fhir.Model
     }
 
     public partial class ConceptMap : IVersionableConformanceResource
-    {
-
-    }
-    public partial class TestScript : IVersionableConformanceResource
-    {
-
-    }
-
-
-    //public partial class ExpansionProfile : IVersionableConformanceResource
-    //{
-    //    public Markdown Purpose
-    //    {
-    //        get { return null; }
-    //        set { throw new NotImplementedException(); }
-    //    }
-    //}
-
-    public partial class Questionnaire : IVersionableConformanceResource
-    {
-
-    }
-
-    public partial class TerminologyCapabilities : IVersionableConformanceResource
     {
 
     }

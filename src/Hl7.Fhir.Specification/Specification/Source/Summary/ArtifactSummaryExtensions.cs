@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for conformance resources.</summary>
         public static IEnumerable<ArtifactSummary> ConformanceResources(this IEnumerable<ArtifactSummary> summaries)
-            => summaries.Where(s => ModelInfo.IsConformanceResource(s.ResourceType));
+            => summaries.Where(s => ModelInfoNEW.IsConformanceResource(s.ResourceType));
 
         /// <summary>Find <see cref="ArtifactSummary"/> instances for conformance resources with the specified canonical url.</summary>
         public static IEnumerable<ArtifactSummary> FindConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         private Uri constructUri<T>(string id) =>
-            ResourceIdentity.Build(ModelInfo.GetFhirTypeNameForType(typeof(T)), id);
+            ResourceIdentity.Build(ModelInfoNEW.GetFhirTypeNameForType(typeof(T)), id);
 
         ///<inheritdoc />
         public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)

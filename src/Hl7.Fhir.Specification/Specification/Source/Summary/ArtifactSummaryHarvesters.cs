@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Determines if the specified instance represents summary information about a conformance resource.</summary>
         public static bool IsConformanceSummary(this IArtifactSummaryPropertyBag properties)
-            => ModelInfo.IsConformanceResource(properties.GetTypeName());
+            => ModelInfoNEW.IsConformanceResource(properties.GetTypeName());
 
         /// <summary>Harvest common summary information from a conformance resource.</summary>
         /// <returns><c>true</c> if the current target represents a conformance resource, or <c>false</c> otherwise.</returns>
@@ -263,18 +263,18 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string BaseDefinitionKey = "StructureDefinition.baseDefinition";
         public static readonly string DerivationKey = "StructureDefinition.derivation";
 
-        public static readonly string FmmExtensionUrl = new Uri(ModelInfo.FhirCoreProfileBaseUri, "structuredefinition-fmm").ToString();
+        public static readonly string FmmExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-fmm").ToString();
         public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
 
-        public static readonly string WgExtensionUrl = new Uri(ModelInfo.FhirCoreProfileBaseUri, "structuredefinition-wg").ToString();
+        public static readonly string WgExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-wg").ToString();
         public static readonly string WorkingGroupKey = "StructureDefinition.workingGroup";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string StandardsStatusExtensionUrl = new Uri(ModelInfo.FhirCoreProfileBaseUri, "structuredefinition-standards-status").ToString();
+        public static readonly string StandardsStatusExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-standards-status").ToString();
         public static readonly string StandardsStatusKey = "StructureDefinition.standardsStatus";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string NormativeVersionExtensionUrl = new Uri(ModelInfo.FhirCoreProfileBaseUri, "structuredefinition-normative-version").ToString();
+        public static readonly string NormativeVersionExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-normative-version").ToString();
         public static readonly string NormativeVersionKey = "StructureDefinition.normativeVersion";
 
         public static readonly string RootDefinitionKey = "StructureDefinition.rootDefinition";

@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Rest
         {
             var result = new EntryRequest
             {
-                Agent = ModelInfo.Version,
+                Agent = ModelInfoNEW.Version,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Rest
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfo.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfoNEW.Version);
             }
 
             if (entry.Resource != null)
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Rest
         {
             var result = new EntryRequest
             {
-                Agent = ModelInfo.Version,
+                Agent = ModelInfoNEW.Version,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Rest
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfo.Version);
+                result.Headers.Accept = ContentType.BuildContentType(settings, ModelInfoNEW.Version);
             }
 
             if (entry.Resource != null)
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Rest
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed
                 // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(settings, ModelInfo.Version);
+                request.ContentType = ContentType.BuildContentType(settings, ModelInfoNEW.Version);
             }
         }
     }

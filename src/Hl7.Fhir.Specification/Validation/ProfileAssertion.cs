@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Validation
 
         public void SetInstanceType(FHIRAllTypes instanceType)
         {
-            SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instanceType));
+            SetInstanceType(ModelInfoNEW.CanonicalUriForFhirCoreType(instanceType));
         }
 
 
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Validation
 
         public void SetDeclaredType(FHIRAllTypes declaredType)
         {
-            SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(declaredType));
+            SetDeclaredType(ModelInfoNEW.CanonicalUriForFhirCoreType(declaredType));
         }
 
 
@@ -291,11 +291,11 @@ namespace Hl7.Fhir.Validation
             if (superclass == subclass)
                 return true;
 
-            if (ModelInfo.IsInstanceTypeFor(superclass, subclass))
+            if (ModelInfoNEW.IsInstanceTypeFor(superclass, subclass))
                 return true;
             else if (superclass == typeof(Resource).Name &&
                 _typeNameMapper != null && _typeNameMapper(subclass, out string dummy) &&
-                !(ModelInfo.IsDataType(subclass) || ModelInfo.IsPrimitive(subclass)))
+                !(ModelInfoNEW.IsDataType(subclass) || ModelInfoNEW.IsPrimitive(subclass)))
                 return true;
             return false;
         }
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Validation
                     var result = ResolvedStatedProfiles.ToList();
                     var bases = ResolvedStatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
                     bases.AddRange(ResolvedStatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                        .Select(sp => ModelInfo.CanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
+                        .Select(sp => ModelInfoNEW.CanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
                     result.RemoveAll(r => bases.Contains(r.Url));
                     _lastMinimalSet = result;
                 }

@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Model
 
         public bool HasSnapshot => Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
 
-        public bool IsCoreDefinition => Type == Id && Url == ModelInfo.CanonicalUriForFhirCoreType(Type).Value;
+        public bool IsCoreDefinition => Type == Id && Url == ModelInfoNEW.CanonicalUriForFhirCoreType(Type).Value;
 
     }
 }

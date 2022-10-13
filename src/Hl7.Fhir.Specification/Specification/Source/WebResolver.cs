@@ -6,14 +6,14 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-using System;
-using System.Diagnostics;
-using System.Net;
-using T=System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
+using System.Diagnostics;
+using System.Net;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -24,17 +24,17 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Default request timeout in milliseconds.</summary>
         public const int DefaultTimeOut = 5000;
 
-        readonly Func<Uri, FhirClient> _clientFactory;
+        readonly Func<Uri, BaseFhirClient> _clientFactory;
 
         /// <summary>Default constructor.</summary>
         public WebResolver() { }
 
-        /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="FhirClient"/> implementation.</summary>
+        /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="BaseFhirClient"/> implementation.</summary>
         /// <param name="fhirClientFactory">
-        /// Factory function that should create a new <see cref="FhirClient"/> instance for the specified <see cref="Uri"/>.
-        /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="FhirClient"/> instance.
+        /// Factory function that should create a new <see cref="BaseFhirClient"/> instance for the specified <see cref="Uri"/>.
+        /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="BaseFhirClient"/> instance.
         /// </param>
-        public WebResolver(Func<Uri, FhirClient> fhirClientFactory)
+        public WebResolver(Func<Uri, BaseFhirClient> fhirClientFactory)
         {
             _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
         }
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Gets or sets configuration settings that control parsing behavior.</summary>
         public ParserSettings ParserSettings { get; set; }
 
-        /// <summary>Gets or sets the request timeout of the internal <see cref="FhirClient"/> instance.</summary>
+        /// <summary>Gets or sets the request timeout of the internal <see cref="BaseFhirClient"/> instance.</summary>
         public int TimeOut { get; set; } = DefaultTimeOut;
 
         /// <summary>
@@ -57,12 +57,15 @@ namespace Hl7.Fhir.Specification.Source
             if (!ResourceIdentity.IsRestResourceIdentity(uri))
             {
                 // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
-                return null;     
+                return null;
             }
 
             var id = new ResourceIdentity(uri);
+
+            // TODO BIG_COMMON
             var client = _clientFactory?.Invoke(id.BaseUri)
-                         ?? new FhirClient(id.BaseUri);
+                         //?? new BaseFhirClient(id.BaseUri, WHAT_TO_INJECT_HERE?)
+                         ;
             client.Settings.Timeout = this.TimeOut;
             client.Settings.ParserSettings = this.ParserSettings;
 

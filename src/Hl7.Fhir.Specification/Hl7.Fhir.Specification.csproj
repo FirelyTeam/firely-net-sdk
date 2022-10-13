@@ -3,12 +3,12 @@
 	<Import Project="..\firely-net-sdk.props" />
 
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.Specification.R5</PackageId>
-		<Title>HL7 FHIR Specification support SDK for R5</Title>
-		<Summary>Support for working with FHIR metadata and validation. Supports FHIR R5 (5.0.0-snapshot1).</Summary>
+		<PackageId>Hl7.Fhir.Specification</PackageId>
+		<Title>HL7 FHIR Specification support SDK</Title>
+		<Summary>Support for working with FHIR metadata and validation.</Summary>
 		<Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
 		<PackageTags>HL7 FHIR Profile Metadata Validation Publication Schematron Schema;Firely;SD</PackageTags>
-		<AssemblyName>Hl7.Fhir.R5.Specification</AssemblyName>
+		<AssemblyName>Hl7.Fhir.Specification</AssemblyName>
 		<RootNamespace>Hl7.Fhir.Specification</RootNamespace>
 	</PropertyGroup>
 
@@ -43,5 +43,4 @@
 		<Message Text="(Re)creating specification.zip" />
 		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
 	</Target>
-
 </Project>

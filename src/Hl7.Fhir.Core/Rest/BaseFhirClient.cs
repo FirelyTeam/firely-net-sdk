@@ -13,11 +13,11 @@ namespace Hl7.Fhir.Rest
     public abstract partial class BaseFhirClient : IDisposable
     {
         private readonly IStructureDefinitionSummaryProvider _provider;
-        protected BaseFhirClient(Uri endpoint, FhirClientSettings settings = null, IStructureDefinitionSummaryProvider provider = null)
+        protected BaseFhirClient(Uri endpoint, IStructureDefinitionSummaryProvider provider, FhirClientSettings settings = null)
         {
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _provider = provider ?? new PocoStructureDefinitionSummaryProvider();
+            _provider = provider;
         }
 
         protected IClientRequester Requester { get; set; }
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -494,7 +494,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
-            string collection = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            string collection = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
 
@@ -752,7 +752,7 @@ namespace Hl7.Fhir.Rest
 
             // [WMR 20160421] GetResourceNameForType is obsolete
             // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            var typeName = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            var typeName = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
 
             return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet);
         }
@@ -1021,7 +1021,7 @@ namespace Hl7.Fhir.Rest
                 if (!Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {ModelInfo.Version}? " +
+                        $"Are you connected to a FHIR server with FHIR version {ModelInfoNEW.Version}? " +
                         "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
                         ste.InnerException);
 
@@ -1111,9 +1111,9 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!ModelInfo.CheckMinorVersionCompatibility(serverVersion))
+            else if (!ModelInfoNEW.CheckMinorVersionCompatibility(serverVersion))
             {
-                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {serverVersion}");
+                throw Error.NotSupported($"This client supports FHIR version {ModelInfoNEW.Version} but the server uses version {serverVersion}");
             }
 
         }

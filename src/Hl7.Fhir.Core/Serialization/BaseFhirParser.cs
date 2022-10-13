@@ -32,7 +32,8 @@ namespace Hl7.Fhir.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
             };
 
-        public Base Parse(ITypedElement element) => element.ToPoco(buildPocoBuilderSettings(Settings));
+        // TODO BIG_COMMON
+        //public Base Parse(ITypedElement element) => element.ToPoco(buildPocoBuilderSettings(Settings));
 
         public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(buildPocoBuilderSettings(Settings));
 
