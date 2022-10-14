@@ -27,4 +27,20 @@
 		<ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
 	</ItemGroup>
 
+
+	<ItemGroup>
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
+			<Link>specification.zip</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+	</ItemGroup>
+
+	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
+		<Message Text="(Re)creating specification.zip" />
+		<ZipDirectory SourceDirectory="Specification\data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
+	</Target>
+
 </Project>

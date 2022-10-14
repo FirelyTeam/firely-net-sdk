@@ -71,12 +71,7 @@
   </ItemGroup>  
  
   <ItemGroup>
-    <Content Include="..\Hl7.Fhir.Specification\data\profiles-resources.xml" Link="TestData\snapshot-test\profiles-resources.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Hl7.Fhir.Specification\data\profiles-types.xml" Link="TestData\snapshot-test\profiles-types.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+   
     <Content Include="TestData\ResourcesInSubfolder.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

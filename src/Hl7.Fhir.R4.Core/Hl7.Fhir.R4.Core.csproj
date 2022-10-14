@@ -27,10 +27,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="..\Hl7.Fhir.Core.R5\**\*.cs" Exclude="..\Hl7.Fhir.Core.R5\Model\Generated\;..\Hl7.Fhir.Core.R5\bin\**;..\Hl7.Fhir.Core.R5\obj\**">
+		<Content Include="..\Hl7.Fhir.R5.Core\**\*.cs" Exclude="..\Hl7.Fhir.R5.Core\Model\Generated\**;..\Hl7.Fhir.R5.Core\Model\RemovedResources\**;..\Hl7.Fhir.R5.Core\bin\**;..\Hl7.Fhir.R5.Core\obj\**">
 			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
+			<Link>specification.zip</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+	</ItemGroup>
+
+	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
+		<Message Text="(Re)creating specification.zip" />
+		<ZipDirectory SourceDirectory="Specification\data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
+	</Target>
 
 </Project>
