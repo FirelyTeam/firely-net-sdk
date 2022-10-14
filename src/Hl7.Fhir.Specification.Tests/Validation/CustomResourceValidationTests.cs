@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             #region Create a Provider that knows this CustomBasic resource
             var structureDef = await new FhirJsonParser().ParseAsync<StructureDefinition>(structureDefJson);
-            var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
+            var snapShotGenerator = new SnapshotGenerator(FhirPackageSource.CreateFhirCorePackageSource());
             await snapShotGenerator.UpdateAsync(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             #endregion
 
             #region Create a Provider that knows this CustomBasic resource
-            var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
+            var snapShotGenerator = new SnapshotGenerator(FhirPackageSource.CreateFhirCorePackageSource());
             await snapShotGenerator.UpdateAsync(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         /// </summary>
         private class CustomResolver : IResourceResolver
         {
-            private static IResourceResolver _coreResolver => ZipSource.CreateValidationSource();
+            private static IResourceResolver _coreResolver => FhirPackageSource.CreateFhirCorePackageSource();
 
             private readonly Dictionary<string, StructureDefinition> _customSds;
 

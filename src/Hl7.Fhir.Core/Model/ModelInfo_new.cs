@@ -31,7 +31,10 @@
 #nullable enable
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
@@ -45,7 +48,14 @@ namespace Hl7.Fhir.Model
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass) => true;
         public static FHIRAllTypes? FhirTypeNameToFhirType(string typeName) => null;
 
-        public static string? FhirTypeToFhirTypeName(FHIRAllTypes type) => null;
+
+        private static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
+            = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
+
+        private static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
+            = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+
+        public static string? FhirTypeToFhirTypeName(FHIRAllTypes type) => _fhirTypeToFhirTypeName.TryGetValue(type, out var result) ? result : null;
 
 
         public static ResourceType? FhirTypeNameToResourceType(string typeName) => null;

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         public async T.Task RunSnapshotMultiThreaded()
         {
             // Arrange
-            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            var source = new CachedResolver(FhirPackageSource.CreateFhirCorePackageSource());
             var generator = new SnapshotGenerator(source);
 
             OperationOutcome GenerateSnapshot(StructureDefinition sd)

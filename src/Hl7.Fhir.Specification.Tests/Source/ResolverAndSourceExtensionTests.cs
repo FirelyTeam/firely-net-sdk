@@ -23,10 +23,10 @@ namespace Hl7.Fhir.Specification.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext _)
         {
-            source = ZipSource.CreateValidationSource();
+            source = FhirPackageSource.CreateFhirCorePackageSource();
         }
 
-        private static ZipSource source = null;
+        private static FhirPackageSource source = null;
 
 #pragma warning disable CS0618 // Type or member is obsolete
         [TestMethod]
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-// Let's keep a few of the obsolete calls in, so we test those too
+        // Let's keep a few of the obsolete calls in, so we test those too
 #pragma warning restore CS0618 // Type or member is obsolete
 
         [TestMethod]

@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Request core Element snapshot; verify recursion handling
 
-            var orgSource = ZipSource.CreateValidationSource();
+            var orgSource = FhirPackageSource.CreateFhirCorePackageSource();
             var cachedSource = new CachedResolver(orgSource);
 
             // Assumption: source provides Element structure
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void CannotCreateSnapshotGeneratorFromSnapshotSource()
         {
-            var orgSource = ZipSource.CreateValidationSource();
+            var orgSource = FhirPackageSource.CreateFhirCorePackageSource();
             var cachedSource = new CachedResolver(orgSource);
             var src = new SnapshotSource(cachedSource);
 
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void CannotCreateNestedSnapshotSource()
         {
-            var orgSource = ZipSource.CreateValidationSource();
+            var orgSource = FhirPackageSource.CreateFhirCorePackageSource();
             var cachedSource = new CachedResolver(orgSource);
             var src = new SnapshotSource(cachedSource);
 

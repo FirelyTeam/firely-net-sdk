@@ -17,26 +17,25 @@ namespace Hl7.Fhir.Specification.Tests
     public class ValidationManifestTest
     {
         private static Validator _testValidator;
-        private static DirectorySource _dirSource;        
+        private static DirectorySource _dirSource;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
             _dirSource = new DirectorySource(@"TestData\\validation-test-suite", new DirectorySourceSettings { IncludeSubDirectories = true });
-            var zipSource = ZipSource.CreateValidationSource();
-            var testResolver = new CachedResolver(new MultiResolver(zipSource, _dirSource));
+            var testResolver = new CachedResolver(new MultiResolver(FhirPackageSource.CreateFhirCorePackageSource(), _dirSource));
 
             var settings = ValidationSettings.CreateDefault();
             settings.GenerateSnapshot = true;
             settings.GenerateSnapshotSettings = new Snapshot.SnapshotGeneratorSettings()
-                                                {
-                                                    ForceRegenerateSnapshots = true,
-                                                    GenerateSnapshotForExternalProfiles = true,
-                                                    GenerateElementIds = true
-                                                };
+            {
+                ForceRegenerateSnapshots = true,
+                GenerateSnapshotForExternalProfiles = true,
+                GenerateElementIds = true
+            };
             settings.ResourceResolver = testResolver;
 
-           _testValidator = new Validator(settings);
+            _testValidator = new Validator(settings);
         }
 
         [Ignore]
@@ -46,10 +45,10 @@ namespace Hl7.Fhir.Specification.Tests
         public async Tasks.Task TestValidationManifest(ValidationTestCase testCase)
         {
             await RunTestCase(testCase);
-        } 
+        }
 
         public static async Tasks.Task RunTestCase(ValidationTestCase testCase)
-        {            
+        {
             var resourceText = await File.ReadAllTextAsync(@$"TestData\validation-test-suite\{testCase.FileName}");
             var testResource = testCase.FileName.EndsWith(".xml") ?
                 await new FhirXmlParser().ParseAsync<Resource>(resourceText) :
@@ -88,7 +87,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(javaWarnings, result.Warnings);
             }
         }
-      
+
         [Ignore]
         [TestMethod]
         public async Tasks.Task RunSingleTest()
@@ -107,7 +106,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         public string GetDisplayName(MethodInfo methodInfo, object[] data)
         {
-            if(data.FirstOrDefault() is ValidationTestCase testCase)
+            if (data.FirstOrDefault() is ValidationTestCase testCase)
             {
                 return testCase?.FileName;
             }
@@ -118,16 +117,16 @@ namespace Hl7.Fhir.Specification.Tests
         public IEnumerable<object[]> GetData(MethodInfo methodInfo)
         {
             var data = ValidatorManifestParser.Parse();
-            return data.Where(d=> d.Version != null && ModelInfo.CheckMinorVersionCompatibility(d.Version))
-                       .Where(d=> !_ignoreTests.Contains(d.FileName))
-                       .Select(e => new object[]{ e });
+            return data.Where(d => d.Version != null && ModelInfo.CheckMinorVersionCompatibility(d.Version))
+                       .Where(d => !_ignoreTests.Contains(d.FileName))
+                       .Select(e => new object[] { e });
         }
     }
 
     internal static class ValidatorManifestParser
     {
         public static List<ValidationTestCase> Parse()
-        {          
+        {
             var manifest = File.ReadAllText(@"TestData\validation-test-suite\manifest.json");
             var json = JObject.Parse(manifest);
             var testCases = CreateValidationCase(json);
@@ -137,7 +136,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static List<ValidationTestCase> CreateValidationCase(JObject json)
         {
             var validationCases = new List<ValidationTestCase>();
-            foreach(var child in json["test-cases"].Children())
+            foreach (var child in json["test-cases"].Children())
             {
                 validationCases.Add(CreateValidationTestCase(child));
             }
@@ -187,7 +186,7 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         private static ValidationTestCase.ExpectedResult GetJavaValidatorResults(JToken json)
-        {            
+        {
             var values = json.ToObject<JObject>();
             return new ValidationTestCase.ExpectedResult
             {
@@ -202,16 +201,17 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var extensiondomains = new List<string>();
 
-            if(values["allowed-extension-domain"] != null)
+            if (values["allowed-extension-domain"] != null)
                 extensiondomains.Add(values["allowed-extension-domain"].Value<string>());
-            if(values["allowed-extension-domains"] != null)
+            if (values["allowed-extension-domains"] != null)
                 extensiondomains.AddRange(((JArray)values["allowed-extension-domains"])?.Values<string>());
 
-            return extensiondomains;            
+            return extensiondomains;
         }
     }
-     
-    public class ValidationTestCase { 
+
+    public class ValidationTestCase
+    {
 
         public string FileName { get; set; }
         public bool? UseTest { get; set; }
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Specification.Tests
         public string Questionnaire { get; set; }
         public List<string> CodeSystems { get; set; }
         public List<string> Profiles { get; set; }
-        public Profile ValidationProfile { get; set; }  
+        public Profile ValidationProfile { get; set; }
         public string Version { get; set; }
         public ExpectedResult Java { get; set; }
         public LogicalModel Logical { get; set; }
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             public string Source { get; set; }
             public List<string> Supporting { get; set; }
-            public  ExpectedResult Java { get; set; }
+            public ExpectedResult Java { get; set; }
         }
 
         public class LogicalModel
@@ -247,5 +247,5 @@ namespace Hl7.Fhir.Specification.Tests
             public List<string> Expressions { get; set; }
             public ExpectedResult Java { get; set; }
         }
-    }  
+    }
 }

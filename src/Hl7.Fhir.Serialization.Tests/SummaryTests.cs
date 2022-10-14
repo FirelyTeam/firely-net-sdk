@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Serialization.Tests
     {
         public ITypedElement getXmlNode(string xml, FhirXmlParsingSettings s = null) =>
             XmlParsingHelpers.ParseToTypedElement(xml, new PocoStructureDefinitionSummaryProvider(), s);
-        
+
         [TestMethod]
         public async Task Summary()
         {
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             var m = masker.Descendants().ToList();
             var maskedChildren = masker.Descendants().Count();
-            Assert.AreEqual(8,maskedChildren);
+            Assert.AreEqual(8, maskedChildren);
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var output = await masker.ToXmlAsync();
 
             var maskedChildren = masker.Descendants().Count();
-            Assert.AreEqual(nav.Descendants().Count()-3 , maskedChildren);
+            Assert.AreEqual(nav.Descendants().Count() - 3, maskedChildren);
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(maskedChildren, 2);
 
             ITypedElement getXmlNodeSDSP(string xml, FhirXmlParsingSettings s = null) =>
-                XmlParsingHelpers.ParseToTypedElement(xml, new StructureDefinitionSummaryProvider(ZipSource.CreateValidationSource()), s);
+                XmlParsingHelpers.ParseToTypedElement(xml, new StructureDefinitionSummaryProvider(FhirPackageSource.CreateFhirCorePackageSource()), s);
         }
     }
 }

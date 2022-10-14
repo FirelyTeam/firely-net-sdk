@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext _)
         {
-            source = ZipSource.CreateValidationSource();
+            source = FhirPackageSource.CreateFhirCorePackageSource();
         }
 
         static IResourceResolver source = null;
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var src = new CachedResolver(
                 new MultiResolver(
-                    ZipSource.CreateValidationSource(),
+                    FhirPackageSource.CreateFhirCorePackageSource(),
                     new WebResolver() { TimeOut = DefaultTimeOut }));
 
             Stopwatch sw1 = new Stopwatch();
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestCacheInvalidation()
         {
-            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
+            var src = new CachedResolver(new MultiResolver(FhirPackageSource.CreateFhirCorePackageSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
             src.Load += (sender, args) => { eventArgs = args; };
 
@@ -239,9 +239,9 @@ namespace Hl7.Fhir.Specification.Tests
             var resource = await cache.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNull(resource);
 
-            // Resolve core resource from ZIP and refresh in-memory resolver
-            var zipSource = ZipSource.CreateValidationSource();
-            var original = zipSource.ResolveByUri(resourceUri) as ValueSet;
+            // Resolve core resource from FhirPackageSource and refresh in-memory resolver
+            var source = FhirPackageSource.CreateFhirCorePackageSource();
+            var original = source.ResolveByCanonicalUri(resourceUri) as ValueSet;
             Assert.IsNotNull(original);
             mem.Reload(original);
 
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSetupIsOnce()
         {
-            var fa = ZipSource.CreateValidationSource();
+            var fa = FhirPackageSource.CreateFhirCorePackageSource();
 
             var sw = new Stopwatch();
             sw.Start();
@@ -322,10 +322,10 @@ namespace Hl7.Fhir.Specification.Tests
             const string dupFileName = "patient-birthtime";
             const string url = "http://hl7.org/fhir/StructureDefinition/patient-birthTime";
 
-            var za = ZipSource.CreateValidationSource();
+            var source = FhirPackageSource.CreateFhirCorePackageSource();
 
             // Try to find a core extension
-            var ext = za.ResolveByCanonicalUri(url);
+            var ext = source.ResolveByCanonicalUri(url);
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
 

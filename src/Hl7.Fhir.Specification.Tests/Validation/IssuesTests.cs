@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var ctx = new ValidationSettings()
             {
-                ResourceResolver = ZipSource.CreateValidationSource(),
+                ResourceResolver = FhirPackageSource.CreateFhirCorePackageSource(),
             };
 
             var validator = new Validator(ctx);
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var settings = new ValidationSettings()
             {
-                ResourceResolver = new MultiResolver(new InMemoryProfileResolver(observationDef), ZipSource.CreateValidationSource()),
+                ResourceResolver = new MultiResolver(new InMemoryProfileResolver(observationDef), FhirPackageSource.CreateFhirCorePackageSource()),
                 GenerateSnapshot = true,
                 GenerateSnapshotSettings = new()
                 {

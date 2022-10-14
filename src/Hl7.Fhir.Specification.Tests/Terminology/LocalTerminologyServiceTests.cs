@@ -10,7 +10,7 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class LocalTerminologyServiceTests
     {
-        private readonly LocalTerminologyService _service = new(ZipSource.CreateValidationSource());
+        private readonly LocalTerminologyService _service = new(FhirPackageSource.CreateFhirCorePackageSource());
 
         [TestMethod]
         public async Task CodeNotFoundMessageTest()

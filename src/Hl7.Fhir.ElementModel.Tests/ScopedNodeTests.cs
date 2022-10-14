@@ -276,14 +276,14 @@ namespace Hl7.Fhir.ElementModel.Tests
         private class CCDAResourceResolver : IAsyncResourceResolver
         {
             private readonly Dictionary<string, StructureDefinition> _cache;
-            private readonly ZipSource _zipSource;
             private readonly CachedResolver _coreResolver;
 
             public CCDAResourceResolver()
             {
                 _cache = new Dictionary<string, StructureDefinition>();
-                _zipSource = ZipSource.CreateValidationSource();
-                _coreResolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
+                _coreResolver = new CachedResolver(new MultiResolver(
+                    FhirPackageSource.CreateFhirCorePackageSource(),
+                    new DirectorySource("TestData/TestSd")));
             }
 
             public async T.Task<Resource> ResolveByCanonicalUriAsync(string uri)

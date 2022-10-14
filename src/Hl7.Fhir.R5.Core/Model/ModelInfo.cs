@@ -472,7 +472,15 @@ namespace Hl7.Fhir.Model
         /// Gets the <see cref="ModelInspector"/> providing metadata for the resources and
         /// datatypes in this release of FHIR.
         /// </summary>
-        public static ModelInspector ModelInspector => ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
+        public static ModelInspector ModelInspector
+        {
+            get
+            {
+                var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
+                inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
+                return inspector;
+            }
+        }
 
         public static readonly Type[] OpenTypes =
         {

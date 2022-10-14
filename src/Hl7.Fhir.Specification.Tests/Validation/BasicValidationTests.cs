@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source =
                     new MultiResolver(
                         new DirectorySource(@"TestData\validation"),
-                        ZipSource.CreateValidationSource());
+                        FhirPackageSource.CreateFhirCorePackageSource());
 
             var ctx = new ValidationSettings()
             {
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestXsdValidationExplicitSet()
         {
             var mySettings = _validator.Settings.Clone();
-            var source = ZipSource.CreateValidationSource();
+            var source = FhirPackageSource.CreateFhirCorePackageSource();
 
             mySettings.XsdSchemaCollection = new SchemaCollection(source);
             var myValidator = new Validator(mySettings);
@@ -1059,7 +1059,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // new DirectorySource(Path.Combine("TestData", "validation")),
                         // new TestProfileArtifactSource(),
                         memResolver,
-                        ZipSource.CreateValidationSource())));
+                        FhirPackageSource.CreateFhirCorePackageSource())));
 
             var ctx = new ValidationSettings()
             {
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new BundleExampleResolver(@"TestData\validation"),
                     new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
-                    ZipSource.CreateValidationSource()));
+                    FhirPackageSource.CreateFhirCorePackageSource()));
 
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
@@ -1369,7 +1369,7 @@ namespace Hl7.Fhir.Specification.Tests
             //prepare
             var resolver = new MultiResolver(
                                    new DirectorySource(@"TestData\validation"),
-                                   ZipSource.CreateValidationSource());
+                                   FhirPackageSource.CreateFhirCorePackageSource());
 
             var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = false });
 
