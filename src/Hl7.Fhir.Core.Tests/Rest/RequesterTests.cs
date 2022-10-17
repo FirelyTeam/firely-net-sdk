@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -367,7 +366,7 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
+            var result = await response.ToTypedEntryResponseAsync(ModelInfo.ModelInspector);
 
             var typedElementXml = await result.TypedElement.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
@@ -400,7 +399,7 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
+            var typedresponse = await response.ToTypedEntryResponseAsync(ModelInfo.ModelInspector);
 
             var settings = new ParserSettings
             {
@@ -410,7 +409,7 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var bundleresponse = typedresponse.ToBundleEntry(settings);
+            var bundleresponse = typedresponse.ToBundleEntry(ModelInfo.ModelInspector, settings);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);

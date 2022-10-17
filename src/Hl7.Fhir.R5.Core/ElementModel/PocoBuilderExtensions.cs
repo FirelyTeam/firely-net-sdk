@@ -15,6 +15,6 @@ namespace Hl7.Fhir.ElementModel
     public static class PocoBuilderExtensions
     {
         public static Base ToPoco(this ITypedElement element, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(ModelInfo.ModelInspector, settings).BuildFrom(element);
+            element.ToPoco<Base>(ModelInfo.ModelInspector, settings);
     }
 }

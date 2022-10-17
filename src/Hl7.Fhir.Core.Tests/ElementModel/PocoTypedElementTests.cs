@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
         public void PocoTypedElementPocoRoundtrip()
         {
             var patient = new Patient();
-            var actual = patient.ToTypedElement().ToPoco<Patient>();
+            var actual = patient.ToTypedElement().ToPoco<Patient>(ModelInfo.ModelInspector);
             Assert.IsNotNull(actual, "Roundtrip POCO -> ITypedElement -> POCO should succeed.");
         }
 

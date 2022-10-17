@@ -1,6 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -12,14 +12,14 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient : IDisposable
     {
-        private readonly IStructureDefinitionSummaryProvider _provider;
+        private readonly ModelInspector _inspector;
         private readonly string _fhirVersion;
 
-        protected BaseFhirClient(Uri endpoint, IStructureDefinitionSummaryProvider provider, string fhirVersion, FhirClientSettings settings = null)
+        protected BaseFhirClient(Uri endpoint, ModelInspector inspector, string fhirVersion, FhirClientSettings settings = null)
         {
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _provider = provider;
+            _inspector = inspector;
             _fhirVersion = fhirVersion;
         }
 
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Rest
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
-                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_provider).ConfigureAwait(false);
+                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_inspector).ConfigureAwait(false);
             }
             catch (UnsupportedBodyTypeException ex)
             {
@@ -1003,7 +1003,7 @@ namespace Hl7.Fhir.Rest
             Bundle.EntryComponent response = null;
             try
             {
-                response = typedEntryResponse.ToBundleEntry(Settings.ParserSettings);
+                response = typedEntryResponse.ToBundleEntry(_inspector, Settings.ParserSettings);
 
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;

@@ -6,12 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, ParserSettings parserSettings)
+        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, ModelInspector inspector, ParserSettings parserSettings)
         {
             var result = new Bundle.EntryComponent
             {
@@ -56,11 +56,11 @@ namespace Hl7.Fhir.Rest
                 }
                 else
                 {
-                    if(entry.TypedElement != null)
+                    if (entry.TypedElement != null)
                     {
                         try
                         {
-                            result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement);
+                            result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement, inspector);
 
                             //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
                             // see also issue #1681
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Rest
             var body = interaction.GetBody();
             return body != null ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
         }
-        
+
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
             interaction.RemoveAnnotations<Body>();

@@ -7,7 +7,6 @@
 */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -32,7 +31,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
         public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null)
-            : base(endpoint, new PocoStructureDefinitionSummaryProvider(), ModelInfo.Version, settings)
+            : base(endpoint, ModelInfo.ModelInspector, ModelInfo.Version, settings)
         {
             // If user does not supply message handler, create our own and add decompression strategy in default handler.
             var handler = messageHandler ?? new HttpClientHandler()
@@ -61,7 +60,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="httpClient"></param>
         public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null)
-            : base(endpoint, new PocoStructureDefinitionSummaryProvider(), ModelInfo.Version, settings)
+            : base(endpoint, ModelInfo.ModelInspector, ModelInfo.Version, settings)
         {
             HttpClientRequester requester = new HttpClientRequester(Endpoint, Settings, httpClient);
             Requester = requester;

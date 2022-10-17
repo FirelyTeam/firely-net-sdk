@@ -22,7 +22,8 @@ namespace Hl7.Fhir.ElementModel
         public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
                (T)source.ToPoco(typeof(T), settings);
 
-        public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings settings = null) where T : Base =>
-               (T)new PocoBuilder(ModelInspector.ForAssembly(typeof(T).Assembly), settings).BuildFrom(element);
+        public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
+               (T)new PocoBuilder(inspector, settings).BuildFrom(element);
+
     }
 }

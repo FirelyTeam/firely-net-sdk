@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 
@@ -35,7 +36,7 @@ namespace Hl7.Fhir.Serialization
         // TODO BIG_COMMON
         //public Base Parse(ITypedElement element) => element.ToPoco(buildPocoBuilderSettings(Settings));
 
-        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(buildPocoBuilderSettings(Settings));
+        public T Parse<T>(ITypedElement element, ModelInspector inspector) where T : Base => element.ToPoco<T>(inspector, buildPocoBuilderSettings(Settings));
 
         public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(type, buildPocoBuilderSettings(Settings));
 
