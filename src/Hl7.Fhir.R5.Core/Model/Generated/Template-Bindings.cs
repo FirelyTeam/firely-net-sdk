@@ -559,6 +559,74 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
+  /// The relationship between concepts.
+  /// (url: http://hl7.org/fhir/ValueSet/concept-map-relationship)
+  /// (system: http://hl7.org/fhir/concept-map-relationship)
+  /// </summary>
+  [FhirEnumeration("ConceptMapRelationship")]
+  public enum ConceptMapRelationship
+  {
+    /// <summary>
+    /// The concepts are related to each other, but the exact relationship is not known.
+    /// (system: http://hl7.org/fhir/concept-map-relationship)
+    /// </summary>
+    [EnumLiteral("related-to", "http://hl7.org/fhir/concept-map-relationship"), Description("Related To")]
+    RelatedTo,
+    /// <summary>
+    /// The definitions of the concepts mean the same thing.
+    /// (system: http://hl7.org/fhir/concept-map-relationship)
+    /// </summary>
+    [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-relationship"), Description("Equivalent")]
+    Equivalent,
+    /// <summary>
+    /// The source concept is narrower in meaning than the target concept.
+    /// (system: http://hl7.org/fhir/concept-map-relationship)
+    /// </summary>
+    [EnumLiteral("source-is-narrower-than-target", "http://hl7.org/fhir/concept-map-relationship"), Description("Source Is Narrower Than Target")]
+    SourceIsNarrowerThanTarget,
+    /// <summary>
+    /// The source concept is broader in meaning than the target concept.
+    /// (system: http://hl7.org/fhir/concept-map-relationship)
+    /// </summary>
+    [EnumLiteral("source-is-broader-than-target", "http://hl7.org/fhir/concept-map-relationship"), Description("Source Is Broader Than Target")]
+    SourceIsBroaderThanTarget,
+    /// <summary>
+    /// This is an explicit assertion that the target concept is not related to the source concept.
+    /// (system: http://hl7.org/fhir/concept-map-relationship)
+    /// </summary>
+    [EnumLiteral("not-related-to", "http://hl7.org/fhir/concept-map-relationship"), Description("Not Related To")]
+    NotRelatedTo,
+  }
+
+  /// <summary>
+  /// Defines which action to take if there is no match in the group.
+  /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
+  /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+  /// </summary>
+  [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+  public enum ConceptMapGroupUnmappedMode
+  {
+    /// <summary>
+    /// Use the code as provided in the $translate request.
+    /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+    /// </summary>
+    [EnumLiteral("provided", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Provided Code")]
+    Provided,
+    /// <summary>
+    /// Use the code explicitly provided in the group.unmapped.
+    /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+    /// </summary>
+    [EnumLiteral("fixed", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Fixed Code")]
+    Fixed,
+    /// <summary>
+    /// Use the map identified by the canonical URL in the url element.
+    /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
+    /// </summary>
+    [EnumLiteral("other-map", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Other Map")]
+    OtherMap,
+  }
+
+  /// <summary>
   /// Used to specify why the normally expected content of the data element is missing.
   /// (url: http://hl7.org/fhir/ValueSet/data-absent-reason)
   /// (system: http://terminology.hl7.org/CodeSystem/data-absent-reason)

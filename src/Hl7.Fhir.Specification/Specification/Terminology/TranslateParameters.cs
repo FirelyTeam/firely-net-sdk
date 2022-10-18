@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>
         /// The concept map is provided directly as part of the request.
         /// </summary>
-        public ConceptMap ConceptMap { get; private set; }
+        public Resource ConceptMap { get; private set; }
         /// <summary>
         /// The identifier that is used to identify a specific version of the concept map to be used for the translation.
         /// </summary>
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Specification.Terminology
         public FhirBoolean Reverse { get; private set; }
 
         #region Builder methods
-        public TranslateParameters WithConceptMap(string url = null, ConceptMap conceptMap = null, string conceptMapVersion = null, string source = null)
+        public TranslateParameters WithConceptMap(string url = null, Resource conceptMap = null, string conceptMapVersion = null, string source = null)
         {
             if (!string.IsNullOrWhiteSpace(url)) Url = new FhirUri(url);
             ConceptMap = conceptMap;

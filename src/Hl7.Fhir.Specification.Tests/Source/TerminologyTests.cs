@@ -1007,8 +1007,6 @@ namespace Hl7.Fhir.Specification.Tests
                 _onlyCs.ValueSet = valueSetUri;
                 return _onlyCs;
             }
-            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
-            public NamingSystem FindNamingSystem(string uniqueId) => throw new NotImplementedException();
             public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => throw new NotImplementedException();
             public Resource ResolveByCanonicalUri(string uri) => throw new NotImplementedException();
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)

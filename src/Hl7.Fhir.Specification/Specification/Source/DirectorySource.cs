@@ -9,6 +9,7 @@
 // [WMR 20171023] TODO
 // - Allow configuration of duplicate canonical url handling strategy
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -18,11 +19,10 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading;
-using T=System.Threading.Tasks;
-using Hl7.Fhir.ElementModel;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -73,31 +73,6 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified content directory and optionally also from subdirectories.
-        /// </summary>
-        /// <param name="includeSubdirectories">
-        /// Determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
-        /// </param>
-        [Obsolete("Instead, use DirectorySource(DirectorySourceSettings settings)")]
-        public DirectorySource(bool includeSubdirectories)
-            : this(SpecificationDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified <paramref name="contentDirectory"/> and optionally also from subdirectories.
-        /// </summary>
-        /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="includeSubdirectories">
-        /// Determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
-        /// </param>
-        [Obsolete("Instead, use DirectorySource(string contentDirectory, DirectorySourceSettings settings)")]
-        public DirectorySource(string contentDirectory, bool includeSubdirectories)
-            : this(contentDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
         /// using the specified <see cref="DirectorySourceSettings"/>.
         /// </summary>
         /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
@@ -121,7 +96,7 @@ namespace Hl7.Fhir.Specification.Source
             : this(contentDirectory, settings, true) { }
 
         // Internal ctor
-        DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
+        private DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
         {
             // [WMR 20190305] FilePatternFilter requires ContentDirectory to be a full, absolute path
             //ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
@@ -129,7 +104,7 @@ namespace Hl7.Fhir.Specification.Source
             ContentDirectory = Path.GetFullPath(contentDirectory);
 
             // [WMR 20171023] Clone specified settings to prevent shared state
-            _settings = settings != null 
+            _settings = settings != null
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
                 : DirectorySourceSettings.CreateDefault();
             _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
@@ -366,7 +341,8 @@ namespace Hl7.Fhir.Specification.Source
         public bool ExcludeSummariesForUnknownArtifacts
         {
             get { return _settings.ExcludeSummariesForUnknownArtifacts; }
-            set {
+            set
+            {
                 _settings.ExcludeSummariesForUnknownArtifacts = value;
                 _summaryGenerator.ExcludeSummariesForUnknownArtifacts = value;
                 Refresh();
@@ -573,30 +549,17 @@ namespace Hl7.Fhir.Specification.Source
             return loadResourceInternal<CodeSystem>(summary);
         }
 
-        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
-        /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
-        /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
-        /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-        {
-            if (sourceUri == null && targetUri == null)
-            {
-                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} arguments cannot both be null");
-            }
-            var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
-        }
+        /// <summary>
+        /// This method is obsolete. Please use the class <c>ConformanceDirectorySource</c>
+        /// </summary>
+        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceDirectorySource")]
+        public IEnumerable<Resource> FindConceptMaps(string sourceUri = null, string targetUri = null) => Enumerable.Empty<Resource>();
 
-        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
-        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
-        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
-        public NamingSystem FindNamingSystem(string uniqueId)
-        {
-            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
-            var summary = GetSummaries().ResolveNamingSystem(uniqueId);
-            return loadResourceInternal<NamingSystem>(summary);
-        }
+        /// <summary>
+        /// This method is obsolete. Please use the class <c>ConformanceDirectorySource</c>
+        /// </summary>
+        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceDirectorySource")]
+        public Resource FindNamingSystem(string uniqueId) => null;
 
         #endregion
 
@@ -726,7 +689,7 @@ namespace Hl7.Fhir.Specification.Source
 
                 // local helper function to validate file/folder attributes, exclude system and/or hidden
                 bool isValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
-                
+
                 // local helper function to filter executables (*.exe, *.dll)
                 bool isExtensionSafe(string extension) => !ExecutableExtensions.Contains(extension, PathComparer);
 
@@ -943,7 +906,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Returns <c>null</c> if the specified <paramref name="summary"/> equals <c>null</c>.</summary>
-        T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
+        protected T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
         {
             if (summary == null) { return null; }
 
@@ -1042,5 +1005,4 @@ namespace Hl7.Fhir.Specification.Source
             + (IncludeSubDirectories ? " (with subdirs)" : null)
             + (_lazyArtifactSummaries.IsValueCreated ? $" {_lazyArtifactSummaries.Value.Count} resources" : " (summaries not yet loaded)");
     }
-
 }

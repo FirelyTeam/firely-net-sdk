@@ -6,15 +6,15 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 // Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Source
@@ -134,19 +134,19 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 
-    /// <summary>For harvesting specific summary information from a <see cref="NamingSystem"/> resource.</summary>
+    /// <summary>For harvesting specific summary information from a <c>NamingSystem</c> resource.</summary>
     public static class NamingSystemSummaryProperties
     {
-        static readonly string NamingSystemTypeName = ResourceType.NamingSystem.GetLiteral();
+        static readonly string NamingSystemTypeName = ResourceNames.NAMINGSYSTEM_NAME;
 
         public static readonly string UniqueIdKey = "NamingSystem.uniqueId";
 
-        /// <summary>Determines if the specified instance represents summary information about a <see cref="NamingSystem"/> resource.</summary>
+        /// <summary>Determines if the specified instance represents summary information about a <c>NamingSystem</c> resource.</summary>
         public static bool IsNamingSystemSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == NamingSystemTypeName;
 
-        /// <summary>Harvest specific summary information from a <see cref="NamingSystem"/> resource.</summary>
-        /// <returns><c>true</c> if the current target represents a <see cref="NamingSystem"/> resource, or <c>false</c> otherwise.</returns>
+        /// <summary>Harvest specific summary information from a <c>NamingSystem</c> resource.</summary>
+        /// <returns><c>true</c> if the current target represents a <c>NamingSystem</c> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method through a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
         public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
@@ -162,12 +162,12 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the <c>NamingSystem.uniqueId</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="NamingSystem"/> resources.</remarks>
+        /// <remarks>Only applies to summaries of <c>NamingSystem</c> resources.</remarks>
         public static IReadOnlyList<string> GetNamingSystemUniqueId(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<IReadOnlyList<string>>(UniqueIdKey);
 
         /// <summary>
-        /// Determines if the current summary properties represent a <see cref="NamingSystem"/>
+        /// Determines if the current summary properties represent a <c>NamingSystem</c>
         /// resource with the specified <c>uniqueId</c> value.
         /// </summary>
         public static bool HasNamingSystemUniqueId(this IArtifactSummaryPropertyBag properties, string uniqueId)
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Specification.Source
                 var ids = GetNamingSystemUniqueId(properties);
                 //return ids != null && Array.IndexOf(ids, uniqueId) > -1;
                 return ids != null && ids.Contains(uniqueId);
-                    
+
             }
             return false;
         }
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Specification.Source
                     if (elementNode != null)
                     {
                         var childNode = elementNode.Children("element").FirstOrDefault();
-                        if(childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
+                        if (childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
                         {
                             childNode.HarvestValue(properties, RootDefinitionKey, "definition");
                         }
@@ -454,7 +454,7 @@ namespace Hl7.Fhir.Specification.Source
 
     /// <summary>For harvesting specific summary information from a <see cref="CodeSystem"/> resource.</summary>
     public static class CodeSystemSummaryProperties
-    { 
+    {
         static readonly string CodeSystemTypeName = ResourceType.CodeSystem.GetLiteral();
 
         public static readonly string ValueSetKey = "CodeSystem.valueSet";
@@ -486,20 +486,20 @@ namespace Hl7.Fhir.Specification.Source
             => properties.GetValueOrDefault<string>(ValueSetKey);
     }
 
-    /// <summary>For harvesting specific summary information from a <see cref="ConceptMap"/> resource.</summary>
+    /// <summary>For harvesting specific summary information from a <c>ConceptMap</c> resource.</summary>
     public static class ConceptMapSummaryProperties
     {
-        static readonly string ConceptMapTypeName = ResourceType.ConceptMap.GetLiteral();
+        static readonly string ConceptMapTypeName = ResourceNames.CONCEPTMAP_NAME;
 
         public static readonly string SourceKey = "ConceptMap.source";
         public static readonly string TargetKey = "ConceptMap.target";
 
-        /// <summary>Determines if the specified instance represents summary information about a <see cref="ConceptMap"/> resource.</summary>
+        /// <summary>Determines if the specified instance represents summary information about a <c>ConceptMap</c> resource.</summary>
         public static bool IsConceptMapSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == ConceptMapTypeName;
 
-        /// <summary>Harvest specific summary information from a <see cref="ConceptMap"/> resource.</summary>
-        /// <returns><c>true</c> if the current target represents a <see cref="ConceptMap"/> resource, or <c>false</c> otherwise.</returns>
+        /// <summary>Harvest specific summary information from a <c>ConceptMap</c> resource.</summary>
+        /// <returns><c>true</c> if the current target represents a <c>ConceptMap</c> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
         public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
         {
@@ -524,12 +524,12 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the <c>ConceptMap.source[x]</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="ConceptMap"/> resources.</remarks>
+        /// <remarks>Only applies to summaries of <c>ConceptMap</c> resources.</remarks>
         public static string GetConceptMapSource(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(SourceKey);
 
         /// <summary>Get the <c>ConceptMap.target[x]</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="ConceptMap"/> resources.</remarks>
+        /// <remarks>Only applies to summaries of <c>ConceptMap</c> resources.</remarks>
         public static string GetConceptMapTarget(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(TargetKey);
     }

@@ -29,10 +29,10 @@ namespace Hl7.Fhir.Specification.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext _)
         {
-            source = ZipSource.CreateValidationSource();
+            source = FhirPackageSource.CreateFhirCorePackageSource();
         }
 
-        static ZipSource source = null;
+        private static FhirPackageSource source = null;
 
 
         [TestMethod]

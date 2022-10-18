@@ -65,9 +65,9 @@ namespace Hl7.Fhir.Specification.Terminology
         public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+                return await Endpoint.TypeOperationAsync(RestOperation.TRANSLATE, ResourceNames.CONCEPTMAP_NAME, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+                return await Endpoint.InstanceOperationAsync(ResourceIdentity.Build(ResourceNames.CONCEPTMAP_NAME, id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
         ///<inheritdoc />
