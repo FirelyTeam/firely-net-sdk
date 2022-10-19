@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Rest
                     case CodeableConcept codeableConcept:
                         return codeableConcept.ToToken();
                     default:
-                        if (ModelInfoNEW.IsPrimitive(parameter.Value.GetType()))
+                        if (CommonModelInfo.CommonIsPrimitive2(parameter.Value.GetType()))
                         {
                             return parameter.Value.ToString();
                         }

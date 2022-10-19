@@ -30,7 +30,6 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -40,8 +39,6 @@ namespace Hl7.Fhir.Model
 {
     public class ModelInfoNEW
     {
-        public static readonly Uri FhirCoreProfileBaseUri = new(@"http://hl7.org/fhir/StructureDefinition/");
-        public static Canonical CanonicalUriForFhirCoreType(string typename) => new(FhirCoreProfileBaseUri.OriginalString + typename);
 
         #region TODO
         public static bool IsInstanceTypeFor(string superclass, string subclass) => true;
@@ -67,31 +64,8 @@ namespace Hl7.Fhir.Model
         public static bool IsCoreModelType(string name) => true;
         #endregion
 
-        public static string? GetFhirTypeNameForType(Type type)
-        {
-            var inspector = ModelInspector.ForAssembly(type.Assembly);
-            var mapping = inspector.FindClassMapping(type);
-            return mapping?.Name;
-        }
-
-        public static bool IsPrimitive(Type type)
-        {
-            var inspector = ModelInspector.ForAssembly(type.Assembly);
-            var mapping = inspector.FindClassMapping(type);
-            return mapping?.IsPrimitive ?? false;
-        }
-
-        public static bool IsBindable(string type)
-            => type switch
-            {
-                // This is the fixed list, for all FHIR versions
-                "code" or "Coding" or "CodeableConcept" or "Quantity" or "string" or "uri" or "Extension" => true,
-                _ => false,
-            };
-
         // Used in ArtifactSummary. Do we still want to support that?
         public static bool IsConformanceResource(string name) => true;
-        public static bool IsConformanceResource(ResourceType? type) => true;
     }
 }
 #nullable restore

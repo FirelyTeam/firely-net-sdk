@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Specification.Schema
             //    return Issue.CONTENT_TYPE_NOT_BINDEABLE 
             //        .NewOutcomeWithIssue($"Validation of binding with non-bindable instance type '{input.InstanceType}' always succeeds.", input);
             //}
-            if (!ModelInfoNEW.IsBindable(input.InstanceType))
+            if (!CommonModelInfo.CommonIsBindable(input.InstanceType))
                 return new OperationOutcome();  // success
 
             var bindable = parseBindable(input);

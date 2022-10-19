@@ -43,8 +43,8 @@ namespace Hl7.Fhir.Specification.Terminology
                 return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        private Uri constructUri<T>(string id) =>
-            ResourceIdentity.Build(ModelInfoNEW.GetFhirTypeNameForType(typeof(T)), id);
+        private Uri constructUri<T>(string id) where T : Resource =>
+            ResourceIdentity.Build(CommonModelInfo.GetCommonFhirTypeNameForType2(typeof(T)), id);
 
         ///<inheritdoc />
         public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)

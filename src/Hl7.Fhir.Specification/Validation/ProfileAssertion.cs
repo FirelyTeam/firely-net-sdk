@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Validation
                     var result = ResolvedStatedProfiles.ToList();
                     var bases = ResolvedStatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
                     bases.AddRange(ResolvedStatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                        .Select(sp => ModelInfoNEW.CanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
+                        .Select(sp => CommonModelInfo.CommonCanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
                     result.RemoveAll(r => bases.Contains(r.Url));
                     _lastMinimalSet = result;
                 }

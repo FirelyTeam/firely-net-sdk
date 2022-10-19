@@ -263,18 +263,18 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string BaseDefinitionKey = "StructureDefinition.baseDefinition";
         public static readonly string DerivationKey = "StructureDefinition.derivation";
 
-        public static readonly string FmmExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-fmm").ToString();
+        public static readonly string FmmExtensionUrl = new Uri(CommonModelInfo.FhirCoreProfileBaseUri, "structuredefinition-fmm").ToString();
         public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
 
-        public static readonly string WgExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-wg").ToString();
+        public static readonly string WgExtensionUrl = new Uri(CommonModelInfo.FhirCoreProfileBaseUri, "structuredefinition-wg").ToString();
         public static readonly string WorkingGroupKey = "StructureDefinition.workingGroup";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string StandardsStatusExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-standards-status").ToString();
+        public static readonly string StandardsStatusExtensionUrl = new Uri(CommonModelInfo.FhirCoreProfileBaseUri, "structuredefinition-standards-status").ToString();
         public static readonly string StandardsStatusKey = "StructureDefinition.standardsStatus";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string NormativeVersionExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-normative-version").ToString();
+        public static readonly string NormativeVersionExtensionUrl = new Uri(CommonModelInfo.FhirCoreProfileBaseUri, "structuredefinition-normative-version").ToString();
         public static readonly string NormativeVersionKey = "StructureDefinition.normativeVersion";
 
         public static readonly string RootDefinitionKey = "StructureDefinition.rootDefinition";
