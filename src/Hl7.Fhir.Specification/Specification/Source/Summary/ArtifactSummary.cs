@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Gets an opaque value that represents the position of the artifact within the container.
-        /// Allows the <see cref="DirectorySource"/> to retrieve and deserialize the associated artifact.
+        /// Allows the <see cref="CommonDirectorySource"/> to retrieve and deserialize the associated artifact.
         /// </summary>
         public string Position => properties.GetPosition();
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Specification.Source
         public ResourceType? ResourceType { get; }
 
         /// <summary>Gets the resource uri.</summary>
-        /// <remarks>The <see cref="DirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
+        /// <remarks>The <see cref="CommonDirectorySource"/> generates virtual uri values for resources that are not bundle entries.</remarks>
         public string ResourceUri => properties.GetResourceUri();
 
         /// <summary>Returns <c>true</c> if the summary describes a Bundle entry resource.</summary>

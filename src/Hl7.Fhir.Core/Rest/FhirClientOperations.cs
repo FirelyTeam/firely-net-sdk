@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Rest
 
             Resource result;
             if (patient == null)
-                result = await client.TypeOperationAsync(RestOperation.FETCH_PATIENT_RECORD, ResourceNames.PATIENT_NAME, par).ConfigureAwait(false);
+                result = await client.TypeOperationAsync(RestOperation.FETCH_PATIENT_RECORD, FhirTypeNames.PATIENT_NAME, par).ConfigureAwait(false);
             else
             {
                 var location = new ResourceIdentity(patient);
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Rest
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
 
-            return OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.TRANSLATE, ResourceNames.CONCEPTMAP_NAME, par).ConfigureAwait(false));
+            return OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, par).ConfigureAwait(false));
         }
 
         public static Parameters TranslateConcept(this BaseFhirClient client, Code code, FhirUri system, FhirString version,

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Rest
                     {
                         try
                         {
-                            result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement, inspector);
+                            result.Resource = new BaseFhirParser(inspector, parserSettings).Parse<Resource>(entry.TypedElement);
 
                             //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
                             // see also issue #1681

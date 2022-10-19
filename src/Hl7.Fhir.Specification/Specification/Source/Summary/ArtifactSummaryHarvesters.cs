@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>For harvesting specific summary information from a <c>NamingSystem</c> resource.</summary>
     public static class NamingSystemSummaryProperties
     {
-        static readonly string NamingSystemTypeName = ResourceNames.NAMINGSYSTEM_NAME;
+        static readonly string NamingSystemTypeName = FhirTypeNames.NAMINGSYSTEM_NAME;
 
         public static readonly string UniqueIdKey = "NamingSystem.uniqueId";
 
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>For harvesting specific summary information from a <c>ConceptMap</c> resource.</summary>
     public static class ConceptMapSummaryProperties
     {
-        static readonly string ConceptMapTypeName = ResourceNames.CONCEPTMAP_NAME;
+        static readonly string ConceptMapTypeName = FhirTypeNames.CONCEPTMAP_NAME;
 
         public static readonly string SourceKey = "ConceptMap.source";
         public static readonly string TargetKey = "ConceptMap.target";

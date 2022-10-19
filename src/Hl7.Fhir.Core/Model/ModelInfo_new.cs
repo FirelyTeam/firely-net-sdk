@@ -38,7 +38,7 @@ using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class ModelInfoNEW
+    public class ModelInfoNEW
     {
         public static readonly Uri FhirCoreProfileBaseUri = new(@"http://hl7.org/fhir/StructureDefinition/");
         public static Canonical CanonicalUriForFhirCoreType(string typename) => new(FhirCoreProfileBaseUri.OriginalString + typename);

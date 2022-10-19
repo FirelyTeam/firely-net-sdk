@@ -6,6 +6,8 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -19,28 +21,25 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Fetches FHIR artifacts (Profiles, ValueSets, ...) from a FHIR server.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class WebResolver : IResourceResolver, IAsyncResourceResolver
+    public class CommonWebResolver : IResourceResolver, IAsyncResourceResolver
     {
         /// <summary>Default request timeout in milliseconds.</summary>
         public const int DefaultTimeOut = 5000;
 
-        readonly Func<Uri, BaseFhirClient> _clientFactory;
+        private readonly Func<Uri, BaseFhirClient> _clientFactory;
 
-        /// <summary>Default constructor.</summary>
-        public WebResolver() { }
-
-        /// <summary>Create a new <see cref="WebResolver"/> instance that supports a custom <see cref="BaseFhirClient"/> implementation.</summary>
+        /// <summary>Create a new <see cref="CommonWebResolver"/> instance that supports a custom <see cref="BaseFhirClient"/> implementation.</summary>
         /// <param name="fhirClientFactory">
         /// Factory function that should create a new <see cref="BaseFhirClient"/> instance for the specified <see cref="Uri"/>.
         /// If this parameter equals <c>null</c>, then the new instance creates a default <see cref="BaseFhirClient"/> instance.
         /// </param>
-        public WebResolver(Func<Uri, BaseFhirClient> fhirClientFactory)
+        public CommonWebResolver(Func<Uri, BaseFhirClient> fhirClientFactory)
         {
             _clientFactory = fhirClientFactory ?? throw Error.ArgumentNull(nameof(fhirClientFactory));
         }
 
         /// <summary>Gets or sets configuration settings that control parsing behavior.</summary>
-        public ParserSettings ParserSettings { get; set; }
+        public ParserSettings? ParserSettings { get; set; }
 
         /// <summary>Gets or sets the request timeout of the internal <see cref="BaseFhirClient"/> instance.</summary>
         public int TimeOut { get; set; } = DefaultTimeOut;
@@ -49,11 +48,11 @@ namespace Hl7.Fhir.Specification.Source
         /// Gets the runtime <see cref="Exception"/> from the last call to the
         /// <see cref="ResolveByUri(string)"/> method, if any, or <c>null</c> otherwise.
         /// </summary>
-        public Exception LastError { get; private set; }
+        public Exception? LastError { get; private set; }
 
-        public Resource ResolveByUri(string uri)
+        public Resource? ResolveByUri(string uri)
         {
-            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            if (uri is null) throw Error.ArgumentNull(nameof(uri));
             if (!ResourceIdentity.IsRestResourceIdentity(uri))
             {
                 // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
@@ -62,10 +61,8 @@ namespace Hl7.Fhir.Specification.Source
 
             var id = new ResourceIdentity(uri);
 
-            // TODO BIG_COMMON
-            var client = _clientFactory?.Invoke(id.BaseUri)
-                         //?? new BaseFhirClient(id.BaseUri, WHAT_TO_INJECT_HERE?)
-                         ;
+            var client = _clientFactory(id.BaseUri);
+
             client.Settings.Timeout = this.TimeOut;
             client.Settings.ParserSettings = this.ParserSettings;
 
@@ -89,13 +86,13 @@ namespace Hl7.Fhir.Specification.Source
             // Other runtime exceptions are fatal...
         }
 
-        public Resource ResolveByCanonicalUri(string uri)
+        public Resource? ResolveByCanonicalUri(string uri)
         {
             return ResolveByUri(uri);
         }
 
-        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
-        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public T.Task<Resource?> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
+        public T.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
@@ -103,7 +100,6 @@ namespace Hl7.Fhir.Specification.Source
         internal protected virtual string DebuggerDisplay
             => $"{GetType().Name}"
             + (LastError != null ? $" LastError: '{LastError.Message}'" : null);
-
-
     }
 }
+#nullable restore

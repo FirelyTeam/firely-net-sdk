@@ -1121,32 +1121,17 @@ namespace Hl7.Fhir.Rest
 
         }
 
-        private static bool CheckMinorVersionCompatibility(string version, string externalVersion)
+        private static bool CheckMinorVersionCompatibility(string version, string externalVersion) =>
+            compareByMajorMinor(SemVersion.Parse(version), SemVersion.Parse(externalVersion)) == 0;
+
+        // TODO BIG_COMMON: Move to SemVersion perhaps?
+        private static int compareByMajorMinor(SemVersion @this, SemVersion other)
         {
-            if (string.IsNullOrEmpty(externalVersion))
-            {
-                throw new ArgumentNullException();
-            }
+            if (other is null || @this is null)
+                return 1;
 
-            var minorFhirVersion = getMajorAndMinorVersion(version);
-            var externalMinorVersion = getMajorAndMinorVersion(externalVersion);
-
-            return string.IsNullOrEmpty(minorFhirVersion) || string.IsNullOrEmpty(externalVersion)
-                ? false
-                : minorFhirVersion == externalMinorVersion;
-        }
-
-        private static string getMajorAndMinorVersion(string version)
-        {
-            var versionnumbers = version.Split('.');
-            if (versionnumbers.Count() >= 2)
-            {
-                return string.Join(".", versionnumbers[0], versionnumbers[1]);
-            }
-            else
-            {
-                return null;
-            }
+            var r = @this.Major.CompareTo(other.Major);
+            return r != 0 ? r : @this.Minor.CompareTo(other.Minor);
         }
 
         #region IDisposable Support

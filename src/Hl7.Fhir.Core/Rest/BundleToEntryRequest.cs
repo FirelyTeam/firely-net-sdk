@@ -18,6 +18,40 @@ namespace Hl7.Fhir.Rest
 {
     public static class BundleToEntryRequest
     {
+        public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings, string fhirVersion)
+        {
+            var result = new EntryRequest
+            {
+                Agent = fhirVersion,
+                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method),
+                Type = entry.Annotation<InteractionType>(),
+                Url = entry.Request.Url,
+                Headers = new EntryRequestHeaders
+                {
+                    IfMatch = entry.Request.IfMatch,
+                    IfModifiedSince = entry.Request.IfModifiedSince,
+                    IfNoneExist = entry.Request.IfNoneExist,
+                    IfNoneMatch = entry.Request.IfNoneMatch
+                }
+            };
+
+            if (!settings.UseFormatParameter)
+            {
+                result.Headers.Accept = ContentType.BuildContentType(settings, fhirVersion);
+            }
+
+            if (entry.Resource != null)
+            {
+                bool searchUsingPost =
+                    result.Method == HTTPVerb.POST
+                    && entry.Annotation<InteractionType>() == InteractionType.Search
+                    && entry.Resource is Parameters;
+                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, fhirVersion));
+            }
+
+            return result;
+        }
+
         public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, string fhirVersion)
         {
             var result = new EntryRequest
