@@ -1,12 +1,21 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
+using Hl7.FhirPath;
+using Hl7.FhirPath.Expressions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.IO;
+using System.Linq;
+using P = Hl7.Fhir.ElementModel.Types;
 
 namespace Hl7.Fhir
 {
     [TestClass]
     public class FhirPathPerformanceTests
     {
-        // TODO BIG_COMMON
-        /*
         [TestMethod]
         public void QuestionnaireResponseFhirpathPocoTest()
         {
@@ -233,7 +242,6 @@ namespace Hl7.Fhir
             bool resultBig = qr.Predicate(bigValidationExpression);
             Assert.IsTrue(resultBig, "This weird big validation should have passed");
         }
-   */
     }
 
 }

@@ -9,6 +9,8 @@
 // [WMR 20171023] TODO
 // - Allow configuration of duplicate canonical url handling strategy
 
+using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -18,17 +20,16 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading;
-using T=System.Threading.Tasks;
-using Hl7.Fhir.ElementModel;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class DirectorySource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
+    public class CommonDirectorySource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         private static readonly StringComparer PathComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison PathComparison = StringComparison.InvariantCultureIgnoreCase;
@@ -41,13 +42,14 @@ namespace Hl7.Fhir.Specification.Source
         private readonly ArtifactSummaryGenerator _summaryGenerator;
         private readonly ConfigurableNavigatorStreamFactory _navigatorFactory;
         private readonly NavigatorStreamFactory _navigatorFactoryDelegate;
+        private readonly ModelInspector _inspector;
 
         // [WMR 20180813] NEW
         // Use Lazy<T> to synchronize collection (re-)loading (=> lock-free reading)
         private Lazy<List<ArtifactSummary>> _lazyArtifactSummaries;
 
         /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// Create a new <see cref="CommonDirectorySource"/> instance to browse and resolve resources
         /// from the default <see cref="SpecificationDirectory"/>
         /// and using the default <see cref="DirectorySourceSettings"/>.
         /// <para>
@@ -55,11 +57,13 @@ namespace Hl7.Fhir.Specification.Source
         /// collect the artifact summaries, while any other threads will block.
         /// </para>
         /// </summary>
-        public DirectorySource()
-            : this(SpecificationDirectory, null, false) { }
+        public CommonDirectorySource(ModelInspector inspector)
+            : this(inspector, SpecificationDirectory, null, false)
+        {
+        }
 
         /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// Create a new <see cref="CommonDirectorySource"/> instance to browse and resolve resources
         /// from the specified <paramref name="contentDirectory"/>
         /// and using the default <see cref="DirectorySourceSettings"/>.
         /// </summary>
@@ -67,46 +71,23 @@ namespace Hl7.Fhir.Specification.Source
         /// Initialization is thread-safe. The source ensures that only a single thread will
         /// collect the artifact summaries, while any other threads will block.
         /// </para>
+        /// <param name="inspector"></param>
         /// <param name="contentDirectory">The file path of the target directory.</param>
-        public DirectorySource(string contentDirectory)
-            : this(contentDirectory, null, false) { }
+        public CommonDirectorySource(ModelInspector inspector, string contentDirectory)
+            : this(inspector, contentDirectory, null, false) { }
 
         /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified content directory and optionally also from subdirectories.
-        /// </summary>
-        /// <param name="includeSubdirectories">
-        /// Determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
-        /// </param>
-        [Obsolete("Instead, use DirectorySource(DirectorySourceSettings settings)")]
-        public DirectorySource(bool includeSubdirectories)
-            : this(SpecificationDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified <paramref name="contentDirectory"/> and optionally also from subdirectories.
-        /// </summary>
-        /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="includeSubdirectories">
-        /// Determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
-        /// </param>
-        [Obsolete("Instead, use DirectorySource(string contentDirectory, DirectorySourceSettings settings)")]
-        public DirectorySource(string contentDirectory, bool includeSubdirectories)
-            : this(contentDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// Create a new <see cref="CommonDirectorySource"/> instance to browse and resolve resources
         /// using the specified <see cref="DirectorySourceSettings"/>.
         /// </summary>
-        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        /// <param name="inspector"></param>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="CommonDirectorySource"/>.</param>
         /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
-        public DirectorySource(DirectorySourceSettings settings)
-            : this(SpecificationDirectory, settings, true) { }
+        public CommonDirectorySource(ModelInspector inspector, DirectorySourceSettings settings)
+            : this(inspector, SpecificationDirectory, settings, true) { }
 
         /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
+        /// Create a new <see cref="CommonDirectorySource"/> instance to browse and resolve resources
         /// from the specified <paramref name="contentDirectory"/>
         /// and using the specified <see cref="DirectorySourceSettings"/>.
         /// <para>
@@ -114,22 +95,24 @@ namespace Hl7.Fhir.Specification.Source
         /// collect the artifact summaries, while any other threads will block.
         /// </para>
         /// </summary>
+        /// <param name="inspector"></param>
         /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
+        /// <param name="settings">Configuration settings that control the behavior of the <see cref="CommonDirectorySource"/>.</param>
         /// <exception cref="ArgumentNullException">One of the specified arguments is <c>null</c>.</exception>
-        public DirectorySource(string contentDirectory, DirectorySourceSettings settings)
-            : this(contentDirectory, settings, true) { }
+        public CommonDirectorySource(ModelInspector inspector, string contentDirectory, DirectorySourceSettings settings)
+            : this(inspector, contentDirectory, settings, true) { }
 
         // Internal ctor
-        DirectorySource(string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
+        private CommonDirectorySource(ModelInspector inspector, string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
         {
+            _inspector = inspector;
             // [WMR 20190305] FilePatternFilter requires ContentDirectory to be a full, absolute path
             //ContentDirectory = contentDirectory ?? throw Error.ArgumentNull(nameof(contentDirectory));
             if (contentDirectory is null) { throw Error.ArgumentNull(nameof(contentDirectory)); }
             ContentDirectory = Path.GetFullPath(contentDirectory);
 
             // [WMR 20171023] Clone specified settings to prevent shared state
-            _settings = settings != null 
+            _settings = settings != null
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
                 : DirectorySourceSettings.CreateDefault();
             _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
@@ -151,14 +134,14 @@ namespace Hl7.Fhir.Specification.Source
         public static string SpecificationDirectory => DirectorySourceSettings.SpecificationDirectory;
 
         /// <summary>
-        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should
+        /// Gets or sets a value that determines wether the <see cref="CommonDirectorySource"/> should
         /// also include artifacts from (nested) subdirectories of the specified content directory.
         /// <para>
         /// Returns <c>false</c> by default.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// Enabling this setting requires the <see cref="DirectorySource"/> instance
+        /// Enabling this setting requires the <see cref="CommonDirectorySource"/> instance
         /// to recursively scan all xml and json files that exist in the target directory
         /// structure, which could unexpectedly turn into a long running operation.
         /// Therefore, consumers should usually try to avoid to enable this setting when
@@ -311,7 +294,7 @@ namespace Hl7.Fhir.Specification.Source
         // Note: DuplicateFilenameResolution must be in sync with FhirSerializationFormats
 
         /// <summary>
-        /// Specifies how the <see cref="DirectorySource"/> should process duplicate files with multiple serialization formats.
+        /// Specifies how the <see cref="CommonDirectorySource"/> should process duplicate files with multiple serialization formats.
         /// </summary>
         public enum DuplicateFilenameResolution
         {
@@ -324,7 +307,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.</summary>
-        /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
+        /// <remarks>The default value is <see cref="CommonDirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
         public DuplicateFilenameResolution FormatPreference
         {
             get { return _settings.FormatPreference; }
@@ -332,11 +315,11 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Determines if the <see cref="DirectorySource"/> instance should harvest artifact
+        /// Determines if the <see cref="CommonDirectorySource"/> instance should harvest artifact
         /// summary information in parallel on the thread pool.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="DirectorySource"/> harvests artifact summaries serially
+        /// By default, the <see cref="CommonDirectorySource"/> harvests artifact summaries serially
         /// on the calling thread. However if this option is enabled, then the DirectorySource
         /// performs summary harvesting in parallel on the thread pool, in order to speed up
         /// the process. This is especially effective when the content directory contains many
@@ -349,7 +332,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Determines wether the <see cref="DirectorySource"/> should exclude
+        /// Determines wether the <see cref="CommonDirectorySource"/> should exclude
         /// artifact summaries for non-parseable (invalid or non-FHIR) content files.
         /// <para>
         /// By default (<c>false</c>), the source will generate summaries for all files
@@ -366,7 +349,8 @@ namespace Hl7.Fhir.Specification.Source
         public bool ExcludeSummariesForUnknownArtifacts
         {
             get { return _settings.ExcludeSummariesForUnknownArtifacts; }
-            set {
+            set
+            {
                 _settings.ExcludeSummariesForUnknownArtifacts = value;
                 _summaryGenerator.ExcludeSummariesForUnknownArtifacts = value;
                 Refresh();
@@ -431,7 +415,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Re-index one or more specific artifact file(s).
         /// This method is NOT thread-safe!
         /// <para>
-        /// Notifies the <see cref="DirectorySource"/> that specific files in the current
+        /// Notifies the <see cref="CommonDirectorySource"/> that specific files in the current
         /// <see cref="ContentDirectory"/> have been created, updated or deleted.
         /// The <paramref name="filePaths"/> argument should specify an array of artifact
         /// file paths that (may) have been deleted, modified or created.
@@ -726,7 +710,7 @@ namespace Hl7.Fhir.Specification.Source
 
                 // local helper function to validate file/folder attributes, exclude system and/or hidden
                 bool isValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
-                
+
                 // local helper function to filter executables (*.exe, *.dll)
                 bool isExtensionSafe(string extension) => !ExecutableExtensions.Contains(extension, PathComparer);
 
@@ -757,7 +741,7 @@ namespace Hl7.Fhir.Specification.Source
                     catch (Exception ex)
                     {
                         // Do Nothing
-                        Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(harvestSummaries)}] {ex.GetType().Name} while enumerating files in '{currentFolder}':\r\n{ex.Message}");
+                        Debug.WriteLine($"[{nameof(CommonDirectorySource)}.{nameof(harvestSummaries)}] {ex.GetType().Name} while enumerating files in '{currentFolder}':\r\n{ex.Message}");
                     }
 #else
                     catch { }
@@ -927,7 +911,7 @@ namespace Hl7.Fhir.Specification.Source
                     // However Parallel.For may still throw, e.g. due to time out or cancel
 
                     // var isCanceled = ex.InnerExceptions.OfType<TaskCanceledException>().Any();
-                    Debug.WriteLine($"[{nameof(DirectorySource)}.{nameof(harvestSummaries)}] {aex.GetType().Name}: {aex.Message}"
+                    Debug.WriteLine($"[{nameof(CommonDirectorySource)}.{nameof(harvestSummaries)}] {aex.GetType().Name}: {aex.Message}"
                         + aex.InnerExceptions?.Select(ix => $"\r\n\t{ix.GetType().Name}: {ix.Message}"));
 
                     // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
@@ -983,7 +967,7 @@ namespace Hl7.Fhir.Specification.Source
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        result = nav.ToPoco<T>(pocoSettings);
+                        result = nav.ToPoco<T>(_inspector, pocoSettings);
 
                         // Add origin annotation
                         result?.SetOrigin(origin);

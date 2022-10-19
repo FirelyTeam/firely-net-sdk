@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Rest
 
             Resource result;
             if (patient == null)
-                result = await client.TypeOperationAsync(RestOperation.FETCH_PATIENT_RECORD, ResourceNames.PATIENT_NAME, par).ConfigureAwait(false);
+                result = await client.TypeOperationAsync(RestOperation.FETCH_PATIENT_RECORD, FhirTypeNames.PATIENT_NAME, par).ConfigureAwait(false);
             else
             {
                 var location = new ResourceIdentity(patient);

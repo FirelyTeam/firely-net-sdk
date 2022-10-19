@@ -33,10 +33,12 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Constructs a SchemaCollection which retrieves XML schemas from the default source.
         /// </summary>
-        /// <remarks>The default source is the source returned by <see cref="ZipSource.CreateValidationSource()"/>.</remarks>
+        /// <remarks>The default source is the source returned by <see cref="CommonDirectorySource.SpecificationDirectory"/>.</remarks>
         public SchemaCollection()
         {
-            var xmlSource = ZipSource.CreateValidationSource();
+            // TODO BIG_COMMON 
+            // Find a way to inject a ModelInspector here
+            var xmlSource = new CommonZipSource(null, Path.Combine(CommonDirectorySource.SpecificationDirectory, CommonZipSource.SpecificationZipFileName));
             _validationSchemaSet = new(() => compileValidationSchemas(xmlSource));
         }
 
@@ -50,7 +52,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Returns the schemas necessary to use XML validation on FHIR resources.
         /// </summary>
-        /// <remarks>The schemas will be searched for at the default location, <see cref="DirectorySource.SpecificationDirectory"/>.</remarks>
+        /// <remarks>The schemas will be searched for at the default location, <see cref="CommonDirectorySource.SpecificationDirectory"/>.</remarks>
         public static XmlSchemaSet ValidationSchemaSet => Default.MinimalSchemas;
 
 

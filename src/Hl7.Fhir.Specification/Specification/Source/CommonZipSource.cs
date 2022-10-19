@@ -6,6 +6,7 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
@@ -18,64 +19,49 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
-    /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="DirectorySource"/>.</remarks>
+    /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="CommonDirectorySource"/>.</remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
+    public class CommonZipSource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         public const string SpecificationZipFileName = "specification.zip";
 
 
-        /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
-        /// found in the path passed to this function.</summary>
-        /// <returns>A new <see cref="ZipSource"/> instance.</returns>
-        /// <param name="path">A path to a directory containing the specification.zip file.</param>
-        public static ZipSource CreateValidationSource(string path)
-        {
-            return !File.Exists(path)
-                ? throw new FileNotFoundException($"Cannot create a {nameof(ZipSource)} for the core specification: '{SpecificationZipFileName}' was not found.")
-                : new ZipSource(path);
-        }
-
-        /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip".</summary>
-        /// <returns>A new <see cref="ZipSource"/> instance.</returns>
-        public static ZipSource CreateValidationSource()
-        {
-            var path = Path.Combine(DirectorySource.SpecificationDirectory, SpecificationZipFileName);
-            return CreateValidationSource(path);
-        }
-
         private string _mask;
         // [WMR 20171102] Use Lazy<T> for thread-safe initialization
-        private readonly Lazy<DirectorySource> _lazySource;
+        private readonly Lazy<CommonDirectorySource> _lazySource;
         private readonly DirectorySourceSettings _settings;
+        private readonly ModelInspector _inspector;
 
-        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="inspector"></param>
         /// <param name="zipPath">File path to a ZIP archive.</param>
-        public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault()) { }
+        public CommonZipSource(ModelInspector inspector, string zipPath) : this(inspector, zipPath, DirectorySourceSettings.CreateDefault()) { }
 
-        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="inspector"></param>
         /// <param name="zipPath">File path to a ZIP archive.</param>
-        /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
-        public ZipSource(string zipPath, DirectorySourceSettings settings)
+        /// <param name="settings">Configuration settings for the internal <see cref="CommonDirectorySource"/> instance.</param>
+        public CommonZipSource(ModelInspector inspector, string zipPath, DirectorySourceSettings settings)
         {
             if (string.IsNullOrEmpty(zipPath)) { throw Error.ArgumentNull(nameof(zipPath)); }
+            _inspector = inspector;
             ZipPath = zipPath;
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
             _settings = settings.Clone();
-            _lazySource = new Lazy<DirectorySource>(createSource);
+            _lazySource = new Lazy<CommonDirectorySource>(createSource);
         }
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>
         public string ZipPath { get; }
 
-        /// <summary>Determines if the <see cref="ZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
-        /// <remarks>The <see cref="ZipSource"/> extracts the contents of the ZIP archive on demand.</remarks>
+        /// <summary>Determines if the <see cref="CommonZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
+        /// <remarks>The <see cref="CommonZipSource"/> extracts the contents of the ZIP archive on demand.</remarks>
         public bool IsPrepared => _lazySource.IsValueCreated;
 
         /// <summary>Gets the location of the ZIP archive extraction folder (if prepared), or <c>null</c> otherwise.</summary>
         /// <remarks>
-        /// The <see cref="ZipSource"/> extracts the contents of the ZIP archive on demand.
+        /// The <see cref="CommonZipSource"/> extracts the contents of the ZIP archive on demand.
         /// If <see cref="IsPrepared"/> equals <c>false</c>, then the extraction folder is not yet known
         /// and <see cref="ExtractPath"/> returns <c>null</c>.
         /// </remarks>
@@ -107,11 +93,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Returns a reference to the internal <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
         public IConformanceSource Source => _lazySource.Value;
 
-        /// <summary>Returns a reference to the internal <see cref="DirectorySource"/> that exposes the contents of the ZIP archive.</summary>
-        protected DirectorySource FileSource => _lazySource.Value;
+        /// <summary>Returns a reference to the internal <see cref="CommonDirectorySource"/> that exposes the contents of the ZIP archive.</summary>
+        protected CommonDirectorySource FileSource => _lazySource.Value;
 
         /// <summary>Extract the contents of the specified ZIP archive.</summary>
-        /// <remarks>The <see cref="ZipSource"/> automatically unpacks the ZIP archive on demand.</remarks>
+        /// <remarks>The <see cref="CommonZipSource"/> automatically unpacks the ZIP archive on demand.</remarks>
         public void Prepare()
         {
             // Access the Lazy<T>.Value property to force creation
@@ -173,7 +159,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Load the resource from which the specified summary was generated.
         /// <para>
-        /// The internal <see cref="DirectorySource"/> instance annotates returned resource instances
+        /// The internal <see cref="CommonDirectorySource"/> instance annotates returned resource instances
         /// with an <seealso cref="OriginAnnotation"/> that captures the value of the
         /// <see cref="ArtifactSummary.Origin"/> property.
         /// The <seealso cref="OriginAnnotationExtensions.GetOrigin(Resource)"/> extension method 
@@ -210,15 +196,15 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         /// <remarks>This is an expensive operations and should be run once. As well, it unpacks files on the
         /// file system and is not thread-safe.</remarks>
-        private DirectorySource createSource()
+        private CommonDirectorySource createSource()
         {
             if (!File.Exists(ZipPath))
             {
-                throw new FileNotFoundException($"Cannot prepare {nameof(ZipSource)}: file '{ZipPath}' was not found");
+                throw new FileNotFoundException($"Cannot prepare {nameof(CommonZipSource)}: file '{ZipPath}' was not found");
             }
 
             var zc = new ZipCacher(ZipPath, GetCacheKey());
-            var source = new DirectorySource(zc.GetContentDirectory(), _settings);
+            var source = new CommonDirectorySource(_inspector, zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
@@ -230,7 +216,7 @@ namespace Hl7.Fhir.Specification.Source
 
         private string GetCacheKey()
         {
-            Assembly assembly = typeof(ZipSource).GetTypeInfo().Assembly;
+            Assembly assembly = typeof(CommonZipSource).GetTypeInfo().Assembly;
             var versionInfo = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
             var productInfo = assembly.GetCustomAttribute<AssemblyProductAttribute>();
             return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
