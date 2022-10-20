@@ -45,19 +45,22 @@ namespace Hl7.Fhir.Model
         public bool CommonIsKnownResource(Type type) => _inspector.FindClassMapping(type) is { } mapping && mapping.IsResource;
 
         /// <summary>Determines if the specified value represents the name of a FHIR primitive data type.</summary>
-        public bool CommonIsPrimitive(string name) => _inspector.FindClassMapping(name)?.IsFhirPrimitive ?? false;
-
+        public bool CommonIsPrimitive(string name) => CommonIsPrimitive(_inspector, name);
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR primitive data type.</summary>
         public bool CommonIsPrimitive(Type type) => CommonIsPrimitive(_inspector, type);
 
         public static bool CommonIsPrimitive(ModelInspector inspector, Type type) => inspector.FindClassMapping(type)?.IsFhirPrimitive ?? false;
-        public static bool CommonIsPrimitive2(Type type) => CommonIsPrimitive(ModelInspector.ForAssembly(type.Assembly), type);
+        public static bool CommonIsPrimitive(ModelInspector inspector, string name) => inspector.FindClassMapping(name)?.IsFhirPrimitive ?? false;
+        public static bool CommonIsPrimitive2(string name) => CommonIsPrimitive(ModelInspector.ForAssembly(typeof(PrimitiveType).Assembly), name);
+        public static bool CommonIsPrimitive2(Type type) => CommonIsPrimitive(ModelInspector.ForAssembly(typeof(PrimitiveType).Assembly), type);
 
         /// <summary>Determines if the specified value represents the name of a FHIR complex data type (NOT including resources and primitives).</summary>
-        public bool CommonIsDataType(string name) => _inspector.FindClassMapping(name) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
-
+        public bool CommonIsDataType(string name) => CommonIsDataType(_inspector, name);
         /// <summary>Determines if the specified <see cref="Type"/> instance represents a FHIR complex data type (NOT including resources and primitives).</summary>
-        public bool CommonIsDataType(Type type) => _inspector.FindClassMapping(type) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
+        public bool CommonIsDataType(Type type) => CommonIsDataType(_inspector, type);
+
+        public static bool CommonIsDataType(ModelInspector inspector, string name) => inspector.FindClassMapping(name) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
+        public static bool CommonIsDataType(ModelInspector inspector, Type type) => inspector.FindClassMapping(type) is { } mapping && !mapping.IsFhirPrimitive && !mapping.IsResource;
 
         /// <summary>Determines if the specified value represents the type name of a FHIR Reference, i.e. equals "Reference".</summary>
         public bool CommonIsReference(string name) => CommonGetTypeForFhirType(name) is { } type && CommonIsReference(type);
@@ -80,8 +83,8 @@ namespace Hl7.Fhir.Model
         /// <summary>Determines if the specified value represents the canonical uri of a core FHIR Resource, FHIR Datatype or FHIR primitive.</summary>
         /// <remarks>This function does not recognize "system" types, these are the basic types that the FHIR
         /// datatypes are built upon, but are not specific to the FHIR datamodel.</remarks>
-        public bool CommonIsCoreModelType(string name) => _inspector.FindClassMapping(name) is not null;
-
+        public bool CommonIsCoreModelType(string name) => CommonIsCoreModelType(_inspector, name);
+        public static bool CommonIsCoreModelType(ModelInspector inspector, string name) => inspector.FindClassMapping(name) is not null;
         /// <summary>Determines if the specified value represents the type of a core Resource, Datatype or primitive.</summary>
         public bool CommonIsCoreModelType(Type type) => _inspector.FindClassMapping(type) is not null;
 
@@ -105,7 +108,6 @@ namespace Hl7.Fhir.Model
             type == typeof(DataType) ||
             type == typeof(PrimitiveType) ||
             type == typeof(BackboneType);
-
         public bool CommonIsCoreSuperType(string name) => CommonGetTypeForFhirType(name) is { } type && CommonIsCoreSuperType(type);
 
         public bool CommonIsInstanceTypeFor(string superclass, string subclass)
@@ -116,7 +118,12 @@ namespace Hl7.Fhir.Model
             return subType is not null && superType is not null && CommonIsInstanceTypeFor(superType, subType);
         }
 
-        public bool CommonIsInstanceTypeFor(Type superclass, Type subclass) => superclass == subclass || superclass.IsAssignableFrom(subclass);
+        public static bool CommonIsInstanceTypeFor(ModelInspector inspector, string superclass, string subclass) =>
+            CommonGetTypeForFhirType(inspector, superclass) is { } superType &&
+            CommonGetTypeForFhirType(inspector, subclass) is { } subType &&
+            CommonIsInstanceTypeFor(superType, subType);
+
+        public static bool CommonIsInstanceTypeFor(Type superclass, Type subclass) => superclass == subclass || superclass.IsAssignableFrom(subclass);
 
         public static bool CommonIsBindable(string type)
             => type switch

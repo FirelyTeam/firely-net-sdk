@@ -79,17 +79,6 @@ namespace Hl7.Fhir.Specification.Source
             return await resolver.FindStructureDefinitionAsync(url).ConfigureAwait(false);
         }
 
-        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes)"/>
-        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
-            => resolver.FindStructureDefinitionForCoreType(ModelInfoNEW.FhirTypeToFhirTypeName(type));
-
-        /// <summary>
-        /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.
-        /// </summary>
-        public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
-            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfoNEW.FhirTypeToFhirTypeName(type)).ConfigureAwait(false);
-
         /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindValueSetAsync() instead.")]
         public static ValueSet FindValueSet(this IResourceResolver source, string uri)

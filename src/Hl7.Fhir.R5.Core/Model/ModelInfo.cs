@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
 
         //    return superclass.IsAssignableFrom(subclass);
         //}
-        public static bool IsInstanceTypeFor(Type superclass, Type subclass) => _singleton.CommonIsInstanceTypeFor(superclass, subclass);
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass) => CommonIsInstanceTypeFor(superclass, subclass);
 
 
         //public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
@@ -447,20 +447,6 @@ namespace Hl7.Fhir.Model
         //{
         //    return new Canonical("http://hl7.org/fhir/StructureDefinition/" + typename);
         //}
-
-        /* Unmerged change from project 'Hl7.Fhir.R5.Core (net452)'
-        Before:
-                public static Canonical CanonicalUriForFhirCoreType(string typename) => _singleton.CommonCanonicalUriForFhirCoreType(typename);
-        After:
-                public static Canonical CanonicalUriForFhirCoreType(string typename) => CommonModelInfo.CommonCanonicalUriForFhirCoreType(typename);
-        */
-
-        /* Unmerged change from project 'Hl7.Fhir.R5.Core (netstandard2.0)'
-        Before:
-                public static Canonical CanonicalUriForFhirCoreType(string typename) => _singleton.CommonCanonicalUriForFhirCoreType(typename);
-        After:
-                public static Canonical CanonicalUriForFhirCoreType(string typename) => CommonModelInfo.CommonCanonicalUriForFhirCoreType(typename);
-        */
         public static Canonical CanonicalUriForFhirCoreType(string typename) => CommonCanonicalUriForFhirCoreType(typename);
 
         //public static Canonical CanonicalUriForFhirCoreType(Type type)

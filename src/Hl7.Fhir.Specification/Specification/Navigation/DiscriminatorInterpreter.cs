@@ -53,7 +53,8 @@ namespace Hl7.Fhir.Specification.Navigation
                 case "as": // 'as()' for backwards compatibility only
                 case "ofType":
                     var type = getSingleStringParameter(call);
-                    if (!ModelInfoNEW.IsCoreModelType(type))
+
+                    if (Root.ModelInspector is not null && !CommonModelInfo.CommonIsCoreModelType(Root.ModelInspector, type))
                         throw new DiscriminatorFormatException($"Type '{type}' passed to {call.FunctionName}() is not a known FHIR type.");
                     return parentSet.OfType(type);
                 default:

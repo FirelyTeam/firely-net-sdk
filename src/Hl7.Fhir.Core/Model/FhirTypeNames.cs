@@ -7,5 +7,7 @@
         public const string SIMPLEQUANTITY_NAME = "SimpleQuantity";
         public const string CONCEPTMAP_NAME = "ConceptMap";
         public const string NAMINGSYSTEM_NAME = "NamingSystem";
+        public const string DOMAINRESOURCE_NAME = "DomainResource";
+        public const string REFERENCE_NAME = "Reference";
     }
 }

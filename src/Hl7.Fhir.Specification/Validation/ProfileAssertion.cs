@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support;
@@ -27,15 +28,17 @@ namespace Hl7.Fhir.Validation
         }
 
         private readonly string _path;
+        private readonly ModelInspector _inspector;
         private readonly Func<string, StructureDefinition> _resolver;
         private readonly StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
         private readonly ResolutionContext _resolutionContext;
         private readonly List<ProfileEntry> _allEntries = new List<ProfileEntry>();
 
-        public ProfileAssertion(string path, Func<string, StructureDefinition> resolver,
+        public ProfileAssertion(string path, ModelInspector inspector, Func<string, StructureDefinition> resolver,
             StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper = null, ResolutionContext resolutionContext = ResolutionContext.Elsewhere)
         {
             _path = path;
+            _inspector = inspector;
             _resolver = resolver;
             _typeNameMapper = typeNameMapper;
             _resolutionContext = resolutionContext;
@@ -278,11 +281,11 @@ namespace Hl7.Fhir.Validation
             if (superclass == subclass)
                 return true;
 
-            if (ModelInfoNEW.IsInstanceTypeFor(superclass, subclass))
+            if (CommonModelInfo.CommonIsInstanceTypeFor(_inspector, superclass, subclass))
                 return true;
             else if (superclass == typeof(Resource).Name &&
                 _typeNameMapper != null && _typeNameMapper(subclass, out string dummy) &&
-                !(ModelInfoNEW.IsDataType(subclass) || ModelInfoNEW.IsPrimitive(subclass)))
+                !(CommonModelInfo.CommonIsDataType(_inspector, subclass) || CommonModelInfo.CommonIsPrimitive(_inspector, subclass)))
                 return true;
             return false;
         }

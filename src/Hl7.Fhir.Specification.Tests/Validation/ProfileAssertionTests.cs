@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = await _asyncResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.ValueSet);
 
-            var assertion = new ProfileAssertion("Patient.name[0]", resolve);
+            var assertion = new ProfileAssertion("Patient.name[0]", ModelInfo.ModelInspector, resolve);
             assertion.SetInstanceType(FHIRAllTypes.ValueSet.GetLiteral());
             assertion.SetDeclaredType(FHIRAllTypes.ValueSet.GetLiteral());
             assertion.AddStatedProfile("http://hl7.org/fhir/StructureDefinition/shareablevalueset");
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void NormalElement()
         {
-            var assertion = new ProfileAssertion("Patient.name[0]", resolve);
+            var assertion = new ProfileAssertion("Patient.name[0]", ModelInfo.ModelInspector, resolve);
             assertion.SetDeclaredType(FHIRAllTypes.HumanName.GetLiteral());
 
             Assert.True(assertion.Validate().Success);
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void QuantityElement()
         {
-            var assertion = new ProfileAssertion("Patient.name[0]", resolve);
+            var assertion = new ProfileAssertion("Patient.name[0]", ModelInfo.ModelInspector, resolve);
             assertion.SetInstanceType(FHIRAllTypes.Age.GetLiteral());
             assertion.SetDeclaredType(FHIRAllTypes.Quantity.GetLiteral());
 
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ProfiledElement()
         {
-            var assertion = new ProfileAssertion("Patient.identifier[0]", resolve);
+            var assertion = new ProfileAssertion("Patient.identifier[0]", ModelInfo.ModelInspector, resolve);
             assertion.SetDeclaredType("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
             Assert.True(assertion.Validate().Success);
 
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ContainedResource()
         {
-            var assertion = new ProfileAssertion("Bundle.entry.resource[0]", resolve);
+            var assertion = new ProfileAssertion("Bundle.entry.resource[0]", ModelInfo.ModelInspector, resolve);
             assertion.SetDeclaredType(FHIRAllTypes.Resource.GetLiteral());
             Assert.True(assertion.Validate().Success);
 
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ResourceWithStatedProfiles()
         {
-            var assertion = new ProfileAssertion("Observation", resolve);
+            var assertion = new ProfileAssertion("Observation", ModelInfo.ModelInspector, resolve);
             assertion.SetDeclaredType(FHIRAllTypes.Observation.GetLiteral());
 
             Assert.True(assertion.Validate().Success);

@@ -30,6 +30,7 @@
 
 #nullable enable
 
+
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -39,33 +40,12 @@ namespace Hl7.Fhir.Model
 {
     public class ModelInfoNEW
     {
-
-        #region TODO
-        public static bool IsInstanceTypeFor(string superclass, string subclass) => true;
-        public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass) => true;
-        public static FHIRAllTypes? FhirTypeNameToFhirType(string typeName) => null;
-
-
-        private static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
-            = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
-
-        private static readonly Dictionary<FHIRAllTypes, string> _fhirTypeToFhirTypeName
-            = _fhirTypeNameToFhirType.ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
-
-        public static string? FhirTypeToFhirTypeName(FHIRAllTypes type) => _fhirTypeToFhirTypeName.TryGetValue(type, out var result) ? result : null;
-
-
-        public static ResourceType? FhirTypeNameToResourceType(string typeName) => null;
-
-        public static bool IsDataType(string name) => true;
-
-        public static bool IsPrimitive(string name) => true;
-
-        public static bool IsCoreModelType(string name) => true;
-        #endregion
+        private static readonly Dictionary<string, ResourceType> _fhirTypeNameToResourceType
+            = Enum.GetValues(typeof(ResourceType)).OfType<ResourceType>().ToDictionary(type => type.GetLiteral());
 
         // Used in ArtifactSummary. Do we still want to support that?
         public static bool IsConformanceResource(string name) => true;
+        public static ResourceType? FhirTypeNameToResourceType(string typeName) => _fhirTypeNameToResourceType.TryGetValue(typeName, out var result) ? result : null;
     }
 }
 #nullable restore

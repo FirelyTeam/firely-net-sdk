@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Tests
             var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
             var data = SourceNode.Node("active").ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var result = _validator.Validate(data, boolSd);
+            var result = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             Assert.False(result.Success);
             Assert.Contains("must not be empty", result.ToString());
         }
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Specification.Tests
                             SourceNode.Valued("valueInteger", "4")))
                             .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var report = _validator.Validate(data, boolSd);
+            var report = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Specification.Tests
                           SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor")))
                        .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var report = _validator.Validate(data, boolSd);
+            var report = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // ext-1, Extension.value[x] cardinality [1..1]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
 
-            var report = _validator.Validate(data, boolSd);
+            var report = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new JProperty("unknown", "bla"));
             var patTE = FhirJsonNode.Create(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
-            var report = _validator.Validate(patTE);
+            var report = _validator.Validate(patTE, ModelInfo.ModelInspector);
             Assert.Contains("deceasedInteger", report.ToString());
         }
 
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Specification.Tests
             var patJ = "{ \"resourceType\": \"Patient\", \"active\" : \"\" }";
             var patTE = FhirJsonNode.Parse(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
-            var report = _validator.Validate(patTE);
+            var report = _validator.Validate(patTE, ModelInfo.ModelInspector);
             Assert.DoesNotContain("Internal logic", report.ToString());
         }
 
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Specification.Tests
                         SourceNode.Valued("display", "Outpatient Note"))),
                 SourceNode.Valued("date", "2005-12-24T09:43:41"));
 
-            var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()));
+            var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()), ModelInfo.ModelInspector);
             Assert.False(report.Success);
             Assert.Equal(2, report.Errors); // timezone in 'date' is missing and mandatory element 'content' is missing
             Assert.Equal(0, report.Warnings);
