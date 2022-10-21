@@ -56,13 +56,13 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
-        public void ResolveByUriFromZip()
+        public void ResolveByUriFromFhirPackage()
         {
-            var extDefn = source.ResolveByUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
+            var extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/data-absent-reason");
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
-            extDefn = source.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Patient");
+            extDefn = source.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Patient");
             Assert.IsNotNull(extDefn);
             Assert.IsInstanceOfType(extDefn, typeof(StructureDefinition));
 
@@ -197,26 +197,26 @@ namespace Hl7.Fhir.Specification.Tests
 
             // Verify that the Load event is fired on the initial load
             const string resourceUri = "http://hl7.org/fhir/StructureDefinition/Patient";
-            var resource = await src.ResolveByUriAsync(resourceUri);
+            var resource = await src.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(resourceUri, eventArgs.Url);
             Assert.AreEqual(resource, eventArgs.Resource);
 
             // Verify that the Load event is not fired on subsequent load
             eventArgs = null;
-            resource = await src.ResolveByUriAsync(resourceUri);
+            resource = await src.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNull(eventArgs);
 
             // Verify that we can remove the cache entry
-            var result = src.InvalidateByUri(resourceUri);
+            var result = src.InvalidateByCanonicalUri(resourceUri);
             Assert.IsTrue(result);
 
             // Verify that the cache entry has been removed
-            result = src.InvalidateByUri(resourceUri);
+            result = src.InvalidateByCanonicalUri(resourceUri);
             Assert.IsFalse(result);
 
             // Verify that the Load event is fired again on the next load
-            var resource2 = await src.ResolveByUriAsync(resourceUri);
+            var resource2 = await src.ResolveByCanonicalUriAsync(resourceUri);
             Assert.IsNotNull(eventArgs);
             Assert.AreEqual(resourceUri, eventArgs.Url);
             Assert.AreEqual(resource2, eventArgs.Resource);
