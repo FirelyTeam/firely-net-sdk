@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 
@@ -268,7 +269,7 @@ namespace Hl7.Fhir.Rest
                     case CodeableConcept codeableConcept:
                         return codeableConcept.ToToken();
                     default:
-                        if (CommonModelInfo.CommonIsPrimitive2(parameter.Value.GetType()))
+                        if (ModelInfoExtensions.IsPrimitive(parameter.Value.GetType()))
                         {
                             return parameter.Value.ToString();
                         }

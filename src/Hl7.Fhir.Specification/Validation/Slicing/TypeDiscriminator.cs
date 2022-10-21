@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.Model;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation
@@ -26,6 +25,6 @@ namespace Hl7.Fhir.Validation
         // This discriminator matches if the type in the instance is *compatible* with ANY of the 
         // possible multiple types in the ElementDefinition.Type.Code (since Type repeats).
         protected override bool MatchInternal(ITypedElement instance, ValidationState _) =>
-            Types.Any(type => CommonModelInfo.CommonIsInstanceTypeFor(Validator.modelInspector, type, instance.InstanceType));
+            Types.Any(type => Validator.modelInspector.IsInstanceTypeFor(type, instance.InstanceType));
     }
 }

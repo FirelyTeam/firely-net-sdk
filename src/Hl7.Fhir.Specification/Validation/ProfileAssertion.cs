@@ -10,6 +10,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -281,11 +282,11 @@ namespace Hl7.Fhir.Validation
             if (superclass == subclass)
                 return true;
 
-            if (CommonModelInfo.CommonIsInstanceTypeFor(_inspector, superclass, subclass))
+            if (_inspector.IsInstanceTypeFor(superclass, subclass))
                 return true;
             else if (superclass == typeof(Resource).Name &&
                 _typeNameMapper != null && _typeNameMapper(subclass, out string dummy) &&
-                !(CommonModelInfo.CommonIsDataType(_inspector, subclass) || CommonModelInfo.CommonIsPrimitive(_inspector, subclass)))
+                !(_inspector.IsDataType(subclass) || _inspector.IsPrimitive(subclass)))
                 return true;
             return false;
         }
@@ -306,7 +307,7 @@ namespace Hl7.Fhir.Validation
                     var result = ResolvedStatedProfiles.ToList();
                     var bases = ResolvedStatedProfiles.Where(sp => sp.BaseDefinition != null).Select(sp => sp.BaseDefinition).Distinct().ToList();
                     bases.AddRange(ResolvedStatedProfiles.Where(sp => sp.Type != null && sp.Derivation == StructureDefinition.TypeDerivationRule.Constraint)
-                        .Select(sp => CommonModelInfo.CommonCanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
+                        .Select(sp => ModelInfoExtensions.CanonicalUriForFhirCoreType(sp.Type).Value).Distinct());
                     result.RemoveAll(r => bases.Contains(r.Url));
                     _lastMinimalSet = result;
                 }

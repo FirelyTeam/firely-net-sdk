@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = CommonModelInfo.GetCommonFhirTypeNameForType(_inspector, typeof(TResource));
+            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = CommonModelInfo.GetCommonFhirTypeNameForType(_inspector, typeof(TResource));
+            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
-            string collection = CommonModelInfo.GetCommonFhirTypeNameForType(_inspector, typeof(TResource));
+            string collection = _inspector.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
 
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Rest
 
             // [WMR 20160421] GetResourceNameForType is obsolete
             // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            var typeName = CommonModelInfo.GetCommonFhirTypeNameForType(_inspector, typeof(TResource));
+            var typeName = _inspector.GetFhirTypeNameForType(typeof(TResource));
 
             return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet);
         }

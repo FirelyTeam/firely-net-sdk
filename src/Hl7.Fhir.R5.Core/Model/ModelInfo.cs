@@ -39,13 +39,8 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class ModelInfo : CommonModelInfo
+    public partial class ModelInfo
     {
-        public ModelInfo() : base(ModelInspector) { }
-
-        private static ModelInfo _singleton = new();
-
-
         #region FHIRAllType functions
         private static readonly Dictionary<string, FHIRAllTypes> _fhirTypeNameToFhirType
             = Enum.GetValues(typeof(FHIRAllTypes)).OfType<FHIRAllTypes>().ToDictionary(type => type.GetLiteral());
@@ -79,53 +74,53 @@ namespace Hl7.Fhir.Model
 
         #endregion
 
-        /// <inheritdoc cref="CommonModelInfo.CommonGetTypeForFhirType(string)"/>
-        public static Type? GetTypeForFhirType(string name) => _singleton.CommonGetTypeForFhirType(name);
+        /// <inheritdoc cref="IModelInfo.GetTypeForFhirType(string)"/>
+        public static Type? GetTypeForFhirType(string name) => ModelInspector.GetTypeForFhirType(name);
 
-        /// <inheritdoc cref="CommonModelInfo.GetCommonFhirTypeNameForType(Type)"/>
-        public static string? GetFhirTypeNameForType(Type type) => _singleton.GetCommonFhirTypeNameForType(type);
+        /// <inheritdoc cref="IModelInfo.GetFhirTypeNameForType(Type)"/>
+        public static string? GetFhirTypeNameForType(Type type) => ModelInspector.GetFhirTypeNameForType(type);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsKnownResource(string)"/>
-        public static bool IsKnownResource(string name) => _singleton.CommonIsKnownResource(name);
+        /// <inheritdoc cref="IModelInfo.IsKnownResource(string)"/>
+        public static bool IsKnownResource(string name) => ModelInspector.IsKnownResource(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsKnownResource(Type)"/>
-        public static bool IsKnownResource(Type type) => _singleton.CommonIsKnownResource(type);
+        /// <inheritdoc cref="IModelInfo.IsKnownResource(Type)"/>
+        public static bool IsKnownResource(Type type) => ModelInspector.IsKnownResource(type);
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a known FHIR resource.</summary>
         public static bool IsKnownResource(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name && IsKnownResource(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsPrimitive(string)"/>
-        public static bool IsPrimitive(string name) => _singleton.CommonIsPrimitive(name);
+        /// <inheritdoc cref="IModelInfo.IsPrimitive(string)"/>
+        public static bool IsPrimitive(string name) => ModelInspector.IsPrimitive(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsPrimitive(Type)"/>
-        public static bool IsPrimitive(Type type) => _singleton.CommonIsPrimitive(type);
+        /// <inheritdoc cref="IModelInfo.IsPrimitive(Type)"/>
+        public static bool IsPrimitive(Type type) => ModelInspector.IsPrimitive(type);
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR primitive data type.</summary>
         public static bool IsPrimitive(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name && IsPrimitive(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsDataType(string)"/>
-        public static bool IsDataType(string name) => _singleton.CommonIsDataType(name);
+        /// <inheritdoc cref="IModelInfo.IsDataType(string)"/>
+        public static bool IsDataType(string name) => ModelInspector.IsDataType(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsDataType(Type)"/>
-        public static bool IsDataType(Type type) => _singleton.CommonIsDataType(type);
+        /// <inheritdoc cref="IModelInfo.IsDataType(Type)"/>
+        public static bool IsDataType(Type type) => ModelInspector.IsDataType(type);
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR complex data type (NOT including resources and primitives).</summary>
         public static bool IsDataType(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name && IsDataType(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsReference(string)"/>
-        public static bool IsReference(string name) => _singleton.CommonIsReference(name);
+        /// <inheritdoc cref="IModelInfo.IsReference(string)"/>
+        public static bool IsReference(string name) => ModelInspector.IsReference(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsReference(Type)"/>
-        public static bool IsReference(Type type) => _singleton.CommonIsReference(type);
+        /// <inheritdoc cref="IModelInfo.IsReference(Type)"/>
+        public static bool IsReference(Type type) => ModelInspector.IsReference(type);
 
         /// <summary>Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR Reference type.</summary>
         public static bool IsReference(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name && IsReference(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsConformanceResource(Type)"/>
-        public static bool IsConformanceResource(Type type) => _singleton.CommonIsConformanceResource(type);
+        /// <inheritdoc cref="IModelInfo.IsConformanceResource(Type)"/>
+        public static bool IsConformanceResource(Type type) => ModelInspector.IsConformanceResource(type);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsConformanceResource(string)"/>
-        public static bool IsConformanceResource(string name) => _singleton.CommonIsConformanceResource(name);
+        /// <inheritdoc cref="IModelInfo.IsConformanceResource(string)"/>
+        public static bool IsConformanceResource(string name) => ModelInspector.IsConformanceResource(name);
 
         /// <summary>
         /// Determines if the specified <see cref="FHIRAllTypes"/> value represents a FHIR conformance resource type
@@ -139,14 +134,14 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public static bool IsConformanceResource(ResourceType? type) => type.HasValue && ResourceTypeToFhirTypeName(type.Value) is { } name && IsConformanceResource(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsCoreModelType(string)"/>
-        public static bool IsCoreModelType(string name) => _singleton.CommonIsCoreModelType(name);
+        /// <inheritdoc cref="IModelInfo.IsCoreModelType(string)"/>
+        public static bool IsCoreModelType(string name) => ModelInspector.IsCoreModelType(name);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsCoreModelType(Type)"/>
-        public static bool IsCoreModelType(Type type) => _singleton.CommonIsCoreModelType(type);
+        /// <inheritdoc cref="IModelInfo.IsCoreModelType(Type)"/>
+        public static bool IsCoreModelType(Type type) => ModelInspector.IsCoreModelType(type);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsCoreModelTypeUri(Uri)"/>
-        public static bool IsCoreModelTypeUri(Uri uri) => _singleton.CommonIsCoreModelTypeUri(uri);
+        /// <inheritdoc cref="IModelInfo.IsCoreModelTypeUri(Uri)"/>
+        public static bool IsCoreModelTypeUri(Uri uri) => ModelInspector.IsCoreModelTypeUri(uri);
 
         /// <summary>
         /// Returns whether the type has subclasses in the core spec
@@ -165,13 +160,13 @@ namespace Hl7.Fhir.Model
                 type == FHIRAllTypes.BackboneElement;
         }
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsCoreSuperType(Type)"/>
-        public static bool IsCoreSuperType(Type type) => CommonIsCoreSuperType(type);
+        /// <inheritdoc cref="IModelInfo.IsCoreSuperType(Type)"/>
+        public static bool IsCoreSuperType(Type type) => ModelInspector.IsCoreSuperType(type);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsCoreSuperType(string)"/>
-        public static bool IsCoreSuperType(string name) => _singleton.CommonIsCoreSuperType(name);
+        /// <inheritdoc cref="IModelInfo.IsCoreSuperType(string)"/>
+        public static bool IsCoreSuperType(string name) => ModelInspector.IsCoreSuperType(name);
 
-        public static bool IsBindable(string type) => CommonIsBindable2(type);
+        public static bool IsBindable(string type) => ModelInspector.IsBindable(type);
 
 
         public static bool CheckMinorVersionCompatibility(string externalVersion)
@@ -207,11 +202,11 @@ namespace Hl7.Fhir.Model
             }
         }
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsInstanceTypeFor(string, string)"/>
-        public static bool IsInstanceTypeFor(string superclass, string subclass) => _singleton.CommonIsInstanceTypeFor(superclass, subclass);
+        /// <inheritdoc cref="IModelInfo.IsInstanceTypeFor(string, string)"/>
+        public static bool IsInstanceTypeFor(string superclass, string subclass) => ModelInspector.IsInstanceTypeFor(superclass, subclass);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonIsInstanceTypeFor(Type, Type)"/>
-        public static bool IsInstanceTypeFor(Type superclass, Type subclass) => CommonIsInstanceTypeFor(superclass, subclass);
+        /// <inheritdoc cref="IModelInfo.IsInstanceTypeFor(Type, Type)"/>
+        public static bool IsInstanceTypeFor(Type superclass, Type subclass) => ModelInspector.IsInstanceTypeFor(superclass, subclass);
 
         public static bool IsInstanceTypeFor(FHIRAllTypes superclass, FHIRAllTypes subclass)
         {
@@ -220,11 +215,11 @@ namespace Hl7.Fhir.Model
             return superclassname is not null && subclassname is not null && IsInstanceTypeFor(superclassname, subclassname);
         }
 
-        /// <inheritdoc cref="CommonModelInfo.CommonCanonicalUriForFhirCoreType(string)"/>
-        public static Canonical CanonicalUriForFhirCoreType(string typename) => CommonCanonicalUriForFhirCoreType(typename);
+        /// <inheritdoc cref="IModelInfo.CanonicalUriForFhirCoreType(string)"/>
+        public static Canonical CanonicalUriForFhirCoreType(string typename) => Hl7.Fhir.Support.Poco.Model.ModelInfoExtensions.CanonicalUriForFhirCoreType(typename);
 
-        /// <inheritdoc cref="CommonModelInfo.CommonCanonicalUriForFhirCoreType(Type)"/>
-        public static Canonical? CanonicalUriForFhirCoreType(Type type) => _singleton.CommonCanonicalUriForFhirCoreType(type);
+        /// <inheritdoc cref="IModelInfo.CanonicalUriForFhirCoreType(Type)"/>
+        public static Canonical? CanonicalUriForFhirCoreType(Type type) => ModelInspector.CanonicalUriForFhirCoreType(type);
 
         public static Canonical? CanonicalUriForFhirCoreType(FHIRAllTypes type) => FhirTypeToFhirTypeName(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;
 

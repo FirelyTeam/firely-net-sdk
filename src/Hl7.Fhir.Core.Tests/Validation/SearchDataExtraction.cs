@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Test.Validation
             }
         }
 
-        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
+        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, SearchParamDefinition index, string key)
         {
             IEnumerable<Base> results;
             try

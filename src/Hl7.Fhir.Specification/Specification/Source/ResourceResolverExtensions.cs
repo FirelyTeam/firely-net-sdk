@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
-            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : CommonModelInfo.CommonCanonicalUriForFhirCoreType(typename).Value;
+            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfoExtensions.CanonicalUriForFhirCoreType(typename).Value;
             return resolver.FindStructureDefinition(url);
         }
 
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Specification.Source
         public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
         {
             var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename :
-                CommonModelInfo.CommonCanonicalUriForFhirCoreType(typename).Value;
+                ModelInfoExtensions.CanonicalUriForFhirCoreType(typename).Value;
             return await resolver.FindStructureDefinitionAsync(url).ConfigureAwait(false);
         }
 
@@ -103,7 +104,7 @@ namespace Hl7.Fhir.Specification.Source
 
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
         {
-            var type = CommonModelInfo.GetCommonFhirTypeNameForType2(typeof(T));
+            var type = ModelInfoExtensions.GetFhirTypeNameForType(typeof(T));
 
             if (type != null)
             {

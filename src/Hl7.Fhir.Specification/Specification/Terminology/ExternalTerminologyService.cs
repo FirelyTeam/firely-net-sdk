@@ -10,6 +10,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Threading.Tasks;
@@ -44,7 +45,7 @@ namespace Hl7.Fhir.Specification.Terminology
         }
 
         private Uri constructUri<T>(string id) where T : Resource =>
-            ResourceIdentity.Build(CommonModelInfo.GetCommonFhirTypeNameForType2(typeof(T)), id);
+            ResourceIdentity.Build(ModelInfoExtensions.GetFhirTypeNameForType(typeof(T)), id);
 
         ///<inheritdoc />
         public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)

@@ -39,6 +39,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -550,7 +551,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(elem.IsRootElement());
                 if (!string.IsNullOrEmpty(elem.SliceName))
                 {
-                    if (sd.Url != CommonModelInfo.CommonCanonicalUriForFhirCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
+                    if (sd.Url != ModelInfoExtensions.CanonicalUriForFhirCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
                     {
                         addIssueInvalidSliceNameOnRootElement(elem, sd);
                     }

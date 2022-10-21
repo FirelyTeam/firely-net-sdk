@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Support.Poco.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,7 +47,7 @@ namespace Hl7.Fhir.Validation
                 if (_typeNameMapper != null && _typeNameMapper(instance.InstanceType, out string canonicalUri))
                     _profiles.SetInstanceType(canonicalUri);
                 else
-                    _profiles.SetInstanceType(CommonModelInfo.CommonCanonicalUriForFhirCoreType(instance.InstanceType));
+                    _profiles.SetInstanceType(ModelInfoExtensions.CanonicalUriForFhirCoreType(instance.InstanceType));
             }
             if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
 
@@ -54,7 +55,7 @@ namespace Hl7.Fhir.Validation
             _profiles.AddStatedProfile(instance.Children("meta").Children("profile").Select(p => p.Value).Cast<string>());
 
             //Almost identically, extensions can declare adherance to a profile using the 'url' attribute
-            if (declaredTypeProfile == CommonModelInfo.CommonCanonicalUriForFhirCoreType(FhirTypeNames.EXTENSION_NAME))
+            if (declaredTypeProfile == ModelInfoExtensions.CanonicalUriForFhirCoreType(FhirTypeNames.EXTENSION_NAME))
             {
                 if (instance.Children("url").FirstOrDefault()?.Value is string urlDeclaration
                     && urlDeclaration.StartsWith("http://", StringComparison.OrdinalIgnoreCase))

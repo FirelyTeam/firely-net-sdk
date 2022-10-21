@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Validation
             {
                 //find out what type is present in the instance data
                 // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                var isCoreType = CommonModelInfo.CommonIsCoreModelType(validator.modelInspector, instance.InstanceType);
+                var isCoreType = validator.modelInspector.IsCoreModelType(instance.InstanceType);
 
                 if (choices.Count() > 1)
                 {
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Validation
                         // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
                         // any.
                         var applicableChoices = typeRefs.Where(tr => !tr.Code.StartsWith("http:"))
-                                    .Where(tr => CommonModelInfo.CommonIsInstanceTypeFor(validator.modelInspector, tr.Code, instance.InstanceType));
+                                    .Where(tr => validator.modelInspector.IsInstanceTypeFor(tr.Code, instance.InstanceType));
 
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Validation
                     if (isCoreType)
                     {
                         // Check if instance is of correct type
-                        var isCorrectType = CommonModelInfo.CommonIsInstanceTypeFor(validator.modelInspector, choices.Single(), instance.InstanceType);
+                        var isCorrectType = validator.modelInspector.IsInstanceTypeFor(choices.Single(), instance.InstanceType);
                         if (!isCorrectType)
                         {
                             validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceType}') is not of the expected type ('{choices.Single()}')",

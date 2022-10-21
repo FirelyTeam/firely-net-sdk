@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support.Poco.Model;
 using System;
 
 namespace Hl7.Fhir.Specification.Navigation
@@ -117,7 +118,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 // Primitive types start with a lower-case character
                 var altTypeName = Utility.StringExtensions.Uncapitalize(typeName);
-                if (CommonModelInfo.CommonIsPrimitive2(altTypeName)) { return altTypeName; }
+                if (ModelInfoExtensions.IsPrimitive(altTypeName)) { return altTypeName; }
                 return typeName;
 
             }
