@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
                 // [MV 20220803] Remove Binding when the element has no bindable type
-                if (snap.Binding is not null && !snap.Type.Any(t => CommonModelInfo.CommonIsBindable(t.Code)))
+                if (snap.Binding is not null && !snap.Type.Any(t => CommonModelInfo.CommonIsBindable2(t.Code)))
                 {
                     snap.Binding = null;
                 }

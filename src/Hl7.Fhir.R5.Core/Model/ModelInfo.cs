@@ -361,6 +361,8 @@ namespace Hl7.Fhir.Model
         //    return type == FHIRAllTypes.SimpleQuantity || type == FHIRAllTypes.MoneyQuantity;
         //}
 
+        public static bool IsBindable(string type) => CommonIsBindable2(type);
+
         //[Obsolete("Profiled quantities have been removed from the POCO model and will not appear in data anymore.")]
         //public static bool IsProfiledQuantity(string type)
         //{

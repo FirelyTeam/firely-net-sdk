@@ -125,13 +125,9 @@ namespace Hl7.Fhir.Model
 
         public static bool CommonIsInstanceTypeFor(Type superclass, Type subclass) => superclass == subclass || superclass.IsAssignableFrom(subclass);
 
-        public static bool CommonIsBindable(string type)
-            => type switch
-            {
-                // This is the fixed list, for all FHIR versions
-                "code" or "Coding" or "CodeableConcept" or "Quantity" or "string" or "uri" or "Extension" => true,
-                _ => false,
-            };
+        public bool CommonIsBindable(string type) => CommonIsBindable(_inspector, type);
+        public static bool CommonIsBindable(ModelInspector inspector, string type) => inspector.FindClassMapping(type) is { } mapping ? mapping.IsBindable : false;
+        public static bool CommonIsBindable2(string type) => CommonIsBindable(ModelInspector.ForAssembly(typeof(PrimitiveType).Assembly), type);
 
         public static Canonical CommonCanonicalUriForFhirCoreType(string typename) => new("http://hl7.org/fhir/StructureDefinition/" + typename);
 
