@@ -99,6 +99,9 @@ namespace Hl7.Fhir.Model
                 && FhirCoreProfileBaseUri.IsBaseOf(uri)
                 && CommonIsCoreModelType(FhirCoreProfileBaseUri.MakeRelativeUri(uri).ToString());
 
+        /// <summary>
+        /// Returns whether the type has subclasses in the core spec.
+        /// </summary>
         public static bool CommonIsCoreSuperType(Type type) =>
             type == typeof(Base) ||
             type == typeof(Resource) ||
@@ -108,6 +111,10 @@ namespace Hl7.Fhir.Model
             type == typeof(DataType) ||
             type == typeof(PrimitiveType) ||
             type == typeof(BackboneType);
+
+        /// <summary>
+        /// Returns whether the value has subclasses in the core spec.
+        /// </summary>
         public bool CommonIsCoreSuperType(string name) => CommonGetTypeForFhirType(name) is { } type && CommonIsCoreSuperType(type);
 
         public bool CommonIsInstanceTypeFor(string superclass, string subclass)
