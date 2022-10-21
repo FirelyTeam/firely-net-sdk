@@ -19,22 +19,22 @@ namespace Hl7.Fhir.Validation
     {
         public static OperationOutcome Validate(this Validator me, Base instance)
         {
-            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector);
+            return me.Validate(instance.ToTypedElement(ModelInfo.ModelInspector), ModelInfo.ModelInspector);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, params string[] definitionUri)
         {
-            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector, definitionUri);
+            return me.Validate(instance.ToTypedElement(ModelInfo.ModelInspector), ModelInfo.ModelInspector, definitionUri);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, StructureDefinition structureDefinition)
         {
-            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector, structureDefinition);
+            return me.Validate(instance.ToTypedElement(ModelInfo.ModelInspector), ModelInfo.ModelInspector, structureDefinition);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector, structureDefinitions);
+            return me.Validate(instance.ToTypedElement(ModelInfo.ModelInspector), ModelInfo.ModelInspector, structureDefinitions);
         }
     }
 }

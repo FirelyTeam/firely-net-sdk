@@ -14,6 +14,9 @@ namespace Hl7.Fhir.ElementModel
     public static class TypedElementExtensions
     {
         public static ITypedElement ToTypedElement(this Base @base, string rootName = null) =>
-            new PocoElementNode(ModelInspector.ForAssembly(@base.GetType().Assembly), @base, rootName: rootName);
+            @base.ToTypedElement(ModelInspector.ForAssembly(@base.GetType().Assembly), rootName);
+
+        public static ITypedElement ToTypedElement(this Base @base, ModelInspector inspector, string rootName = null) =>
+            new PocoElementNode(inspector, @base, rootName: rootName);
     }
 }
