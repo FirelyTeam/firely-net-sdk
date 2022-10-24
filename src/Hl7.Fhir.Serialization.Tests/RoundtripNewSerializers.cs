@@ -69,14 +69,35 @@ namespace Hl7.Fhir.Serialization.Tests
             var intermediate2Path = Path.Combine(targetDir, intermediate2Folder);
             createEmptyDir(intermediate2Path);
 
-            var xmlSerializer = new FhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+            var xmlSerializer = new FhirXmlPocoSerializer(Specification.FhirRelease.R4);
             var xmlDeserializer = new FhirXmlPocoDeserializer(typeof(ModelInfo).Assembly);
             var jsonOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
 
-            files.ForEach(f => objects.Add(new object[] { f, xmlSerializer, xmlDeserializer, jsonOptions }));
+            files.Where(f => !SkipFile(f)).ToList()
+                 .ForEach(f => objects.Add(new object[] { f, xmlSerializer, xmlDeserializer, jsonOptions }));
 
             return objects;
         }
+        static bool SkipFile(string file)
+        {
+            if (file.Contains("examplescenario-example"))
+                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
+            if (file.Contains("json-edge-cases"))
+                return true; // known issues with binary contained resource having content, not data
+            if (file.Contains("observation-decimal"))
+                return true; // exponential number example is tooo big (and too small)
+            if (file.Contains("package-min-ver"))
+                return true; // not a resource
+            if (file.Contains("profiles-other"))
+                return true;
+            if (file.Contains("profiles-resources"))
+                return true;
+            if (file.Contains("valuesets"))
+                return true;
+
+            return false;
+        }
+
 
         public static string GetTestDisplayNames(MethodInfo methodInfo, object[] values)
         {
