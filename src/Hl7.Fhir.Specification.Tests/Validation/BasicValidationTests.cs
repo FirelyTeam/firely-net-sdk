@@ -1014,8 +1014,12 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ValidateAStructureDefinition()
         {
-            var sd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
-            var result = _validator.Validate(sd);
+            // This test does not work with Fhir Package as a ResourceResolver, because the definition of `structuredefinition-fhir-type` is not right? See also 
+            // this discussion on Zulip: https://chat.fhir.org/#narrow/stream/179280-fhir.2Finfrastructure-wg/topic/Value.20of.20Extension.20.60structuredefinition-fhir-type.60
+            var source = ZipSource.CreateValidationSource();
+            var sd = (StructureDefinition)(await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
+            var validator = new Validator(new ValidationSettings { ResourceResolver = source });
+            var result = validator.Validate(sd);
             Assert.True(result.Success);
         }
 
@@ -1208,13 +1212,18 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ValidatePrimitiveWithEmptyTypeElement()
         {
-            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Code);
+            // This test does not work with Fhir Package as a ResourceResolver, because the definition of `structuredefinition-fhir-type` is not right? See also 
+            // this discussion on Zulip: https://chat.fhir.org/#narrow/stream/179280-fhir.2Finfrastructure-wg/topic/Value.20of.20Extension.20.60structuredefinition-fhir-type.60
+
+            var source = ZipSource.CreateValidationSource();
+            var def = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Code);
             var elem = def.Snapshot.Element.Where(e => e.Path == "code.value").Single();
             var data = elem.ToTypedElement();
 
             Assert.True(data.IsBoolean("type.select(code&profile&targetProfile).isDistinct()", true));
 
-            var result = _validator.Validate(def);
+            var validator = new Validator(new ValidationSettings { ResourceResolver = source });
+            var result = validator.Validate(def);
             Assert.True(result.Success, result.ToString());
         }
 
