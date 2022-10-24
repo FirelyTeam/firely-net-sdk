@@ -632,7 +632,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Gracefully handle non-distinct type codes; do not expand
 
                 // [MS 20210614] When we can't find a CommonTypeCode assume "Element" for .id and .extension
-                var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();
+                var distinctTypeCode = defn.CommonTypeCode() ?? FhirTypeNames.ELEMENT_NAME;
 
                 // Different profiles for common base type => expand the common base type (w/o custom profile)
                 // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };

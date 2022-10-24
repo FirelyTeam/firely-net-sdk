@@ -168,6 +168,7 @@ namespace Hl7.Fhir.Model
 
         public static bool IsBindable(string type) => ModelInspector.IsBindable(type);
 
+        public static bool IsBindable(FHIRAllTypes t) => FhirTypeToFhirTypeName(t) is { } typeName ? IsBindable(typeName) : false;
 
         public static bool CheckMinorVersionCompatibility(string externalVersion)
         {

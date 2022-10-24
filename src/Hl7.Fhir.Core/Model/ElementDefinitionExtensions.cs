@@ -64,15 +64,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        /// <inheritdoc cref="OfType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, IEnumerable<string>? profiles = null)
-            => ed.OfType(type.GetLiteral(), profiles);
-
-        /// <inheritdoc cref="OfType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string profile)
-            => ed.OfType(type.GetLiteral(), new[] { profile });
-
-        private static readonly string REFERENCE_LITERAL = FHIRAllTypes.Reference.GetLiteral();
+        private static readonly string REFERENCE_LITERAL = FhirTypeNames.REFERENCE_NAME;
 
         /// <summary>
         /// Adds a <see cref="ElementDefinition.TypeRefComponent"/> to the given <see cref="ElementDefinition"/>.
@@ -91,14 +83,6 @@ namespace Hl7.Fhir.Model
 
             return ed;
         }
-
-        /// <inheritdoc cref="OrType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, string profile)
-            => ed.OrType(type.GetLiteral(), new[] { profile });
-
-        /// <inheritdoc cref="OrType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, IEnumerable<string>? profiles = null)
-            => ed.OrType(type.GetLiteral(), profiles);
 
         /// <summary>
         /// Sets <see cref="ElementDefinition.Type"/> to a single "reference" with the given attributes.

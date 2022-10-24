@@ -9,5 +9,9 @@
         public const string NAMINGSYSTEM_NAME = "NamingSystem";
         public const string DOMAINRESOURCE_NAME = "DomainResource";
         public const string REFERENCE_NAME = "Reference";
+        public const string ELEMENT_NAME = "Element";
+        public const string STRING_NAME = "string";
+        public const string MARKDOWN_NAME = "markdown";
+
     }
 }

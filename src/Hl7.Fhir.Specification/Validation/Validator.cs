@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Validation
                 // See issue https://github.com/FirelyTeam/firely-net-sdk/issues/1563 and https://hl7.org/fhir/datatypes.html#string 
                 // the regex provided by the Fhir standard is not sufficient enough. The regex [\r\n\t\u0020-\uFFFF]* is more recommended
                 // The regex defined for string also applies to markdown
-                if ((instance?.InstanceType == FHIRAllTypes.String.GetLiteral() || instance?.InstanceType == FHIRAllTypes.Markdown.GetLiteral()) && pattern == @"[ \r\n\t\S]+")
+                if ((instance?.InstanceType == FhirTypeNames.STRING_NAME || instance?.InstanceType == FhirTypeNames.MARKDOWN_NAME) && pattern == @"[ \r\n\t\S]+")
                 {
                     pattern = @"[\r\n\t\u0020-\uFFFF]*";
                 }
@@ -576,17 +576,6 @@ namespace Hl7.Fhir.Validation
                    t == typeof(UnsignedInt) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
-        }
-
-        public static bool IsBindeableFhirType(this FHIRAllTypes t)
-        {
-            return t == FHIRAllTypes.Code ||
-                   t == FHIRAllTypes.Coding ||
-                   t == FHIRAllTypes.CodeableConcept ||
-                   t == FHIRAllTypes.Quantity ||
-                   t == FHIRAllTypes.Extension ||
-                   t == FHIRAllTypes.String ||
-                   t == FHIRAllTypes.Uri;
         }
     }
 
