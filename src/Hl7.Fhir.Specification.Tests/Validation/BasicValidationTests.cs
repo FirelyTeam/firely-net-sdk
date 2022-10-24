@@ -670,10 +670,8 @@ namespace Hl7.Fhir.Specification.Tests
                 output.WriteLine(report.ToString());
             }
             Assert.True(report.Success);
-            Assert.Equal(3, report.Warnings);            // 3x Could not resolve http://terminology.hl7.org elements
-
+            Assert.Equal(0, report.Warnings);
         }
-
 
         [Fact]
         public void MeasureDeepCopyPerformance()
