@@ -852,7 +852,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = v.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
-            Assert.Equal(3, report.Warnings);            // 3x Could not resolve http://terminology.hl7.org elements
+            Assert.Equal(0, report.Warnings);
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
