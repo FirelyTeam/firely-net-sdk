@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             string path = Path.GetFullPath(Path.Combine("TestData", "profiles-types.json"));
 
-            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
+            var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             string path = Path.GetFullPath(Path.Combine("TestData", "snapshot-test", "profiles-resources.xml"));
 
-            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
+            var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var entryStream = entry.Open())
                 using (var navStream = new XmlNavigatorStream(entryStream))
                 {
-                    var summaries = ArtifactSummaryGenerator.Default.Generate(navStream);
+                    var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(navStream);
                     Assert.IsNotNull(summaries);
                     corePatientSummary = summaries.FindConformanceResources(corePatientUrl).FirstOrDefault();
                 }

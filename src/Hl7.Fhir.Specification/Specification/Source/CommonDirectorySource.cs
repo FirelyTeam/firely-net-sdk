@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
             // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
-            return GetSummaries().OfResourceType(filter.GetLiteral()).Select(dsi => dsi.ResourceUri);
+            return GetSummaries().OfResourceType(filter?.GetLiteral()).Select(dsi => dsi.ResourceUri);
         }
 
         /// <summary>
