@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Source
             _settings = settings != null
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
                 : DirectorySourceSettings.CreateDefault();
-            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
+            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts, inspector);
             _navigatorFactory = new ConfigurableNavigatorStreamFactory(_settings.XmlParserSettings, _settings.JsonParserSettings)
             {
                 ThrowOnUnsupportedFormat = false
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
             // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
-            return GetSummaries().OfResourceType(filter).Select(dsi => dsi.ResourceUri);
+            return GetSummaries().OfResourceType(filter.GetLiteral()).Select(dsi => dsi.ResourceUri);
         }
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Specification.Source
         public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
         {
             if (valueSetUri == null) throw Error.ArgumentNull(nameof(valueSetUri));
-            var summary = GetSummaries().ResolveCodeSystem(valueSetUri);
+            var summary = GetSummaries().ResolveCodeSystem(valueSetUri, _inspector);
             return loadResourceInternal<CodeSystem>(summary);
         }
 
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Specification.Source
         public Resource ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByUri(uri);
+            var summary = GetSummaries().ResolveByUri(uri, _inspector);
             return loadResourceInternal<Resource>(summary);
         }
 
@@ -619,7 +619,7 @@ namespace Hl7.Fhir.Specification.Source
         public Resource ResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByCanonicalUri(uri);
+            var summary = GetSummaries().ResolveByCanonicalUri(uri, _inspector);
             return loadResourceInternal<Resource>(summary);
         }
 
@@ -904,7 +904,7 @@ namespace Hl7.Fhir.Specification.Source
                     // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
                     // Or unwrap all inner exceptions?
                     // scanResult.Add(ArtifactSummary.FromException(aex));
-                    scanResult.AddRange(aex.InnerExceptions.Select(ArtifactSummary.FromException));
+                    scanResult.AddRange(aex.InnerExceptions.Select(e => ArtifactSummary.FromException(e, _inspector)));
                 }
                 // Aggregate completed results into single list
                 scanResult.AddRange(summaries.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));

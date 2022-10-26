@@ -104,11 +104,11 @@ namespace Hl7.Fhir.Specification.Source
 
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
         {
-            var type = ModelInfoExtensions.GetFhirTypeNameForType(typeof(T));
+            var typeName = ModelInfoExtensions.GetFhirTypeNameForType(typeof(T));
 
-            if (type != null)
+            if (typeName is not null)
             {
-                var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
+                var resourceType = EnumUtility.ParseLiteral<ResourceType>(typeName);
                 var uris = source.ListResourceUris(resourceType);
                 return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
             }
