@@ -130,17 +130,13 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             string exampleWithOppositeExtension = changeFileExtension(file);
             string outputFile = Path.Combine(outputPath, exampleWithOppositeExtension);
-
-            if (!(file.Contains("expansions.") || file.Contains("profiles-resources") || file.Contains("profiles-others") || file.Contains("valuesets.")))
+            try
             {
-                try
-                {
-                    convertResource(file, outputFile, xmlSerializer, xmlDeserializer, jsonOptions);
-                }
-                catch (Exception ex)
-                {
-                    errors.Add(ex.Message);
-                }
+                convertResource(file, outputFile, xmlSerializer, xmlDeserializer, jsonOptions);
+            }
+            catch (Exception ex)
+            {
+                errors.Add(ex.Message);
             }
         }
 
