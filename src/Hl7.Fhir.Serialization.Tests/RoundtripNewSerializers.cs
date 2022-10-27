@@ -26,18 +26,16 @@ namespace Hl7.Fhir.Serialization.Tests
         [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
-            var baseTestPath = Path.Combine(Path.GetTempPath(), xmlTestFolder);
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
 
         [DynamicData(nameof(prepareExampleZipFilesJson), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
-            var baseTestPath = Path.Combine(Path.GetTempPath(), jsonTestFolder);
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
 
@@ -48,6 +46,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
         private static IEnumerable<object[]> prepareExampleZipFilesJson()
         {
+
             return prepareExampleZipFiles("examples-json.zip", Path.Combine(Path.GetTempPath(), jsonTestFolder));
         }
 
@@ -73,7 +72,7 @@ namespace Hl7.Fhir.Serialization.Tests
             var xmlDeserializer = new FhirXmlPocoDeserializer(typeof(ModelInfo).Assembly);
             var jsonOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
 
-            files.ForEach(f => objects.Add(new object[] { f, xmlSerializer, xmlDeserializer, jsonOptions }));
+            files.ForEach(f => objects.Add(new object[] { f, targetDir, xmlSerializer, xmlDeserializer, jsonOptions }));
 
             return objects;
         }
