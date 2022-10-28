@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Introspection
                 var assemblies = referredResources(@base)
                     .Select(r => r.GetType().Assembly)
                     .Distinct()
-                    .Except(new[] { typeof(IModelInfo).Assembly, }); // remove the common assembly, because that's always loaded
+                    .Except(new[] { typeof(IModelInfo).Assembly, callingAssembly }); // remove the common assembly, because that's always loaded
 
 
                 if (assemblies.Count() > 1)
