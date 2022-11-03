@@ -123,6 +123,8 @@ namespace Hl7.Fhir.Validation
             return result;
         }
 
+        // This is a bit ugly. But we know that this code will not stay forever here, so we allow it. With the new validator
+        // this will be gone.
         internal ModelInspector modelInspector = null;
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
@@ -494,7 +496,7 @@ namespace Hl7.Fhir.Validation
                 {
                     var poco = Settings.ResourceResolver.ResolveByUri(reference);
                     if (poco != null)
-                        return poco.ToTypedElement();
+                        return poco.ToTypedElement(modelInspector);
                 }
                 catch (Exception e)
                 {
@@ -533,7 +535,7 @@ namespace Hl7.Fhir.Validation
 
 #if DEBUG
                 // TODO: Validation Async Support
-                string xml = (new FhirXmlSerializer()).SerializeToString(definition);
+                string xml = (new CommonFhirXmlSerializer(modelInspector)).SerializeToString(definition);
                 string name = definition.Id ?? definition.Name.Replace(" ", "").Replace("/", "");
                 var dir = Path.Combine(Path.GetTempPath(), "validation");
 

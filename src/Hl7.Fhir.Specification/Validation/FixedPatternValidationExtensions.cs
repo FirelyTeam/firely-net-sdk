@@ -7,7 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
@@ -24,11 +24,11 @@ namespace Hl7.Fhir.Validation
 
             var outcome = new OperationOutcome();
 
-            ITypedElement fixedValueNav = fixedValue.ToTypedElement();
+            ITypedElement fixedValueNav = fixedValue.ToTypedElement(v.modelInspector);
 
             if (!instance.IsExactlyEqualTo(fixedValueNav))
             {
-                v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(fixedValue)}'",
+                v.Trace(outcome, $"Value is not exactly equal to fixed value '{toReadable(fixedValue, v.modelInspector)}'",
                         Issue.CONTENT_DOES_NOT_MATCH_FIXED_VALUE, instance);
             }
 
@@ -44,11 +44,11 @@ namespace Hl7.Fhir.Validation
 
             var outcome = new OperationOutcome();
 
-            ITypedElement patternValueNav = pattern.ToTypedElement();
+            ITypedElement patternValueNav = pattern.ToTypedElement(v.modelInspector);
 
             if (!instance.Matches(patternValueNav))
             {
-                v.Trace(outcome, $"Value does not match pattern '{toReadable(pattern)}'",
+                v.Trace(outcome, $"Value does not match pattern '{toReadable(pattern, v.modelInspector)}'",
                         Issue.CONTENT_DOES_NOT_MATCH_PATTERN_VALUE, instance);
             }
 
@@ -59,13 +59,8 @@ namespace Hl7.Fhir.Validation
         public static OperationOutcome ValidatePattern(this Validator v, ElementDefinition definition, ITypedElement instance) =>
               definition.Pattern != null ? v.ValidatePattern(definition.Pattern, instance) : new OperationOutcome();
 
-        private static string toReadable(Base value)
-        {
-            if (value is PrimitiveType)
-                return value.ToString();
-            else
-                return new FhirJsonSerializer().SerializeToString(value);
-        }
+        private static string toReadable(Base value, ModelInspector modelInspector)
+            => value is PrimitiveType ? value.ToString() : new CommonFhirJsonSerializer(modelInspector).SerializeToString(value);
 
         public static bool IsExactlyEqualTo(this ITypedElement left, ITypedElement right)
         {
@@ -80,7 +75,7 @@ namespace Hl7.Fhir.Validation
 
             if (childrenL.Count() != childrenR.Count()) return false;
 
-            return childrenL.Zip(childrenR, 
+            return childrenL.Zip(childrenR,
                             (childL, childR) => childL.Name == childR.Name && childL.IsExactlyEqualTo(childR)).All(t => t);
         }
 
@@ -111,7 +106,7 @@ namespace Hl7.Fhir.Validation
         {
             if (value == null && pattern == null) return true;
             if (value == null || pattern == null) return false;
-            
+
             if (!ValueEquality(value.Value, pattern.Value)) return false;
 
             // Compare the children.

@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
@@ -16,21 +16,21 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlSerializer : BaseFhirSerializer
+    public class CommonFhirXmlSerializer : BaseFhirSerializer
     {
-        public FhirXmlSerializer(SerializerSettings settings = null) : base(settings)
+        public CommonFhirXmlSerializer(ModelInspector modelInspector, SerializerSettings settings = null) : base(modelInspector, settings)
         {
         }
 
         private FhirXmlSerializationSettings buildFhirXmlWriterSettings() =>
-            new FhirXmlSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
+            new() { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine, TrimWhitespaces = Settings.TrimWhiteSpacesInXml };
 
         /// <inheritdoc cref="SerializeToStringAsync(Base, SummaryType, string, string[])" />
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXml(settings: buildFhirXmlWriterSettings());
-        
+
         public async Tasks.Task<string> SerializeToStringAsync(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
                 .Rename(root)
@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Serialization
             MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .ToXmlBytes(settings: buildFhirXmlWriterSettings());
-        
+
         public async Tasks.Task<byte[]> SerializeToBytesAsync(Base instance, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
                 .Rename(root)
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Serialization
             MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
             .Rename(root)
             .WriteTo(writer, settings: buildFhirXmlWriterSettings());
-        
+
         public async Tasks.Task SerializeAsync(Base instance, XmlWriter writer, SummaryType summary = SummaryType.False, string root = null, string[] elements = null) =>
             await MakeElementStack(instance, summary, elements, Settings?.IncludeMandatoryInElementsSummary ?? false)
                 .Rename(root)

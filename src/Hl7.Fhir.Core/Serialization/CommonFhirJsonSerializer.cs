@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Newtonsoft.Json;
@@ -14,14 +15,14 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirJsonSerializer : BaseFhirSerializer
+    public class CommonFhirJsonSerializer : BaseFhirSerializer
     {
-        public FhirJsonSerializer(SerializerSettings settings = null) : base(settings)
+        public CommonFhirJsonSerializer(ModelInspector modelInspector, SerializerSettings settings = null) : base(modelInspector, settings)
         {
         }
 
         private FhirJsonSerializationSettings buildFhirJsonWriterSettings() =>
-            new FhirJsonSerializationSettings { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine };
+            new() { Pretty = Settings.Pretty, AppendNewLine = Settings.AppendNewLine };
 
         /// <inheritdoc cref="SerializeToStringAsync(Base, SummaryType, string[])" />
         public string SerializeToString(Base instance, SummaryType summary = SummaryType.False, string[] elements = null) =>

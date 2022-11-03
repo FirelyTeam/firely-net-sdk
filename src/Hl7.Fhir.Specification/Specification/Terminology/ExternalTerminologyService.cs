@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -105,7 +106,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         coding = new Coding(system, code, display);
 
                     // Serialize the code or coding to json for display purposes in the issue
-                    var jsonSer = new FhirJsonSerializer();
+                    var jsonSer = new CommonFhirJsonSerializer(ModelInspector.ForAssembly(typeof(Coding).Assembly));
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
                         : jsonSer.SerializeToString(coding);
 
