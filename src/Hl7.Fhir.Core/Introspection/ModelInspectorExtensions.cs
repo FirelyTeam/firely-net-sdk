@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Introspection
     public static class ModelInspectorExtensions
     {
 
-        private static Assembly[] _commonAssemblies = new[] { typeof(IModelInfo).Assembly, typeof(Bundle).Assembly };
+        private static readonly Assembly[] _commonAssemblies = new[] { typeof(IModelInfo).Assembly, typeof(Bundle).Assembly };
 
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
@@ -38,8 +38,12 @@ namespace Hl7.Fhir.Introspection
         public static ModelInspector ForInstance(Base @base)
         {
             var callingAssembly = @base.GetType().Assembly;
-            ModelInspector? inspector = null;
+            var inspector = getInspectorForCommonInstance(@base, callingAssembly);
+            return inspector ?? ModelInspector.ForAssembly(callingAssembly);
+        }
 
+        private static ModelInspector? getInspectorForCommonInstance(Base @base, Assembly callingAssembly)
+        {
             if (_commonAssemblies.Contains(callingAssembly))
             {
                 var assemblies = referredResources(@base)
@@ -50,34 +54,42 @@ namespace Hl7.Fhir.Introspection
 
                 if (assemblies.Count() > 1)
                 {
-                    throw new InvalidOperationException("Found multiple assemblies " +
-                        $"({string.Join(",", assemblies.Select(a => a.FullName))}) which is not supported.");
+                    // 2022-11-03 MV: we know this goes wrong when the end user has custom resources in a separate assembly. A bundle
+                    // with a mix of standard resources and custom resource will result in more than 1 assembly. We can't fix this yet.
+
+                    throw new InvalidOperationException($"Found an instance of type {@base.GetType()} from the common assembly " +
+                        $"that contains resources from more than one satellite assembly: " +
+                        string.Join(",", assemblies.Select(a => a.FullName)));
                 }
 
                 var assembly = assemblies.SingleOrDefault();
-
-                if (assembly is not null) inspector = ModelInspector.ForAssembly(assembly);
+                if (assembly is not null) return ModelInspector.ForAssembly(assembly);
             }
 
-            return inspector ?? ModelInspector.ForAssembly(callingAssembly);
+            return null;
         }
 
         private static IEnumerable<Base> referredResources(Base @base)
         {
-            var resources = @base switch
+            List<Base> resources = (@base switch
             {
-                DomainResource domainResource => domainResource.Contained.Select(c => c).OfType<Base>(),
-                Bundle bundle => bundle.Entry.Select(e => e.Resource).OfType<Base>()
-                                .Concat(bundle.Entry.Select(e => e.Response?.Outcome).OfType<Base>()),
+                DomainResource domainResource => domainResource.Contained,
+                Bundle bundle => bundle.Entry.Select(e => e.Resource).Cast<Base?>()
+                                .Concat(bundle.Entry.Select(e => e.Response?.Outcome)),
                 Parameters parameters => parameters.Parameter.Select(p => p.Value),
 
                 _ => Enumerable.Empty<Base>()
-            };
-            resources = resources.Where(t => t is not null);
+            }).Where(t => t is not null).Cast<Base>().ToList();
 
             return resources.Any() == false
                 ? resources
-                : resources.Concat(resources.SelectMany(r => referredResources(r))).ToList();
+                : addRange(resources, resources.SelectMany(r => referredResources(r)));
+
+            static List<T> addRange<T>(List<T> l, IEnumerable<T> items)
+            {
+                l.AddRange(items);
+                return l;
+            }
         }
 
     }
