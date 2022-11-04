@@ -6,14 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
-using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Validation
 {
@@ -24,22 +21,23 @@ namespace Hl7.Fhir.Validation
     {
         public static OperationOutcome Validate(this Validator me, Base instance)
         {
-            return me.Validate(instance.ToTypedElement());
+            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, params string[] definitionUri)
         {
-            return me.Validate(instance.ToTypedElement(), definitionUri);
+            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector, definitionUri);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, StructureDefinition structureDefinition)
         {
-            return me.Validate(instance.ToTypedElement(), structureDefinition);
+            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector, structureDefinition);
         }
 
         public static OperationOutcome Validate(this Validator me, Base instance, IEnumerable<StructureDefinition> structureDefinitions)
         {
-            return me.Validate(instance.ToTypedElement(), structureDefinitions);
+            return me.Validate(instance.ToTypedElement(), ModelInfo.ModelInspector, structureDefinitions);
         }
     }
 }
+#nullable restore

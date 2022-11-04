@@ -11,6 +11,7 @@
 #define NORMALIZE_RENAMED_TYPESLICE
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -172,7 +173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
                 // [MV 20220803] Remove Binding when the element has no bindable type
-                if (snap.Binding is not null && !snap.Type.Any(t => ModelInfoNEW.IsBindable(t.Code)))
+                if (snap.Binding is not null && !snap.Type.Any(t => ModelInfoExtensions.IsBindable(t.Code)))
                 {
                     snap.Binding = null;
                 }

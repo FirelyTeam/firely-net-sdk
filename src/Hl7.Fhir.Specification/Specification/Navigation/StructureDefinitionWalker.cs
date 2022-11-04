@@ -9,6 +9,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
@@ -32,6 +33,8 @@ namespace Hl7.Fhir.Specification
         public IResourceResolver? Resolver => _resolver as IResourceResolver;
         public IAsyncResourceResolver AsyncResolver => _resolver.AsAsync();
 
+        internal ModelInspector? ModelInspector { get; }
+
 #pragma warning disable CS0618 // Type or member is obsolete
         private readonly ISyncOrAsyncResourceResolver _resolver;
 #pragma warning restore CS0618 // Type or member is obsolete
@@ -52,10 +55,18 @@ namespace Hl7.Fhir.Specification
         }
 
 #pragma warning disable CS0618 // Type or member is obsolete
-        public StructureDefinitionWalker(ElementDefinitionNavigator element, ISyncOrAsyncResourceResolver resolver)
+        public StructureDefinitionWalker(ElementDefinitionNavigator element, ISyncOrAsyncResourceResolver resolver) : this(element, resolver, null)
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+
+        }
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        internal StructureDefinitionWalker(ElementDefinitionNavigator element, ISyncOrAsyncResourceResolver resolver, ModelInspector? modelInspector)
 #pragma warning restore CS0618 // Type or member is obsolete
         {
             Current = element.ShallowCopy();
+            ModelInspector = modelInspector;
             _resolver = resolver;
 
             // Make sure there is always a current item

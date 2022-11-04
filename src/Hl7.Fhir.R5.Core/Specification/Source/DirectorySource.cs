@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Source
         public new NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
-            var summary = GetSummaries().ResolveNamingSystem(uniqueId);
+            var summary = GetSummaries().ResolveNamingSystem(uniqueId, ModelInfo.ModelInspector);
             return loadResourceInternal<NamingSystem>(summary);
         }
 

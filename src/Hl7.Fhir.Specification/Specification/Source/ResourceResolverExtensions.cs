@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Specification.Source
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
         public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, string typename)
         {
-            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfoNEW.CanonicalUriForFhirCoreType(typename).Value;
+            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : ModelInfoExtensions.CanonicalUriForFhirCoreType(typename).Value;
             return resolver.FindStructureDefinition(url);
         }
 
@@ -74,21 +75,10 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, string typename)
         {
-            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename : 
-                ModelInfoNEW.CanonicalUriForFhirCoreType(typename).Value;
+            var url = Uri.IsWellFormedUriString(typename, UriKind.Absolute) ? typename :
+                ModelInfoExtensions.CanonicalUriForFhirCoreType(typename).Value;
             return await resolver.FindStructureDefinitionAsync(url).ConfigureAwait(false);
         }
-
-        /// <inheritdoc cref="FindStructureDefinitionForCoreTypeAsync(IAsyncResourceResolver, FHIRAllTypes)"/>
-        [Obsolete("Using synchronous resolvers is not recommended anymore, use FindStructureDefinitionForCoreTypeAsync() instead.")]
-        public static StructureDefinition FindStructureDefinitionForCoreType(this IResourceResolver resolver, FHIRAllTypes type)
-            => resolver.FindStructureDefinitionForCoreType(ModelInfoNEW.FhirTypeToFhirTypeName(type));
-
-        /// <summary>
-        /// Resolve the StructureDefinition for the FHIR-defined type given in <paramref name="type"/>.
-        /// </summary>
-        public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
-            => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfoNEW.FhirTypeToFhirTypeName(type)).ConfigureAwait(false);
 
         /// <inheritdoc cref="FindValueSetAsync(IAsyncResourceResolver, string)"/>
         [Obsolete("Using synchronous resolvers is not recommended anymore, use FindValueSetAsync() instead.")]
@@ -114,11 +104,11 @@ namespace Hl7.Fhir.Specification.Source
 
         public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
         {
-            var type = ModelInfoNEW.GetFhirTypeNameForType(typeof(T));
+            var typeName = ModelInfoExtensions.GetFhirTypeNameForType(typeof(T));
 
-            if (type != null)
+            if (typeName is not null)
             {
-                var resourceType = EnumUtility.ParseLiteral<ResourceType>(type);
+                var resourceType = EnumUtility.ParseLiteral<ResourceType>(typeName);
                 var uris = source.ListResourceUris(resourceType);
                 return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
             }

@@ -647,6 +647,16 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
+        public void TestGetTypeForFhirType()
+        {
+            ModelInfo.GetTypeForFhirType("Patient").Should().Be<Patient>();
+            ModelInfo.GetTypeForFhirType("Address").Should().Be<Address>();
+            ModelInfo.GetTypeForFhirType("Extension").Should().Be<Extension>();
+            ModelInfo.GetTypeForFhirType("string").Should().Be<FhirString>();
+            ModelInfo.GetTypeForFhirType("ElementDefinition").Should().Be<ElementDefinition>();
+        }
+
+        [TestMethod]
         public void TestIsPrimitive()
         {
             // Verify that ModelInfo.IsPrimitive overloads returns true for all types derived from Primitive
@@ -668,10 +678,7 @@ namespace Hl7.Fhir.Tests.Model
             {
                 if (type == typeof(Base)) continue;
 
-                var isDataType =
-                    type == typeof(Resource)
-                    || type == typeof(DomainResource)
-                    || (type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(PrimitiveType)));
+                var isDataType = type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(PrimitiveType));
                 var typeName = ModelInfo.GetFhirTypeNameForType(type);
                 Assert.IsNotNull(typeName);
                 Assert.AreEqual(isDataType, ModelInfo.IsDataType(type), type.Name);

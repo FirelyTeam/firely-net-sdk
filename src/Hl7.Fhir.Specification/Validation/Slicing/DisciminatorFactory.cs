@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
@@ -32,7 +33,7 @@ namespace Hl7.Fhir.Validation
             //See http://hl7.org/fhir/valueset-operation-validate-code.html
             var context = $"{root.StructureDefinition.Url}#{location}";
 
-            var condition = walkToCondition(root, spec.Path, resolver);
+            var condition = walkToCondition(root, spec.Path, resolver, validator.modelInspector);
 
             if (condition is null)
             {
@@ -144,9 +145,9 @@ namespace Hl7.Fhir.Validation
         }
 
 
-        private static ElementDefinitionNavigator? walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver)
+        private static ElementDefinitionNavigator? walkToCondition(ElementDefinitionNavigator root, string discriminator, IResourceResolver resolver, ModelInspector modelInspector)
         {
-            var walker = new StructureDefinitionWalker(root, resolver);
+            var walker = new StructureDefinitionWalker(root, resolver, modelInspector);
             var conditions = walker.Walk(discriminator);
 
             // Well, we could check whether the conditions are Equal, since that's what really matters - they should not differ.

@@ -377,6 +377,1379 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
+  /// A list of all the concrete types defined in this version of the FHIR specification - Abstract Types, Data Types and Resource Types.
+  /// (url: http://hl7.org/fhir/ValueSet/all-types)
+  /// (systems: 3)
+  /// </summary>
+  [FhirEnumeration("FHIRAllTypes")]
+  public enum FHIRAllTypes
+  {
+    /// <summary>
+    /// An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Address", "http://hl7.org/fhir/data-types"), Description("Address")]
+    Address,
+    /// <summary>
+    /// A duration of time during which an organism (or a process) has existed.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Age", "http://hl7.org/fhir/data-types"), Description("Age")]
+    Age,
+    /// <summary>
+    /// A  text note which also  contains information about who made the statement and when.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Annotation", "http://hl7.org/fhir/data-types"), Description("Annotation")]
+    Annotation,
+    /// <summary>
+    /// For referring to data content defined in other formats.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Attachment", "http://hl7.org/fhir/data-types"), Description("Attachment")]
+    Attachment,
+    /// <summary>
+    /// Base definition for all elements that are defined inside a resource - but not those in a data type.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("BackboneElement", "http://hl7.org/fhir/data-types"), Description("BackboneElement")]
+    BackboneElement,
+    /// <summary>
+    /// Base definition for the few data types that are allowed to carry modifier extensions.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("BackboneType", "http://hl7.org/fhir/data-types"), Description("BackboneType")]
+    BackboneType,
+    /// <summary>
+    /// Base definition for all types defined in FHIR type system.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Base", "http://hl7.org/fhir/data-types"), Description("Base")]
+    Base,
+    /// <summary>
+    /// A concept that may be defined by a formal reference to a terminology or ontology or may be provided by text.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("CodeableConcept", "http://hl7.org/fhir/data-types"), Description("CodeableConcept")]
+    CodeableConcept,
+    /// <summary>
+    /// A reference to a resource (by instance), or instead, a reference to a cencept defined in a terminology or ontology (by class).
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("CodeableReference", "http://hl7.org/fhir/data-types"), Description("CodeableReference")]
+    CodeableReference,
+    /// <summary>
+    /// A reference to a code defined by a terminology system.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Coding", "http://hl7.org/fhir/data-types"), Description("Coding")]
+    Coding,
+    /// <summary>
+    /// Specifies contact information for a person or organization.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("ContactDetail", "http://hl7.org/fhir/data-types"), Description("ContactDetail")]
+    ContactDetail,
+    /// <summary>
+    /// Details for all kinds of technology mediated contact points for a person or organization, including telephone, email, etc.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("ContactPoint", "http://hl7.org/fhir/data-types"), Description("ContactPoint")]
+    ContactPoint,
+    /// <summary>
+    /// A contributor to the content of a knowledge asset, including authors, editors, reviewers, and endorsers.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Contributor", "http://hl7.org/fhir/data-types"), Description("Contributor")]
+    Contributor,
+    /// <summary>
+    /// A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Count", "http://hl7.org/fhir/data-types"), Description("Count")]
+    Count,
+    /// <summary>
+    /// Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("DataRequirement", "http://hl7.org/fhir/data-types"), Description("DataRequirement")]
+    DataRequirement,
+    /// <summary>
+    /// The base class for all re-useable types defined as part of the FHIR Specification.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("DataType", "http://hl7.org/fhir/data-types"), Description("DataType")]
+    DataType,
+    /// <summary>
+    /// A length - a value with a unit that is a physical distance.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Distance", "http://hl7.org/fhir/data-types"), Description("Distance")]
+    Distance,
+    /// <summary>
+    /// Indicates how the medication is/was taken or should be taken by the patient.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Dosage", "http://hl7.org/fhir/data-types"), Description("Dosage")]
+    Dosage,
+    /// <summary>
+    /// A length of time.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Duration", "http://hl7.org/fhir/data-types"), Description("Duration")]
+    Duration,
+    /// <summary>
+    /// Base definition for all elements in a resource.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Element", "http://hl7.org/fhir/data-types"), Description("Element")]
+    Element,
+    /// <summary>
+    /// Captures constraints on each element within the resource, profile, or extension.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("ElementDefinition", "http://hl7.org/fhir/data-types"), Description("ElementDefinition")]
+    ElementDefinition,
+    /// <summary>
+    /// A expression that is evaluated in a specified context and returns a value. The context of use of the expression must specify the context in which the expression is evaluated, and how the result of the expression is used.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Expression", "http://hl7.org/fhir/data-types"), Description("Expression")]
+    Expression,
+    /// <summary>
+    /// Optional Extension Element - found in all resources.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Extension", "http://hl7.org/fhir/data-types"), Description("Extension")]
+    Extension,
+    /// <summary>
+    /// A human's name with the ability to identify parts and usage.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("HumanName", "http://hl7.org/fhir/data-types"), Description("HumanName")]
+    HumanName,
+    /// <summary>
+    /// An identifier - identifies some entity uniquely and unambiguously. Typically this is used for business identifiers.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Identifier", "http://hl7.org/fhir/data-types"), Description("Identifier")]
+    Identifier,
+    /// <summary>
+    /// The marketing status describes the date when a medicinal product is actually put on the market or the date as of which it is no longer available.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("MarketingStatus", "http://hl7.org/fhir/data-types"), Description("MarketingStatus")]
+    MarketingStatus,
+    /// <summary>
+    /// The metadata about a resource. This is content in the resource that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Meta", "http://hl7.org/fhir/data-types"), Description("Meta")]
+    Meta,
+    /// <summary>
+    /// An amount of economic utility in some recognized currency.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Money", "http://hl7.org/fhir/data-types"), Description("Money")]
+    Money,
+    /// <summary>
+    /// MISSING DESCRIPTION
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("MoneyQuantity", "http://hl7.org/fhir/data-types"), Description("MoneyQuantity")]
+    MoneyQuantity,
+    /// <summary>
+    /// A human-readable summary of the resource conveying the essential clinical and business information for the resource.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Narrative", "http://hl7.org/fhir/data-types"), Description("Narrative")]
+    Narrative,
+    /// <summary>
+    /// The parameters to the module. This collection specifies both the input and output parameters. Input parameters are provided by the caller as part of the $evaluate operation. Output parameters are included in the GuidanceResponse.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("ParameterDefinition", "http://hl7.org/fhir/data-types"), Description("ParameterDefinition")]
+    ParameterDefinition,
+    /// <summary>
+    /// A time period defined by a start and end date and optionally time.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Period", "http://hl7.org/fhir/data-types"), Description("Period")]
+    Period,
+    /// <summary>
+    /// A populatioof people with some set of grouping criteria.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Population", "http://hl7.org/fhir/data-types"), Description("Population")]
+    Population,
+    /// <summary>
+    /// The base type for all re-useable types defined that have a simple property.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("PrimitiveType", "http://hl7.org/fhir/data-types"), Description("PrimitiveType")]
+    PrimitiveType,
+    /// <summary>
+    /// The marketing status describes the date when a medicinal product is actually put on the market or the date as of which it is no longer available.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("ProdCharacteristic", "http://hl7.org/fhir/data-types"), Description("ProdCharacteristic")]
+    ProdCharacteristic,
+    /// <summary>
+    /// The shelf-life and storage information for a medicinal product item or container can be described using this class.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("ProductShelfLife", "http://hl7.org/fhir/data-types"), Description("ProductShelfLife")]
+    ProductShelfLife,
+    /// <summary>
+    /// A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Quantity", "http://hl7.org/fhir/data-types"), Description("Quantity")]
+    Quantity,
+    /// <summary>
+    /// A set of ordered Quantities defined by a low and high limit.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Range", "http://hl7.org/fhir/data-types"), Description("Range")]
+    Range,
+    /// <summary>
+    /// A relationship of two Quantity values - expressed as a numerator and a denominator.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Ratio", "http://hl7.org/fhir/data-types"), Description("Ratio")]
+    Ratio,
+    /// <summary>
+    /// A range of ratios expressed as a low and high numerator and a denominator.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("RatioRange", "http://hl7.org/fhir/data-types"), Description("RatioRange")]
+    RatioRange,
+    /// <summary>
+    /// A reference from one resource to another.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Reference", "http://hl7.org/fhir/data-types"), Description("Reference")]
+    Reference,
+    /// <summary>
+    /// Related artifacts such as additional documentation, justification, or bibliographic references.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("RelatedArtifact", "http://hl7.org/fhir/data-types"), Description("RelatedArtifact")]
+    RelatedArtifact,
+    /// <summary>
+    /// A series of measurements taken by a device, with upper and lower limits. There may be more than one dimension in the data.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("SampledData", "http://hl7.org/fhir/data-types"), Description("SampledData")]
+    SampledData,
+    /// <summary>
+    /// A signature along with supporting context. The signature may be a digital signature that is cryptographic in nature, or some other signature acceptable to the domain. This other signature may be as simple as a graphical image representing a hand-written signature, or a signature ceremony Different signature approaches have different utilities.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Signature", "http://hl7.org/fhir/data-types"), Description("Signature")]
+    Signature,
+    /// <summary>
+    /// MISSING DESCRIPTION
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("SimpleQuantity", "http://hl7.org/fhir/data-types"), Description("SimpleQuantity")]
+    SimpleQuantity,
+    /// <summary>
+    /// Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("Timing", "http://hl7.org/fhir/data-types"), Description("Timing")]
+    Timing,
+    /// <summary>
+    /// A description of a triggering event. Triggering events can be named events, data events, or periodic, as determined by the type element.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("TriggerDefinition", "http://hl7.org/fhir/data-types"), Description("TriggerDefinition")]
+    TriggerDefinition,
+    /// <summary>
+    /// Specifies clinical/business/etc. metadata that can be used to retrieve, index and/or categorize an artifact. This metadata can either be specific to the applicable population (e.g., age category, DRG) or the specific context of care (e.g., venue, care setting, provider of care).
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("UsageContext", "http://hl7.org/fhir/data-types"), Description("UsageContext")]
+    UsageContext,
+    /// <summary>
+    /// A stream of bytes
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("base64Binary", "http://hl7.org/fhir/data-types"), Description("base64Binary")]
+    Base64Binary,
+    /// <summary>
+    /// Value of "true" or "false"
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("boolean", "http://hl7.org/fhir/data-types"), Description("boolean")]
+    Boolean,
+    /// <summary>
+    /// A URI that is a reference to a canonical URL on a FHIR resource
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("canonical", "http://hl7.org/fhir/data-types"), Description("canonical")]
+    Canonical,
+    /// <summary>
+    /// A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("code", "http://hl7.org/fhir/data-types"), Description("code")]
+    Code,
+    /// <summary>
+    /// A date or partial date (e.g. just year or year + month). There is no UTC offset. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("date", "http://hl7.org/fhir/data-types"), Description("date")]
+    Date,
+    /// <summary>
+    /// A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a UTC offset SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("dateTime", "http://hl7.org/fhir/data-types"), Description("dateTime")]
+    DateTime,
+    /// <summary>
+    /// A rational number with implicit precision
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("decimal", "http://hl7.org/fhir/data-types"), Description("decimal")]
+    Decimal,
+    /// <summary>
+    /// Any combination of letters, numerals, "-" and ".", with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive.
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("id", "http://hl7.org/fhir/data-types"), Description("id")]
+    Id,
+    /// <summary>
+    /// An instant in time - known at least to the second
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("instant", "http://hl7.org/fhir/data-types"), Description("instant")]
+    Instant,
+    /// <summary>
+    /// A whole number
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("integer", "http://hl7.org/fhir/data-types"), Description("integer")]
+    Integer,
+    /// <summary>
+    /// A very large whole number
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("integer64", "http://hl7.org/fhir/data-types"), Description("integer64")]
+    Integer64,
+    /// <summary>
+    /// A string that may contain Github Flavored Markdown syntax for optional processing by a mark down presentation engine
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("markdown", "http://hl7.org/fhir/data-types"), Description("markdown")]
+    Markdown,
+    /// <summary>
+    /// An OID represented as a URI
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("oid", "http://hl7.org/fhir/data-types"), Description("oid")]
+    Oid,
+    /// <summary>
+    /// An integer with a value that is positive (e.g. &gt;0)
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("positiveInt", "http://hl7.org/fhir/data-types"), Description("positiveInt")]
+    PositiveInt,
+    /// <summary>
+    /// A sequence of Unicode characters
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("string", "http://hl7.org/fhir/data-types"), Description("string")]
+    String,
+    /// <summary>
+    /// A time during the day, with no date specified
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("time", "http://hl7.org/fhir/data-types"), Description("time")]
+    Time,
+    /// <summary>
+    /// An integer with a value that is not negative (e.g. &gt;= 0)
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("unsignedInt", "http://hl7.org/fhir/data-types"), Description("unsignedInt")]
+    UnsignedInt,
+    /// <summary>
+    /// String of characters used to identify a name or a resource
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("uri", "http://hl7.org/fhir/data-types"), Description("uri")]
+    Uri,
+    /// <summary>
+    /// A URI that is a literal reference
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("url", "http://hl7.org/fhir/data-types"), Description("url")]
+    Url,
+    /// <summary>
+    /// A UUID, represented as a URI
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("uuid", "http://hl7.org/fhir/data-types"), Description("uuid")]
+    Uuid,
+    /// <summary>
+    /// XHTML format, as defined by W3C, but restricted usage (mainly, no active content)
+    /// (system: http://hl7.org/fhir/data-types)
+    /// </summary>
+    [EnumLiteral("xhtml", "http://hl7.org/fhir/data-types"), Description("XHTML")]
+    Xhtml,
+    /// <summary>
+    /// --- Abstract Type! ---This is the base resource type for everything.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Resource", "http://hl7.org/fhir/resource-types"), Description("Resource")]
+    Resource,
+    /// <summary>
+    /// A resource that represents the data of a single raw artifact as digital content accessible in its native format.  A Binary resource can contain any content, whether text, image, pdf, zip archive, etc.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Binary", "http://hl7.org/fhir/resource-types"), Description("Binary")]
+    Binary,
+    /// <summary>
+    /// A container for a collection of resources.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Bundle", "http://hl7.org/fhir/resource-types"), Description("Bundle")]
+    Bundle,
+    /// <summary>
+    /// --- Abstract Type! ---A resource that includes narrative, extensions, and contained resources.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DomainResource", "http://hl7.org/fhir/resource-types"), Description("DomainResource")]
+    DomainResource,
+    /// <summary>
+    /// A financial tool for tracking value accrued for a particular purpose.  In the healthcare field, used to track charges for a patient, cost centers, etc.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Account", "http://hl7.org/fhir/resource-types"), Description("Account")]
+    Account,
+    /// <summary>
+    /// A medicinal product in the final form which is suitable for administering to a patient (after any mixing of multiple components, dissolution etc. has been performed).
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("AdministrableProductDefinition", "http://hl7.org/fhir/resource-types"), Description("AdministrableProductDefinition")]
+    AdministrableProductDefinition,
+    /// <summary>
+    /// An event (i.e. any change to current patient status) that may be related to unintended effects on a patient or research subject.  The unintended effects may require additional monitoring, treatment or hospitalization or may result in death.  The AdverseEvent resource also extends to potential or avoided events that could have had such effects.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("AdverseEvent", "http://hl7.org/fhir/resource-types"), Description("AdverseEvent")]
+    AdverseEvent,
+    /// <summary>
+    /// Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("AllergyIntolerance", "http://hl7.org/fhir/resource-types"), Description("AllergyIntolerance")]
+    AllergyIntolerance,
+    /// <summary>
+    /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Appointment", "http://hl7.org/fhir/resource-types"), Description("Appointment")]
+    Appointment,
+    /// <summary>
+    /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/resource-types"), Description("AppointmentResponse")]
+    AppointmentResponse,
+    /// <summary>
+    /// A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("AuditEvent", "http://hl7.org/fhir/resource-types"), Description("AuditEvent")]
+    AuditEvent,
+    /// <summary>
+    /// Basic is used for handling concepts not yet defined in FHIR, narrative-only resources that don't map to an existing resource, and custom resources not appropriate for inclusion in the FHIR specification.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Basic", "http://hl7.org/fhir/resource-types"), Description("Basic")]
+    Basic,
+    /// <summary>
+    /// A biological material originating from a biological entity intended to be transplanted or infused into another (possibly the same) biological entity.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("BiologicallyDerivedProduct", "http://hl7.org/fhir/resource-types"), Description("BiologicallyDerivedProduct")]
+    BiologicallyDerivedProduct,
+    /// <summary>
+    /// Record details about an anatomical structure.  This resource may be used when a coded concept does not provide the necessary detail needed for the use case.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("BodyStructure", "http://hl7.org/fhir/resource-types"), Description("BodyStructure")]
+    BodyStructure,
+    /// <summary>
+    /// --- Abstract Type! ---Common Ancestor declaration for conformance and knowledge artifact resources.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CanonicalResource", "http://hl7.org/fhir/resource-types"), Description("CanonicalResource")]
+    CanonicalResource,
+    /// <summary>
+    /// A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CapabilityStatement", "http://hl7.org/fhir/resource-types"), Description("CapabilityStatement")]
+    CapabilityStatement,
+    /// <summary>
+    /// A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CapabilityStatement2", "http://hl7.org/fhir/resource-types"), Description("CapabilityStatement2")]
+    CapabilityStatement2,
+    /// <summary>
+    /// The CodeSystem resource is used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CodeSystem", "http://hl7.org/fhir/resource-types"), Description("CodeSystem")]
+    CodeSystem,
+    /// <summary>
+    /// A compartment definition that defines how resources are accessed on a server.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CompartmentDefinition", "http://hl7.org/fhir/resource-types"), Description("CompartmentDefinition")]
+    CompartmentDefinition,
+    /// <summary>
+    /// A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ConceptMap", "http://hl7.org/fhir/resource-types"), Description("ConceptMap")]
+    ConceptMap,
+    /// <summary>
+    /// A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ConceptMap2", "http://hl7.org/fhir/resource-types"), Description("ConceptMap2")]
+    ConceptMap2,
+    /// <summary>
+    /// Example of workflow instance.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ExampleScenario", "http://hl7.org/fhir/resource-types"), Description("ExampleScenario")]
+    ExampleScenario,
+    /// <summary>
+    /// A formal computable definition of a graph of resources - that is, a coherent set of resources that form a graph by following references. The Graph Definition resource defines a set and makes rules about the set.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("GraphDefinition", "http://hl7.org/fhir/resource-types"), Description("GraphDefinition")]
+    GraphDefinition,
+    /// <summary>
+    /// A set of rules of how a particular interoperability or standards problem is solved - typically through the use of FHIR resources. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ImplementationGuide", "http://hl7.org/fhir/resource-types"), Description("ImplementationGuide")]
+    ImplementationGuide,
+    /// <summary>
+    /// Defines the characteristics of a message that can be shared between systems, including the type of event that initiates the message, the content to be transmitted and what response(s), if any, are permitted.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MessageDefinition", "http://hl7.org/fhir/resource-types"), Description("MessageDefinition")]
+    MessageDefinition,
+    /// <summary>
+    /// --- Abstract Type! ---Common Ancestor declaration for conformance and knowledge artifact resources.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MetadataResource", "http://hl7.org/fhir/resource-types"), Description("MetadataResource")]
+    MetadataResource,
+    /// <summary>
+    /// This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ActivityDefinition", "http://hl7.org/fhir/resource-types"), Description("ActivityDefinition")]
+    ActivityDefinition,
+    /// <summary>
+    /// This Resource provides one or more comments, classifiers or ratings about a Resource and supports attribution and rights management metadata for the added content.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ArtifactAssessment", "http://hl7.org/fhir/resource-types"), Description("ArtifactAssessment")]
+    ArtifactAssessment,
+    /// <summary>
+    /// The ChargeItemDefinition resource provides the properties that apply to the (billing) codes necessary to calculate costs and prices. The properties may differ largely depending on type and realm, therefore this resource gives only a rough structure and requires profiling for each type of billing code system.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ChargeItemDefinition", "http://hl7.org/fhir/resource-types"), Description("ChargeItemDefinition")]
+    ChargeItemDefinition,
+    /// <summary>
+    /// The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Citation", "http://hl7.org/fhir/resource-types"), Description("Citation")]
+    Citation,
+    /// <summary>
+    /// A definition of a condition and information relevant to managing it.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ConditionDefinition", "http://hl7.org/fhir/resource-types"), Description("ConditionDefinition")]
+    ConditionDefinition,
+    /// <summary>
+    /// The EventDefinition resource provides a reusable description of when a particular event can occur.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("EventDefinition", "http://hl7.org/fhir/resource-types"), Description("EventDefinition")]
+    EventDefinition,
+    /// <summary>
+    /// The Evidence Resource provides a machine-interpretable expression of an evidence concept including the evidence variables (e.g., population, exposures/interventions, comparators, outcomes, measured variables, confounding variables), the statistics, and the certainty of this evidence.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Evidence", "http://hl7.org/fhir/resource-types"), Description("Evidence")]
+    Evidence,
+    /// <summary>
+    /// The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("EvidenceReport", "http://hl7.org/fhir/resource-types"), Description("EvidenceReport")]
+    EvidenceReport,
+    /// <summary>
+    /// The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("EvidenceVariable", "http://hl7.org/fhir/resource-types"), Description("EvidenceVariable")]
+    EvidenceVariable,
+    /// <summary>
+    /// The Library resource is a general-purpose container for knowledge asset definitions. It can be used to describe and expose existing knowledge assets such as logic libraries and information model descriptions, as well as to describe a collection of knowledge assets.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Library", "http://hl7.org/fhir/resource-types"), Description("Library")]
+    Library,
+    /// <summary>
+    /// The Measure resource provides the definition of a quality measure.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Measure", "http://hl7.org/fhir/resource-types"), Description("Measure")]
+    Measure,
+    /// <summary>
+    /// This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("PlanDefinition", "http://hl7.org/fhir/resource-types"), Description("PlanDefinition")]
+    PlanDefinition,
+    /// <summary>
+    /// A structured set of questions intended to guide the collection of answers from end-users. Questionnaires provide detailed control over order, presentation, phraseology and grouping to allow coherent, consistent data collection.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Questionnaire", "http://hl7.org/fhir/resource-types"), Description("Questionnaire")]
+    Questionnaire,
+    /// <summary>
+    /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("NamingSystem", "http://hl7.org/fhir/resource-types"), Description("NamingSystem")]
+    NamingSystem,
+    /// <summary>
+    /// A formal computable definition of an operation (on the RESTful interface) or a named query (using the search interaction).
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("OperationDefinition", "http://hl7.org/fhir/resource-types"), Description("OperationDefinition")]
+    OperationDefinition,
+    /// <summary>
+    /// A search parameter that defines a named search item that can be used to search/filter on a resource.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SearchParameter", "http://hl7.org/fhir/resource-types"), Description("SearchParameter")]
+    SearchParameter,
+    /// <summary>
+    /// A definition of a FHIR structure. This resource is used to describe the underlying resources, data types defined in FHIR, and also for describing extensions and constraints on resources and data types.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("StructureDefinition", "http://hl7.org/fhir/resource-types"), Description("StructureDefinition")]
+    StructureDefinition,
+    /// <summary>
+    /// A Map of relationships between 2 structures that can be used to transform data.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("StructureMap", "http://hl7.org/fhir/resource-types"), Description("StructureMap")]
+    StructureMap,
+    /// <summary>
+    /// A TerminologyCapabilities resource documents a set of capabilities (behaviors) of a FHIR Terminology Server that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("TerminologyCapabilities", "http://hl7.org/fhir/resource-types"), Description("TerminologyCapabilities")]
+    TerminologyCapabilities,
+    /// <summary>
+    /// A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("TestScript", "http://hl7.org/fhir/resource-types"), Description("TestScript")]
+    TestScript,
+    /// <summary>
+    /// A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ValueSet", "http://hl7.org/fhir/resource-types"), Description("ValueSet")]
+    ValueSet,
+    /// <summary>
+    /// Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CarePlan", "http://hl7.org/fhir/resource-types"), Description("CarePlan")]
+    CarePlan,
+    /// <summary>
+    /// The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CareTeam", "http://hl7.org/fhir/resource-types"), Description("CareTeam")]
+    CareTeam,
+    /// <summary>
+    /// The resource ChargeItem describes the provision of healthcare provider products for a certain patient, therefore referring not only to the product, but containing in addition details of the provision, like date, time, amounts and participating organizations and persons. Main Usage of the ChargeItem is to enable the billing process and internal cost allocation.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ChargeItem", "http://hl7.org/fhir/resource-types"), Description("ChargeItem")]
+    ChargeItem,
+    /// <summary>
+    /// A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Claim", "http://hl7.org/fhir/resource-types"), Description("Claim")]
+    Claim,
+    /// <summary>
+    /// This resource provides the adjudication details from the processing of a Claim resource.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ClaimResponse", "http://hl7.org/fhir/resource-types"), Description("ClaimResponse")]
+    ClaimResponse,
+    /// <summary>
+    /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ClinicalImpression", "http://hl7.org/fhir/resource-types"), Description("ClinicalImpression")]
+    ClinicalImpression,
+    /// <summary>
+    /// A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ClinicalUseDefinition", "http://hl7.org/fhir/resource-types"), Description("ClinicalUseDefinition")]
+    ClinicalUseDefinition,
+    /// <summary>
+    /// A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ClinicalUseIssue", "http://hl7.org/fhir/resource-types"), Description("ClinicalUseIssue")]
+    ClinicalUseIssue,
+    /// <summary>
+    /// A clinical or business level record of information being transmitted or shared; e.g. an alert that was sent to a responsible provider, a public health agency communication to a provider/reporter in response to a case report for a reportable condition.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Communication", "http://hl7.org/fhir/resource-types"), Description("Communication")]
+    Communication,
+    /// <summary>
+    /// A request to convey information; e.g. the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/resource-types"), Description("CommunicationRequest")]
+    CommunicationRequest,
+    /// <summary>
+    /// A set of healthcare-related information that is assembled together into a single logical package that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement. A Composition defines the structure and narrative content necessary for a document. However, a Composition alone does not constitute a document. Rather, the Composition must be the first entry in a Bundle where Bundle.type=document, and any other resources referenced from Composition must be included as subsequent entries in the Bundle (for example Patient, Practitioner, Encounter, etc.).
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Composition", "http://hl7.org/fhir/resource-types"), Description("Composition")]
+    Composition,
+    /// <summary>
+    /// A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Condition", "http://hl7.org/fhir/resource-types"), Description("Condition")]
+    Condition,
+    /// <summary>
+    /// A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Consent", "http://hl7.org/fhir/resource-types"), Description("Consent")]
+    Consent,
+    /// <summary>
+    /// Legally enforceable, formally recorded unilateral or bilateral directive i.e., a policy or agreement.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Contract", "http://hl7.org/fhir/resource-types"), Description("Contract")]
+    Contract,
+    /// <summary>
+    /// Financial instrument which may be used to reimburse or pay for health care products and services. Includes both insurance and self-payment.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Coverage", "http://hl7.org/fhir/resource-types"), Description("Coverage")]
+    Coverage,
+    /// <summary>
+    /// The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CoverageEligibilityRequest", "http://hl7.org/fhir/resource-types"), Description("CoverageEligibilityRequest")]
+    CoverageEligibilityRequest,
+    /// <summary>
+    /// This resource provides eligibility and plan details from the processing of an CoverageEligibilityRequest resource.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("CoverageEligibilityResponse", "http://hl7.org/fhir/resource-types"), Description("CoverageEligibilityResponse")]
+    CoverageEligibilityResponse,
+    /// <summary>
+    /// Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g. Drug-drug interaction, Ineffective treatment frequency, Procedure-condition conflict, etc.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DetectedIssue", "http://hl7.org/fhir/resource-types"), Description("DetectedIssue")]
+    DetectedIssue,
+    /// <summary>
+    /// This resource describes the properties (regulated, has real time clock, etc.), adminstrative (manufacturer name, model number, serial number, firmware, etc), and type (knee replacement, blood pressure cuff, MRI, etc.) of a physical unit (these values do not change much within a given module, for example the serail number, manufacturer name, and model number). An actual unit may consist of several modules in a distinct hierarchy and these are represented by multiple Device resources and bound through the 'parent' element.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Device", "http://hl7.org/fhir/resource-types"), Description("Device")]
+    Device,
+    /// <summary>
+    /// This is a specialized resource that defines the characteristics and capabilities of a device.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DeviceDefinition", "http://hl7.org/fhir/resource-types"), Description("DeviceDefinition")]
+    DeviceDefinition,
+    /// <summary>
+    /// Indicates that a device is to be or has been dispensed for a named person/patient.  This includes a description of the product (supply) provided and the instructions for using the device.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DeviceDispense", "http://hl7.org/fhir/resource-types"), Description("DeviceDispense")]
+    DeviceDispense,
+    /// <summary>
+    /// Describes a measurement, calculation or setting capability of a medical device.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DeviceMetric", "http://hl7.org/fhir/resource-types"), Description("DeviceMetric")]
+    DeviceMetric,
+    /// <summary>
+    /// Represents a request a device to be provided to a specific patient. The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/resource-types"), Description("DeviceRequest")]
+    DeviceRequest,
+    /// <summary>
+    /// A record of a device being used by a patient where the record is the result of a report from the patient or a clinician.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DeviceUsage", "http://hl7.org/fhir/resource-types"), Description("DeviceUsage")]
+    DeviceUsage,
+    /// <summary>
+    /// The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports. The report also includes non-clinical context such as batch analysis and stability reporting of products and substances.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DiagnosticReport", "http://hl7.org/fhir/resource-types"), Description("DiagnosticReport")]
+    DiagnosticReport,
+    /// <summary>
+    /// A collection of documents compiled for a purpose together with metadata that applies to the collection.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DocumentManifest", "http://hl7.org/fhir/resource-types"), Description("DocumentManifest")]
+    DocumentManifest,
+    /// <summary>
+    /// A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this "document" encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("DocumentReference", "http://hl7.org/fhir/resource-types"), Description("DocumentReference")]
+    DocumentReference,
+    /// <summary>
+    /// An interaction between a patient and healthcare provider(s) for the purpose of providing healthcare service(s) or assessing the health status of a patient.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Encounter", "http://hl7.org/fhir/resource-types"), Description("Encounter")]
+    Encounter,
+    /// <summary>
+    /// The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b or a REST endpoint for another FHIR server. This may include any security context information.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Endpoint", "http://hl7.org/fhir/resource-types"), Description("Endpoint")]
+    Endpoint,
+    /// <summary>
+    /// This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/resource-types"), Description("EnrollmentRequest")]
+    EnrollmentRequest,
+    /// <summary>
+    /// This resource provides enrollment and plan details from the processing of an EnrollmentRequest resource.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("EnrollmentResponse", "http://hl7.org/fhir/resource-types"), Description("EnrollmentResponse")]
+    EnrollmentResponse,
+    /// <summary>
+    /// An association between a patient and an organization / healthcare provider(s) during which time encounters may occur. The managing organization assumes a level of responsibility for the patient during this time.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/resource-types"), Description("EpisodeOfCare")]
+    EpisodeOfCare,
+    /// <summary>
+    /// This resource provides: the claim details; adjudication details from the processing of a Claim; and optionally account balance information, for informing the subscriber of the benefits provided.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ExplanationOfBenefit", "http://hl7.org/fhir/resource-types"), Description("ExplanationOfBenefit")]
+    ExplanationOfBenefit,
+    /// <summary>
+    /// Significant health conditions for a person related to the patient relevant in the context of care for the patient.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("FamilyMemberHistory", "http://hl7.org/fhir/resource-types"), Description("FamilyMemberHistory")]
+    FamilyMemberHistory,
+    /// <summary>
+    /// Prospective warnings of potential issues when providing care to the patient.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Flag", "http://hl7.org/fhir/resource-types"), Description("Flag")]
+    Flag,
+    /// <summary>
+    /// Describes the intended objective(s) for a patient, group or organization care, for example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Goal", "http://hl7.org/fhir/resource-types"), Description("Goal")]
+    Goal,
+    /// <summary>
+    /// Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Group", "http://hl7.org/fhir/resource-types"), Description("Group")]
+    Group,
+    /// <summary>
+    /// A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("GuidanceResponse", "http://hl7.org/fhir/resource-types"), Description("GuidanceResponse")]
+    GuidanceResponse,
+    /// <summary>
+    /// The details of a healthcare service available at a location.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("HealthcareService", "http://hl7.org/fhir/resource-types"), Description("HealthcareService")]
+    HealthcareService,
+    /// <summary>
+    /// A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ImagingSelection", "http://hl7.org/fhir/resource-types"), Description("ImagingSelection")]
+    ImagingSelection,
+    /// <summary>
+    /// Representation of the content produced in a DICOM imaging study. A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ImagingStudy", "http://hl7.org/fhir/resource-types"), Description("ImagingStudy")]
+    ImagingStudy,
+    /// <summary>
+    /// Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Immunization", "http://hl7.org/fhir/resource-types"), Description("Immunization")]
+    Immunization,
+    /// <summary>
+    /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ImmunizationEvaluation", "http://hl7.org/fhir/resource-types"), Description("ImmunizationEvaluation")]
+    ImmunizationEvaluation,
+    /// <summary>
+    /// A patient's point-in-time set of recommendations (i.e. forecasting) according to a published schedule with optional supporting justification.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/resource-types"), Description("ImmunizationRecommendation")]
+    ImmunizationRecommendation,
+    /// <summary>
+    /// An ingredient of a manufactured item or pharmaceutical product.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Ingredient", "http://hl7.org/fhir/resource-types"), Description("Ingredient")]
+    Ingredient,
+    /// <summary>
+    /// Details of a Health Insurance product/plan provided by an organization.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("InsurancePlan", "http://hl7.org/fhir/resource-types"), Description("InsurancePlan")]
+    InsurancePlan,
+    /// <summary>
+    /// A report of inventory or stock items.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("InventoryReport", "http://hl7.org/fhir/resource-types"), Description("InventoryReport")]
+    InventoryReport,
+    /// <summary>
+    /// Invoice containing collected ChargeItems from an Account with calculated individual and total price for Billing purpose.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Invoice", "http://hl7.org/fhir/resource-types"), Description("Invoice")]
+    Invoice,
+    /// <summary>
+    /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Linkage", "http://hl7.org/fhir/resource-types"), Description("Linkage")]
+    Linkage,
+    /// <summary>
+    /// A list is a curated collection of resources.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("List", "http://hl7.org/fhir/resource-types"), Description("List")]
+    List,
+    /// <summary>
+    /// Details and position information for a physical place where services are provided and resources and participants may be stored, found, contained, or accommodated.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Location", "http://hl7.org/fhir/resource-types"), Description("Location")]
+    Location,
+    /// <summary>
+    /// The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ManufacturedItemDefinition", "http://hl7.org/fhir/resource-types"), Description("ManufacturedItemDefinition")]
+    ManufacturedItemDefinition,
+    /// <summary>
+    /// The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MeasureReport", "http://hl7.org/fhir/resource-types"), Description("MeasureReport")]
+    MeasureReport,
+    /// <summary>
+    /// This resource is primarily used for the identification and definition of a medication, including ingredients, for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Medication", "http://hl7.org/fhir/resource-types"), Description("Medication")]
+    Medication,
+    /// <summary>
+    /// Describes the event of a patient consuming or otherwise being administered a medication.  This may be as simple as swallowing a tablet or it may be a long running infusion.  Related resources tie this event to the authorizing prescription, and the specific encounter between patient and health care practitioner.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MedicationAdministration", "http://hl7.org/fhir/resource-types"), Description("MedicationAdministration")]
+    MedicationAdministration,
+    /// <summary>
+    /// Indicates that a medication product is to be or has been dispensed for a named person/patient.  This includes a description of the medication product (supply) provided and the instructions for administering the medication.  The medication dispense is the result of a pharmacy system responding to a medication order.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MedicationDispense", "http://hl7.org/fhir/resource-types"), Description("MedicationDispense")]
+    MedicationDispense,
+    /// <summary>
+    /// Information about a medication that is used to support knowledge.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MedicationKnowledge", "http://hl7.org/fhir/resource-types"), Description("MedicationKnowledge")]
+    MedicationKnowledge,
+    /// <summary>
+    /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/resource-types"), Description("MedicationRequest")]
+    MedicationRequest,
+    /// <summary>
+    /// A record of a medication that is being consumed by a patient.   A MedicationUsage may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
+    /// The primary difference between a medicationusage and a medicationadministration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medicationusage is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the Medication Usage information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MedicationUsage", "http://hl7.org/fhir/resource-types"), Description("MedicationUsage")]
+    MedicationUsage,
+    /// <summary>
+    /// Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use, drug catalogs).
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MedicinalProductDefinition", "http://hl7.org/fhir/resource-types"), Description("MedicinalProductDefinition")]
+    MedicinalProductDefinition,
+    /// <summary>
+    /// The header for a message exchange that is either requesting or responding to an action.  The reference(s) that are the subject of the action as well as other information related to the action are typically transmitted in a bundle in which the MessageHeader resource instance is the first resource in the bundle.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MessageHeader", "http://hl7.org/fhir/resource-types"), Description("MessageHeader")]
+    MessageHeader,
+    /// <summary>
+    /// Raw data describing a biological sequence.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("MolecularSequence", "http://hl7.org/fhir/resource-types"), Description("MolecularSequence")]
+    MolecularSequence,
+    /// <summary>
+    /// A record of food or fluid that is being consumed by a patient.   A NutritionIntake may indicate that the patient may be consuming the food or fluid now or has consumed the food or fluid in the past.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay or through an app that tracks food or fluids consumed.   The consumption information may come from sources such as the patient's memory, from a nutrition label,  or from a clinician documenting observed intake.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("NutritionIntake", "http://hl7.org/fhir/resource-types"), Description("NutritionIntake")]
+    NutritionIntake,
+    /// <summary>
+    /// A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/resource-types"), Description("NutritionOrder")]
+    NutritionOrder,
+    /// <summary>
+    /// A food or fluid product that is consumed by patients.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/resource-types"), Description("NutritionProduct")]
+    NutritionProduct,
+    /// <summary>
+    /// Measurements and simple assertions made about a patient, device or other subject.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Observation", "http://hl7.org/fhir/resource-types"), Description("Observation")]
+    Observation,
+    /// <summary>
+    /// Set of definitional characteristics for a kind of observation or measurement produced or consumed by an orderable health care service.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ObservationDefinition", "http://hl7.org/fhir/resource-types"), Description("ObservationDefinition")]
+    ObservationDefinition,
+    /// <summary>
+    /// A collection of error, warning, or information messages that result from a system action.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("OperationOutcome", "http://hl7.org/fhir/resource-types"), Description("OperationOutcome")]
+    OperationOutcome,
+    /// <summary>
+    /// A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action.  Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Organization", "http://hl7.org/fhir/resource-types"), Description("Organization")]
+    Organization,
+    /// <summary>
+    /// Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("OrganizationAffiliation", "http://hl7.org/fhir/resource-types"), Description("OrganizationAffiliation")]
+    OrganizationAffiliation,
+    /// <summary>
+    /// A medically related item or items, in a container or package.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("PackagedProductDefinition", "http://hl7.org/fhir/resource-types"), Description("PackagedProductDefinition")]
+    PackagedProductDefinition,
+    /// <summary>
+    /// Demographics and other administrative information about an individual or animal receiving care or other health-related services.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Patient", "http://hl7.org/fhir/resource-types"), Description("Patient")]
+    Patient,
+    /// <summary>
+    /// This resource provides the status of the payment for goods and services rendered, and the request and response resource references.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("PaymentNotice", "http://hl7.org/fhir/resource-types"), Description("PaymentNotice")]
+    PaymentNotice,
+    /// <summary>
+    /// This resource provides the details including amount of a payment and allocates the payment items being paid.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/resource-types"), Description("PaymentReconciliation")]
+    PaymentReconciliation,
+    /// <summary>
+    /// Permission.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Permission", "http://hl7.org/fhir/resource-types"), Description("Permission")]
+    Permission,
+    /// <summary>
+    /// Demographics and administrative information about a person independent of a specific health-related context.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Person", "http://hl7.org/fhir/resource-types"), Description("Person")]
+    Person,
+    /// <summary>
+    /// A person who is directly or indirectly involved in the provisioning of healthcare.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Practitioner", "http://hl7.org/fhir/resource-types"), Description("Practitioner")]
+    Practitioner,
+    /// <summary>
+    /// A specific set of Roles/Locations/specialties/services that a practitioner may perform at an organization for a period of time.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("PractitionerRole", "http://hl7.org/fhir/resource-types"), Description("PractitionerRole")]
+    PractitionerRole,
+    /// <summary>
+    /// An action that is or was performed on or for a patient, practitioner, device, organization, or location. For example, this can be a physical intervention on a patient like an operation, or less invasive like long term services, counseling, or hypnotherapy.  This can be a quality or safety inspection for a location, organization, or device.  This can be an accreditation procedure on a practitioner for licensing.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Procedure", "http://hl7.org/fhir/resource-types"), Description("Procedure")]
+    Procedure,
+    /// <summary>
+    /// Provenance of a resource is a record that describes entities and processes involved in producing and delivering or otherwise influencing that resource. Provenance provides a critical foundation for assessing authenticity, enabling trust, and allowing reproducibility. Provenance assertions are a form of contextual metadata and can themselves become important records with their own provenance. Provenance statement indicates clinical significance in terms of confidence in authenticity, reliability, and trustworthiness, integrity, and stage in lifecycle (e.g. Document Completion - has the artifact been legally authenticated), all of which may impact security, privacy, and trust policies.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Provenance", "http://hl7.org/fhir/resource-types"), Description("Provenance")]
+    Provenance,
+    /// <summary>
+    /// A structured set of questions and their answers. The questions are ordered and grouped into coherent subsets, corresponding to the structure of the grouping of the questionnaire being responded to.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("QuestionnaireResponse", "http://hl7.org/fhir/resource-types"), Description("QuestionnaireResponse")]
+    QuestionnaireResponse,
+    /// <summary>
+    /// Regulatory approval, clearance or licencing related to a regulated product, treatment, facility or activity that is cited in a guidance, regulation, rule or legislative act. An example is Market Authorization relating to a Medicinal Product.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("RegulatedAuthorization", "http://hl7.org/fhir/resource-types"), Description("RegulatedAuthorization")]
+    RegulatedAuthorization,
+    /// <summary>
+    /// Information about a person that is involved in the care for a patient, but who is not the target of healthcare, nor has a formal responsibility in the care process.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/resource-types"), Description("RelatedPerson")]
+    RelatedPerson,
+    /// <summary>
+    /// A group of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("RequestGroup", "http://hl7.org/fhir/resource-types"), Description("RequestGroup")]
+    RequestGroup,
+    /// <summary>
+    /// A process where a researcher or organization plans and then executes a series of steps intended to increase the field of healthcare-related knowledge.  This includes studies of safety, efficacy, comparative effectiveness and other information about medications, devices, therapies and other interventional and investigative techniques.  A ResearchStudy involves the gathering of information about human or animal subjects.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ResearchStudy", "http://hl7.org/fhir/resource-types"), Description("ResearchStudy")]
+    ResearchStudy,
+    /// <summary>
+    /// A physical entity which is the primary unit of operational and/or administrative interest in a study.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ResearchSubject", "http://hl7.org/fhir/resource-types"), Description("ResearchSubject")]
+    ResearchSubject,
+    /// <summary>
+    /// An assessment of the likely outcome(s) for a patient or other subject as well as the likelihood of each outcome.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("RiskAssessment", "http://hl7.org/fhir/resource-types"), Description("RiskAssessment")]
+    RiskAssessment,
+    /// <summary>
+    /// A container for slots of time that may be available for booking appointments.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Schedule", "http://hl7.org/fhir/resource-types"), Description("Schedule")]
+    Schedule,
+    /// <summary>
+    /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/resource-types"), Description("ServiceRequest")]
+    ServiceRequest,
+    /// <summary>
+    /// A slot of time on a schedule that may be available for booking appointments.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Slot", "http://hl7.org/fhir/resource-types"), Description("Slot")]
+    Slot,
+    /// <summary>
+    /// A sample to be used for analysis.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Specimen", "http://hl7.org/fhir/resource-types"), Description("Specimen")]
+    Specimen,
+    /// <summary>
+    /// A kind of specimen with associated set of requirements.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SpecimenDefinition", "http://hl7.org/fhir/resource-types"), Description("SpecimenDefinition")]
+    SpecimenDefinition,
+    /// <summary>
+    /// The subscription resource describes a particular client's request to be notified about a SubscriptionTopic.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Subscription", "http://hl7.org/fhir/resource-types"), Description("Subscription")]
+    Subscription,
+    /// <summary>
+    /// The SubscriptionStatus resource describes the state of a Subscription during notifications.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/resource-types"), Description("SubscriptionStatus")]
+    SubscriptionStatus,
+    /// <summary>
+    /// Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/resource-types"), Description("SubscriptionTopic")]
+    SubscriptionTopic,
+    /// <summary>
+    /// A homogeneous material with a definite composition.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Substance", "http://hl7.org/fhir/resource-types"), Description("Substance")]
+    Substance,
+    /// <summary>
+    /// The detailed description of a substance, typically at a level beyond what is used for prescribing.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubstanceDefinition", "http://hl7.org/fhir/resource-types"), Description("SubstanceDefinition")]
+    SubstanceDefinition,
+    /// <summary>
+    /// Nucleic acids are defined by three distinct elements: the base, sugar and linkage. Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubstanceNucleicAcid", "http://hl7.org/fhir/resource-types"), Description("SubstanceNucleicAcid")]
+    SubstanceNucleicAcid,
+    /// <summary>
+    /// Properties of a substance specific to it being a polymer.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubstancePolymer", "http://hl7.org/fhir/resource-types"), Description("SubstancePolymer")]
+    SubstancePolymer,
+    /// <summary>
+    /// A SubstanceProtein is defined as a single unit of a linear amino acid sequence, or a combination of subunits that are either covalently linked or have a defined invariant stoichiometric relationship. This includes all synthetic, recombinant and purified SubstanceProteins of defined sequence, whether the use is therapeutic or prophylactic. This set of elements will be used to describe albumins, coagulation factors, cytokines, growth factors, peptide/SubstanceProtein hormones, enzymes, toxins, toxoids, recombinant vaccines, and immunomodulators.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubstanceProtein", "http://hl7.org/fhir/resource-types"), Description("SubstanceProtein")]
+    SubstanceProtein,
+    /// <summary>
+    /// Todo.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubstanceReferenceInformation", "http://hl7.org/fhir/resource-types"), Description("SubstanceReferenceInformation")]
+    SubstanceReferenceInformation,
+    /// <summary>
+    /// Source material shall capture information on the taxonomic and anatomical origins as well as the fraction of a material that can result in or can be modified to form a substance. This set of data elements shall be used to define polymer substances isolated from biological matrices. Taxonomic and anatomical origins shall be described using a controlled vocabulary as required. This information is captured for naturally derived polymers ( . starch) and structurally diverse substances. For Organisms belonging to the Kingdom Plantae the Substance level defines the fresh material of a single species or infraspecies, the Herbal Drug and the Herbal preparation. For Herbal preparations, the fraction information will be captured at the Substance information level and additional information for herbal extracts will be captured at the Specified Substance Group 1 information level. See for further explanation the Substance Class: Structurally Diverse and the herbal annex.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SubstanceSourceMaterial", "http://hl7.org/fhir/resource-types"), Description("SubstanceSourceMaterial")]
+    SubstanceSourceMaterial,
+    /// <summary>
+    /// Record of delivery of what is supplied.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SupplyDelivery", "http://hl7.org/fhir/resource-types"), Description("SupplyDelivery")]
+    SupplyDelivery,
+    /// <summary>
+    /// A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/resource-types"), Description("SupplyRequest")]
+    SupplyRequest,
+    /// <summary>
+    /// A task to be performed.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Task", "http://hl7.org/fhir/resource-types"), Description("Task")]
+    Task,
+    /// <summary>
+    /// A summary of information based on the results of executing a TestScript.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("TestReport", "http://hl7.org/fhir/resource-types"), Description("TestReport")]
+    TestReport,
+    /// <summary>
+    /// Describes validation requirements, source(s), status and dates for one or more elements.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("VerificationResult", "http://hl7.org/fhir/resource-types"), Description("VerificationResult")]
+    VerificationResult,
+    /// <summary>
+    /// An authorization for the provision of glasses and/or contact lenses to a patient.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/resource-types"), Description("VisionPrescription")]
+    VisionPrescription,
+    /// <summary>
+    /// This resource is a non-persisted resource used to pass information into and back from an [operation](operations.html). It has no other use, and there is no RESTful endpoint associated with it.
+    /// (system: http://hl7.org/fhir/resource-types)
+    /// </summary>
+    [EnumLiteral("Parameters", "http://hl7.org/fhir/resource-types"), Description("Parameters")]
+    Parameters,
+    /// <summary>
+    /// A place holder that means any kind of data type
+    /// (system: http://hl7.org/fhir/abstract-types)
+    /// </summary>
+    [EnumLiteral("Type", "http://hl7.org/fhir/abstract-types"), Description("Type")]
+    Type,
+    /// <summary>
+    /// A place holder that means any kind of resource
+    /// (system: http://hl7.org/fhir/abstract-types)
+    /// </summary>
+    [EnumLiteral("Any", "http://hl7.org/fhir/abstract-types"), Description("Any")]
+    Any,
+  }
+
+  /// <summary>
   /// This value set includes Claim Processing Outcome codes.
   /// (url: http://hl7.org/fhir/ValueSet/claim-outcome)
   /// (system: http://hl7.org/fhir/claim-outcome)

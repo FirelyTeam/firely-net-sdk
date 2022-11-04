@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
   /// A class with methods to retrieve information about the
   /// FHIR definitions based on which this assembly was generated.
   /// </summary>
-  public static partial class ModelInfo
+  public partial class ModelInfo
   {
     public static List<string> SupportedResources = new List<string>()
     {

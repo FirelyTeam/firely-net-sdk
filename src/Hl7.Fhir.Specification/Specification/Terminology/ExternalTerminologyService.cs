@@ -6,10 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Threading.Tasks;
@@ -43,8 +45,8 @@ namespace Hl7.Fhir.Specification.Terminology
                 return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        private Uri constructUri<T>(string id) =>
-            ResourceIdentity.Build(ModelInfoNEW.GetFhirTypeNameForType(typeof(T)), id);
+        private Uri constructUri<T>(string id) where T : Resource =>
+            ResourceIdentity.Build(ModelInfoExtensions.GetFhirTypeNameForType(typeof(T)), id);
 
         ///<inheritdoc />
         public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
@@ -104,7 +106,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         coding = new Coding(system, code, display);
 
                     // Serialize the code or coding to json for display purposes in the issue
-                    var jsonSer = new FhirJsonSerializer();
+                    var jsonSer = new CommonFhirJsonSerializer(ModelInspector.ForAssembly(typeof(Coding).Assembly));
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
                         : jsonSer.SerializeToString(coding);
 

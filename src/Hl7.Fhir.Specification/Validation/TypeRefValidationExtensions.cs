@@ -37,17 +37,17 @@ namespace Hl7.Fhir.Validation
             {
                 //find out what type is present in the instance data
                 // (e.g. deceased[Boolean], or _resourceType in json). This is exposed by IElementNavigator.TypeName.
-                var instanceType = ModelInfoNEW.FhirTypeNameToFhirType(instance.InstanceType);
+                var isCoreType = validator.modelInspector.IsCoreModelType(instance.InstanceType);
 
                 if (choices.Count() > 1)
                 {
-                    if (instanceType is not null)
+                    if (isCoreType)
                     {
                         // The next statements are just an optimalization, without them, we would do an ANY validation
                         // against *all* choices, what we do here is pre-filtering for sensible choices, and report if there isn't
                         // any.
                         var applicableChoices = typeRefs.Where(tr => !tr.Code.StartsWith("http:"))
-                                    .Where(tr => ModelInfoNEW.IsInstanceTypeFor(ModelInfoNEW.FhirTypeNameToFhirType(tr.Code).Value, instanceType.Value));
+                                    .Where(tr => validator.modelInspector.IsInstanceTypeFor(tr.Code, instance.InstanceType));
 
                         // Instance typename must be one of the applicable types in the choice
                         if (applicableChoices.Any())
@@ -69,10 +69,10 @@ namespace Hl7.Fhir.Validation
                 }
                 else if (choices.Count() == 1)
                 {
-                    if (instanceType is not null)
+                    if (isCoreType)
                     {
                         // Check if instance is of correct type
-                        var isCorrectType = ModelInfoNEW.IsInstanceTypeFor(ModelInfoNEW.FhirTypeNameToFhirType(choices.Single()).Value, instanceType.Value);
+                        var isCorrectType = validator.modelInspector.IsInstanceTypeFor(choices.Single(), instance.InstanceType);
                         if (!isCorrectType)
                         {
                             validator.Trace(outcome, $"Type specified in the instance ('{instance.InstanceType}') is not of the expected type ('{choices.Single()}')",
@@ -122,11 +122,11 @@ namespace Hl7.Fhir.Validation
                 if (validateProfiles)
                 {
                     // First, call Validate() for the current element (the reference itself) against the profile
-                    result.Add(validator.ValidateInternal(instance, tr.GetTypeProfile(), statedCanonicals: null, statedProfiles: null, state: state));
+                    result.Add(validator.ValidateInternal(instance, tr.GetTypeProfile(), statedCanonicals: null, statedProfiles: null, state: state, inspector: validator.modelInspector));
                 }
 
                 // If this is a reference, also validate the reference against the targetProfile
-                if (ModelInfoNEW.FhirTypeNameToFhirType(tr.Code) == FHIRAllTypes.Reference)
+                if (tr.Code == FhirTypeNames.REFERENCE_NAME)
                     result.Add(validator.ValidateResourceReference(instance, tr, state));
 
                 return result;
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Validation
 
             OperationOutcome validate()
             {
-                return validator.ValidateInternal(instance, declaredProfile, statedCanonicals: null, statedProfiles: null, state);
+                return validator.ValidateInternal(instance, declaredProfile, statedCanonicals: null, statedProfiles: null, state, inspector: validator.modelInspector);
             }
         }
 
@@ -261,7 +261,8 @@ namespace Hl7.Fhir.Validation
                                          targetProfile,
                                          statedProfiles: null,
                                          statedCanonicals: null,
-                                         state: state);
+                                         state: state,
+                                         inspector: validator.modelInspector);
             }
 
             Func<OperationOutcome> createValidatorForExternalReferenceResource(string targetProfile)
@@ -271,7 +272,8 @@ namespace Hl7.Fhir.Validation
                                                         targetProfile,
                                                         statedProfiles: null,
                                                         statedCanonicals: null,
-                                                        state: state));
+                                                        state: state,
+                                                        inspector: validator.modelInspector));
             }
         }
 
