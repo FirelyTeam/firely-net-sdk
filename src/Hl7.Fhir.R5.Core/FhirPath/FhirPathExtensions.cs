@@ -34,7 +34,7 @@ namespace Hl7.Fhir.FhirPath
             ITypedElement? navResolver(string url)
             {
                 var resource = resolver(url);
-                return resource?.ToTypedElement(ModelInfo.ModelInspector);
+                return resource?.ToTypedElement();
             }
         }
 

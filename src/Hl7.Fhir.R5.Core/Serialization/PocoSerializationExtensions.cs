@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     {
         /// <inheritdoc cref="ToJsonAsync(Base, FhirJsonSerializationSettings)" />
         public static string ToJson(this Base source, FhirJsonSerializationSettings settings = null) =>
-            source.ToTypedElement(ModelInfo.ModelInspector).ToJson(settings);
+            source.ToTypedElement().ToJson(settings);
 
         public static async T.Task<string> ToJsonAsync(this Base source, FhirJsonSerializationSettings settings = null) =>
             await source.ToTypedElement().ToJsonAsync(settings).ConfigureAwait(false);
