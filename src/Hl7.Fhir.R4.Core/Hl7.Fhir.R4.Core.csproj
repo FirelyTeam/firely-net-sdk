@@ -34,6 +34,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="xhtml\fhir-single.zip">
+			<LogicalName>xhtml.fhir-single.zip</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
 		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
 			<Link>specification.zip</Link>
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>

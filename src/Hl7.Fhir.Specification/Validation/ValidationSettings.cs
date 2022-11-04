@@ -12,6 +12,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Terminology;
 using Hl7.Fhir.Utility;
 using System;
+using System.Xml.Schema;
 
 namespace Hl7.Fhir.Validation
 {
@@ -112,7 +113,7 @@ namespace Hl7.Fhir.Validation
         /// Determine where to retrieve the XSD schemas from when when Xsd validation is enabled and run.
         /// </summary>
         /// <remarks>If this is not set, the default location (using specification.zip) will be used.</remarks>
-        public SchemaCollection XsdSchemaCollection { get; set; }
+        public XmlSchemaSet XsdSchemaCollection { get; set; }
 
         /// <summary>Default constructor. Creates a new <see cref="ValidationSettings"/> instance with default property values.</summary>
         public ValidationSettings() { }
