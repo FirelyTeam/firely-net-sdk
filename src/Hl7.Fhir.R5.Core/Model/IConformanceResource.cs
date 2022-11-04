@@ -61,6 +61,36 @@ namespace Hl7.Fhir.Model
     {
 
     }
+
+    public partial class ConceptMap : IVersionableConformanceResource
+    {
+
+    }
+
+    public partial class NamingSystem : IConformanceResource
+    {
+        // I think NamingSystem should have Experimental too
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        public Markdown Purpose
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        public bool? Experimental
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+
+        [Obsolete("This property is not a part of the official FHIR specification", true)]
+        public FhirBoolean ExperimentalElement
+        {
+            get { return null; }
+            set { throw new NotImplementedException(); }
+        }
+    }
     public partial class StructureMap : IVersionableConformanceResource
     {
 

@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Language;
-using Hl7.Fhir.Model;
 using Hl7.FhirPath.Expressions;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +52,8 @@ namespace Hl7.Fhir.Specification.Navigation
                 case "as": // 'as()' for backwards compatibility only
                 case "ofType":
                     var type = getSingleStringParameter(call);
-                    if (!ModelInfoNEW.IsCoreModelType(type))
+
+                    if (Root.ModelInspector is not null && !Root.ModelInspector.IsCoreModelType(type))
                         throw new DiscriminatorFormatException($"Type '{type}' passed to {call.FunctionName}() is not a known FHIR type.");
                     return parentSet.OfType(type);
                 default:

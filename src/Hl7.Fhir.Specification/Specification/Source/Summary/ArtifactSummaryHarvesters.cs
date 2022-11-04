@@ -6,15 +6,17 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Summary;
-using Hl7.Fhir.Utility;
+using Hl7.Fhir.Support.Poco.Model;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 
 // Expose low-level interfaces from a separate child namespace, to prevent pollution
 namespace Hl7.Fhir.Specification.Source
@@ -45,20 +47,20 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="properties">An artifact summary property bag.</param>
         /// <param name="key">A property key.</param>
         /// <returns>An object value, or <c>null</c>.</returns>
-        public static object GetValueOrDefault(this IArtifactSummaryPropertyBag properties, string key)
-            => properties.TryGetValue(key, out object result) ? result : null;
+        public static object? GetValueOrDefault(this IArtifactSummaryPropertyBag properties, string key)
+            => properties.TryGetValue(key, out object? result) ? result : null;
 
         /// <summary>Try to retrieve the property value for the specified key.</summary>
         /// <param name="properties">An artifact summary property bag.</param>
         /// <param name="key">A property key.</param>
         /// <typeparam name="T">The type of the property value.</typeparam>
         /// <returns>A value of type <typeparamref name="T"/>, or <c>null</c>.</returns>
-        public static T GetValueOrDefault<T>(this IArtifactSummaryPropertyBag properties, string key)
+        public static T? GetValueOrDefault<T>(this IArtifactSummaryPropertyBag properties, string key)
             where T : class
             => properties.GetValueOrDefault(key) as T;
 
         /// <summary>Get the Origin property value from the specified artifact summary property bag, if available.</summary>
-        public static string GetOrigin(this IArtifactSummaryPropertyBag properties)
+        public static string? GetOrigin(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(OriginKey);
 
         internal static void SetOrigin(this ArtifactSummaryPropertyBag properties, string value)
@@ -88,7 +90,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Get a string value from the specified artifact summary property bag that represents the artifact
         /// serialization format, as defined by the <see cref="FhirSerializationFormats"/> class, if available.
         /// </summary>
-        public static string GetSerializationFormat(this IArtifactSummaryPropertyBag properties)
+        public static string? GetSerializationFormat(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(SerializationFormatKey);
 
         internal static void SetSerializationFormat(this ArtifactSummaryPropertyBag properties, string value)
@@ -98,7 +100,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the Position property value from the specified artifact summary property bag, if available.</summary>
-        public static string GetPosition(this IArtifactSummaryPropertyBag properties)
+        public static string? GetPosition(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(PositionKey);
 
         internal static void SetPosition(this ArtifactSummaryPropertyBag properties, string value)
@@ -107,7 +109,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the TypeName property value from the specified artifact summary property bag, if available.</summary>
-        public static string GetTypeName(this IArtifactSummaryPropertyBag properties)
+        public static string? GetTypeName(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(TypeNameKey);
 
         internal static void SetTypeName(this ArtifactSummaryPropertyBag properties, string value)
@@ -116,7 +118,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the ResourceUri property value from the specified artifact summary property bag, if available.</summary>
-        public static string GetResourceUri(this IArtifactSummaryPropertyBag properties)
+        public static string? GetResourceUri(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(ResourceUriKey);
 
         internal static void SetResourceUri(this ArtifactSummaryPropertyBag properties, string value)
@@ -134,21 +136,21 @@ namespace Hl7.Fhir.Specification.Source
         }
     }
 
-    /// <summary>For harvesting specific summary information from a <see cref="NamingSystem"/> resource.</summary>
+    /// <summary>For harvesting specific summary information from a <c>NamingSystem</c> resource.</summary>
     public static class NamingSystemSummaryProperties
     {
-        static readonly string NamingSystemTypeName = ResourceType.NamingSystem.GetLiteral();
+        static readonly string NamingSystemTypeName = FhirTypeNames.NAMINGSYSTEM_NAME;
 
         public static readonly string UniqueIdKey = "NamingSystem.uniqueId";
 
-        /// <summary>Determines if the specified instance represents summary information about a <see cref="NamingSystem"/> resource.</summary>
+        /// <summary>Determines if the specified instance represents summary information about a <c>NamingSystem</c> resource.</summary>
         public static bool IsNamingSystemSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == NamingSystemTypeName;
 
-        /// <summary>Harvest specific summary information from a <see cref="NamingSystem"/> resource.</summary>
-        /// <returns><c>true</c> if the current target represents a <see cref="NamingSystem"/> resource, or <c>false</c> otherwise.</returns>
+        /// <summary>Harvest specific summary information from a <c>NamingSystem</c> resource.</summary>
+        /// <returns><c>true</c> if the current target represents a <c>NamingSystem</c> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method through a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelinfo)
         {
             if (IsNamingSystemSummary(properties))
             {
@@ -162,12 +164,12 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the <c>NamingSystem.uniqueId</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="NamingSystem"/> resources.</remarks>
-        public static IReadOnlyList<string> GetNamingSystemUniqueId(this IArtifactSummaryPropertyBag properties)
+        /// <remarks>Only applies to summaries of <c>NamingSystem</c> resources.</remarks>
+        public static IReadOnlyList<string>? GetNamingSystemUniqueId(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<IReadOnlyList<string>>(UniqueIdKey);
 
         /// <summary>
-        /// Determines if the current summary properties represent a <see cref="NamingSystem"/>
+        /// Determines if the current summary properties represent a <c>NamingSystem</c>
         /// resource with the specified <c>uniqueId</c> value.
         /// </summary>
         public static bool HasNamingSystemUniqueId(this IArtifactSummaryPropertyBag properties, string uniqueId)
@@ -177,7 +179,7 @@ namespace Hl7.Fhir.Specification.Source
                 var ids = GetNamingSystemUniqueId(properties);
                 //return ids != null && Array.IndexOf(ids, uniqueId) > -1;
                 return ids != null && ids.Contains(uniqueId);
-                    
+
             }
             return false;
         }
@@ -192,8 +194,8 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string StatusKey = "Conformance.status";
 
         /// <summary>Determines if the specified instance represents summary information about a conformance resource.</summary>
-        public static bool IsConformanceSummary(this IArtifactSummaryPropertyBag properties)
-            => ModelInfoNEW.IsConformanceResource(properties.GetTypeName());
+        public static bool IsConformanceSummary(this IArtifactSummaryPropertyBag properties, IModelInfo modelInfo)
+            => properties.GetTypeName() is { } typeName && modelInfo.IsConformanceResource(typeName);
 
         /// <summary>Harvest common summary information from a conformance resource.</summary>
         /// <returns><c>true</c> if the current target represents a conformance resource, or <c>false</c> otherwise.</returns>
@@ -205,9 +207,9 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         /// <seealso cref="StructureDefinitionSummaryProperties"/>
         /// <seealso cref="ConceptMapSummaryProperties"/>
-        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelInfo)
         {
-            if (IsConformanceSummary(properties))
+            if (IsConformanceSummary(properties, modelInfo))
             {
                 nav.HarvestValue(properties, CanonicalUrlKey, "url");
                 // [WMR 20181213] R4 NEW
@@ -223,28 +225,28 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Get the canonical <c>url</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
-        public static string GetConformanceCanonicalUrl(this IArtifactSummaryPropertyBag properties)
+        public static string? GetConformanceCanonicalUrl(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(CanonicalUrlKey);
 
         /// <summary>Get the <c>version</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
-        public static string GetConformanceVersion(this IArtifactSummaryPropertyBag properties)
+        public static string? GetConformanceVersion(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(VersionKey);
 
         /// <summary>Get the <c>name</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
-        public static string GetConformanceName(this IArtifactSummaryPropertyBag properties)
+        public static string? GetConformanceName(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(NameKey);
 
         /// <summary>Get the <c>status</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
         [Obsolete("Use GetPublicationStatus")]
-        public static string GetConformanceStatus(this IArtifactSummaryPropertyBag properties)
+        public static string? GetConformanceStatus(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(StatusKey);
 
         /// <summary>Get the <c>status</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
-        public static string GetPublicationStatus(this IArtifactSummaryPropertyBag properties)
+        public static string? GetPublicationStatus(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(StatusKey);
 
     }
@@ -252,7 +254,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>For harvesting specific summary information from a <see cref="StructureDefinition"/> resource.</summary>
     public static class StructureDefinitionSummaryProperties
     {
-        static readonly string StructureDefinitionTypeName = ResourceType.StructureDefinition.GetLiteral();
+        static readonly string StructureDefinitionTypeName = FhirTypeNames.STRUCTUREDEFINITION_NAME;
 
         public static readonly string FhirVersionKey = "StructureDefinition.fhirVersion";
         public static readonly string KindKey = "StructureDefinition.kind";
@@ -263,18 +265,18 @@ namespace Hl7.Fhir.Specification.Source
         public static readonly string BaseDefinitionKey = "StructureDefinition.baseDefinition";
         public static readonly string DerivationKey = "StructureDefinition.derivation";
 
-        public static readonly string FmmExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-fmm").ToString();
+        public static readonly string FmmExtensionUrl = new Uri(ModelInfoExtensions.FhirCoreProfileBaseUri, "structuredefinition-fmm").ToString();
         public static readonly string MaturityLevelKey = "StructureDefinition.maturityLevel";
 
-        public static readonly string WgExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-wg").ToString();
+        public static readonly string WgExtensionUrl = new Uri(ModelInfoExtensions.FhirCoreProfileBaseUri, "structuredefinition-wg").ToString();
         public static readonly string WorkingGroupKey = "StructureDefinition.workingGroup";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string StandardsStatusExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-standards-status").ToString();
+        public static readonly string StandardsStatusExtensionUrl = new Uri(ModelInfoExtensions.FhirCoreProfileBaseUri, "structuredefinition-standards-status").ToString();
         public static readonly string StandardsStatusKey = "StructureDefinition.standardsStatus";
 
         // [WMR 20181213] R4 - NEW
-        public static readonly string NormativeVersionExtensionUrl = new Uri(ModelInfoNEW.FhirCoreProfileBaseUri, "structuredefinition-normative-version").ToString();
+        public static readonly string NormativeVersionExtensionUrl = new Uri(ModelInfoExtensions.FhirCoreProfileBaseUri, "structuredefinition-normative-version").ToString();
         public static readonly string NormativeVersionKey = "StructureDefinition.normativeVersion";
 
         public static readonly string RootDefinitionKey = "StructureDefinition.rootDefinition";
@@ -286,7 +288,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="StructureDefinition"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="StructureDefinition"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelInfo)
         {
             if (IsStructureDefinitionSummary(properties))
             {
@@ -294,7 +296,7 @@ namespace Hl7.Fhir.Specification.Source
                 nav.HarvestExtensions(properties, harvestExtension);
 
                 // Explicit extractor chaining
-                if (ConformanceSummaryProperties.Harvest(nav, properties))
+                if (ConformanceSummaryProperties.Harvest(nav, properties, modelInfo))
                 {
                     nav.HarvestValue(properties, FhirVersionKey, "fhirVersion");
                     nav.HarvestValue(properties, KindKey, "kind");
@@ -318,7 +320,7 @@ namespace Hl7.Fhir.Specification.Source
                     if (elementNode != null)
                     {
                         var childNode = elementNode.Children("element").FirstOrDefault();
-                        if(childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
+                        if (childNode != null && Navigation.ElementDefinitionNavigator.IsRootPath(childNode.Name))
                         {
                             childNode.HarvestValue(properties, RootDefinitionKey, "definition");
                         }
@@ -356,7 +358,7 @@ namespace Hl7.Fhir.Specification.Source
         // StructureDefinition.context is a repeated BackboneElement with children .type and .expression
         static void harvestExtensionContexts(this ISourceNode nav, IDictionary<string, object> properties)
         {
-            var contexts = new List<(string Type, string Expression)>();
+            var contexts = new List<(string? Type, string? Expression)>();
             foreach (var child in nav.Children("context"))
             {
                 var type = child.Children("type").FirstOrDefault()?.Text;
@@ -368,12 +370,12 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Get the <c>StructureDefinition.fhirVersion</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
-        public static string GetStructureDefinitionFhirVersion(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionFhirVersion(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(FhirVersionKey);
 
         /// <summary>Get the <c>StructureDefinition.kind</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
-        public static string GetStructureDefinitionKind(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionKind(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(KindKey);
 
         // [WMR 20181218] STU3 OBSOLETE
@@ -391,22 +393,22 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Get the list of <c>StructureDefinition.context</c> property values from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
         /// <returns>A read-only list of tuples containing the type and expression of each supported extension context.</returns>
-        public static IReadOnlyList<(string Type, string Expression)> GetStructureDefinitionContext(this IArtifactSummaryPropertyBag properties)
+        public static IReadOnlyList<(string Type, string Expression)>? GetStructureDefinitionContext(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<IReadOnlyList<(string Type, string Expression)>>(ContextKey);
 
         /// <summary>Get the <c>StructureDefinition.type</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
-        public static string GetStructureDefinitionType(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionType(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(TypeKey);
 
         /// <summary>Get the <c>StructureDefinition.baseDefinition</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
-        public static string GetStructureDefinitionBaseDefinition(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionBaseDefinition(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(BaseDefinitionKey);
 
         /// <summary>Get the <c>StructureDefinition.derivation</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="StructureDefinition"/> resources.</remarks>
-        public static string GetStructureDefinitionDerivation(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionDerivation(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(DerivationKey);
 
         /// <summary>Get the value of the maturity level extension from the specified artifact summary property bag, if available.</summary>
@@ -414,7 +416,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Returns the resource maturity level, as defined by the official FHIR extension "http://hl7.org/fhir/StructureDefinition/structuredefinition-fmm".
         /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
         /// </remarks>
-        public static string GetStructureDefinitionMaturityLevel(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionMaturityLevel(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(MaturityLevelKey);
 
         /// <summary>Get the value of the working group extension from the specified artifact summary property bag, if available.</summary>
@@ -422,7 +424,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Returns the associated working group, as defined by the official FHIR extension "http://hl7.org/fhir/StructureDefinition/structuredefinition-wg".
         /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
         /// </remarks>
-        public static string GetStructureDefinitionWorkingGroup(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionWorkingGroup(this IArtifactSummaryPropertyBag properties)
            => properties.GetValueOrDefault<string>(WorkingGroupKey);
 
         /// <summary>Get the value of the standards status extension from the specified artifact summary property bag, if available.</summary>
@@ -431,7 +433,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
         /// </remarks>
         /// <returns>draft | normative | trial-use | informative | deprecated | external</returns>
-        public static string GetStructureDefinitionStandardsStatus(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionStandardsStatus(this IArtifactSummaryPropertyBag properties)
            => properties.GetValueOrDefault<string>(StandardsStatusKey);
 
         /// <summary>Get the value of the normative version extension from the specified artifact summary property bag, if available.</summary>
@@ -439,7 +441,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Returns the associated normative version number, as defined by the official FHIR extension "http://hl7.org/fhir/StructureDefinition/structuredefinition-normative-version".
         /// Only applies to summaries of <see cref="StructureDefinition"/> resources that define FHIR core resources.
         /// </remarks>
-        public static string GetStructureDefinitionNormativeVersion(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionNormativeVersion(this IArtifactSummaryPropertyBag properties)
            => properties.GetValueOrDefault<string>(NormativeVersionKey);
 
         /// <summary>Get the value of the root element definition from the specified artifact summary property bag, if available.</summary>
@@ -447,15 +449,15 @@ namespace Hl7.Fhir.Specification.Source
         /// Returns the definition text of the root element.
         /// Only applies to summaries of <see cref="StructureDefinition"/> resources.
         /// </remarks>
-        public static string GetStructureDefinitionRootDefinition(this IArtifactSummaryPropertyBag properties)
+        public static string? GetStructureDefinitionRootDefinition(this IArtifactSummaryPropertyBag properties)
            => properties.GetValueOrDefault<string>(RootDefinitionKey);
 
     }
 
     /// <summary>For harvesting specific summary information from a <see cref="CodeSystem"/> resource.</summary>
     public static class CodeSystemSummaryProperties
-    { 
-        static readonly string CodeSystemTypeName = ResourceType.CodeSystem.GetLiteral();
+    {
+        static readonly string CodeSystemTypeName = FhirTypeNames.CODESYSTEM_NAME;
 
         public static readonly string ValueSetKey = "CodeSystem.valueSet";
 
@@ -466,12 +468,12 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Harvest specific summary information from a <see cref="CodeSystem"/> resource.</summary>
         /// <returns><c>true</c> if the current target represents a <see cref="CodeSystem"/> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelInfo)
         {
             if (properties.IsCodeSystemSummary())
             {
                 // Explicit harvester chaining
-                if (ConformanceSummaryProperties.Harvest(nav, properties))
+                if (ConformanceSummaryProperties.Harvest(nav, properties, modelInfo))
                 {
                     nav.HarvestValue(properties, ValueSetKey, "valueSet", "value");
                 }
@@ -482,31 +484,31 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Get the <c>CodeSystem.valueSet</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <see cref="CodeSystem"/> resources.</remarks>
-        public static string GetCodeSystemValueSet(this IArtifactSummaryPropertyBag properties)
+        public static string? GetCodeSystemValueSet(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(ValueSetKey);
     }
 
-    /// <summary>For harvesting specific summary information from a <see cref="ConceptMap"/> resource.</summary>
+    /// <summary>For harvesting specific summary information from a <c>ConceptMap</c> resource.</summary>
     public static class ConceptMapSummaryProperties
     {
-        static readonly string ConceptMapTypeName = ResourceType.ConceptMap.GetLiteral();
+        static readonly string ConceptMapTypeName = FhirTypeNames.CONCEPTMAP_NAME;
 
         public static readonly string SourceKey = "ConceptMap.source";
         public static readonly string TargetKey = "ConceptMap.target";
 
-        /// <summary>Determines if the specified instance represents summary information about a <see cref="ConceptMap"/> resource.</summary>
+        /// <summary>Determines if the specified instance represents summary information about a <c>ConceptMap</c> resource.</summary>
         public static bool IsConceptMapSummary(this IArtifactSummaryPropertyBag properties)
             => properties.GetTypeName() == ConceptMapTypeName;
 
-        /// <summary>Harvest specific summary information from a <see cref="ConceptMap"/> resource.</summary>
-        /// <returns><c>true</c> if the current target represents a <see cref="ConceptMap"/> resource, or <c>false</c> otherwise.</returns>
+        /// <summary>Harvest specific summary information from a <c>ConceptMap</c> resource.</summary>
+        /// <returns><c>true</c> if the current target represents a <c>ConceptMap</c> resource, or <c>false</c> otherwise.</returns>
         /// <remarks>The <see cref="ArtifactSummaryGenerator"/> calls this method from a <see cref="ArtifactSummaryHarvester"/> delegate.</remarks>
-        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties)
+        public static bool Harvest(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelInfo)
         {
             if (IsConceptMapSummary(properties))
             {
                 // Explicit harvester chaining
-                if (ConformanceSummaryProperties.Harvest(nav, properties))
+                if (ConformanceSummaryProperties.Harvest(nav, properties, modelInfo))
                 {
                     if (!nav.HarvestValue(properties, SourceKey, "sourceUri"))
                     {
@@ -524,13 +526,14 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Get the <c>ConceptMap.source[x]</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="ConceptMap"/> resources.</remarks>
-        public static string GetConceptMapSource(this IArtifactSummaryPropertyBag properties)
+        /// <remarks>Only applies to summaries of <c>ConceptMap</c> resources.</remarks>
+        public static string? GetConceptMapSource(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(SourceKey);
 
         /// <summary>Get the <c>ConceptMap.target[x]</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of <see cref="ConceptMap"/> resources.</remarks>
-        public static string GetConceptMapTarget(this IArtifactSummaryPropertyBag properties)
+        /// <remarks>Only applies to summaries of <c>ConceptMap</c> resources.</remarks>
+        public static string? GetConceptMapTarget(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(TargetKey);
     }
 }
+#nullable restore

@@ -30,9 +30,9 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Returns a list of <see cref="ArtifactSummary"/> instances for resources of the specified <see cref="ResourceType"/>.</summary>
         /// <param name="source">A <see cref="ISummarySource"/> instance.</param>
-        /// <param name="resourceType">A <see cref="ResourceType"/> enum value.</param>
+        /// <param name="resourceTypeName">name of the Resource</param>
         /// <returns>A sequence of <see cref="ArtifactSummary"/> instances.</returns>
-        public static IEnumerable<ArtifactSummary> ListSummaries(this ISummarySource source, ResourceType resourceType)
-            => source.ListSummaries().OfResourceType(resourceType);
+        public static IEnumerable<ArtifactSummary> ListSummaries(this ISummarySource source, string resourceTypeName)
+            => source.ListSummaries().OfResourceType(resourceTypeName);
     }
 }

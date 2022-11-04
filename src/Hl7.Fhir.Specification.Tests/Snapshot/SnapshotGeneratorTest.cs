@@ -2718,25 +2718,17 @@ namespace Hl7.Fhir.Specification.Tests
             // Start at root types without a base (Element, Extension), then recursively expand derived types
 
             var result = true;
-            var source = new DirectorySource("TestData/snapshot-test");
-            var resolver = new CachedResolver(source); // IMPORTANT!
+            var resolver = new CachedResolver(FhirPackageSource.CreateFhirCorePackageSource());
 
             _generator = new SnapshotGenerator(resolver, _settings);
             _generator.PrepareElement += elementHandler;
 
             try
             {
-                // HACK! CachedResolver doesn't expose LoadArtifactByName
-                // So first enumerate source to get url's, then enumerate CachedResolver to persist snapshots (!)
-                ProfileInfo[] coreProfileInfo;
-                using (var stream = source.LoadArtifactByName("profiles-types.xml"))
-                {
-                    // var coreDefs = EnumerateBundleStream<StructureDefinition>(stream).ToList();
-                    // expandCoreProfilesDerivedFrom(coreDefs, null);
+                var coreTypes = ModelInfo.FhirCsTypeToString.Values.Where(s => ModelInfo.IsPrimitive(s) || ModelInfo.IsDataType(s));
+                var coreDefs = await T.Task.WhenAll(coreTypes.Select(ct => resolver.FindStructureDefinitionForCoreTypeAsync(ct)));
+                ProfileInfo[] coreProfileInfo = coreDefs.Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
 
-                    var coreDefs = enumerateBundleStream<StructureDefinition>(stream);
-                    coreProfileInfo = coreDefs.Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
-                }
                 await expandStructuresBasedOn(resolver, coreProfileInfo, null);
             }
             finally

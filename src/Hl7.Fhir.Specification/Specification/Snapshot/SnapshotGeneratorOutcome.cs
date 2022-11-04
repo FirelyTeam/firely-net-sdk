@@ -8,14 +8,12 @@
 
 // #define FIX_SLICENAMES_ON_SPECIALIZATIONS
 
-using System;
-using System.Diagnostics;
-using System.Linq;
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
+using System.Diagnostics;
+using System.Linq;
 
 #pragma warning disable 1591 // suppress XML summary warnings
 
@@ -98,7 +96,7 @@ namespace Hl7.Fhir.Specification.Snapshot
             Debug.Assert(baseName != null);
             var location = FormatLocation(elementDef);
             return PROFILE_ELEMENTDEF_INVALID_CHOICETYPE_NAME.ToIssueComponent(
-                $"Element {location} has an invalid name. The profile should specify the inherited element name '{baseName}'.", 
+                $"Element {location} has an invalid name. The profile should specify the inherited element name '{baseName}'.",
                 location
             );
         }
@@ -268,7 +266,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         OperationOutcome.IssueComponent addIssueInvalidProfileType(ElementDefinition elementDef, StructureDefinition profile)
         {
             var location = FormatLocation(elementDef);
-            var elemType = elementDef.PrimaryTypeCode();
+            var elemType = elementDef.GetTypeCode();
             var profileType = profile.Type;
             return addIssue(
                 PROFILE_ELEMENTDEF_INVALID_PROFILE_TYPE.ToIssueComponent(

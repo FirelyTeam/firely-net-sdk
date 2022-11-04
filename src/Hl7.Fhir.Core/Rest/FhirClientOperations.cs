@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Rest
         {
             Parameters par = createTranslateConceptParams(code, system, version, valueSet, coding, codeableConcept, target, dependencies);
 
-            return OperationResult<Parameters>(await client.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, par).ConfigureAwait(false));
+            return OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, par).ConfigureAwait(false));
         }
 
         public static Parameters TranslateConcept(this BaseFhirClient client, Code code, FhirUri system, FhirString version,

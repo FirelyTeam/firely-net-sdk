@@ -9,8 +9,8 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Source;
 using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -22,11 +22,6 @@ namespace Hl7.Fhir.Specification.Tests
             TimeSpan _duration = TimeSpan.Zero;
 
             public TimingSource(IConformanceSource source) { _source = source; }
-
-            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-                => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
-
-            public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
 
             public CodeSystem FindCodeSystemByValueSet(string system) => measureDuration(() => _source.FindCodeSystemByValueSet(system));
 

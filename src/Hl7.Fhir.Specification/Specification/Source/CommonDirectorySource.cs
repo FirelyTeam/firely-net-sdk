@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Source
             _settings = settings != null
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
                 : DirectorySourceSettings.CreateDefault();
-            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
+            _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts, inspector);
             _navigatorFactory = new ConfigurableNavigatorStreamFactory(_settings.XmlParserSettings, _settings.JsonParserSettings)
             {
                 ThrowOnUnsupportedFormat = false
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
             // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
-            return GetSummaries().OfResourceType(filter).Select(dsi => dsi.ResourceUri);
+            return GetSummaries().OfResourceType(filter?.GetLiteral()).Select(dsi => dsi.ResourceUri);
         }
 
         /// <summary>
@@ -553,34 +553,21 @@ namespace Hl7.Fhir.Specification.Source
         public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
         {
             if (valueSetUri == null) throw Error.ArgumentNull(nameof(valueSetUri));
-            var summary = GetSummaries().ResolveCodeSystem(valueSetUri);
+            var summary = GetSummaries().ResolveCodeSystem(valueSetUri, _inspector);
             return loadResourceInternal<CodeSystem>(summary);
         }
 
-        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
-        /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
-        /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
-        /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-        {
-            if (sourceUri == null && targetUri == null)
-            {
-                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} arguments cannot both be null");
-            }
-            var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
-        }
+        /// <summary>
+        /// This method is obsolete. Please use the class <c>ConformanceDirectorySource</c>
+        /// </summary>
+        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceDirectorySource")]
+        public IEnumerable<Resource> FindConceptMaps(string sourceUri = null, string targetUri = null) => Enumerable.Empty<Resource>();
 
-        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
-        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
-        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
-        public NamingSystem FindNamingSystem(string uniqueId)
-        {
-            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
-            var summary = GetSummaries().ResolveNamingSystem(uniqueId);
-            return loadResourceInternal<NamingSystem>(summary);
-        }
+        /// <summary>
+        /// This method is obsolete. Please use the class <c>ConformanceDirectorySource</c>
+        /// </summary>
+        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceDirectorySource")]
+        public Resource FindNamingSystem(string uniqueId) => null;
 
         #endregion
 
@@ -623,7 +610,7 @@ namespace Hl7.Fhir.Specification.Source
         public Resource ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByUri(uri);
+            var summary = GetSummaries().ResolveByUri(uri, _inspector);
             return loadResourceInternal<Resource>(summary);
         }
 
@@ -632,7 +619,7 @@ namespace Hl7.Fhir.Specification.Source
         public Resource ResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
-            var summary = GetSummaries().ResolveByCanonicalUri(uri);
+            var summary = GetSummaries().ResolveByCanonicalUri(uri, _inspector);
             return loadResourceInternal<Resource>(summary);
         }
 
@@ -917,7 +904,7 @@ namespace Hl7.Fhir.Specification.Source
                     // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
                     // Or unwrap all inner exceptions?
                     // scanResult.Add(ArtifactSummary.FromException(aex));
-                    scanResult.AddRange(aex.InnerExceptions.Select(ArtifactSummary.FromException));
+                    scanResult.AddRange(aex.InnerExceptions.Select(e => ArtifactSummary.FromException(e, _inspector)));
                 }
                 // Aggregate completed results into single list
                 scanResult.AddRange(summaries.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
@@ -927,7 +914,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Returns <c>null</c> if the specified <paramref name="summary"/> equals <c>null</c>.</summary>
-        T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
+        protected T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
         {
             if (summary == null) { return null; }
 
@@ -1026,5 +1013,4 @@ namespace Hl7.Fhir.Specification.Source
             + (IncludeSubDirectories ? " (with subdirs)" : null)
             + (_lazyArtifactSummaries.IsValueCreated ? $" {_lazyArtifactSummaries.Value.Count} resources" : " (summaries not yet loaded)");
     }
-
 }

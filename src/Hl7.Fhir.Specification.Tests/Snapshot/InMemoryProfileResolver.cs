@@ -3,7 +3,7 @@ using Hl7.Fhir.Specification.Source;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using T=System.Threading.Tasks;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -45,12 +45,6 @@ namespace Hl7.Fhir.Specification.Tests
         #region IConformanceResource
 
         public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
-            => throw new NotImplementedException();
-
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-            => throw new NotImplementedException();
-
-        public NamingSystem FindNamingSystem(string uniqueid)
             => throw new NotImplementedException();
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default)

@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -25,6 +26,10 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const string SpecificationZipFileName = "specification.zip";
 
+        /// <summary>
+        /// Factory method to create a specific DirectorySource
+        /// </summary>
+        protected Func<ModelInspector, string, DirectorySourceSettings, CommonDirectorySource> directorySourceFactory = (inspector, contentDirectory, settings) => new CommonDirectorySource(inspector, contentDirectory, settings);
 
         private string _mask;
         // [WMR 20171102] Use Lazy<T> for thread-safe initialization
@@ -136,18 +141,18 @@ namespace Hl7.Fhir.Specification.Source
         /// </remarks>
         public CodeSystem FindCodeSystemByValueSet(string valueSetUri) => FileSource.FindCodeSystemByValueSet(valueSetUri);
 
-        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
-        /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
-        /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
-        /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-            => FileSource.FindConceptMaps(sourceUri, targetUri);
+        /// <summary>
+        /// This method is obsolete. Please use the class <c>ConformanceZipSource</c>
+        /// </summary>
+        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceZipSource")]
+        public IEnumerable<Resource> FindConceptMaps(string sourceUri = null, string targetUri = null)
+            => Enumerable.Empty<Resource>();
 
-        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
-        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
-        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
-        public NamingSystem FindNamingSystem(string uniqueId) => FileSource.FindNamingSystem(uniqueId);
+        /// <summary>
+        /// This method is obsolete. Please use the class <c>ConformanceZipSource</c>
+        /// </summary>
+        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceZipSource")]
+        public Resource FindNamingSystem(string uniqueId) => null;
 
         #endregion
 
@@ -204,7 +209,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             var zc = new ZipCacher(ZipPath, GetCacheKey());
-            var source = new CommonDirectorySource(_inspector, zc.GetContentDirectory(), _settings);
+            var source = directorySourceFactory(_inspector, zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))

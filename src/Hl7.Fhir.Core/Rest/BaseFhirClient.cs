@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
-            string collection = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
+            string collection = _inspector.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
 
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Rest
 
             // [WMR 20160421] GetResourceNameForType is obsolete
             // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            var typeName = ModelInfoNEW.GetFhirTypeNameForType(typeof(TResource));
+            var typeName = _inspector.GetFhirTypeNameForType(typeof(TResource));
 
             return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet);
         }
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = await request.ToEntryRequestAsync(Settings, _fhirVersion).ConfigureAwait(false);
+            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, _fhirVersion).ConfigureAwait(false);
 
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);

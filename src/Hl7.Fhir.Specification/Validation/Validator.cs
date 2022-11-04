@@ -11,6 +11,7 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Validation
             {
                 OnSnapshotNeeded = this.OnSnapshotNeeded,
                 OnExternalResolutionNeeded = this.OnExternalResolutionNeeded,
+                modelInspector = this.modelInspector,
 
 #if REUSE_SNAPSHOT_GENERATOR
                 _snapshotGenerator = this._snapshotGenerator
@@ -83,31 +85,31 @@ namespace Hl7.Fhir.Validation
             };
         }
 
-        public OperationOutcome Validate(ITypedElement instance)
+        public OperationOutcome Validate(ITypedElement instance, ModelInspector inspector)
         {
             var state = new ValidationState();
-            var result = ValidateInternal(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null, state: state)
+            var result = ValidateInternal(instance, declaredTypeProfile: null, statedCanonicals: null, statedProfiles: null, state: state, inspector: inspector)
                 .RemoveDuplicateMessages();
             result.SetAnnotation(state);
             return result;
         }
 
-        public OperationOutcome Validate(ITypedElement instance, params string[] definitionUris) =>
-            Validate(instance, (IEnumerable<string>)definitionUris);
+        public OperationOutcome Validate(ITypedElement instance, ModelInspector inspector, params string[] definitionUris) =>
+            Validate(instance, inspector, (IEnumerable<string>)definitionUris);
 
-        public OperationOutcome Validate(ITypedElement instance, IEnumerable<string> definitionUris)
+        public OperationOutcome Validate(ITypedElement instance, ModelInspector inspector, IEnumerable<string> definitionUris)
         {
             var state = new ValidationState();
-            var result = ValidateInternal(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null, state: state)
+            var result = ValidateInternal(instance, declaredTypeProfile: null, statedCanonicals: definitionUris, statedProfiles: null, state: state, inspector: inspector)
                 .RemoveDuplicateMessages();
             result.SetAnnotation(state);
             return result;
         }
 
-        public OperationOutcome Validate(ITypedElement instance, params StructureDefinition[] structureDefinitions) =>
-            Validate(instance, (IEnumerable<StructureDefinition>)structureDefinitions);
+        public OperationOutcome Validate(ITypedElement instance, ModelInspector inspector, params StructureDefinition[] structureDefinitions) =>
+            Validate(instance, inspector, (IEnumerable<StructureDefinition>)structureDefinitions);
 
-        public OperationOutcome Validate(ITypedElement instance, IEnumerable<StructureDefinition> structureDefinitions)
+        public OperationOutcome Validate(ITypedElement instance, ModelInspector inspector, IEnumerable<StructureDefinition> structureDefinitions)
         {
             var state = new ValidationState();
             var result = ValidateInternal(
@@ -115,10 +117,15 @@ namespace Hl7.Fhir.Validation
                 declaredTypeProfile: null,
                 statedCanonicals: null,
                 statedProfiles: structureDefinitions,
-                state: state).RemoveDuplicateMessages();
+                state: state,
+                inspector: inspector).RemoveDuplicateMessages();
             result.SetAnnotation(state);
             return result;
         }
+
+        // This is a bit ugly. But we know that this code will not stay forever here, so we allow it. With the new validator
+        // this will be gone.
+        internal ModelInspector modelInspector = null;
 
         // This is the one and only main entry point for all external validation calls (i.e. invoked by the user of the API)
         internal OperationOutcome ValidateInternal(
@@ -126,8 +133,10 @@ namespace Hl7.Fhir.Validation
             string declaredTypeProfile,
             IEnumerable<string> statedCanonicals,
             IEnumerable<StructureDefinition> statedProfiles,
-            ValidationState state)
+            ValidationState state,
+            ModelInspector inspector)
         {
+            modelInspector = inspector;
             var resolutionContext = instance switch
             {
                 { InstanceType: "Extension" } when instance.Name == "modifierExtension" => ProfileAssertion.ResolutionContext.InModifierExtension,
@@ -135,7 +144,7 @@ namespace Hl7.Fhir.Validation
                 _ => ProfileAssertion.ResolutionContext.Elsewhere
             };
 
-            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping, resolutionContext);
+            var processor = new ProfilePreprocessor(profileResolutionNeeded, snapshotGenerationNeeded, instance, declaredTypeProfile, statedProfiles, statedCanonicals, Settings.ResourceMapping, resolutionContext, modelInspector);
             var outcome = processor.Process();
 
             // Note: only start validating if the profiles are complete and consistent
@@ -311,7 +320,7 @@ namespace Hl7.Fhir.Validation
                 // See issue https://github.com/FirelyTeam/firely-net-sdk/issues/1563 and https://hl7.org/fhir/datatypes.html#string 
                 // the regex provided by the Fhir standard is not sufficient enough. The regex [\r\n\t\u0020-\uFFFF]* is more recommended
                 // The regex defined for string also applies to markdown
-                if ((instance?.InstanceType == FHIRAllTypes.String.GetLiteral() || instance?.InstanceType == FHIRAllTypes.Markdown.GetLiteral()) && pattern == @"[ \r\n\t\S]+")
+                if ((instance?.InstanceType == FhirTypeNames.STRING_NAME || instance?.InstanceType == FhirTypeNames.MARKDOWN_NAME) && pattern == @"[ \r\n\t\S]+")
                 {
                     pattern = @"[\r\n\t\u0020-\uFFFF]*";
                 }
@@ -487,7 +496,7 @@ namespace Hl7.Fhir.Validation
                 {
                     var poco = Settings.ResourceResolver.ResolveByUri(reference);
                     if (poco != null)
-                        return poco.ToTypedElement();
+                        return poco.ToTypedElement(modelInspector);
                 }
                 catch (Exception e)
                 {
@@ -526,7 +535,7 @@ namespace Hl7.Fhir.Validation
 
 #if DEBUG
                 // TODO: Validation Async Support
-                string xml = (new FhirXmlSerializer()).SerializeToString(definition);
+                string xml = (new CommonFhirXmlSerializer(modelInspector)).SerializeToString(definition);
                 string name = definition.Id ?? definition.Name.Replace(" ", "").Replace("/", "");
                 var dir = Path.Combine(Path.GetTempPath(), "validation");
 
@@ -569,17 +578,6 @@ namespace Hl7.Fhir.Validation
                    t == typeof(UnsignedInt) ||
                    t == typeof(Model.Quantity) ||
                    t == typeof(FhirString);
-        }
-
-        public static bool IsBindeableFhirType(this FHIRAllTypes t)
-        {
-            return t == FHIRAllTypes.Code ||
-                   t == FHIRAllTypes.Coding ||
-                   t == FHIRAllTypes.CodeableConcept ||
-                   t == FHIRAllTypes.Quantity ||
-                   t == FHIRAllTypes.Extension ||
-                   t == FHIRAllTypes.String ||
-                   t == FHIRAllTypes.Uri;
         }
     }
 

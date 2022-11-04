@@ -31,8 +31,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             source = ZipSource.CreateValidationSource();
         }
-
-        static ZipSource source = null;
+        // TODO BIG_COMMON 
+        // These unit tests do not work on FhirPackageSource. This has nothing todo with the big refactor work, but more with FhirPackageSource itself.
+        private static ZipSource source = null;
 
 
         [TestMethod]
