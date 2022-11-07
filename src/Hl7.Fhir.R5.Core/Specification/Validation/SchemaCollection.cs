@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Constructs a SchemaCollection which retrieves XML schemas from the given <see cref="IArtifactSource"/>.
         /// </summary>
-        [Obsolete("The FHIR-supplied XSD schemas in SchemaCollection are now shipped as embedded resources, so you can no longer use a specific IArtifactSource to reada from.")]
+        [Obsolete("The FHIR-supplied XSD schemas in SchemaCollection are now shipped as embedded resources, so you can no longer use a specific IArtifactSource to read from.")]
         public SchemaCollection(IArtifactSource _) : this()
         {
             // Nothing
