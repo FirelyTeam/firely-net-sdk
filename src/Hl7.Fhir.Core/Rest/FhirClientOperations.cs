@@ -166,21 +166,11 @@ namespace Hl7.Fhir.Rest
         //[base]/$meta
         public static async Task<Meta> MetaAsync(this BaseFhirClient client)
         {
-            return extractMeta(OperationResult<Parameters>(await client.WholeSystemOperationAsync(RestOperation.META, useGet: true).ConfigureAwait(false)));
+            return ExtractMeta(OperationResult<Parameters>(await client.WholeSystemOperationAsync(RestOperation.META, useGet: true).ConfigureAwait(false)));
         }
         public static Meta Meta(this BaseFhirClient client)
         {
             return MetaAsync(client).WaitResult();
-        }
-
-        //[base]/Resource/$meta
-        public static async Task<Meta> MetaAsync(this BaseFhirClient client, ResourceType type)
-        {
-            return extractMeta(OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.META, type.ToString(), useGet: true).ConfigureAwait(false)));
-        }
-        public static Meta Meta(this BaseFhirClient client, ResourceType type)
-        {
-            return MetaAsync(client, type).WaitResult();
         }
 
         //[base]/Resource/id/$meta/[_history/vid]
@@ -189,7 +179,7 @@ namespace Hl7.Fhir.Rest
             Resource result;
             result = await client.InstanceOperationAsync(location, RestOperation.META, useGet: true).ConfigureAwait(false);
 
-            return extractMeta(OperationResult<Parameters>(result));
+            return ExtractMeta(OperationResult<Parameters>(result));
         }
         public static Meta Meta(this BaseFhirClient client, Uri location)
         {
@@ -208,7 +198,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> AddMetaAsync(this BaseFhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return extractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_ADD, par).ConfigureAwait(false)));
+            return ExtractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_ADD, par).ConfigureAwait(false)));
         }
         public static Meta AddMeta(this BaseFhirClient client, Uri location, Meta meta)
         {
@@ -228,7 +218,7 @@ namespace Hl7.Fhir.Rest
         public static async Task<Meta> DeleteMetaAsync(this BaseFhirClient client, Uri location, Meta meta)
         {
             var par = new Parameters().Add("meta", meta);
-            return extractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_DELETE, par).ConfigureAwait(false)));
+            return ExtractMeta(OperationResult<Parameters>(await client.InstanceOperationAsync(location, RestOperation.META_DELETE, par).ConfigureAwait(false)));
         }
 
         public static Meta DeleteMeta(this BaseFhirClient client, Uri location, Meta meta)
@@ -340,7 +330,7 @@ namespace Hl7.Fhir.Rest
             throw Error.InvalidOperation($"Operation did not return a {typeof(T).Name} but a {result.GetType().Name}");
         }
 
-        private static Meta extractMeta(Parameters parms)
+        internal static Meta ExtractMeta(Parameters parms)
         {
             if (!parms.Parameter.IsNullOrEmpty())
             {

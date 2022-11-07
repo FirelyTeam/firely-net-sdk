@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class CommonDirectorySource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
+    public class CommonDirectorySource : ISummarySource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         private static readonly StringComparer PathComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison PathComparison = StringComparison.InvariantCultureIgnoreCase;
@@ -529,18 +529,6 @@ namespace Hl7.Fhir.Specification.Source
 
         #endregion
 
-        #region IConformanceSource
-
-        /// <summary>List all resource uris, optionally filtered by type.</summary>
-        /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
-        {
-            // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
-            // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
-            return GetSummaries().OfResourceType(filter?.GetLiteral()).Select(dsi => dsi.ResourceUri);
-        }
-
         /// <summary>
         /// Find a <see cref="CodeSystem"/> resource by a <see cref="ValueSet"/> canonical url that contains all codes from that codesystem.
         /// </summary>
@@ -556,20 +544,6 @@ namespace Hl7.Fhir.Specification.Source
             var summary = GetSummaries().ResolveCodeSystem(valueSetUri, _inspector);
             return loadResourceInternal<CodeSystem>(summary);
         }
-
-        /// <summary>
-        /// This method is obsolete. Please use the class <c>ConformanceDirectorySource</c>
-        /// </summary>
-        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceDirectorySource")]
-        public IEnumerable<Resource> FindConceptMaps(string sourceUri = null, string targetUri = null) => Enumerable.Empty<Resource>();
-
-        /// <summary>
-        /// This method is obsolete. Please use the class <c>ConformanceDirectorySource</c>
-        /// </summary>
-        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceDirectorySource")]
-        public Resource FindNamingSystem(string uniqueId) => null;
-
-        #endregion
 
         #region ISummarySource
 

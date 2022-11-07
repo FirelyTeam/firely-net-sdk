@@ -49,6 +49,8 @@ namespace Hl7.Fhir.Specification.Tests
 
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default)
             => _resources.Select(g => g.Key);
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
+        public NamingSystem FindNamingSystem(string uniqueId) => throw new NotImplementedException();
         #endregion
     }
 

@@ -14,7 +14,7 @@ using System.Linq;
 namespace Hl7.Fhir.Specification.Source
 {
     /// <inheritdoc/>
-    public class DirectorySource : CommonDirectorySource
+    public class DirectorySource : CommonDirectorySource, IConformanceSource
     {
         /// <inheritdoc/>
         public DirectorySource() : base(ModelInfo.ModelInspector)
@@ -36,12 +36,9 @@ namespace Hl7.Fhir.Specification.Source
         {
         }
 
-        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
-        /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
-        /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
-        /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
-        public new IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+        #region IConformanceSource
+        /// <inheritdoc/>
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
         {
             if (sourceUri == null && targetUri == null)
             {
@@ -51,15 +48,21 @@ namespace Hl7.Fhir.Specification.Source
             return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
         }
 
-        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
-        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
-        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
-        public new NamingSystem FindNamingSystem(string uniqueId)
+        /// <inheritdoc/>
+        public NamingSystem FindNamingSystem(string uniqueId)
         {
             if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
             var summary = GetSummaries().ResolveNamingSystem(uniqueId, ModelInfo.ModelInspector);
             return loadResourceInternal<NamingSystem>(summary);
         }
 
+        /// <inheritdoc/>
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
+        {
+            // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
+            // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
+            return GetSummaries().OfResourceType(filter?.GetLiteral()).Select(dsi => dsi.ResourceUri);
+        }
+        #endregion
     }
 }

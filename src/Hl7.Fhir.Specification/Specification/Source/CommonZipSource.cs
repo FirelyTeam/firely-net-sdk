@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -22,7 +21,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="CommonDirectorySource"/>.</remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class CommonZipSource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
+    public class CommonZipSource : ISummarySource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         public const string SpecificationZipFileName = "specification.zip";
 
@@ -95,9 +94,6 @@ namespace Hl7.Fhir.Specification.Source
             }
         }
 
-        /// <summary>Returns a reference to the internal <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
-        public IConformanceSource Source => _lazySource.Value;
-
         /// <summary>Returns a reference to the internal <see cref="CommonDirectorySource"/> that exposes the contents of the ZIP archive.</summary>
         protected CommonDirectorySource FileSource => _lazySource.Value;
 
@@ -119,40 +115,6 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Load the artifact with the specified filename.</summary>
         /// <param name="name">The filename of the artifact.</param>
         public Stream LoadArtifactByName(string name) => FileSource.LoadArtifactByName(name);
-
-        #endregion
-
-        #region IConformanceSource
-
-        /// <summary>List all resource uris, optionally filtered by type.</summary>
-        /// <param name="filter">A <see cref="ResourceType"/> enum value.</param>
-        /// <returns>A <see cref="IEnumerable{T}"/> sequence of uri strings.</returns>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default)
-            => FileSource.ListResourceUris(filter);
-
-        /// <summary>
-        /// Find a <see cref="CodeSystem"/> resource by a <see cref="ValueSet"/> canonical url that contains all codes from that codesystem.
-        /// </summary>
-        /// <param name="valueSetUri">The canonical uri of a <see cref="ValueSet"/> resource.</param>
-        /// <returns>A <see cref="CodeSystem"/> resource, or <c>null</c>.</returns>
-        /// <remarks>
-        /// It is very common for valuesets to represent all codes from a specific/smaller code system.
-        /// These are indicated by he CodeSystem.valueSet element, which is searched here.
-        /// </remarks>
-        public CodeSystem FindCodeSystemByValueSet(string valueSetUri) => FileSource.FindCodeSystemByValueSet(valueSetUri);
-
-        /// <summary>
-        /// This method is obsolete. Please use the class <c>ConformanceZipSource</c>
-        /// </summary>
-        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceZipSource")]
-        public IEnumerable<Resource> FindConceptMaps(string sourceUri = null, string targetUri = null)
-            => Enumerable.Empty<Resource>();
-
-        /// <summary>
-        /// This method is obsolete. Please use the class <c>ConformanceZipSource</c>
-        /// </summary>
-        [Obsolete(message: "This method is obsolete. It has been moved to the class ConformanceZipSource")]
-        public Resource FindNamingSystem(string uniqueId) => null;
 
         #endregion
 

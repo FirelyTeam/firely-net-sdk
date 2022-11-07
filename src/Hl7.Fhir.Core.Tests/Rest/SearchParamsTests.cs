@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
@@ -446,7 +447,7 @@ namespace Hl7.Fhir.Test.Rest
             var sp = ModelInfo.SearchParameters.Where(s => s.Resource == resource && s.Name == spName).FirstOrDefault();
             if (sp is not null)
             {
-                Assert.IsFalse(sp.Target.Contains(targetResource),
+                Assert.IsFalse(sp.Target.Contains(targetResource.GetLiteral()),
                     $"Manualy removed target {targetResource} from searchparameter {resource}.{spName}. Commit: {commit}");
             }
         }

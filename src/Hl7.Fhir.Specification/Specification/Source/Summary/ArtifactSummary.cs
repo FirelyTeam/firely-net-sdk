@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Specification.Source
         public bool IsFaulted => Error != null; // cf. Task
 
         /// <summary>Indicates if the summary describes a valid FHIR resource.</summary>
-        /// <value>Returns <c>true</c> if <see cref="ResourceType"/> is known (not <c>null</c>), or <c>false</c> otherwise.</value>
+        /// <value>Returns <c>true</c> if <see cref="ResourceTypeName"/> is known (not <c>null</c>), or <c>false</c> otherwise.</value>
         public bool IsFhirResource => ResourceTypeName is not null && _modelInfo.IsCoreModelType(ResourceTypeName);
 
         /// <summary>Gets the original location of the associated artifact.</summary>

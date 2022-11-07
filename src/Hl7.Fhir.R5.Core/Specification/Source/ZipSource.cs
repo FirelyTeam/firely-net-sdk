@@ -1,10 +1,11 @@
 ﻿using Hl7.Fhir.Model;
 using System.Collections.Generic;
 using System.IO;
+using File = System.IO.File;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    public class ZipSource : CommonZipSource
+    public class ZipSource : CommonZipSource, IConformanceSource
     {
         public ZipSource(string zipPath) : base(ModelInfo.ModelInspector, zipPath)
         {
@@ -15,6 +16,9 @@ namespace Hl7.Fhir.Specification.Source
         {
             directorySourceFactory = (inspector, contentDirectory, settings) => new DirectorySource(contentDirectory, settings);
         }
+
+        /// <summary>Returns a reference to the internal <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
+        public IConformanceSource Source => DirectorySource;
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
         /// found in the path passed to this function.</summary>
@@ -37,17 +41,19 @@ namespace Hl7.Fhir.Specification.Source
 
         private DirectorySource DirectorySource => FileSource as DirectorySource;
 
-        /// <summary>Find <see cref="ConceptMap"/> resources which map from the given source to the given target.</summary>
-        /// <param name="sourceUri">An uri that is either the source uri, source ValueSet system or source StructureDefinition canonical url for the map.</param>
-        /// <param name="targetUri">An uri that is either the target uri, target ValueSet system or target StructureDefinition canonical url for the map.</param>
-        /// <returns>A sequence of <see cref="ConceptMap"/> resources.</returns>
-        /// <remarks>Either sourceUri may be null, or targetUri, but not both</remarks>
-        public new IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+        #region IConformanceSource
+        /// <inheritdoc/>
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
             => DirectorySource.FindConceptMaps(sourceUri, targetUri);
 
-        /// <summary>Finds a <see cref="NamingSystem"/> resource by matching any of a system's UniqueIds.</summary>
-        /// <param name="uniqueId">The unique id of a <see cref="NamingSystem"/> resource.</param>
-        /// <returns>A <see cref="NamingSystem"/> resource, or <c>null</c>.</returns>
-        public new NamingSystem FindNamingSystem(string uniqueId) => DirectorySource.FindNamingSystem(uniqueId);
+        /// <inheritdoc/>
+        public NamingSystem FindNamingSystem(string uniqueId) => DirectorySource.FindNamingSystem(uniqueId);
+
+        /// <inheritdoc/>
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = default) => DirectorySource.ListResourceUris(filter);
+
+        /// <inheritdoc/>
+        public CodeSystem FindCodeSystemByValueSet(string valueSetUri) => DirectorySource.FindCodeSystemByValueSet(valueSetUri);
+        #endregion
     }
 }
