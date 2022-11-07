@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Validation
     /// </summary>
     public static class XmlValidationExtensions
     {
-        private static XmlSchemaSet getSchemaSetFromSettings(Validator v) => v.Settings.XsdSchemaCollection?.MinimalSchemas ??
+        private static XmlSchemaSet getSchemaSetFromSettings(Validator v) => v.Settings.XsdSchemaCollection ??
                             SchemaCollection.ValidationSchemaSet;
 
         public static OperationOutcome Validate(this Validator me, XmlReader instance)
@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Validation
         private static OperationOutcome.IssueComponent ToIssueComponent(ValidationEventArgs args)
         {
             string message = $".NET Xsd validation {args.Severity}: {args.Message}";
-            string pos = $"line: { args.Exception.LineNumber}, pos: { args.Exception.LinePosition}";
+            string pos = $"line: {args.Exception.LineNumber}, pos: {args.Exception.LinePosition}";
 
             if (args.Severity == XmlSeverityType.Error)
                 return Issue.XSD_VALIDATION_ERROR.ToIssueComponent(message, pos);
