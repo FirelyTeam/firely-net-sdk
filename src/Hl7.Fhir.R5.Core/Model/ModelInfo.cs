@@ -266,7 +266,7 @@ namespace Hl7.Fhir.Model
         }
 
         /// <inheritdoc cref="IModelInfo.CanonicalUriForFhirCoreType(string)"/>
-        public static Canonical CanonicalUriForFhirCoreType(string typename) => Hl7.Fhir.Support.Poco.Model.ModelInfoExtensions.CanonicalUriForFhirCoreType(typename);
+        public static Canonical CanonicalUriForFhirCoreType(string typename) => Canonical.CanonicalUriForFhirCoreType(typename);
 
         /// <inheritdoc cref="IModelInfo.CanonicalUriForFhirCoreType(Type)"/>
         public static Canonical? CanonicalUriForFhirCoreType(Type type) => ModelInspector.CanonicalUriForFhirCoreType(type);

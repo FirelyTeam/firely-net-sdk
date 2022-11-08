@@ -6,9 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Rest
                     case CodeableConcept codeableConcept:
                         return codeableConcept.ToToken();
                     default:
-                        if (ModelInfoExtensions.IsPrimitive(parameter.Value.GetType()))
+                        if (ModelInspector.Common.IsPrimitive(parameter.Value.GetType()))
                         {
                             return parameter.Value.ToString();
                         }
