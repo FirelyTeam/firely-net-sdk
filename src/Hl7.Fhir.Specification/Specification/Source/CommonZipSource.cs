@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Specification.Source
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a ZIP archive. Thread-safe.</summary>
     /// <remarks>Extracts the ZIP archive to a temporary folder and delegates to the <see cref="CommonDirectorySource"/>.</remarks>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class CommonZipSource : ISummarySource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
+    public class CommonZipSource : ISummarySource, ICommonConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         public const string SpecificationZipFileName = "specification.zip";
 
@@ -116,6 +116,11 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="name">The filename of the artifact.</param>
         public Stream LoadArtifactByName(string name) => FileSource.LoadArtifactByName(name);
 
+        #endregion
+
+        #region ICommonConformanceSource
+        /// <inheritdoc/>
+        public CodeSystem FindCodeSystemByValueSet(string valueSetUri) => FileSource.FindCodeSystemByValueSet(valueSetUri);
         #endregion
 
         #region ISummarySource

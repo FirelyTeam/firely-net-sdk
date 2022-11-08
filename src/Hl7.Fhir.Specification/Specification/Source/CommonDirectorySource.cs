@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     /// <summary>Reads FHIR artifacts (Profiles, ValueSets, ...) from a directory on disk. Thread-safe.</summary>
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
-    public class CommonDirectorySource : ISummarySource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
+    public class CommonDirectorySource : ISummarySource, ICommonConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
         private static readonly StringComparer PathComparer = StringComparer.InvariantCultureIgnoreCase;
         private static readonly StringComparison PathComparison = StringComparison.InvariantCultureIgnoreCase;

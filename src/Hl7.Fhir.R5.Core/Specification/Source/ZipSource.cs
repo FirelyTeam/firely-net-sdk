@@ -51,9 +51,6 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <inheritdoc/>
         public IEnumerable<string> ListResourceUris(ResourceType? filter = default) => DirectorySource.ListResourceUris(filter);
-
-        /// <inheritdoc/>
-        public CodeSystem FindCodeSystemByValueSet(string valueSetUri) => DirectorySource.FindCodeSystemByValueSet(valueSetUri);
         #endregion
     }
 }
