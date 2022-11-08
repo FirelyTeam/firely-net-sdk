@@ -7,7 +7,10 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -24,5 +27,25 @@ namespace Hl7.Fhir.Specification.Source
         /// </summary>
         public static async T.Task<StructureDefinition> FindStructureDefinitionForCoreTypeAsync(this IAsyncResourceResolver resolver, FHIRAllTypes type)
             => await resolver.FindStructureDefinitionForCoreTypeAsync(ModelInfo.FhirTypeToFhirTypeName(type)).ConfigureAwait(false);
+
+        /// <summary>
+        /// Find all resources by resource type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source">The <see cref="IConformanceSource"/> </param>
+        /// <returns>All the resources by Resource Type in the <see cref="IConformanceSource"/>.</returns>
+        public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
+        {
+            var typeName = ModelInfo.GetFhirTypeNameForType(typeof(T));
+
+            if (typeName is not null)
+            {
+                var resourceType = EnumUtility.ParseLiteral<ResourceType>(typeName);
+                var uris = source.ListResourceUris(resourceType);
+                return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
+            }
+            else
+                return null;
+        }
     }
 }

@@ -15,6 +15,11 @@ namespace Hl7.Fhir.Specification.Tests
 
         public IConformanceSource Source => _source;
 
+        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+          => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
+
+        public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
+
         // public ValueSet FindValueSetBySystem(string system) => measureDuration(() => _source.FindValueSetBySystem(system));
 
         public CodeSystem FindCodeSystemByValueSet(string system) => measureDuration(() => _source.FindCodeSystemByValueSet(system));

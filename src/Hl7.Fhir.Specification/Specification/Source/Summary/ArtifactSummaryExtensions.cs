@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Source
             => summaries.Where(s => s.IsFaulted);
 
         /// <summary>
-        /// Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.
+        /// Filter <see cref="ArtifactSummary"/> instances for resources with the specified <paramref name="resourceTypeName"/>.
         /// If <paramref name="resourceTypeName"/> equals <c>null</c>, then filter summaries for all valid FHIR resources.
         /// </summary>
         public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, string? resourceTypeName)

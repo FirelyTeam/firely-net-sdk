@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
             Assert.AreNotEqual(0, entry.Rest[0].Resource.Count, "There is expected to be at least 1 resource defined in the conformance statement");
-            Assert.IsTrue(entry.Rest[0].Resource[0].Type.HasValue, "The resource type should be provided");
+            Assert.IsTrue(entry.Rest[0].Resource[0].Type is not null, "The resource type should be provided");
             Assert.AreNotEqual(0, entry.Rest[0].Operation.Count, "operations should be listed in the summary"); // actually operations are now a part of the summary
         }
 

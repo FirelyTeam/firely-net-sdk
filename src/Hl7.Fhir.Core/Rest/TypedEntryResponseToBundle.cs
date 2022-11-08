@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Rest
             {
                 var id = new ResourceIdentity(responseUri);
 
-                if (id.ResourceType != ResourceType.Binary.ToString()) return false;
+                if (id.ResourceType != FhirTypeNames.BINARY_NAME) return false;
 
                 if (id.Id != null && Id.IsValidValue(id.Id)) return true;
                 if (id.VersionId != null && Id.IsValidValue(id.VersionId)) return true;
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Rest
         }
 
         internal static Binary MakeBinaryResource(byte[] data, string contentType) =>
-            new Binary
+            new()
             {
                 //Content is for STU3, from R4 Content has changed into Data
                 Data = data,

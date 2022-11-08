@@ -22,6 +22,10 @@ namespace Hl7.Fhir.Specification.Tests
             TimeSpan _duration = TimeSpan.Zero;
 
             public TimingSource(IConformanceSource source) { _source = source; }
+            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
+               => measureDuration(() => _source.FindConceptMaps(sourceUri, targetUri));
+
+            public NamingSystem FindNamingSystem(string uniqueid) => measureDuration(() => _source.FindNamingSystem(uniqueid));
 
             public CodeSystem FindCodeSystemByValueSet(string system) => measureDuration(() => _source.FindCodeSystemByValueSet(system));
 
@@ -60,6 +64,7 @@ namespace Hl7.Fhir.Specification.Tests
                 var snapshotAvg = snapshotMs / count;
                 Console.WriteLine($"Average per resource: {totalAvg} = {resolverAvg} ms (resolver) + {snapshotAvg} ms (snapshot)");
             }
+
 
         }
     }
