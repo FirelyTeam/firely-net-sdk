@@ -21,6 +21,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
+using static Hl7.Fhir.Model.ModelInfo;
 
 namespace Hl7.Fhir.Test.Validation
 {
