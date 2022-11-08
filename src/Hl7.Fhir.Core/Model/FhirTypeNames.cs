@@ -3,6 +3,7 @@
     internal class FhirTypeNames
     {
         public const string PATIENT_NAME = "Patient";
+        public const string BINARY_NAME = "Binary";
         public const string EXTENSION_NAME = "Extension";
         public const string SIMPLEQUANTITY_NAME = "SimpleQuantity";
         public const string STRUCTUREDEFINITION_NAME = "StructureDefinition";

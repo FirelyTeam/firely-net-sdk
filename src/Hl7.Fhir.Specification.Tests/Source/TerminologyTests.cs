@@ -967,7 +967,7 @@ namespace Hl7.Fhir.Specification.Tests
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
-        private class OnlyCodeSystemResolver : IAsyncResourceResolver, IConformanceSource
+        private class OnlyCodeSystemResolver : IAsyncResourceResolver, ICommonConformanceSource
         {
             private CodeSystem _onlyCs;
 
@@ -1017,6 +1017,8 @@ namespace Hl7.Fhir.Specification.Tests
             }
             public Resource ResolveByUri(string uri) => throw new NotImplementedException();
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
+            public NamingSystem FindNamingSystem(string uniqueId) => throw new NotImplementedException();
         }
     }
 }

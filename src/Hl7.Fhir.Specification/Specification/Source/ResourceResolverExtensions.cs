@@ -7,13 +7,9 @@
  */
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -102,18 +98,6 @@ namespace Hl7.Fhir.Specification.Source
         public static async T.Task<CodeSystem> FindCodeSystemAsync(this IAsyncResourceResolver source, string uri)
             => await source.ResolveByCanonicalUriAsync(uri).ConfigureAwait(false) as CodeSystem;
 
-        public static IEnumerable<T> FindAll<T>(this IConformanceSource source) where T : Resource
-        {
-            var typeName = ModelInfoExtensions.GetFhirTypeNameForType(typeof(T));
 
-            if (typeName is not null)
-            {
-                var resourceType = EnumUtility.ParseLiteral<ResourceType>(typeName);
-                var uris = source.ListResourceUris(resourceType);
-                return uris.Select(u => source.ResolveByUri(u) as T).Where(r => r != null);
-            }
-            else
-                return null;
-        }
     }
 }
