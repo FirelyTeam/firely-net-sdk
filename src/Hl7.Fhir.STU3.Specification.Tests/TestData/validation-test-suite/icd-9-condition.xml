@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Condition xmlns="http://hl7.org/fhir">
+  <id value="icd-9-condition"/>
+  <code>
+    <coding>
+      <system value="http://hl7.org/fhir/sid/icd-9-cm"/>
+      <code value="250.0"/>
+    </coding>
+  </code>
+	<subject>
+    <display value="Someone"/>
+	</subject>
+</Condition>

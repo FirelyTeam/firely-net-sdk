@@ -1,0 +1,4 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="patient-circle2-good-alone"/>
+  <gender value="other"/>
+</Patient>

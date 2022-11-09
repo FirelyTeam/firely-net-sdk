@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Organization xmlns="http://hl7.org/fhir">
+    <id value="organization.org-3.fail-1"/>
+    <name value="Test organization"/>
+    <telecom>
+        <system value="phone"/>
+        <value value="9999999"/>
+        <use value="home"/>
+    </telecom>
+</Organization>

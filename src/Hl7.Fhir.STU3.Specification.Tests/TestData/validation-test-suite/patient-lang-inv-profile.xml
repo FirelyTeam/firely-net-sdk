@@ -1,0 +1,24 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="Patient-lang-inv-profile"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/Patient-lang-inv-profile"/>
+  <status value="draft"/>
+  <date value="2018-03-20T15:43:56+00:00"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient.address.country">
+      <path value="Patient.address.country"/>
+      <constraint>
+        <key value="pat-cnt-2or3-char"/>
+        <severity value="warning"/>
+        <human value="The content of this element SHALL be selected EITHER from ValueSet ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2 OR MAY be selected from ISO Country Alpha-3 Value Set http://hl7.org/fhir/ValueSet/iso3166-1-3, IF the country is not specified in value Set ISO Country Alpha-2 http://hl7.org/fhir/ValueSet/iso3166-1-2."/>
+        <expression value="Patient.address.country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-2') or Patient.address.country.memberOf('http://hl7.org/fhir/ValueSet/iso3166-1-3')"/>
+      </constraint>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

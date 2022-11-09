@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://example.org/fhir/StructureDefinition/MyPatient" />
+  <name value="MyPatient" />
+  <status value="draft" />
+  <fhirVersion value="4.0.0" />
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="cda" />
+    <uri value="http://hl7.org/v3/cda" />
+    <name value="CDA (R2)" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/fivews" />
+    <name value="FiveWs Pattern Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="loinc" />
+    <uri value="http://loinc.org" />
+    <name value="LOINC code for the element" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Patient.generalPractitioner">
+      <path value="Patient.generalPractitioner" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="identifier.system" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Patient.generalPractitioner:sliceGeneralPractitioner">
+      <path value="Patient.generalPractitioner" />
+      <sliceName value="sliceGeneralPractitioner" />
+    </element>
+    <element id="Patient.generalPractitioner:sliceGeneralPractitioner.identifier">
+      <path value="Patient.generalPractitioner.identifier" />
+      <type>
+        <code value="Identifier" />
+        <profile value="http://hl7.dk/fhir/StructureDefinition/dk-core-sor-identifier" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

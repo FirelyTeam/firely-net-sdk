@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="https://example.de/fhir/StructureDefinition/MyPractitioner"/>  
+  <name value="MyPractitioner"/>  <status value="draft"/>  
+  <fhirVersion value="3.0.1"/>  
+  <kind value="resource"/>  
+  <abstract value="false"/>  
+  <type value="Practitioner"/>  
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>  
+  <derivation value="constraint"/>  
+  <differential>
+    <element id="Practitioner">
+      <path value="Practitioner"/>      
+      <constraint>
+        <key value="oneOfficialName"/>        
+        <severity value="error"/>        
+        <human value="One name must be official."/>        
+        <expression value="name.where(use=&apos;official&apos;).count()&gt;0"/>      
+      </constraint>
+    </element>
+    <element id="Practitioner.name">
+      <path value="Practitioner.name"/>      
+      <min value="1"/>      
+    </element>
+    <element id="Practitioner.name.family">
+      <path value="Practitioner.name.family"/>      <min value="1"/>    </element>
+    <element id="Practitioner.name.given">
+      <path value="Practitioner.name.given"/>      <min value="1"/>    </element>
+    <element id="Practitioner.address">
+      <path value="Practitioner.address"/>      <min value="1"/>    </element>
+    <element id="Practitioner.address.use">
+      <path value="Practitioner.address.use"/>      <fixedCode value="work"/>    </element>
+    <element id="Practitioner.address.type">
+      <path value="Practitioner.address.type"/>      <fixedCode value="physical"/>    </element>
+    <element id="Practitioner.address.line.extension:Postfach">
+      <path value="Practitioner.address.line.extension"/>      <sliceName value="Postfach"/>      <max value="0"/>    </element>
+    <element id="Practitioner.address.state">
+      <path value="Practitioner.address.state"/>      <binding>
+        <strength value="required"/>        <description value="Bundesl&#228;nder"/>      </binding>
+    </element>
+    <element id="Practitioner.address.postalCode">
+      <path value="Practitioner.address.postalCode"/>      <min value="1"/>    </element>
+    <element id="Practitioner.address.country">
+      <path value="Practitioner.address.country"/>      <min value="1"/>      <binding>
+        <strength value="required"/>      </binding>
+    </element>
+    <element id="Practitioner.gender">
+      <path value="Practitioner.gender"/>      <max value="0"/>    </element>
+    <element id="Practitioner.birthDate">
+      <path value="Practitioner.birthDate"/>      <max value="0"/>    </element>
+    <element id="Practitioner.photo">
+      <path value="Practitioner.photo"/>      <max value="0"/>    </element>
+    <element id="Practitioner.communication">
+      <path value="Practitioner.communication"/>      <max value="0"/>    </element>
+  </differential>
+</StructureDefinition>

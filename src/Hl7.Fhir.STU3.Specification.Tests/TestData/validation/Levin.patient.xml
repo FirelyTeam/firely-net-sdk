@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Patient xmlns="http://hl7.org/fhir">
+    <id value="Levin"/>
+    <meta>
+        <lastUpdated value="2014-11-13T11:41:00+11:00"/>
+    </meta>
+    <text>
+        <status value="generated"/>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>Henry Levin the 7th</p>
+            <p>MRN: 123456. Male, 24-Sept 1932</p>
+        </div>
+    </text>
+    <extension url="http://hl7.org/fhir/StructureDefinition/birthPlace">
+        <valueAddress>
+            <text value="1 Back Lane&#13;&#10;Holmfirth&#13;&#10;HUDDERSFIELD&#13;&#10;HD7 1HQ"/>
+            <line value="1 Back Lane"/>
+            <city value="Holmfirth"/>
+            <district value="HUDDERSFIELD"/>
+            <postalCode value="HD7 1HQ"/>
+        </valueAddress>
+    </extension>
+    <extension url="http://hl7.org/fhir/StructureDefinition/patient-clinicalTrial" >
+        <extension url="NCT" >
+            <valueString value="123456789" />
+        </extension>
+        <extension url="period" >	  
+            <valuePeriod>
+                <start value="2009-03-14" />	  
+            </valuePeriod>
+        </extension>
+        <extension url="reason" >	  
+            <valueCodeableConcept>	  
+                <coding>	  	    
+                    <system value="http://acme.org/codes/general" />	  
+                    <code value="tt14j" />	  
+                </coding>	  	    
+            </valueCodeableConcept>	  
+        </extension>
+    </extension>
+    <identifier>
+        <use value="usual"/>
+        <type>
+            <coding>
+                <system value="http://hl7.org/fhir/v2/0203"/>
+                <code value="MR"/>
+            </coding>
+        </type>
+        <system value="http://www.goodhealth.org/identifiers/mrn"/>
+        <value value="123456"/>
+    </identifier>
+    <active value="true"/>
+    <name>
+        <family value="Levin"/>
+        <given value="Henry"/>
+        <suffix value="The 7th"/>
+    </name>
+    <gender value="male"/>
+    <birthDate value="1932-09-24">
+        <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+            <valueDateTime value="1932-09-24T15:15:50+02:00" />
+        </extension>
+    </birthDate>   
+</Patient>

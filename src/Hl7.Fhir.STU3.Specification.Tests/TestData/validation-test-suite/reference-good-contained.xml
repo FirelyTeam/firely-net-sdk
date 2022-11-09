@@ -1,0 +1,17 @@
+<Observation xmlns="http://hl7.org/fhir">
+  <contained>
+    <Patient>
+      <id value="pat"/>
+      <name>
+        <text value="some name"/>
+      </name>
+    </Patient>
+  </contained>
+  <status value="final"/>
+  <code>
+    <text value="test"/>
+  </code>
+  <subject>
+    <reference value="#pat"/>
+  </subject>
+</Observation>

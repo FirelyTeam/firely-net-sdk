@@ -1,0 +1,31 @@
+<MeasureReport xmlns="http://hl7.org/fhir">
+  <status value="complete"/> 
+  <type value="summary"/> 
+  <measure value="http://hl7.org/fhir/test/Measure/mr-m-simple"/> 
+  <period> 
+      <start value="2014-01-01"/> 
+      <end value="2014-03-31"/> 
+  </period> 
+  <group id="CMS146-group-1">
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/> 
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+      <count value="500"/> 
+    </population> 
+  </group> 
+  <group id="CMS146-group-1">
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/> 
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+      <count value="500"/> 
+    </population> 
+  </group> 
+</MeasureReport> 

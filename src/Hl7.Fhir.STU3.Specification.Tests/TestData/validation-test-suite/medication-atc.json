@@ -1,0 +1,70 @@
+{
+  "resourceType": "Medication",
+  "meta": {
+    "profile": [
+    "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-FormularyDrug"
+    ]
+  },
+  "id": "formularydrugV1001",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: med0308</p><p><b>contained</b>: </p><p><b>code</b>: Percocet tablet <span>(Details : {http://hl7.org/fhir/sid/ndc code '16590-619-30' = '16590-619-30', given as 'Percocet tablet'})</span></p><p><b>manufacturer</b>: id: org1; name: Stat Rx USA LLC</p><p><b>form</b>: Tablet dose form (qualifier value) <span>(Details : {SNOMED CT code '385055001' = 'Tablet', given as 'Tablet dose form (qualifier value)'})</span></p><blockquote><p><b>ingredient</b></p><p><b>item</b>: Oxycodone HCl <span>(Details : {RxNorm code '82063' = 'Oxycodone Hydrochloride', given as 'Oxycodone HCl'})</span></p><p><b>amount</b>: 5 mg<span> (Details: UCUM code mg = 'mg')</span>/1 TAB<span> (Details: http://hl7.org/fhir/v3/orderableDrugForm code TAB = 'Tablet')</span></p></blockquote><blockquote><p><b>ingredient</b></p><p><b>item</b>: Acetaminophen <span>(Details : {RxNorm code '161' = 'Acetaminophen', given as 'Acetaminophen'})</span></p><p><b>amount</b>: 325 mg<span> (Details: UCUM code mg = 'mg')</span>/1 TAB<span> (Details: http://hl7.org/fhir/v3/orderableDrugForm code TAB = 'Tablet')</span></p></blockquote><h3>Batches</h3><table><tr><td>-</td><td><b>LotNumber</b></td><td><b>ExpirationDate</b></td></tr><tr><td>*</td><td>658484</td><td>31/07/2020</td></tr></table></div>"
+  },
+  "extension": [
+      {
+        "url": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-DrugClass-extension",
+        "valueCodeableConcept": {
+          "coding": [
+            {
+              "code": "N02BE",
+              "display": "Anilides"
+            }
+          ]
+        }
+      },
+      {
+        "url": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-DrugClass-extension",
+        "valueCodeableConcept": {
+          "coding": [
+            { "system": "http://www.whocc.no/atc",
+              "code": "N02AA",
+              "display": "Barbiturates and derivatives"
+            }
+          ]
+        }
+      },
+        {
+          "url": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-DrugTierID-extension",
+          "valueCodeableConcept": {
+            "coding": [
+              {
+                "system": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/CodeSystem/usdrugformulary-DrugTierCS",
+                "code": "BRAND",
+                "display": "Brand"
+              }
+            ]
+          }
+        },
+       {
+        "url": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-PriorAuthorization-extension",
+        "valueBoolean": false
+      },
+      {
+        "url": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-StepTherapyLimit-extension",
+        "valueBoolean": false
+      },
+      {
+        "url": "https://api-v8-r4.hspconsortium.org/DrugFormulary0/open/StructureDefinition/usdrugformulary-QuantityLimit-extension",
+        "valueBoolean": false
+      }
+    ],
+  "code": {
+    "coding": [
+      {
+        "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+        "code": "1049640",
+        "display": "Acetaminophen 325 MG / Oxycodone Hydrochloride 5 MG Oral Tablet [Percocet]"
+      }
+    ]
+  }
+}

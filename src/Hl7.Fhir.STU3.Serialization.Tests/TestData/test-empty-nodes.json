@@ -1,0 +1,29 @@
+﻿{
+  "resourceType": "Patient",
+  "contained": [
+    {
+      "resourceType": "Patient",
+      "_id": {},
+      "managingOrganization": { "reference": "Organization/hl7" }
+    }
+  ],
+  "identifier": {},
+  "active": null,
+  "contact": [
+    {
+      "relationship": [
+        {},
+        null,
+        {}
+      ],
+      "_relationship": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "gender": "male"
+    }
+  ]
+}

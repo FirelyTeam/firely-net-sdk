@@ -1,0 +1,15 @@
+<ValueSet xmlns="http://hl7.org/fhir">
+  <id value="member-of-VS"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/member-of-VS"/> 
+  <status value="draft"/> 
+  <date value="2020-01-17"/> 
+  <description value="test out memberOf"/> 
+  <compose> 
+    <include> 
+      <system value="http://hl7.org/fhir/allergy-intolerance-criticality"/> 
+      <concept>
+        <code value="low"/>
+      </concept>
+    </include> 
+  </compose> 
+</ValueSet> 

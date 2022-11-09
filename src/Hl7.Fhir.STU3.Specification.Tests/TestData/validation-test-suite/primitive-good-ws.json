@@ -1,0 +1,9 @@
+{
+  "resourceType" : "Parameters",
+  "parameter" : [
+    {
+      "name" : "paramString",
+      "valueString" : " \t "
+    }
+  ]
+}

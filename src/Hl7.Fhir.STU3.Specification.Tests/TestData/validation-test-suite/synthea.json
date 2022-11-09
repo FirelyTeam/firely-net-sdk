@@ -1,0 +1,36 @@
+{
+  "resourceType": "Encounter",
+  "id": "f003",
+  "class" : {
+    "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+    "code" : "AMB"
+  },
+  "text": {
+    "status": "generated",
+    "div":
+      "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p></div>"
+  },
+  "identifier": [
+    {
+      "use": "official",
+      "system": "http://www.bmc.nl/zorgportal/identifiers/encounters",
+      "value": "v6751"
+    }
+  ],
+  "status": "completed",
+  "subject": {
+    "reference": "Patient/f001",
+    "display": "P. van de Heuvel"
+  },
+  "reasonCode": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor",
+        "valueCode": "UNK"
+      }
+    ]
+  },
+  "serviceProvider": {
+    "reference": "Organization/f001"
+  }
+}

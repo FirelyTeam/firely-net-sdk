@@ -1,0 +1,82 @@
+﻿<!-- Comments here -->
+<Patient xmlns="http://hl7.org/fhir">  
+  <id value="pat1"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      
+      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
+      
+    </div>
+  </text>
+  <contained>
+    <Patient>      
+      <id value="1"/>     
+      <identifier>
+        <system value="http://hl7.org/fhir/sid/us-ssn"/>
+        <value value="444222222"/>
+      </identifier>
+      <active value ="true"/>
+      <name>
+        <!-- See if this is roundtripped -->        
+        <use value="official"/>
+        <family value="Everywoman"/>
+        <given value="Eve"/>
+      </name>
+      <telecom>
+        <system value="phone"/>
+        <value value="555-555-2003"/>
+        <use value="work"/>
+      </telecom>
+      <gender value="female"/>
+      <birthDate value="1973-05-31"/>
+      <address>
+        <use value="home"/>
+        <line value="2222 Home Street"/>
+      </address>
+      <managingOrganization>
+        <reference value="Organization/hl7"/>
+      </managingOrganization>
+    </Patient>
+  </contained> 
+  <identifier>
+    <use value="usual"/>
+    <system value="urn:oid:0.1.2.3.4.5.6.7"/>
+    <value value="654321"/>
+  </identifier>
+  <active value ="true"/>
+  <name>
+    <use value="official"/>
+    <family value="Donald"/>
+    <given value="Duck"/>
+  </name>
+  <gender value="male"/>
+  <photo>
+    <contentType value="image/gif"/>
+    <data value="R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7"/>
+  </photo>
+  <contact>
+    <relationship>
+      <coding>
+        <system value="http://hl7.org/fhir/patient-contact-relationship"/>
+        <code value="owner"/>
+      </coding>
+    </relationship>
+    <organization>
+      <!--   Which organization to contact to reach this patient   -->
+      <reference value="Organization/1"/>
+      <display value="Walt Disney Corporation"/>
+    </organization>
+  </contact>
+  <managingOrganization>
+    <reference value="Organization/1"/>
+    <display value="ACME Healthcare, Inc"/>
+  </managingOrganization>
+  <link>
+    <other>
+      <reference value="Patient/pat2"/>
+    </other>
+    <type value="seealso"/>
+  </link>
+</Patient>
+<!-- Comments there -->
