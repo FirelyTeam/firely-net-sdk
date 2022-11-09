@@ -26,7 +26,6 @@
   POSSIBILITY OF SUCH DAMAGE.
   
 */
-using Hl7.Fhir.Support.Poco.Model;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -57,7 +56,7 @@ namespace Hl7.Fhir.Model
 
         public bool HasSnapshot => Snapshot != null && Snapshot.Element != null && Snapshot.Element.Any();
 
-        public bool IsCoreDefinition => Type == Id && Url == ModelInfoExtensions.CanonicalUriForFhirCoreType(Type).Value;
+        public bool IsCoreDefinition => Type == Id && Url == Canonical.CanonicalUriForFhirCoreType(Type).Value;
 
     }
 }

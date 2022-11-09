@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Support.Poco.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -262,14 +261,14 @@ namespace Hl7.Fhir.Model
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
         public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile.SafeSingleOrDefault() ?? (elemType?.Code is not null ? ModelInfoExtensions.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
+            elemType?.Profile.SafeSingleOrDefault() ?? (elemType?.Code is not null ? Canonical.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
 
         /// <summary>
         /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
         public static IEnumerable<string>? GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile.Any() == true ? elemType.Profile : (elemType?.Code is not null ? new[] { ModelInfoExtensions.CanonicalUriForFhirCoreType(elemType.Code).Value } : null);
+            elemType?.Profile.Any() == true ? elemType.Profile : (elemType?.Code is not null ? new[] { Canonical.CanonicalUriForFhirCoreType(elemType.Code).Value } : null);
 
         /// <inheritdoc cref="GetTypeProfile(ElementDefinition.TypeRefComponent)"/>
         [Obsolete("This function is a duplicate of GetTypeProfile()")]
