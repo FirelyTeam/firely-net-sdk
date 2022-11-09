@@ -13,6 +13,10 @@
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	</PropertyGroup>
 
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<IncludeSymbols>False</IncludeSymbols>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
 			<Link>specification.zip</Link>
