@@ -1,0 +1,32 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+	<PropertyGroup>
+		<Title>HL7 FHIR Specification data</Title>
+		<Summary>Package containing data for working with FHIR metadata and validation.</Summary>
+		<Description>This library contains HL7's FHIR metadata such as profiles and valuesets.</Description>
+		<PackageTags>HL7;FHIR;Firely;SDK;specification.zip</PackageTags>
+		<RootNamespace>Hl7.Fhir</RootNamespace>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
+			<Link>specification.zip</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+	</ItemGroup>
+
+	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
+		<Message Text="(Re)creating specification.zip" />
+		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
+	</Target>
+
+</Project>
+

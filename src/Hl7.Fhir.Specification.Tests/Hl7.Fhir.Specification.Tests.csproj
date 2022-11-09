@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.R5.Core\Hl7.Fhir.R5.Core.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.R5.Specification.Data\Hl7.Fhir.R5.Specification.Data.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
     <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
   </ItemGroup>
