@@ -21,6 +21,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Xml;
+using static Hl7.Fhir.Model.ModelInfo;
 
 namespace Hl7.Fhir.Test.Validation
 {
@@ -131,7 +132,7 @@ namespace Hl7.Fhir.Test.Validation
             }
         }
 
-        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, ModelInfo.SearchParamDefinition index, string key)
+        private static void ExtractExamplesFromResource(Dictionary<string, int> exampleSearchValues, Resource resource, SearchParamDefinition index, string key)
         {
             IEnumerable<Base> results;
             try

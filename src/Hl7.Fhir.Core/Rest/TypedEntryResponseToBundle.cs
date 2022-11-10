@@ -6,12 +6,12 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, ParserSettings parserSettings)
+        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, ModelInspector inspector, ParserSettings parserSettings)
         {
             var result = new Bundle.EntryComponent
             {
@@ -56,11 +56,11 @@ namespace Hl7.Fhir.Rest
                 }
                 else
                 {
-                    if(entry.TypedElement != null)
+                    if (entry.TypedElement != null)
                     {
                         try
                         {
-                            result.Resource = new BaseFhirParser(parserSettings).Parse<Resource>(entry.TypedElement);
+                            result.Resource = new BaseFhirParser(inspector, parserSettings).Parse<Resource>(entry.TypedElement);
 
                             //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
                             // see also issue #1681
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Rest
             {
                 var id = new ResourceIdentity(responseUri);
 
-                if (id.ResourceType != ResourceType.Binary.ToString()) return false;
+                if (id.ResourceType != FhirTypeNames.BINARY_NAME) return false;
 
                 if (id.Id != null && Id.IsValidValue(id.Id)) return true;
                 if (id.VersionId != null && Id.IsValidValue(id.VersionId)) return true;
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Rest
         }
 
         internal static Binary MakeBinaryResource(byte[] data, string contentType) =>
-            new Binary
+            new()
             {
                 //Content is for STU3, from R4 Content has changed into Data
                 Data = data,
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Rest
             var body = interaction.GetBody();
             return body != null ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
         }
-        
+
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
             interaction.RemoveAnnotations<Body>();

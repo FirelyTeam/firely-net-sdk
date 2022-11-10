@@ -1,0 +1,467 @@
+<?xml version="1.0"?>
+<Questionnaire xmlns="http://hl7.org/fhir">
+	<id value="gp-assessment-report"/>
+	<meta>
+		<versionId value="5"/>
+		<lastUpdated value="2019-10-07T03:11:19.7949933+00:00"/>
+		<profile value="http://fhir.telstrahealth.com/th-ncsr/StructureDefinition/ncsr-questionnaire"/>
+	</meta>
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">div
+  </div>
+	</text>
+	<contained>
+		<Bundle>
+			<id value="PrePopQuery"/>
+			<type value="batch"/>
+			<entry>
+				<fullUrl value="urn:uuid:88f151c0-a954-468a-88bd-5ae15c08e059"/>
+				<request>
+					<method value="GET"/>
+					<url value="RelatedPerson?patient={{%LaunchPatient.id}}&amp;active=true"/>
+				</request>
+			</entry>
+		</Bundle>
+	</contained>
+	<extension url="http://standards.healthconnex.com.au/fhir/StructureDefinition/Questionnaire-hcx-css">
+		<valueString value="https://smartq.azurewebsites.net/Content/fhir-ncsr.css"/>
+	</extension>
+	<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext">
+		<extension url="name">
+			<valueId value="LaunchPatient"/>
+		</extension>
+		<extension url="type">
+			<valueCode value="Patient"/>
+		</extension>
+		<extension url="description">
+			<valueString value="The patient that is to be used to pre-populate the form"/>
+		</extension>
+	</extension>
+	<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext">
+		<extension url="name">
+			<valueId value="LaunchEpisodeOfCare"/>
+		</extension>
+		<extension url="type">
+			<valueCode value="Episodeofcare"/>
+		</extension>
+		<extension url="description">
+			<valueString value="The episodeofcare that is to be used to pre-populate the form"/>
+		</extension>
+	</extension>
+	<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext">
+		<extension url="name">
+			<valueId value="LaunchPractitioner"/>
+		</extension>
+		<extension url="type">
+			<valueCode value="Practitioner"/>
+		</extension>
+		<extension url="description">
+			<valueString value="The practitioner that is to be used to pre-populate the form"/>
+		</extension>
+	</extension>
+	<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-sourceQueries">
+		<valueReference>
+			<reference value="#PrePopQuery"/>
+		</valueReference>
+	</extension>
+	<url value="http://fhir.telstrahealth.com/th-ncsr/Questionnaire/gp-assessment-report"/>
+	<name value="NcsrGpAssessmentReport"/>
+	<title value="GP Assessment Report"/>
+	<status value="active"/>
+	<subjectType value="Patient"/>
+	<date value="2017-10-17T01:39:42.162Z"/>
+	<publisher value="Telstra Health"/>
+	<description value="GP Assessment report that should be completed when providing an assessment ..."/>
+	<useContext>
+		<code>
+			<system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/>
+			<code value="focus"/>
+			<display value="Clinical Focus"/>
+		</code>
+		<valueCodeableConcept>
+			<coding>
+				<code value="bowel"/>
+				<display value="Bowel Cancer Registry"/>
+			</coding>
+		</valueCodeableConcept>
+	</useContext>
+	<item>
+		<linkId value="part-details"/>
+		<text value="Participant details"/>
+		<type value="group"/>
+		<repeats value="false"/>
+		<item>
+			<linkId value="participant-id"/>
+			<text value="Participant ID number"/>
+			<type value="string"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.identifier.where(system='http://ns.electronichealth.net.au/id/hi/mc').value.first()"/>
+				</valueExpression>
+			</extension>
+			<linkId value="medicare-number"/>
+			<text value="Medicare number"/>
+			<type value="string"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.identifier.where(system='http://ns.electronichealth.net.au/id/hi/dva').value.first()"/>
+				</valueExpression>
+			</extension>
+			<linkId value="dva-number"/>
+			<text value="DVA number"/>
+			<type value="string"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.name.first().family.first()"/>
+				</valueExpression>
+			</extension>
+			<linkId value="family-name"/>
+			<text value="Family name"/>
+			<type value="string"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.name.first().given.first()"/>
+				</valueExpression>
+			</extension>
+			<linkId value="given-names"/>
+			<text value="Given name(s)"/>
+			<type value="string"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.birthDate"/>
+				</valueExpression>
+			</extension>
+			<linkId value="dob"/>
+			<text value="Date of birth"/>
+			<type value="date"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.gender"/>
+				</valueExpression>
+			</extension>
+			<linkId value="gender"/>
+			<text value="Gender"/>
+			<type value="choice"/>
+			<repeats value="false"/>
+			<answerValueSet value="https://sqlonfhir-dstu2.azurewebsites.net/fhir/ValueSet/administrative-gender"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPatient.telecom.where(system='phone').select(($this.where(use='mobile') | $this.where(use='home')).first().value)"/>
+				</valueExpression>
+			</extension>
+			<linkId value="contact-number"/>
+			<text value="Contact telephone number"/>
+			<type value="string"/>
+			<item>
+				<linkId value="contact-number-tooltip"/>
+				<text value="(mobile or land line including area code)"/>
+				<type value="text"/>
+			</item>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%PrePopQuery.entry.resource.total"/>
+				</valueExpression>
+			</extension>
+			<linkId value="related-persons"/>
+			<text value="Number of active RelatedPersons"/>
+			<type value="integer"/>
+		</item>
+	</item>
+	<item>
+		<linkId value="symptoms"/>
+		<text value="Symptoms present at time of assessment following a positive FOBT result"/>
+		<type value="group"/>
+		<repeats value="false"/>
+		<item>
+			<linkId value="5d1f7a32-5601-483a-8881-2c2437c72e9a"/>
+			<type value="group"/>
+			<repeats value="false"/>
+			<item>
+				<linkId value="5d1f7a32-5601-483a-8881-2c2437c72e9a-grouptext"/>
+				<text value="(Mark all those that apply)"/>
+				<type value="text"/>
+			</item>
+			<item>
+				<linkId value="no-symptoms"/>
+				<text value="No Symptoms"/>
+				<type value="boolean"/>
+			</item>
+			<item>
+				<linkId value="longer-standing"/>
+				<text value="Longer standing rectal bleeding (&gt; 6 months)"/>
+				<type value="boolean"/>
+			</item>
+			<item>
+				<linkId value="iron-deficiency"/>
+				<text value="Iron deficiency anaemia"/>
+				<type value="boolean"/>
+			</item>
+		</item>
+		<item>
+			<linkId value="46923fac-09ee-4288-8a2e-b4ed70bf7869"/>
+			<type value="group"/>
+			<repeats value="false"/>
+			<item>
+				<linkId value="recent-onset"/>
+				<text value="Recent onset rectal bleeding ( &#x2264; 6 months)"/>
+				<type value="boolean"/>
+			</item>
+			<item>
+				<linkId value="significant-change"/>
+				<text value="Significant change in bowel habits"/>
+				<type value="boolean"/>
+			</item>
+			<item>
+				<linkId value="abdominal-pain"/>
+				<text value="Abdominal pain"/>
+				<type value="boolean"/>
+			</item>
+		</item>
+	</item>
+	<item>
+		<linkId value="0f9c0385-32ef-4c33-980f-502eab10dd15"/>
+		<text value="Assessment outcome following a positive FOBT result"/>
+		<type value="group"/>
+		<repeats value="false"/>
+		<item>
+			<extension url="http://standards.healthconnex.com.au/fhir/StructureDefinition/Questionnaire-hcx-horizontal">
+				<valueBoolean value="true"/>
+			</extension>
+			<linkId value="assess-outcome"/>
+			<type value="choice"/>
+			<repeats value="false"/>
+			<answerOption>
+				<valueCoding>
+					<code value="Y"/>
+					<display value="Referred for colonoscopy"/>
+				</valueCoding>
+			</answerOption>
+			<answerOption>
+				<valueCoding>
+					<code value="N"/>
+					<display value="Not referred for colonoscopy"/>
+				</valueCoding>
+			</answerOption>
+			<item>
+				<linkId value="group-specialist-clinic"/>
+				<text value="Specialist/clinic name and suburb:"/>
+				<type value="group"/>
+				<enableWhen>
+					<question value="assess-outcome"/>
+					<operator value="="/>
+					<answerCoding>
+						<code value="Y"/>
+					</answerCoding>
+				</enableWhen>
+				<repeats value="false"/>
+				<item>
+					<linkId value="group-specialist-clinic-grouplabel"/>
+					<text value="(e.g. name of specialist and/or hospital/clinic and location)"/>
+					<type value="text"/>
+				</item>
+				<item>
+					<linkId value="specialist-clinic-name"/>
+					<text value="Specialist/Clinic Name"/>
+					<type value="string"/>
+				</item>
+				<item>
+					<extension url="http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl">
+						<valueCodeableConcept>
+							<coding>
+								<system value="http://hl7.org/fhir/questionnaire-item-control"/>
+								<code value="autocomplete"/>
+							</coding>
+						</valueCodeableConcept>
+					</extension>
+					<linkId value="specialist-location"/>
+					<text value="Location/Suburb"/>
+					<type value="choice"/>
+					<repeats value="false"/>
+					<answerValueSet value="https://sqlonfhir-ci2.azurewebsites.net/fhir/ValueSet/hcxdir-locality"/>
+				</item>
+				<item>
+					<linkId value="specialist-contact-number"/>
+					<text value="Contact-telephone number"/>
+					<type value="string"/>
+				</item>
+			</item>
+			<item>
+				<linkId value="group-not-referred"/>
+				<text value="Reason for not referring colonoscopy"/>
+				<type value="group"/>
+				<enableWhen>
+					<question value="assess-outcome"/>
+					<operator value="="/>
+					<answerCoding>
+						<code value="N"/>
+					</answerCoding>
+				</enableWhen>
+				<repeats value="false"/>
+				<item>
+					<linkId value="previous-diagnosis"/>
+					<text value="Bowel cancer previously diagnosed"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="recent-colonoscopy"/>
+					<text value="Recent colonoscopy ( *lt; 18 months)"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="significant-comorbidity"/>
+					<text value="Significant co-morbidity"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="limited-life-expectancy"/>
+					<text value="Limited life expectancy"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="patient-declined"/>
+					<text value="Patient declines colonoscopy"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="other-conditions"/>
+					<text value="Other medical condition(s)"/>
+					<type value="boolean"/>
+				</item>
+			</item>
+		</item>
+	</item>
+	<item>
+		<linkId value="group-other-exams"/>
+		<text value="Was the patient referred for other examinations(s)?"/>
+		<type value="group"/>
+		<repeats value="false"/>
+		<item>
+			<linkId value="referred-other-exam"/>
+			<type value="choice"/>
+			<repeats value="false"/>
+			<answerOption>
+				<valueCoding>
+					<code value="N"/>
+					<display value="No"/>
+				</valueCoding>
+			</answerOption>
+			<answerOption>
+				<valueCoding>
+					<code value="Y"/>
+					<display value="Yes"/>
+				</valueCoding>
+			</answerOption>
+			<item>
+				<linkId value="group-referred-others"/>
+				<type value="group"/>
+				<enableWhen>
+					<question value="referred-other-exam"/>
+					<operator value="="/>
+					<answerCoding>
+						<code value="Y"/>
+					</answerCoding>
+				</enableWhen>
+				<repeats value="false"/>
+				<item>
+					<linkId value="exam-dcbe"/>
+					<text value="Double contrast barium enema"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="exam-ctc"/>
+					<text value="CT colonography"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="exam-sigmoidoscopy"/>
+					<text value="Sigmoidoscopy"/>
+					<type value="boolean"/>
+				</item>
+				<item>
+					<linkId value="exam-other"/>
+					<text value="Other"/>
+					<type value="boolean"/>
+					<item>
+						<linkId value="e58ed410-25e0-49bf-bbeb-a79d52d0acc6"/>
+						<type value="group"/>
+						<enableWhen>
+							<question value="exam-other"/>
+							<operator value="="/>
+							<answerBoolean value="true"/>
+						</enableWhen>
+						<repeats value="false"/>
+						<item>
+							<linkId value="exam-other-details"/>
+							<text value="Please specify"/>
+							<type value="text"/>
+						</item>
+					</item>
+				</item>
+			</item>
+		</item>
+	</item>
+	<item>
+		<linkId value="provider-details"/>
+		<text value="Provider details"/>
+		<type value="group"/>
+		<repeats value="false"/>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPractitioner.identifier.where(system='http://ns.electronichealth.net.au/id/hi/prn').first().value"/>
+				</valueExpression>
+			</extension>
+			<linkId value="provider-number"/>
+			<text value="Provider number for payment"/>
+			<type value="string"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="today()"/>
+				</valueExpression>
+			</extension>
+			<linkId value="date-consult"/>
+			<text value="Date of consultation"/>
+			<type value="date"/>
+		</item>
+		<item>
+			<extension url="http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression">
+				<valueExpression>
+					<language value="text/fhirpath"/>
+					<expression value="%LaunchPractitioner.name.first().select(given.first() + ' ' + family.first())"/>
+				</valueExpression>
+			</extension>
+			<linkId value="provider-name"/>
+			<text value="Name"/>
+			<type value="string"/>
+		</item>
+	</item>
+</Questionnaire>

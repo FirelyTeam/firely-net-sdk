@@ -104,6 +104,8 @@ namespace Hl7.Fhir.Specification.Tests
             result = val.Validate(c.ToTypedElement(), vc);
             Assert.True(result.Success);        // local terminology service treats incorrect displays as warnings (GH#624)
 
+
+
             // But this won't, it's also a composition, but without expansion - the local term server won't help you here
             var binding2 = new ElementDefinition.ElementDefinitionBindingComponent
             {
@@ -111,10 +113,13 @@ namespace Hl7.Fhir.Specification.Tests
                 Strength = BindingStrength.Required
             };
 
+            // Do not use the Expansion package here
+            var localTermService = new LocalTerminologyService(new FhirPackageSource("http://packages2.fhir.org/packages", new string[] { "hl7.fhir.r5.core@5.0.0-snapshot1" }));
+
             var val2 = binding2.ToValidatable();
 
             c = new Coding("http://snomed.info/sct", "160244002");
-            result = val2.Validate(c.ToTypedElement(), vc);
+            result = val2.Validate(c.ToTypedElement(), new ValidationContext { TerminologyService = localTermService });
             Assert.True(result.Success);
             Assert.NotEmpty(result.Where(type: OperationOutcome.IssueType.NotSupported));
         }

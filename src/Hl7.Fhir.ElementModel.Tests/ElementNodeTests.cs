@@ -381,13 +381,13 @@ namespace Hl7.FhirPath.Tests
 
         private class CustomResourceResolver : IAsyncResourceResolver
         {
-            private readonly ZipSource _zipSource;
             private readonly CachedResolver _resolver;
 
             public CustomResourceResolver()
             {
-                _zipSource = ZipSource.CreateValidationSource();
-                _resolver = new CachedResolver(new MultiResolver(_zipSource, new DirectorySource("TestData/TestSd")));
+                _resolver = new CachedResolver(new MultiResolver(
+                    FhirPackageSource.CreateFhirCorePackageSource(),
+                    new DirectorySource("TestData/TestSd")));
             }
 
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)

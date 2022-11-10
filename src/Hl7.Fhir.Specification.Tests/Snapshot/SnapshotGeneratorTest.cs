@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
     {
         private SnapshotGenerator _generator;
-        private ZipSource _zipSource;
+        private IResourceResolver _standardFhirSource;
         private CachedResolver _testResolver;
         private TimingSource _source;
         private readonly SnapshotGeneratorSettings _settings = new()
@@ -74,8 +74,8 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170810] Order is important!
             // Specify source first to override core defs from
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
-            _zipSource = ZipSource.CreateValidationSource();
-            _testResolver = new CachedResolver(new MultiResolver(_zipSource, _source));
+            _standardFhirSource = FhirPackageSource.CreateFhirCorePackageSource();
+            _testResolver = new CachedResolver(new MultiResolver(_standardFhirSource, _source));
         }
 
         private StructureDefinition createStructureDefinition(string url, params ElementDefinition[] elements)
@@ -2190,7 +2190,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryProfileResolver(sd)));
+            var source = new CachedResolver(new MultiResolver(_standardFhirSource, new InMemoryProfileResolver(sd)));
 
             var settings = new SnapshotGeneratorSettings(_settings)
             {
@@ -2718,25 +2718,17 @@ namespace Hl7.Fhir.Specification.Tests
             // Start at root types without a base (Element, Extension), then recursively expand derived types
 
             var result = true;
-            var source = new DirectorySource("TestData/snapshot-test");
-            var resolver = new CachedResolver(source); // IMPORTANT!
+            var resolver = new CachedResolver(FhirPackageSource.CreateFhirCorePackageSource());
 
             _generator = new SnapshotGenerator(resolver, _settings);
             _generator.PrepareElement += elementHandler;
 
             try
             {
-                // HACK! CachedResolver doesn't expose LoadArtifactByName
-                // So first enumerate source to get url's, then enumerate CachedResolver to persist snapshots (!)
-                ProfileInfo[] coreProfileInfo;
-                using (var stream = source.LoadArtifactByName("profiles-types.xml"))
-                {
-                    // var coreDefs = EnumerateBundleStream<StructureDefinition>(stream).ToList();
-                    // expandCoreProfilesDerivedFrom(coreDefs, null);
+                var coreTypes = ModelInfo.FhirCsTypeToString.Values.Where(s => ModelInfo.IsPrimitive(s) || ModelInfo.IsDataType(s));
+                var coreDefs = await T.Task.WhenAll(coreTypes.Select(ct => resolver.FindStructureDefinitionForCoreTypeAsync(ct)));
+                ProfileInfo[] coreProfileInfo = coreDefs.Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
 
-                    var coreDefs = enumerateBundleStream<StructureDefinition>(stream);
-                    coreProfileInfo = coreDefs.Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
-                }
                 await expandStructuresBasedOn(resolver, coreProfileInfo, null);
             }
             finally
@@ -7842,7 +7834,7 @@ namespace Hl7.Fhir.Specification.Tests
             var src = new TestProfileArtifactSource();
             var testResolver = new CachedResolver(
                 new MultiResolver(
-                    _zipSource, //new ZipSource("specification.zip"),
+                    _standardFhirSource,
                     src));
             var generator = _generator = new SnapshotGenerator(testResolver, _settings);
 
@@ -9107,7 +9099,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new MultiResolver(
                         new CachedResolver(
                             new TestProfileArtifactSource()),
-                            ZipSource.CreateValidationSource())));
+                            _standardFhirSource)));
 
             var patient = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/mi-patient");
             patient.Should().NotBeNull("A snapshot must be created");
@@ -9127,7 +9119,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new MultiResolver(
                         new CachedResolver(
                             new TestProfileArtifactSource()),
-                            ZipSource.CreateValidationSource())));
+                            _standardFhirSource)));
 
             var observation = await resolver.FindStructureDefinitionAsync("http://validationtest.org/fhir/StructureDefinition/ObservationSlicingCodeableConcept");
 
@@ -9205,8 +9197,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             const string ElementId = "Extension.value[x]";
 
-            var zipSource = ZipSource.CreateValidationSource();
-            var resolver = new MultiResolver(zipSource);
+            var resolver = new MultiResolver(_standardFhirSource);
             var sd = await resolver.FindStructureDefinitionForCoreTypeAsync(nameof(Extension));
 
             var element = sd.Snapshot.Element.Single(x => x.ElementId == ElementId);
@@ -9233,7 +9224,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task CheckCardinalityOfProfiledType()
         {
-            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var resolver = new CachedResolver(new MultiResolver(_standardFhirSource, new TestProfileArtifactSource()));
             var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
             var sd = await resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/StructureDefinition/Observation") as StructureDefinition;
             var sut = await resolver.ResolveByCanonicalUriAsync("http://validationtest.org/fhir/StructureDefinition/ObservationWithTranslatableCode") as StructureDefinition;
@@ -9257,8 +9248,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestAbsoluteContentReferenceGeneration()
         {
             //prepare 
-            var zipSource = ZipSource.CreateValidationSource();
-            var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
+            var generator = new SnapshotGenerator(_standardFhirSource, SnapshotGeneratorSettings.CreateDefault());
 
 
             //Test if core resource has relative content references.
@@ -9338,7 +9328,7 @@ namespace Hl7.Fhir.Specification.Tests
         [DataRow("http://validationtest.org/fhir/StructureDefinition/DeceasedPatientRequiredBoolean", "Patient.deceased[x].extension:range")]
         public async T.Task ContinueMergingChildConstraintMultipleTypes(string url, string elementId)
         {
-            var resolver = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource(), new TestProfileArtifactSource()));
+            var resolver = new CachedResolver(new MultiResolver(_standardFhirSource, new TestProfileArtifactSource()));
             var snapshotGenerator = new SnapshotGenerator(resolver, SnapshotGeneratorSettings.CreateDefault());
             var sd = await resolver.ResolveByCanonicalUriAsync(url) as StructureDefinition;
 
@@ -9560,8 +9550,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             // Arrange
             var uri = ModelInfo.CanonicalUriForFhirCoreType(profileType);
-            var zipSource = ZipSource.CreateValidationSource();
-            var generator = new SnapshotGenerator(zipSource, SnapshotGeneratorSettings.CreateDefault());
+            var generator = new SnapshotGenerator(_standardFhirSource, SnapshotGeneratorSettings.CreateDefault());
             var propertyProxy = new ElementDefinitionPropertyProxy(propertyName);
 
             var sd = await _testResolver.FindStructureDefinitionAsync(uri); // Find base profile
@@ -9758,7 +9747,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new CachedResolver(
                     new MultiResolver(
                         new TestProfileArtifactSource(),
-                        ZipSource.CreateValidationSource()));
+                        _standardFhirSource));
 
             string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132";
 
@@ -9785,7 +9774,7 @@ namespace Hl7.Fhir.Specification.Tests
             var resolver = new CachedResolver(
                     new MultiResolver(
                         new TestProfileArtifactSource(),
-                        ZipSource.CreateValidationSource()));
+                        _standardFhirSource));
 
             string url = $"http://validationtest.org/fhir/StructureDefinition/MedicationRequest-issue-2132-2";
 

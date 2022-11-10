@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
 
             #region Create a Provider that knows this CustomBasic resource
             var structureDef = await new FhirJsonParser().ParseAsync<StructureDefinition>(structureDefJson);
-            var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
+            var snapShotGenerator = new SnapshotGenerator(FhirPackageSource.CreateFhirCorePackageSource());
             await snapShotGenerator.UpdateAsync(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             Assert.Empty(typingErrors);
 
             var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
-            var result = validator.Validate(customTyped);
+            var result = validator.Validate(customTyped, ModelInfo.ModelInspector);
 
             Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + await result.ToJsonAsync());
             #endregion
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             #endregion
 
             #region Create a Provider that knows this CustomBasic resource
-            var snapShotGenerator = new SnapshotGenerator(ZipSource.CreateValidationSource());
+            var snapShotGenerator = new SnapshotGenerator(FhirPackageSource.CreateFhirCorePackageSource());
             await snapShotGenerator.UpdateAsync(structureDef);
 
             var customResolver = new CustomResolver(new Dictionary<string, StructureDefinition> { { customBasicCanonical, structureDef } });
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
             Assert.Empty(typingErrors);
 
             var validator = new Validator(new ValidationSettings() { ResourceResolver = customResolver, GenerateSnapshot = true, ResourceMapping = mapTypeName });
-            var result = validator.Validate(customTyped);
+            var result = validator.Validate(customTyped, ModelInfo.ModelInspector);
 
             Assert.True(result.Success, "Validation should be successful but was not. Outcome: " + await result.ToJsonAsync());
             //CK: This is failing with message "The declared type of the element (Resource) is incompatible with that of the instance ('CustomBasic')"},"location":["Bundle.entry[0].resource[0]"]". 
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Specification.Tests.Validation
         /// </summary>
         private class CustomResolver : IResourceResolver
         {
-            private static IResourceResolver _coreResolver => ZipSource.CreateValidationSource();
+            private static IResourceResolver _coreResolver => FhirPackageSource.CreateFhirCorePackageSource();
 
             private readonly Dictionary<string, StructureDefinition> _customSds;
 

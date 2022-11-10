@@ -1,0 +1,146 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="zib-Product" />
+  <contained>
+    <ValueSet>
+      <id value="v1"/>
+      <status value="draft"/>
+      <compose>
+        <include>
+          <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+          <concept>
+            <code value="s1"/>
+          </concept>
+          <concept>
+            <code value="s1a"/>
+          </concept>
+        </include>
+      </compose>
+    </ValueSet>
+  </contained>
+  <contained>
+    <ValueSet>
+      <id value="v2"/>
+      <status value="draft"/>
+      <compose>
+        <include>
+          <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+          <concept>
+            <code value="s2"/>
+          </concept>
+          <concept>
+            <code value="s2a"/>
+          </concept>
+        </include>
+      </compose>
+    </ValueSet>
+  </contained>
+  <contained>
+    <ValueSet>
+      <id value="v3"/>
+      <status value="draft"/>
+      <compose>
+        <include>
+          <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+          <concept>
+            <code value="s3"/>
+          </concept>
+          <concept>
+            <code value="s3a"/>
+          </concept>
+        </include>
+      </compose>
+    </ValueSet>
+  </contained>
+  <contained>
+    <ValueSet>
+      <id value="v4"/>
+      <status value="draft"/>
+      <compose>
+        <include>
+          <system value="http://tst.org/fhir/CodeSystem/test-meds"/>
+          <concept>
+            <code value="s4"/>
+          </concept>
+          <concept>
+            <code value="s4a"/>
+          </concept>
+        </include>
+      </compose>
+    </ValueSet>
+  </contained>
+  <url value="http://test.org/fhir/StructureDefinition/meds-test" />
+  <version value="2.0.3" />
+  <name value="MedicationSlicingByValueset" />
+  <title value="Medication test: Slicing by valueset" />
+  <status value="active" />
+  <publisher value="HL7" />
+  <description value="This profile test slicing by value set" />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.1" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Medication" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Medication" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Medication.code.coding">
+      <path value="Medication.code.coding" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="$this" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <short value="Medication, Sliced by value set" />
+    </element>
+    <element id="Medication.code.coding:slice1">
+      <path value="Medication.code.coding" />
+      <sliceName value="slice1" />
+      <short value="Slice #1"/>
+      <max value="1" />
+      <binding>
+        <strength value="required" />
+        <valueSetReference>
+          <reference value="#v1" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Medication.code.coding:slice2">
+      <path value="Medication.code.coding" />
+      <sliceName value="slice2" />
+      <short value="Slice #2"/>
+      <max value="1" />
+      <binding>
+        <strength value="required" />
+        <valueSetReference>
+          <reference value="#v2" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Medication.code.coding:slice3">
+      <path value="Medication.code.coding" />
+      <sliceName value="slice3" />
+      <short value="Slice #3"/>
+      <max value="1" />
+      <binding>
+        <strength value="required" />
+        <valueSetReference>
+          <reference value="#v3" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Medication.code.coding:slice4">
+      <path value="Medication.code.coding" />
+      <sliceName value="slice4" />
+      <short value="Slice #4"/>
+      <max value="1" />
+      <binding>
+        <strength value="required" />
+        <valueSetReference>
+          <reference value="#v4" />
+        </valueSetReference>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

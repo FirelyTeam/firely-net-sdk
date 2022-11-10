@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
                       new CachedResolver(
                         new MultiResolver(
                           new TestProfileArtifactSource(),
-                          ZipSource.CreateValidationSource(),
+                          FhirPackageSource.CreateFhirCorePackageSource(),
                           visitResolver)));
 
             var validatorSettings = new ValidationSettings

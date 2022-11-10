@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ * #%L
+ * org.hl7.fhir.r5
+ * %%
+ * Copyright (C) 2014 - 2019 Health Level 7
+ * %%
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * #L%
+ */
+
+/*
+  Copyright (c) 2011+, HL7, Inc.
+  All rights reserved.
+  
+  Redistribution and use in source and binary forms, with or without modification, 
+  are permitted provided that the following conditions are met:
+  
+   * Redistributions of source code must retain the above copyright notice, this 
+     list of conditions and the following disclaimer.
+   * Redistributions in binary form must reproduce the above copyright notice, 
+     this list of conditions and the following disclaimer in the documentation 
+     and/or other materials provided with the distribution.
+   * Neither the name of HL7 nor the names of its contributors may be used to 
+     endorse or promote products derived from this software without specific 
+     prior written permission.
+  
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
+  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, 
+  INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT 
+  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR 
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, 
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
+  POSSIBILITY OF SUCH DAMAGE.
+  
+
+  Generated on Sat, May 28, 2022 12:47+1000 for FHIR v4.3.0 
+
+  Note: the schemas &amp; schematrons do not contain all of the rules about what makes resources
+  valid. Implementers will still need to be familiar with the content of the specification and with
+  any profiles that apply to the resources in order to make a conformant implementation.
+
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://hl7.org/fhir" xmlns:xhtml="http://www.w3.org/1999/xhtml" targetNamespace="http://hl7.org/fhir" elementFormDefault="qualified" version="1.0">
+  <xs:include schemaLocation="fhir-base.xsd"/>
+  <xs:element name="SubstanceDefinition" type="SubstanceDefinition">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="SubstanceDefinition">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+      <xs:documentation xml:lang="en">If the element is present, it must have either a @value, an @id, or extensions</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="DomainResource">
+        <xs:sequence>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="unbounded" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifier by which this substance is known.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="version" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A business level version identifier of the substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Status of substance within the catalogue e.g. active, retired.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="classification" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A high level categorization, e.g. polymer or nucleic acid, or food, chemical, biological, or a lower level such as the general types of polymer (linear or branch chain) or type of impurity (process related or contaminant).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="domain" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">If the substance applies to human or veterinary use.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="grade" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The quality standard, established benchmark, to which substance complies (e.g. USP/NF, Ph. Eur, JP, BP, Company Standard).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="description" minOccurs="0" maxOccurs="1" type="markdown">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Textual description of the substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="informationSource" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Supporting literature.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Textual comment about the substance's catalogue or registry record.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="manufacturer" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The entity that creates, makes, produces or fabricates the substance. This is a set of potential manufacturers but is not necessarily comprehensive.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="supplier" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An entity that is the source for the substance. It may be different from the manufacturer. Supplier is synonymous to a distributor.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="moiety" type="SubstanceDefinition.Moiety" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Moiety, for structural modifications.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="property" type="SubstanceDefinition.Property" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">General specifications for this substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="molecularWeight" type="SubstanceDefinition.MolecularWeight" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The molecular weight or weight range (for proteins, polymers or nucleic acids).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="structure" type="SubstanceDefinition.Structure" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Structural information.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="code" type="SubstanceDefinition.Code" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Codes associated with the substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="name" type="SubstanceDefinition.Name" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Names applicable to this substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="relationship" type="SubstanceDefinition.Relationship" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A link between this substance and another, with details of the relationship.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="sourceMaterial" type="SubstanceDefinition.SourceMaterial" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Material or taxonomic/anatomical source for the substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Moiety">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="role" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Role that the moiety is playing.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="identifier" minOccurs="0" maxOccurs="1" type="Identifier">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Identifier by which this moiety substance is known.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="name" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Textual name for this moiety substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="stereochemistry" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Stereochemistry type.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="opticalActivity" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Optical activity type.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="molecularFormula" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Molecular formula for this moiety of this substance, typically using the Hill system.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Quantitative value for this moiety.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="amountQuantity" type="Quantity"/>
+            <xs:element name="amountString" type="string"/>
+          </xs:choice>
+          <xs:element name="measurementType" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The measurement type of the quantitative value. In capturing the actual relative amounts of substances or molecular fragments it may be necessary to indicate whether the amount refers to, for example, a mole ratio or weight ratio.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Property">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A code expressing the type of property.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A value for the property.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="valueCodeableConcept" type="CodeableConcept"/>
+            <xs:element name="valueQuantity" type="Quantity"/>
+            <xs:element name="valueDate" type="date"/>
+            <xs:element name="valueBoolean" type="boolean"/>
+            <xs:element name="valueAttachment" type="Attachment"/>
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.MolecularWeight">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="method" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The method by which the molecular weight was determined.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Type of molecular weight such as exact, average (also known as. number average), weight average.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="amount" minOccurs="1" maxOccurs="1" type="Quantity">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Used to capture quantitative values for a variety of elements. If only limits are given, the arithmetic mean would be the average. If only a single definite value for a given element is given, it would be captured in this field.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Structure">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="stereochemistry" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Stereochemistry type.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="opticalActivity" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Optical activity type.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="molecularFormula" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Molecular formula of this substance, typically using the Hill system.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="molecularFormulaByMoiety" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Specified per moiety according to the Hill system, i.e. first C, then H, then alphabetical, each moiety separated by a dot.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="molecularWeight" type="SubstanceDefinition.MolecularWeight" minOccurs="0" maxOccurs="1">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The molecular weight or weight range (for proteins, polymers or nucleic acids).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="technique" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The method used to elucidate the structure or characterization of the drug substance. Examples: X-ray, HPLC, NMR, Peptide mapping, Ligand binding assay.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="sourceDocument" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The source of information about the structure.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="representation" type="SubstanceDefinition.Representation" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A depiction of the structure or characterization of the substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Representation">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The kind of structural representation (e.g. full, partial).</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="representation" minOccurs="0" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The structural representation or characterization as a text string in a standard format.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="format" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The format of the representation e.g. InChI, SMILES, MOLFILE, CDX, SDF, PDB, mmCIF. The logical content type rather than the physical file format of a document.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="document" minOccurs="0" maxOccurs="1" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An attached file with the structural representation or characterization e.g. a molecular structure graphic of the substance, a JCAMP or AnIML file.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Code">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="code" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The specific code.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Status of the code assignment, for example 'provisional', 'approved'.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="statusDate" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The date at which the code status was changed as part of the terminology maintenance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="note" minOccurs="0" maxOccurs="unbounded" type="Annotation">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Any comment can be provided in this field, if necessary.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="source" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Supporting literature.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Name">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="name" minOccurs="1" maxOccurs="1" type="string">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The actual name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Name type, for example 'systematic',  'scientific, 'brand'.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of the name, for example 'current', 'proposed'.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="preferred" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">If this is the preferred name for this substance.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="language" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Human language that the name is written in.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="domain" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The use context of this name for example if there is a different name a drug active ingredient as opposed to a food colour additive.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="jurisdiction" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The jurisdiction where this name applies.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="synonym" type="SubstanceDefinition.Name" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A synonym of this particular name, by which the substance is also known.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="translation" type="SubstanceDefinition.Name" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A translation for this name into another human language.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="official" type="SubstanceDefinition.Official" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Details of the official nature of this name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="source" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Supporting literature.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Official">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="authority" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Which authority uses this official name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="status" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The status of the official name, for example 'draft', 'active', 'retired'.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="date" minOccurs="0" maxOccurs="1" type="dateTime">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Date of the official name change.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.Relationship">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A pointer to another substance, as a resource or just a representational code.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="substanceDefinitionReference" type="Reference"/>
+            <xs:element name="substanceDefinitionCodeableConcept" type="CodeableConcept"/>
+          </xs:choice>
+          <xs:element name="type" minOccurs="1" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">For example &quot;salt to parent&quot;, &quot;active moiety&quot;, &quot;starting material&quot;, &quot;polymorph&quot;, &quot;impurity of&quot;.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="isDefining" minOccurs="0" maxOccurs="1" type="boolean">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">For example where an enzyme strongly bonds with a particular substance, this is a defining relationship for that enzyme, out of several possible substance relationships.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:choice minOccurs="0" maxOccurs="1" >
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A numeric factor for the relationship, for instance to express that the salt of a substance has some percentage of the active substance in relation to some other.</xs:documentation>
+            </xs:annotation>
+            <xs:element name="amountQuantity" type="Quantity"/>
+            <xs:element name="amountRatio" type="Ratio"/>
+            <xs:element name="amountString" type="string"/>
+          </xs:choice>
+          <xs:element name="ratioHighLimitAmount" minOccurs="0" maxOccurs="1" type="Ratio">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">For use when the numeric has an uncertain range.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="comparator" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An operator for the amount, for example &quot;average&quot;, &quot;approximately&quot;, &quot;less than&quot;.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="source" minOccurs="0" maxOccurs="unbounded" type="Reference">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">Supporting literature.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SubstanceDefinition.SourceMaterial">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">The detailed description of a substance, typically at a level beyond what is used for prescribing.</xs:documentation>
+    </xs:annotation>
+    <xs:complexContent>
+      <xs:extension base="BackboneElement">
+        <xs:sequence>
+          <xs:element name="type" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">A classification that provides the origin of the raw material. Example: cat hair would be an Animal source type.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="genus" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The genus of an organism, typically referring to the Latin epithet of the genus element of the plant/animal scientific name.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="species" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The species of an organism, typically referring to the Latin epithet of the species of the plant/animal.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="part" minOccurs="0" maxOccurs="1" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">An anatomical origin of the source material within an organism.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+          <xs:element name="countryOfOrigin" minOccurs="0" maxOccurs="unbounded" type="CodeableConcept">
+            <xs:annotation>
+              <xs:documentation xml:lang="en">The country or countries where the material is harvested.</xs:documentation>
+           </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>

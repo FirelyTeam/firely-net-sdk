@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="patient-translated-codes"/>
+	<contained>
+    <ValueSet>
+      <id value="relationships"/>
+      <url value="http://hl7.org/fhir/patient-translated-codes-relationships"/>
+      <status value="draft"/>
+      <expansion>
+        <timestamp value="2019-05-23T10:18:03.2071-06:00"/>
+        <contains>
+          <system value="http://terminology.hl7.org/CodeSystem/v2-0131"/>
+          <code value="C"/>
+          <display value="alt-display"/>
+        </contains>
+        <contains>
+          <system value="http://terminology.hl7.org/CodeSystem/v2-0131"/>
+          <code value="N"/>
+          <designation>
+            <value value="alt-designation"/>
+          </designation>
+        </contains>
+      </expansion>
+    </ValueSet>
+  </contained>
+	<url value="http://hl7.org/fhir/StructureDefinition/patient-translated-codes"/>
+	<name value="PatientTranslatedCodes"/>
+	<title value="Test slicing by polymorphic type"/>
+	<status value="draft"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="Patient"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Patient">
+			<path value="Patient"/>
+		</element>
+		<element id="Patient.contact">
+			<path value="Patient.contact"/>
+		</element>
+		<element id="Patient.contact.relationship">
+			<path value="Patient.contact.relationship"/>
+			<binding>
+        <strength value="required"/>
+        <valueSet value="#relationships"/>
+      </binding>
+		</element>
+	</differential>
+</StructureDefinition>

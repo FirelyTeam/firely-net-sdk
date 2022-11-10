@@ -7,6 +7,7 @@
  */
 
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using System;
@@ -15,16 +16,17 @@ namespace Hl7.Fhir.ElementModel
 {
     public static class PocoBuilderExtensions
     {
-        public static Base ToPoco(this ISourceNode source, Type pocoType = null, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(ModelInfo.ModelInspector, settings).BuildFrom(source, pocoType);
+        public static Base ToPoco(this ISourceNode source, ModelInspector inspector, Type pocoType = null, PocoBuilderSettings settings = null) =>
+            new PocoBuilder(inspector, settings).BuildFrom(source, pocoType);
 
-        public static T ToPoco<T>(this ISourceNode source, PocoBuilderSettings settings = null) where T : Base =>
-               (T)source.ToPoco(typeof(T), settings);
+        public static T ToPoco<T>(this ISourceNode source, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
+               (T)source.ToPoco(inspector, typeof(T), settings);
 
-        public static Base ToPoco(this ITypedElement element, PocoBuilderSettings settings = null) =>
-            new PocoBuilder(ModelInfo.ModelInspector, settings).BuildFrom(element);
+        public static T ToPoco<T>(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) where T : Base =>
+               (T)new PocoBuilder(inspector, settings).BuildFrom(element);
 
-        public static T ToPoco<T>(this ITypedElement element, PocoBuilderSettings settings = null) where T : Base =>
-               (T)element.ToPoco(settings);
+        public static Base ToPoco(this ITypedElement element, ModelInspector inspector, PocoBuilderSettings settings = null) =>
+               (Base)new PocoBuilder(inspector, settings).BuildFrom(element);
+
     }
 }

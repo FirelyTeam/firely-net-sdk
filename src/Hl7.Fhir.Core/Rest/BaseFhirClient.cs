@@ -1,6 +1,6 @@
 ﻿using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -12,12 +12,15 @@ namespace Hl7.Fhir.Rest
 {
     public abstract partial class BaseFhirClient : IDisposable
     {
-        private readonly IStructureDefinitionSummaryProvider _provider;
-        protected BaseFhirClient(Uri endpoint, FhirClientSettings settings = null, IStructureDefinitionSummaryProvider provider = null)
+        private readonly ModelInspector _inspector;
+        private readonly string _fhirVersion;
+
+        protected BaseFhirClient(Uri endpoint, ModelInspector inspector, string fhirVersion, FhirClientSettings settings = null)
         {
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _provider = provider ?? new PocoStructureDefinitionSummaryProvider();
+            _inspector = inspector;
+            _fhirVersion = fhirVersion;
         }
 
         protected IClientRequester Requester { get; set; }
@@ -467,7 +470,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -494,7 +497,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK });
@@ -584,7 +587,7 @@ namespace Hl7.Fhir.Rest
         /// ResourceEntries and DeletedEntries.</returns>
         public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
-            string collection = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            string collection = _inspector.GetFhirTypeNameForType(typeof(TResource));
             return internalHistoryAsync(collection, null, since, pageSize, summary);
         }
 
@@ -752,7 +755,7 @@ namespace Hl7.Fhir.Rest
 
             // [WMR 20160421] GetResourceNameForType is obsolete
             // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            var typeName = ModelInfo.GetFhirTypeNameForType(typeof(TResource));
+            var typeName = _inspector.GetFhirTypeNameForType(typeof(TResource));
 
             return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet);
         }
@@ -966,14 +969,14 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = await request.ToEntryRequestAsync(Settings).ConfigureAwait(false);
+            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, _fhirVersion).ConfigureAwait(false);
 
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
-                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_provider).ConfigureAwait(false);
+                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_inspector).ConfigureAwait(false);
             }
             catch (UnsupportedBodyTypeException ex)
             {
@@ -1000,7 +1003,7 @@ namespace Hl7.Fhir.Rest
             Bundle.EntryComponent response = null;
             try
             {
-                response = typedEntryResponse.ToBundleEntry(Settings.ParserSettings);
+                response = typedEntryResponse.ToBundleEntry(_inspector, Settings.ParserSettings);
 
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;
@@ -1021,7 +1024,7 @@ namespace Hl7.Fhir.Rest
                 if (!Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {ModelInfo.Version}? " +
+                        $"Are you connected to a FHIR server with FHIR version {_fhirVersion}? " +
                         "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
                         ste.InnerException);
 
@@ -1111,12 +1114,26 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!ModelInfo.CheckMinorVersionCompatibility(serverVersion))
+            else if (!CheckMinorVersionCompatibility(_fhirVersion, serverVersion))
             {
-                throw Error.NotSupported($"This client supports FHIR version {ModelInfo.Version} but the server uses version {serverVersion}");
+                throw Error.NotSupported($"This client supports FHIR version {_fhirVersion} but the server uses version {serverVersion}");
             }
 
         }
+
+        private static bool CheckMinorVersionCompatibility(string version, string externalVersion) =>
+            compareByMajorMinor(SemVersion.Parse(version), SemVersion.Parse(externalVersion)) == 0;
+
+        // TODO BIG_COMMON: Move to SemVersion perhaps?
+        private static int compareByMajorMinor(SemVersion @this, SemVersion other)
+        {
+            if (other is null || @this is null)
+                return 1;
+
+            var r = @this.Major.CompareTo(other.Major);
+            return r != 0 ? r : @this.Minor.CompareTo(other.Minor);
+        }
+
         #region IDisposable Support
         protected bool disposedValue = false; // To detect redundant calls
 

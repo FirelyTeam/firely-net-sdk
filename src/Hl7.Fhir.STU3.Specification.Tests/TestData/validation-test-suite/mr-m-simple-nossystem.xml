@@ -1,0 +1,37 @@
+<Measure xmlns="http://hl7.org/fhir">
+  <url value="http://hl7.org/fhir/test/Measure/mr-m-simple"/> 
+  <name value="TestMeasure"/>
+  <status value="active"/> 
+  <library value="Library/library-cms146-example"/> 
+  <group>
+    <population> 
+      <code> 
+        <coding> 
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.InInitialPopulation"/> 
+      </criteria> 
+    </population>  
+    <stratifier> 
+      <code> 
+        <text value="stratifier-ages-up-to-9"/> 
+      </code> 
+      <criteria> 
+        <language value="text/cql"/> 
+        <expression value="CMS146.AgesUpToNine"/> 
+      </criteria> 
+    </stratifier> 
+  </group> 
+  <supplementalData> 
+    <code> 
+      <text value="supplemental-data-gender"/> 
+    </code> 
+    <criteria> 
+      <language value="text/fhirpath"/> 
+      <expression value="Patient.gender"/> 
+    </criteria> 
+  </supplementalData> 
+</Measure> 

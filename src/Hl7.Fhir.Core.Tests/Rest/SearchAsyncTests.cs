@@ -1,6 +1,5 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Rest.Legacy;
 using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -13,19 +12,6 @@ namespace Hl7.Fhir.Core.AsyncTests
     public class FhirClientSearchAsyncTests
     {
         private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
-        private readonly string _endpointSupportingSearchUsingPost = "http://localhost:4080/";
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task Search_UsingSearchParams_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpoint);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchUsingParam(client);
-        }
 
         public async Task Search_UsingSearchParams_SearchReturnedHttpClient()
         {
@@ -61,17 +47,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             Console.WriteLine("Test Completed");
         }
 
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchUsingPost_UsingSearchParams_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchUsingPost(client);
-        }
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
@@ -111,18 +86,6 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public void SearchSync_UsingSearchParams_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpoint);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            searchSync(client);
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
         public void SearchSync_UsingSearchParams_SearchReturnedHttpCLient()
         {
             using (var client = new FhirClient(_endpoint))
@@ -156,52 +119,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             }
 
             Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public void SearchUsingPostSync_UsingSearchParams_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            var srch = new SearchParams()
-                .Where("name=Donald")
-                .LimitTo(10)
-                .SummaryOnly();
-
-            var result1 = client.SearchUsingPost<Patient>(srch);
-
-            Assert.IsTrue(result1.Entry.Count >= 1);
-
-            while (result1 != null)
-            {
-                foreach (var e in result1.Entry)
-                {
-                    Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
-                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                }
-                result1 = client.Continue(result1, PageDirection.Next);
-            }
-
-            Console.WriteLine("Test Completed");
-
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchMultiple_UsingSearchParams_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpoint);
-
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchMultiple(client);
         }
 
         public async Task SearchMultiple_UsingSearchParams_SearchReturnedHttpClient()
@@ -251,18 +168,6 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchUsingPostMultiple_UsingSearchParams_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchMultipleUsingPost(client);
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostMultiple_UsingSearchParams_SearchReturnedHttpClient()
         {
             using (var client = new FhirClient(_endpoint))
@@ -308,19 +213,6 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchWithCriteria_SyncContinue_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpoint);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-
-            await searchWithCriteria(client);
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
         {
             using (var client = new FhirClient(_endpoint))
@@ -349,18 +241,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             }
 
             Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchUsingPostWithCriteria(client);
         }
 
         [TestMethod]
@@ -394,18 +274,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             }
 
             Console.WriteLine("Test Completed");
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchWithCriteria_AsyncContinue_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpoint);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchWithCriteriaAsynContinue(client);
         }
 
         [TestMethod]
@@ -445,18 +313,6 @@ namespace Hl7.Fhir.Core.AsyncTests
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
-        [Obsolete]
-        public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturned()
-        {
-            var client = new LegacyFhirClient(_endpointSupportingSearchUsingPost);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
-
-            await searchUsingPostAsyncContinue(client);
-        }
-
-        [TestMethod]
-        [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturnedHttpClient()
         {
             using (var client = new FhirClient(_endpoint))
@@ -466,7 +322,6 @@ namespace Hl7.Fhir.Core.AsyncTests
                 await searchUsingPostAsyncContinue(client);
             }
         }
-
 
         private static async Task searchUsingPostAsyncContinue(BaseFhirClient client)
         {

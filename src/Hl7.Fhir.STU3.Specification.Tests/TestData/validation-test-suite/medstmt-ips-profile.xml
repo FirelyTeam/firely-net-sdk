@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="medstmt-ips"/>
+	<url value="http://hl7.org/fhir/test/StructureDefinition/medstmt-ips"/>
+	<status value="draft"/>
+	<date value="2018-02-14T22:57:06.512+01:00"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="MedicationStatement"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationStatement"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="MedicationStatement.effective[x]">
+			<path value="MedicationStatement.effective[x]"/>
+			<min value="1"/>
+			<max value="1"/>
+			<mustSupport value="true"/>
+		</element>
+		<element id="MedicationStatement.effective[x]:data-absent-reason">
+			<path value="MedicationStatement.effective[x].extension"/>
+			<short value="effective[x] absence reason"/>
+			<definition value="Provides a reason why the effectiveTime is missing."/>
+			<max value="1"/>
+			<type>
+				<code value="Extension"/>
+				<profile value="http://hl7.org/fhir/StructureDefinition/data-absent-reason"/>
+			</type>
+			<mustSupport value="true"/>
+		</element>
+	</differential>
+</StructureDefinition>

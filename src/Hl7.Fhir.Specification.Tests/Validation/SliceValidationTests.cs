@@ -151,19 +151,21 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var s = createPatientReslices() as SliceGroupBucket;
 
-            var p = new Patient();
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
-            p.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
-            var pnode = new ScopedNode(p.ToTypedElement());
+            var patient = new Patient();
+            patient.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Use = ContactPoint.ContactPointUse.Home, Value = "+31-6-39015765" });
+            patient.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Email, Use = ContactPoint.ContactPointUse.Work, Value = "e.kramer@furore.com" });
+            patient.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Temp, Value = "skype://crap" });
+            patient.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Other, Use = ContactPoint.ContactPointUse.Home, Value = "http://nu.nl" });
+            patient.Telecom.Add(new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Use = ContactPoint.ContactPointUse.Work, Value = "+31-20-6707070" });
+            var pnode = new ScopedNode(patient.ToTypedElement());
 
             var telecoms = pnode.Children("telecom").Cast<ScopedNode>();
 
             foreach (var telecom in telecoms)
                 Assert.True(s.Add(telecom));
 
+            // Hack: to inject the ModelInspector we validate patient first via one of the shims.
+            _validator.Validate(patient);
             var outcome = s.Validate(_validator, pnode);
             Assert.True(outcome.Success);
             Assert.Equal(0, outcome.Warnings);

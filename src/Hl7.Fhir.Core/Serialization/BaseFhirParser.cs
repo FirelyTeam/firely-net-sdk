@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 
@@ -15,10 +16,12 @@ namespace Hl7.Fhir.Serialization
     public class BaseFhirParser
     {
         public readonly ParserSettings Settings;
+        private readonly ModelInspector _inspector;
 
-        public BaseFhirParser(ParserSettings settings = null)
+        public BaseFhirParser(ModelInspector inspector, ParserSettings settings = null)
         {
             Settings = settings?.Clone() ?? new ParserSettings();
+            _inspector = inspector;
         }
 
         private PocoBuilderSettings buildPocoBuilderSettings(ParserSettings ps) =>
@@ -32,13 +35,13 @@ namespace Hl7.Fhir.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
             };
 
-        public Base Parse(ITypedElement element) => element.ToPoco(buildPocoBuilderSettings(Settings));
+        public Base Parse(ITypedElement element) => element.ToPoco(_inspector, buildPocoBuilderSettings(Settings));
 
-        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(buildPocoBuilderSettings(Settings));
+        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(_inspector, buildPocoBuilderSettings(Settings));
 
-        public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(type, buildPocoBuilderSettings(Settings));
+        public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(_inspector, type, buildPocoBuilderSettings(Settings));
 
-        public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(buildPocoBuilderSettings(Settings));
+        public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(_inspector, buildPocoBuilderSettings(Settings));
     }
 
 }

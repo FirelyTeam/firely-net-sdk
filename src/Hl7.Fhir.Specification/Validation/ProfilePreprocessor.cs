@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Navigation;
@@ -22,27 +23,30 @@ namespace Hl7.Fhir.Validation
         private readonly Func<string, StructureDefinition> _profileResolver;
         private readonly Func<StructureDefinition, OperationOutcome> _snapshotGenerator;
         private readonly StructureDefinitionSummaryProvider.TypeNameMapper _typeNameMapper;
+        private readonly ModelInspector _inspector;
         private readonly string _path;
         private readonly ProfileAssertion _profiles;
 
         public ProfilePreprocessor(Func<string, StructureDefinition> profileResolver, Func<StructureDefinition, OperationOutcome> snapshotGenerator,
                 ITypedElement instance, string declaredTypeProfile,
                 IEnumerable<StructureDefinition> additionalProfiles, IEnumerable<string> additionalCanonicals,
-                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper, ProfileAssertion.ResolutionContext resolutionContext)
+                StructureDefinitionSummaryProvider.TypeNameMapper typeNameMapper, ProfileAssertion.ResolutionContext resolutionContext,
+                ModelInspector inspector)
         {
             _profileResolver = profileResolver;
             _snapshotGenerator = snapshotGenerator;
             _typeNameMapper = typeNameMapper;
+            _inspector = inspector;
             _path = instance.Location;
 
-            _profiles = new ProfileAssertion(_path, _profileResolver, typeNameMapper, resolutionContext);
+            _profiles = new ProfileAssertion(_path, inspector, _profileResolver, typeNameMapper, resolutionContext);
 
             if (instance.InstanceType != null)
             {
                 if (_typeNameMapper != null && _typeNameMapper(instance.InstanceType, out string canonicalUri))
                     _profiles.SetInstanceType(canonicalUri);
                 else
-                    _profiles.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(instance.InstanceType));
+                    _profiles.SetInstanceType(Canonical.CanonicalUriForFhirCoreType(instance.InstanceType));
             }
             if (declaredTypeProfile != null) _profiles.SetDeclaredType(declaredTypeProfile);
 
@@ -50,7 +54,7 @@ namespace Hl7.Fhir.Validation
             _profiles.AddStatedProfile(instance.Children("meta").Children("profile").Select(p => p.Value).Cast<string>());
 
             //Almost identically, extensions can declare adherance to a profile using the 'url' attribute
-            if (declaredTypeProfile == ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Extension))
+            if (declaredTypeProfile == Canonical.CanonicalUriForFhirCoreType(FhirTypeNames.EXTENSION_NAME))
             {
                 if (instance.Children("url").FirstOrDefault()?.Value is string urlDeclaration
                     && urlDeclaration.StartsWith("http://", StringComparison.OrdinalIgnoreCase))

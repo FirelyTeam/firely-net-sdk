@@ -1,0 +1,21 @@
+{
+  "resourceType" : "StructureDefinition",
+  "id" : "parameters-profiled-resource-profiles-patient2",
+  "url" : "http://hl7.org/fhir/test/StructureDefinition/parameters-profiled-resource-profiles-patient2",
+  "version" : "0.1.0",
+  "name" : "TestResourceProfileInParamsPatient",
+  "fhirVersion" : "4.0.1",
+  "kind" : "resource",
+  "abstract" : false,
+  "type" : "Patient",
+  "baseDefinition" : "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation" : "constraint",
+  "differential" : {
+    "element" : [
+      {
+        "path" : "Patient.dateOfBirth",
+        "min" : 1
+      }
+    ]
+  }
+}

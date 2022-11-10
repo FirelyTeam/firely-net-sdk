@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -43,8 +44,8 @@ namespace Hl7.Fhir.Specification.Terminology
                 return await Endpoint.InstanceOperationAsync(constructUri<CodeSystem>(id), RestOperation.VALIDATE_CODE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
-        private Uri constructUri<T>(string id) =>
-            ResourceIdentity.Build(ModelInfo.GetFhirTypeNameForType(typeof(T)), id);
+        private Uri constructUri<T>(string id) where T : Resource =>
+            ResourceIdentity.Build(ModelInspector.ForType<T>().GetFhirTypeNameForType(typeof(T)), id);
 
         ///<inheritdoc />
         public async Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false)
@@ -65,9 +66,9 @@ namespace Hl7.Fhir.Specification.Terminology
         public async Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false)
         {
             if (string.IsNullOrEmpty(id))
-                return await Endpoint.TypeOperationAsync<ConceptMap>(RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+                return await Endpoint.TypeOperationAsync(RestOperation.TRANSLATE, FhirTypeNames.CONCEPTMAP_NAME, parameters, useGet).ConfigureAwait(false) as Parameters;
             else
-                return await Endpoint.InstanceOperationAsync(constructUri<ConceptMap>(id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
+                return await Endpoint.InstanceOperationAsync(ResourceIdentity.Build(FhirTypeNames.CONCEPTMAP_NAME, id), RestOperation.TRANSLATE, parameters, useGet).ConfigureAwait(false) as Parameters;
         }
 
         ///<inheritdoc />
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Specification.Terminology
                         coding = new Coding(system, code, display);
 
                     // Serialize the code or coding to json for display purposes in the issue
-                    var jsonSer = new FhirJsonSerializer();
+                    var jsonSer = new CommonFhirJsonSerializer(ModelInspector.ForAssembly(typeof(Coding).Assembly));
                     var codeDisplay = codeableConcept != null ? jsonSer.SerializeToString(codeableConcept)
                         : jsonSer.SerializeToString(coding);
 

@@ -1,0 +1,20 @@
+{
+    "resourceType": "Communication",
+    "id": "myCommInvalid",
+    "status": "completed",
+    "basedOn": [
+        {
+            "reference": "Observation/example"
+        }
+    ],
+    "partOf": [
+        {
+            "reference": "Observation/example"
+        }
+    ],
+    "about": [
+        {
+            "reference": "Patient/pat-good"
+        }
+    ]
+}

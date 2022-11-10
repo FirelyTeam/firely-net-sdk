@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public async System.Threading.Tasks.Task RoundtripStructureDefinition()
         {
-            var spec = ZipSource.CreateValidationSource();
+            var spec = FhirPackageSource.CreateFhirCorePackageSource();
 
             var sd = await spec.FindStructureDefinitionForCoreTypeAsync("Patient");
 

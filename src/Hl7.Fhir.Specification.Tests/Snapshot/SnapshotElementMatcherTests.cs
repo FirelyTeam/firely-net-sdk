@@ -30,8 +30,12 @@ namespace Hl7.Fhir.Specification.Tests
         [TestInitialize]
         public void Setup()
         {
-            var dirSource = new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true });
-            _testResolver = new CachedResolver(dirSource);
+            _testResolver = new CachedResolver(
+                new MultiResolver(
+                    new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true }),
+                    FhirPackageSource.CreateFhirCorePackageSource()
+                    )
+                );
         }
 
         private static List<ElementMatcher.MatchInfo> Match(ElementDefinitionNavigator snapNav, ElementDefinitionNavigator diffNav)

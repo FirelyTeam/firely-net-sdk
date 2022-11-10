@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 
@@ -117,7 +118,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 // Primitive types start with a lower-case character
                 var altTypeName = Utility.StringExtensions.Uncapitalize(typeName);
-                if (Model.ModelInfo.IsPrimitive(altTypeName)) { return altTypeName; }
+                if (ModelInspector.Common.IsPrimitive(altTypeName)) { return altTypeName; }
                 return typeName;
 
             }

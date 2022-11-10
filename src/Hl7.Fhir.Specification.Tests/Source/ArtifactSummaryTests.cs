@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Specification.Tests
 
         // Custom artifact summary harvester implementation to extract family name(s) from Patient resources
         const string PatientFamilyNameKey = "Patient.name.family";
-        static bool HarvestPatientSummary(ISourceNode nav, ArtifactSummaryPropertyBag properties)
+        static bool HarvestPatientSummary(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelinfo)
         {
             if (properties.GetTypeName() == ResourceType.Patient.GetLiteral())
             {
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Common properties
             Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.ValueSet.GetLiteral(), summary.ResourceTypeName);
-            Assert.IsTrue(summary.ResourceType == ResourceType.ValueSet);
+            Assert.IsTrue(summary.ResourceTypeName == ResourceType.ValueSet.GetLiteral());
 
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Common properties
             Assert.IsFalse(summary.IsBundleEntry);
             Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
-            Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+            Assert.IsTrue(summary.ResourceTypeName == ResourceType.StructureDefinition.GetLiteral());
             // Conformance resource properties
             Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
             Assert.AreEqual(url, summary.GetConformanceCanonicalUrl());
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             string path = Path.GetFullPath(Path.Combine("TestData", "profiles-types.json"));
 
-            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
+            var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.AreEqual(fi.LastWriteTimeUtc, summary.LastModified);
 
                 Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName);
-                Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+                Assert.IsTrue(summary.ResourceTypeName == ResourceType.StructureDefinition.GetLiteral());
 
                 // Conformance resource properties
                 Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             string path = Path.GetFullPath(Path.Combine("TestData", "snapshot-test", "profiles-resources.xml"));
 
-            var summaries = ArtifactSummaryGenerator.Default.Generate(path);
+            var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path);
             Assert.IsNotNull(summaries);
             Assert.AreNotEqual(0, summaries.Count);
             for (int i = 0; i < summaries.Count; i++)
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                 if (StringComparer.Ordinal.Equals(ResourceType.StructureDefinition.GetLiteral(), summary.ResourceTypeName))
                 {
-                    Assert.IsTrue(summary.ResourceType == ResourceType.StructureDefinition);
+                    Assert.IsTrue(summary.ResourceTypeName == ResourceType.StructureDefinition.GetLiteral());
 
                     // Conformance resource properties
                     Assert.IsNotNull(summary.GetConformanceCanonicalUrl());
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Specification.Tests
         ArtifactSummary assertSummary(string path, params ArtifactSummaryHarvester[] harvesters)
         {
             path = Path.GetFullPath(path);
-            var summaries = ArtifactSummaryGenerator.Default.Generate(path, harvesters);
+            var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(path, harvesters);
             Assert.IsNotNull(summaries);
             Assert.AreEqual(1, summaries.Count);
             var summary = summaries[0];
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Specification.Tests
             var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient).Value;
             var patientSummary = summaries.FindConformanceResources(patientUrl).FirstOrDefault();
             Assert.IsNotNull(patientSummary);
-            Assert.AreEqual(ResourceType.StructureDefinition, patientSummary.ResourceType);
+            Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), patientSummary.ResourceTypeName);
             Assert.AreEqual(patientUrl, patientSummary.GetConformanceCanonicalUrl());
 
             Assert.IsNotNull(patientSummary.Origin);
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Specification.Tests
                 using (var entryStream = entry.Open())
                 using (var navStream = new XmlNavigatorStream(entryStream))
                 {
-                    var summaries = ArtifactSummaryGenerator.Default.Generate(navStream);
+                    var summaries = new ArtifactSummaryGenerator(ModelInfo.ModelInspector).Generate(navStream);
                     Assert.IsNotNull(summaries);
                     corePatientSummary = summaries.FindConformanceResources(corePatientUrl).FirstOrDefault();
                 }
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             Assert.IsNotNull(corePatientSummary);
-            Assert.AreEqual(ResourceType.StructureDefinition, corePatientSummary.ResourceType);
+            Assert.AreEqual(ResourceType.StructureDefinition.GetLiteral(), corePatientSummary.ResourceTypeName);
             Assert.AreEqual(corePatientUrl, corePatientSummary.GetConformanceCanonicalUrl());
 
             // Load core Patient resource from ZIP (extract in memory)
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Specification.Tests
                     if (nav != null)
                     {
                         // Parse target resource from navigator
-                        var parser = new BaseFhirParser();
+                        var parser = new FhirXmlParser();
                         var corePatient = parser.Parse<StructureDefinition>(nav);
                         Assert.IsNotNull(corePatient);
                         Assert.AreEqual(corePatientUrl, corePatient.Url);
@@ -428,11 +428,11 @@ namespace Hl7.Fhir.Specification.Tests
             Debug.Print($"Found {summaries.Count} artifacts:");
             foreach (var summary in summaries)
             {
-                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
+                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceTypeName} : {summary.ResourceUri}");
             }
 
             // Expecting *all* artifacts to be recognized, including entries w/o ResourceId
-            var UnknownArtefacts = summaries.Where(s => s.ResourceType is null);
+            var UnknownArtefacts = summaries.Where(s => s.ResourceTypeName is null);
             Console.WriteLine("Unrecognized artefacts:");
             foreach (var summary in UnknownArtefacts)
             {
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Specification.Tests
             Console.WriteLine("Anonymous artefacts:");
             foreach (var summary in AnonymousArtefacts)
             {
-                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceType} : {summary.ResourceUri}");
+                Console.WriteLine($"{Path.GetFileName(summary.Origin)} - {summary.ResourceTypeName} : {summary.ResourceUri}");
             }
             Assert.AreEqual(6, AnonymousArtefacts.Count());
         }

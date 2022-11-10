@@ -1,0 +1,10 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="pat-good"/>
+  <text id="pat-good">
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      some text in no particular language
+    </div>
+  </text>
+  <active id="pat-good-a" value="false"/>
+</Patient>

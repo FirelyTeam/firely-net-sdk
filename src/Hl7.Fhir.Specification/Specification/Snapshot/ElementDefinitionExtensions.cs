@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 return defn.Type[0];
             else  //if there are multiple types (value[x]), try to get a common type, otherwise, use Element as the common datatype             
             {
-                var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();
+                var distinctTypeCode = defn.CommonTypeCode() ?? FhirTypeNames.ELEMENT_NAME;
                 return new ElementDefinition.TypeRefComponent() { Code = distinctTypeCode };
             }
 
@@ -64,16 +64,15 @@ namespace Hl7.Fhir.Specification.Snapshot
             return elem.Type.FirstOrDefault()?.Profile ?? Enumerable.Empty<string>();
         }
 
-        /// <summary>Returns the type code of the primary element type, or <c>null</c>.</summary>
-        public static FHIRAllTypes? PrimaryTypeCode(this ElementDefinition elem)
+        /// <summary>Returns the typeName of the primary element type, or <c>null</c>.</summary>
+        public static string? GetTypeCode(this ElementDefinition elem)
         {
             if (elem.Type != null)
             {
                 var type = elem.Type.FirstOrDefault();
                 if (type != null && !string.IsNullOrEmpty(type.Code))
                 {
-                    return Utility.EnumUtility.ParseLiteral<FHIRAllTypes>(type.Code);
-                    // return (FHIRAllTypes)Enum.Parse(typeof(FHIRAllTypes), type.Code);
+                    return type.Code;
                 }
             }
             return null;

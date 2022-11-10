@@ -1127,20 +1127,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ResourceType> TypeElement
+      public Code TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.ResourceType> _TypeElement;
+      private Code _TypeElement;
 
       /// <summary>
       /// A resource type that is supported
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.ResourceType? Type
+      public string Type
       {
         get { return TypeElement != null ? TypeElement.Value : null; }
         set
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             TypeElement = null;
           else
-            TypeElement = new Code<Hl7.Fhir.Model.ResourceType>(value);
+            TypeElement = new Code(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1598,7 +1598,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResourceType>)TypeElement.DeepCopy();
+        if(TypeElement != null) dest.TypeElement = (Hl7.Fhir.Model.Code)TypeElement.DeepCopy();
         if(ProfileElement != null) dest.ProfileElement = (Hl7.Fhir.Model.Canonical)ProfileElement.DeepCopy();
         if(SupportedProfileElement != null) dest.SupportedProfileElement = new List<Hl7.Fhir.Model.Canonical>(SupportedProfileElement.DeepCopy());
         if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();

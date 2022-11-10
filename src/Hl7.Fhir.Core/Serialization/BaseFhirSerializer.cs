@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Utility;
@@ -17,18 +18,20 @@ namespace Hl7.Fhir.Serialization
     public class BaseFhirSerializer
     {
         public readonly SerializerSettings Settings;
+        private readonly ModelInspector _modelInspector;
 
-        public BaseFhirSerializer(SerializerSettings settings)
+        public BaseFhirSerializer(ModelInspector modelInspector, SerializerSettings settings = null)
         {
             Settings = settings?.Clone() ?? new SerializerSettings();
+            _modelInspector = modelInspector;
         }
 
-        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements)
+        protected ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements)
             => MakeElementStack(instance, summary, elements, false);
 
-        protected static ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements, bool includeMandatoryInElementsSummary)
+        protected ITypedElement MakeElementStack(Base instance, SummaryType summary, string[] elements, bool includeMandatoryInElementsSummary)
         {
-            if (summary == SummaryType.False && elements == null) return instance.ToTypedElement();
+            if (summary == SummaryType.False && elements == null) return instance.ToTypedElement(_modelInspector);
 
             if (elements != null && summary != SummaryType.False)
                 throw Error.Argument("elements", "Elements parameter is supported only when summary is SummaryType.False or summary is not specified at all.");
@@ -37,7 +40,7 @@ namespace Hl7.Fhir.Serialization
 
             MetaSubsettedAdder.AddSubsetted(patchedInstance, atRoot: true);
 
-            var baseNav = new ScopedNode(patchedInstance.ToTypedElement());
+            var baseNav = new ScopedNode(patchedInstance.ToTypedElement(_modelInspector));
 
             switch (summary)
             {

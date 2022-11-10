@@ -1,0 +1,3863 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="conceptmaps" />
+  <meta>
+    <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+  </meta>
+  <type value="collection" />
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-contact-point-use-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v3" />
+        <version value="4.0.1" />
+        <name value="v3.ContactPointUse" />
+        <title value="v3 map for ContactPointUse" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
+        <group>
+          <source value="http://hl7.org/fhir/contact-point-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
+          <element>
+            <code value="home" />
+            <target>
+              <code value="H" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <target>
+              <code value="WP" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="TMP" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="OLD" />
+              <equivalence value="narrower" />
+              <comment value="Old and Bad" />
+            </target>
+            <target>
+              <code value="BAD" />
+              <equivalence value="narrower" />
+              <comment value="Old and Bad" />
+            </target>
+          </element>
+          <element>
+            <code value="mobile" />
+            <target>
+              <code value="MC" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-contact-point-use-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-use-v2" />
+        <version value="4.0.1" />
+        <name value="v2.ContactPointUse" />
+        <title value="v2 map for ContactPointUse" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/contact-point-use" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0201" />
+        <group>
+          <source value="http://hl7.org/fhir/contact-point-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0201" />
+          <element>
+            <code value="home" />
+            <target>
+              <code value="PRN" />
+              <equivalence value="wider" />
+            </target>
+            <target>
+              <code value="ORN" />
+              <equivalence value="wider" />
+            </target>
+            <target>
+              <code value="VHN" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <target>
+              <code value="WPN" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="mobile" />
+            <target>
+              <code value="PRS" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-address-type-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-address-type-v3" />
+        <version value="4.0.1" />
+        <name value="v3.AddressType" />
+        <title value="v3 map for AddressType" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/address-type" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
+        <group>
+          <source value="http://hl7.org/fhir/address-type" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
+          <element>
+            <code value="postal" />
+            <target>
+              <code value="PST" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="physical" />
+            <target>
+              <code value="PHYS" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-name-use-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v2" />
+        <version value="4.0.1" />
+        <name value="v2.NameUse" />
+        <title value="v2 map for NameUse" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/name-use" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0200" />
+        <group>
+          <source value="http://hl7.org/fhir/name-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0200" />
+          <element>
+            <code value="usual" />
+            <target>
+              <code value="D" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="official" />
+            <target>
+              <code value="L" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="TEMP" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="nickname" />
+            <target>
+              <code value="N" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="anonymous" />
+            <target>
+              <code value="S" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="NOUSE" />
+              <equivalence value="wider" />
+            </target>
+            <target>
+              <code value="BAD" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="maiden" />
+            <target>
+              <code value="M" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-name-use-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-name-use-v3" />
+        <version value="4.0.1" />
+        <name value="v3.NameUse" />
+        <title value="v3 map for NameUse" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/name-use" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-EntityNameUseR2" />
+        <group>
+          <source value="http://hl7.org/fhir/name-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-EntityNameUseR2" />
+          <element>
+            <code value="usual" />
+            <target>
+              <code value="C" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="official" />
+            <target>
+              <code value="OR" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="T" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="nickname" />
+            <target>
+              <code value="P" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="anonymous" />
+            <target>
+              <code value="ANON" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="OLD" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="maiden" />
+            <target>
+              <code value="M" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-address-use-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v3" />
+        <version value="4.0.1" />
+        <name value="v3.AddressUse" />
+        <title value="v3 map for AddressUse" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/address-use" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
+        <group>
+          <source value="http://hl7.org/fhir/address-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
+          <element>
+            <code value="home" />
+            <target>
+              <code value="H" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <target>
+              <code value="WP" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="TMP" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="OLD" />
+              <equivalence value="narrower" />
+              <comment value="Bad or Old" />
+            </target>
+            <target>
+              <code value="BAD" />
+              <equivalence value="narrower" />
+              <comment value="Bad or Old" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-administrative-gender-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v2" />
+        <version value="4.0.1" />
+        <name value="v2.AdministrativeGender" />
+        <title value="v2 map for AdministrativeGender" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0001" />
+        <group>
+          <source value="http://hl7.org/fhir/administrative-gender" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0001" />
+          <element>
+            <code value="male" />
+            <target>
+              <code value="M" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="female" />
+            <target>
+              <code value="F" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="other" />
+            <target>
+              <code value="A" />
+              <equivalence value="wider" />
+            </target>
+            <target>
+              <code value="O" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="unknown" />
+            <target>
+              <code value="U" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-administrative-gender-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-administrative-gender-v3" />
+        <version value="4.0.1" />
+        <name value="v3.AdministrativeGender" />
+        <title value="v3 map for AdministrativeGender" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/administrative-gender" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-AdministrativeGender" />
+        <group>
+          <source value="http://hl7.org/fhir/administrative-gender" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender" />
+          <element>
+            <code value="male" />
+            <target>
+              <code value="M" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="female" />
+            <target>
+              <code value="F" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="other" />
+            <target>
+              <code value="UN" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="unknown" />
+            <target>
+              <code value="UNK" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-document-reference-status-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-document-reference-status-v3" />
+        <version value="4.0.1" />
+        <name value="v3.DocumentReferenceStatus" />
+        <title value="v3 map for DocumentReferenceStatus" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/document-reference-status" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
+        <group>
+          <source value="http://hl7.org/fhir/document-reference-status" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
+          <element>
+            <code value="current" />
+            <target>
+              <code value="active" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="superseded" />
+            <target>
+              <code value="obsolete" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="entered-in-error" />
+            <target>
+              <code value="nullified" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-address-use-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-address-use-v2" />
+        <version value="4.0.1" />
+        <name value="v2.AddressUse" />
+        <title value="v2 map for AddressUse" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/address-use" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0190" />
+        <group>
+          <source value="http://hl7.org/fhir/address-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0190" />
+          <element>
+            <code value="home" />
+            <target>
+              <code value="H" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <target>
+              <code value="O" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <target>
+              <code value="C" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <target>
+              <code value="BA" />
+              <equivalence value="wider" />
+              <comment value="unclear about old addresses" />
+            </target>
+          </element>
+          <element>
+            <code value="billing" />
+            <target>
+              <code value="BI" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-detectedissue-severity-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-detectedissue-severity-v3" />
+        <version value="4.0.1" />
+        <name value="v3.DetectedIssueSeverity" />
+        <title value="v3 map for DetectedIssueSeverity" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/detectedissue-severity" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-SeverityObservation" />
+        <group>
+          <source value="http://hl7.org/fhir/detectedissue-severity" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ObservationValue" />
+          <element>
+            <code value="high" />
+            <target>
+              <code value="H" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="moderate" />
+            <target>
+              <code value="M" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="low" />
+            <target>
+              <code value="L" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-composition-status-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-composition-status-v3" />
+        <version value="4.0.1" />
+        <name value="v3.CompositionStatus" />
+        <title value="v3 map for CompositionStatus" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/composition-status" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-ActStatus" />
+        <group>
+          <source value="http://hl7.org/fhir/composition-status" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-ActStatus" />
+          <element>
+            <code value="preliminary" />
+            <target>
+              <code value="active" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="final" />
+            <target>
+              <code value="completed" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="amended" />
+            <target>
+              <code value="completed" />
+              <equivalence value="wider" />
+            </target>
+          </element>
+          <element>
+            <code value="entered-in-error" />
+            <target>
+              <code value="nullified" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-data-absent-reason-v3" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-data-absent-reason-v3" />
+        <version value="4.0.1" />
+        <name value="v3.DataAbsentReason" />
+        <title value="v3 map for DataAbsentReason" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/data-absent-reason" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v3-NullFlavor" />
+        <group>
+          <source value="http://terminology.hl7.org/CodeSystem/data-absent-reason" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-NullFlavor" />
+          <element>
+            <code value="unknown" />
+            <target>
+              <code value="UNK" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="asked-unknown" />
+            <target>
+              <code value="ASKU" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="temp-unknown" />
+            <target>
+              <code value="NAV" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="not-asked" />
+            <target>
+              <code value="NASK" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="masked" />
+            <target>
+              <code value="MSK" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="not-applicable" />
+            <target>
+              <code value="NA" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="negative-infinity" />
+            <target>
+              <code value="NINF" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="positive-infinity" />
+            <target>
+              <code value="PINF" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="not-permitted" />
+            <target>
+              <code value="OTH" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
+    <resource>
+      <ConceptMap>
+        <id value="cm-contact-point-system-v2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/cm-contact-point-system-v2" />
+        <version value="4.0.1" />
+        <name value="v2.ContactPointSystem" />
+        <title value="v2 map for ContactPointSystem" />
+        <status value="draft" />
+        <date value="2019-11-01T09:29:23+11:00" />
+        <publisher value="HL7 (FHIR Project)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+          <telecom>
+            <system value="email" />
+            <value value="fhir@lists.hl7.org" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://hl7.org/fhir/ValueSet/contact-point-system" />
+        <targetCanonical value="http://terminology.hl7.org/ValueSet/v2-0202" />
+        <group>
+          <source value="http://hl7.org/fhir/contact-point-system" />
+          <target value="http://terminology.hl7.org/CodeSystem/v2-0202" />
+          <element>
+            <code value="phone" />
+            <target>
+              <code value="PH" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="fax" />
+            <target>
+              <code value="FX" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="email" />
+            <target>
+              <code value="Internet" />
+              <equivalence value="narrower" />
+              <comment value="for email addresses" />
+            </target>
+          </element>
+          <element>
+            <code value="pager" />
+            <target>
+              <code value="BP" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="url" />
+            <target>
+              <code value="Internet" />
+              <equivalence value="narrower" />
+              <comment value="for non-email kinds of addresses" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/101" />
+    <resource>
+      <ConceptMap>
+        <id value="101" />
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/101" />
+        <identifier>
+          <system value="urn:ietf:rfc:3986" />
+          <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b" />
+        </identifier>
+        <version value="4.0.1" />
+        <name value="FHIR-v3-Address-Use" />
+        <title value="FHIR/v3 Address Use Mapping" />
+        <status value="draft" />
+        <experimental value="true" />
+        <date value="2012-06-13" />
+        <publisher value="HL7, Inc" />
+        <contact>
+          <name value="FHIR project team (example)" />
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <description value="A mapping between the FHIR and HL7 v3 AddressUse Code systems" />
+        <useContext>
+          <code>
+            <system value="http://terminology.hl7.org/CodeSystem/usage-context-type" />
+            <code value="venue" />
+          </code>
+          <valueCodeableConcept>
+            <text value="for CCDA Usage" />
+          </valueCodeableConcept>
+        </useContext>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <purpose value="To help implementers map from HL7 v3/CDA to FHIR" />
+        <copyright value="Creative Commons 0" />
+        <sourceUri value="http://hl7.org/fhir/ValueSet/address-use" />
+        <targetUri value="http://terminology.hl7.org/ValueSet/v3-AddressUse" />
+        <group>
+          <source value="http://hl7.org/fhir/address-use" />
+          <target value="http://terminology.hl7.org/CodeSystem/v3-AddressUse" />
+          <element>
+            <code value="home" />
+            <display value="home" />
+            <target>
+              <code value="H" />
+              <display value="home" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="work" />
+            <display value="work" />
+            <target>
+              <code value="WP" />
+              <display value="work place" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="temp" />
+            <display value="temp" />
+            <target>
+              <code value="TMP" />
+              <display value="temporary address" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="old" />
+            <display value="old" />
+            <target>
+              <code value="BAD" />
+              <display value="bad address" />
+              <equivalence value="disjoint" />
+              <comment value="In the HL7 v3 AD, old is handled by the usablePeriod element, but you have to provide a time, there's no simple equivalent of flagging an address as old" />
+            </target>
+          </element>
+          <unmapped>
+            <mode value="fixed" />
+            <code value="temp" />
+            <display value="temp" />
+          </unmapped>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/103" />
+    <resource>
+      <ConceptMap>
+        <id value="103" />
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/103" />
+        <identifier>
+          <system value="urn:ietf:rfc:3986" />
+          <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b" />
+        </identifier>
+        <version value="4.0.1" />
+        <name value="SNOMED CT to ICD-10-CM mappings for fracture of ulna" />
+        <status value="draft" />
+        <experimental value="true" />
+        <date value="2012-06-13" />
+        <publisher value="HL7, Inc" />
+        <contact>
+          <name value="FHIR project team (example)" />
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <description value="Example rule-based mappings between SNOMED CT to ICD-10-CM for fracture of ulna" />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="840" />
+            <display value="United States of America" />
+          </coding>
+        </jurisdiction>
+        <purpose value="Show example rule based mappings" />
+        <copyright value="Creative Commons 0" />
+        <sourceCanonical value="http://snomed.info/sct?fhir_vs" />
+        <targetCanonical value="http://hl7.org/fhir/sid/icd-10-us" />
+        <group>
+          <source value="http://snomed.info/sct" />
+          <sourceVersion value="March 2015 US Edition" />
+          <target value="http://hl7.org/fhir/sid/icd-10-us" />
+          <targetVersion value="2015" />
+          <element>
+            <code value="263204007" />
+            <target>
+              <code value="S52.209A" />
+              <equivalence value="narrower" />
+              <comment value="The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent) and fracture type is required for a valid ICD-10-CM mapping." />
+            </target>
+          </element>
+          <element>
+            <target>
+              <code value="S52.209D" />
+              <equivalence value="narrower" />
+              <comment value="The target mapping to ICD-10-CM is narrower, since additional patient data on the encounter (initial vs. subsequent), fracture type and healing (for subsequent encounter) is required for a valid ICD-10-CM mapping." />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/102" />
+    <resource>
+      <ConceptMap>
+        <id value="102" />
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/102" />
+        <version value="4.0.1" />
+        <name value="Specimen mapping from v2 table 0487 to SNOMED CT" />
+        <status value="draft" />
+        <experimental value="false" />
+        <date value="2013-07-25" />
+        <publisher value="FHIR project team (original source: LabMCoP)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://www.phconnect.org/group/laboratorymessagingcommunityofpractice/forum/attachment/download?id=3649725%3AUploadedFile%3A145786" />
+          </telecom>
+        </contact>
+        <sourceCanonical value="http://terminology.hl7.org/ValueSet/v2-0487" />
+        <targetCanonical value="http://snomed.info/sct?fhir_vs" />
+        <group>
+          <source value="http://terminology.hl7.org/CodeSystem/v2-0487" />
+          <target value="http://snomed.info/sct" />
+          <element>
+            <code value="ACNE" />
+            <target>
+              <code value="309068002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ACNFLD" />
+            <target>
+              <code value="119323008" />
+              <equivalence value="equivalent" />
+              <comment value="HL7 term is a historical term. mapped to Pus" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="47002008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="AIRS" />
+            <target>
+              <code value="446302006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ALL" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="7970006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="AMP" />
+            <target>
+              <code value="408654003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="81723002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="ANGI" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="ARTC" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="ASERU" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="pending" />
+            </target>
+          </element>
+          <element>
+            <code value="ASP" />
+            <target>
+              <code value="119295008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="ATTE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="AUTOC" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="AUTP" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="This really is not a specimen per se - it is the state of the subject from whom the specimen is collected, so it should be used as a  specimen type modifier ONLY!. Often this is indicated with a special medical record number or other notation on the patient. needs to have specimen type (e.g. SPM-4) and source site (SPM.8) and spatial orientation (SPM.9)" />
+            </target>
+          </element>
+          <element>
+            <code value="BBL" />
+            <target>
+              <code value="119304001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="BCYST" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="submitted (PLR155) with parent of  167874004^knee joint synovial fluid (specimen), with specimen source topography 32361000^Popliteal fossa structure (body structure)" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="32361000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Submit for new term with parent 119365002" />
+            </target>
+          </element>
+          <element>
+            <code value="BLEB" />
+            <target>
+              <code value="309049000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="339008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BLIST" />
+            <target>
+              <code value="309049000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="339008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BOIL" />
+            <target>
+              <code value="119295008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="59843005" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BON" />
+            <target>
+              <code value="430268003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="BOWL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Don't use this term for human samples - use Stool instead. animal would use small intestinal contents, large intestinal contents" />
+            </target>
+          </element>
+          <element>
+            <code value="BPU" />
+            <target>
+              <code value="119300005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="BRN" />
+            <target>
+              <code value="119367005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="BRSH" />
+            <target>
+              <code value="258415003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="439336003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BRTH" />
+            <target>
+              <code value="119336008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="BRUS" />
+            <target>
+              <code value="309176002" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="80657008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BUB" />
+            <target>
+              <code value="302795002" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="11585000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BULLA" />
+            <target>
+              <code value="258482009" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="339008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="BX" />
+            <target>
+              <code value="258415003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="86273004" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CALC" />
+            <target>
+              <code value="119350003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CARBU" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="41570003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CAT" />
+            <target>
+              <code value="119311002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CBITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Submit for new term with parent 119365002" />
+            </target>
+          </element>
+          <element>
+            <code value="CLIPP" />
+            <target>
+              <code value="119327009" />
+              <equivalence value="equivalent" />
+              <comment value="Be more specific use either: 119326000^hair specimen or 119327009^nail specimen" />
+            </target>
+          </element>
+          <element>
+            <code value="CNJT" />
+            <target>
+              <code value="119401005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CNJT" />
+            <target>
+              <code value="128160006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CNJT" />
+            <target>
+              <code value="258498002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="COL" />
+            <target>
+              <code value="119329007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CONE" />
+            <target>
+              <code value="399713008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="54535009" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="71252005" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CSCR" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="submit for new term with parent 119365002^Specimen from wound (specimen)" />
+            </target>
+          </element>
+          <element>
+            <code value="CSERU" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="pending" />
+            </target>
+          </element>
+          <element>
+            <code value="CSITE" />
+            <target>
+              <code value="258507003" />
+              <equivalence value="equivalent" />
+              <comment value="Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora       " />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="386144009" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="285570007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CSMY" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CST" />
+            <target>
+              <code value="258453008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CSVR" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD - may use blood and SPM-6" />
+            </target>
+          </element>
+          <element>
+            <code value="CTP" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="CVPS" />
+            <target>
+              <code value="258507003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="CVPT" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="445085009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CYN" />
+            <target>
+              <code value="119368000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="27925004" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CYST" />
+            <target>
+              <code value="119368000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="DBITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Submit for new term with parent 119365002" />
+            </target>
+          </element>
+          <element>
+            <code value="DCS" />
+            <target>
+              <code value="119335007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="DEC" />
+            <target>
+              <code value="258505006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="DEION" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="DIA" />
+            <target>
+              <code value="119360007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="DISCHG" />
+            <target>
+              <code value="258439008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="DIV" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="31113003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="DRN" />
+            <target>
+              <code value="119306004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="DRNG" />
+            <target>
+              <code value="258455001" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: not an acceptable specimen for micro - not specific enough term" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="DRNGP" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="EARW" />
+            <target>
+              <code value="122580007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="EBRUSH" />
+            <target>
+              <code value="309210009" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="36213007" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="32849002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="EEYE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="EFF" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="EFFUS" />
+            <target>
+              <code value="258440005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="EFOD" />
+            <target>
+              <code value="119320006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="EISO" />
+            <target>
+              <code value="258536003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ELT" />
+            <target>
+              <code value="119314005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ENVIR" />
+            <target>
+              <code value="119324002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="EOTH" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="ESOI" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="ESOS" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="ETA" />
+            <target>
+              <code value="119307008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="321667001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="ETTP" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="ETTUB" />
+            <target>
+              <code value="119307008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="321667001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="EWHI" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="EXG" />
+            <target>
+              <code value="119336008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="EXS" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="EXUDTE" />
+            <target>
+              <code value="258441009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="FAW" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="FBLOOD" />
+            <target>
+              <code value="119297000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="303112003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="FGA" />
+            <target>
+              <code value="168139001" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="83670000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="FIST" />
+            <target>
+              <code value="119370009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="FLD" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="FLT" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="FLU" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="FLUID" />
+            <target>
+              <code value="258442002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="FOLEY" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="FRS" />
+            <target>
+              <code value="258442002" />
+              <equivalence value="equivalent" />
+              <comment value="this term is not specific enough, choose from terms that more accurately describe the specimen" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="272626006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="FSCLP" />
+            <target>
+              <code value="309502007" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="41695006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="FUR" />
+            <target>
+              <code value="119295008" />
+              <equivalence value="equivalent" />
+              <comment value="Further describe the sample as tissue or pus. or by the collection method. The term boil is not specific to a body site - need to indicate source site (spm.8). preferred term is Aspirate_Boil" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="59843005" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GAS" />
+            <target>
+              <code value="119317003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="GASA" />
+            <target>
+              <code value="168137004" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GASAN" />
+            <target>
+              <code value="119379005" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="66051006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GASBR" />
+            <target>
+              <code value="309213006" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="235157009" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GASD" />
+            <target>
+              <code value="258459007" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GAST" />
+            <target>
+              <code value="258459007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="GENV" />
+            <target>
+              <code value="119394009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="GRAFT" />
+            <target>
+              <code value="440493002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="GRANU" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="45647009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GROSH" />
+            <target>
+              <code value="119311002" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="GSOL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="GSPEC" />
+            <target>
+              <code value="309211008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="79121003" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="GT" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="GTUBE" />
+            <target>
+              <code value="258459007" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="127490009" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="HBITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Submit for new term with parent 119365002" />
+            </target>
+          </element>
+          <element>
+            <code value="HBLUD" />
+            <target>
+              <code value="119297000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="303113008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="HEMAQ" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="HEMO" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="HERNI" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="HEV" />
+            <target>
+              <code value="119306004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="HIC" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="445085009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="HYDC" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="55434001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="IBITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Submit for new term with parent 119365002" />
+            </target>
+          </element>
+          <element>
+            <code value="ICYST" />
+            <target>
+              <code value="309075001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="IDC" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="IHG" />
+            <target>
+              <code value="119337004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ILEO" />
+            <target>
+              <code value="258455001" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="419954003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="ILLEG" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="IMP" />
+            <target>
+              <code value="439961009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="INCI" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="INFIL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="This describes a morphologic abnormality, not a sample" />
+            </target>
+          </element>
+          <element>
+            <code value="INS" />
+            <target>
+              <code value="258614005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="INTRD" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="IT" />
+            <target>
+              <code value="119307008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="IUD" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="pending" />
+            </target>
+          </element>
+          <element>
+            <code value="IVCAT" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="255560000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="IVFLD" />
+            <target>
+              <code value="258649003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="IVTIP" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="JEJU" />
+            <target>
+              <code value="258463000" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="21306003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="JNTFLD" />
+            <target>
+              <code value="119332005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="JP" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="KELOI" />
+            <target>
+              <code value="440674008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="67889009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="KIDFLD" />
+            <target>
+              <code value="309051001" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="64033007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="LAVG" />
+            <target>
+              <code value="258607008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="397394009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="LAVGG" />
+            <target>
+              <code value="168138009" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="173830003" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="LAVGP" />
+            <target>
+              <code value="440137008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="LAVPG" />
+            <target>
+              <code value="440674008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="67889009" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="44567001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="LENS1" />
+            <target>
+              <code value="440473005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="LENS2" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="LESN" />
+            <target>
+              <code value="309049000" />
+              <equivalence value="equivalent" />
+              <comment value="should be more specific what kind of lesion is observed - be more specific is it a wound, abscess, mass - specify! Ask SNOMED CT to mark it as a grouper term only (309049000)" />
+            </target>
+          </element>
+          <element>
+            <code value="LIQ" />
+            <target>
+              <code value="258442002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="LIQO" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="LSAC" />
+            <target>
+              <code value="258450006" />
+              <equivalence value="equivalent" />
+              <comment value="The HL7 term is a historical term Mapped to CSF obtained by lumbar puncture" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="303949008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="MAHUR" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="MASS" />
+            <target>
+              <code value="420548004" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="4147007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="MBLD" />
+            <target>
+              <code value="119345009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="MUCOS" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="414781009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="MUCUS" />
+            <target>
+              <code value="258483004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="NASDR" />
+            <target>
+              <code value="258474009" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="2095001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="NEDL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="NEPH" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="NGASP" />
+            <target>
+              <code value="302794003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="6853008" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="NGAST" />
+            <target>
+              <code value="258459007" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="127492001" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="69695003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="NGS" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="NODUL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="pending" />
+            </target>
+          </element>
+          <element>
+            <code value="NSECR" />
+            <target>
+              <code value="168141000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ORH" />
+            <target>
+              <code value="123038009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="ORL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="be more precise use ulcer, tumor, vesicle" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="74262004" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="OTH" />
+            <target>
+              <code value="123038009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PACEM" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="PCFL" />
+            <target>
+              <code value="122571007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PDSIT" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PDTS" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="submitted for code" />
+            </target>
+          </element>
+          <element>
+            <code value="PELVA" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="12921003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="PENIL" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="need to know what kind of lesion, so map to: UlcerTissue_penile, VesicleFluid_penile, Wound_penile, Mass tissue_penile, Necrotic tissue_penile, AbscessAspirate_penile, Anything else?" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="18911002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="PERIA" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="397158004" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="PILOC" />
+            <target>
+              <code value="119368000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PINS" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PIS" />
+            <target>
+              <code value="258507003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PLAN" />
+            <target>
+              <code value="119301009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PLAS" />
+            <target>
+              <code value="119361006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PLB" />
+            <target>
+              <code value="119305000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PLEVS" />
+            <target>
+              <code value="119364003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="255587001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="PND" />
+            <target>
+              <code value="258439008" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term -though in this case more often used for discharge" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="13648007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="POL" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="41329004" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="POPGS" />
+            <target>
+              <code value="440493002" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="6902008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="POPLG" />
+            <target>
+              <code value="440493002" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="6902008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="POPLV" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="PORTA" />
+            <target>
+              <code value="119311002" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="PPP" />
+            <target>
+              <code value="119362004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PROST" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PRP" />
+            <target>
+              <code value="119363009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PSC" />
+            <target>
+              <code value="119368000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PUNCT" />
+            <target>
+              <code value="119365002" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="129300006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="PUS" />
+            <target>
+              <code value="119323008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="PUSFR" />
+            <target>
+              <code value="119323008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="47002008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="PUST" />
+            <target>
+              <code value="119323008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="47002008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="QC3" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="RANDU" />
+            <target>
+              <code value="278020009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="RBITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Submit for new term with parent: 119365002" />
+            </target>
+          </element>
+          <element>
+            <code value="RECT" />
+            <target>
+              <code value="119339001" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead: stool is what is expected, should use stool sample" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="34402009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="RECTA" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="34402009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="RENALC" />
+            <target>
+              <code value="258420003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="64033007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="RENC" />
+            <target>
+              <code value="258453008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="64033007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="RES" />
+            <target>
+              <code value="258603007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SAL" />
+            <target>
+              <code value="119342007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SCAR" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SCLV" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="9454009" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SCROA" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="20233005" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SECRE" />
+            <target>
+              <code value="432825001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SER" />
+            <target>
+              <code value="119364003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SHU" />
+            <target>
+              <code value="119295008" />
+              <equivalence value="equivalent" />
+              <comment value="Preferred is aspiration with sterile syringe from inflamed area. Specify body location of shunt site" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="257351008" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SHUNF" />
+            <target>
+              <code value="446861007" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="446860008" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="279107003" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SHUNT" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="SITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="SKBP" />
+            <target>
+              <code value="309066003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="240977001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SKN" />
+            <target>
+              <code value="119325001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SMM" />
+            <target>
+              <code value="420548004" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="4147007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SNV" />
+            <target>
+              <code value="119332005" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SPRM" />
+            <target>
+              <code value="119349003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SPRP" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="SPRPB" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="SPS" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="SPT" />
+            <target>
+              <code value="119334006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SPTC" />
+            <target>
+              <code value="119335007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SPTT" />
+            <target>
+              <code value="258609006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SPUT1" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="SPUTIN" />
+            <target>
+              <code value="258610001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="SPUTSP" />
+            <target>
+              <code value="119335007" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="STER" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="STL" />
+            <target>
+              <code value="119339001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="STONE" />
+            <target>
+              <code value="119350003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="64033007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SUBMA" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="5713008" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SUBMX" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="4335006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SUMP" />
+            <target>
+              <code value="446562005" />
+              <equivalence value="equivalent" />
+              <comment value="Historical term - consider what is being drained and indicate that in SPM-4 instead" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SUP" />
+            <target>
+              <code value="122575003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="58088002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SUTUR" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="SWGZ" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="TASP" />
+            <target>
+              <code value="122877000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="129112001" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="44567001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="TISS" />
+            <target>
+              <code value="119376003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="TISU" />
+            <target>
+              <code value="122593002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="TLC" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="TRAC" />
+            <target>
+              <code value="438660002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="TRANS" />
+            <target>
+              <code value="258538002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="TSERU" />
+            <target>
+              <code value="119364003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="255588006" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="TSTES" />
+            <target>
+              <code value="119371008" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="279572002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="TTRA" />
+            <target>
+              <code value="258480001" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="129112001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="TUBES" />
+            <target>
+              <code value="119310001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="TUMOR" />
+            <target>
+              <code value="258435002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="TZANC" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="This is the name of a lab test. A skin sample is examined for viral inclusions." />
+            </target>
+          </element>
+          <element>
+            <code value="UDENT" />
+            <target>
+              <code value="123038009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="UR" />
+            <target>
+              <code value="122575003" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="URC" />
+            <target>
+              <code value="122880004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="URINB" />
+            <target>
+              <code value="122575003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="78533007" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="URINC" />
+            <target>
+              <code value="446846006" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="URINM" />
+            <target>
+              <code value="258574006" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="225271002" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="431938005" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="URINN" />
+            <target>
+              <code value="446277003" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="225109005" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="25990002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="URINP" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="URT" />
+            <target>
+              <code value="122565001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="USCOP" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="NEW specimenTERM 7" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="176178006" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="89837001" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="USPEC" />
+            <target>
+              <code value="123038009" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="VASTIP" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="VENT" />
+            <target>
+              <code value="119312009" />
+              <equivalence value="equivalent" />
+              <comment value="TBD in detail" />
+            </target>
+          </element>
+          <element>
+            <code value="VITF" />
+            <target>
+              <code value="258438000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="VOM" />
+            <target>
+              <code value="122572000" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WASH" />
+            <target>
+              <code value="440674008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WASI" />
+            <target>
+              <code value="122609004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WAT" />
+            <target>
+              <code value="119318008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WB" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Bloodbanking term ONLY now map to blood and the respective preservative" />
+            </target>
+          </element>
+          <element>
+            <code value="WEN" />
+            <target>
+              <code value="309075001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WICK" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="WND" />
+            <target>
+              <code value="119365002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WNDA" />
+            <target>
+              <code value="119366001" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WNDD" />
+            <target>
+              <code value="122566000" />
+              <equivalence value="equivalent" />
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="122462000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="WNDE" />
+            <target>
+              <code value="122568004" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WORM" />
+            <target>
+              <code value="258618008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WRT" />
+            <target>
+              <code value="309068002" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WWA" />
+            <target>
+              <code value="119318008" />
+              <equivalence value="equivalent" />
+            </target>
+          </element>
+          <element>
+            <code value="WWO" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="WWT" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="TBD" />
+            </target>
+          </element>
+          <element>
+            <code value="CSITE" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Prefer to have aspirate of the pus oozing out from cleaned insertion site - if swab is all that can be obtained, then swab after cleaning, otherwise you may get a contaminated specimen and a falsely identified infected central line. Do not just swab the reddened area - that will just collect skin flora" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="119295008" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="386144009" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/3006873018" />
+                <system value="http://snomed.info/sct" />
+                <value value="14766002" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="CLIPP" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="Be more specific use either: 119326000^hair specimen, or 119327009^nail specimen" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="119326000" />
+              </product>
+            </target>
+          </element>
+          <element>
+            <code value="SHU" />
+            <target>
+              <equivalence value="unmatched" />
+              <comment value="assume swab from shunt site for mapping here - clean surface of skin prior to expressing the shunt site - preferred is aspiration with sterile syringe should use SPM.8 to specify body approximate match location of shunt site" />
+              <product>
+                <property value="TypeModifier" />
+                <system value="http://snomed.info/sct" />
+                <value value="438660002" />
+              </product>
+              <product>
+                <property value="http://snomed.info/id/246380002" />
+                <system value="http://snomed.info/sct" />
+                <value value="257351008" />
+              </product>
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/example2" />
+    <resource>
+      <ConceptMap>
+        <id value="example2" />
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://hl7.org/fhir/ConceptMap/example2" />
+        <version value="4.0.1" />
+        <name value="FHIR-exanple-2" />
+        <title value="FHIR Example 2" />
+        <status value="draft" />
+        <experimental value="true" />
+        <date value="2012-06-13" />
+        <publisher value="HL7, Inc" />
+        <contact>
+          <name value="FHIR project team (example)" />
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <description value="An example mapping" />
+        <purpose value="To illustrate mapping features" />
+        <sourceUri value="http://example.org/fhir/example1" />
+        <targetUri value="http://example.org/fhir/example2" />
+        <group>
+          <source value="http://example.org/fhir/example1" />
+          <target value="http://example.org/fhir/example2" />
+          <element>
+            <code value="code" />
+            <display value="Example Code" />
+            <target>
+              <code value="code2" />
+              <display value="Some Example Code" />
+              <equivalence value="equivalent" />
+              <dependsOn>
+                <property value="http://example.org/fhir/property-value/example" />
+                <system value="http://example.org/fhir/example3" />
+                <value value="some-code" />
+                <display value="Something Coded" />
+              </dependsOn>
+            </target>
+          </element>
+          <unmapped>
+            <mode value="other-map" />
+            <url value="http://example.org/fhir/ConceptMap/map2" />
+          </unmapped>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/ConceptMap/cdshooks-indicator" />
+    <resource>
+      <ConceptMap>
+        <id value="cdshooks-indicator" />
+        <meta>
+          <lastUpdated value="2019-11-01T09:29:23.356+11:00" />
+        </meta>
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <url value="http://cds-hooks.hl7.org/ConceptMap/indicator-to-request-priority" />
+        <name value="IndicatorToRequestPriority" />
+        <status value="draft" />
+        <experimental value="false" />
+        <description value="This concept map defines a mapping from CDS Hooks indicator to request priority." />
+        <sourceCanonical value="http://cds-hooks.hl7.org/ValueSet/indicator" />
+        <targetCanonical value="http://hl7.org/fhir/ValueSet/request-priority" />
+        <group>
+          <element>
+            <code value="info" />
+            <target>
+              <code value="routine" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="warning" />
+            <target>
+              <code value="urgent" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+          <element>
+            <code value="critical" />
+            <target>
+              <code value="stat" />
+              <equivalence value="equal" />
+            </target>
+          </element>
+        </group>
+      </ConceptMap>
+    </resource>
+  </entry>
+</Bundle>

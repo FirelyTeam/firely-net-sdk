@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 Debug.Assert(elem.IsRootElement());
                 if (!string.IsNullOrEmpty(elem.SliceName))
                 {
-                    if (sd.Url != ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity))
+                    if (sd.Url != Canonical.CanonicalUriForFhirCoreType(FhirTypeNames.SIMPLEQUANTITY_NAME))
                     {
                         addIssueInvalidSliceNameOnRootElement(elem, sd);
                     }
@@ -631,7 +631,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // Gracefully handle non-distinct type codes; do not expand
 
                 // [MS 20210614] When we can't find a CommonTypeCode assume "Element" for .id and .extension
-                var distinctTypeCode = defn.CommonTypeCode() ?? FHIRAllTypes.Element.GetLiteral();
+                var distinctTypeCode = defn.CommonTypeCode() ?? FhirTypeNames.ELEMENT_NAME;
 
                 // Different profiles for common base type => expand the common base type (w/o custom profile)
                 // var typeRef = new ElementDefinition.TypeRefComponent() { Code = distinctTypeCodes[0] };
@@ -1112,7 +1112,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         // By default, use strategy (A): ignore custom type profile, merge from base
         // If mergeTypeProfiles is enabled, then first merge custom type profile before merging base
 
-        private static readonly string DOMAINRESOURCE_EXTENSION_PATH = ModelInfo.FhirTypeToFhirTypeName(FHIRAllTypes.DomainResource) + ".extension";
+        private static readonly string DOMAINRESOURCE_EXTENSION_PATH = FhirTypeNames.DOMAINRESOURCE_NAME + ".extension";
 
         // Resolve the type profile of the currently selected element and merge into snapshot
         private async T.Task<bool> mergeTypeProfiles(ElementDefinitionNavigator snap, ElementDefinitionNavigator diff)

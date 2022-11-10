@@ -1,0 +1,2258 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="registry" />
+  <type value="collection" />
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/dicom-uid" />
+    <resource>
+      <NamingSystem>
+        <id value="dicom-uid" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="DICOM Unique Id" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-31" />
+        <publisher value="NEMA" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="https://www.dicomstandard.org/" />
+          </telecom>
+        </contact>
+        <description value="An OID issued under DICOM OID rules. DICOM OIDs are represented as plain OIDs, with a prefix of &quot;urn:oid:&quot;" />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:dicom:uid" />
+          <preferred value="true" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/us-ssn" />
+    <resource>
+      <NamingSystem>
+        <id value="us-ssn" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="United States Social Security Number" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-31" />
+        <publisher value="United States Social Security Administration" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://www.ssa.gov/" />
+          </telecom>
+        </contact>
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="SB" />
+          </coding>
+        </type>
+        <description value="The SSN is represented in resources with dashes removed" />
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="http://hl7.org/fhir/sid/us-ssn" />
+          <preferred value="true" />
+        </uniqueId>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.1" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/us-medicare" />
+    <resource>
+      <NamingSystem>
+        <id value="us-medicare" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="United States Medicare Number" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2016-07-12" />
+        <publisher value="Centers for Medicare &amp; Medicaid Services" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="https://www.medicare.gov/" />
+          </telecom>
+        </contact>
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="SB" />
+          </coding>
+        </type>
+        <description value="Medicare Numbers (HIC or HICN) are represented without any spaces or dashes" />
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="http://hl7.org/fhir/sid/us-medicare" />
+          <preferred value="true" />
+        </uniqueId>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.572" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/us-mbi" />
+    <resource>
+      <NamingSystem>
+        <id value="us-mbi" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Medicare Beneficiary Identifier (United States)" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2016-07-12" />
+        <publisher value="Centers for Medicare &amp; Medicaid Services" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="https://www.medicare.gov/" />
+          </telecom>
+        </contact>
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="SB" />
+          </coding>
+        </type>
+        <description value="Medicare Beneficiary Identifiers are represented without any spaces or dashes" />
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="http://hl7.org/fhir/sid/us-mbi" />
+          <preferred value="true" />
+        </uniqueId>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.927" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/us-npi" />
+    <resource>
+      <NamingSystem>
+        <id value="us-npi" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="United States National Provider Identifier" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-31" />
+        <publisher value="Centers for Medicare and Medicaid Services" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://www.cms.gov/" />
+          </telecom>
+        </contact>
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="PRN" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="uri" />
+          <value value="http://hl7.org/fhir/sid/us-npi" />
+          <preferred value="true" />
+        </uniqueId>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.6" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/gtin" />
+    <resource>
+      <NamingSystem>
+        <id value="gtin" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Global Trade Item Number (GTIN)" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2017-12-18" />
+        <publisher value="GS1" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://www.gs1.org/" />
+          </telecom>
+        </contact>
+        <description value="Note: GTINs may be used in both [Codes](datatypes.html#Coding) and [Identifiers](datatypes.html#Identifier)" />
+        <jurisdiction>
+          <coding>
+            <system value="http://unstats.un.org/unsd/methods/m49/m49.htm" />
+            <code value="001" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="1.3.160" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="https://www.gs1.org/gtin" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.2" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.2" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Alaska Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.2" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.2" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.1" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.1" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Alabama Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.1" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.1" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.5" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.5" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Arkansas Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.5" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.5" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.4" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.4" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Arizona Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.4" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.4" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.6" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.6" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="California Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.6" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.6" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.8" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.8" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Colorado Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.8" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.8" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.9" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.9" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Connecticut Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.9" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.9" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.11" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.11" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="DC Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.11" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.11" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.10" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.10" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Delaware Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.10" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.10" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.12" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.12" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Florida Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.12" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.12" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.13" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.13" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Georgia Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.13" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.13" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.15" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.15" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Hawaii Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.15" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.15" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.18" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.18" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Indiana Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.18" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.18" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.19" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.19" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Iowa Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.19" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.19" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.16" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.16" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Idaho Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.16" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.16" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.17" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.17" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Illinois Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.17" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.17" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.20" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.20" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Kansas Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.20" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.20" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.21" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.21" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Kentucky Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.21" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.21" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.22" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.22" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Louisiana Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.22" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.22" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.25" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.25" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Massachusetts Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.25" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.25" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.24" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.24" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Maryland Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.24" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.24" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.23" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.23" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Maine Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.23" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.23" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.26" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.26" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Michigan Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.26" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.26" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.27" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.27" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Minnesota Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.27" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.27" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.29" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.29" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Missouri Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.29" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.29" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.28" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.28" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Mississippi Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.28" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.28" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.30" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.30" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Montana Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.30" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.30" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.36" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.36" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="New York Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.36" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.36" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.37" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.37" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="North Carolina Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.37" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.37" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.38" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.38" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="North Dakota Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.38" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.38" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.31" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.31" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Nebraska Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.31" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.31" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.33" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.33" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="New Hampshire Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.33" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.33" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.34" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.34" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="New Jersey Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.34" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.34" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.35" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.35" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="New Mexico Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.35" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.35" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.32" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.32" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Nevada Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.32" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.32" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.39" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.39" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Ohio Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.39" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.39" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.40" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.40" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Oklahoma Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.40" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.40" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.41" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.41" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Oregon Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.41" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.41" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.42" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.42" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Pennsylvania Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.42" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.42" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.44" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.44" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Rhode Island Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.44" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.44" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.45" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.45" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="South Carolina Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.45" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.45" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.46" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.46" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="South Dakota Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.46" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.46" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.47" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.47" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Tennessee Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.47" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.47" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.48" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.48" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Texas Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.48" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.48" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.49" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.49" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Utah Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.49" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.49" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.51" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.51" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Virginia Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.51" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.51" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.50" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.50" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Vermont Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.50" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.50" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.53" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.53" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Washington Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.53" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.53" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.55" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.55" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Wisconsin Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.55" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.55" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.54" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.54" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="West Virginia Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.54" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.54" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/NamingSystem/4.3.56" />
+    <resource>
+      <NamingSystem>
+        <id value="4.3.56" />
+        <text>
+          <status value="generated" />
+          <div xmlns="http://www.w3.org/1999/xhtml">
+            <p>The narrative has been removed to reduce the size of the distribution of the Hl7.Fhir.Specification library</p>
+          </div>
+        </text>
+        <name value="Wyoming Driver's License" />
+        <status value="active" />
+        <kind value="identifier" />
+        <date value="2015-07-03" />
+        <publisher value="HL7 International" />
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+            <code value="DL" />
+          </coding>
+        </type>
+        <jurisdiction>
+          <coding>
+            <system value="urn:iso:std:iso:3166" />
+            <code value="US" />
+          </coding>
+        </jurisdiction>
+        <uniqueId>
+          <type value="oid" />
+          <value value="2.16.840.1.113883.4.3.56" />
+        </uniqueId>
+        <uniqueId>
+          <type value="uri" />
+          <value value="urn:oid:2.16.840.1.113883.4.3.56" />
+        </uniqueId>
+      </NamingSystem>
+    </resource>
+  </entry>
+</Bundle>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="patient-contained-org-profile"/>
+  <contained>
+    <StructureDefinition>
+      <id value="gp"/>
+      <url value="http://hl7.org/fhir/patient-contained-org-org-profile"/>
+      <name value="PatientContainedOrgOrg"/>
+      <status value="draft"/>
+      <kind value="resource"/>
+      <abstract value="false"/>
+      <type value="Organization"/>
+      <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+      <derivation value="constraint"/>
+      <differential>
+        <element id="Organization">
+          <path value="Organization"/>
+        </element>
+        <element id="Organization.name">
+          <path value="Organization.name"/>
+          <min value="1"/>
+        </element>
+      </differential>
+    </StructureDefinition>
+  </contained>
+  <url value="http://hl7.org/fhir/StructureDefinition/patient-contained-gp-profile"/>
+  <name value="PatientContainedOrgProfile"/>
+  <status value="draft"/>
+  <description value="Test profile to confirm that targetProfiles on references are enforced against contained resources"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Patient">
+      <path value="Patient"/>
+    </element>
+    <element id="Patient.generalPractitioner">
+      <path value="Patient.generalPractitioner"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="#gp"/>
+        <aggregation value="contained"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

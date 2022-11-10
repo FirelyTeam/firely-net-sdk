@@ -1,0 +1,1 @@
+<Patient xmlns="http://hl7.org/fhir"><id value="patient-one" /><meta id="eric-clapton"><versionId value="1234" /><tag><system value="http://hl7.org/fhir/v3/ObservationValue" /><code value="SUBSETTED" /></tag></meta><text><status value="generated" /><div xmlns="http://www.w3.org/1999/xhtml">A great blues player</div></text></Patient>

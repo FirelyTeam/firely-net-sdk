@@ -6,7 +6,10 @@
 * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
 */
 
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
@@ -21,6 +24,7 @@ namespace Hl7.Fhir.Specification.Summary
     /// <summary>Represents a method that tries to harvest specific summary information from an artifact.</summary>
     /// <param name="nav">An <see cref="ISourceNode"/> instance to navigate the artifact.</param>
     /// <param name="properties">A dictionary for storing the harvested summary information.</param>
+    /// <param name="modelinfo"></param>
     /// <returns>
     /// Returns <c>true </c> to indicate that all relevant properties have been harvested from the artifact and the summary is ready to be generated.
     /// Returns <c>false</c> to try and continue harvesting additional summary information.
@@ -31,7 +35,7 @@ namespace Hl7.Fhir.Specification.Summary
     /// When finished, the navigator should again be positioned on the first nesting level, so any remaining
     /// delegates can continue harvesting additional information from there.
     /// </remarks>
-    public delegate bool ArtifactSummaryHarvester(ISourceNode nav, ArtifactSummaryPropertyBag properties);
+    public delegate bool ArtifactSummaryHarvester(ISourceNode nav, ArtifactSummaryPropertyBag properties, IModelInfo modelinfo);
 
     /// <summary>
     /// For generating artifact summary information from a file path or <see cref="INavigatorStream"/>,
@@ -62,19 +66,24 @@ namespace Hl7.Fhir.Specification.Summary
                 // Fall back for all other conformance resources
                 ConformanceSummaryProperties.Harvest,
             };
+        private readonly IModelInfo _modelInfo;
 
         /// <summary>Singleton. Returns a global default instance.</summary>
-        public static ArtifactSummaryGenerator Default { get; } = new ArtifactSummaryGenerator();
+        public static ArtifactSummaryGenerator Default { get; } = new ArtifactSummaryGenerator(ModelInspector.ForAssembly(typeof(IModelInfo).Assembly));
 
         /// <summary>Default constructor. Creates a new instance of the <see cref="ArtifactSummaryGenerator"/>.</summary>
-        public ArtifactSummaryGenerator() { }
+        public ArtifactSummaryGenerator(IModelInfo modelInfo)
+        {
+            _modelInfo = modelInfo;
+        }
 
         /// <summary>Constructor. Creates a new instance of the <see cref="ArtifactSummaryGenerator"/>.</summary>
         /// <param name="excludeSummariesForUnknownArtifacts">
         /// If <c>true</c>, then the generator will ignore non-parseable (invalid or non-FHIR)
         /// content files and exclude the summary from the result.
         /// </param>
-        public ArtifactSummaryGenerator(bool excludeSummariesForUnknownArtifacts)
+        /// <param name="modelInfo"></param>
+        public ArtifactSummaryGenerator(bool excludeSummariesForUnknownArtifacts, IModelInfo modelInfo) : this(modelInfo)
         {
             ExcludeSummariesForUnknownArtifacts = excludeSummariesForUnknownArtifacts;
         }
@@ -168,7 +177,7 @@ namespace Hl7.Fhir.Specification.Summary
             NavigatorStreamFactory navigatorStreamFactory,
             params ArtifactSummaryHarvester[] harvesters)
         {
-            List<ArtifactSummary> result = null;
+            List<ArtifactSummary>? result = null;
             try
             {
                 // Get some source file properties
@@ -181,7 +190,7 @@ namespace Hl7.Fhir.Specification.Summary
             {
                 result = new List<ArtifactSummary>
                 {
-                    ArtifactSummary.FromException(ex, filePath)
+                    ArtifactSummary.FromException(ex, _modelInfo, filePath)
                 };
             }
             return result;
@@ -261,14 +270,14 @@ namespace Hl7.Fhir.Specification.Summary
         /// equal to <c>true</c> and <see cref="ArtifactSummary.Error"/> returning the exception.
         /// </remarks>
         public List<ArtifactSummary> Generate(
-            INavigatorStream navStream,
-            Action<ArtifactSummaryPropertyBag> customPropertyInitializer,
+            INavigatorStream? navStream,
+            Action<ArtifactSummaryPropertyBag>? customPropertyInitializer,
             params ArtifactSummaryHarvester[] harvesters)
         {
             var result = new List<ArtifactSummary>();
 
             // Factory returns null for unknown file formats
-            if (!(navStream is null))
+            if (navStream is not null)
             {
                 try
                 {
@@ -313,14 +322,14 @@ namespace Hl7.Fhir.Specification.Summary
                     ArtifactSummary summary;
                     if (customPropertyInitializer is null)
                     {
-                        summary = ArtifactSummary.FromException(ex);
+                        summary = ArtifactSummary.FromException(ex, _modelInfo);
                     }
                     else
                     {
                         var properties = new ArtifactSummaryPropertyBag();
                         // Allow caller to modify/enrich harvested properties
                         customPropertyInitializer?.Invoke(properties);
-                        summary = new ArtifactSummary(properties, ex);
+                        summary = new ArtifactSummary(properties, _modelInfo, ex);
                     }
                     result.Add(summary);
                 }
@@ -339,7 +348,7 @@ namespace Hl7.Fhir.Specification.Summary
                 customPropertyInitializer.Invoke(properties);
 
                 // Generate the final (immutable) ArtifactSummary instance
-                var summary = new ArtifactSummary(properties);
+                var summary = new ArtifactSummary(properties, _modelInfo);
                 result.Add(summary);
             }
 
@@ -349,12 +358,12 @@ namespace Hl7.Fhir.Specification.Summary
         // ---------- Private Members ----------
 
         // Generate summaries for the specified FileInfo
-        List<ArtifactSummary> Generate(
+        private List<ArtifactSummary> Generate(
             FileInfo fi,
             NavigatorStreamFactory navigatorStreamFactory,
             params ArtifactSummaryHarvester[] harvesters)
         {
-            List<ArtifactSummary> result = null;
+            List<ArtifactSummary>? result = null;
 
             // Local helper method to initialize origin-specific summary properties
             // All resources from common origin share common property values
@@ -377,7 +386,7 @@ namespace Hl7.Fhir.Specification.Summary
 
             // Try to create navigator stream factory
             // May fail if the specified input is invalid => return error summary
-            INavigatorStream navStream = null;
+            INavigatorStream? navStream = null;
             try
             {
                 // Factory returns null for unknown file formats
@@ -388,7 +397,7 @@ namespace Hl7.Fhir.Specification.Summary
                 // ConfigurableNavigatorStreamFactory returns null for unknown file extensions
                 // No need to call DefaultNavigatorStreamFactory (redundant)
                 navStream = navigatorStreamFactory?.Invoke(fi.FullName);
-                    // ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
+                // ?? DefaultNavigatorStreamFactory.Create(fi.FullName);
 
                 result = Generate(navStream, InitializeSummaryFromOrigin, harvesters);
             }
@@ -399,7 +408,7 @@ namespace Hl7.Fhir.Specification.Summary
                 InitializeSummaryFromOrigin(properties);
                 result = new List<ArtifactSummary>
                 {
-                    new ArtifactSummary(properties, ex)
+                    new ArtifactSummary(properties, _modelInfo, ex)
                 };
             }
 
@@ -408,12 +417,12 @@ namespace Hl7.Fhir.Specification.Summary
 
 
         // Generate summary for a single artifact
-        static ArtifactSummary generate(
+        private ArtifactSummary generate(
             ArtifactSummaryPropertyBag props,
             ISourceNode nav,
             ArtifactSummaryHarvester[] harvesters)
         {
-            Exception error = null;
+            Exception? error = null;
 
             // [WMR 20180419] Support empty harvester list (harvest only default props, no custom props)
             if (harvesters != null && harvesters.Length > 0)
@@ -431,7 +440,7 @@ namespace Hl7.Fhir.Specification.Summary
                         {
                             try
                             {
-                                if (harvester != null && harvester.Invoke(nav, props))
+                                if (harvester != null && harvester.Invoke(nav, props, _modelInfo))
                                 {
                                     break;
                                 }
@@ -460,8 +469,9 @@ namespace Hl7.Fhir.Specification.Summary
             }
 
             // Create final summary from harvested properties and optional error
-            return new ArtifactSummary(props, error);
+            return new ArtifactSummary(props, _modelInfo, error);
         }
 
     }
 }
+#nullable restore

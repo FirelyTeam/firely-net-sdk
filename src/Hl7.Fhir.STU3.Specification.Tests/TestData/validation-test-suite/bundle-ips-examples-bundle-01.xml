@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="IPS-examples-Bundle-01"/>
+  <meta>
+    <lastUpdated value="2017-07-20T14:30:00+01:00"/>
+  </meta>
+  <language value="en-GB"/>
+  <identifier>
+    <system value="urn:oid:2.16.724.4.8.10.200.10"/>
+    <value value="175bd032-8b00-4728-b2dc-748bb1501aed"/>
+  </identifier>
+  <type value="document"/>
+<!-- e0 -->
+  <entry>
+    <fullUrl value="urn:uuid:30551ce1-5a28-4356-b684-1e639094ad4d"/>
+    <resource>
+      <Composition>
+        <id value="30551ce1-5a28-4356-b684-1e639094ad4d"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Composition-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 30551ce1-5a28-4356-b684-1e639094ad4d</p><p><b>meta</b>: </p><p><b>identifier</b>: 3f69e0a5-2177-4540-baab-7a5d0877428f</p><p><b>status</b>: final</p><p><b>type</b>: Patient summary Document <span style="background: LightGoldenRodYellow">(Details : {LOINC code '60591-5' = 'Patient summary Document', given as 'Patient summary Document'})</span></p><p><b>date</b>: Jul 20, 2017, 1:30:00 PM</p><p><b>author</b>: <a href="Practitioner/1c616b24-3895-48c4-9a02-9a64110351ef">Practitioner/1c616b24-3895-48c4-9a02-9a64110351ef</a></p><p><b>title</b>: Patient Summary as of July 20, 2017 14:30</p><p><b>confidentiality</b>: N</p><blockquote><p><b>attester</b></p><p><b>mode</b>: legal</p><p><b>time</b>: Jul 20, 2017, 1:30:00 PM</p><p><b>party</b>: <a href="Practitioner/1c616b24-3895-48c4-9a02-9a64110351ef">Practitioner/1c616b24-3895-48c4-9a02-9a64110351ef</a></p></blockquote><blockquote><p><b>attester</b></p><p><b>mode</b>: legal</p><p><b>time</b>: Jul 20, 2017, 1:30:00 PM</p><p><b>party</b>: <a href="Organization/890751f4-2924-4636-bab7-efffc7f3cf15">Organization/890751f4-2924-4636-bab7-efffc7f3cf15</a></p></blockquote><p><b>custodian</b>: <a href="Organization/890751f4-2924-4636-bab7-efffc7f3cf15">Organization/890751f4-2924-4636-bab7-efffc7f3cf15</a></p><h3>RelatesTos</h3><table class="grid"><tr><td>-</td><td><b>Code</b></td><td><b>Target[x]</b></td></tr><tr><td>*</td><td>appends</td><td>c2277753-9f90-4a95-8ddb-a0b3f6e7d292</td></tr></table><h3>Events</h3><table class="grid"><tr><td>-</td><td><b>Code</b></td><td><b>Period</b></td></tr><tr><td>*</td><td>care provision <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/v3-ActClass code 'PCPR' = 'care provision)</span></td><td>?? --&gt; Jul 20, 2017, 1:30:00 PM</td></tr></table></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:2.16.724.4.8.10.200.10"/>
+          <value value="3f69e0a5-2177-4540-baab-7a5d0877428f"/>
+        </identifier>
+        <status value="final"/>
+        <type>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="60591-5"/>
+            <display value="Patient summary Document"/>
+          </coding>
+        </type>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <date value="2017-07-20T14:30:00+01:00"/>
+        <author>
+          <reference value="Practitioner/1c616b24-3895-48c4-9a02-9a64110351ef"/>
+        </author>
+        <title value="Patient Summary as of July 20, 2017 14:30"/>
+        <confidentiality value="N"/>
+        <attester>
+          <mode value="legal"/>
+          <time value="2017-07-20T14:30:00+01:00"/>
+          <party>
+            <reference value="Practitioner/1c616b24-3895-48c4-9a02-9a64110351ef"/>
+          </party>
+        </attester>
+        <attester>
+          <mode value="legal"/>
+          <time value="2017-07-20T14:30:00+01:00"/>
+          <party>
+            <reference value="Organization/890751f4-2924-4636-bab7-efffc7f3cf15"/>
+          </party>
+        </attester>
+        <custodian>
+          <reference value="Organization/890751f4-2924-4636-bab7-efffc7f3cf15"/>
+        </custodian>
+        <relatesTo>
+          <code value="appends"/>
+          <targetIdentifier>
+            <system value="urn:oid:2.16.724.4.8.10.200.10"/>
+            <value value="c2277753-9f90-4a95-8ddb-a0b3f6e7d292"/>
+          </targetIdentifier>
+        </relatesTo>
+        <event>
+          <code>
+            <coding>
+              <system value="http://terminology.hl7.org/CodeSystem/v3-ActClass"/>
+              <code value="PCPR"/>
+            </coding>
+          </code>
+          <period>
+            <end value="2017-07-20T14:30:00+01:00"/>
+          </period>
+        </event>
+        <section>
+          <title value="Active Problems"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="11450-4"/>
+              <display value="Problem list Reported"/>
+            </coding>
+          </code>
+          <text>
+            <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">Hot flushes</div>
+          </text>
+          <entry>
+            <reference value="Condition/c64139e7-f02d-409c-bf34-75e8bf23bc80"/>
+          </entry>
+        </section>
+        <section>
+          <title value="Medication"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="10160-0"/>
+              <display value="History of Medication use Narrative"/>
+            </coding>
+          </code>
+          <text>
+            <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+							<table>
+								<thead>
+									<tr>
+										<th>Medication</th>
+										<th>Strength</th>
+										<th>Form</th>
+										<th>Dosage</th>
+										<th>Comment</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Anastrozole</td>
+										<td>1 mg</td>
+										<td>tablet</td>
+										<td>once daily</td>
+										<td>treatment for breast cancer</td>
+									</tr>
+									<tr>
+										<td>Black Cohosh Extract</td>
+										<td> </td>
+										<td>pil</td>
+										<td> </td>
+										<td>herbal supplement</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+          </text>
+          <entry>
+            <reference value="MedicationStatement/c220e36c-eb67-4fc4-9ba1-2fabc52acec6"/>
+          </entry>
+          <entry>
+            <reference value="MedicationStatement/47524493-846a-4a26-bae2-4ab03e60f02e"/>
+          </entry>
+        </section>
+        <section>
+          <title value="Allergies and Intolerances"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="48765-2"/>
+              <display value="Allergies and adverse reactions Document"/>
+            </coding>
+          </code>
+          <text>
+            <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">Allergy to penicillin, high criticality, active
+							No known food allergies
+						</div>
+          </text>
+          <entry>
+            <reference value="AllergyIntolerance/72884cad-ebe6-4f43-a51a-2f978275f132"/>
+          </entry>
+          <entry>
+            <reference value="AllergyIntolerance/c7781f44-6df8-4a8b-9e06-0b34263a47c5"/>
+          </entry>
+        </section>
+        <section>
+          <title value="History of Past Illness"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="11348-0"/>
+              <display value="Hx of Past illness"/>
+            </coding>
+          </code>
+          <text>
+            <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">Breast cancer Stage II with no evidence of recurrence following treatment</div>
+          </text>
+          <entry>
+            <reference value="Condition/c4597aa2-688a-401b-a658-70acc6de28c6"/>
+          </entry>
+        </section>
+        <section>
+          <title value="Plan of Treatment"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="18776-5"/>
+              <display value="Plan of care note"/>
+            </coding>
+          </code>
+          <text>
+            <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">Continue hormone medication with Anastrozole for total of 5 years and monitor for potential breast cancer recurrence</div>
+          </text>
+        </section>
+        <section>
+          <title value="Results"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="30954-2"/>
+              <display value="Relevant diagnostic tests/laboratory data Narrative"/>
+            </coding>
+          </code>
+          <text>
+            <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+							<table>
+								<thead>
+									<tr>
+										<th colspan="3">Blood typing</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Blood group</td>
+										<td>A+</td>
+										<td/>
+									</tr>
+									<tr>
+										<td>C Ab [Presence] in Serum or Plasma</td>
+										<td>Positive</td>
+										<td/>
+									</tr>
+									<tr>
+										<td>E Ab [Presence] in Serum or Plasma</td>
+										<td>Positive</td>
+										<td/>
+									</tr>
+									<tr>
+										<td>Little c Ab [Presence] in Serum or Plasma</td>
+										<td>Negative</td>
+										<td/>
+									</tr>
+								</tbody>
+							</table>
+							<table>
+								<thead>
+									<tr>
+										<th colspan="3">Hemoglobin A1c monitoring</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Hemoglobin A1c/Hemoglobin.total in Blood by HPLC</td>
+										<td>7.5 %</td>
+										<td/>
+									</tr>
+								</tbody>
+							</table>
+							<table>
+								<thead>
+									<tr>
+										<th colspan="3">Bacteriology</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="3">Methicillin resistant Staphylococcus aureus</td>
+									</tr>
+									<tr>
+										<td colspan="3">Healthy carrier of MRSA</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+          </text>
+        <!--  member obseravtions
+					<entry>
+						<reference value="Observation/aa11a2be-3e36-4be7-b58a-6fc3dace2741"/>
+					</entry>
+					<entry>
+						<reference value="Observation/6e39ccf3-f997-4a2b-8f28-b4b71c778c70"/>
+					</entry>
+					<entry>
+						<reference value="Observation/b4916505-a06b-460c-9be8-011609282457"/>
+					</entry>
+					<entry>
+						<reference value="Observation/a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4"/>
+					</entry>
+					 -->
+          <entry>
+            <reference value="Observation/2639657a-c19a-48e2-82cc-471e13b8ad94"/>
+          </entry>
+          <entry>
+            <reference value="Observation/cc354e00-a419-47ea-8b6c-1768b2a01646"/>
+          </entry>
+          <entry>
+            <reference value="Observation/26bee0a9-5997-4557-ab9d-c6adbb05b572"/>
+          </entry>
+        </section>
+      </Composition>
+    </resource>
+  </entry>
+<!-- e1 -->
+  <entry>
+    <fullUrl value="urn:uuid:2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+    <resource>
+      <Patient>
+        <id value="2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Patient-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 2b90dd2b-2dab-4c75-9bb9-a355e07401e8</p><p><b>meta</b>: </p><p><b>identifier</b>: 574687583</p><p><b>active</b>: true</p><p><b>name</b>: Martha DeLarosa </p><p><b>telecom</b>: ph: +31788700800(HOME)</p><p><b>gender</b>: female</p><p><b>birthDate</b>: May 1, 1972</p><p><b>address</b>: Laan Van Europa 1600 Dordrecht 3317 DB Netherlands </p><h3>Contacts</h3><table class="grid"><tr><td>-</td><td><b>Relationship</b></td><td><b>Name</b></td><td><b>Telecom</b></td><td><b>Address</b></td></tr><tr><td>*</td><td>mother <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/v3-RoleCode code 'MTH' = 'mother)</span></td><td>Martha Mum </td><td>ph: +33-555-20036(HOME)</td><td>Promenade des Anglais 111 Lyon 69001 France </td></tr></table></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.2.4.6.3"/>
+          <value value="574687583"/>
+        </identifier>
+        <active value="true"/>
+        <name>
+          <family value="DeLarosa"/>
+          <given value="Martha"/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="+31788700800"/>
+          <use value="home"/>
+        </telecom>
+        <gender value="female"/>
+        <birthDate value="1972-05-01"/>
+        <address>
+          <line value="Laan Van Europa 1600"/>
+          <city value="Dordrecht"/>
+          <postalCode value="3317 DB"/>
+          <country value="Netherlands"/>
+        </address>
+        <contact>
+          <relationship>
+            <coding>
+              <system value="http://terminology.hl7.org/CodeSystem/v3-RoleCode"/>
+              <code value="MTH"/>
+            </coding>
+          </relationship>
+          <name>
+            <family value="Mum"/>
+            <given value="Martha"/>
+          </name>
+          <telecom>
+            <system value="phone"/>
+            <value value="+33-555-20036"/>
+            <use value="home"/>
+          </telecom>
+          <address>
+            <line value="Promenade des Anglais 111"/>
+            <city value="Lyon"/>
+            <postalCode value="69001"/>
+            <country value="France"/>
+          </address>
+        </contact>
+      </Patient>
+    </resource>
+  </entry>
+<!-- e2 -->
+  <entry>
+    <fullUrl value="urn:uuid:1c616b24-3895-48c4-9a02-9a64110351ef"/>
+    <resource>
+      <Practitioner>
+        <id value="1c616b24-3895-48c4-9a02-9a64110351ef"/>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 1c616b24-3895-48c4-9a02-9a64110351ef</p><p><b>identifier</b>: 129854633</p><p><b>active</b>: true</p><p><b>name</b>: Beetje van Hulp </p><h3>Qualifications</h3><table class="grid"><tr><td>-</td><td><b>Code</b></td></tr><tr><td>*</td><td>Doctor of Medicine <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/v2-0360|2.7 code 'MD' = 'Doctor of Medicine', given as 'Doctor of Medicine'})</span></td></tr></table></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:2.16.528.1.1007.3.1"/>
+          <value value="129854633"/>
+          <assigner>
+            <display value="CIBG"/>
+          </assigner>
+        </identifier>
+        <active value="true"/>
+        <name>
+          <family value="van Hulp"/>
+          <given value="Beetje"/>
+        </name>
+        <qualification>
+          <code>
+            <coding>
+              <system value="http://terminology.hl7.org/CodeSystem/v2-0360|2.7"/>
+              <code value="MD"/>
+              <display value="Doctor of Medicine"/>
+            </coding>
+          </code>
+        </qualification>
+      </Practitioner>
+    </resource>
+  </entry>
+<!-- e3 -->
+  <entry>
+    <fullUrl value="urn:uuid:890751f4-2924-4636-bab7-efffc7f3cf15"/>
+    <resource>
+      <Organization>
+        <id value="890751f4-2924-4636-bab7-efffc7f3cf15"/>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 890751f4-2924-4636-bab7-efffc7f3cf15</p><p><b>identifier</b>: 564738757</p><p><b>active</b>: true</p><p><b>name</b>: Anorg Aniza Tion BV / The best custodian ever</p><p><b>telecom</b>: ph: +31-51-34343400(WORK)</p><p><b>address</b>: Houttuinen 27 Dordrecht 3311 CE Netherlands (WORK)</p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:2.16.528.1.1007.3.3"/>
+          <value value="564738757"/>
+        </identifier>
+        <active value="true"/>
+        <name value="Anorg Aniza Tion BV / The best custodian ever"/>
+        <telecom>
+          <system value="phone"/>
+          <value value="+31-51-34343400"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <use value="work"/>
+          <line value="Houttuinen 27"/>
+          <city value="Dordrecht"/>
+          <postalCode value="3311 CE"/>
+          <country value="Netherlands"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+<!-- e4 -->
+  <entry>
+    <fullUrl value="urn:uuid:c64139e7-f02d-409c-bf34-75e8bf23bc80"/>
+    <resource>
+      <Condition>
+        <id value="c64139e7-f02d-409c-bf34-75e8bf23bc80"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: c64139e7-f02d-409c-bf34-75e8bf23bc80</p><p><b>meta</b>: </p><p><b>identifier</b>: c87bf51c-e53c-4bfe-b8b7-aa62bdd93002</p><p><b>clinicalStatus</b>: Active <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-clinical code 'active' = 'Active)</span></p><p><b>verificationStatus</b>: Confirmed <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-ver-status code 'confirmed' = 'Confirmed)</span></p><p><b>category</b>: Problem <span style="background: LightGoldenRodYellow">(Details : {LOINC code '75326-9' = 'Problem', given as 'Problem'})</span></p><p><b>severity</b>: Moderate <span style="background: LightGoldenRodYellow">(Details : {LOINC code 'LA6751-7' = 'Moderate', given as 'Moderate'})</span></p><p><b>code</b>: Menopausal flushing (finding) <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '198436008' = 'Hot flush', given as 'Menopausal flushing (finding)'}; {http://hl7.org/fhir/sid/icd-10 code 'N95.1' = 'Menopausal and female climacteric states', given as 'Menopausal and female climacteric states'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>onset</b>: Jan 1, 2015, 12:00:00 AM</p><p><b>recordedDate</b>: Oct 1, 2016, 12:00:00 AM</p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:1.2.3.999"/>
+          <value value="c87bf51c-e53c-4bfe-b8b7-aa62bdd93002"/>
+        </identifier>
+        <clinicalStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+            <code value="active"/>
+          </coding>
+        </clinicalStatus>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <category>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="75326-9"/>
+            <display value="Problem"/>
+          </coding>
+        </category>
+        <severity>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="LA6751-7"/>
+            <display value="Moderate"/>
+          </coding>
+        </severity>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="198436008"/>
+            <display value="Menopausal flushing (finding)">
+              <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+                <extension url="lang">
+                  <valueCode value="nl-NL"/>
+                </extension>
+                <extension url="content">
+                  <valueString value="opvliegers"/>
+                </extension>
+              </extension>
+            </display>
+          </coding>
+          <coding>
+            <system value="http://hl7.org/fhir/sid/icd-10"/>
+            <code value="N95.1"/>
+            <display value="Menopausal and female climacteric states"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <onsetDateTime value="2015"/>
+        <recordedDate value="2016-10"/>
+      </Condition>
+    </resource>
+  </entry>
+<!-- e5 -->
+  <entry>
+    <fullUrl value="urn:uuid:c220e36c-eb67-4fc4-9ba1-2fabc52acec6"/>
+    <resource>
+      <MedicationStatement>
+        <id value="c220e36c-eb67-4fc4-9ba1-2fabc52acec6"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/MedicationStatement-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: c220e36c-eb67-4fc4-9ba1-2fabc52acec6</p><p><b>meta</b>: </p><p><b>identifier</b>: b75f92cb-61d4-469a-9387-df5ef70d25f0</p><p><b>status</b>: active</p><p><b>medication</b>: <a href="Medication/976d0804-cae0-45ae-afe3-a19f3ceba6bc">Medication/976d0804-cae0-45ae-afe3-a19f3ceba6bc</a></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Mar 1, 2015, 12:00:00 AM --&gt; (ongoing)</p><p><b>dosage</b>: </p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:1.2.3.999"/>
+          <value value="b75f92cb-61d4-469a-9387-df5ef70d25f0"/>
+        </identifier>
+        <status value="active"/>
+        <medicationReference>
+          <reference value="Medication/976d0804-cae0-45ae-afe3-a19f3ceba6bc"/>
+        </medicationReference>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectivePeriod>
+          <start value="2015-03"/>
+        </effectivePeriod>
+        <dosage>
+          <timing>
+            <repeat>
+              <count value="1"/>
+              <periodUnit value="d"/>
+            </repeat>
+          </timing>
+          <route>
+            <coding>
+              <system value="http://standardterms.edqm.eu"/>
+              <code value="20053000"/>
+              <display value="Oral use"/>
+            </coding>
+          </route>
+          <doseAndRate>
+            <type>
+              <coding>
+                <system value="http://terminology.hl7.org/CodeSystem/dose-rate-type"/>
+                <code value="ordered"/>
+                <display value="Ordered"/>
+              </coding>
+            </type>
+            <doseQuantity>
+              <value value="1"/>
+              <unit value="tablet"/>
+              <system value="http://unitsofmeasure.org"/>
+              <code value="1"/>
+            </doseQuantity>
+          </doseAndRate>
+        </dosage>
+      </MedicationStatement>
+    </resource>
+  </entry>
+<!-- e6 -->
+  <entry>
+    <fullUrl value="urn:uuid:47524493-846a-4a26-bae2-4ab03e60f02e"/>
+    <resource>
+      <MedicationStatement>
+        <id value="47524493-846a-4a26-bae2-4ab03e60f02e"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/MedicationStatement-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 47524493-846a-4a26-bae2-4ab03e60f02e</p><p><b>meta</b>: </p><p><b>identifier</b>: 9e312d6b-c6b6-439a-a730-6efaa5dcf8bc</p><p><b>status</b>: active</p><p><b>medication</b>: <a href="Medication/8adc0999-9468-4ac9-9557-680fa133d626">Medication/8adc0999-9468-4ac9-9557-680fa133d626</a></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Jan 1, 2016, 12:00:00 AM --&gt; (ongoing)</p><p><b>dosage</b>: </p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:1.2.3.999"/>
+          <value value="9e312d6b-c6b6-439a-a730-6efaa5dcf8bc"/>
+        </identifier>
+        <status value="active"/>
+        <medicationReference>
+          <reference value="Medication/8adc0999-9468-4ac9-9557-680fa133d626"/>
+        </medicationReference>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectivePeriod>
+          <start value="2016-01"/>
+        </effectivePeriod>
+        <dosage>
+          <route>
+            <coding>
+              <system value="http://standardterms.edqm.eu"/>
+              <code value="20053000"/>
+              <display value="Oral use"/>
+            </coding>
+          </route>
+        </dosage>
+      </MedicationStatement>
+    </resource>
+  </entry>
+<!-- e7 -->
+  <entry>
+    <fullUrl value="urn:uuid:976d0804-cae0-45ae-afe3-a19f3ceba6bc"/>
+    <resource>
+      <Medication>
+        <id value="976d0804-cae0-45ae-afe3-a19f3ceba6bc"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Medication-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 976d0804-cae0-45ae-afe3-a19f3ceba6bc</p><p><b>meta</b>: </p><p><b>code</b>: Product containing anastrozole (medicinal product) <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '108774000' = 'Product containing anastrozole (medicinal product)', given as 'Product containing anastrozole (medicinal product)'}; {urn:oid:2.16.840.1.113883.2.4.4.1 code '99872' = '99872', given as 'ANASTROZOL 1MG TABLET'}; {urn:oid:2.16.840.1.113883.2.4.4.7 code '2076667' = '2076667', given as 'ANASTROZOL CF TABLET FILMOMHULD 1MG'}; {http://www.whocc.no/atc code 'L02BG03' = 'anastrozole', given as 'anastrozole'})</span></p></div>
+        </text>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="108774000"/>
+            <display value="Product containing anastrozole (medicinal product)"/>
+          </coding>
+          <coding>
+            <system value="urn:oid:2.16.840.1.113883.2.4.4.1"/>
+            <code value="99872"/>
+            <display value="ANASTROZOL 1MG TABLET"/>
+          </coding>
+          <coding>
+            <system value="urn:oid:2.16.840.1.113883.2.4.4.7"/>
+            <code value="2076667"/>
+            <display value="ANASTROZOL CF TABLET FILMOMHULD 1MG"/>
+          </coding>
+          <coding>
+            <system value="http://www.whocc.no/atc"/>
+            <code value="L02BG03"/>
+            <display value="anastrozole"/>
+          </coding>
+        </code>
+      </Medication>
+    </resource>
+  </entry>
+<!-- e8 -->
+  <entry>
+    <fullUrl value="urn:uuid:8adc0999-9468-4ac9-9557-680fa133d626"/>
+    <resource>
+      <Medication>
+        <id value="8adc0999-9468-4ac9-9557-680fa133d626"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Medication-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 8adc0999-9468-4ac9-9557-680fa133d626</p><p><b>meta</b>: </p><p><b>code</b>: Black Cohosh Extract herbal supplement <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '412588001' = 'Cimicifuga racemosa extract (substance)', given as 'Cimicifuga racemosa extract (substance)'}; {http://www.whocc.no/atc code 'G02CX04' = 'Cimicifugae rhizoma', given as 'Cimicifugae rhizoma'})</span></p></div>
+        </text>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="412588001"/>
+            <display value="Cimicifuga racemosa extract (substance)">
+              <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+                <extension url="lang">
+                  <valueCode value="nl-NL"/>
+                </extension>
+                <extension url="content">
+                  <valueString value="Zwarte Cohosh Extract"/>
+                </extension>
+              </extension>
+            </display>
+          </coding>
+          <coding>
+            <system value="http://www.whocc.no/atc"/>
+            <code value="G02CX04"/>
+            <display value="Cimicifugae rhizoma"/>
+          </coding>
+          <text value="Black Cohosh Extract herbal supplement"/>
+        </code>
+      </Medication>
+    </resource>
+  </entry>
+<!-- e9 -->
+  <entry>
+    <fullUrl value="urn:uuid:72884cad-ebe6-4f43-a51a-2f978275f132"/>
+    <resource>
+      <AllergyIntolerance>
+        <id value="72884cad-ebe6-4f43-a51a-2f978275f132"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/AllergyIntolerance-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 72884cad-ebe6-4f43-a51a-2f978275f132</p><p><b>meta</b>: </p><p><b>identifier</b>: 3a462598-009c-484a-965c-d6b24a821424</p><p><b>clinicalStatus</b>: Active <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical code 'active' = 'Active)</span></p><p><b>verificationStatus</b>: Confirmed <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/allergyintolerance-verification code 'confirmed' = 'Confirmed)</span></p><p><b>type</b>: allergy</p><p><b>category</b>: medication</p><p><b>criticality</b>: high</p><p><b>code</b>: Penicillin -class of antibiotic- (substance) <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '373270004' = 'Substance with penicillin structure and antibacterial mechanism of action', given as 'Penicillin -class of antibiotic- (substance)'})</span></p><p><b>patient</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>onset</b>: Jan 1, 2010, 12:00:00 AM</p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:1.2.3.999"/>
+          <value value="3a462598-009c-484a-965c-d6b24a821424"/>
+        </identifier>
+        <clinicalStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"/>
+            <code value="active"/>
+          </coding>
+        </clinicalStatus>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <type value="allergy"/>
+        <category value="medication"/>
+        <criticality value="high"/>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="373270004"/>
+            <display value="Penicillin -class of antibiotic- (substance)"/>
+          </coding>
+        </code>
+        <patient>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </patient>
+        <onsetDateTime value="2010"/>
+      </AllergyIntolerance>
+    </resource>
+  </entry>
+<!-- e10 -->
+  <entry>
+    <fullUrl value="urn:uuid:c4597aa2-688a-401b-a658-70acc6de28c6"/>
+    <resource>
+      <Condition>
+        <id value="c4597aa2-688a-401b-a658-70acc6de28c6"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Condition-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: c4597aa2-688a-401b-a658-70acc6de28c6</p><p><b>meta</b>: </p><p><b>identifier</b>: 66d4a8c7-9081-43e0-a63f-489c2ae6edd6</p><p><b>clinicalStatus</b>: Remission <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-clinical code 'remission' = 'Remission)</span></p><p><b>verificationStatus</b>: Confirmed <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-ver-status code 'confirmed' = 'Confirmed)</span></p><p><b>category</b>: Problem <span style="background: LightGoldenRodYellow">(Details : {LOINC code '75326-9' = 'Problem', given as 'Problem'})</span></p><p><b>severity</b>: Severe <span style="background: LightGoldenRodYellow">(Details : {LOINC code 'LA6750-9' = 'Severe', given as 'Severe'})</span></p><p><b>code</b>: Malignant tumor of breast <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '254837009' = 'Malignant neoplasm of breast (disorder)', given as 'Malignant tumor of breast'}; {urn:oid:2.16.840.1.113883.6.43.1 code '8500/3' = 'Infiltrating duct carcinoma, NOS', given as 'Infiltrating duct carcinoma, NOS'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>onset</b>: Jan 1, 2015, 12:00:00 AM</p><p><b>abatement</b>: Mar 1, 2015, 12:00:00 AM</p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:1.2.3.999"/>
+          <value value="66d4a8c7-9081-43e0-a63f-489c2ae6edd6"/>
+        </identifier>
+        <clinicalStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+            <code value="remission"/>
+          </coding>
+        </clinicalStatus>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <category>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="75326-9"/>
+            <display value="Problem"/>
+          </coding>
+        </category>
+        <severity>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="LA6750-9"/>
+            <display value="Severe"/>
+          </coding>
+        </severity>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="254837009"/>
+            <display value="Malignant tumor of breast">
+              <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+                <extension url="lang">
+                  <valueCode value="nl-NL"/>
+                </extension>
+                <extension url="content">
+                  <valueString value="Borstkanker stadium II zonder aanwijzingen van recidieven na behandeling"/>
+                </extension>
+              </extension>
+            </display>
+          </coding>
+          <coding>
+            <system value="urn:oid:2.16.840.1.113883.6.43.1"/>
+            <code value="8500/3"/>
+            <display value="Infiltrating duct carcinoma, NOS"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <onsetDateTime value="2015-01"/>
+        <abatementDateTime value="2015-03"/>
+      </Condition>
+    </resource>
+  </entry>
+<!-- e11 -->
+  <entry>
+    <fullUrl value="urn:uuid:45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7"/>
+    <resource>
+      <Organization>
+        <id value="45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7"/>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7</p><p><b>active</b>: true</p><p><b>type</b>: Other <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/organization-type code 'other' = 'Other)</span></p><p><b>name</b>: Laboratoire de charme</p></div>
+        </text>
+        <active value="true"/>
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/organization-type"/>
+            <code value="other"/>
+          </coding>
+        </type>
+        <name value="Laboratoire de charme"/>
+      </Organization>
+    </resource>
+  </entry>
+<!-- e12 -->
+  <entry>
+    <fullUrl value="urn:uuid:aa11a2be-3e36-4be7-b58a-6fc3dace2741"/>
+    <resource>
+      <Observation>
+        <id value="aa11a2be-3e36-4be7-b58a-6fc3dace2741"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-member-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: aa11a2be-3e36-4be7-b58a-6fc3dace2741</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: ABO and Rh group [Type] in Blood <span style="background: LightGoldenRodYellow">(Details : {LOINC code '882-1' = 'ABO and Rh group [Type] in Blood', given as 'ABO and Rh group [Type] in Blood'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Oct 10, 2015, 8:15:00 AM</p><p><b>value</b>: Blood group A Rh(D) positive <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '278149003' = 'Blood group A Rh(D) positive', given as 'Blood group A Rh(D) positive'})</span></p></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="882-1"/>
+            <display value="ABO and Rh group [Type] in Blood"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2015-10-10T09:15:00+01:00"/>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="278149003"/>
+            <display value="Blood group A Rh(D) positive"/>
+          </coding>
+        </valueCodeableConcept>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e13 -->
+  <entry>
+    <fullUrl value="urn:uuid:6e39ccf3-f997-4a2b-8f28-b4b71c778c70"/>
+    <resource>
+      <Observation>
+        <id value="6e39ccf3-f997-4a2b-8f28-b4b71c778c70"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-member-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 6e39ccf3-f997-4a2b-8f28-b4b71c778c70</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: C Ab [Presence] in Serum or Plasma <span style="background: LightGoldenRodYellow">(Details : {LOINC code '945-6' = 'C Ab [Presence] in Serum or Plasma', given as 'C Ab [Presence] in Serum or Plasma'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Oct 10, 2015, 8:35:00 AM</p><p><b>value</b>: Positive <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '10828004' = 'Positive', given as 'Positive'})</span></p></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="945-6"/>
+            <display value="C Ab [Presence] in Serum or Plasma"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2015-10-10T09:35:00+01:00"/>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="10828004"/>
+            <display value="Positive"/>
+          </coding>
+        </valueCodeableConcept>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e14 -->
+  <entry>
+    <fullUrl value="urn:uuid:b4916505-a06b-460c-9be8-011609282457"/>
+    <resource>
+      <Observation>
+        <id value="b4916505-a06b-460c-9be8-011609282457"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-member-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: b4916505-a06b-460c-9be8-011609282457</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: E Ab [Presence] in Serum or Plasma <span style="background: LightGoldenRodYellow">(Details : {LOINC code '1018-1' = 'E Ab [Presence] in Serum or Plasma', given as 'E Ab [Presence] in Serum or Plasma'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Oct 10, 2015, 8:35:00 AM</p><p><b>value</b>: Positive <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '10828004' = 'Positive', given as 'Positive'})</span></p></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="1018-1"/>
+            <display value="E Ab [Presence] in Serum or Plasma"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2015-10-10T09:35:00+01:00"/>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="10828004"/>
+            <display value="Positive"/>
+          </coding>
+        </valueCodeableConcept>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e15 -->
+  <entry>
+    <fullUrl value="urn:uuid:a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4"/>
+    <resource>
+      <Observation>
+        <id value="a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-member-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: little c Ab [Presence] in Serum or Plasma <span style="background: LightGoldenRodYellow">(Details : {LOINC code '1156-9' = 'little c Ab [Presence] in Serum or Plasma', given as 'little c Ab [Presence] in Serum or Plasma'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Oct 10, 2015, 8:35:00 AM</p><p><b>value</b>: Negative <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '260385009' = 'Negative', given as 'Negative'})</span></p></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="1156-9"/>
+            <display value="little c Ab [Presence] in Serum or Plasma"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2015-10-10T09:35:00+01:00"/>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="260385009"/>
+            <display value="Negative"/>
+          </coding>
+        </valueCodeableConcept>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e16 -->
+  <entry>
+    <fullUrl value="urn:uuid:2639657a-c19a-48e2-82cc-471e13b8ad94"/>
+    <resource>
+      <Observation>
+        <id value="2639657a-c19a-48e2-82cc-471e13b8ad94"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 2639657a-c19a-48e2-82cc-471e13b8ad94</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: Blood typing <span style="background: LightGoldenRodYellow">(Details )</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Oct 10, 2015, 12:00:00 AM</p><p><b>performer</b>: <a href="Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7">Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7</a></p><p><b>hasMember</b>: </p><ul><li><a href="Observation/aa11a2be-3e36-4be7-b58a-6fc3dace2741">Observation/aa11a2be-3e36-4be7-b58a-6fc3dace2741</a></li><li><a href="Observation/6e39ccf3-f997-4a2b-8f28-b4b71c778c70">Observation/6e39ccf3-f997-4a2b-8f28-b4b71c778c70</a></li><li><a href="Observation/b4916505-a06b-460c-9be8-011609282457">Observation/b4916505-a06b-460c-9be8-011609282457</a></li><li><a href="Observation/a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4">Observation/a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4</a></li></ul></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <text value="Blood typing"/>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2015-10-10"/>
+        <performer>
+          <reference value="Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7"/>
+        </performer>
+        <hasMember>
+          <reference value="Observation/aa11a2be-3e36-4be7-b58a-6fc3dace2741"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/6e39ccf3-f997-4a2b-8f28-b4b71c778c70"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/b4916505-a06b-460c-9be8-011609282457"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/a6a5a1d5-c896-4c7e-b922-888fcc7e6ae4"/>
+        </hasMember>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e17 -->
+  <entry>
+    <fullUrl value="urn:uuid:cc354e00-a419-47ea-8b6c-1768b2a01646"/>
+    <resource>
+      <Observation>
+        <id value="cc354e00-a419-47ea-8b6c-1768b2a01646"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: cc354e00-a419-47ea-8b6c-1768b2a01646</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: Hemoglobin A1c/Hemoglobin.total in Blood by HPLC <span style="background: LightGoldenRodYellow">(Details : {LOINC code '17856-6' = 'Hemoglobin A1c/Hemoglobin.total in Blood by HPLC', given as 'Hemoglobin A1c/Hemoglobin.total in Blood by HPLC'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Nov 10, 2017, 7:20:00 AM</p><p><b>performer</b>: <a href="Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7">Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7</a></p><p><b>value</b>: 7.5 %<span style="background: LightGoldenRodYellow"> (Details: UCUM code % = '%')</span></p><p><b>note</b>: Above stated goal of 7.0 %</p></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="17856-6"/>
+            <display value="Hemoglobin A1c/Hemoglobin.total in Blood by HPLC"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2017-11-10T08:20:00+01:00"/>
+        <performer>
+          <reference value="Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7"/>
+        </performer>
+        <valueQuantity>
+          <value value="7.5"/>
+          <unit value="%"/>
+          <system value="http://unitsofmeasure.org"/>
+          <code value="%"/>
+        </valueQuantity>
+        <note>
+          <text value="Above stated goal of 7.0 %"/>
+        </note>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e18 -->
+  <entry>
+    <fullUrl value="urn:uuid:26bee0a9-5997-4557-ab9d-c6adbb05b572"/>
+    <resource>
+      <Observation>
+        <id value="26bee0a9-5997-4557-ab9d-c6adbb05b572"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/Observation-laboratory-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: 26bee0a9-5997-4557-ab9d-c6adbb05b572</p><p><b>meta</b>: </p><p><b>status</b>: final</p><p><b>category</b>: Laboratory <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/observation-category code 'laboratory' = 'Laboratory)</span></p><p><b>code</b>: Bacteria identified in Isolate <span style="background: LightGoldenRodYellow">(Details : {LOINC code '42803-7' = 'Bacteria identified in Isolate', given as 'Bacteria identified in Isolate'})</span></p><p><b>subject</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>effective</b>: Dec 10, 2017, 7:20:00 AM</p><p><b>performer</b>: <a href="Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7">Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7</a></p><p><b>value</b>: Methicillin resistant Staphylococcus aureus <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '115329001' = 'MRSA', given as 'Methicillin resistant Staphylococcus aureus'})</span></p><p><b>note</b>: Healthy carrier of MRSA</p></div>
+        </text>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/observation-category"/>
+            <code value="laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="42803-7"/>
+            <display value="Bacteria identified in Isolate"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </subject>
+        <effectiveDateTime value="2017-12-10T08:20:00+01:00"/>
+        <performer>
+          <reference value="Organization/45a5c5b1-4ec1-4d60-b4b2-ff5a84a41fd7"/>
+        </performer>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="115329001"/>
+            <display value="Methicillin resistant Staphylococcus aureus"/>
+          </coding>
+        </valueCodeableConcept>
+        <note>
+          <text value="Healthy carrier of MRSA"/>
+        </note>
+      </Observation>
+    </resource>
+  </entry>
+<!-- e19 -->
+  <entry>
+    <fullUrl value="urn:uuid:c7781f44-6df8-4a8b-9e06-0b34263a47c5"/>
+    <resource>
+      <AllergyIntolerance>
+        <id value="c7781f44-6df8-4a8b-9e06-0b34263a47c5"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/uv/ips/StructureDefinition/AllergyIntolerance-uv-ips"/>
+        </meta>
+        <text>
+          <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: c7781f44-6df8-4a8b-9e06-0b34263a47c5</p><p><b>meta</b>: </p><p><b>identifier</b>: 3a462598-009c-484a-965c-d6b24a821424</p><p><b>clinicalStatus</b>: Active <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical code 'active' = 'Active)</span></p><p><b>verificationStatus</b>: Confirmed <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/allergyintolerance-verification code 'confirmed' = 'Confirmed)</span></p><p><b>type</b>: allergy</p><p><b>category</b>: medication</p><p><b>criticality</b>: high</p><p><b>code</b>: No known food allergies <span style="background: LightGoldenRodYellow">(Details : {http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips code 'no-known-food-allergies' = 'No known food allergies)</span></p><p><b>patient</b>: <a href="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8">Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8</a></p><p><b>onset</b>: Jan 1, 2010, 12:00:00 AM</p></div>
+        </text>
+        <identifier>
+          <system value="urn:oid:1.2.3.999"/>
+          <value value="3a462598-009c-484a-965c-d6b24a821424"/>
+        </identifier>
+        <clinicalStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical"/>
+            <code value="active"/>
+          </coding>
+        </clinicalStatus>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/allergyintolerance-verification"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <type value="allergy"/>
+        <category value="medication"/>
+        <criticality value="high"/>
+        <code>
+          <coding>
+            <system value="http://hl7.org/fhir/uv/ips/CodeSystem/absent-unknown-uv-ips"/>
+            <code value="no-known-food-allergies"/>
+          </coding>
+        </code>
+        <patient>
+          <reference value="Patient/2b90dd2b-2dab-4c75-9bb9-a355e07401e8"/>
+        </patient>
+        <onsetDateTime value="2010"/>
+      </AllergyIntolerance>
+    </resource>
+  </entry>
+</Bundle>

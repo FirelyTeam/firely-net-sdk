@@ -16,6 +16,8 @@ namespace Hl7.Fhir.Specification.Tests
     {
         private readonly IAsyncResourceResolver _resolver;
         private static Uri _externalTerminologyServerEndpoint = new("https://r4.ontoserver.csiro.au/fhir");
+        // Use here a FhirPackageSource without the expansion package.
+        private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(new FhirPackageSource("http://packages2.fhir.org/packages", new string[] { "hl7.fhir.r5.core@5.0.0-snapshot1" }));
 
         public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
         {
@@ -25,13 +27,13 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfWholeSystem()
         {
-            var issueTypeVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
+            var issueTypeVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
             // issueTypeVs.CodeSystem.Version = null;
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
 
             await expander.ExpandAsync(issueTypeVs);
 
@@ -77,10 +79,10 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeImport()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version")).DeepCopy() as ValueSet;
+            var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/FHIR-version")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
             expander.Settings.MaxExpansionSize = 2;
 
             await Assert.ThrowsAsync<ValueSetExpansionTooBigException>(async () => await expander.ExpandAsync(testVs));
@@ -252,7 +254,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task LocalTermServiceValidateCodeTest()
         {
-            var svc = new LocalTerminologyService(_resolver);
+            var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
             // Do common tests for service
             await testServiceAsync(svc);
@@ -274,7 +276,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async void LocalTermServiceValidateCodeWithParamsTest()
         {
-            var svc = new LocalTerminologyService(_resolver);
+            var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
             var inParams = new ValidateCodeParameters()
@@ -965,7 +967,7 @@ namespace Hl7.Fhir.Specification.Tests
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
         }
 
-        private class OnlyCodeSystemResolver : IAsyncResourceResolver, IConformanceSource
+        private class OnlyCodeSystemResolver : IAsyncResourceResolver, ICommonConformanceSource
         {
             private CodeSystem _onlyCs;
 
@@ -1007,8 +1009,6 @@ namespace Hl7.Fhir.Specification.Tests
                 _onlyCs.ValueSet = valueSetUri;
                 return _onlyCs;
             }
-            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
-            public NamingSystem FindNamingSystem(string uniqueId) => throw new NotImplementedException();
             public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => throw new NotImplementedException();
             public Resource ResolveByCanonicalUri(string uri) => throw new NotImplementedException();
             public async Task<Resource> ResolveByCanonicalUriAsync(string uri)
@@ -1017,6 +1017,8 @@ namespace Hl7.Fhir.Specification.Tests
             }
             public Resource ResolveByUri(string uri) => throw new NotImplementedException();
             public Task<Resource> ResolveByUriAsync(string uri) => throw new NotImplementedException();
+            public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null) => throw new NotImplementedException();
+            public NamingSystem FindNamingSystem(string uniqueId) => throw new NotImplementedException();
         }
     }
 }

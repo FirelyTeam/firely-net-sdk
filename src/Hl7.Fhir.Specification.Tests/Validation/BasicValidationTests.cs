@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Tests
             var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
             var data = SourceNode.Node("active").ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var result = _validator.Validate(data, boolSd);
+            var result = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             Assert.False(result.Success);
             Assert.Contains("must not be empty", result.ToString());
         }
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Specification.Tests
                             SourceNode.Valued("valueInteger", "4")))
                             .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var report = _validator.Validate(data, boolSd);
+            var report = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Specification.Tests
                           SourceNode.Node("extension", SourceNode.Valued("url", "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor")))
                        .ToTypedElement(new PocoStructureDefinitionSummaryProvider(), "boolean");
 
-            var report = _validator.Validate(data, boolSd);
+            var report = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // ext-1, Extension.value[x] cardinality [1..1]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var boolSd = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Boolean);
 
-            var report = _validator.Validate(data, boolSd);
+            var report = _validator.Validate(data, ModelInfo.ModelInspector, boolSd);
             output.WriteLine(report.ToString());
             Assert.Equal(0, report.Fatals);
             Assert.Equal(2, report.Errors); // boolean.id [0..1], extension.url [1..1]
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new JProperty("unknown", "bla"));
             var patTE = FhirJsonNode.Create(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
-            var report = _validator.Validate(patTE);
+            var report = _validator.Validate(patTE, ModelInfo.ModelInspector);
             Assert.Contains("deceasedInteger", report.ToString());
         }
 
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Specification.Tests
             var patJ = "{ \"resourceType\": \"Patient\", \"active\" : \"\" }";
             var patTE = FhirJsonNode.Parse(patJ).ToTypedElement(new PocoStructureDefinitionSummaryProvider());
 
-            var report = _validator.Validate(patTE);
+            var report = _validator.Validate(patTE, ModelInfo.ModelInspector);
             Assert.DoesNotContain("Internal logic", report.ToString());
         }
 
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Specification.Tests
                         SourceNode.Valued("display", "Outpatient Note"))),
                 SourceNode.Valued("date", "2005-12-24T09:43:41"));
 
-            var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()));
+            var report = _validator.Validate(docRef.ToTypedElement(new PocoStructureDefinitionSummaryProvider()), ModelInfo.ModelInspector);
             Assert.False(report.Success);
             Assert.Equal(2, report.Errors); // timezone in 'date' is missing and mandatory element 'content' is missing
             Assert.Equal(0, report.Warnings);
@@ -670,10 +670,8 @@ namespace Hl7.Fhir.Specification.Tests
                 output.WriteLine(report.ToString());
             }
             Assert.True(report.Success);
-            Assert.Equal(3, report.Warnings);            // 3x Could not resolve http://terminology.hl7.org elements
-
+            Assert.Equal(0, report.Warnings);
         }
-
 
         [Fact]
         public void MeasureDeepCopyPerformance()
@@ -750,7 +748,7 @@ namespace Hl7.Fhir.Specification.Tests
             var source =
                     new MultiResolver(
                         new DirectorySource(@"TestData\validation"),
-                        ZipSource.CreateValidationSource());
+                        FhirPackageSource.CreateFhirCorePackageSource());
 
             var ctx = new ValidationSettings()
             {
@@ -838,9 +836,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void TestXsdValidationExplicitSet()
         {
             var mySettings = _validator.Settings.Clone();
-            var source = ZipSource.CreateValidationSource();
-
-            mySettings.XsdSchemaCollection = new SchemaCollection(source);
+            mySettings.XsdSchemaCollection = SchemaCollection.ValidationSchemaSet;
             var myValidator = new Validator(mySettings);
 
             runXsdValidation(myValidator);
@@ -854,7 +850,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var report = v.Validate(cpDoc.CreateReader());
             Assert.True(report.Success);
-            Assert.Equal(3, report.Warnings);            // 3x Could not resolve http://terminology.hl7.org elements
+            Assert.Equal(0, report.Warnings);
 
             // Damage the document by removing the mandated 'status' element
             cpDoc.Element(XName.Get("CarePlan", "http://hl7.org/fhir")).Elements(XName.Get("status", "http://hl7.org/fhir")).Remove();
@@ -1014,8 +1010,12 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ValidateAStructureDefinition()
         {
-            var sd = (StructureDefinition)(await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
-            var result = _validator.Validate(sd);
+            // This test does not work with Fhir Package as a ResourceResolver, because the definition of `structuredefinition-fhir-type` is not right? See also 
+            // this discussion on Zulip: https://chat.fhir.org/#narrow/stream/179280-fhir.2Finfrastructure-wg/topic/Value.20of.20Extension.20.60structuredefinition-fhir-type.60
+            var source = ZipSource.CreateValidationSource();
+            var sd = (StructureDefinition)(await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Patient)).DeepCopy();
+            var validator = new Validator(new ValidationSettings { ResourceResolver = source });
+            var result = validator.Validate(sd);
             Assert.True(result.Success);
         }
 
@@ -1059,7 +1059,7 @@ namespace Hl7.Fhir.Specification.Tests
                         // new DirectorySource(Path.Combine("TestData", "validation")),
                         // new TestProfileArtifactSource(),
                         memResolver,
-                        ZipSource.CreateValidationSource())));
+                        FhirPackageSource.CreateFhirCorePackageSource())));
 
             var ctx = new ValidationSettings()
             {
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Specification.Tests
                     new BundleExampleResolver(@"TestData\validation"),
                     new DirectorySource(@"TestData\validation"),
                     new TestProfileArtifactSource(),
-                    ZipSource.CreateValidationSource()));
+                    FhirPackageSource.CreateFhirCorePackageSource()));
 
             var nrOfParrallelTasks = 50;
             var results = new ConcurrentBag<OperationOutcome>();
@@ -1208,13 +1208,18 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ValidatePrimitiveWithEmptyTypeElement()
         {
-            var def = await _asyncSource.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Code);
+            // This test does not work with Fhir Package as a ResourceResolver, because the definition of `structuredefinition-fhir-type` is not right? See also 
+            // this discussion on Zulip: https://chat.fhir.org/#narrow/stream/179280-fhir.2Finfrastructure-wg/topic/Value.20of.20Extension.20.60structuredefinition-fhir-type.60
+
+            var source = ZipSource.CreateValidationSource();
+            var def = await source.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Code);
             var elem = def.Snapshot.Element.Where(e => e.Path == "code.value").Single();
             var data = elem.ToTypedElement();
 
             Assert.True(data.IsBoolean("type.select(code&profile&targetProfile).isDistinct()", true));
 
-            var result = _validator.Validate(def);
+            var validator = new Validator(new ValidationSettings { ResourceResolver = source });
+            var result = validator.Validate(def);
             Assert.True(result.Success, result.ToString());
         }
 
@@ -1369,7 +1374,7 @@ namespace Hl7.Fhir.Specification.Tests
             //prepare
             var resolver = new MultiResolver(
                                    new DirectorySource(@"TestData\validation"),
-                                   ZipSource.CreateValidationSource());
+                                   FhirPackageSource.CreateFhirCorePackageSource());
 
             var validator = new Validator(new ValidationSettings() { ResourceResolver = resolver, GenerateSnapshot = false });
 

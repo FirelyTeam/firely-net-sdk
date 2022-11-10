@@ -1,0 +1,1 @@
+<Patient xmlns="http://hl7.org/fhir"><id value="patient-one" /><meta id="eric-clapton"><versionId value="1234" /><tag><system value="http://hl7.org/fhir/v3/ObservationValue" /><code value="SUBSETTED" /></tag></meta><active value="true" /><name><use value="official" /><family value="Clapton" /></name><gender value="male" /><birthDate value="2015-07-09" /></Patient>

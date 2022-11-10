@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
                         new BasicValidationTests.BundleExampleResolver(Path.Combine("TestData", "validation")),
                         new DirectorySource(Path.Combine("TestData", "validation")),
                         new TestProfileArtifactSource(),
-                        ZipSource.CreateValidationSource()));
+                        FhirPackageSource.CreateFhirCorePackageSource()));
 
             var ctx = new ValidationSettings()
             {
@@ -61,9 +61,9 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var sd = await _asyncResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.ValueSet);
 
-            var assertion = new ProfileAssertion("Patient.name[0]", resolve);
-            assertion.SetInstanceType(FHIRAllTypes.ValueSet);
-            assertion.SetDeclaredType(FHIRAllTypes.ValueSet);
+            var assertion = new ProfileAssertion("Patient.name[0]", ModelInfo.ModelInspector, resolve);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.ValueSet));
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.ValueSet));
             assertion.AddStatedProfile("http://hl7.org/fhir/StructureDefinition/shareablevalueset");
 
             Assert.Equal(2, assertion.AllProfiles.Count());
@@ -102,18 +102,18 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void NormalElement()
         {
-            var assertion = new ProfileAssertion("Patient.name[0]", resolve);
-            assertion.SetDeclaredType(FHIRAllTypes.HumanName);
+            var assertion = new ProfileAssertion("Patient.name[0]", ModelInfo.ModelInspector, resolve);
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.HumanName));
 
             Assert.True(assertion.Validate().Success);
 
 
-            assertion.SetInstanceType(FHIRAllTypes.HumanName);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.HumanName));
             Assert.True(assertion.Validate().Success);
 
             Assert.Single(assertion.MinimalProfiles, assertion.DeclaredType);
 
-            assertion.SetInstanceType(FHIRAllTypes.Identifier);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
             var report = assertion.Validate();
             Assert.False(report.Success);
             Assert.Contains("is incompatible with that of the instance", report.ToString());
@@ -122,14 +122,14 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void QuantityElement()
         {
-            var assertion = new ProfileAssertion("Patient.name[0]", resolve);
-            assertion.SetInstanceType(FHIRAllTypes.Age);
-            assertion.SetDeclaredType(FHIRAllTypes.Quantity);
+            var assertion = new ProfileAssertion("Patient.name[0]", ModelInfo.ModelInspector, resolve);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Age));
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Quantity));
 
             Assert.True(assertion.Validate().Success);
             Assert.Single(assertion.MinimalProfiles, assertion.DeclaredType);
 
-            assertion.SetInstanceType(FHIRAllTypes.Identifier);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
             var report = assertion.Validate();
             Assert.False(report.Success);
             Assert.Contains("is incompatible with that of the instance", report.ToString());
@@ -138,15 +138,15 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ProfiledElement()
         {
-            var assertion = new ProfileAssertion("Patient.identifier[0]", resolve);
+            var assertion = new ProfileAssertion("Patient.identifier[0]", ModelInfo.ModelInspector, resolve);
             assertion.SetDeclaredType("http://validationtest.org/fhir/StructureDefinition/IdentifierWithBSN");
             Assert.True(assertion.Validate().Success);
 
-            assertion.SetInstanceType(FHIRAllTypes.Identifier);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
             Assert.True(assertion.Validate().Success);
             Assert.Single(assertion.MinimalProfiles, assertion.DeclaredType);
 
-            assertion.SetInstanceType(FHIRAllTypes.HumanName);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.HumanName));
             var report = assertion.Validate();
             Assert.False(report.Success);
             Assert.Contains("is incompatible with that of the instance", report.ToString());
@@ -155,19 +155,19 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ContainedResource()
         {
-            var assertion = new ProfileAssertion("Bundle.entry.resource[0]", resolve);
-            assertion.SetDeclaredType(FHIRAllTypes.Resource);
+            var assertion = new ProfileAssertion("Bundle.entry.resource[0]", ModelInfo.ModelInspector, resolve);
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Resource));
             Assert.True(assertion.Validate().Success);
 
-            assertion.SetInstanceType(FHIRAllTypes.Patient);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient));
             Assert.True(assertion.Validate().Success);
 
-            assertion.SetDeclaredType(FHIRAllTypes.DomainResource);
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.DomainResource));
             Assert.True(assertion.Validate().Success);
 
             Assert.Single(assertion.MinimalProfiles, assertion.InstanceType);
 
-            assertion.SetInstanceType(FHIRAllTypes.Binary);
+            assertion.SetInstanceType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Binary));
             var report = assertion.Validate();
             Assert.False(report.Success);
             Assert.Contains("is incompatible with that of the instance", report.ToString());
@@ -190,8 +190,8 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public void ResourceWithStatedProfiles()
         {
-            var assertion = new ProfileAssertion("Observation", resolve);
-            assertion.SetDeclaredType(FHIRAllTypes.Observation);
+            var assertion = new ProfileAssertion("Observation", ModelInfo.ModelInspector, resolve);
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Observation));
 
             Assert.True(assertion.Validate().Success);
 
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.Equal(2, assertion.MinimalProfiles.Count());
             Assert.Equal(assertion.MinimalProfiles, assertion.ResolvedStatedProfiles.Skip(1));
 
-            assertion.SetDeclaredType(FHIRAllTypes.Procedure);
+            assertion.SetDeclaredType(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Procedure));
             report = assertion.Validate();
 
             Assert.False(report.Success);

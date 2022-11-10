@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+  <Import Project="..\firely-net-sdk-tests.props" />
+
+  <PropertyGroup>
+    <AssemblyName>Hl7.Fhir.STU3.Core.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
+    <ProjectReference Include="..\Hl7.Fhir.STU3.Core\Hl7.Fhir.STU3.Core.csproj" />
+    <ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">   
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />  
+    <PackageReference Include="System.AppContext" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestData\**\*.xml;TestData\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Hl7.Fhir.STU3.Specification\data\profiles-others.xml" Link="TestData\profiles-others.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\examples.zip;TestData\examples-json.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\fhir-logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

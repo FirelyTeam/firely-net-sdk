@@ -1,0 +1,65 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "ncdhc-patient-baby",
+  "url": "http://hl7.org.au/fhir/ch/v1/StructureDefinition/ncdhc-patient-baby",
+  "version": "v1.0.0",
+  "name": "NCDHC Patient Baby Profile",
+  "title": "NCDHC Patient Baby",
+  "status": "draft",
+  "date": "2019-04-17",
+  "publisher": "National Children's Digital Health Collaborative (NCDHC)",
+  "description": "Profile to represent Baby Patient in NCDHC Context",
+  "fhirVersion": "3.0.1",
+  "kind": "resource",
+  "abstract": false,
+  "type": "Patient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Patient",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Patient",
+        "path": "Patient",
+        "short": "A patient in NCDHC healthcare context"
+      },
+      {
+        "id": "Patient.contact",
+        "path": "Patient.contact",
+        "slicing": {
+          "discriminator": [
+            {
+              "type": "pattern",
+              "path": "relationship"
+            }
+          ],
+          "rules": "closed"
+        },
+        "mustSupport": true
+      },
+      {
+        "id": "Patient.contact:contactMother",
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/StructureDefinition/structuredefinition-explicit-type-name",
+            "valueString": "Contact"
+          }
+        ],
+        "path": "Patient.contact",
+        "sliceName": "contactMother",
+        "max": "1"
+      },
+      {
+        "id": "Patient.contact:contactMother.relationship",
+        "path": "Patient.contact.relationship",
+        "patternCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/v3/RoleCode",
+              "code": "MTH"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

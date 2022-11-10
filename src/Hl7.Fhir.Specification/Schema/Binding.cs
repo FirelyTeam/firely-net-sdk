@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
@@ -88,7 +89,7 @@ namespace Hl7.Fhir.Specification.Schema
             //    return Issue.CONTENT_TYPE_NOT_BINDEABLE 
             //        .NewOutcomeWithIssue($"Validation of binding with non-bindable instance type '{input.InstanceType}' always succeeds.", input);
             //}
-            if (!ModelInfo.IsBindable(input.InstanceType))
+            if (!ModelInspector.Common.IsBindable(input.InstanceType))
                 return new OperationOutcome();  // success
 
             var bindable = parseBindable(input);

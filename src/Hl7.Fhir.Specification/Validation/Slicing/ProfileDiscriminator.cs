@@ -33,7 +33,8 @@ namespace Hl7.Fhir.Validation
                                             declaredTypeProfile: null,
                                             statedCanonicals: new[] { profile },
                                             statedProfiles: null,
-                                            state: state);
+                                            state: state,
+                                            inspector: Validator.modelInspector);
             return result.Success;
         }
     }

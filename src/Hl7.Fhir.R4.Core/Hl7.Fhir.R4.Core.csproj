@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\platforms.props" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.R4</PackageId>
+		<Title>HL7 FHIR Core support SDK for R4</Title>
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R4 (4.0.1)</Summary>
+		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
+		<AssemblyName>Hl7.Fhir.R4.Core</AssemblyName>
+		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
+		<RootNamespace>Hl7.Fhir</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<EmbeddedResource Include="xhtml\fhir-single.zip">
+			<LogicalName>xhtml.fhir-single.zip</LogicalName>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Hl7.Fhir.R5.Core\**\*.cs" Exclude="..\Hl7.Fhir.R5.Core\Model\Generated\**;..\Hl7.Fhir.R5.Core\Model\RemovedResources\**;..\Hl7.Fhir.R5.Core\bin\**;..\Hl7.Fhir.R5.Core\obj\**;..\Hl7.Fhir.R5.Core\Specification\Source\CorePackageFileNames.cs;..\Hl7.Fhir.R5.Core\Properties\AssemblyInfo.cs;..\Hl7.Fhir.R5.Core\Model\IConformanceResource.cs">
+			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Compile>
+	</ItemGroup>
+
+</Project>
