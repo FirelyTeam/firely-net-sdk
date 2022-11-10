@@ -1,0 +1,3786 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="sdc-questionnaire" />
+  <url value="http://hl7.org/fhir/us/sdc/StructureDefinition/sdc-questionnaire" />
+  <name value="Profile sdc-questionnaire" />
+  <status value="draft" />
+  <date value="2014-04-21" />
+  <publisher value="Health Level Seven International (Orders and Observations - Structured Data Capture)" />
+  <contact>
+    <telecom>
+      <system value="other" />
+      <value value="http://wiki.siframework.org/Structured+Data+Capture+Initiative" />
+    </telecom>
+  </contact>
+  <mapping>
+    <identity value="ihesdc" />
+    <uri value="http://wiki.siframework.org/IHE+SDC+Profile" />
+    <name value="IHE Structured Data Capture" />
+  </mapping>
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/w5" />
+    <name value="W5 Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Questionnaire" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Questionnaire" />
+  <derivation value="constraint" />
+  <snapshot>
+    <element id="Questionnaire:sdcquestionnaire">
+      <path value="Questionnaire" />
+      <sliceName value="SDCQuestionnaire" />
+      <short value="A structured set of questions" />
+      <definition value="Sets minimum expectations for questionnaire support for SDC-conformant systems, including a number of extensions around display and behavior." />
+      <alias value="Form" />
+      <alias value="CRF" />
+      <alias value="Survey" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <constraint>
+        <key value="dom-2" />
+        <severity value="error" />
+        <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources" />
+        <expression value="contained.contained.empty()" />
+        <xpath value="not(parent::f:contained and f:contained)" />
+      </constraint>
+      <constraint>
+        <key value="dom-1" />
+        <severity value="error" />
+        <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative" />
+        <expression value="contained.text.empty()" />
+        <xpath value="not(parent::f:contained and f:text)" />
+      </constraint>
+      <constraint>
+        <key value="dom-4" />
+        <severity value="error" />
+        <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated" />
+        <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()" />
+        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))" />
+      </constraint>
+      <constraint>
+        <key value="dom-3" />
+        <severity value="error" />
+        <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource" />
+        <expression value="contained.where(('#'+id in %resource.descendants().reference).not()).empty()" />
+        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" />
+      </constraint>
+      <constraint>
+        <key value="que-2" />
+        <severity value="error" />
+        <human value="The link ids for groups and questions must be unique within the questionnaire" />
+        <expression value="descendants().linkId.isDistinct()" />
+        <xpath value="count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))" />
+      </constraint>
+      <mustSupport value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="Entity. Role, or Act" />
+      </mapping>
+      <mapping>
+        <identity value="rim" />
+        <map value="Observation[moodCode=DEF]" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="infrastructure.information" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Form_Package" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.id">
+      <path value="Questionnaire.id" />
+      <short value="Logical id of this artifact" />
+      <definition value="The logical id of the resource, as used in the URL for the resource. Once assigned, this value never changes." />
+      <comment value="The only time that a resource does not have an id is when it is being submitted to the server using a create operation." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Resource.id" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="id" />
+      </type>
+      <isSummary value="true" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.meta">
+      <path value="Questionnaire.meta" />
+      <short value="Metadata about the resource" />
+      <definition value="The metadata about the resource. This is content that is maintained by the infrastructure. Changes to the content may not always be associated with version changes to the resource." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Resource.meta" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Meta" />
+      </type>
+      <isSummary value="true" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.implicitRules">
+      <path value="Questionnaire.implicitRules" />
+      <short value="A set of rules under which this content was created" />
+      <definition value="A reference to a set of rules that were followed when the resource was constructed, and which must be understood when processing the content." />
+      <comment value="Asserting this rule set restricts the content to be only understood by a limited set of trading partners. This inherently limits the usefulness of the data in the long term. However, the existing health eco-system is highly fractured, and not yet ready to define, collect, and exchange data in a generally computable sense. Wherever possible, implementers and/or specification writers should avoid using this element as much as possible." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Resource.implicitRules" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="uri" />
+      </type>
+      <isModifier value="true" />
+      <isSummary value="true" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.language">
+      <path value="Questionnaire.language" />
+      <short value="Language of the resource content" />
+      <definition value="The base language in which the resource is written." />
+      <comment value="Language is provided to support indexing and accessibility (typically, services such as text to speech use the language tag). The html language tag in the narrative applies  to the narrative. The language tag on the resource may be used to specify the language of other presentations generated from the data in the resource  Not all the content has to be in the base language. The Resource.language should not be assumed to apply to the narrative automatically. If a language is specified, it should it also be specified on the div element in the html (see rules in HTML5 for information about the relationship between xml:lang and the html lang attribute)." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Resource.language" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="code" />
+      </type>
+      <binding>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueReference>
+            <reference value="http://hl7.org/fhir/ValueSet/all-languages" />
+          </valueReference>
+        </extension>
+        <strength value="extensible" />
+        <description value="A human language." />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/languages" />
+        </valueSetReference>
+      </binding>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.text">
+      <path value="Questionnaire.text" />
+      <short value="Text summary of the resource, for human interpretation" />
+      <definition value="A human-readable narrative that contains a summary of the resource, and may be used to represent the content of the resource to a human. The narrative need not encode all the structured data, but is required to contain sufficient detail to make it 'clinically safe' for a human to just read the narrative. Resource definitions may define what content should be represented in the narrative to ensure clinical safety." />
+      <comment value="Contained resources do not have narrative. Resources that are not contained SHOULD have a narrative. In some cases, a resource may only have text with little or no additional discrete data (as long as all minOccurs=1 elements are satisfied).  This may be necessary for data from legacy systems where information is captured as a 'text blob' or where text is additionally entered raw or narrated and encoded in formation is added later." />
+      <alias value="narrative" />
+      <alias value="html" />
+      <alias value="xhtml" />
+      <alias value="display" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="DomainResource.text" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Narrative" />
+      </type>
+      <condition value="dom-1" />
+      <mapping>
+        <identity value="rim" />
+        <map value="Act.text?" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.contained">
+      <path value="Questionnaire.contained" />
+      <short value="Contained, inline Resources" />
+      <definition value="These resources do not have an independent existence apart from the resource that contains them - they cannot be identified independently, and nor can they have their own independent transaction scope." />
+      <comment value="This should never be done when the content can be identified properly, as once identification is lost, it is extremely difficult (and context dependent) to restore it again." />
+      <alias value="inline resources" />
+      <alias value="anonymous resources" />
+      <alias value="contained resources" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="DomainResource.contained" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Resource" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension">
+      <path value="Questionnaire.extension" />
+      <slicing id="5">
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:submissionendpoint$sdc-questionnaire-endpoint">
+      <path value="Questionnaire.extension" />
+      <sliceName value="submissionEndpoint" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-endpoint" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="administrative_package/submissionRule/destination/endpoint" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:provenancesignaturerequired$sdc-questionnaire-provenanceSignatureRequred">
+      <path value="Questionnaire.extension" />
+      <sliceName value="provenanceSignatureRequired" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-provenanceSignatureRequred" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:stylesensitive$rendering-styleSensitive">
+      <path value="Questionnaire.extension" />
+      <sliceName value="styleSensitive" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-styleSensitive" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="N/A (new requirement)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:demap$questionnaire-deMap">
+      <path value="Questionnaire.extension" />
+      <sliceName value="deMap" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-deMap" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:structuremap$questionnaire-sourceStructureMap">
+      <path value="Questionnaire.extension" />
+      <sliceName value="structureMap" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-sourceStructureMap" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:studyprotocolidentifier$questionnaire-studyProtocolIdentifier">
+      <path value="Questionnaire.extension" />
+      <sliceName value="studyProtocolIdentifier" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="DomainResource.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-studyProtocolIdentifier" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.modifierExtension">
+      <path value="Questionnaire.modifierExtension" />
+      <short value="Extensions that cannot be ignored" />
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <alias value="extensions" />
+      <alias value="user content" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="DomainResource.modifierExtension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+      <isModifier value="true" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.url">
+      <path value="Questionnaire.url" />
+      <short value="Globally unique logical identifier for  questionnaire" />
+      <definition value="An absolute URL that is used to identify this questionnaire when it is referenced in a specification, model, design or an instance. This SHALL be a URL, SHOULD be globally unique, and SHOULD be an address at which this questionnaire is (or will be) published." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.url" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="uri" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".id[use=BUSN, reliability=ISS, extension is a URI]" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="id" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.identifier">
+      <path value="Questionnaire.identifier" />
+      <short value="External identifiers for this questionnaire" />
+      <definition value="This records identifiers associated with this question set that are defined by business processes and/or used to refer to it when a direct URL reference to the resource itself is not appropriate (e.g. in CDA documents, or in written / printed documentation)." />
+      <requirements value="Need to allow connection to a wider workflow." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.identifier" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Identifier" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".id[use=BUSN]" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="id" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./form_design/@form_design_identifier {maps to value; system='urn:ietf:rfc:3986'}" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.version">
+      <path value="Questionnaire.version" />
+      <short value="Logical identifier for this version of Questionnaire" />
+      <definition value="The version number assigned by the publisher for business reasons.  It may remain the same when the resource is updated." />
+      <requirements value="In some cases, separate resource instances might be created for each version (if an older version can be maintained once a new version exists)." />
+      <alias value="N/A - MIF rather than RIM level" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.version" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".id[use=VER]" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="id.version" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Not currently in schema" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.status">
+      <path value="Questionnaire.status" />
+      <short value="draft | published | retired" />
+      <definition value="The lifecycle status of the questionnaire as a whole." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.status" />
+        <min value="1" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="code" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="true" />
+      <isSummary value="false" />
+      <binding>
+        <strength value="required" />
+        <description value="Lifecycle status of the questionnaire." />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/questionnaire-status" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim" />
+        <map value=".statusCode (also whether there's a revisionControlAct - and possibly mood to distinguish 'in-progress' from 'published')" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="status" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./administration_package/registration/state/registration_status" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.date">
+      <path value="Questionnaire.date" />
+      <short value="Date this version was authored" />
+      <definition value="Identifies when this version of the form was created.  Changes whenever the form is updated." />
+      <alias value="Date created" />
+      <alias value="Date published" />
+      <alias value="Date issued" />
+      <alias value="Date updated" />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.date" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="dateTime" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".participation[typeCode=AUT].time" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="when.recorded" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./administration_package/registration/creation_date" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.publisher">
+      <path value="Questionnaire.publisher" />
+      <short value="Organization/individual who designed the questionnaire" />
+      <definition value="Organization or person responsible for developing and maintaining the questionnaire." />
+      <requirements value="Conveys responsibility for the questions and their organization and also helps evaluate the questionnaire's 'authority'." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.publisher" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".participation[typeCode=AUT].role" />
+      </mapping>
+      <mapping>
+        <identity value="w5" />
+        <map value="who.witness" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./administration_package/registration/organization" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.telecom">
+      <path value="Questionnaire.telecom" />
+      <short value="Contact information of the publisher" />
+      <definition value="Contact details to assist a user in finding and communicating with the publisher." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.telecom" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="ContactPoint" />
+      </type>
+      <isSummary value="true" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".participation[typeCode=AUT].role.telecom" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.useContext">
+      <path value="Questionnaire.useContext" />
+      <short value="Questionnaire intends to support these contexts" />
+      <definition value="A code that identifies the questionnaire as falling into a particular group of like questionnaires; e.g. 'Pediatric', 'Admissions', 'Research', 'Demographic', 'Opinion Survey', etc." />
+      <requirements value="Allows discovery of questionnaires.  Also allows organization of lists of questionnaires into groups for presentation." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.useContext" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <binding>
+        <strength value="extensible" />
+        <description value="Indicates the countries, regions, disciplines and other aspects of use within which this artifact is targeted for use." />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/use-context" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./form_design/classifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title">
+      <path value="Questionnaire.title" />
+      <short value="Name for the questionnaire" />
+      <definition value="The name or label associated with this questionnaire." />
+      <requirements value="Used for display, searching." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.title" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".title" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.id">
+      <path value="Questionnaire.title.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references)" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.id" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="id" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.extension">
+      <path value="Questionnaire.title.extension" />
+      <slicing id="6">
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.extension:titlerenderingstyle$rendering-style">
+      <path value="Questionnaire.title.extension" />
+      <sliceName value="title.renderingStyle" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="../style" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.extension:titlexhtml$rendering-xhtml">
+      <path value="Questionnaire.title.extension" />
+      <sliceName value="title.xhtml" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="(strings can contain xhtml)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.value">
+      <path value="Questionnaire.title.value" />
+      <representation value="xmlAttr" />
+      <short value="Primitive value for string" />
+      <definition value="The actual value" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.value" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <maxLength value="1048576" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.concept">
+      <path value="Questionnaire.concept" />
+      <short value="Concept that represents the overall questionnaire" />
+      <definition value="Identifies a how this question or group of questions is known in a particular terminology such as LOINC." />
+      <requirements value="Allows linking of the complete Questionnaire resources to formal terminologies.  It's common for 'pannels' of questions to be identified by a code." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.concept" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Coding" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <binding>
+        <strength value="example" />
+        <description value="Codes for questionnaires, groups and individual questions" />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/questionnaire-questions" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim" />
+        <map value=".code" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.subjectType">
+      <path value="Questionnaire.subjectType" />
+      <short value="Resource that can be subject of QuestionnaireResponse" />
+      <definition value="Identifies the types of subjects that can be the subject of the questionnaire." />
+      <comment value="If none are specified, then the subject is unlimited." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.subjectType" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="code" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <binding>
+        <strength value="required" />
+        <description value="One of the resource types defined as part of FHIR." />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/resource-types" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim" />
+        <map value=".outboundRelationship[typeCode=META].target[classCode=OBS, moodCode=DEFN, isCriterion=true].participation.role.classCode" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item">
+      <path value="Questionnaire.item" />
+      <short value="Questions and sections within the Questionnaire" />
+      <definition value="The questions and groupings of questions that make up the questionnaire." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.item" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="BackboneElement" />
+      </type>
+      <condition value="que-3" />
+      <constraint>
+        <key value="que-9" />
+        <severity value="error" />
+        <human value="Read-only can't be specified for 'display' items" />
+        <expression value="type!='display' or readOnly.empty()" />
+        <xpath value="not(f:type/@value='display' and f:readOnly)" />
+      </constraint>
+      <constraint>
+        <key value="que-8" />
+        <severity value="error" />
+        <human value="Default values can't be specified for groups or display items" />
+        <expression value="(type!='group' and type!='display') or initial.empty()" />
+        <xpath value="not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])" />
+      </constraint>
+      <constraint>
+        <key value="que-6" />
+        <severity value="error" />
+        <human value="Required and repeat aren't permitted for display items" />
+        <expression value="type!='display' or (required.empty() and repeats.empty())" />
+        <xpath value="not(f:type/@value='display' and (f:required or f:repeats))" />
+      </constraint>
+      <constraint>
+        <key value="que-5" />
+        <severity value="error" />
+        <human value="Only 'choice' items can have options" />
+        <expression value="(type ='choice' or type = 'open-choice') or (options.empty() and option.empty())" />
+        <xpath value="f:type/@value=('choice','open-choice') or not(f:option or f:options)" />
+      </constraint>
+      <constraint>
+        <key value="que-4" />
+        <severity value="error" />
+        <human value="A question cannot have both option and options" />
+        <expression value="option.empty() or options.empty()" />
+        <xpath value="not(f:options and f:option)" />
+      </constraint>
+      <constraint>
+        <key value="que-3" />
+        <severity value="error" />
+        <human value="Display items cannot have a 'concept' asserted" />
+        <expression value="type!='display' or concept.empty()" />
+        <xpath value="not(f:type/@value='display' and f:concept)" />
+      </constraint>
+      <constraint>
+        <key value="que-10" />
+        <severity value="error" />
+        <human value="Maximum length can only be declared for simple question types" />
+        <expression value="(type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url')) or maxLength.empty()" />
+        <xpath value="f:type/@value=('boolean', 'decimal', 'integer', 'open-choice', 'string', 'text', 'url') or not(f:maxLength)" />
+      </constraint>
+      <constraint>
+        <key value="que-1" />
+        <severity value="error" />
+        <human value="Group items must have nested items, display items cannot have nested items" />
+        <expression value="(type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty())" />
+        <xpath value="not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))" />
+      </constraint>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".outboundRelationship[typeCode=COMP].target[classCode=OBS, moodCode=DEF]" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./form_design/*[self::header or self::footer or self::section]" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.id">
+      <path value="Questionnaire.item.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.id" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="n/a" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension">
+      <path value="Questionnaire.item.extension" />
+      <slicing id="7">
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemminoccurs$questionnaire-minOccurs">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemMinOccurs" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-minOccurs" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-3" />
+        <severity value="error" />
+        <human value="minOccurs can't exist for display items" />
+        <expression value="$parent.type!='display'" />
+        <xpath value="not(parent::*/f:type/@value='display')" />
+      </constraint>
+      <constraint>
+        <key value="inv-1" />
+        <severity value="error" />
+        <human value="minOccurs can't be more than one if required is false" />
+        <expression value="valueInteger = 0 or $parent.required" />
+        <xpath value="f:valueInteger/@value=0 or parent::*/f:required/@value=true()" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/minimum" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemmaxoccurs$questionnaire-maxOccurs">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemMaxOccurs" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-maxOccurs" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-4" />
+        <severity value="error" />
+        <human value="maxOccurs can't exist for display items" />
+        <expression value="$parent.type!='display'" />
+        <xpath value="not(parent::*/f:type/@value='display')" />
+      </constraint>
+      <constraint>
+        <key value="inv-2" />
+        <severity value="error" />
+        <human value="maxOccurs can't be more than one if repeats is false" />
+        <expression value="valueInteger &lt;= 1 or $parent.repeats" />
+        <xpath value="f:valueInteger/@value&lt;=1 or parent::*/f:repeats/@value=true()" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/maximum" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemoptionaldisplay$sdc-questionnaire-optionalDisplay">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemOptionalDisplay" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-optionalDisplay" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="N/A (new requirement)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemhidden$questionnaire-hidden">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemHidden" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Any element with @initial_state='hidden' and no rule that unhides the element" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:usagemode$questionnaire-usageMode">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="usageMode" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-usageMode" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemcontrol$questionnaire-itemControl">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemControl" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:choiceorientation$questionnaire-choiceOrientation">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="choiceOrientation" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-6" />
+        <severity value="error" />
+        <human value="choiceOrientation can only be present on elements of type 'choice' or 'open-choice'" />
+        <expression value="$parent.type='choice' or $parent.type='open-choice'" />
+        <xpath value="parent::*/f:type/@value=('choice', 'open-choice')" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:minlength$minLength">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="minLength" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/minLength" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/string/maximum_characters" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:regex$regex">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="regex" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/regex" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/string/reg_ex" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:entryformat$entryFormat">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="entryFormat" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/entryFormat" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/format | ./*_Field/datatype/string/pattern" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:minvalue$minValue">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="minValue" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/minValue" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/[integer|decimal]/minimum_value" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:maxvalue$maxValue">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="maxValue" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/maxValue" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/[integer|decimal]/maximum_value" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:maxdecimalplaces$maxDecimalPlaces">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="maxDecimalPlaces" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/decimal/fractionDigits" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:mimetype$mimeType">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="mimeType" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/mimeType" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:maxsize$maxSize">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="maxSize" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/maxSize" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:unit$questionnaire-unit">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="unit" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-unit" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-16" />
+        <severity value="error" />
+        <human value="Lookup Questionnaire can only be specified for questions with a type of 'integer' or 'decimal'" />
+        <expression value="$parent.type='integer' or $parent.type='decimal'" />
+        <xpath value="parent::*/f:type/@value=('integer', 'decimal')" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:dereference$questionnaire-deReference">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="deReference" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-deReference" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-9" />
+        <severity value="error" />
+        <human value="Data Element references can't be specified for 'display' items" />
+        <expression value="$parent.type!='display'" />
+        <xpath value="not(parent::*/f:type/@value='display')" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="/form_package/mapping_package/mdr_mapping/question_element_data_element_association[question_element_identifier=current()/question_identifier]/data_element_scoped_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:allowedresource$questionnaire-allowedResource">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="allowedResource" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-allowedResource" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-10" />
+        <severity value="error" />
+        <human value="Allowed resource can only be specified for items of type 'reference'" />
+        <expression value="$parent.type='reference'" />
+        <xpath value="parent::*/f:type/@value='reference'" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="/form_package/mapping_package/mdr_mapping/question_element_data_element_association[question_element_identifier=current()/question_identifier]/data_element_scoped_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:allowedprofile$questionnaire-allowedProfile">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="allowedProfile" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-allowedProfile" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-17" />
+        <severity value="error" />
+        <human value="Allowed profile can only be specified for items of type 'reference'" />
+        <expression value="$parent.type='reference'" />
+        <xpath value="parent::*/f:type/@value='reference'" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:referencefilter$questionnaire-referenceFilter">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="referenceFilter" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-referenceFilter" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-13" />
+        <severity value="error" />
+        <human value="Allowed reference filter can only be specified for items of type 'reference'" />
+        <expression value="$parent.type='reference'" />
+        <xpath value="parent::*/f:type/@value='reference'" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:displaycategory$questionnaire-displayCategory">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="displayCategory" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <constraint>
+        <key value="inv-11" />
+        <severity value="error" />
+        <human value="Display category can only be specified for items of type display" />
+        <expression value="$parent.type='display'" />
+        <xpath value="parent::*/f:type/@value='display'" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="/form_package/mapping_package/mdr_mapping/question_element_data_element_association[question_element_identifier=current()/question_identifier]/data_element_scoped_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:supportlink$questionnaire-supportLink">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="supportLink" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-supportLink" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.modifierExtension">
+      <path value="Questionnaire.item.modifierExtension" />
+      <short value="Extensions that cannot be ignored" />
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <alias value="extensions" />
+      <alias value="user content" />
+      <alias value="modifiers" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="BackboneElement.modifierExtension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+      <isModifier value="true" />
+      <isSummary value="true" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.linkId">
+      <path value="Questionnaire.item.linkId" />
+      <short value="To link questionnaire with questionnaire response" />
+      <definition value="An identifier that is unique within the Questionnaire allowing linkage to the equivalent item in a QuestionnaireResponse resource." />
+      <comment value="May be omitted if there is no expectation to link answers back to a Questionnaire.  This ''can'' be a meaningful identifier (e.g. a LOINC code) but is not intended to have any meaning.  GUIDs or sequential numbers are appropriate here." />
+      <requirements value="[[[QuestionnaireResponse]]] does not require omitted items to be included and may have some items that repeat, so linkage based on position alone is not sufficient." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.linkId" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".id" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./section_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.concept">
+      <path value="Questionnaire.item.concept" />
+      <short value="Concept that represents this item within in a questionnaire" />
+      <definition value="Identifies a how this group of questions is known in a particular terminology such as LOINC." />
+      <comment value="The code(s) for the 'root' group apply to the questionnaire as a whole." />
+      <requirements value="Allows linking of groups of questions (and complete Questionnaire resources) to formal terminologies." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.concept" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Coding" />
+      </type>
+      <condition value="que-3" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <binding>
+        <strength value="example" />
+        <description value="Codes for questionnaires, groups and individual questions" />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/questionnaire-questions" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim" />
+        <map value=".code" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix">
+      <path value="Questionnaire.item.prefix" />
+      <short value="E.g. '1(a)', '2.5.3'" />
+      <definition value="A short label for a particular group, question or set of display text within the questionnaire." />
+      <comment value="These are generally unique within a questionnaire, though this is not guaranteed. Some questionnaires may have multiple questions with the same label with logic to control which gets exposed.  Typically these won't be used for 'text' items, though such use is not prohibited.  Systems SHOULD NOT generate their own prefixes if prefixes are defined for any items within a Questionnaire." />
+      <requirements value="Separating the label from the question text allows improved rendering.  Also, instructions will often refer to specific prefixes, so there's a need for the questionnaire design to have control over what labels are used." />
+      <alias value="label" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.prefix" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="Not supported" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./section_number/label" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.id">
+      <path value="Questionnaire.item.prefix.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references)" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.id" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="id" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.extension">
+      <path value="Questionnaire.item.prefix.extension" />
+      <slicing id="8">
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelrenderingstyle$rendering-style">
+      <path value="Questionnaire.item.prefix.extension" />
+      <sliceName value="itemLabel.renderingStyle" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="../style" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelxhtml$rendering-xhtml">
+      <path value="Questionnaire.item.prefix.extension" />
+      <sliceName value="itemLabel.xhtml" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="(strings can contain xhtml)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.value">
+      <path value="Questionnaire.item.prefix.value" />
+      <representation value="xmlAttr" />
+      <short value="Primitive value for string" />
+      <definition value="The actual value" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.value" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <maxLength value="1048576" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text">
+      <path value="Questionnaire.item.text" />
+      <short value="Primary text for the item" />
+      <definition value="The name of a section, the text of a question or text content for a text item." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.text" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".text" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Form Design/designation[context='primary?'/definition/  ./section_instruction/label" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.id">
+      <path value="Questionnaire.item.text.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references)" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.id" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="id" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.extension">
+      <path value="Questionnaire.item.text.extension" />
+      <slicing id="9">
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <ordered value="false" />
+        <rules value="open" />
+      </slicing>
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextrenderingstyle$rendering-style">
+      <path value="Questionnaire.item.text.extension" />
+      <sliceName value="groupText.renderingStyle" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="../style" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextxhtml$rendering-xhtml">
+      <path value="Questionnaire.item.text.extension" />
+      <sliceName value="groupText.xhtml" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="(strings can contain xhtml)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.value">
+      <path value="Questionnaire.item.text.value" />
+      <representation value="xmlAttr" />
+      <short value="Primitive value for string" />
+      <definition value="The actual value" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="string.value" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <maxLength value="1048576" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.type">
+      <path value="Questionnaire.item.type" />
+      <short value="group | display | question | boolean | decimal | integer | date | dateTime +" />
+      <definition value="Identifies the type of questionnaire item this is - whether text for display, a grouping of other items or a particular type of data to be captured (string, integer, coded choice, etc.)." />
+      <comment value="Time is handled using 'string'.  File is handled using Attachment.  (Content can be sent as a contained binary)." />
+      <requirements value="Defines the format in which the user is to be prompted for the answer." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.type" />
+        <min value="1" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="code" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <binding>
+        <strength value="required" />
+        <description value="Distinguishes groups from questions and display text and indicates data type for questions" />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/item-type" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*/datatype" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen">
+      <path value="Questionnaire.item.enableWhen" />
+      <short value="Only allow data when:" />
+      <definition value="If present, indicates that this item should only be enabled (displayed/allow answers to be captured) when the specified condition is true." />
+      <comment value="If multiple repetitions of this extension are present, the item should be enabled when the condition for *any* of the repetitions is true.  I.e. Treat 'enableWhen's as being joined by an 'or' clause.  If enableWhen is present for an item, 'required' is ignored unless one of the enableWhen conditions is met." />
+      <requirements value="Allows questionnaires to adapt based on answers to other questions; e.g. If physical gender is specified as a male, no need to capture pregnancy history.  Also allows conditional display of instructions or groups of questions." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.item.enableWhen" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="BackboneElement" />
+      </type>
+      <constraint>
+        <key value="que-7" />
+        <severity value="error" />
+        <human value="enableWhen must contain either an 'answer' or an 'answered' element" />
+        <expression value="hasAnswer.exists() xor answer.exists()" />
+        <xpath value="count(*[starts-with(local-name(.), 'answer')]|answered) = 1" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="parent::guarded_element/guard //guard[guarded_element_identifier = current()/question-identifier]" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.id">
+      <path value="Questionnaire.item.enableWhen.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.id" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="n/a" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.extension">
+      <path value="Questionnaire.item.enableWhen.extension" />
+      <short value="Additional Content defined by implementations" />
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element. In order to make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <alias value="extensions" />
+      <alias value="user content" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="n/a" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.modifierExtension">
+      <path value="Questionnaire.item.enableWhen.modifierExtension" />
+      <short value="Extensions that cannot be ignored" />
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <alias value="extensions" />
+      <alias value="user content" />
+      <alias value="modifiers" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="BackboneElement.modifierExtension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+      <isModifier value="true" />
+      <isSummary value="true" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.question">
+      <path value="Questionnaire.item.enableWhen.question" />
+      <short value="Question that determines whether item is enabled" />
+      <definition value="The linkId for the question whose answer (or lack of answer) governs whether this item is enabled." />
+      <comment value="If multiple question occurrences are present for the same question (same linkId), then this refers to the nearest question occurrence reachable by tracing first the 'ancestor' axis and then the 'preceding' axis and then the 'following' axis." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.enableWhen.question" />
+        <min value="1" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="parent::list_item/parent::list_field/parent::question" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.hasAnswer">
+      <path value="Questionnaire.item.enableWhen.hasAnswer" />
+      <short value="Enable when answered or not" />
+      <definition value="If present, indicates that this item should be enabled only if the specified question is answered or not answered." />
+      <comment value="If answered=false and answer values are also provided, then they are treated as 'or'.  I.e. 'Enable if the question is unanswered or the answer is one of the specified values'.  If answered=true and answers are present, one of the specified answers must be met. (So there's little reason to specify answered=true if answers are present.)." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.enableWhen.hasAnswer" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="boolean" />
+      </type>
+      <condition value="que-7" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.answer[x]">
+      <path value="Questionnaire.item.enableWhen.answer[x]" />
+      <short value="Value question must have" />
+      <definition value="If present, then the answer for the referenced question must match this answer for all components present in the enableWhen.answer." />
+      <comment value="Components not specified in the answer do not need to match.  For example, if enableWhen specifies code + system for a Coding, it's ok if the answer has a 'display' element.  The dataType of this element must be the same as the data type of the question being referenced." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.enableWhen.answer[x]" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="boolean" />
+      </type>
+      <type>
+        <code value="decimal" />
+      </type>
+      <type>
+        <code value="integer" />
+      </type>
+      <type>
+        <code value="date" />
+      </type>
+      <type>
+        <code value="dateTime" />
+      </type>
+      <type>
+        <code value="instant" />
+      </type>
+      <type>
+        <code value="time" />
+      </type>
+      <type>
+        <code value="string" />
+      </type>
+      <type>
+        <code value="uri" />
+      </type>
+      <type>
+        <code value="Attachment" />
+      </type>
+      <type>
+        <code value="Coding" />
+      </type>
+      <type>
+        <code value="Quantity" />
+      </type>
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/Resource" />
+      </type>
+      <condition value="que-7" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="parent::list_item" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.required">
+      <path value="Questionnaire.item.required" />
+      <short value="Whether the item must be included in data results" />
+      <definition value="If true, indicates that the item must be present in a 'completed' QuestionnaireResponse.  If false, the item may be skipped when answering the questionnaire." />
+      <comment value="If an item that contains other items is marked as required, that does not automatically make the contained elements required (though required groups must contain at least one child element)." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.required" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="boolean" />
+      </type>
+      <defaultValueBoolean value="false" />
+      <condition value="que-6" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/minimum!=0" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.repeats">
+      <path value="Questionnaire.item.repeats" />
+      <short value="Whether the item may repeat" />
+      <definition value="Whether the item may occur multiple times in the instance, containing multiple sets of answers." />
+      <requirements value="Items may be used to create set of (related) questions that can be repeated to give multiple answers to such a set." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.repeats" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="boolean" />
+      </type>
+      <defaultValueBoolean value="false" />
+      <condition value="que-6" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/maximum!=1" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.readOnly">
+      <path value="Questionnaire.item.readOnly" />
+      <short value="Don't allow human editing" />
+      <definition value="If true, the value cannot be changed by a human respondent to the Questionnaire." />
+      <comment value="The value of readOnly elements can be established by asserting  extensions for defaultValues, linkages that support pre-population and/or extensions that support calculation based on other answers." />
+      <requirements value="Allows certain information to be phrased (and rendered) as a question and an answer, while keeping users from changing it.  May also be useful for preventing changes to pre-populated portions of a questionnaire, for calculated values, etc." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.readOnly" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="boolean" />
+      </type>
+      <condition value="que-9" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/default_value_read_only  ./default_element/read_only" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.maxLength">
+      <path value="Questionnaire.item.maxLength" />
+      <short value="No more than this many characters" />
+      <definition value="The maximum number of characters that are permitted in the answer to be considered a 'valid' QuestionnaireResponse." />
+      <comment value="For base64binary, reflects the number of characters representing the encoded data, not the number of bytes of the binary data." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.maxLength" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="integer" />
+      </type>
+      <condition value="que-10" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="v2" />
+        <map value="N/A" />
+      </mapping>
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/maximum_character_quantity | ./*_Field/datatype/string/maximum_characters" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.options">
+      <path value="Questionnaire.item.options" />
+      <short value="Valueset containing permitted answers" />
+      <definition value="Reference to a value set containing a list of codes representing permitted answers for the question." />
+      <comment value="LOINC defines many useful value sets for questionnaire response. See [LOINC Answer Lists](loinc.html#alist)." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.options" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/ValueSet" />
+      </type>
+      <condition value="que-4" />
+      <condition value="que-5" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./list_field | ./lookup_field/endpoint" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option">
+      <path value="Questionnaire.item.option" />
+      <short value="Permitted answer" />
+      <definition value="For a 'choice' question, identifies one of the permitted answers for the question." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.item.option" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="BackboneElement" />
+      </type>
+      <condition value="que-4" />
+      <condition value="que-5" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option.id">
+      <path value="Questionnaire.item.option.id" />
+      <representation value="xmlAttr" />
+      <short value="xml:id (or equivalent in JSON)" />
+      <definition value="unique id for the element within a resource (for internal references). This may be any string value that does not contain spaces." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.id" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="string" />
+      </type>
+      <mapping>
+        <identity value="rim" />
+        <map value="n/a" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option.extension:optionprefix$questionnaire-optionPrefix">
+      <path value="Questionnaire.item.option.extension" />
+      <sliceName value="OptionPrefix" />
+      <short value="Extension" />
+      <definition value="An Extension" />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Element.extension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix" />
+      </type>
+      <condition value="ele-1" />
+      <constraint>
+        <key value="ele-1" />
+        <severity value="error" />
+        <human value="All FHIR elements must have a @value or children" />
+        <expression value="children().count() &gt; id.count()" />
+        <xpath value="@value|f:*|h:div" />
+      </constraint>
+      <constraint>
+        <key value="ext-1" />
+        <severity value="error" />
+        <human value="Must have either extensions or value[x], not both" />
+        <expression value="extension.exists() != value.exists()" />
+        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+      </constraint>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option.modifierExtension">
+      <path value="Questionnaire.item.option.modifierExtension" />
+      <short value="Extensions that cannot be ignored" />
+      <definition value="May be used to represent additional information that is not part of the basic definition of the element, and that modifies the understanding of the element that contains it. Usually modifier elements provide negation or qualification. In order to make the use of extensions safe and manageable, there is a strict set of governance applied to the definition and use of extensions. Though any implementer is allowed to define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension. Applications processing a resource are required to check for modifier extensions." />
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone." />
+      <alias value="extensions" />
+      <alias value="user content" />
+      <alias value="modifiers" />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="BackboneElement.modifierExtension" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <type>
+        <code value="Extension" />
+      </type>
+      <isModifier value="true" />
+      <isSummary value="true" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option.value[x]">
+      <path value="Questionnaire.item.option.value[x]" />
+      <short value="Answer value" />
+      <definition value="Identifies a specific answer that's allowed as the answer to a question." />
+      <min value="1" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.option.value[x]" />
+        <min value="1" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="integer" />
+      </type>
+      <type>
+        <code value="date" />
+      </type>
+      <type>
+        <code value="time" />
+      </type>
+      <type>
+        <code value="string" />
+      </type>
+      <type>
+        <code value="Coding" />
+      </type>
+      <binding>
+        <strength value="example" />
+        <description value="Allowed values to answer questions." />
+        <valueSetReference>
+          <reference value="http://hl7.org/fhir/ValueSet/questionnaire-answers" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.initial[x]">
+      <path value="Questionnaire.item.initial[x]" />
+      <short value="Initial presumed answer for question" />
+      <definition value="The value that should be pre-populated when rendering the questionnaire for user input." />
+      <requirements value="In some workflows, having defaults saves time." />
+      <min value="0" />
+      <max value="1" />
+      <base>
+        <path value="Questionnaire.item.initial[x]" />
+        <min value="0" />
+        <max value="1" />
+      </base>
+      <type>
+        <code value="boolean" />
+      </type>
+      <type>
+        <code value="decimal" />
+      </type>
+      <type>
+        <code value="integer" />
+      </type>
+      <type>
+        <code value="date" />
+      </type>
+      <type>
+        <code value="dateTime" />
+      </type>
+      <type>
+        <code value="instant" />
+      </type>
+      <type>
+        <code value="time" />
+      </type>
+      <type>
+        <code value="string" />
+      </type>
+      <type>
+        <code value="uri" />
+      </type>
+      <type>
+        <code value="Attachment" />
+      </type>
+      <type>
+        <code value="Coding" />
+      </type>
+      <type>
+        <code value="Quantity" />
+      </type>
+      <type>
+        <code value="Reference" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/Resource" />
+      </type>
+      <condition value="que-8" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value="N/A - MIF rather than RIM level" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./default_value  ./default_element/default/value  ./default_element/list_item_identifier (resolve)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.item">
+      <path value="Questionnaire.item.item" />
+      <short value="Nested questionnaire items" />
+      <definition value="Allows text, questions and other groups to be nested beneath a question or group." />
+      <requirements value="Reports can consist of complex nested groups." />
+      <min value="0" />
+      <max value="*" />
+      <base>
+        <path value="Questionnaire.item.item" />
+        <min value="0" />
+        <max value="*" />
+      </base>
+      <contentReference value="#Questionnaire:sdcquestionnaire.item" />
+      <condition value="que-1" />
+      <mustSupport value="true" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="rim" />
+        <map value=".outboundRelationship[typeCode=COMP].target" />
+      </mapping>
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./contained_section" />
+      </mapping>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="Questionnaire:sdcquestionnaire">
+      <path value="Questionnaire" />
+      <sliceName value="SDCQuestionnaire" />
+      <definition value="Sets minimum expectations for questionnaire support for SDC-conformant systems, including a number of extensions around display and behavior." />
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Form_Package" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:submissionendpoint$sdc-questionnaire-endpoint">
+      <path value="Questionnaire.extension" />
+      <sliceName value="submissionEndpoint" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-endpoint" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="administrative_package/submissionRule/destination/endpoint" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:provenancesignaturerequired$sdc-questionnaire-provenanceSignatureRequred">
+      <path value="Questionnaire.extension" />
+      <sliceName value="provenanceSignatureRequired" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-provenanceSignatureRequred" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:stylesensitive$rendering-styleSensitive">
+      <path value="Questionnaire.extension" />
+      <sliceName value="styleSensitive" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-styleSensitive" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="N/A (new requirement)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:demap$questionnaire-deMap">
+      <path value="Questionnaire.extension" />
+      <sliceName value="deMap" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-deMap" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:structuremap$questionnaire-sourceStructureMap">
+      <path value="Questionnaire.extension" />
+      <sliceName value="structureMap" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-sourceStructureMap" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.extension:studyprotocolidentifier$questionnaire-studyProtocolIdentifier">
+      <path value="Questionnaire.extension" />
+      <sliceName value="studyProtocolIdentifier" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-studyProtocolIdentifier" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.url">
+      <path value="Questionnaire.url" />
+      <min value="1" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.identifier">
+      <path value="Questionnaire.identifier" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./form_design/@form_design_identifier {maps to value; system='urn:ietf:rfc:3986'}" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.version">
+      <path value="Questionnaire.version" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Not currently in schema" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.status">
+      <path value="Questionnaire.status" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./administration_package/registration/state/registration_status" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.date">
+      <path value="Questionnaire.date" />
+      <definition value="Identifies when this version of the form was created.  Changes whenever the form is updated." />
+      <min value="1" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./administration_package/registration/creation_date" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.publisher">
+      <path value="Questionnaire.publisher" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./administration_package/registration/organization" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.useContext">
+      <path value="Questionnaire.useContext" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./form_design/classifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title">
+      <path value="Questionnaire.title" />
+      <min value="1" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.extension:titlerenderingstyle$rendering-style">
+      <path value="Questionnaire.title.extension" />
+      <sliceName value="title.renderingStyle" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="../style" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.title.extension:titlexhtml$rendering-xhtml">
+      <path value="Questionnaire.title.extension" />
+      <sliceName value="title.xhtml" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="(strings can contain xhtml)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.concept">
+      <path value="Questionnaire.concept" />
+      <min value="0" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.subjectType">
+      <path value="Questionnaire.subjectType" />
+      <min value="1" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item">
+      <path value="Questionnaire.item" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./form_design/*[self::header or self::footer or self::section]" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemminoccurs$questionnaire-minOccurs">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemMinOccurs" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-minOccurs" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/minimum" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemmaxoccurs$questionnaire-maxOccurs">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemMaxOccurs" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-maxOccurs" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/maximum" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemoptionaldisplay$sdc-questionnaire-optionalDisplay">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemOptionalDisplay" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/sdc-questionnaire-optionalDisplay" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="N/A (new requirement)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemhidden$questionnaire-hidden">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemHidden" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-hidden" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Any element with @initial_state='hidden' and no rule that unhides the element" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:usagemode$questionnaire-usageMode">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="usageMode" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-usageMode" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:itemcontrol$questionnaire-itemControl">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="itemControl" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:choiceorientation$questionnaire-choiceOrientation">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="choiceOrientation" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-choiceOrientation" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:minlength$minLength">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="minLength" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/minLength" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/string/maximum_characters" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:regex$regex">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="regex" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/regex" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/string/reg_ex" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:entryformat$entryFormat">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="entryFormat" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/entryFormat" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/format | ./*_Field/datatype/string/pattern" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:minvalue$minValue">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="minValue" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/minValue" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/[integer|decimal]/minimum_value" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:maxvalue$maxValue">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="maxValue" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/maxValue" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/[integer|decimal]/maximum_value" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:maxdecimalplaces$maxDecimalPlaces">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="maxDecimalPlaces" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/maxDecimalPlaces" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/datatype/decimal/fractionDigits" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:mimetype$mimeType">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="mimeType" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/mimeType" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:maxsize$maxSize">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="maxSize" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/maxSize" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:unit$questionnaire-unit">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="unit" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-unit" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:dereference$questionnaire-deReference">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="deReference" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-deReference" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="/form_package/mapping_package/mdr_mapping/question_element_data_element_association[question_element_identifier=current()/question_identifier]/data_element_scoped_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:allowedresource$questionnaire-allowedResource">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="allowedResource" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-allowedResource" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="/form_package/mapping_package/mdr_mapping/question_element_data_element_association[question_element_identifier=current()/question_identifier]/data_element_scoped_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:allowedprofile$questionnaire-allowedProfile">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="allowedProfile" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-allowedProfile" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:referencefilter$questionnaire-referenceFilter">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="referenceFilter" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-referenceFilter" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:displaycategory$questionnaire-displayCategory">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="displayCategory" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-displayCategory" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="/form_package/mapping_package/mdr_mapping/question_element_data_element_association[question_element_identifier=current()/question_identifier]/data_element_scoped_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.extension:supportlink$questionnaire-supportLink">
+      <path value="Questionnaire.item.extension" />
+      <sliceName value="supportLink" />
+      <min value="0" />
+      <max value="*" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-supportLink" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.linkId">
+      <path value="Questionnaire.item.linkId" />
+      <min value="1" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./section_identifier" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.concept">
+      <path value="Questionnaire.item.concept" />
+      <min value="0" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix">
+      <path value="Questionnaire.item.prefix" />
+      <min value="0" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./section_number/label" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelrenderingstyle$rendering-style">
+      <path value="Questionnaire.item.prefix.extension" />
+      <sliceName value="itemLabel.renderingStyle" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="../style" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.prefix.extension:itemlabelxhtml$rendering-xhtml">
+      <path value="Questionnaire.item.prefix.extension" />
+      <sliceName value="itemLabel.xhtml" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="(strings can contain xhtml)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text">
+      <path value="Questionnaire.item.text" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="Form Design/designation[context='primary?'/definition/  ./section_instruction/label" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextrenderingstyle$rendering-style">
+      <path value="Questionnaire.item.text.extension" />
+      <sliceName value="groupText.renderingStyle" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-style" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="../style" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.text.extension:grouptextxhtml$rendering-xhtml">
+      <path value="Questionnaire.item.text.extension" />
+      <sliceName value="groupText.xhtml" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/rendering-xhtml" />
+      </type>
+      <mustSupport value="false" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="(strings can contain xhtml)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.type">
+      <path value="Questionnaire.item.type" />
+      <comment value="Time is handled using 'string'.  File is handled using Attachment.  (Content can be sent as a contained binary)." />
+      <min value="1" />
+      <max value="1" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*/datatype" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen">
+      <path value="Questionnaire.item.enableWhen" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="parent::guarded_element/guard //guard[guarded_element_identifier = current()/question-identifier]" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.question">
+      <path value="Questionnaire.item.enableWhen.question" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="parent::list_item/parent::list_field/parent::question" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.hasAnswer">
+      <path value="Questionnaire.item.enableWhen.hasAnswer" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.enableWhen.answer[x]">
+      <path value="Questionnaire.item.enableWhen.answer[x]" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="parent::list_item" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.required">
+      <path value="Questionnaire.item.required" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/minimum!=0" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.repeats">
+      <path value="Questionnaire.item.repeats" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./cardinality/maximum!=1" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.readOnly">
+      <path value="Questionnaire.item.readOnly" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/default_value_read_only  ./default_element/read_only" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.maxLength">
+      <path value="Questionnaire.item.maxLength" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./*_Field/maximum_character_quantity | ./*_Field/datatype/string/maximum_characters" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.options">
+      <path value="Questionnaire.item.options" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./list_field | ./lookup_field/endpoint" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option">
+      <path value="Questionnaire.item.option" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.option.extension:optionprefix$questionnaire-optionPrefix">
+      <path value="Questionnaire.item.option.extension" />
+      <sliceName value="OptionPrefix" />
+      <min value="0" />
+      <max value="1" />
+      <type>
+        <code value="Extension" />
+        <profile value="http://hl7.org/fhir/StructureDefinition/questionnaire-optionPrefix" />
+      </type>
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.initial[x]">
+      <path value="Questionnaire.item.initial[x]" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./default_value  ./default_element/default/value  ./default_element/list_item_identifier (resolve)" />
+      </mapping>
+    </element>
+    <element id="Questionnaire:sdcquestionnaire.item.item">
+      <path value="Questionnaire.item.item" />
+      <mustSupport value="true" />
+      <isModifier value="false" />
+      <isSummary value="false" />
+      <mapping>
+        <identity value="ihesdc" />
+        <map value="./contained_section" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

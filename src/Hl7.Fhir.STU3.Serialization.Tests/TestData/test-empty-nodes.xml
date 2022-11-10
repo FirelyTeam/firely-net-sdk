@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Patient xmlns="http://hl7.org/fhir">
+  <contained>
+    <Patient>
+      <id />
+      <managingOrganization>
+        <reference value="Organization/hl7"/>
+      </managingOrganization>
+    </Patient>
+  </contained>
+  <identifier>
+    <use />
+  </identifier>
+  <!-- before active -->
+  <active value="" />
+  <!-- before gender -->
+  <gender value="male">
+    <extension url="http://example.org/StructureDefinition/real-gender">
+      <valueCode value="metrosexual" />
+    </extension>
+    <!-- after last child -->
+  </gender>
+  <!-- after gender/before contact -->
+  <contact>
+    <!-- first child -->
+    <relationship>
+      <coding>
+      </coding>
+    </relationship>
+    <!-- after last child -->
+  </contact>
+</Patient>
+<!-- Last comment -->

@@ -1,0 +1,122 @@
+{
+  "resourceType" : "Observation",
+  "id" : "mCODECancerGeneticVariantExample01",
+  "meta" : {
+    "profile" : [
+      "http://hl7.org/fhir/us/mcode/StructureDefinition/mcode-cancer-genetic-variant"
+    ]
+  },
+  "status" : "final",
+  "category" : [
+    {
+      "coding" : [
+        {
+          "system" : "http://terminology.hl7.org/CodeSystem/observation-category",
+          "code" : "laboratory"
+        }
+      ]
+    }
+  ],
+  "code" : {
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "code" : "69548-6"
+      }
+    ]
+  },
+  "subject" : {
+    "reference" : "Patient/mCODEPatientExample01"
+  },
+  "effectiveDateTime" : "2019-04-01",
+  "valueCodeableConcept" : {
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "code" : "LA9633-4"
+      }
+    ]
+  },
+  "method" : {
+    "coding" : [
+      {
+        "system" : "http://loinc.org",
+        "code" : "LA26398-0"
+      }
+    ]
+  },
+  "component" : [
+    {
+      "code" : {
+        "coding" : [
+          {
+            "system" : "http://loinc.org",
+            "code" : "48018-6"
+          }
+        ]
+      },
+      "valueCodeableConcept" : {
+        "coding" : [
+          {
+            "system" : "http://www.genenames.org/geneId",
+            "code" : "HGNC:11389"
+          }
+        ]
+      }
+    },
+    {
+      "code" : {
+        "coding" : [
+          {
+            "system" : "http://loinc.org",
+            "code" : "81252-9"
+          }
+        ]
+      },
+      "valueCodeableConcept" : {
+        "coding" : [
+          {
+            "system" : "http://www.ncbi.nlm.nih.gov/clinvar",
+            "code" : "619728"
+          }
+        ]
+      }
+    },
+    {
+      "code" : {
+        "coding" : [
+          {
+            "system" : "http://loinc.org",
+            "code" : "81290-9"
+          }
+        ]
+      },
+      "valueCodeableConcept" : {
+        "coding" : [
+          {
+            "system" : "http://varnomen.hgvs.org",
+            "code" : "NC_000019.8:g.1171707G>A"
+          }
+        ]
+      }
+    },
+    {
+      "code" : {
+        "coding" : [
+          {
+            "system" : "http://loinc.org",
+            "code" : "48002-0"
+          }
+        ]
+      },
+      "valueCodeableConcept" : {
+        "coding" : [
+          {
+            "system" : "http://loinc.org",
+            "code" : "LA6684-0"
+          }
+        ]
+      }
+    }
+  ]
+}

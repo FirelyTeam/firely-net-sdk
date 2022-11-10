@@ -1,0 +1,12 @@
+{
+  "resourceType": "Group",
+  "type": "person",
+  "actual": true,
+  "characteristic": [
+    {
+      "code": {}
+      "valueBoolean": true,
+      "exclude": false
+    }
+  ]
+}

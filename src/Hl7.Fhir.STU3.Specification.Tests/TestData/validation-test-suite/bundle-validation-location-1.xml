@@ -1,0 +1,23 @@
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="bundle-validation-location-1"/>
+  <type value="collection"/>
+  <entry>
+    <fullUrl value="http://acme.com/Patient/pat1"/>
+    <resource>
+      <Patient>
+        <id value="pat1"/>
+        <gender value="invalid"/>
+      </Patient>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://acme.com/Patient/pat2"/>
+    <resource>
+      <Patient>
+        <id value="pat2"/>
+        <gender value="invalid"/>
+      </Patient>
+    </resource>
+  </entry>
+</Bundle>
+

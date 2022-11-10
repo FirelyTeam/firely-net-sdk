@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+	<Import Project="..\firely-net-sdk.props" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.Specification.STU3</PackageId>
+		<Title>HL7 FHIR Specification support SDK for STU3</Title>
+		<Summary>Support for working with FHIR metadata and validation. Supports FHIR STU3 (3.0.2).</Summary>
+		<Description>This library offers additional support beyond core for HL7's FHIR standard (http://hl7.org/fhir). It contains functionality to working with FHIR's specification (meta)data such as profiles, profile-based validation and publication</Description>
+		<PackageTags>HL7;FHIR;Profile;Metadata;Validation;Publication;Schematron;Schema;Firely;SDK</PackageTags>
+		<AssemblyName>Hl7.Fhir.STU3.Specification</AssemblyName>
+		<RootNamespace>Hl7.Fhir.Specification</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.STU3.Core\Hl7.Fhir.STU3.Core.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net452'">
+		<Reference Include="System.Net.Http" />
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
+			<Link>specification.zip</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<PackagePath>contentFiles\any\any</PackagePath>
+			<PackageCopyToOutput>true</PackageCopyToOutput>
+			<PackageFlatten>true</PackageFlatten>
+		</Content>
+	</ItemGroup>
+	
+	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
+		<Message Text="(Re)creating specification.zip" />
+		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
+	</Target>
+
+</Project>

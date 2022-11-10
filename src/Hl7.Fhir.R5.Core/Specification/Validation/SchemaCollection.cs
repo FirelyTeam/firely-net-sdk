@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Utility;
 using System;
-using System.Reflection;
 using System.Xml.Schema;
 
 #nullable enable
@@ -37,7 +36,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <remarks>The default source is the source returned by <see cref="CommonDirectorySource.SpecificationDirectory"/>.</remarks>
         public SchemaCollection()
         {
-            _validationSchemaSet = new(SerializationUtil.BASEFHIRSCHEMAS, Assembly.GetExecutingAssembly(), FHIRSINGLE_XSD_RESOURCENAME);
+            _validationSchemaSet = new(SerializationUtil.BASEFHIRSCHEMAS, typeof(SchemaCollection).Assembly, FHIRSINGLE_XSD_RESOURCENAME);
         }
 
         private readonly IncludedXsdSchemaSet _validationSchemaSet;

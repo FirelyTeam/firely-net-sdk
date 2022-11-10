@@ -1,0 +1,17 @@
+<Patient xmlns="http://hl7.org/fhir">
+    <id value="patient-warning-maritalstatus"/>
+    <text>
+        <status value="generated"/>
+        <div xmlns="http://www.w3.org/1999/xhtml">
+Success...validating ./examplesNonValid/patient/patient-warning-maritalstatus.xml:  error:0 warn:1 info:0
+  Warning @ Patient.maritalStatus (line 9, col20) : None of the codes provided are in the value set http://hl7.org/fhir/ValueSet/marital-status (http://hl7.org/fhir/ValueSet/marital-status, and a code should come from this value set unless it has no suitable code) (codes = http://fhir.ch/whateversysstem#adfasfdf)
+        </div>
+    </text>
+    <maritalStatus>
+        <coding>
+            <system value="http://fhir.ch/whateversysstem"/>
+            <code value="adfasfdf"/>
+            <display value="I dont know what this value means"/>
+        </coding>
+    </maritalStatus>
+</Patient>

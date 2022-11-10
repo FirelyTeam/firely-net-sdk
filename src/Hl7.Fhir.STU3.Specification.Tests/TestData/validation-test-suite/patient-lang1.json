@@ -1,0 +1,9 @@
+{
+  "resourceType" : "Patient",
+  "id" : "pat-good",
+  "language" : "en-AU",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\">some text in no particular language </div>"
+  }
+}

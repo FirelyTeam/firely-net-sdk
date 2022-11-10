@@ -1,0 +1,41 @@
+{
+  "resourceType" : "MeasureReport",
+  "id" : "FHIR-349",
+  "status" : "complete",
+  "type" : "summary",
+  "measure" : "http://cdcmeasures.example.org/modules/covid19/20200331/numTotBeds",
+  "subject" : {
+    "reference" : "Location/Loc-Org-1065",
+    "display" : "HEALTHSOUTH REHABILITATION HOSPITAL OF LITTLETON"
+  },
+  "date" : "2020-04-02T15:12:36.3166692-05:00",
+  "reporter" : {
+    "reference" : "Organization/Org-1065",
+    "display" : "HEALTHSOUTH REHABILITATION HOSPITAL OF LITTLETON"
+  },
+  "period" : {
+    "start" : "2020-03-30",
+    "end" : "2020-03-30"
+  },
+  "group" : [
+    {
+      "population" : [
+        {
+          "code" : {
+            "coding" : [
+              {
+                "system" : "http://terminology.hl7.org/CodeSystem/measure-population",
+                "code" : "measure-population",
+                "display" : "Measure Population"
+              }
+            ]
+          },
+          "count" : 10
+        }
+      ],
+      "measureScore" : {
+        "value" : 10
+      }
+    }
+  ]
+}

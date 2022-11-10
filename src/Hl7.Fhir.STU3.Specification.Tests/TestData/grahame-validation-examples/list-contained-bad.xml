@@ -1,0 +1,14 @@
+<List xmlns="http://hl7.org/fhir">
+  <id value="val1"/>
+  <contained>
+    <Patient>
+      <id value="pat1"/>
+    </Patient>
+  </contained>
+  <status value="current"/>
+  <mode value="changes"/>
+  <subject>
+    <reference value="#pat"/>
+  </subject>
+</List>
+
