@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="bundle-slice-profile-master" />
+	<url value="http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-master" />
+	<status value="active" />
+	<experimental value="false" />
+	<date value="2020-01-06" />
+
+	<fhirVersion value="4.0.0" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Bundle" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+	<derivation value="constraint" />
+	<differential>
+<!-- slice definition for the Bundle content -->
+		<element>
+			<path value="Bundle.entry" />
+			<slicing>
+				<discriminator>
+					<type value="profile" />
+					<path value="$this.resource" />
+				</discriminator>
+				<ordered value="false"/>
+				<rules value="closed" />
+			</slicing>
+		</element>
+<!-- Patient - a simply profiled resource -->
+		<element>
+			<path value="Bundle.entry" />
+			<sliceName value="Patient" />
+			<min value="1"/>
+			<max value="1"/>
+		</element>
+		<element>
+			<path value="Bundle.entry.resource" />
+			<min value="1" />
+			<type>
+				<code value="Resource" />
+				<profile value="http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-patient" />
+			</type>
+		</element>
+<!-- Observation1 - make sure can differentiate same type but different profile -->
+		<element>
+			<path value="Bundle.entry" />
+			<sliceName value="Obs1" />
+			<min value="1"/>
+			<max value="1"/>
+		</element>
+		<element>
+			<path value="Bundle.entry.resource" />
+			<min value="1" />
+			<type>
+				<code value="Resource" />
+				<profile value="http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs1" />
+			</type>
+		</element>
+<!-- Observation2 - 2nd observation -->
+		<element>
+			<path value="Bundle.entry" />
+			<sliceName value="Obs2" />
+			<min value="1"/>
+			<max value="1"/>
+		</element>
+		<element>
+			<path value="Bundle.entry.resource" />
+			<min value="1" />
+			<type>
+				<code value="Resource" />
+				<profile value="http://hl7.org/fhir/test/StructureDefinition/bundle-slice-profile-obs2" />
+			</type>
+		</element>    
+<!-- Procedure (base resource) -->
+		<element>
+			<path value="Bundle.entry" />
+			<sliceName value="Patient" />
+			<min value="1"/>
+			<max value="1"/>
+		</element>
+		<element>
+			<path value="Bundle.entry.resource" />
+			<min value="1" />
+			<type>
+				<code value="Resource" />
+				<profile value="http://hl7.org/fhir/StructureDefinition/Procedure" />
+			</type>
+		</element>    
+	</differential>  
+</StructureDefinition>

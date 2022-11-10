@@ -1,0 +1,27 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="CE"/>
+  <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-namespace">
+    <valueUri value="urn:hl7-org:v3"/>
+  </extension>
+  <url value="http://hl7.org/fhir/cda/StructureDefinition/CE"/>
+  <version value="0.0.1"/>
+  <name value="CE"/>
+  <title value="CE: CodedWithEquivalents (V3 Data Type)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2019-12-12T22:24:25+00:00"/>
+  <publisher value="HL7"/>
+  <description value="Coded data that consists of a coded value (CV) and, optionally, coded value(s) from other coding systems that identify the same concept. Used when alternative codes may exist."/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="logical"/>
+  <abstract value="false"/>
+  <type value="CE"/>
+  <baseDefinition value="http://hl7.org/fhir/cda/StructureDefinition/CD"/>
+  <derivation value="specialization"/>
+  <differential>
+    <element id="CE.qualifier">
+      <path value="CE.qualifier"/>
+      <min value="0"/>
+    </element>
+  </differential>
+</StructureDefinition>

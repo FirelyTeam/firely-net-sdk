@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\platforms.props" />
+	<Import Project="..\specification.data.props" />
+	
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.R4.Specification.Data</PackageId>
+		<AssemblyName>Hl7.Fhir.R4.Specification.Data</AssemblyName>
+	</PropertyGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="patient-patternidentifierslice-profile" />
+	<url
+		value="http://hl7.org/fhir/StructureDefinition/patient-patternidentifier-profile" />
+	<name value="PatientConformProfile" />
+	<status value="draft" />
+	<description value="Test profile for slicing on Identifier with patternIdentifier" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Patient" />
+	<baseDefinition
+		value="http://hl7.org/fhir/StructureDefinition/Patient" />
+	<derivation value="constraint" />
+	<differential>
+		<element id="Patient">
+			<path value="Patient" />
+		</element>
+		<element id="Patient.identifier">
+			<path value="Patient.identifier" />
+			<slicing>
+				<discriminator>
+					<type value="pattern" />
+					<path value="$this" />
+				</discriminator>
+				<rules value="open" />
+			</slicing>
+		</element>
+		<element id="Patient.identifier:MR">
+			<path value="Patient.identifier" />
+      <sliceName value="MR" />
+			<short value="An identifier for this patient" />
+			<definition value="An identifier for this patient." />
+			<min value="1" />
+			<max value="1" />
+			<patternIdentifier>
+				<type>
+					<coding>
+						<system
+							value="http://terminology.hl7.org/CodeSystem/v2-0203" />
+						<code value="MR" />
+					</coding>
+				</type>
+				<system value="urn:oid:2.16.756.5.30.999999.1" />
+			</patternIdentifier>
+		</element>
+	</differential>
+</StructureDefinition>

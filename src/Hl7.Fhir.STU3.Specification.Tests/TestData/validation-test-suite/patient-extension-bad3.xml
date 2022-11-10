@@ -1,0 +1,12 @@
+<Patient xmlns="http://hl7.org/fhir">
+  <id value="extension-bad"/>
+  <extension>
+    <valueString value="nothing"/>
+  </extension>
+  <active value="true"/>
+  <name>
+    <text value="Nothing"/>
+  </name>
+  <gender value="female"/>
+  <birthDate value="2010-03-23"/>
+</Patient>

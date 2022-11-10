@@ -1,0 +1,47 @@
+{
+  "resourceType" : "Observation",
+  "id" : "profile-slicing-coding-good",
+  "status" : "final",
+  "code" : {
+    "coding" : [
+      {
+        "system" : "http://snomed.info/sct",
+        "code" : "27171005"
+      }
+    ],
+    "text" : "Urinalysis (Protein / Glucose)"
+  },
+  "subject" : {
+    "reference" : "Patient/ncdhc-patient-expectant-mother-example",
+    "display" : "Eve Bill"
+  },
+  "effectiveDateTime" : "2020-02-11T14:36:03Z",
+  "performer" : [
+    {
+      "reference" : "Practitioner/examiner-practitioner",
+      "display" : "Examiner"
+    },
+    {
+      "reference" : "Organization/examiner-organization",
+      "display" : "Organisation"
+    }
+  ],
+  "valueCodeableConcept" : {
+    "coding" : [
+      {
+        "system" : "http://snomed.info/sct",
+        "code" : "443938003",
+        "display" : "Procedure carried out on subject"
+      }
+    ]
+  },
+  "interpretation" : {
+    "coding" : [
+      {
+        "system" : "http://snomed.info/sct",
+        "code" : "17621005",
+        "display" : "Normal"
+      }
+    ]
+  }
+}

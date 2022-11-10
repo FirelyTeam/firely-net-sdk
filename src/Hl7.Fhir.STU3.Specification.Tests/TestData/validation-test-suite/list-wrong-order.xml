@@ -1,0 +1,5 @@
+<List xmlns="http://hl7.org/fhir">
+  <id value="val1"/>
+  <mode value="changes"/>
+  <status value="current"/>
+</List>

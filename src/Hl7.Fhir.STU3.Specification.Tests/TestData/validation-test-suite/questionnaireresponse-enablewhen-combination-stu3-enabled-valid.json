@@ -1,0 +1,24 @@
+{
+    "resourceType": "QuestionnaireResponse",
+    "questionnaire": { "reference": "http://example.com/fhir/enableWhenQuestionnaire" },
+    "status": "completed",
+    "item": [{
+            "linkId": "S0",
+            "answer": [{
+                "valueBoolean": true
+            }]
+        },
+        {
+            "linkId": "S1",
+            "answer": [{
+                "valueBoolean": true
+            }]
+        },
+        {
+            "linkId": "S2",
+            "answer": [{
+                "valueBoolean": true
+            }]
+        }
+    ]
+}

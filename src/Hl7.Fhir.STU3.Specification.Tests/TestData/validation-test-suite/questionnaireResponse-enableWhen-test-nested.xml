@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QuestionnaireResponse xmlns="http://hl7.org/fhir">
+  <id value="questionnaireResponse-enableWhen-test" />
+  <text>
+    <status value="generated" />
+    <div xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+      <p>enableWhen test response</p>
+    </div>
+  </text>
+  <questionnaire value="http://hl7.org/fhir/us/hai/Questionnaire/questionnaire-enableWhen-test" />
+  <status value="completed" />
+  <!-- group 0: spacer -->
+  <item>
+    <linkId value="group" />
+    <item>
+      <linkId value="condition" />
+      <text value="condition" />
+      <answer>
+        <valueBoolean value="true" />
+      </answer>
+    </item>
+    <item>
+      <linkId value="enable-when" />
+      <text value="enable when condition true" />
+      <answer>
+        <valueBoolean value="false" />
+      </answer>
+    </item>
+  </item>  
+  <!-- group 1: condition true, present (valid) -->
+  <item>
+    <linkId value="group" />
+    <item>
+      <linkId value="condition" />
+      <text value="condition" />
+      <answer>
+        <valueBoolean value="true" />
+      </answer>
+    </item>
+    <item>
+      <linkId value="enable-when" />
+      <text value="enable when condition true" />
+      <answer>
+        <valueBoolean value="false" />
+      </answer>
+    </item>
+  </item>  
+  <!-- group 2: condition false, present (invalid) -->
+  <item>
+    <linkId value="group" />
+    <item>
+      <linkId value="condition" />
+      <text value="condition" />
+      <answer>
+        <valueBoolean value="false" />
+      </answer>
+    </item>
+    <item>
+      <linkId value="enable-when" />
+      <text value="enable when condition true" />
+      <answer>
+        <valueBoolean value="false" />
+      </answer>
+    </item>
+  </item>  
+  <!-- group 3: condition true, absent (invalid) -->
+  <item>
+    <linkId value="group" />
+    <item>
+      <linkId value="condition" />
+      <text value="condition" />
+      <answer>
+        <valueBoolean value="true" />
+      </answer>
+    </item>
+  </item>  
+  <!-- group 4: condition false, absent (valid) -->
+  <item>
+    <linkId value="group" />
+    <item>
+      <linkId value="condition" />
+      <text value="condition" />
+      <answer>
+        <valueBoolean value="false" />
+      </answer>
+    </item>
+  </item>  
+</QuestionnaireResponse>

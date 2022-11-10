@@ -1,0 +1,299 @@
+{
+  "resourceType": "Patient",
+  "id": "pat1",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p></div>"
+  },
+  "contained": [
+    {
+      "resourceType": "Patient",
+      "id": "1",
+      "identifier": [
+        {
+          "system": "http://hl7.org/fhir/sid/us-ssn",
+          "value": "444222222"
+        }
+      ],
+      "active": true,
+      "name": [
+        {
+          "id": "firstname",
+          "use": "official",
+          "family": "Everywoman",
+          "given": [ "Eve" ]
+        },
+        {
+          "id": "anothername",
+          "use": "usual",
+          "family": "Everywoman",
+          "given": [ "Eveline" ]
+        }
+      ],
+      "telecom": [
+        {
+          "system": "phone",
+          "value": "555-555-2003",
+          "use": "work",
+          "rank": 1
+        }
+      ],
+      "gender": "female",
+      "birthDate": "1973-05-31",
+      "address": [
+        {
+          "use": "home",
+          "line": [ "2222 Home Street" ]
+        }
+      ],
+      "managingOrganization": { "reference": "Organization/hl7" }
+    },
+    {
+      "resourceType": "Questionnaire",
+      "id": "3141",
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><pre>\r\n            Comorbidity? YES\r\n            Cardial Comorbidity? YES\r\n            Angina? YES\r\n            MI? NO\r\n            Vascular Comorbidity?\r\n            (no answers)\r\n            ...\r\n            Histopathology\r\n            Abdominal\r\n            pT category: 1a\r\n            ...\r\n          </pre></div>"
+      },
+      "status": "draft",
+      "date": "2012-01",
+      "subjectType": [ "Patient" ],
+      "item": [
+        {
+          "linkId": "1",
+          "text": "Cancer Quality Forum Questionnaire 2012",
+          "type": "display",
+          "item": [
+            {
+              "linkId": "1.1",
+              "code": [
+                {
+                  "system": "http://example.org/system/code/sections",
+                  "code": "COMORBIDITY"
+                }
+              ],
+              "type": "display",
+              "item": [
+                {
+                  "linkId": "1.1.1",
+                  "code": [
+                    {
+                      "system": "http://example.org/system/code/questions",
+                      "code": "COMORB"
+                    }
+                  ],
+                  "type": "choice",
+                  "options": { "reference": "#yesno" },
+                  "item": [
+                    {
+                      "linkId": "1.1.1.1",
+                      "code": [
+                        {
+                          "system": "http://example.org/system/code/sections",
+                          "code": "CARDIAL"
+                        }
+                      ],
+                      "type": "display",
+                      "item": [
+                        {
+                          "linkId": "1.1.1.1.1",
+                          "code": [
+                            {
+                              "system": "http://example.org/system/code/questions",
+                              "code": "COMORBCAR"
+                            }
+                          ],
+                          "type": "choice",
+                          "options": { "reference": "#yesno" }
+                        },
+                        {
+                          "linkId": "1.1.1.1.2",
+                          "code": [
+                            {
+                              "system": "http://example.org/system/code/questions",
+                              "code": "COMCAR00",
+                              "display": "Angina Pectoris"
+                            },
+                            {
+                              "system": "http://snomed.info/sct",
+                              "code": "194828000",
+                              "display": "Angina (disorder)"
+                            }
+                          ],
+                          "type": "choice",
+                          "options": { "reference": "#yesno" }
+                        },
+                        {
+                          "linkId": "1.1.1.1.3",
+                          "code": [
+                            {
+                              "system": "http://snomed.info/sct",
+                              "code": "22298006",
+                              "display": "Myocardial infarction (disorder)"
+                            }
+                          ],
+                          "type": "choice",
+                          "options": { "reference": "#yesno" }
+                        }
+                      ]
+                    },
+                    {
+                      "linkId": "1.1.1.2",
+                      "code": [
+                        {
+                          "system": "http://example.org/system/code/sections",
+                          "code": "VASCULAR"
+                        }
+                      ],
+                      "type": "display"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "linkId": "1.2",
+              "code": [
+                {
+                  "system": "http://example.org/system/code/sections",
+                  "code": "HISTOPATHOLOGY"
+                }
+              ],
+              "type": "display",
+              "item": [
+                {
+                  "linkId": "1.2.1",
+                  "code": [
+                    {
+                      "system": "http://example.org/system/code/sections",
+                      "code": "ABDOMINAL"
+                    }
+                  ],
+                  "type": "display",
+                  "item": [
+                    {
+                      "linkId": "1.2.1.2",
+                      "type": "display"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "identifier": [
+    {
+      "use": "usual",
+      "system": "urn:oid:0.1.2.3.4.5.6.7",
+      "value": "654321"
+    },
+    {
+      "use": "official",
+      "system": "urn:oid:9.0.1.2.3.4.5.6.7",
+      "value": "7654321"
+    },
+    {
+      "use": "official",
+      "system": "http://some.other/system",
+      "value": "11223344"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "use": "official",
+      "family": "Donald",
+      "given": [ "Duck" ]
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "555-555-2003",
+      "use": "work",
+      "rank": 1
+    }
+  ],
+  "gender": "male",
+  "_gender": {
+    "extension": [
+      {
+        "url": "http://example.org/StructureDefinition/real-gender",
+        "valueCode": "metrosexual"
+      }
+    ]
+  },
+  "birthDate": "1974-12-25",
+  "_birthDate": {
+    "extension": [
+      {
+        "url": "http://hl7.org/fhir/StructureDefinition/patient-birthTime",
+        "valueDateTime": "1974-12-25T14:35:45-05:00"
+      }
+    ]
+  },
+  "deceasedBoolean": false,
+  "photo": [
+    {
+      "contentType": "image/gif",
+      "data": "R0lGODlhEwARAPcAAAAAAAAA/+9aAO+1AP/WAP/eAP/eCP/eEP/eGP/nAP/nCP/nEP/nIf/nKf/nUv/nWv/vAP/vCP/vEP/vGP/vIf/vKf/vMf/vOf/vWv/vY//va//vjP/3c//3lP/3nP//tf//vf///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAATABEAAAi+AAMIDDCgYMGBCBMSvMCQ4QCFCQcwDBGCA4cLDyEGECDxAoAQHjxwyKhQAMeGIUOSJJjRpIAGDS5wCDly4AALFlYOgHlBwwOSNydM0AmzwYGjBi8IHWoTgQYORg8QIGDAwAKhESI8HIDgwQaRDI1WXXAhK9MBBzZ8/XDxQoUFZC9IiCBh6wEHGz6IbNuwQoSpWxEgyLCXL8O/gAnylNlW6AUEBRIL7Og3KwQIiCXb9HsZQoIEUzUjNEiaNMKAAAA7"
+    }
+  ],
+  "contact": [
+    {
+      "relationship": [
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/ValueSet/patient-contact-relationship",
+              "code": "owner"
+            }
+          ]
+        }
+      ],
+      "organization": {
+        "reference": "Organization/1",
+        "display": "Walt Disney Corporation"
+      }
+    }
+  ],
+  "communication": [
+    {
+      "language": { "coding": [ { "code": "nl-nl" } ] },
+      "preferred": true,
+      "_preferred": {
+        "extension": [
+          {
+            "url": "http://example.org/StructureDefinition/language-preference",
+            "valueCode": "in-writing"
+          }
+        ]
+      }
+    },
+    {
+      "language": { "coding": [ { "code": "nl-nl" } ] },
+      "preferred": true,
+      "_preferred": {
+        "extension": [
+          {
+            "url": "http://example.org/StructureDefinition/language-preference",
+            "valueCode": "oral"
+          }
+        ]
+      }
+    }
+  ],
+  "managingOrganization": {
+    "reference": "Organization/1",
+    "display": "ACME Healthcare, Inc"
+  },
+  "link": [
+    {
+      "other": { "reference": "Patient/pat2" },
+      "type": "seealso"
+    }
+  ]
+}

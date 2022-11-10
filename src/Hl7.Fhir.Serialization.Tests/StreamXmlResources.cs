@@ -1,6 +1,5 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
@@ -120,8 +119,8 @@ namespace Hl7.Fhir.Support.Tests.Serialization
             // ZipDeflateStream does not support seeking (forward-only stream)
             // Therefore this only works for the XmlNavigatorStream, as the ctor does NOT (need to) call Reset()
             // JsonNavigatorStream cannot support zip streams; ctor needs to call Reset after scanning resourceType
-            using var archive = ZipFile.Open(ZipSource.SpecificationZipFileName, ZipArchiveMode.Read);
-            var entry = archive.Entries.FirstOrDefault(e => e.Name == "profiles-resources.xml");
+            using var archive = ZipFile.Open(Path.Combine("TestData", "examples.zip"), ZipArchiveMode.Read);
+            var entry = archive.Entries.FirstOrDefault(e => e.Name == "bundle-example(bundle-example).xml");
             Assert.IsNotNull(entry);
 
             using var entryStream = entry.Open();

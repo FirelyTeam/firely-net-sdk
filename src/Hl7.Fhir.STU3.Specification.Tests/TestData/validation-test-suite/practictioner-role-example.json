@@ -1,0 +1,53 @@
+{
+  "id": "342ddebe-7dfe-4eea-a618-e471942a81bc",
+  "meta": {
+    "profile": [
+      "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitionerrole"
+    ]
+  },
+  "practitioner": {
+    "reference": "urn:uuid:0000016e-8ae7-5aae-0000-0000000040a6",
+    "display": "Dr. Mindi87 Langworth352"
+  },
+  "organization": {
+    "reference": "urn:uuid:279b2a85-ab64-3dec-90df-fbca8b479db5",
+    "display": "PCP25692"
+  },
+  "code": [
+    {
+      "coding": [
+        {
+          "system": "http://nucc.org/provider-taxonomy",
+          "code": "208D00000X",
+          "display": "General Practice"
+        }
+      ],
+      "text": "General Practice"
+    }
+  ],
+  "specialty": [
+    {
+      "coding": [
+        {
+          "system": "http://nucc.org/provider-taxonomy",
+          "code": "208D00000X",
+          "display": "General Practice"
+        }
+      ],
+      "text": "General Practice"
+    }
+  ],
+  "location": [
+    {
+      "reference": "urn:uuid:21c80a53-b119-4193-8e29-1cf291595140",
+      "display": "PCP25692"
+    }
+  ],
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "978-473-6078"
+    }
+  ],
+  "resourceType": "PractitionerRole"
+}

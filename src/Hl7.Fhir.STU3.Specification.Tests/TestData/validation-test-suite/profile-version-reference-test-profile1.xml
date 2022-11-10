@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="profile-version-reference-test-profile" />
+	<url value="http://hl7.org/fhir/test/StructureDefinition/profile-version-reference-test-profile" />
+	<version value="0.1.3"/>
+	<status value="active" />
+	<experimental value="false" />
+	<date value="2020-01-06" />
+	<fhirVersion value="4.0.0" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Patient" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+	<derivation value="constraint" />
+	<differential>
+    <element>
+      <path value="Patient.name"/>
+      <max value="1"/>
+    </element>
+	</differential>  
+</StructureDefinition>

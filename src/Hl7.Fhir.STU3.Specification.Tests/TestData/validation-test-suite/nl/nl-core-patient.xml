@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="nl-core-patient" />
+  <url value="http://fhir.nl/fhir/StructureDefinition/nl-core-patient" />
+  <version value="2.1.5" />
+  <name value="nl-core-patient" />
+  <title value="nl-core-patient" />
+  <status value="active" />
+  <publisher value="HL7 Netherlands" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="A Patient resource as defined by the Dutch Health and Care Information models or HCIM (Dutch: Zorginformatiebouwsteen or ZIB) Patient, with additions from the HCIMs Nationality, MaritalStatus, ContactPerson, LanguageProficiency, HealthProfessional and HealthcareProvider (HCIM releases 2015, 2016 and 2017)" />
+  <purpose value="Patient. Tracking a patient is the center of the healthcare process. Names and addresses are also in compliance with HL7 V3 Basic Components." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.2" />
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Patient" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Patient">
+      <path value="Patient" />
+      <short value="Patient" />
+      <alias value="Patiënt" />
+    </element>
+    <element id="Patient.address">
+      <path value="Patient.address" />
+      <short value="AddressInformation" />
+      <alias value="Adresgegevens" />
+      <type>
+        <code value="Address" />
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-address" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>
