@@ -17,6 +17,11 @@
 		<IncludeSymbols>False</IncludeSymbols>
 	</PropertyGroup>
 
+	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
+		<Message Text="(Re)creating specification.zip" />
+		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
+	</Target>
+
 	<ItemGroup>
 		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
 			<Link>specification.zip</Link>
@@ -26,11 +31,6 @@
 			<PackageFlatten>true</PackageFlatten>
 		</Content>
 	</ItemGroup>
-
-	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
-		<Message Text="(Re)creating specification.zip" />
-		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
-	</Target>
 
 </Project>
 
