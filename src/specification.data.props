@@ -20,17 +20,19 @@
 	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
 		<Message Text="(Re)creating specification.zip" />
 		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
+		
+		<ItemGroup>
+			<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
+				<Link>specification.zip</Link>
+				<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+				<PackagePath>contentFiles\any\any</PackagePath>
+				<PackageCopyToOutput>true</PackageCopyToOutput>
+				<PackageFlatten>true</PackageFlatten>
+			</Content>
+		</ItemGroup>
 	</Target>
 
-	<ItemGroup>
-		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
-			<Link>specification.zip</Link>
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-			<PackagePath>contentFiles\any\any</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<PackageFlatten>true</PackageFlatten>
-		</Content>
-	</ItemGroup>
+	
 
 </Project>
 
