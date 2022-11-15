@@ -24,6 +24,7 @@
 // Generated Shared Enumeration: ActionRelationshipType (http://hl7.org/fhir/ValueSet/action-relationship-type)
   // Used in model class (resource): PlanDefinition.action.relatedAction.relationship
   // Used in model class (resource): RequestGroup.action.relatedAction.relationship
+  // Used in model class (type): Extension.extension.value[x]
 
 // Generated Shared Enumeration: ActionRequiredBehavior (http://hl7.org/fhir/ValueSet/action-required-behavior)
   // Used in model class (resource): PlanDefinition.action.requiredBehavior
@@ -47,11 +48,11 @@
   // Used in model class (type): ParameterDefinition.type
   // Used in model class (resource): OperationDefinition.parameter.type
 
-// Generated Shared Enumeration: BindingStrength (http://hl7.org/fhir/ValueSet/binding-strength)
+// Deferred generation of Shared Enumeration (will be generated in another subset): BindingStrength (http://hl7.org/fhir/ValueSet/binding-strength)
   // Used in model class (type): ElementDefinition.binding.strength
   // Used in model class (resource): OperationDefinition.parameter.binding.strength
 
-// Generated Shared Enumeration: CapabilityStatementKind (http://hl7.org/fhir/ValueSet/capability-statement-kind)
+// Deferred generation of Shared Enumeration (will be generated in another subset): CapabilityStatementKind (http://hl7.org/fhir/ValueSet/capability-statement-kind)
   // Used in model class (resource): CapabilityStatement.kind
   // Used in model class (resource): TerminologyCapabilities.kind
 
@@ -71,6 +72,10 @@
 // Generated Shared Enumeration: ConceptMapEquivalence (http://hl7.org/fhir/ValueSet/concept-map-equivalence)
   // Used in model class (resource): ConceptMap.group.element.target.equivalence
   // Used in model class (type): Extension.value[x]
+
+// Deferred generation of Shared Enumeration (will be generated in another subset): ConstraintSeverity (http://hl7.org/fhir/ValueSet/constraint-severity)
+  // Used in model class (type): ElementDefinition.constraint.severity
+  // Used in model class (type): Extension.extension.value[x]
 
 // Generated Shared Enumeration: CountryValueSet (http://hl7.org/fhir/ValueSet/country)
   // Used in model class (resource): Ingredient.substance.strength.country
@@ -114,15 +119,16 @@
   // Used in model class (resource): Communication.status
   // Used in model class (resource): Media.status
   // Used in model class (resource): Procedure.status
+  // Used in model class (resource): Event.status
 
-// Generated Shared Enumeration: FHIRVersion (http://hl7.org/fhir/ValueSet/FHIR-version)
+// Deferred generation of Shared Enumeration (will be generated in another subset): FHIRVersion (http://hl7.org/fhir/ValueSet/FHIR-version)
   // Used in model class (resource): CapabilityStatement.fhirVersion
   // Used in model class (resource): ImplementationGuide.fhirVersion
   // Used in model class (resource): ImplementationGuide.definition.resource.fhirVersion
   // Used in model class (resource): StructureDefinition.fhirVersion
   // Used in model class (type): Extension.value[x]
 
-// Deferred generation of Shared Enumeration (will be generated in common): FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
+// Deferred generation of Shared Enumeration (will be generated in another subset): FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
   // Used in model class (resource): CodeSystem.filter.operator
   // Used in model class (resource): ValueSet.compose.include.filter.op
 
@@ -178,7 +184,7 @@
   // Used in model class (resource): Appointment.participant.status
   // Used in model class (resource): AppointmentResponse.participantStatus
 
-// Deferred generation of Shared Enumeration (will be generated in common): PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
+// Deferred generation of Shared Enumeration (will be generated in another subset): PublicationStatus (http://hl7.org/fhir/ValueSet/publication-status)
   // Used in model class (resource): ActivityDefinition.status
   // Used in model class (resource): AdministrableProductDefinition.status
   // Used in model class (resource): AdministrableProductDefinition.property.status
@@ -224,6 +230,7 @@
   // Used in model class (resource): TerminologyCapabilities.status
   // Used in model class (resource): TestScript.status
   // Used in model class (resource): ValueSet.status
+  // Used in model class (resource): Definition.status
 
 // Generated Shared Enumeration: RemittanceOutcome (http://hl7.org/fhir/ValueSet/remittance-outcome)
   // Used in model class (resource): ClaimResponse.outcome
@@ -238,6 +245,7 @@
   // Used in model class (resource): NutritionOrder.intent
   // Used in model class (resource): RequestGroup.intent
   // Used in model class (resource): ServiceRequest.intent
+  // Used in model class (resource): Request.intent
 
 // Generated Shared Enumeration: RequestPriority (http://hl7.org/fhir/ValueSet/request-priority)
   // Used in model class (resource): ActivityDefinition.priority
@@ -251,6 +259,7 @@
   // Used in model class (resource): ServiceRequest.priority
   // Used in model class (resource): SupplyRequest.priority
   // Used in model class (resource): Task.priority
+  // Used in model class (resource): Request.priority
 
 // Generated Shared Enumeration: RequestStatus (http://hl7.org/fhir/ValueSet/request-status)
   // Used in model class (resource): CarePlan.status
@@ -259,6 +268,7 @@
   // Used in model class (resource): NutritionOrder.status
   // Used in model class (resource): RequestGroup.status
   // Used in model class (resource): ServiceRequest.status
+  // Used in model class (resource): Request.status
 
 // Generated Shared Enumeration: ResourceType (http://hl7.org/fhir/ValueSet/resource-types)
   // Used in model class (type): Reference.type
@@ -275,7 +285,7 @@
   // Used in model class (resource): SearchParameter.target
   // Used in model class (type): Extension.value[x]
 
-// Generated Shared Enumeration: SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
+// Deferred generation of Shared Enumeration (will be generated in another subset): SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
@@ -300,7 +310,6 @@
 // Distance.cs
 // Dosage.cs
 // Duration.cs
-// ElementDefinition.cs
 // Expression.cs
 // HumanName.cs
 // MarketingStatus.cs
@@ -313,7 +322,6 @@
 // RatioRange.cs
 // RelatedArtifact.cs
 // SampledData.cs
-// Signature.cs
 // Timing.cs
 // TriggerDefinition.cs
 // Account.cs
@@ -325,11 +333,8 @@
 // AppointmentResponse.cs
 // AuditEvent.cs
 // Basic.cs
-// Binary.cs
 // BiologicallyDerivedProduct.cs
 // BodyStructure.cs
-// Bundle.cs
-// CapabilityStatement.cs
 // CarePlan.cs
 // CareTeam.cs
 // CatalogEntry.cs
@@ -340,7 +345,6 @@
 // ClaimResponse.cs
 // ClinicalImpression.cs
 // ClinicalUseDefinition.cs
-// CodeSystem.cs
 // Communication.cs
 // CommunicationRequest.cs
 // CompartmentDefinition.cs
@@ -439,7 +443,6 @@
 // Slot.cs
 // Specimen.cs
 // SpecimenDefinition.cs
-// StructureDefinition.cs
 // StructureMap.cs
 // Subscription.cs
 // SubscriptionStatus.cs
@@ -452,6 +455,5 @@
 // TerminologyCapabilities.cs
 // TestReport.cs
 // TestScript.cs
-// ValueSet.cs
 // VerificationResult.cs
 // VisionPrescription.cs
