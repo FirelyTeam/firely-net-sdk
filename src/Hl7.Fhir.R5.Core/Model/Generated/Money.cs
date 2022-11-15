@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("ISK", "urn:iso:std:iso:4217"), Description("Icelandic krC3na")]
+      [EnumLiteral("ISK", "urn:iso:std:iso:4217"), Description("Icelandic króna")]
       ISK,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -643,7 +643,7 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("MNT", "urn:iso:std:iso:4217"), Description("Mongolian tC6grC6g")]
+      [EnumLiteral("MNT", "urn:iso:std:iso:4217"), Description("Mongolian tögrög")]
       MNT,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -715,7 +715,7 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("NIO", "urn:iso:std:iso:4217"), Description("Nicaraguan cC3rdoba")]
+      [EnumLiteral("NIO", "urn:iso:std:iso:4217"), Description("Nicaraguan córdoba")]
       NIO,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -775,13 +775,13 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PLN", "urn:iso:std:iso:4217"), Description("Polish zEoty")]
+      [EnumLiteral("PLN", "urn:iso:std:iso:4217"), Description("Polish złoty")]
       PLN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("PYG", "urn:iso:std:iso:4217"), Description("Paraguayan guaranC-")]
+      [EnumLiteral("PYG", "urn:iso:std:iso:4217"), Description("Paraguayan guaraní")]
       PYG,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -883,13 +883,13 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("S�o Tom� and Pr�ncipe dobra")]
+      [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("São Tomé and Príncipe dobra")]
       STN,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("SVC", "urn:iso:std:iso:4217"), Description("Salvadoran colC3n")]
+      [EnumLiteral("SVC", "urn:iso:std:iso:4217"), Description("Salvadoran colón")]
       SVC,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("TOP", "urn:iso:std:iso:4217"), Description("Tongan paJ;anga")]
+      [EnumLiteral("TOP", "urn:iso:std:iso:4217"), Description("Tongan paʻanga")]
       TOP,
       /// <summary>
       /// MISSING DESCRIPTION
@@ -1009,13 +1009,13 @@ namespace Hl7.Fhir.Model
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("VEF", "urn:iso:std:iso:4217"), Description("Venezuelan bolC-var")]
+      [EnumLiteral("VEF", "urn:iso:std:iso:4217"), Description("Venezuelan bolívar")]
       VEF,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: urn:iso:std:iso:4217)
       /// </summary>
-      [EnumLiteral("VND", "urn:iso:std:iso:4217"), Description("Vietnamese D#a;%ng")]
+      [EnumLiteral("VND", "urn:iso:std:iso:4217"), Description("Vietnamese dồng")]
       VND,
       /// <summary>
       /// MISSING DESCRIPTION
