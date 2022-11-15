@@ -135,7 +135,7 @@ namespace FHIR.Server.Tests
                 {
                     Expression = expression,
                     Key = key,
-                    Severity = severity == "Error" ? ElementDefinition.ConstraintSeverity.Error : ElementDefinition.ConstraintSeverity.Warning,
+                    Severity = severity == "Error" ? ConstraintSeverity.Error : ConstraintSeverity.Warning,
                     Human = human,
                     Xpath = xpath
                 };

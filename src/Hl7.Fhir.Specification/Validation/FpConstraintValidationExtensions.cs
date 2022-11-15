@@ -40,9 +40,9 @@ namespace Hl7.Fhir.Validation
 
                 if (constraintElement.GetBoolExtension("http://hl7.org/fhir/StructureDefinition/elementdefinition-bestpractice") == true)
                     if (v.Settings.ConstraintBestPracticesSeverity == ConstraintBestPracticesSeverity.Error)
-                        constraintElement.Severity = ElementDefinition.ConstraintSeverity.Error;
+                        constraintElement.Severity = ConstraintSeverity.Error;
                     else if (v.Settings.ConstraintBestPracticesSeverity == ConstraintBestPracticesSeverity.Warning)
-                        constraintElement.Severity = ElementDefinition.ConstraintSeverity.Warning;
+                        constraintElement.Severity = ConstraintSeverity.Warning;
 
                 // The following constraints will be repaired in R4B - pre-apply it for other R3+ here as well.
                 constraintElement.Expression = constraintElement switch
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Validation
                 if (!success)
                 {
                     var text = "Instance failed constraint " + constraintElement.ConstraintDescription();
-                    var issue = constraintElement.Severity == ElementDefinition.ConstraintSeverity.Error ?
+                    var issue = constraintElement.Severity == ConstraintSeverity.Error ?
                         Issue.CONTENT_ELEMENT_FAILS_ERROR_CONSTRAINT : Issue.CONTENT_ELEMENT_FAILS_WARNING_CONSTRAINT;
 
                     // just use the constraint description in the error message, as this is to explain the issue
