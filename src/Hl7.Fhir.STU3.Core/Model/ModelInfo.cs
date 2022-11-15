@@ -38,7 +38,7 @@ using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class ModelInfo
+    public static partial class ModelInfo
     {
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public class SearchParamDefinition
