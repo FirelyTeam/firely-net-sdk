@@ -1124,16 +1124,15 @@ namespace Hl7.Fhir.Model
       /// A resource type that is supported
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code TypeElement
+      public Hl7.Fhir.Model.Code TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code _TypeElement;
+      private Hl7.Fhir.Model.Code _TypeElement;
 
       /// <summary>
       /// A resource type that is supported
@@ -1148,7 +1147,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             TypeElement = null;
           else
-            TypeElement = new Code(value);
+            TypeElement = new Hl7.Fhir.Model.Code(value);
           OnPropertyChanged("Type");
         }
       }
