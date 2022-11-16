@@ -29,19 +29,4 @@
 		<Reference Include="System.ComponentModel.DataAnnotations" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Content Include="$(BaseIntermediateOutputPath)\specification.zip">
-			<Link>specification.zip</Link>
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-			<PackagePath>contentFiles\any\any</PackagePath>
-			<PackageCopyToOutput>true</PackageCopyToOutput>
-			<PackageFlatten>true</PackageFlatten>
-		</Content>
-	</ItemGroup>
-	
-	<Target Name="CreateSpecZip" BeforeTargets="DispatchToInnerBuilds">
-		<Message Text="(Re)creating specification.zip" />
-		<ZipDirectory SourceDirectory="data" DestinationFile="$(BaseIntermediateOutputPath)\specification.zip" Overwrite="true" />
-	</Target>
-
 </Project>
