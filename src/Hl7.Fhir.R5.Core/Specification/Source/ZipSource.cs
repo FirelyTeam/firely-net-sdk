@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Model;
+﻿#nullable enable
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.IO;
 using File = System.IO.File;
@@ -7,18 +9,15 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class ZipSource : CommonZipSource, IConformanceSource
     {
-        public ZipSource(string zipPath) : base(ModelInfo.ModelInspector, zipPath)
+        public ZipSource(string zipPath) : base(ModelInfo.ModelInspector, zipPath, targetDir)
         {
-            directorySourceFactory = (inspector, contentDirectory, settings) => new DirectorySource(contentDirectory, settings);
         }
 
-        public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, settings)
+        public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, targetDir, settings)
         {
-            directorySourceFactory = (inspector, contentDirectory, settings) => new DirectorySource(contentDirectory, settings);
         }
 
-        /// <summary>Returns a reference to the internal <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
-        public IConformanceSource Source => DirectorySource;
+        private static string targetDir => BuildDefaultCacheDirectoryName(typeof(ZipSource).Assembly);
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
         /// found in the path passed to this function.</summary>
@@ -39,18 +38,33 @@ namespace Hl7.Fhir.Specification.Source
             return CreateValidationSource(path);
         }
 
-        private DirectorySource DirectorySource => FileSource as DirectorySource;
-
         #region IConformanceSource
-        /// <inheritdoc/>
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-            => DirectorySource.FindConceptMaps(sourceUri, targetUri);
+        /// <summary>Returns a reference to an <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
+        public IConformanceSource Source => new DirectorySourceOnCommon(FileSource);
 
-        /// <inheritdoc/>
-        public NamingSystem FindNamingSystem(string uniqueId) => DirectorySource.FindNamingSystem(uniqueId);
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => Source.ListResourceUris(filter);
+        public IEnumerable<ConceptMap> FindConceptMaps(string? sourceUri = null, string? targetUri = null) => Source.FindConceptMaps(sourceUri, targetUri);
+        public NamingSystem? FindNamingSystem(string uniqueId) => Source.FindNamingSystem(uniqueId);
 
-        /// <inheritdoc/>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default) => DirectorySource.ListResourceUris(filter);
+        private class DirectorySourceOnCommon : IConformanceSource
+        {
+            public DirectorySourceOnCommon(CommonDirectorySource source)
+            {
+                Source = source;
+            }
+
+            public CommonDirectorySource Source { get; }
+
+            public CodeSystem? FindCodeSystemByValueSet(string valueSetUri) => Source.FindCodeSystemByValueSet(valueSetUri);
+            public IEnumerable<ConceptMap> FindConceptMaps(string? sourceUri = null, string? targetUri = null) =>
+                Source.FindConceptMaps<ConceptMap>(sourceUri, targetUri);
+            public NamingSystem? FindNamingSystem(string uniqueId) => Source.FindNamingSystem<NamingSystem>(uniqueId);
+            public IEnumerable<string> ListResourceUris(ResourceType? filter = null) => Source.ListResourceUris(filter?.GetLiteral());
+            public Resource? ResolveByCanonicalUri(string uri) => Source.ResolveByCanonicalUri(uri);
+            public Resource? ResolveByUri(string uri) => Source.ResolveByUri(uri);
+        }
+
         #endregion
     }
 }
+#nullable restore
