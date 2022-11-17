@@ -1,4 +1,5 @@
-﻿/* 
+﻿#nullable enable
+/* 
  * Copyright (c) 2022, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -9,7 +10,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -38,31 +38,16 @@ namespace Hl7.Fhir.Specification.Source
 
         #region IConformanceSource
         /// <inheritdoc/>
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-        {
-            if (sourceUri == null && targetUri == null)
-            {
-                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} arguments cannot both be null");
-            }
-            var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
-            return summaries.Select(summary => loadResourceInternal<ConceptMap>(summary)).Where(r => r != null);
-        }
+        public IEnumerable<ConceptMap> FindConceptMaps(string? sourceUri = null, string? targetUri = null) =>
+            FindConceptMaps<ConceptMap>(sourceUri, targetUri);
 
         /// <inheritdoc/>
-        public NamingSystem FindNamingSystem(string uniqueId)
-        {
-            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
-            var summary = GetSummaries().ResolveNamingSystem(uniqueId, ModelInfo.ModelInspector);
-            return loadResourceInternal<NamingSystem>(summary);
-        }
+        public NamingSystem? FindNamingSystem(string uniqueId) => FindNamingSystem<NamingSystem>(uniqueId);
 
         /// <inheritdoc/>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
-        {
-            // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
-            // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
-            return GetSummaries().OfResourceType(filter?.GetLiteral()).Select(dsi => dsi.ResourceUri);
-        }
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = null) =>
+            ListResourceUris(filter?.GetLiteral());
         #endregion
     }
 }
+#nullable restore

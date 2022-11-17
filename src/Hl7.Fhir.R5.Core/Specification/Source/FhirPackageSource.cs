@@ -97,14 +97,14 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         ///<inheritdoc/>
-        public async Task<IEnumerable<ConceptMap>?> FindConceptMapsAsync(string? sourceUri = null, string? targetUri = null)
+        public async Task<IEnumerable<ConceptMap>> FindConceptMapsAsync(string? sourceUri = null, string? targetUri = null)
         {
             var resources = await _resolver.FindConceptMaps(sourceUri, targetUri).ConfigureAwait(false);
-            return resources == null ? null : resources.Cast<ConceptMap>();
+            return resources.Cast<ConceptMap>();
         }
 
         ///<inheritdoc/>
-        public IEnumerable<ConceptMap>? FindConceptMaps(string? sourceUri = null, string? targetUri = null)
+        public IEnumerable<ConceptMap> FindConceptMaps(string? sourceUri = null, string? targetUri = null)
         {
             return TaskHelper.Await(() => FindConceptMapsAsync(sourceUri, targetUri));
         }

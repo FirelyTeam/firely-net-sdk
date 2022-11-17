@@ -25,11 +25,6 @@ namespace Hl7.Fhir.Specification.Source
     {
         public const string SpecificationZipFileName = "specification.zip";
 
-        /// <summary>
-        /// Factory method to create a specific DirectorySource
-        /// </summary>
-        protected Func<ModelInspector, string, DirectorySourceSettings, CommonDirectorySource> directorySourceFactory = (inspector, contentDirectory, settings) => new CommonDirectorySource(inspector, contentDirectory, settings);
-
         private string _mask;
         // [WMR 20171102] Use Lazy<T> for thread-safe initialization
         private readonly Lazy<CommonDirectorySource> _lazySource;
@@ -38,18 +33,22 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="inspector"></param>
-        /// <param name="zipPath">File path to a ZIP archive.</param>
-        public CommonZipSource(ModelInspector inspector, string zipPath) : this(inspector, zipPath, DirectorySourceSettings.CreateDefault()) { }
+        /// <param name="zipPath">File path to a Zip archive.</param>
+        /// <param name="targetDirectory">The directory within the users temp directory to unzip the archive to.</param>
+        public CommonZipSource(ModelInspector inspector, string zipPath, string targetDirectory) : this(inspector, zipPath, targetDirectory, DirectorySourceSettings.CreateDefault()) { }
 
         /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="inspector"></param>
         /// <param name="zipPath">File path to a ZIP archive.</param>
+        /// <param name="targetDirectory">The directory within the users temp directory to unzip the archive to.</param>
         /// <param name="settings">Configuration settings for the internal <see cref="CommonDirectorySource"/> instance.</param>
-        public CommonZipSource(ModelInspector inspector, string zipPath, DirectorySourceSettings settings)
+        public CommonZipSource(ModelInspector inspector, string zipPath, string targetDirectory, DirectorySourceSettings settings)
         {
             if (string.IsNullOrEmpty(zipPath)) { throw Error.ArgumentNull(nameof(zipPath)); }
+            if (string.IsNullOrEmpty(targetDirectory)) { throw Error.ArgumentNull(nameof(targetDirectory)); }
             _inspector = inspector;
             ZipPath = zipPath;
+            TargetDirectory = targetDirectory;
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
             _settings = settings.Clone();
@@ -58,6 +57,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>
         public string ZipPath { get; }
+        public string TargetDirectory { get; }
 
         /// <summary>Determines if the <see cref="CommonZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
         /// <remarks>The <see cref="CommonZipSource"/> extracts the contents of the ZIP archive on demand.</remarks>
@@ -175,8 +175,8 @@ namespace Hl7.Fhir.Specification.Source
                 throw new FileNotFoundException($"Cannot prepare {nameof(CommonZipSource)}: file '{ZipPath}' was not found");
             }
 
-            var zc = new ZipCacher(ZipPath, GetCacheKey());
-            var source = directorySourceFactory(_inspector, zc.GetContentDirectory(), _settings);
+            var zc = new ZipCacher(ZipPath, TargetDirectory);
+            var source = new CommonDirectorySource(_inspector, zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
@@ -186,18 +186,22 @@ namespace Hl7.Fhir.Specification.Source
             return source;
         }
 
-        private string GetCacheKey()
+        /// <summary>
+        /// Builds a directory name to use as the target of the unzipped data. The name is based
+        /// on the product and version information of the assembly given.
+        /// </summary>
+        /// <param name="satellite">The assembly from which to take product and version information.</param>
+        public static string BuildDefaultCacheDirectoryName(Assembly satellite)
         {
-            Assembly assembly = typeof(CommonZipSource).GetTypeInfo().Assembly;
-            var versionInfo = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-            var productInfo = assembly.GetCustomAttribute<AssemblyProductAttribute>();
+            var versionInfo = satellite.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var productInfo = satellite.GetCustomAttribute<AssemblyProductAttribute>();
             return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
         }
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay
+        protected internal virtual string DebuggerDisplay
             => $"{GetType().Name} for '{ZipPath}'"
             + (IsPrepared ? $" | Extracted to '{ExtractPath}'" : null);
 
