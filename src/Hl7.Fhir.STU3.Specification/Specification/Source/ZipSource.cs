@@ -105,7 +105,9 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Returns a reference to the internal <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
-        public IConformanceSource Source => _lazySource.Value;
+        // Obsoleted since 2022-11-21, EK
+        [Obsolete("ZipSource itself implements IConformanceSource, use that implementation instead of this property.")]
+        public IConformanceSource Source => this;
 
         /// <summary>Returns a reference to the internal <see cref="DirectorySource"/> that exposes the contents of the ZIP archive.</summary>
         protected DirectorySource FileSource => _lazySource.Value;
@@ -239,7 +241,7 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay
+        protected internal virtual string DebuggerDisplay
             => $"{GetType().Name} for '{ZipPath}'"
             + (IsPrepared ? $" | Extracted to '{ExtractPath}'" : null);
 

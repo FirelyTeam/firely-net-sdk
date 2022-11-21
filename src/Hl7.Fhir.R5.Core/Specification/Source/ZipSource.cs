@@ -1,4 +1,7 @@
-﻿using Hl7.Fhir.Model;
+﻿#nullable enable
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using File = System.IO.File;
@@ -7,18 +10,15 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class ZipSource : CommonZipSource, IConformanceSource
     {
-        public ZipSource(string zipPath) : base(ModelInfo.ModelInspector, zipPath)
+        public ZipSource(string zipPath) : base(ModelInfo.ModelInspector, zipPath, targetDir)
         {
-            directorySourceFactory = (inspector, contentDirectory, settings) => new DirectorySource(contentDirectory, settings);
         }
 
-        public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, settings)
+        public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, targetDir, settings)
         {
-            directorySourceFactory = (inspector, contentDirectory, settings) => new DirectorySource(contentDirectory, settings);
         }
 
-        /// <summary>Returns a reference to the internal <see cref="IConformanceSource"/> that exposes the contents of the ZIP archive.</summary>
-        public IConformanceSource Source => DirectorySource;
+        private static string targetDir => BuildDefaultCacheDirectoryName(typeof(ZipSource).Assembly);
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
         /// found in the path passed to this function.</summary>
@@ -39,18 +39,18 @@ namespace Hl7.Fhir.Specification.Source
             return CreateValidationSource(path);
         }
 
-        private DirectorySource DirectorySource => FileSource as DirectorySource;
-
         #region IConformanceSource
-        /// <inheritdoc/>
-        public IEnumerable<ConceptMap> FindConceptMaps(string sourceUri = null, string targetUri = null)
-            => DirectorySource.FindConceptMaps(sourceUri, targetUri);
+        // Obsoleted since 2022-11-21, EK
+        [Obsolete("ZipSource itself implements IConformanceSource, use that implementation instead of this property.")]
+        public IConformanceSource Source => this;
 
-        /// <inheritdoc/>
-        public NamingSystem FindNamingSystem(string uniqueId) => DirectorySource.FindNamingSystem(uniqueId);
 
-        /// <inheritdoc/>
-        public IEnumerable<string> ListResourceUris(ResourceType? filter = default) => DirectorySource.ListResourceUris(filter);
+        public IEnumerable<string> ListResourceUris(ResourceType? filter = null) =>
+            FileSource.ListResourceUris(filter?.GetLiteral());
+        public IEnumerable<ConceptMap> FindConceptMaps(string? sourceUri = null, string? targetUri = null) =>
+            FileSource.FindConceptMaps<ConceptMap>(sourceUri, targetUri);
+        public NamingSystem? FindNamingSystem(string uniqueId) => FileSource.FindNamingSystem<NamingSystem>(uniqueId);
         #endregion
     }
 }
+#nullable restore
