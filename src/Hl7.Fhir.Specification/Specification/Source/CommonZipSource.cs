@@ -74,6 +74,10 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>
         public string ZipPath { get; }
+
+        /// <summary>
+        /// Gets the location of the directory where the zip archive will be extracted and cached.
+        /// </summary>
         public string CacheDirectory { get; }
 
         /// <summary>Determines if the <see cref="CommonZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
@@ -186,7 +190,7 @@ namespace Hl7.Fhir.Specification.Source
             }
 
             var zc = new ZipCacher(ZipPath, CacheDirectory);
-            var source = new CommonDirectorySource(_inspector, CacheDirectory, _settings);
+            var source = new CommonDirectorySource(_inspector, zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))

@@ -10,8 +10,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class ZipSource : CommonZipSource, IConformanceSource
     {
-        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
-        /// <param name="zipPath">File path to a ZIP archive.</param>
+        /// <inheritdoc cref="ZipSource.ZipSource(string, DirectorySourceSettings)"/>
         public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault())
         {
             // Nothing
@@ -21,6 +20,23 @@ namespace Hl7.Fhir.Specification.Source
         /// <param name="zipPath">File path to a ZIP archive.</param>
         /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
         public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, CACHEDIRPATH, settings)
+        {
+            // Nothing
+        }
+
+        /// <inheritdoc cref="ZipSource.ZipSource(string, string, DirectorySourceSettings)"/>
+        public ZipSource(string zipPath, string extractionDirectory) :
+            base(ModelInfo.ModelInspector, zipPath, extractionDirectory, DirectorySourceSettings.CreateDefault())
+        {
+            // Nothing
+        }
+
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        /// <param name="extractionDirectory">The full path of the directory where the zip file will be extracted.</param>
+        /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
+        public ZipSource(string zipPath, string extractionDirectory, DirectorySourceSettings settings) :
+            base(ModelInfo.ModelInspector, zipPath, extractionDirectory, settings)
         {
             // Nothing
         }

@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Linq;
 
@@ -16,7 +17,8 @@ namespace Hl7.Fhir.Specification.Tests.Source
         public void ListSummariesIncludingSubdirectories()
         {
             var zipfile = Path.Combine("TestData", "ResourcesInSubfolder.zip");
-            var zip = new ZipSource(zipfile, new DirectorySourceSettings() { IncludeSubDirectories = true });
+            var extractDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            var zip = new ZipSource(zipfile, extractDir, new DirectorySourceSettings() { IncludeSubDirectories = true });
             var summaries = zip.ListSummaries();
 
             Assert.IsNotNull(summaries, "Collection of summeries should not be null");
@@ -27,7 +29,8 @@ namespace Hl7.Fhir.Specification.Tests.Source
         public void ListSummariesExcludingSubdirectories()
         {
             var zipfile = Path.Combine("TestData", "ResourcesInSubfolder.zip");
-            var zip = new ZipSource(zipfile, new DirectorySourceSettings() { IncludeSubDirectories = false });
+            var extractDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            var zip = new ZipSource(zipfile, extractDir, new DirectorySourceSettings() { IncludeSubDirectories = false });
             var summaries = zip.ListSummaries();
 
             Assert.IsNotNull(summaries, "Collection of summeries should not be null");

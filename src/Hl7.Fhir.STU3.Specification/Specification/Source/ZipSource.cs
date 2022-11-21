@@ -59,10 +59,27 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="zipPath">File path to a ZIP archive.</param>
         /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
-        public ZipSource(string zipPath, DirectorySourceSettings settings)
+        public ZipSource(string zipPath, DirectorySourceSettings settings) : this(zipPath, CACHEDIRPATH, settings)
+        {
+            // Nothing
+        }
+
+        /// <inheritdoc cref="ZipSource.ZipSource(string, string, DirectorySourceSettings)"/>
+        public ZipSource(string zipPath, string extractionDirectory) :
+            this(zipPath, extractionDirectory, DirectorySourceSettings.CreateDefault())
+        {
+            // Nothing
+        }
+
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        /// <param name="extractionDirectory">The full path of the directory where the zip file will be extracted.</param>
+        /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
+        public ZipSource(string zipPath, string extractionDirectory, DirectorySourceSettings settings)
         {
             if (string.IsNullOrEmpty(zipPath)) { throw Error.ArgumentNull(nameof(zipPath)); }
             ZipPath = zipPath;
+            CacheDirectory = extractionDirectory;
             if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
             // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
             _settings = settings.Clone();
@@ -71,6 +88,11 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>
         public string ZipPath { get; }
+
+        /// <summary>
+        /// Gets the location of the directory where the zip archive will be extracted and cached.
+        /// </summary>
+        public string CacheDirectory { get; }
 
         /// <summary>Determines if the <see cref="ZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
         /// <remarks>The <see cref="ZipSource"/> extracts the contents of the ZIP archive on demand.</remarks>
@@ -222,8 +244,8 @@ namespace Hl7.Fhir.Specification.Source
                 throw new FileNotFoundException($"Cannot prepare {nameof(ZipSource)}: file '{ZipPath}' was not found");
             }
 
-            var zc = new ZipCacher(ZipPath, CACHEDIRPATH);
-            var source = new DirectorySource(CACHEDIRPATH, _settings);
+            var zc = new ZipCacher(ZipPath, CacheDirectory);
+            var source = new DirectorySource(zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
