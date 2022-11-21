@@ -1,4 +1,5 @@
-﻿/* 
+﻿#nullable enable
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -46,7 +47,7 @@ namespace Hl7.Fhir.Specification.Source
 
         // [WMR 20180813] NEW
         // Use Lazy<T> to synchronize collection (re-)loading (=> lock-free reading)
-        private Lazy<List<ArtifactSummary>> _lazyArtifactSummaries;
+        private Lazy<List<ArtifactSummary>>? _lazyArtifactSummaries;
 
         /// <summary>
         /// Create a new <see cref="CommonDirectorySource"/> instance to browse and resolve resources
@@ -103,7 +104,7 @@ namespace Hl7.Fhir.Specification.Source
             : this(inspector, contentDirectory, settings, true) { }
 
         // Internal ctor
-        private CommonDirectorySource(ModelInspector inspector, string contentDirectory, DirectorySourceSettings settings, bool cloneSettings)
+        private CommonDirectorySource(ModelInspector inspector, string contentDirectory, DirectorySourceSettings? settings, bool cloneSettings)
         {
             _inspector = inspector;
             // [WMR 20190305] FilePatternFilter requires ContentDirectory to be a full, absolute path
@@ -121,7 +122,8 @@ namespace Hl7.Fhir.Specification.Source
                 ThrowOnUnsupportedFormat = false
             };
             _navigatorFactoryDelegate = new NavigatorStreamFactory(_navigatorFactory.Create);
-            // Initialize Lazy
+
+            // Initialize Lazy - _lazyArtifactSummaries will always be set.
             Refresh();
         }
 
@@ -490,7 +492,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Also accepts relative file paths.
         /// </summary>
         /// <exception cref="InvalidOperationException">More than one file exists with the specified name.</exception>
-        public Stream LoadArtifactByName(string filePath)
+        public Stream? LoadArtifactByName(string filePath)
         {
             if (filePath == null) throw Error.ArgumentNull(nameof(filePath));
 
@@ -515,10 +517,10 @@ namespace Hl7.Fhir.Specification.Source
             var candidates = GetSummaries().Where(isCandidateArtifact);
 
             // We might match multiple files; pick best/nearest fit
-            ArtifactSummary match = null;
+            ArtifactSummary? match = null;
             foreach (var candidate in candidates)
             {
-                if (match is null || candidate.Origin.Length < match.Origin.Length)
+                if (match is null || candidate.Origin?.Length < match.Origin?.Length)
                 {
                     match = candidate;
                 }
@@ -538,11 +540,11 @@ namespace Hl7.Fhir.Specification.Source
         /// It is very common for valuesets to represent all codes from a specific/smaller code system.
         /// These are indicated by he CodeSystem.valueSet element, which is searched here.
         /// </remarks>
-        public CodeSystem FindCodeSystemByValueSet(string valueSetUri)
+        public CodeSystem? FindCodeSystemByValueSet(string valueSetUri)
         {
             if (valueSetUri == null) throw Error.ArgumentNull(nameof(valueSetUri));
             var summary = GetSummaries().ResolveCodeSystem(valueSetUri, _inspector);
-            return loadResourceInternal<CodeSystem>(summary);
+            return summary is not null ? loadResourceInternal<CodeSystem>(summary) : null;
         }
 
         #region ISummarySource
@@ -568,11 +570,9 @@ namespace Hl7.Fhir.Specification.Source
         /// The <see cref="ArtifactSummary.Origin"/> and <see cref="ArtifactSummary.Position"/>
         /// summary properties allow the source to identify and resolve the artifact.
         /// </remarks>
-        public Resource LoadBySummary(ArtifactSummary summary)
+        public Resource? LoadBySummary(ArtifactSummary summary)
         {
-            if (summary == null) { throw Error.ArgumentNull(nameof(summary)); }
-            return loadResourceInternal<Resource>(summary);
-
+            return summary != null ? loadResourceInternal<Resource>(summary) : throw Error.ArgumentNull(nameof(summary));
         }
 
         #endregion
@@ -581,20 +581,20 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
-        public Resource ResolveByUri(string uri)
+        public Resource? ResolveByUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByUri(uri, _inspector);
-            return loadResourceInternal<Resource>(summary);
+            return summary is not null ? loadResourceInternal<Resource>(summary) : null;
         }
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
-        public Resource ResolveByCanonicalUri(string uri)
+        public Resource? ResolveByCanonicalUri(string uri)
         {
             if (uri == null) throw Error.ArgumentNull(nameof(uri));
             var summary = GetSummaries().ResolveByCanonicalUri(uri, _inspector);
-            return loadResourceInternal<Resource>(summary);
+            return summary is not null ? loadResourceInternal<Resource>(summary) : null;
         }
 
         #endregion
@@ -812,7 +812,7 @@ namespace Hl7.Fhir.Specification.Source
             return summaries;
         }
 
-        List<ArtifactSummary> harvestSummaries(List<string> paths)
+        private List<ArtifactSummary> harvestSummaries(List<string> paths)
         {
             // [WMR 20171023] Note: some files may no longer exist
 
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Specification.Source
                             summaries[i] = _summaryGenerator.Generate(paths[i], factory, harvesters);
                         });
                 }
-                catch (AggregateException aex)
+                catch (AggregateException aex) when (aex.InnerExceptions != null)
                 {
                     // ArtifactSummaryHarvester.HarvestAll catches and returns exceptions using ArtifactSummary.FromException
                     // However Parallel.For may still throw, e.g. due to time out or cancel
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Specification.Source
                     // [WMR 20171023] Return exceptions via ArtifactSummary.FromException
                     // Or unwrap all inner exceptions?
                     // scanResult.Add(ArtifactSummary.FromException(aex));
-                    scanResult.AddRange(aex.InnerExceptions.Select(e => ArtifactSummary.FromException(e, _inspector)));
+                    scanResult.AddRange(aex.InnerExceptions!.Select(e => ArtifactSummary.FromException(e, _inspector)));
                 }
                 // Aggregate completed results into single list
                 scanResult.AddRange(summaries.SelectMany(r => r ?? Enumerable.Empty<ArtifactSummary>()));
@@ -887,10 +887,36 @@ namespace Hl7.Fhir.Specification.Source
             return scanResult;
         }
 
-        /// <summary>Returns <c>null</c> if the specified <paramref name="summary"/> equals <c>null</c>.</summary>
-        protected T loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
+        protected internal IEnumerable<T> FindConceptMaps<T>(string? sourceUri = null, string? targetUri = null) where T : Resource
         {
-            if (summary == null) { return null; }
+            if (sourceUri == null && targetUri == null)
+            {
+                throw Error.ArgumentNull(nameof(targetUri), $"{nameof(sourceUri)} and {nameof(targetUri)} arguments cannot both be null");
+            }
+            var summaries = GetSummaries().FindConceptMaps(sourceUri, targetUri);
+            return summaries.Select(summary => loadResourceInternal<T>(summary)).Where(r => r != null).Cast<T>();
+        }
+
+        /// <inheritdoc/>
+        protected internal T? FindNamingSystem<T>(string uniqueId) where T : Resource
+        {
+            if (uniqueId == null) throw Error.ArgumentNull(nameof(uniqueId));
+            var summary = GetSummaries().ResolveNamingSystem(uniqueId, _inspector);
+            return summary is not null ? loadResourceInternal<T>(summary) : null;
+        }
+
+        /// <inheritdoc/>
+        protected internal IEnumerable<string> ListResourceUris(string? filter = null)
+        {
+            // [WMR 20180813] Do not return null values from non-FHIR artifacts (ResourceUri = null)
+            // => OfResourceType filters valid FHIR artifacts (ResourceUri != null)
+            return GetSummaries().OfResourceType(filter).Where(dsi => dsi.ResourceUri is not null).Select(dsi => dsi.ResourceUri!);
+        }
+
+        /// <summary>Returns <c>null</c> if the specified <paramref name="summary"/> equals <c>null</c>.</summary>
+        protected T? loadResourceInternal<T>(ArtifactSummary summary) where T : Resource
+        {
+            if (summary == null) throw new ArgumentNullException(nameof(summary));
 
             // File path of the containing resource file (could be a Bundle)
             var origin = summary.Origin;
@@ -912,7 +938,7 @@ namespace Hl7.Fhir.Specification.Source
             var pocoSettings = PocoBuilderSettings.CreateDefault();
             _settings.ParserSettings?.CopyTo(pocoSettings);
 
-            T result = null;
+            T? result = null;
 
             using (var navStream = factory.Create(origin))
             {
@@ -940,7 +966,7 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>Return <see cref="ConfigurableNavigatorStreamFactory"/> instance, updated with current Xml/Json parser settings.</summary>
-        ConfigurableNavigatorStreamFactory GetNavigatorStreamFactory()
+        private ConfigurableNavigatorStreamFactory GetNavigatorStreamFactory()
         {
             var settings = _settings;
             var factory = _navigatorFactory;
@@ -957,7 +983,7 @@ namespace Hl7.Fhir.Specification.Source
         /// Gets a list of <see cref="ArtifactSummary"/> instances for files in the specified <see cref="ContentDirectory"/>.
         /// The artifact summaries are loaded on demand.
         /// </summary>
-        protected List<ArtifactSummary> GetSummaries() => _lazyArtifactSummaries.Value;
+        protected List<ArtifactSummary> GetSummaries() => _lazyArtifactSummaries!.Value;
 
         // Note: Need distinct for bundled resources
 
@@ -965,26 +991,29 @@ namespace Hl7.Fhir.Specification.Source
         /// Enumerate distinct file paths in the specified <see cref="ContentDirectory"/>.
         /// The underlying artifact summaries are loaded on demand.
         /// </summary>
-        protected IEnumerable<string> GetFilePaths() => GetSummaries().Select(s => s.Origin).Distinct();
+        protected IEnumerable<string> GetFilePaths() => GetSummaries().Where(s => s.Origin is not null).Select(s => s.Origin!).Distinct();
 
         /// <summary>
         /// Enumerate distinct file names in the specified <see cref="ContentDirectory"/>.
         /// The underlying artifact summaries are loaded on demand.
         /// </summary>
-        protected IEnumerable<string> GetFileNames() => GetSummaries().Select(s => Path.GetFileName(s.Origin)).Distinct();
+        protected IEnumerable<string> GetFileNames() => GetSummaries().Where(s => s.Origin is not null)
+            .Select(s => Path.GetFileName(s.Origin!)).Distinct();
 
-        public T.Task<Resource> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
+        public T.Task<Resource?> ResolveByUriAsync(string uri) => T.Task.FromResult(ResolveByUri(uri));
 
-        public T.Task<Resource> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
+        public T.Task<Resource?> ResolveByCanonicalUriAsync(string uri) => T.Task.FromResult(ResolveByCanonicalUri(uri));
 
         #endregion
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay
+        protected internal virtual string DebuggerDisplay
             => $"{GetType().Name} for '{ContentDirectory}' : '{Mask}'"
             + (IncludeSubDirectories ? " (with subdirs)" : null)
-            + (_lazyArtifactSummaries.IsValueCreated ? $" {_lazyArtifactSummaries.Value.Count} resources" : " (summaries not yet loaded)");
+            + (_lazyArtifactSummaries!.IsValueCreated ? $" {_lazyArtifactSummaries.Value.Count} resources" : " (summaries not yet loaded)");
     }
 }
+
+#nullable restore
