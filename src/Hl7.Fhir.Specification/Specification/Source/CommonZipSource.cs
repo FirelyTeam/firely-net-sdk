@@ -34,19 +34,6 @@ namespace Hl7.Fhir.Specification.Source
         private readonly DirectorySourceSettings _settings;
         private readonly ModelInspector _inspector;
 
-        ///// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
-        ///// <param name="inspector"></param>
-        ///// <param name="zipPath">File path to a Zip archive.</param>
-        ///// <param name="cacheId">A unique string that identifies this version of the specification.zip. Will be used in the unique
-        ///// name for the directory within the user's temp directory in which the zip file will be unpacked.</param>
-        ///// <param name="settings">Configuration settings for the internal <see cref="CommonDirectorySource"/> instance.</param>
-        //public static CommonZipSource InUserTemp(ModelInspector inspector, string zipPath, string cacheId, DirectorySourceSettings settings) =>
-        //    new(inspector, zipPath, buildCacheDirPath(cacheId), settings);
-
-        ///// <inheritdoc cref="InUserTemp(ModelInspector, string, string, DirectorySourceSettings)"/>
-        //public static CommonZipSource InUserTemp(ModelInspector inspector, string zipPath, string cacheId) =>
-        //     InUserTemp(inspector, zipPath, buildCacheDirPath(cacheId), DirectorySourceSettings.CreateDefault());
-
         /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="inspector"></param>
         /// <param name="zipPath">File path to a Zip archive.</param>
