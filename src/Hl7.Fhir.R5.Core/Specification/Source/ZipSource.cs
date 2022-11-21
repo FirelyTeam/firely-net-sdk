@@ -10,15 +10,23 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class ZipSource : CommonZipSource, IConformanceSource
     {
-        public ZipSource(string zipPath) : base(ModelInfo.ModelInspector, zipPath, targetDir)
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault())
         {
+            // Nothing
         }
 
-        public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, targetDir, settings)
+        /// <summary>Create a new <see cref="ZipSource"/> instance for the ZIP archive with the specified file path.</summary>
+        /// <param name="zipPath">File path to a ZIP archive.</param>
+        /// <param name="settings">Configuration settings for the internal <see cref="DirectorySource"/> instance.</param>
+        public ZipSource(string zipPath, DirectorySourceSettings settings) : base(ModelInfo.ModelInspector, zipPath, CACHEDIRPATH, settings)
         {
+            // Nothing
         }
 
-        private static string targetDir => BuildDefaultCacheDirectoryName(typeof(ZipSource).Assembly);
+        private static readonly string CACHEHINT = ZipCacher.BuildDefaultCacheDirectoryName(typeof(ZipSource).Assembly);
+        private static readonly string CACHEDIRPATH = Path.Combine(Path.GetTempPath(), CACHEHINT);
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
         /// found in the path passed to this function.</summary>

@@ -12,7 +12,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -22,7 +21,11 @@ namespace Hl7.Fhir.Specification.Source
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class ZipSource : ISummarySource, IConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
+#pragma warning disable IDE1006 // Naming Styles - cannot fix because of bw-compatibility
         public const string SpecificationZipFileName = "specification.zip";
+#pragma warning restore IDE1006 // Naming Styles
+        private static readonly string CACHEHINT = ZipCacher.BuildDefaultCacheDirectoryName(typeof(ZipSource).Assembly);
+        private static readonly string CACHEDIRPATH = Path.Combine(Path.GetTempPath(), CACHEHINT);
 
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip"
@@ -219,8 +222,8 @@ namespace Hl7.Fhir.Specification.Source
                 throw new FileNotFoundException($"Cannot prepare {nameof(ZipSource)}: file '{ZipPath}' was not found");
             }
 
-            var zc = new ZipCacher(ZipPath, GetCacheKey());
-            var source = new DirectorySource(zc.GetContentDirectory(), _settings);
+            var zc = new ZipCacher(ZipPath, CACHEDIRPATH);
+            var source = new DirectorySource(CACHEDIRPATH, _settings);
 
             var mask = Mask;
             if (!string.IsNullOrEmpty(mask))
@@ -228,14 +231,6 @@ namespace Hl7.Fhir.Specification.Source
                 source.Mask = mask;
             }
             return source;
-        }
-
-        private string GetCacheKey()
-        {
-            Assembly assembly = typeof(ZipSource).GetTypeInfo().Assembly;
-            var versionInfo = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-            var productInfo = assembly.GetCustomAttribute<AssemblyProductAttribute>();
-            return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
         }
 
         // Allow derived classes to override
