@@ -30,6 +30,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Snapshot;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Tests.Snapshot;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

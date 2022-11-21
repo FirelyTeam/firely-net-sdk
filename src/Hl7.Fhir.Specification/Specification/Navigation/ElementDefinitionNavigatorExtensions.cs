@@ -9,11 +9,9 @@
 #nullable enable
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Specification.Navigation;
 using System;
-using System.Linq;
 
-namespace Hl7.Fhir.Validation
+namespace Hl7.Fhir.Specification.Navigation
 {
     internal static class ElementDefinitionNavigatorExtensions
     {

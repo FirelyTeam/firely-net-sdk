@@ -1,11 +1,12 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Specification.Tests
+namespace Hl7.Fhir.Specification.Tests.Snapshot
 {
     internal static class LExt
     {
