@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
 {
     public class FhirJsonParser : BaseFhirParser
     {
-        public FhirJsonParser(ParserSettings settings = null) : base(settings)
+        public FhirJsonParser(ParserSettings settings = null) : base(ModelInfo.ModelInspector, settings)
         {
             //
         }
@@ -23,13 +23,13 @@ namespace Hl7.Fhir.Serialization
         /// <inheritdoc cref="ParseAsync{T}(string)" />
         public T Parse<T>(string json) where T : Base => (T)Parse(json, typeof(T));
 
-        public async Tasks.Task<T> ParseAsync<T>(string json) where T : Base 
+        public async Tasks.Task<T> ParseAsync<T>(string json) where T : Base
             => (T)await ParseAsync(json, typeof(T)).ConfigureAwait(false);
 
         /// <inheritdoc cref="ParseAsync{T}(JsonReader)" />
         public T Parse<T>(JsonReader reader) where T : Base => (T)Parse(reader, typeof(T));
 
-        public async Tasks.Task<T> ParseAsync<T>(JsonReader reader) where T : Base 
+        public async Tasks.Task<T> ParseAsync<T>(JsonReader reader) where T : Base
             => (T)await ParseAsync(reader, typeof(T)).ConfigureAwait(false);
 
         private static FhirJsonParsingSettings buildNodeSettings(ParserSettings settings) =>

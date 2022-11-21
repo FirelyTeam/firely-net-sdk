@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Patch);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
             Assert.IsNotNull(entryRequest);
             Assert.IsNotNull(entryRequest.RequestBodyContent);
             Assert.AreEqual("test content type", entryRequest.ContentType);
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var bundleresponse = typedresponse.ToBundleEntry(settings);
+            var bundleresponse = typedresponse.ToBundleEntry(ModelInfo.ModelInspector, settings);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);

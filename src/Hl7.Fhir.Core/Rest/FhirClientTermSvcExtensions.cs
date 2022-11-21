@@ -1,71 +1,10 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    /// <summary>
-    /// Collection of the valid Operation values supported as const strings
-    /// </summary>
-    /// <remarks>
-    /// This static class is required to keep the operation const values
-    /// separate from the methods in the Fhir Client.
-    /// Specifically the Meta operation clashes with the META const value.
-    /// This would make it un-usable from VB.Net
-    /// </remarks>
-    public static partial class RestOperation
-    {
-        /// <summary>
-        /// "expand" operation
-        /// </summary>
-        public const string EXPAND_VALUESET = "expand";
-
-        /// <summary>
-        /// "lookup" operation
-        /// </summary>
-        public const string CONCEPT_LOOKUP = "lookup";
-
-        /// <summary>
-        /// "validate-code" operation
-        /// </summary>
-        public const string VALIDATE_CODE = "validate-code";
-
-        /// <summary>
-        /// "closure" operation
-        /// </summary>
-        public const string CLOSURE = "closure";
-
-        /// <summary>
-        /// "subsumes" operation
-        /// </summary>
-        public const string SUBSUMES = "subsumes";
-    }
-
-    public class ValidateCodeResult
-    {
-        public FhirBoolean Result;
-        public FhirString Message;
-        public FhirString Display;
-
-        public static ValidateCodeResult FromParameters(Parameters p)
-        {
-            if (p == null) throw Error.ArgumentNull(nameof(p));
-
-            return new ValidateCodeResult
-            {
-                Result = p["result"]?.Value as FhirBoolean,
-                Message = p.Get("message").FirstOrDefault()?.Value as FhirString,
-                Display = p.Get("display").FirstOrDefault()?.Value as FhirString
-            };
-        }
-    }
-
-
-
     public static class FhirClientTermSvcExtensions
     {
         #region Expand
@@ -132,9 +71,9 @@ namespace Hl7.Fhir.Rest
 
         #region Concept Lookup
 
-        public static async Task<Parameters> ConceptLookupAsync(this BaseFhirClient client, 
-            Code code=null, FhirUri system = null, FhirString version = null, 
-            Coding coding=null, FhirDateTime date = null, Code displayLanguage=null, Code property=null)
+        public static async Task<Parameters> ConceptLookupAsync(this BaseFhirClient client,
+            Code code = null, FhirUri system = null, FhirString version = null,
+            Coding coding = null, FhirDateTime date = null, Code displayLanguage = null, Code property = null)
         {
             var par = new Parameters()
                 .Add(nameof(code), code)
@@ -161,11 +100,11 @@ namespace Hl7.Fhir.Rest
 
         #region Validate Code
 
-        public static async Task<ValidateCodeResult> ValidateCodeAsync(this BaseFhirClient client, String valueSetId, 
+        public static async Task<ValidateCodeResult> ValidateCodeAsync(this BaseFhirClient client, String valueSetId,
                 FhirUri url = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
-                FhirUri system = null, FhirString version = null, FhirString display = null, 
+                FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
-                FhirBoolean @abstract = null, Code displayLanguage = null)   
+                FhirBoolean @abstract = null, Code displayLanguage = null)
         {
             if (valueSetId == null) throw new ArgumentNullException(nameof(valueSetId));
 
@@ -196,7 +135,7 @@ namespace Hl7.Fhir.Rest
                 FhirUri url = null, FhirUri context = null, ValueSet valueSet = null, Code code = null,
                 FhirUri system = null, FhirString version = null, FhirString display = null,
                 Coding coding = null, CodeableConcept codeableConcept = null, FhirDateTime date = null,
-                FhirBoolean @abstract = null, Code displayLanguage=null)
+                FhirBoolean @abstract = null, Code displayLanguage = null)
         {
             return ValidateCodeAsync(client, valueSetId, url, context, valueSet, code, system, version, display,
                 coding, codeableConcept, date, @abstract, displayLanguage).WaitResult();
@@ -224,7 +163,7 @@ namespace Hl7.Fhir.Rest
 
             var result = await client.TypeOperationAsync<ValueSet>(RestOperation.VALIDATE_CODE, par).ConfigureAwait(false);
 
-            if(result != null)
+            if (result != null)
                 return ValidateCodeResult.FromParameters(result.OperationResult<Parameters>());
             else
                 return null;
