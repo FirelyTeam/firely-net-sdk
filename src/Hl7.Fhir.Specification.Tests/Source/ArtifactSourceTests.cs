@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             var zip = new ZipCacher(zipFile, Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
-            var zipPath = zip.CachePath;
+            var zipPath = zip.GetContentDirectory();
 
             var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(testPath);
