@@ -5,7 +5,7 @@ using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Hl7.Fhir.Specification.Tests
+namespace Hl7.Fhir.STU3.Specification.Tests.Snapshot
 {
     internal static class LExt
     {

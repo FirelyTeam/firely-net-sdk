@@ -12,17 +12,13 @@ using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
-    public class TerminologyTests : IClassFixture<ValidationFixture>
+    public class TerminologyTests
     {
-        private readonly IAsyncResourceResolver _resolver;
+        private readonly IAsyncResourceResolver _resolver = new CachedResolver(FhirPackageSource.CreateFhirCorePackageSource());
+
         private static Uri _externalTerminologyServerEndpoint = new("https://r4.ontoserver.csiro.au/fhir");
         // Use here a FhirPackageSource without the expansion package.
         private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(new FhirPackageSource("http://packages2.fhir.org/packages", new string[] { "hl7.fhir.r5.core@5.0.0-snapshot1" }));
-
-        public TerminologyTests(ValidationFixture fixture, Xunit.Abstractions.ITestOutputHelper _)
-        {
-            _resolver = fixture.AsyncResolver;
-        }
 
         [Fact]
         public async T.Task ExpansionOfWholeSystem()
