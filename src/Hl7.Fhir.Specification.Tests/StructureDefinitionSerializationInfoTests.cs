@@ -1,6 +1,6 @@
 ﻿using Hl7.Fhir.Specification;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Specification.Tests;
+using Hl7.Fhir.Specification.Tests.Snapshot;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Hl7.Fhir.Serialization.Tests
