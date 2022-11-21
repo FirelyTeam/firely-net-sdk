@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
             typeof(Model.Distance),
             typeof(Model.Dosage),
             typeof(Model.Duration),
-            typeof(Model.Expression),
+          //  typeof(Model.Expression),
             typeof(Model.HumanName),
             typeof(Model.Id),
             typeof(Model.Identifier),

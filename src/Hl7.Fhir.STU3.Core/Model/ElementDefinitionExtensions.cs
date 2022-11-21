@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
         public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile ?? (elemType?.Code is not null ? ModelInfo.CanonicalUriForFhirCoreType(elemType.Code) : null);
+            elemType?.Profile ?? (elemType?.Code is not null ? ModelInfo.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
 
         /// <inheritdoc cref="GetTypeProfile(ElementDefinition.TypeRefComponent)"/>
         [Obsolete("This function is a duplicate of GetTypeProfile()")]

@@ -2,6 +2,8 @@
 
 	<Import Project="..\firely-net-sdk.props" />
 	<Import Project="..\platforms.props" />
+	<Import Project="..\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems" Label="Shared" />
+	<Import Project="..\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems" Label="Shared" />
 
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.R4B</PackageId>
@@ -25,13 +27,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Include="..\Hl7.Fhir.R5.Core\**\*.cs" Exclude="..\Hl7.Fhir.R5.Core\Model\Generated\**;..\Hl7.Fhir.R5.Core\Model\RemovedResources\**;..\Hl7.Fhir.R5.Core\bin\**;..\Hl7.Fhir.R5.Core\obj\**;..\Hl7.Fhir.R5.Core\Specification\Source\CorePackageFileNames.cs;..\Hl7.Fhir.R5.Core\Properties\AssemblyInfo.cs;..\Hl7.Fhir.R5.Core\Model\IConformanceResource.cs">
-			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>

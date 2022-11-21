@@ -16,8 +16,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using T = System.Threading.Tasks;
 using ssac = System.Security.AccessControl;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
 {
@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Specification.Tests
         public void ReadsSubdirectories()
         {
             var testPath = prepareExampleDirectory(out int numFiles);
-            var fa = new DirectorySource(testPath, new DirectorySourceSettings() {  IncludeSubDirectories = true });
+            var fa = new DirectorySource(testPath, new DirectorySourceSettings() { IncludeSubDirectories = true });
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(numFiles, names.Count());
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
-            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName)).ToArray();
+            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
             // Boths arrays should contains same urls, possibly in different order
             Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
             Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));
@@ -363,7 +363,7 @@ namespace Hl7.Fhir.Specification.Tests
                     // Revoke file read permissions for the current user
                     fs.AddAccessRule(rule);
                     Debug.Print($"Removing read permissions from fole: '{forbiddenFile}' ...");
-                    
+
                     // Abort unit test if we can't modify file permissions
                     forbiddenFile.SetAccessControl(fs);
 
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Specification.Tests
 
                         // [WMR 20170823] Also test ListResourceUris => prepareResources()
                         var profileUrls = dirSource.ListResourceUris(ResourceType.StructureDefinition);
-                        
+
                         // Materialize the sequence
                         var urlList = profileUrls.ToList();
                         Assert.IsFalse(urlList.Contains(profileUrl1));
