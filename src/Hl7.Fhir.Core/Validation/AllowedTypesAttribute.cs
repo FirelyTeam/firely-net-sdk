@@ -33,9 +33,7 @@ namespace Hl7.Fhir.Validation
 
         public Hl7.Fhir.Model.Version Version { get; set; }
 
-#if DOTNETFW
         public override object TypeId => Version;
-#endif
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
