@@ -65,6 +65,8 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>
         /// Gets the location of the directory where the zip archive will be extracted and cached.
         /// </summary>
+        /// <remarks>This differs from the <see cref="ExtractPath"/>, which is the <see cref="CacheDirectory"/>
+        /// with a subdirectory named after the Zip archive.</remarks>
         public string CacheDirectory { get; }
 
         /// <summary>Determines if the <see cref="CommonZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
