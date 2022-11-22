@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(xml);
         }
 
-        [FhirType(Fhir.Model.Version.DSTU2, "Bundle", IsResource = true)]
+        [FhirType(Fhir.Model.Version.DSTU2, "CustomBundle", IsResource = true)]
         //[DataContract]
         public class CustomBundle : Bundle
         {

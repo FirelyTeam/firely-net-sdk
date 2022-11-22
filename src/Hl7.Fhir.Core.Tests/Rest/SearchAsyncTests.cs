@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Hl7.Fhir.Model.DSTU2;
+using Hl7.Fhir.Model.R4;
 using Hl7.Fhir.Rest;
 using Task = System.Threading.Tasks.Task;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -10,16 +10,13 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class SearchAsyncTests
     {
-        private readonly string _endpoint = "https://api.hspconsortium.org/rpineda/open";
-
-        //private string _endpointSupportingSearchUsingPost = "http://localhost:49911/fhir";
-        private readonly string _endpointSupportingSearchUsingPost = "http://nde-fhir-ehelse.azurewebsites.net/fhir";
+        private readonly string _endpoint = "https://server.fire.ly/r4";
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
         public async Task Search_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpoint)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -53,7 +50,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPost_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpointSupportingSearchUsingPost)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -71,7 +68,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             while (result1 != null)
             {
-                foreach (var e in result1.Entry)
+                foreach (var e in result1.Entry.Where(e => e.Search?.Mode == Model.SearchEntryMode.Match))
                 {
                     Patient p = (Patient)e.Resource;
                     Console.WriteLine(
@@ -87,7 +84,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public void SearchSync_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpoint)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -122,7 +119,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public void SearchUsingPostSync_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpointSupportingSearchUsingPost)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -141,7 +138,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             while (result1 != null)
             {
-                foreach (var e in result1.Entry)
+                foreach (var e in result1.Entry.Where(e => e.Search?.Mode == Model.SearchEntryMode.Match))
                 {
                     Patient p = (Patient)e.Resource;
                     Console.WriteLine(
@@ -157,7 +154,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchMultiple_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpoint)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -197,7 +194,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostMultiple_UsingSearchParams_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpointSupportingSearchUsingPost)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -221,7 +218,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             while (result1 != null)
             {
-                foreach (var e in result1.Entry)
+                foreach (var e in result1.Entry.Where(e => e.Search?.Mode == Model.SearchEntryMode.Match))
                 {
                     Patient p = (Patient)e.Resource;
                     Console.WriteLine(
@@ -237,13 +234,13 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpoint)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
             };
 
-            var result1 = await client.SearchAsync<Patient>(new []{"family=clark"});
+            var result1 = await client.SearchAsync<Patient>(new []{"family=Chalmers"});
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -265,7 +262,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpointSupportingSearchUsingPost)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
@@ -277,7 +274,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 
             while (result1 != null)
             {
-                foreach (var e in result1.Entry)
+                foreach (var e in result1.Entry.Where(e => e.Search?.Mode == Model.SearchEntryMode.Match))
                 {
                     Patient p = (Patient)e.Resource;
                     Console.WriteLine(
@@ -293,13 +290,13 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpoint)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
             };
 
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=clark" },null,1);
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Chalmers" },null,1);
 
             Assert.IsTrue(result1.Entry.Count >= 1);
 
@@ -322,7 +319,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest")]
         public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturned()
         {
-            var client = new FhirDstu2Client(_endpointSupportingSearchUsingPost)
+            var client = new FhirR4Client(_endpoint)
             {
                 PreferredFormat = ResourceFormat.Json,
                 ReturnFullResource = true
