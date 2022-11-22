@@ -120,6 +120,45 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "form":
+                        Form = source.Populate(Form);
+                        return true;
+                    case "ingredient":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "batch":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "ingredient":
+                        source.PopulateListItem(Ingredient, index);
+                        return true;
+                    case "batch":
+                        source.PopulateListItem(Batch, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProductComponent;
@@ -239,6 +278,24 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Item?.Serialize(sink);
                 sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "item":
+                        Item = source.Populate(Item);
+                        return true;
+                    case "amount":
+                        Amount = source.Populate(Amount);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -380,6 +437,30 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "lotNumber":
+                        LotNumberElement = source.PopulateValue(LotNumberElement);
+                        return true;
+                    case "_lotNumber":
+                        LotNumberElement = source.Populate(LotNumberElement);
+                        return true;
+                    case "expirationDate":
+                        ExpirationDateElement = source.PopulateValue(ExpirationDateElement);
+                        return true;
+                    case "_expirationDate":
+                        ExpirationDateElement = source.Populate(ExpirationDateElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as BatchComponent;
@@ -499,6 +580,39 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "container":
+                        Container = source.Populate(Container);
+                        return true;
+                    case "content":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "content":
+                        source.PopulateListItem(Content, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PackageComponent;
@@ -613,6 +727,24 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("item", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Item?.Serialize(sink);
                 sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Amount?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "item":
+                        Item = source.Populate(Item);
+                        return true;
+                    case "amount":
+                        Amount = source.Populate(Amount);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -838,6 +970,36 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("product", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Product?.Serialize(sink);
             sink.Element("package", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Package?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "code":
+                    Code = source.Populate(Code);
+                    return true;
+                case "isBrand":
+                    IsBrandElement = source.PopulateValue(IsBrandElement);
+                    return true;
+                case "_isBrand":
+                    IsBrandElement = source.Populate(IsBrandElement);
+                    return true;
+                case "manufacturer":
+                    Manufacturer = source.Populate(Manufacturer);
+                    return true;
+                case "product":
+                    Product = source.Populate(Product);
+                    return true;
+                case "package":
+                    Package = source.Populate(Package);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

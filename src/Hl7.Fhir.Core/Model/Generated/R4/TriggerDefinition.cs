@@ -265,6 +265,75 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "timingTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.R4.Timing>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.R4.Timing);
+                    return true;
+                case "timingReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "timingDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Timing, "timing");
+                    Timing = source.PopulateValue(Timing as Hl7.Fhir.Model.Date);
+                    return true;
+                case "_timingDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.Date);
+                    return true;
+                case "timingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Timing, "timing");
+                    Timing = source.PopulateValue(Timing as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_timingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "data":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "condition":
+                    Condition = source.Populate(Condition);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "data":
+                    source.PopulateListItem(Data, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

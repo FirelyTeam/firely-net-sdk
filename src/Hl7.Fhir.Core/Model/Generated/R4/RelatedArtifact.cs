@@ -340,6 +340,57 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "label":
+                    LabelElement = source.PopulateValue(LabelElement);
+                    return true;
+                case "_label":
+                    LabelElement = source.Populate(LabelElement);
+                    return true;
+                case "display":
+                    DisplayElement = source.PopulateValue(DisplayElement);
+                    return true;
+                case "_display":
+                    DisplayElement = source.Populate(DisplayElement);
+                    return true;
+                case "citation":
+                    CitationElement = source.PopulateValue(CitationElement);
+                    return true;
+                case "_citation":
+                    CitationElement = source.Populate(CitationElement);
+                    return true;
+                case "url":
+                    UrlElement = source.PopulateValue(UrlElement);
+                    return true;
+                case "_url":
+                    UrlElement = source.Populate(UrlElement);
+                    return true;
+                case "document":
+                    Document = source.Populate(Document);
+                    return true;
+                case "resource":
+                    ResourceElement = source.PopulateValue(ResourceElement);
+                    return true;
+                case "_resource":
+                    ResourceElement = source.Populate(ResourceElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

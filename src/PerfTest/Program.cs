@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using FhirModel = Hl7.Fhir.Model;
 using FhirModel2 = Hl7.Fhir.Model.DSTU2;
+using FhirModel4 = Hl7.Fhir.Model.R4;
 using FhirSerialization = Hl7.Fhir.Serialization;
 
 namespace PerfTest
@@ -10,6 +12,41 @@ namespace PerfTest
     class Program
     {
         static void Main()
+        {
+            ParseJson();
+        }
+
+        static void ParseJson()
+        {
+            var json = File.ReadAllText(@"bundle.json");
+
+            const int count = 100;
+
+            JsonSerializer.Deserialize<FhirModel4.Bundle>(json, FhirSerialization.JsonSerializerOptionsExtensions.ForFhir(new JsonSerializerOptions(), FhirModel.Version.R4));
+            var initialMemory = GC.GetAllocatedBytesForCurrentThread();
+            var watch = Stopwatch.StartNew();
+            for (var i = 0; i < count; i++)
+            {
+                JsonSerializer.Deserialize<FhirModel4.Bundle>(json, FhirSerialization.JsonSerializerOptionsExtensions.ForFhir(new JsonSerializerOptions(), FhirModel.Version.R4));
+            }
+            watch.Stop();
+            var memoryUsed = GC.GetAllocatedBytesForCurrentThread() - initialMemory; 
+            Console.WriteLine("JSON fast parse X {1:N0}: {0:N1}ms, {2:N0} bytes", watch.ElapsedMilliseconds, count, memoryUsed);
+
+            var jsonParser = new FhirSerialization.FhirJsonParser(FhirModel.Version.R4);
+            jsonParser.Parse<FhirModel4.Bundle>(json);
+            initialMemory = GC.GetAllocatedBytesForCurrentThread();
+            watch.Restart();
+            for (var i = 0; i < count; i++)
+            {
+                jsonParser.Parse<FhirModel4.Bundle>(json);
+            }
+            watch.Stop();
+            memoryUsed = GC.GetAllocatedBytesForCurrentThread() - initialMemory;
+            Console.WriteLine("JSON parse X {1:N0}: {0:N1}ms, {2:N0} bytes", watch.ElapsedMilliseconds, count, memoryUsed);
+        }
+
+        static void Serialize()
         {
             var xml = File.ReadAllText(@"bundle.xml");
 

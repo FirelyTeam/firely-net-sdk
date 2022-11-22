@@ -390,6 +390,93 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "active":
+                    ActiveElement = source.PopulateValue(ActiveElement);
+                    return true;
+                case "_active":
+                    ActiveElement = source.Populate(ActiveElement);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "organization":
+                    Organization = source.Populate(Organization);
+                    return true;
+                case "participatingOrganization":
+                    ParticipatingOrganization = source.Populate(ParticipatingOrganization);
+                    return true;
+                case "network":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "code":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "specialty":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "location":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "healthcareService":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "telecom":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "endpoint":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "network":
+                    source.PopulateListItem(Network, index);
+                    return true;
+                case "code":
+                    source.PopulateListItem(Code, index);
+                    return true;
+                case "specialty":
+                    source.PopulateListItem(Specialty, index);
+                    return true;
+                case "location":
+                    source.PopulateListItem(Location, index);
+                    return true;
+                case "healthcareService":
+                    source.PopulateListItem(HealthcareService, index);
+                    return true;
+                case "telecom":
+                    source.PopulateListItem(Telecom, index);
+                    return true;
+                case "endpoint":
+                    source.PopulateListItem(Endpoint, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

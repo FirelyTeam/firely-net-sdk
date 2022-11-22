@@ -471,6 +471,204 @@ namespace Hl7.Fhir.Model.DSTU2
                 { typeof(Hl7.Fhir.Model.DSTU2.VisionPrescription), "VisionPrescription" },
             };
     
+        public static Resource CreateResource(string resourceType)
+        {
+            switch (resourceType)
+            {
+                case "Account":
+                    return new Hl7.Fhir.Model.DSTU2.Account();
+                case "AllergyIntolerance":
+                    return new Hl7.Fhir.Model.DSTU2.AllergyIntolerance();
+                case "Appointment":
+                    return new Hl7.Fhir.Model.DSTU2.Appointment();
+                case "AppointmentResponse":
+                    return new Hl7.Fhir.Model.DSTU2.AppointmentResponse();
+                case "AuditEvent":
+                    return new Hl7.Fhir.Model.DSTU2.AuditEvent();
+                case "Basic":
+                    return new Hl7.Fhir.Model.DSTU2.Basic();
+                case "Binary":
+                    return new Hl7.Fhir.Model.DSTU2.Binary();
+                case "BodySite":
+                    return new Hl7.Fhir.Model.BodySite();
+                case "Bundle":
+                    return new Hl7.Fhir.Model.DSTU2.Bundle();
+                case "CarePlan":
+                    return new Hl7.Fhir.Model.DSTU2.CarePlan();
+                case "Claim":
+                    return new Hl7.Fhir.Model.DSTU2.Claim();
+                case "ClaimResponse":
+                    return new Hl7.Fhir.Model.DSTU2.ClaimResponse();
+                case "ClinicalImpression":
+                    return new Hl7.Fhir.Model.DSTU2.ClinicalImpression();
+                case "Communication":
+                    return new Hl7.Fhir.Model.DSTU2.Communication();
+                case "CommunicationRequest":
+                    return new Hl7.Fhir.Model.DSTU2.CommunicationRequest();
+                case "Composition":
+                    return new Hl7.Fhir.Model.DSTU2.Composition();
+                case "ConceptMap":
+                    return new Hl7.Fhir.Model.DSTU2.ConceptMap();
+                case "Condition":
+                    return new Hl7.Fhir.Model.DSTU2.Condition();
+                case "Conformance":
+                    return new Hl7.Fhir.Model.DSTU2.Conformance();
+                case "Contract":
+                    return new Hl7.Fhir.Model.DSTU2.Contract();
+                case "Coverage":
+                    return new Hl7.Fhir.Model.DSTU2.Coverage();
+                case "DataElement":
+                    return new Hl7.Fhir.Model.DSTU2.DataElement();
+                case "DetectedIssue":
+                    return new Hl7.Fhir.Model.DSTU2.DetectedIssue();
+                case "Device":
+                    return new Hl7.Fhir.Model.DSTU2.Device();
+                case "DeviceComponent":
+                    return new Hl7.Fhir.Model.DSTU2.DeviceComponent();
+                case "DeviceMetric":
+                    return new Hl7.Fhir.Model.DSTU2.DeviceMetric();
+                case "DeviceUseRequest":
+                    return new Hl7.Fhir.Model.DSTU2.DeviceUseRequest();
+                case "DeviceUseStatement":
+                    return new Hl7.Fhir.Model.DSTU2.DeviceUseStatement();
+                case "DiagnosticOrder":
+                    return new Hl7.Fhir.Model.DSTU2.DiagnosticOrder();
+                case "DiagnosticReport":
+                    return new Hl7.Fhir.Model.DSTU2.DiagnosticReport();
+                case "DocumentManifest":
+                    return new Hl7.Fhir.Model.DSTU2.DocumentManifest();
+                case "DocumentReference":
+                    return new Hl7.Fhir.Model.DSTU2.DocumentReference();
+                case "EligibilityRequest":
+                    return new Hl7.Fhir.Model.EligibilityRequest();
+                case "EligibilityResponse":
+                    return new Hl7.Fhir.Model.DSTU2.EligibilityResponse();
+                case "Encounter":
+                    return new Hl7.Fhir.Model.DSTU2.Encounter();
+                case "EnrollmentRequest":
+                    return new Hl7.Fhir.Model.DSTU2.EnrollmentRequest();
+                case "EnrollmentResponse":
+                    return new Hl7.Fhir.Model.DSTU2.EnrollmentResponse();
+                case "EpisodeOfCare":
+                    return new Hl7.Fhir.Model.DSTU2.EpisodeOfCare();
+                case "ExplanationOfBenefit":
+                    return new Hl7.Fhir.Model.DSTU2.ExplanationOfBenefit();
+                case "FamilyMemberHistory":
+                    return new Hl7.Fhir.Model.DSTU2.FamilyMemberHistory();
+                case "Flag":
+                    return new Hl7.Fhir.Model.DSTU2.Flag();
+                case "Goal":
+                    return new Hl7.Fhir.Model.DSTU2.Goal();
+                case "Group":
+                    return new Hl7.Fhir.Model.DSTU2.Group();
+                case "HealthcareService":
+                    return new Hl7.Fhir.Model.DSTU2.HealthcareService();
+                case "ImagingObjectSelection":
+                    return new Hl7.Fhir.Model.DSTU2.ImagingObjectSelection();
+                case "ImagingStudy":
+                    return new Hl7.Fhir.Model.DSTU2.ImagingStudy();
+                case "Immunization":
+                    return new Hl7.Fhir.Model.DSTU2.Immunization();
+                case "ImmunizationRecommendation":
+                    return new Hl7.Fhir.Model.DSTU2.ImmunizationRecommendation();
+                case "ImplementationGuide":
+                    return new Hl7.Fhir.Model.DSTU2.ImplementationGuide();
+                case "List":
+                    return new Hl7.Fhir.Model.DSTU2.List();
+                case "Location":
+                    return new Hl7.Fhir.Model.DSTU2.Location();
+                case "Media":
+                    return new Hl7.Fhir.Model.DSTU2.Media();
+                case "Medication":
+                    return new Hl7.Fhir.Model.DSTU2.Medication();
+                case "MedicationAdministration":
+                    return new Hl7.Fhir.Model.DSTU2.MedicationAdministration();
+                case "MedicationDispense":
+                    return new Hl7.Fhir.Model.DSTU2.MedicationDispense();
+                case "MedicationOrder":
+                    return new Hl7.Fhir.Model.DSTU2.MedicationOrder();
+                case "MedicationStatement":
+                    return new Hl7.Fhir.Model.DSTU2.MedicationStatement();
+                case "MessageHeader":
+                    return new Hl7.Fhir.Model.DSTU2.MessageHeader();
+                case "NamingSystem":
+                    return new Hl7.Fhir.Model.DSTU2.NamingSystem();
+                case "NutritionOrder":
+                    return new Hl7.Fhir.Model.DSTU2.NutritionOrder();
+                case "Observation":
+                    return new Hl7.Fhir.Model.DSTU2.Observation();
+                case "OperationDefinition":
+                    return new Hl7.Fhir.Model.DSTU2.OperationDefinition();
+                case "OperationOutcome":
+                    return new Hl7.Fhir.Model.OperationOutcome();
+                case "Order":
+                    return new Hl7.Fhir.Model.DSTU2.Order();
+                case "OrderResponse":
+                    return new Hl7.Fhir.Model.DSTU2.OrderResponse();
+                case "Organization":
+                    return new Hl7.Fhir.Model.DSTU2.Organization();
+                case "Parameters":
+                    return new Hl7.Fhir.Model.Parameters();
+                case "Patient":
+                    return new Hl7.Fhir.Model.DSTU2.Patient();
+                case "PaymentNotice":
+                    return new Hl7.Fhir.Model.DSTU2.PaymentNotice();
+                case "PaymentReconciliation":
+                    return new Hl7.Fhir.Model.DSTU2.PaymentReconciliation();
+                case "Person":
+                    return new Hl7.Fhir.Model.DSTU2.Person();
+                case "Practitioner":
+                    return new Hl7.Fhir.Model.DSTU2.Practitioner();
+                case "Procedure":
+                    return new Hl7.Fhir.Model.DSTU2.Procedure();
+                case "ProcedureRequest":
+                    return new Hl7.Fhir.Model.DSTU2.ProcedureRequest();
+                case "ProcessRequest":
+                    return new Hl7.Fhir.Model.DSTU2.ProcessRequest();
+                case "ProcessResponse":
+                    return new Hl7.Fhir.Model.DSTU2.ProcessResponse();
+                case "Provenance":
+                    return new Hl7.Fhir.Model.DSTU2.Provenance();
+                case "Questionnaire":
+                    return new Hl7.Fhir.Model.DSTU2.Questionnaire();
+                case "QuestionnaireResponse":
+                    return new Hl7.Fhir.Model.DSTU2.QuestionnaireResponse();
+                case "ReferralRequest":
+                    return new Hl7.Fhir.Model.DSTU2.ReferralRequest();
+                case "RelatedPerson":
+                    return new Hl7.Fhir.Model.DSTU2.RelatedPerson();
+                case "RiskAssessment":
+                    return new Hl7.Fhir.Model.DSTU2.RiskAssessment();
+                case "Schedule":
+                    return new Hl7.Fhir.Model.DSTU2.Schedule();
+                case "SearchParameter":
+                    return new Hl7.Fhir.Model.DSTU2.SearchParameter();
+                case "Slot":
+                    return new Hl7.Fhir.Model.DSTU2.Slot();
+                case "Specimen":
+                    return new Hl7.Fhir.Model.DSTU2.Specimen();
+                case "StructureDefinition":
+                    return new Hl7.Fhir.Model.DSTU2.StructureDefinition();
+                case "Subscription":
+                    return new Hl7.Fhir.Model.DSTU2.Subscription();
+                case "Substance":
+                    return new Hl7.Fhir.Model.DSTU2.Substance();
+                case "SupplyDelivery":
+                    return new Hl7.Fhir.Model.DSTU2.SupplyDelivery();
+                case "SupplyRequest":
+                    return new Hl7.Fhir.Model.DSTU2.SupplyRequest();
+                case "TestReport":
+                    return new Hl7.Fhir.Model.TestReport();
+                case "TestScript":
+                    return new Hl7.Fhir.Model.DSTU2.TestScript();
+                case "ValueSet":
+                    return new Hl7.Fhir.Model.DSTU2.ValueSet();
+                case "VisionPrescription":
+                    return new Hl7.Fhir.Model.DSTU2.VisionPrescription();
+            }
+            return null;
+        }
+    
         public static List<SearchParamDefinition> SearchParameters =
             new List<SearchParamDefinition>
             {

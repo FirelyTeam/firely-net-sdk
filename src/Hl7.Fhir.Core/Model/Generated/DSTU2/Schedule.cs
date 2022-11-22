@@ -222,6 +222,54 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "type":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "actor":
+                    Actor = source.Populate(Actor);
+                    return true;
+                case "planningHorizon":
+                    PlanningHorizon = source.Populate(PlanningHorizon);
+                    return true;
+                case "comment":
+                    CommentElement = source.PopulateValue(CommentElement);
+                    return true;
+                case "_comment":
+                    CommentElement = source.Populate(CommentElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "type":
+                    source.PopulateListItem(Type, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

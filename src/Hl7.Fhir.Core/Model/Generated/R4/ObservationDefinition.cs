@@ -163,6 +163,36 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "customaryUnit":
+                        CustomaryUnit = source.Populate(CustomaryUnit);
+                        return true;
+                    case "unit":
+                        Unit = source.Populate(Unit);
+                        return true;
+                    case "conversionFactor":
+                        ConversionFactorElement = source.PopulateValue(ConversionFactorElement);
+                        return true;
+                    case "_conversionFactor":
+                        ConversionFactorElement = source.Populate(ConversionFactorElement);
+                        return true;
+                    case "decimalPrecision":
+                        DecimalPrecisionElement = source.PopulateValue(DecimalPrecisionElement);
+                        return true;
+                    case "_decimalPrecision":
+                        DecimalPrecisionElement = source.Populate(DecimalPrecisionElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as QuantitativeDetailsComponent;
@@ -431,6 +461,66 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("gestationalAge", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); GestationalAge?.Serialize(sink);
                 sink.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConditionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "category":
+                        CategoryElement = source.PopulateValue(CategoryElement);
+                        return true;
+                    case "_category":
+                        CategoryElement = source.Populate(CategoryElement);
+                        return true;
+                    case "range":
+                        Range = source.Populate(Range);
+                        return true;
+                    case "context":
+                        Context = source.Populate(Context);
+                        return true;
+                    case "appliesTo":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "gender":
+                        GenderElement = source.PopulateValue(GenderElement);
+                        return true;
+                    case "_gender":
+                        GenderElement = source.Populate(GenderElement);
+                        return true;
+                    case "age":
+                        Age = source.Populate(Age);
+                        return true;
+                    case "gestationalAge":
+                        GestationalAge = source.Populate(GestationalAge);
+                        return true;
+                    case "condition":
+                        ConditionElement = source.PopulateValue(ConditionElement);
+                        return true;
+                    case "_condition":
+                        ConditionElement = source.Populate(ConditionElement);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "appliesTo":
+                        source.PopulateListItem(AppliesTo, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -889,6 +979,91 @@ namespace Hl7.Fhir.Model.R4
             sink.Element("abnormalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AbnormalCodedValueSet?.Serialize(sink);
             sink.Element("criticalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CriticalCodedValueSet?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "category":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "code":
+                    Code = source.Populate(Code);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "permittedDataType":
+                case "_permittedDataType":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "multipleResultsAllowed":
+                    MultipleResultsAllowedElement = source.PopulateValue(MultipleResultsAllowedElement);
+                    return true;
+                case "_multipleResultsAllowed":
+                    MultipleResultsAllowedElement = source.Populate(MultipleResultsAllowedElement);
+                    return true;
+                case "method":
+                    Method = source.Populate(Method);
+                    return true;
+                case "preferredReportName":
+                    PreferredReportNameElement = source.PopulateValue(PreferredReportNameElement);
+                    return true;
+                case "_preferredReportName":
+                    PreferredReportNameElement = source.Populate(PreferredReportNameElement);
+                    return true;
+                case "quantitativeDetails":
+                    QuantitativeDetails = source.Populate(QuantitativeDetails);
+                    return true;
+                case "qualifiedInterval":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "validCodedValueSet":
+                    ValidCodedValueSet = source.Populate(ValidCodedValueSet);
+                    return true;
+                case "normalCodedValueSet":
+                    NormalCodedValueSet = source.Populate(NormalCodedValueSet);
+                    return true;
+                case "abnormalCodedValueSet":
+                    AbnormalCodedValueSet = source.Populate(AbnormalCodedValueSet);
+                    return true;
+                case "criticalCodedValueSet":
+                    CriticalCodedValueSet = source.Populate(CriticalCodedValueSet);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "category":
+                    source.PopulateListItem(Category, index);
+                    return true;
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "permittedDataType":
+                    source.PopulatePrimitiveListItemValue(PermittedDataTypeElement, index);
+                    return true;
+                case "_permittedDataType":
+                    source.PopulatePrimitiveListItem(PermittedDataTypeElement, index);
+                    return true;
+                case "qualifiedInterval":
+                    source.PopulateListItem(QualifiedInterval, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

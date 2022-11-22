@@ -86,6 +86,26 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "itemReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Item, "item");
+                        Item = source.Populate(Item as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "itemCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Item, "item");
+                        Item = source.Populate(Item as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as InteractantComponent;
@@ -354,6 +374,60 @@ namespace Hl7.Fhir.Model.R4
             sink.Element("incidence", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Incidence?.Serialize(sink);
             sink.Element("management", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Management?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "subject":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "interactant":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "effect":
+                    Effect = source.Populate(Effect);
+                    return true;
+                case "incidence":
+                    Incidence = source.Populate(Incidence);
+                    return true;
+                case "management":
+                    Management = source.Populate(Management);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "subject":
+                    source.PopulateListItem(Subject, index);
+                    return true;
+                case "interactant":
+                    source.PopulateListItem(Interactant, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

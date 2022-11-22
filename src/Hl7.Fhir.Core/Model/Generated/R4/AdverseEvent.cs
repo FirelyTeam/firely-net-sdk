@@ -107,6 +107,39 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "instance":
+                        Instance = source.Populate(Instance);
+                        return true;
+                    case "causality":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "causality":
+                        source.PopulateListItem(Causality, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SuspectEntityComponent;
@@ -270,6 +303,33 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("author", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Author?.Serialize(sink);
                 sink.Element("method", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Method?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "assessment":
+                        Assessment = source.Populate(Assessment);
+                        return true;
+                    case "productRelatedness":
+                        ProductRelatednessElement = source.PopulateValue(ProductRelatednessElement);
+                        return true;
+                    case "_productRelatedness":
+                        ProductRelatednessElement = source.Populate(ProductRelatednessElement);
+                        return true;
+                    case "author":
+                        Author = source.Populate(Author);
+                        return true;
+                    case "method":
+                        Method = source.Populate(Method);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -889,6 +949,123 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "actuality":
+                    ActualityElement = source.PopulateValue(ActualityElement);
+                    return true;
+                case "_actuality":
+                    ActualityElement = source.Populate(ActualityElement);
+                    return true;
+                case "category":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "event":
+                    Event = source.Populate(Event);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "detected":
+                    DetectedElement = source.PopulateValue(DetectedElement);
+                    return true;
+                case "_detected":
+                    DetectedElement = source.Populate(DetectedElement);
+                    return true;
+                case "recordedDate":
+                    RecordedDateElement = source.PopulateValue(RecordedDateElement);
+                    return true;
+                case "_recordedDate":
+                    RecordedDateElement = source.Populate(RecordedDateElement);
+                    return true;
+                case "resultingCondition":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "location":
+                    Location = source.Populate(Location);
+                    return true;
+                case "seriousness":
+                    Seriousness = source.Populate(Seriousness);
+                    return true;
+                case "severity":
+                    Severity = source.Populate(Severity);
+                    return true;
+                case "outcome":
+                    Outcome = source.Populate(Outcome);
+                    return true;
+                case "recorder":
+                    Recorder = source.Populate(Recorder);
+                    return true;
+                case "contributor":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "suspectEntity":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subjectMedicalHistory":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "referenceDocument":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "study":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "category":
+                    source.PopulateListItem(Category, index);
+                    return true;
+                case "resultingCondition":
+                    source.PopulateListItem(ResultingCondition, index);
+                    return true;
+                case "contributor":
+                    source.PopulateListItem(Contributor, index);
+                    return true;
+                case "suspectEntity":
+                    source.PopulateListItem(SuspectEntity, index);
+                    return true;
+                case "subjectMedicalHistory":
+                    source.PopulateListItem(SubjectMedicalHistory, index);
+                    return true;
+                case "referenceDocument":
+                    source.PopulateListItem(ReferenceDocument, index);
+                    return true;
+                case "study":
+                    source.PopulateListItem(Study, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
@@ -61,10 +61,6 @@
     <None Include="..\Hl7.Fhir.Core.Tests\TestData\examples.zip" Link="TestData\examples.zip">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="System.IO.Compression" />
   </ItemGroup>
 
   <ItemGroup>

@@ -644,6 +644,310 @@ namespace Hl7.Fhir.Model.R4
                 { typeof(Hl7.Fhir.Model.R4.VisionPrescription), "VisionPrescription" },
             };
     
+        public static Resource CreateResource(string resourceType)
+        {
+            switch (resourceType)
+            {
+                case "Account":
+                    return new Hl7.Fhir.Model.R4.Account();
+                case "ActivityDefinition":
+                    return new Hl7.Fhir.Model.R4.ActivityDefinition();
+                case "AdverseEvent":
+                    return new Hl7.Fhir.Model.R4.AdverseEvent();
+                case "AllergyIntolerance":
+                    return new Hl7.Fhir.Model.R4.AllergyIntolerance();
+                case "Appointment":
+                    return new Hl7.Fhir.Model.R4.Appointment();
+                case "AppointmentResponse":
+                    return new Hl7.Fhir.Model.R4.AppointmentResponse();
+                case "AuditEvent":
+                    return new Hl7.Fhir.Model.R4.AuditEvent();
+                case "Basic":
+                    return new Hl7.Fhir.Model.R4.Basic();
+                case "Binary":
+                    return new Hl7.Fhir.Model.R4.Binary();
+                case "BiologicallyDerivedProduct":
+                    return new Hl7.Fhir.Model.R4.BiologicallyDerivedProduct();
+                case "BodySite":
+                    return new Hl7.Fhir.Model.BodySite();
+                case "BodyStructure":
+                    return new Hl7.Fhir.Model.R4.BodyStructure();
+                case "Bundle":
+                    return new Hl7.Fhir.Model.R4.Bundle();
+                case "CapabilityStatement":
+                    return new Hl7.Fhir.Model.R4.CapabilityStatement();
+                case "CarePlan":
+                    return new Hl7.Fhir.Model.R4.CarePlan();
+                case "CareTeam":
+                    return new Hl7.Fhir.Model.R4.CareTeam();
+                case "CatalogEntry":
+                    return new Hl7.Fhir.Model.R4.CatalogEntry();
+                case "ChargeItem":
+                    return new Hl7.Fhir.Model.R4.ChargeItem();
+                case "ChargeItemDefinition":
+                    return new Hl7.Fhir.Model.R4.ChargeItemDefinition();
+                case "Claim":
+                    return new Hl7.Fhir.Model.R4.Claim();
+                case "ClaimResponse":
+                    return new Hl7.Fhir.Model.R4.ClaimResponse();
+                case "ClinicalImpression":
+                    return new Hl7.Fhir.Model.R4.ClinicalImpression();
+                case "CodeSystem":
+                    return new Hl7.Fhir.Model.R4.CodeSystem();
+                case "Communication":
+                    return new Hl7.Fhir.Model.R4.Communication();
+                case "CommunicationRequest":
+                    return new Hl7.Fhir.Model.R4.CommunicationRequest();
+                case "CompartmentDefinition":
+                    return new Hl7.Fhir.Model.R4.CompartmentDefinition();
+                case "Composition":
+                    return new Hl7.Fhir.Model.R4.Composition();
+                case "ConceptMap":
+                    return new Hl7.Fhir.Model.R4.ConceptMap();
+                case "Condition":
+                    return new Hl7.Fhir.Model.R4.Condition();
+                case "Consent":
+                    return new Hl7.Fhir.Model.R4.Consent();
+                case "Contract":
+                    return new Hl7.Fhir.Model.R4.Contract();
+                case "Coverage":
+                    return new Hl7.Fhir.Model.R4.Coverage();
+                case "CoverageEligibilityRequest":
+                    return new Hl7.Fhir.Model.R4.CoverageEligibilityRequest();
+                case "CoverageEligibilityResponse":
+                    return new Hl7.Fhir.Model.R4.CoverageEligibilityResponse();
+                case "DetectedIssue":
+                    return new Hl7.Fhir.Model.R4.DetectedIssue();
+                case "Device":
+                    return new Hl7.Fhir.Model.R4.Device();
+                case "DeviceDefinition":
+                    return new Hl7.Fhir.Model.R4.DeviceDefinition();
+                case "DeviceMetric":
+                    return new Hl7.Fhir.Model.R4.DeviceMetric();
+                case "DeviceRequest":
+                    return new Hl7.Fhir.Model.R4.DeviceRequest();
+                case "DeviceUseStatement":
+                    return new Hl7.Fhir.Model.R4.DeviceUseStatement();
+                case "DiagnosticReport":
+                    return new Hl7.Fhir.Model.R4.DiagnosticReport();
+                case "DocumentManifest":
+                    return new Hl7.Fhir.Model.R4.DocumentManifest();
+                case "DocumentReference":
+                    return new Hl7.Fhir.Model.R4.DocumentReference();
+                case "EffectEvidenceSynthesis":
+                    return new Hl7.Fhir.Model.R4.EffectEvidenceSynthesis();
+                case "EligibilityRequest":
+                    return new Hl7.Fhir.Model.EligibilityRequest();
+                case "Encounter":
+                    return new Hl7.Fhir.Model.R4.Encounter();
+                case "Endpoint":
+                    return new Hl7.Fhir.Model.R4.Endpoint();
+                case "EnrollmentRequest":
+                    return new Hl7.Fhir.Model.R4.EnrollmentRequest();
+                case "EnrollmentResponse":
+                    return new Hl7.Fhir.Model.R4.EnrollmentResponse();
+                case "EpisodeOfCare":
+                    return new Hl7.Fhir.Model.R4.EpisodeOfCare();
+                case "EventDefinition":
+                    return new Hl7.Fhir.Model.R4.EventDefinition();
+                case "Evidence":
+                    return new Hl7.Fhir.Model.R4.Evidence();
+                case "EvidenceVariable":
+                    return new Hl7.Fhir.Model.R4.EvidenceVariable();
+                case "ExampleScenario":
+                    return new Hl7.Fhir.Model.R4.ExampleScenario();
+                case "ExplanationOfBenefit":
+                    return new Hl7.Fhir.Model.R4.ExplanationOfBenefit();
+                case "FamilyMemberHistory":
+                    return new Hl7.Fhir.Model.R4.FamilyMemberHistory();
+                case "Flag":
+                    return new Hl7.Fhir.Model.R4.Flag();
+                case "Goal":
+                    return new Hl7.Fhir.Model.R4.Goal();
+                case "GraphDefinition":
+                    return new Hl7.Fhir.Model.R4.GraphDefinition();
+                case "Group":
+                    return new Hl7.Fhir.Model.R4.Group();
+                case "GuidanceResponse":
+                    return new Hl7.Fhir.Model.R4.GuidanceResponse();
+                case "HealthcareService":
+                    return new Hl7.Fhir.Model.R4.HealthcareService();
+                case "ImagingStudy":
+                    return new Hl7.Fhir.Model.R4.ImagingStudy();
+                case "Immunization":
+                    return new Hl7.Fhir.Model.R4.Immunization();
+                case "ImmunizationEvaluation":
+                    return new Hl7.Fhir.Model.R4.ImmunizationEvaluation();
+                case "ImmunizationRecommendation":
+                    return new Hl7.Fhir.Model.R4.ImmunizationRecommendation();
+                case "ImplementationGuide":
+                    return new Hl7.Fhir.Model.R4.ImplementationGuide();
+                case "InsurancePlan":
+                    return new Hl7.Fhir.Model.R4.InsurancePlan();
+                case "Invoice":
+                    return new Hl7.Fhir.Model.R4.Invoice();
+                case "Library":
+                    return new Hl7.Fhir.Model.R4.Library();
+                case "Linkage":
+                    return new Hl7.Fhir.Model.R4.Linkage();
+                case "List":
+                    return new Hl7.Fhir.Model.R4.List();
+                case "Location":
+                    return new Hl7.Fhir.Model.R4.Location();
+                case "Measure":
+                    return new Hl7.Fhir.Model.R4.Measure();
+                case "MeasureReport":
+                    return new Hl7.Fhir.Model.R4.MeasureReport();
+                case "Media":
+                    return new Hl7.Fhir.Model.R4.Media();
+                case "Medication":
+                    return new Hl7.Fhir.Model.R4.Medication();
+                case "MedicationAdministration":
+                    return new Hl7.Fhir.Model.R4.MedicationAdministration();
+                case "MedicationDispense":
+                    return new Hl7.Fhir.Model.R4.MedicationDispense();
+                case "MedicationKnowledge":
+                    return new Hl7.Fhir.Model.R4.MedicationKnowledge();
+                case "MedicationRequest":
+                    return new Hl7.Fhir.Model.R4.MedicationRequest();
+                case "MedicationStatement":
+                    return new Hl7.Fhir.Model.R4.MedicationStatement();
+                case "MedicinalProduct":
+                    return new Hl7.Fhir.Model.R4.MedicinalProduct();
+                case "MedicinalProductAuthorization":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductAuthorization();
+                case "MedicinalProductContraindication":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductContraindication();
+                case "MedicinalProductIndication":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductIndication();
+                case "MedicinalProductIngredient":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductIngredient();
+                case "MedicinalProductInteraction":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductInteraction();
+                case "MedicinalProductManufactured":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductManufactured();
+                case "MedicinalProductPackaged":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductPackaged();
+                case "MedicinalProductPharmaceutical":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductPharmaceutical();
+                case "MedicinalProductUndesirableEffect":
+                    return new Hl7.Fhir.Model.R4.MedicinalProductUndesirableEffect();
+                case "MessageDefinition":
+                    return new Hl7.Fhir.Model.R4.MessageDefinition();
+                case "MessageHeader":
+                    return new Hl7.Fhir.Model.R4.MessageHeader();
+                case "MolecularSequence":
+                    return new Hl7.Fhir.Model.R4.MolecularSequence();
+                case "NamingSystem":
+                    return new Hl7.Fhir.Model.R4.NamingSystem();
+                case "NutritionOrder":
+                    return new Hl7.Fhir.Model.R4.NutritionOrder();
+                case "Observation":
+                    return new Hl7.Fhir.Model.R4.Observation();
+                case "ObservationDefinition":
+                    return new Hl7.Fhir.Model.R4.ObservationDefinition();
+                case "OperationDefinition":
+                    return new Hl7.Fhir.Model.R4.OperationDefinition();
+                case "OperationOutcome":
+                    return new Hl7.Fhir.Model.OperationOutcome();
+                case "Organization":
+                    return new Hl7.Fhir.Model.R4.Organization();
+                case "OrganizationAffiliation":
+                    return new Hl7.Fhir.Model.R4.OrganizationAffiliation();
+                case "Parameters":
+                    return new Hl7.Fhir.Model.Parameters();
+                case "Patient":
+                    return new Hl7.Fhir.Model.R4.Patient();
+                case "PaymentNotice":
+                    return new Hl7.Fhir.Model.R4.PaymentNotice();
+                case "PaymentReconciliation":
+                    return new Hl7.Fhir.Model.R4.PaymentReconciliation();
+                case "Person":
+                    return new Hl7.Fhir.Model.R4.Person();
+                case "PlanDefinition":
+                    return new Hl7.Fhir.Model.R4.PlanDefinition();
+                case "Practitioner":
+                    return new Hl7.Fhir.Model.R4.Practitioner();
+                case "PractitionerRole":
+                    return new Hl7.Fhir.Model.R4.PractitionerRole();
+                case "Procedure":
+                    return new Hl7.Fhir.Model.R4.Procedure();
+                case "Provenance":
+                    return new Hl7.Fhir.Model.R4.Provenance();
+                case "Questionnaire":
+                    return new Hl7.Fhir.Model.R4.Questionnaire();
+                case "QuestionnaireResponse":
+                    return new Hl7.Fhir.Model.R4.QuestionnaireResponse();
+                case "RelatedPerson":
+                    return new Hl7.Fhir.Model.R4.RelatedPerson();
+                case "RequestGroup":
+                    return new Hl7.Fhir.Model.R4.RequestGroup();
+                case "ResearchDefinition":
+                    return new Hl7.Fhir.Model.R4.ResearchDefinition();
+                case "ResearchElementDefinition":
+                    return new Hl7.Fhir.Model.R4.ResearchElementDefinition();
+                case "ResearchStudy":
+                    return new Hl7.Fhir.Model.R4.ResearchStudy();
+                case "ResearchSubject":
+                    return new Hl7.Fhir.Model.R4.ResearchSubject();
+                case "RiskAssessment":
+                    return new Hl7.Fhir.Model.R4.RiskAssessment();
+                case "RiskEvidenceSynthesis":
+                    return new Hl7.Fhir.Model.R4.RiskEvidenceSynthesis();
+                case "Schedule":
+                    return new Hl7.Fhir.Model.R4.Schedule();
+                case "SearchParameter":
+                    return new Hl7.Fhir.Model.R4.SearchParameter();
+                case "ServiceRequest":
+                    return new Hl7.Fhir.Model.R4.ServiceRequest();
+                case "Slot":
+                    return new Hl7.Fhir.Model.R4.Slot();
+                case "Specimen":
+                    return new Hl7.Fhir.Model.R4.Specimen();
+                case "SpecimenDefinition":
+                    return new Hl7.Fhir.Model.R4.SpecimenDefinition();
+                case "StructureDefinition":
+                    return new Hl7.Fhir.Model.R4.StructureDefinition();
+                case "StructureMap":
+                    return new Hl7.Fhir.Model.R4.StructureMap();
+                case "Subscription":
+                    return new Hl7.Fhir.Model.R4.Subscription();
+                case "Substance":
+                    return new Hl7.Fhir.Model.R4.Substance();
+                case "SubstanceNucleicAcid":
+                    return new Hl7.Fhir.Model.R4.SubstanceNucleicAcid();
+                case "SubstancePolymer":
+                    return new Hl7.Fhir.Model.R4.SubstancePolymer();
+                case "SubstanceProtein":
+                    return new Hl7.Fhir.Model.R4.SubstanceProtein();
+                case "SubstanceReferenceInformation":
+                    return new Hl7.Fhir.Model.R4.SubstanceReferenceInformation();
+                case "SubstanceSourceMaterial":
+                    return new Hl7.Fhir.Model.R4.SubstanceSourceMaterial();
+                case "SubstanceSpecification":
+                    return new Hl7.Fhir.Model.R4.SubstanceSpecification();
+                case "SupplyDelivery":
+                    return new Hl7.Fhir.Model.R4.SupplyDelivery();
+                case "SupplyRequest":
+                    return new Hl7.Fhir.Model.R4.SupplyRequest();
+                case "Task":
+                    return new Hl7.Fhir.Model.R4.Task();
+                case "TerminologyCapabilities":
+                    return new Hl7.Fhir.Model.R4.TerminologyCapabilities();
+                case "TestReport":
+                    return new Hl7.Fhir.Model.TestReport();
+                case "TestScript":
+                    return new Hl7.Fhir.Model.R4.TestScript();
+                case "ValueSet":
+                    return new Hl7.Fhir.Model.R4.ValueSet();
+                case "VerificationResult":
+                    return new Hl7.Fhir.Model.R4.VerificationResult();
+                case "VisionPrescription":
+                    return new Hl7.Fhir.Model.R4.VisionPrescription();
+            }
+            return null;
+        }
+    
         public static List<SearchParamDefinition> SearchParameters =
             new List<SearchParamDefinition>
             {

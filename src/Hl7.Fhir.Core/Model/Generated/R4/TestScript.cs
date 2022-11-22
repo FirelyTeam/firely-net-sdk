@@ -118,6 +118,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "index":
+                        IndexElement = source.PopulateValue(IndexElement);
+                        return true;
+                    case "_index":
+                        IndexElement = source.Populate(IndexElement);
+                        return true;
+                    case "profile":
+                        Profile = source.Populate(Profile);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OriginComponent;
@@ -252,6 +273,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "index":
+                        IndexElement = source.PopulateValue(IndexElement);
+                        return true;
+                    case "_index":
+                        IndexElement = source.Populate(IndexElement);
+                        return true;
+                    case "profile":
+                        Profile = source.Populate(Profile);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DestinationComponent;
@@ -381,6 +423,42 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "link":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "capability":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "link":
+                        source.PopulateListItem(Link, index);
+                        return true;
+                    case "capability":
+                        source.PopulateListItem(Capability, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -533,6 +611,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); UrlElement?.Serialize(sink);
                 sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "url":
+                        UrlElement = source.PopulateValue(UrlElement);
+                        return true;
+                    case "_url":
+                        UrlElement = source.Populate(UrlElement);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -860,6 +962,80 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "required":
+                        RequiredElement = source.PopulateValue(RequiredElement);
+                        return true;
+                    case "_required":
+                        RequiredElement = source.Populate(RequiredElement);
+                        return true;
+                    case "validated":
+                        ValidatedElement = source.PopulateValue(ValidatedElement);
+                        return true;
+                    case "_validated":
+                        ValidatedElement = source.Populate(ValidatedElement);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "origin":
+                    case "_origin":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "destination":
+                        DestinationElement = source.PopulateValue(DestinationElement);
+                        return true;
+                    case "_destination":
+                        DestinationElement = source.Populate(DestinationElement);
+                        return true;
+                    case "link":
+                    case "_link":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "capabilities":
+                        CapabilitiesElement = source.PopulateValue(CapabilitiesElement);
+                        return true;
+                    case "_capabilities":
+                        CapabilitiesElement = source.Populate(CapabilitiesElement);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "origin":
+                        source.PopulatePrimitiveListItemValue(OriginElement, index);
+                        return true;
+                    case "_origin":
+                        source.PopulatePrimitiveListItem(OriginElement, index);
+                        return true;
+                    case "link":
+                        source.PopulatePrimitiveListItemValue(LinkElement, index);
+                        return true;
+                    case "_link":
+                        source.PopulatePrimitiveListItem(LinkElement, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CapabilityComponent;
@@ -1050,6 +1226,33 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("autodelete", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); AutodeleteElement?.Serialize(sink);
                 sink.Element("resource", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Resource?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "autocreate":
+                        AutocreateElement = source.PopulateValue(AutocreateElement);
+                        return true;
+                    case "_autocreate":
+                        AutocreateElement = source.Populate(AutocreateElement);
+                        return true;
+                    case "autodelete":
+                        AutodeleteElement = source.PopulateValue(AutodeleteElement);
+                        return true;
+                    case "_autodelete":
+                        AutodeleteElement = source.Populate(AutodeleteElement);
+                        return true;
+                    case "resource":
+                        Resource = source.Populate(Resource);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1407,6 +1610,66 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "name":
+                        NameElement = source.PopulateValue(NameElement);
+                        return true;
+                    case "_name":
+                        NameElement = source.Populate(NameElement);
+                        return true;
+                    case "defaultValue":
+                        DefaultValueElement = source.PopulateValue(DefaultValueElement);
+                        return true;
+                    case "_defaultValue":
+                        DefaultValueElement = source.Populate(DefaultValueElement);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "expression":
+                        ExpressionElement = source.PopulateValue(ExpressionElement);
+                        return true;
+                    case "_expression":
+                        ExpressionElement = source.Populate(ExpressionElement);
+                        return true;
+                    case "headerField":
+                        HeaderFieldElement = source.PopulateValue(HeaderFieldElement);
+                        return true;
+                    case "_headerField":
+                        HeaderFieldElement = source.Populate(HeaderFieldElement);
+                        return true;
+                    case "hint":
+                        HintElement = source.PopulateValue(HintElement);
+                        return true;
+                    case "_hint":
+                        HintElement = source.Populate(HintElement);
+                        return true;
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "sourceId":
+                        SourceIdElement = source.PopulateValue(SourceIdElement);
+                        return true;
+                    case "_sourceId":
+                        SourceIdElement = source.Populate(SourceIdElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as VariableComponent;
@@ -1545,6 +1808,36 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "action":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "action":
+                        source.PopulateListItem(Action, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SetupComponent;
@@ -1657,6 +1950,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("operation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Operation?.Serialize(sink);
                 sink.Element("assert", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Assert?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "operation":
+                        Operation = source.Populate(Operation);
+                        return true;
+                    case "assert":
+                        Assert = source.Populate(Assert);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -2277,6 +2588,129 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "type":
+                        Type = source.Populate(Type);
+                        return true;
+                    case "resource":
+                        ResourceElement = source.PopulateValue(ResourceElement);
+                        return true;
+                    case "_resource":
+                        ResourceElement = source.Populate(ResourceElement);
+                        return true;
+                    case "label":
+                        LabelElement = source.PopulateValue(LabelElement);
+                        return true;
+                    case "_label":
+                        LabelElement = source.Populate(LabelElement);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "accept":
+                        AcceptElement = source.PopulateValue(AcceptElement);
+                        return true;
+                    case "_accept":
+                        AcceptElement = source.Populate(AcceptElement);
+                        return true;
+                    case "contentType":
+                        ContentTypeElement = source.PopulateValue(ContentTypeElement);
+                        return true;
+                    case "_contentType":
+                        ContentTypeElement = source.Populate(ContentTypeElement);
+                        return true;
+                    case "destination":
+                        DestinationElement = source.PopulateValue(DestinationElement);
+                        return true;
+                    case "_destination":
+                        DestinationElement = source.Populate(DestinationElement);
+                        return true;
+                    case "encodeRequestUrl":
+                        EncodeRequestUrlElement = source.PopulateValue(EncodeRequestUrlElement);
+                        return true;
+                    case "_encodeRequestUrl":
+                        EncodeRequestUrlElement = source.Populate(EncodeRequestUrlElement);
+                        return true;
+                    case "method":
+                        MethodElement = source.PopulateValue(MethodElement);
+                        return true;
+                    case "_method":
+                        MethodElement = source.Populate(MethodElement);
+                        return true;
+                    case "origin":
+                        OriginElement = source.PopulateValue(OriginElement);
+                        return true;
+                    case "_origin":
+                        OriginElement = source.Populate(OriginElement);
+                        return true;
+                    case "params":
+                        ParamsElement = source.PopulateValue(ParamsElement);
+                        return true;
+                    case "_params":
+                        ParamsElement = source.Populate(ParamsElement);
+                        return true;
+                    case "requestHeader":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "requestId":
+                        RequestIdElement = source.PopulateValue(RequestIdElement);
+                        return true;
+                    case "_requestId":
+                        RequestIdElement = source.Populate(RequestIdElement);
+                        return true;
+                    case "responseId":
+                        ResponseIdElement = source.PopulateValue(ResponseIdElement);
+                        return true;
+                    case "_responseId":
+                        ResponseIdElement = source.Populate(ResponseIdElement);
+                        return true;
+                    case "sourceId":
+                        SourceIdElement = source.PopulateValue(SourceIdElement);
+                        return true;
+                    case "_sourceId":
+                        SourceIdElement = source.Populate(SourceIdElement);
+                        return true;
+                    case "targetId":
+                        TargetIdElement = source.PopulateValue(TargetIdElement);
+                        return true;
+                    case "_targetId":
+                        TargetIdElement = source.Populate(TargetIdElement);
+                        return true;
+                    case "url":
+                        UrlElement = source.PopulateValue(UrlElement);
+                        return true;
+                    case "_url":
+                        UrlElement = source.Populate(UrlElement);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "requestHeader":
+                        source.PopulateListItem(RequestHeader, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OperationComponent;
@@ -2503,6 +2937,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("field", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); FieldElement?.Serialize(sink);
                 sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "field":
+                        FieldElement = source.PopulateValue(FieldElement);
+                        return true;
+                    case "_field":
+                        FieldElement = source.Populate(FieldElement);
+                        return true;
+                    case "value":
+                        ValueElement = source.PopulateValue(ValueElement);
+                        return true;
+                    case "_value":
+                        ValueElement = source.Populate(ValueElement);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -3317,6 +3775,150 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "label":
+                        LabelElement = source.PopulateValue(LabelElement);
+                        return true;
+                    case "_label":
+                        LabelElement = source.Populate(LabelElement);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "direction":
+                        DirectionElement = source.PopulateValue(DirectionElement);
+                        return true;
+                    case "_direction":
+                        DirectionElement = source.Populate(DirectionElement);
+                        return true;
+                    case "compareToSourceId":
+                        CompareToSourceIdElement = source.PopulateValue(CompareToSourceIdElement);
+                        return true;
+                    case "_compareToSourceId":
+                        CompareToSourceIdElement = source.Populate(CompareToSourceIdElement);
+                        return true;
+                    case "compareToSourceExpression":
+                        CompareToSourceExpressionElement = source.PopulateValue(CompareToSourceExpressionElement);
+                        return true;
+                    case "_compareToSourceExpression":
+                        CompareToSourceExpressionElement = source.Populate(CompareToSourceExpressionElement);
+                        return true;
+                    case "compareToSourcePath":
+                        CompareToSourcePathElement = source.PopulateValue(CompareToSourcePathElement);
+                        return true;
+                    case "_compareToSourcePath":
+                        CompareToSourcePathElement = source.Populate(CompareToSourcePathElement);
+                        return true;
+                    case "contentType":
+                        ContentTypeElement = source.PopulateValue(ContentTypeElement);
+                        return true;
+                    case "_contentType":
+                        ContentTypeElement = source.Populate(ContentTypeElement);
+                        return true;
+                    case "expression":
+                        ExpressionElement = source.PopulateValue(ExpressionElement);
+                        return true;
+                    case "_expression":
+                        ExpressionElement = source.Populate(ExpressionElement);
+                        return true;
+                    case "headerField":
+                        HeaderFieldElement = source.PopulateValue(HeaderFieldElement);
+                        return true;
+                    case "_headerField":
+                        HeaderFieldElement = source.Populate(HeaderFieldElement);
+                        return true;
+                    case "minimumId":
+                        MinimumIdElement = source.PopulateValue(MinimumIdElement);
+                        return true;
+                    case "_minimumId":
+                        MinimumIdElement = source.Populate(MinimumIdElement);
+                        return true;
+                    case "navigationLinks":
+                        NavigationLinksElement = source.PopulateValue(NavigationLinksElement);
+                        return true;
+                    case "_navigationLinks":
+                        NavigationLinksElement = source.Populate(NavigationLinksElement);
+                        return true;
+                    case "operator":
+                        OperatorElement = source.PopulateValue(OperatorElement);
+                        return true;
+                    case "_operator":
+                        OperatorElement = source.Populate(OperatorElement);
+                        return true;
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "requestMethod":
+                        RequestMethodElement = source.PopulateValue(RequestMethodElement);
+                        return true;
+                    case "_requestMethod":
+                        RequestMethodElement = source.Populate(RequestMethodElement);
+                        return true;
+                    case "requestURL":
+                        RequestURLElement = source.PopulateValue(RequestURLElement);
+                        return true;
+                    case "_requestURL":
+                        RequestURLElement = source.Populate(RequestURLElement);
+                        return true;
+                    case "resource":
+                        ResourceElement = source.PopulateValue(ResourceElement);
+                        return true;
+                    case "_resource":
+                        ResourceElement = source.Populate(ResourceElement);
+                        return true;
+                    case "response":
+                        ResponseElement = source.PopulateValue(ResponseElement);
+                        return true;
+                    case "_response":
+                        ResponseElement = source.Populate(ResponseElement);
+                        return true;
+                    case "responseCode":
+                        ResponseCodeElement = source.PopulateValue(ResponseCodeElement);
+                        return true;
+                    case "_responseCode":
+                        ResponseCodeElement = source.Populate(ResponseCodeElement);
+                        return true;
+                    case "sourceId":
+                        SourceIdElement = source.PopulateValue(SourceIdElement);
+                        return true;
+                    case "_sourceId":
+                        SourceIdElement = source.Populate(SourceIdElement);
+                        return true;
+                    case "validateProfileId":
+                        ValidateProfileIdElement = source.PopulateValue(ValidateProfileIdElement);
+                        return true;
+                    case "_validateProfileId":
+                        ValidateProfileIdElement = source.Populate(ValidateProfileIdElement);
+                        return true;
+                    case "value":
+                        ValueElement = source.PopulateValue(ValueElement);
+                        return true;
+                    case "_value":
+                        ValueElement = source.Populate(ValueElement);
+                        return true;
+                    case "warningOnly":
+                        WarningOnlyElement = source.PopulateValue(WarningOnlyElement);
+                        return true;
+                    case "_warningOnly":
+                        WarningOnlyElement = source.Populate(WarningOnlyElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AssertComponent;
@@ -3591,6 +4193,48 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "name":
+                        NameElement = source.PopulateValue(NameElement);
+                        return true;
+                    case "_name":
+                        NameElement = source.Populate(NameElement);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "action":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "action":
+                        source.PopulateListItem(Action, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as TestComponent;
@@ -3715,6 +4359,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "operation":
+                        Operation = source.Populate(Operation);
+                        return true;
+                    case "assert":
+                        Assert = source.Populate(Assert);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as TestActionComponent;
@@ -3820,6 +4482,36 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "action":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "action":
+                        source.PopulateListItem(Action, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as TeardownComponent;
@@ -3913,6 +4605,21 @@ namespace Hl7.Fhir.Model.R4
                 base.Serialize(sink);
                 sink.Element("operation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Operation?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "operation":
+                        Operation = source.Populate(Operation);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -4851,6 +5558,162 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
             sink.Element("teardown", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Teardown?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "url":
+                    UrlElement = source.PopulateValue(UrlElement);
+                    return true;
+                case "_url":
+                    UrlElement = source.Populate(UrlElement);
+                    return true;
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "version":
+                    VersionElement = source.PopulateValue(VersionElement);
+                    return true;
+                case "_version":
+                    VersionElement = source.Populate(VersionElement);
+                    return true;
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "title":
+                    TitleElement = source.PopulateValue(TitleElement);
+                    return true;
+                case "_title":
+                    TitleElement = source.Populate(TitleElement);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "experimental":
+                    ExperimentalElement = source.PopulateValue(ExperimentalElement);
+                    return true;
+                case "_experimental":
+                    ExperimentalElement = source.Populate(ExperimentalElement);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "publisher":
+                    PublisherElement = source.PopulateValue(PublisherElement);
+                    return true;
+                case "_publisher":
+                    PublisherElement = source.Populate(PublisherElement);
+                    return true;
+                case "contact":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "useContext":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "jurisdiction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "purpose":
+                    PurposeElement = source.PopulateValue(PurposeElement);
+                    return true;
+                case "_purpose":
+                    PurposeElement = source.Populate(PurposeElement);
+                    return true;
+                case "copyright":
+                    CopyrightElement = source.PopulateValue(CopyrightElement);
+                    return true;
+                case "_copyright":
+                    CopyrightElement = source.Populate(CopyrightElement);
+                    return true;
+                case "origin":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "destination":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "metadata":
+                    Metadata = source.Populate(Metadata);
+                    return true;
+                case "fixture":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "profile":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "variable":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "setup":
+                    Setup = source.Populate(Setup);
+                    return true;
+                case "test":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "teardown":
+                    Teardown = source.Populate(Teardown);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "contact":
+                    source.PopulateListItem(Contact, index);
+                    return true;
+                case "useContext":
+                    source.PopulateListItem(UseContext, index);
+                    return true;
+                case "jurisdiction":
+                    source.PopulateListItem(Jurisdiction, index);
+                    return true;
+                case "origin":
+                    source.PopulateListItem(Origin, index);
+                    return true;
+                case "destination":
+                    source.PopulateListItem(Destination, index);
+                    return true;
+                case "fixture":
+                    source.PopulateListItem(Fixture, index);
+                    return true;
+                case "profile":
+                    source.PopulateListItem(Profile, index);
+                    return true;
+                case "variable":
+                    source.PopulateListItem(Variable, index);
+                    return true;
+                case "test":
+                    source.PopulateListItem(Test, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

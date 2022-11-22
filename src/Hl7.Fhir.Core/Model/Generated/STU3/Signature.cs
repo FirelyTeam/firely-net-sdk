@@ -273,6 +273,78 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "when":
+                    WhenElement = source.PopulateValue(WhenElement);
+                    return true;
+                case "_when":
+                    WhenElement = source.Populate(WhenElement);
+                    return true;
+                case "whoUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Who, "who");
+                    Who = source.PopulateValue(Who as Hl7.Fhir.Model.FhirUri);
+                    return true;
+                case "_whoUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Who, "who");
+                    Who = source.Populate(Who as Hl7.Fhir.Model.FhirUri);
+                    return true;
+                case "whoReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Who, "who");
+                    Who = source.Populate(Who as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "onBehalfOfUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(OnBehalfOf, "onBehalfOf");
+                    OnBehalfOf = source.PopulateValue(OnBehalfOf as Hl7.Fhir.Model.FhirUri);
+                    return true;
+                case "_onBehalfOfUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(OnBehalfOf, "onBehalfOf");
+                    OnBehalfOf = source.Populate(OnBehalfOf as Hl7.Fhir.Model.FhirUri);
+                    return true;
+                case "onBehalfOfReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(OnBehalfOf, "onBehalfOf");
+                    OnBehalfOf = source.Populate(OnBehalfOf as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "contentType":
+                    ContentTypeElement = source.PopulateValue(ContentTypeElement);
+                    return true;
+                case "_contentType":
+                    ContentTypeElement = source.Populate(ContentTypeElement);
+                    return true;
+                case "blob":
+                    BlobElement = source.PopulateValue(BlobElement);
+                    return true;
+                case "_blob":
+                    BlobElement = source.Populate(BlobElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    source.PopulateListItem(Type, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -118,6 +118,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "type":
+                        Type = source.Populate(Type);
+                        return true;
+                    case "text":
+                        TextElement = source.PopulateValue(TextElement);
+                        return true;
+                    case "_text":
+                        TextElement = source.Populate(TextElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as NotesComponent;
@@ -526,6 +547,84 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "request":
+                    Request = source.Populate(Request);
+                    return true;
+                case "outcome":
+                    Outcome = source.Populate(Outcome);
+                    return true;
+                case "disposition":
+                    DispositionElement = source.PopulateValue(DispositionElement);
+                    return true;
+                case "_disposition":
+                    DispositionElement = source.Populate(DispositionElement);
+                    return true;
+                case "ruleset":
+                    Ruleset = source.Populate(Ruleset);
+                    return true;
+                case "originalRuleset":
+                    OriginalRuleset = source.Populate(OriginalRuleset);
+                    return true;
+                case "created":
+                    CreatedElement = source.PopulateValue(CreatedElement);
+                    return true;
+                case "_created":
+                    CreatedElement = source.Populate(CreatedElement);
+                    return true;
+                case "organization":
+                    Organization = source.Populate(Organization);
+                    return true;
+                case "requestProvider":
+                    RequestProvider = source.Populate(RequestProvider);
+                    return true;
+                case "requestOrganization":
+                    RequestOrganization = source.Populate(RequestOrganization);
+                    return true;
+                case "form":
+                    Form = source.Populate(Form);
+                    return true;
+                case "notes":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "error":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "notes":
+                    source.PopulateListItem(Notes, index);
+                    return true;
+                case "error":
+                    source.PopulateListItem(Error, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

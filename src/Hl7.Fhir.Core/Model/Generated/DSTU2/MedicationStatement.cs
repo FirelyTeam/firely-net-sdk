@@ -227,6 +227,72 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "text":
+                        TextElement = source.PopulateValue(TextElement);
+                        return true;
+                    case "_text":
+                        TextElement = source.Populate(TextElement);
+                        return true;
+                    case "timing":
+                        Timing = source.Populate(Timing);
+                        return true;
+                    case "asNeededBoolean":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                        AsNeeded = source.PopulateValue(AsNeeded as Hl7.Fhir.Model.FhirBoolean);
+                        return true;
+                    case "_asNeededBoolean":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                        AsNeeded = source.Populate(AsNeeded as Hl7.Fhir.Model.FhirBoolean);
+                        return true;
+                    case "asNeededCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(AsNeeded, "asNeeded");
+                        AsNeeded = source.Populate(AsNeeded as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                    case "siteCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Site, "site");
+                        Site = source.Populate(Site as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                    case "siteReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Site, "site");
+                        Site = source.Populate(Site as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "route":
+                        Route = source.Populate(Route);
+                        return true;
+                    case "method":
+                        Method = source.Populate(Method);
+                        return true;
+                    case "quantitySimpleQuantity":
+                        source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Quantity, "quantity");
+                        Quantity = source.Populate(Quantity as Hl7.Fhir.Model.SimpleQuantity);
+                        return true;
+                    case "quantityRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Quantity, "quantity");
+                        Quantity = source.Populate(Quantity as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "rateRatio":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(Rate, "rate");
+                        Rate = source.Populate(Rate as Hl7.Fhir.Model.Ratio);
+                        return true;
+                    case "rateRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Rate, "rate");
+                        Rate = source.Populate(Rate as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "maxDosePerPeriod":
+                        MaxDosePerPeriod = source.Populate(MaxDosePerPeriod);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DosageComponent;
@@ -739,6 +805,112 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "informationSource":
+                    InformationSource = source.Populate(InformationSource);
+                    return true;
+                case "dateAsserted":
+                    DateAssertedElement = source.PopulateValue(DateAssertedElement);
+                    return true;
+                case "_dateAsserted":
+                    DateAssertedElement = source.Populate(DateAssertedElement);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "wasNotTaken":
+                    WasNotTakenElement = source.PopulateValue(WasNotTakenElement);
+                    return true;
+                case "_wasNotTaken":
+                    WasNotTakenElement = source.Populate(WasNotTakenElement);
+                    return true;
+                case "reasonNotTaken":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonForUseCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(ReasonForUse, "reasonForUse");
+                    ReasonForUse = source.Populate(ReasonForUse as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonForUseReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(ReasonForUse, "reasonForUse");
+                    ReasonForUse = source.Populate(ReasonForUse as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "effectiveDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Effective, "effective");
+                    Effective = source.PopulateValue(Effective as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_effectiveDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Effective, "effective");
+                    Effective = source.Populate(Effective as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "effectivePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Effective, "effective");
+                    Effective = source.Populate(Effective as Hl7.Fhir.Model.Period);
+                    return true;
+                case "note":
+                    NoteElement = source.PopulateValue(NoteElement);
+                    return true;
+                case "_note":
+                    NoteElement = source.Populate(NoteElement);
+                    return true;
+                case "supportingInformation":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "medicationCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Medication, "medication");
+                    Medication = source.Populate(Medication as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "medicationReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Medication, "medication");
+                    Medication = source.Populate(Medication as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "dosage":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "reasonNotTaken":
+                    source.PopulateListItem(ReasonNotTaken, index);
+                    return true;
+                case "supportingInformation":
+                    source.PopulateListItem(SupportingInformation, index);
+                    return true;
+                case "dosage":
+                    source.PopulateListItem(Dosage, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

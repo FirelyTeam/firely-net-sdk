@@ -177,6 +177,30 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "contentType":
+                    ContentTypeElement = source.PopulateValue(ContentTypeElement);
+                    return true;
+                case "_contentType":
+                    ContentTypeElement = source.Populate(ContentTypeElement);
+                    return true;
+                case "content":
+                    ContentElement = source.PopulateValue(ContentElement);
+                    return true;
+                case "_content":
+                    ContentElement = source.Populate(ContentElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

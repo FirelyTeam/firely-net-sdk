@@ -180,6 +180,57 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "managingOrganization":
+                        ManagingOrganization = source.Populate(ManagingOrganization);
+                        return true;
+                    case "role":
+                        Role = source.Populate(Role);
+                        return true;
+                    case "specialty":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "period":
+                        Period = source.Populate(Period);
+                        return true;
+                    case "location":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "healthcareService":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "specialty":
+                        source.PopulateListItem(Specialty, index);
+                        return true;
+                    case "location":
+                        source.PopulateListItem(Location, index);
+                        return true;
+                    case "healthcareService":
+                        source.PopulateListItem(HealthcareService, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PractitionerRoleComponent;
@@ -348,6 +399,45 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Period?.Serialize(sink);
                 sink.Element("issuer", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Issuer?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "period":
+                        Period = source.Populate(Period);
+                        return true;
+                    case "issuer":
+                        Issuer = source.Populate(Issuer);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        source.PopulateListItem(Identifier, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -774,6 +864,93 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "active":
+                    ActiveElement = source.PopulateValue(ActiveElement);
+                    return true;
+                case "_active":
+                    ActiveElement = source.Populate(ActiveElement);
+                    return true;
+                case "name":
+                    Name = source.Populate(Name);
+                    return true;
+                case "telecom":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "address":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "gender":
+                    GenderElement = source.PopulateValue(GenderElement);
+                    return true;
+                case "_gender":
+                    GenderElement = source.Populate(GenderElement);
+                    return true;
+                case "birthDate":
+                    BirthDateElement = source.PopulateValue(BirthDateElement);
+                    return true;
+                case "_birthDate":
+                    BirthDateElement = source.Populate(BirthDateElement);
+                    return true;
+                case "photo":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "practitionerRole":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "qualification":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "communication":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "telecom":
+                    source.PopulateListItem(Telecom, index);
+                    return true;
+                case "address":
+                    source.PopulateListItem(Address, index);
+                    return true;
+                case "photo":
+                    source.PopulateListItem(Photo, index);
+                    return true;
+                case "practitionerRole":
+                    source.PopulateListItem(PractitionerRole, index);
+                    return true;
+                case "qualification":
+                    source.PopulateListItem(Qualification, index);
+                    return true;
+                case "communication":
+                    source.PopulateListItem(Communication, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

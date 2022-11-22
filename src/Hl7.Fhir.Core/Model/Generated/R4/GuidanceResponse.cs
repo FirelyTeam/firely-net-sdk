@@ -454,6 +454,116 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "requestIdentifier":
+                    RequestIdentifier = source.Populate(RequestIdentifier);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "moduleUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Module, "module");
+                    Module = source.PopulateValue(Module as Hl7.Fhir.Model.FhirUri);
+                    return true;
+                case "_moduleUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Module, "module");
+                    Module = source.Populate(Module as Hl7.Fhir.Model.FhirUri);
+                    return true;
+                case "moduleCanonical":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Canonical>(Module, "module");
+                    Module = source.PopulateValue(Module as Hl7.Fhir.Model.Canonical);
+                    return true;
+                case "_moduleCanonical":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Canonical>(Module, "module");
+                    Module = source.Populate(Module as Hl7.Fhir.Model.Canonical);
+                    return true;
+                case "moduleCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Module, "module");
+                    Module = source.Populate(Module as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "occurrenceDateTime":
+                    OccurrenceDateTimeElement = source.PopulateValue(OccurrenceDateTimeElement);
+                    return true;
+                case "_occurrenceDateTime":
+                    OccurrenceDateTimeElement = source.Populate(OccurrenceDateTimeElement);
+                    return true;
+                case "performer":
+                    Performer = source.Populate(Performer);
+                    return true;
+                case "reasonCode":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonReference":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "evaluationMessage":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "outputParameters":
+                    OutputParameters = source.Populate(OutputParameters);
+                    return true;
+                case "result":
+                    Result = source.Populate(Result);
+                    return true;
+                case "dataRequirement":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "reasonCode":
+                    source.PopulateListItem(ReasonCode, index);
+                    return true;
+                case "reasonReference":
+                    source.PopulateListItem(ReasonReference, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "evaluationMessage":
+                    source.PopulateListItem(EvaluationMessage, index);
+                    return true;
+                case "dataRequirement":
+                    source.PopulateListItem(DataRequirement, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

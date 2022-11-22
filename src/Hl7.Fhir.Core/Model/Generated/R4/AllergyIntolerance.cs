@@ -236,6 +236,66 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "substance":
+                        Substance = source.Populate(Substance);
+                        return true;
+                    case "manifestation":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "onset":
+                        OnsetElement = source.PopulateValue(OnsetElement);
+                        return true;
+                    case "_onset":
+                        OnsetElement = source.Populate(OnsetElement);
+                        return true;
+                    case "severity":
+                        SeverityElement = source.PopulateValue(SeverityElement);
+                        return true;
+                    case "_severity":
+                        SeverityElement = source.Populate(SeverityElement);
+                        return true;
+                    case "exposureRoute":
+                        ExposureRoute = source.Populate(ExposureRoute);
+                        return true;
+                    case "note":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "manifestation":
+                        source.PopulateListItem(Manifestation, index);
+                        return true;
+                    case "note":
+                        source.PopulateListItem(Note, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ReactionComponent;
@@ -811,6 +871,131 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "clinicalStatus":
+                    ClinicalStatus = source.Populate(ClinicalStatus);
+                    return true;
+                case "verificationStatus":
+                    VerificationStatus = source.Populate(VerificationStatus);
+                    return true;
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "category":
+                case "_category":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "criticality":
+                    CriticalityElement = source.PopulateValue(CriticalityElement);
+                    return true;
+                case "_criticality":
+                    CriticalityElement = source.Populate(CriticalityElement);
+                    return true;
+                case "code":
+                    Code = source.Populate(Code);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "onsetDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Onset, "onset");
+                    Onset = source.PopulateValue(Onset as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_onsetDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Onset, "onset");
+                    Onset = source.Populate(Onset as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "onsetAge":
+                    source.CheckDuplicates<Hl7.Fhir.Model.R4.Age>(Onset, "onset");
+                    Onset = source.Populate(Onset as Hl7.Fhir.Model.R4.Age);
+                    return true;
+                case "onsetPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Onset, "onset");
+                    Onset = source.Populate(Onset as Hl7.Fhir.Model.Period);
+                    return true;
+                case "onsetRange":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Onset, "onset");
+                    Onset = source.Populate(Onset as Hl7.Fhir.Model.Range);
+                    return true;
+                case "onsetString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Onset, "onset");
+                    Onset = source.PopulateValue(Onset as Hl7.Fhir.Model.FhirString);
+                    return true;
+                case "_onsetString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Onset, "onset");
+                    Onset = source.Populate(Onset as Hl7.Fhir.Model.FhirString);
+                    return true;
+                case "recordedDate":
+                    RecordedDateElement = source.PopulateValue(RecordedDateElement);
+                    return true;
+                case "_recordedDate":
+                    RecordedDateElement = source.Populate(RecordedDateElement);
+                    return true;
+                case "recorder":
+                    Recorder = source.Populate(Recorder);
+                    return true;
+                case "asserter":
+                    Asserter = source.Populate(Asserter);
+                    return true;
+                case "lastOccurrence":
+                    LastOccurrenceElement = source.PopulateValue(LastOccurrenceElement);
+                    return true;
+                case "_lastOccurrence":
+                    LastOccurrenceElement = source.Populate(LastOccurrenceElement);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reaction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "category":
+                    source.PopulatePrimitiveListItemValue(CategoryElement, index);
+                    return true;
+                case "_category":
+                    source.PopulatePrimitiveListItem(CategoryElement, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "reaction":
+                    source.PopulateListItem(Reaction, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

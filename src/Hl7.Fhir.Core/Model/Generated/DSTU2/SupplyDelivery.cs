@@ -348,6 +348,72 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "quantity":
+                    Quantity = source.Populate(Quantity);
+                    return true;
+                case "suppliedItem":
+                    SuppliedItem = source.Populate(SuppliedItem);
+                    return true;
+                case "supplier":
+                    Supplier = source.Populate(Supplier);
+                    return true;
+                case "whenPrepared":
+                    WhenPrepared = source.Populate(WhenPrepared);
+                    return true;
+                case "time":
+                    TimeElement = source.PopulateValue(TimeElement);
+                    return true;
+                case "_time":
+                    TimeElement = source.Populate(TimeElement);
+                    return true;
+                case "destination":
+                    Destination = source.Populate(Destination);
+                    return true;
+                case "receiver":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "receiver":
+                    source.PopulateListItem(Receiver, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -213,6 +213,27 @@ namespace Hl7.Fhir.Model
             sink.XhtmlValue("div", Div, summaryVersions: Version.None, isRequired: true);
             sink.End();
         }
+
+        internal override bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "div":
+                    Div = source.GetXHtml();
+                    return true;
+            }
+            return false;
+        }
     }
     
 }

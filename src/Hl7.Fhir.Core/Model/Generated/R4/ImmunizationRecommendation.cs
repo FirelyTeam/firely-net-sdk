@@ -326,6 +326,116 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "vaccineCode":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "targetDisease":
+                        TargetDisease = source.Populate(TargetDisease);
+                        return true;
+                    case "contraindicatedVaccineCode":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "forecastStatus":
+                        ForecastStatus = source.Populate(ForecastStatus);
+                        return true;
+                    case "forecastReason":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "dateCriterion":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "series":
+                        SeriesElement = source.PopulateValue(SeriesElement);
+                        return true;
+                    case "_series":
+                        SeriesElement = source.Populate(SeriesElement);
+                        return true;
+                    case "doseNumberPositiveInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(DoseNumber, "doseNumber");
+                        DoseNumber = source.PopulateValue(DoseNumber as Hl7.Fhir.Model.PositiveInt);
+                        return true;
+                    case "_doseNumberPositiveInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(DoseNumber, "doseNumber");
+                        DoseNumber = source.Populate(DoseNumber as Hl7.Fhir.Model.PositiveInt);
+                        return true;
+                    case "doseNumberString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(DoseNumber, "doseNumber");
+                        DoseNumber = source.PopulateValue(DoseNumber as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "_doseNumberString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(DoseNumber, "doseNumber");
+                        DoseNumber = source.Populate(DoseNumber as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "seriesDosesPositiveInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(SeriesDoses, "seriesDoses");
+                        SeriesDoses = source.PopulateValue(SeriesDoses as Hl7.Fhir.Model.PositiveInt);
+                        return true;
+                    case "_seriesDosesPositiveInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(SeriesDoses, "seriesDoses");
+                        SeriesDoses = source.Populate(SeriesDoses as Hl7.Fhir.Model.PositiveInt);
+                        return true;
+                    case "seriesDosesString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(SeriesDoses, "seriesDoses");
+                        SeriesDoses = source.PopulateValue(SeriesDoses as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "_seriesDosesString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(SeriesDoses, "seriesDoses");
+                        SeriesDoses = source.Populate(SeriesDoses as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "supportingImmunization":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "supportingPatientInformation":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "vaccineCode":
+                        source.PopulateListItem(VaccineCode, index);
+                        return true;
+                    case "contraindicatedVaccineCode":
+                        source.PopulateListItem(ContraindicatedVaccineCode, index);
+                        return true;
+                    case "forecastReason":
+                        source.PopulateListItem(ForecastReason, index);
+                        return true;
+                    case "dateCriterion":
+                        source.PopulateListItem(DateCriterion, index);
+                        return true;
+                    case "supportingImmunization":
+                        source.PopulateListItem(SupportingImmunization, index);
+                        return true;
+                    case "supportingPatientInformation":
+                        source.PopulateListItem(SupportingPatientInformation, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RecommendationComponent;
@@ -508,6 +618,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
                 sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); ValueElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "value":
+                        ValueElement = source.PopulateValue(ValueElement);
+                        return true;
+                    case "_value":
+                        ValueElement = source.Populate(ValueElement);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -771,6 +902,54 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "authority":
+                    Authority = source.Populate(Authority);
+                    return true;
+                case "recommendation":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "recommendation":
+                    source.PopulateListItem(Recommendation, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>net45;netstandard1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="..\fhir-net-api.props" />
@@ -15,6 +15,7 @@
     <PackageTags>HL7 FHIR REST parse serialize class model DSTU2 STU3 R4</PackageTags>
     <AssemblyName>Hl7.Fhir.Core</AssemblyName>
     <RootNamespace>Hl7.Fhir</RootNamespace>
+    <UserSecretsId>3236a372-e526-4ea1-a95d-8ed212fb3c18</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,13 +29,15 @@
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
-    <PackageReference Include="System.Net.Http" Version="4.3.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Serialization\FhirJsonFastParser.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +58,8 @@
     <PackageReference Include="Hl7.Fhir.Serialization" Version="1.5.0" />
     <PackageReference Include="Hl7.Fhir.Support" Version="1.5.0" />
     <PackageReference Include="Hl7.FhirPath" Version="1.5.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

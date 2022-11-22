@@ -171,6 +171,36 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "type":
+                        TypeElement = source.PopulateValue(TypeElement);
+                        return true;
+                    case "_type":
+                        TypeElement = source.Populate(TypeElement);
+                        return true;
+                    case "state":
+                        StateElement = source.PopulateValue(StateElement);
+                        return true;
+                    case "_state":
+                        StateElement = source.Populate(StateElement);
+                        return true;
+                    case "time":
+                        TimeElement = source.PopulateValue(TimeElement);
+                        return true;
+                    case "_time":
+                        TimeElement = source.Populate(TimeElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CalibrationComponent;
@@ -545,6 +575,72 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "unit":
+                    Unit = source.Populate(Unit);
+                    return true;
+                case "source":
+                    Source = source.Populate(Source);
+                    return true;
+                case "parent":
+                    Parent = source.Populate(Parent);
+                    return true;
+                case "operationalStatus":
+                    OperationalStatusElement = source.PopulateValue(OperationalStatusElement);
+                    return true;
+                case "_operationalStatus":
+                    OperationalStatusElement = source.Populate(OperationalStatusElement);
+                    return true;
+                case "color":
+                    ColorElement = source.PopulateValue(ColorElement);
+                    return true;
+                case "_color":
+                    ColorElement = source.Populate(ColorElement);
+                    return true;
+                case "category":
+                    CategoryElement = source.PopulateValue(CategoryElement);
+                    return true;
+                case "_category":
+                    CategoryElement = source.Populate(CategoryElement);
+                    return true;
+                case "measurementPeriod":
+                    MeasurementPeriod = source.Populate(MeasurementPeriod);
+                    return true;
+                case "calibration":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "calibration":
+                    source.PopulateListItem(Calibration, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

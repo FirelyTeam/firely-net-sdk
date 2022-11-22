@@ -204,6 +204,58 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "daysOfWeek":
+                    case "_daysOfWeek":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "allDay":
+                        AllDayElement = source.PopulateValue(AllDayElement);
+                        return true;
+                    case "_allDay":
+                        AllDayElement = source.Populate(AllDayElement);
+                        return true;
+                    case "availableStartTime":
+                        AvailableStartTimeElement = source.PopulateValue(AvailableStartTimeElement);
+                        return true;
+                    case "_availableStartTime":
+                        AvailableStartTimeElement = source.Populate(AvailableStartTimeElement);
+                        return true;
+                    case "availableEndTime":
+                        AvailableEndTimeElement = source.PopulateValue(AvailableEndTimeElement);
+                        return true;
+                    case "_availableEndTime":
+                        AvailableEndTimeElement = source.Populate(AvailableEndTimeElement);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "daysOfWeek":
+                        source.PopulatePrimitiveListItemValue(DaysOfWeekElement, index);
+                        return true;
+                    case "_daysOfWeek":
+                        source.PopulatePrimitiveListItem(DaysOfWeekElement, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AvailableTimeComponent;
@@ -345,6 +397,27 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); DescriptionElement?.Serialize(sink);
                 sink.Element("during", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); During?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "during":
+                        During = source.Populate(During);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1122,6 +1195,166 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "active":
+                    ActiveElement = source.PopulateValue(ActiveElement);
+                    return true;
+                case "_active":
+                    ActiveElement = source.Populate(ActiveElement);
+                    return true;
+                case "providedBy":
+                    ProvidedBy = source.Populate(ProvidedBy);
+                    return true;
+                case "category":
+                    Category = source.Populate(Category);
+                    return true;
+                case "type":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "specialty":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "location":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "comment":
+                    CommentElement = source.PopulateValue(CommentElement);
+                    return true;
+                case "_comment":
+                    CommentElement = source.Populate(CommentElement);
+                    return true;
+                case "extraDetails":
+                    ExtraDetailsElement = source.PopulateValue(ExtraDetailsElement);
+                    return true;
+                case "_extraDetails":
+                    ExtraDetailsElement = source.Populate(ExtraDetailsElement);
+                    return true;
+                case "photo":
+                    Photo = source.Populate(Photo);
+                    return true;
+                case "telecom":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "coverageArea":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "serviceProvisionCode":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "eligibility":
+                    Eligibility = source.Populate(Eligibility);
+                    return true;
+                case "eligibilityNote":
+                    EligibilityNoteElement = source.PopulateValue(EligibilityNoteElement);
+                    return true;
+                case "_eligibilityNote":
+                    EligibilityNoteElement = source.Populate(EligibilityNoteElement);
+                    return true;
+                case "programName":
+                case "_programName":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "characteristic":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "referralMethod":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "appointmentRequired":
+                    AppointmentRequiredElement = source.PopulateValue(AppointmentRequiredElement);
+                    return true;
+                case "_appointmentRequired":
+                    AppointmentRequiredElement = source.Populate(AppointmentRequiredElement);
+                    return true;
+                case "availableTime":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "notAvailable":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "availabilityExceptions":
+                    AvailabilityExceptionsElement = source.PopulateValue(AvailabilityExceptionsElement);
+                    return true;
+                case "_availabilityExceptions":
+                    AvailabilityExceptionsElement = source.Populate(AvailabilityExceptionsElement);
+                    return true;
+                case "endpoint":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "type":
+                    source.PopulateListItem(Type, index);
+                    return true;
+                case "specialty":
+                    source.PopulateListItem(Specialty, index);
+                    return true;
+                case "location":
+                    source.PopulateListItem(Location, index);
+                    return true;
+                case "telecom":
+                    source.PopulateListItem(Telecom, index);
+                    return true;
+                case "coverageArea":
+                    source.PopulateListItem(CoverageArea, index);
+                    return true;
+                case "serviceProvisionCode":
+                    source.PopulateListItem(ServiceProvisionCode, index);
+                    return true;
+                case "programName":
+                    source.PopulatePrimitiveListItemValue(ProgramNameElement, index);
+                    return true;
+                case "_programName":
+                    source.PopulatePrimitiveListItem(ProgramNameElement, index);
+                    return true;
+                case "characteristic":
+                    source.PopulateListItem(Characteristic, index);
+                    return true;
+                case "referralMethod":
+                    source.PopulateListItem(ReferralMethod, index);
+                    return true;
+                case "availableTime":
+                    source.PopulateListItem(AvailableTime, index);
+                    return true;
+                case "notAvailable":
+                    source.PopulateListItem(NotAvailable, index);
+                    return true;
+                case "endpoint":
+                    source.PopulateListItem(Endpoint, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

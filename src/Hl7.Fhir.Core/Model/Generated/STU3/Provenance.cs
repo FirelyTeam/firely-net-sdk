@@ -137,6 +137,63 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "role":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "whoUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Who, "who");
+                        Who = source.PopulateValue(Who as Hl7.Fhir.Model.FhirUri);
+                        return true;
+                    case "_whoUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Who, "who");
+                        Who = source.Populate(Who as Hl7.Fhir.Model.FhirUri);
+                        return true;
+                    case "whoReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Who, "who");
+                        Who = source.Populate(Who as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "onBehalfOfUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(OnBehalfOf, "onBehalfOf");
+                        OnBehalfOf = source.PopulateValue(OnBehalfOf as Hl7.Fhir.Model.FhirUri);
+                        return true;
+                    case "_onBehalfOfUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(OnBehalfOf, "onBehalfOf");
+                        OnBehalfOf = source.Populate(OnBehalfOf as Hl7.Fhir.Model.FhirUri);
+                        return true;
+                    case "onBehalfOfReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(OnBehalfOf, "onBehalfOf");
+                        OnBehalfOf = source.Populate(OnBehalfOf as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "relatedAgentType":
+                        RelatedAgentType = source.Populate(RelatedAgentType);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "role":
+                        source.PopulateListItem(Role, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AgentComponent;
@@ -302,6 +359,58 @@ namespace Hl7.Fhir.Model.STU3
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "role":
+                        RoleElement = source.PopulateValue(RoleElement);
+                        return true;
+                    case "_role":
+                        RoleElement = source.Populate(RoleElement);
+                        return true;
+                    case "whatUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(What, "what");
+                        What = source.PopulateValue(What as Hl7.Fhir.Model.FhirUri);
+                        return true;
+                    case "_whatUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(What, "what");
+                        What = source.Populate(What as Hl7.Fhir.Model.FhirUri);
+                        return true;
+                    case "whatReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(What, "what");
+                        What = source.Populate(What as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "whatIdentifier":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Identifier>(What, "what");
+                        What = source.Populate(What as Hl7.Fhir.Model.Identifier);
+                        return true;
+                    case "agent":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "agent":
+                        source.PopulateListItem(Agent, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -679,6 +788,85 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "target":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "recorded":
+                    RecordedElement = source.PopulateValue(RecordedElement);
+                    return true;
+                case "_recorded":
+                    RecordedElement = source.Populate(RecordedElement);
+                    return true;
+                case "policy":
+                case "_policy":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "location":
+                    Location = source.Populate(Location);
+                    return true;
+                case "reason":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "activity":
+                    Activity = source.Populate(Activity);
+                    return true;
+                case "agent":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "entity":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "signature":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "target":
+                    source.PopulateListItem(Target, index);
+                    return true;
+                case "policy":
+                    source.PopulatePrimitiveListItemValue(PolicyElement, index);
+                    return true;
+                case "_policy":
+                    source.PopulatePrimitiveListItem(PolicyElement, index);
+                    return true;
+                case "reason":
+                    source.PopulateListItem(Reason, index);
+                    return true;
+                case "agent":
+                    source.PopulateListItem(Agent, index);
+                    return true;
+                case "entity":
+                    source.PopulateListItem(Entity, index);
+                    return true;
+                case "signature":
+                    source.PopulateListItem(Signature, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

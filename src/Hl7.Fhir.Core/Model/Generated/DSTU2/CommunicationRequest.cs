@@ -86,6 +86,34 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.PopulateValue(Content as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "_contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "contentAttachment":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.Attachment);
+                        return true;
+                    case "contentReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PayloadComponent;
@@ -525,6 +553,102 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
             sink.Element("priority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Priority?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "category":
+                    Category = source.Populate(Category);
+                    return true;
+                case "sender":
+                    Sender = source.Populate(Sender);
+                    return true;
+                case "recipient":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "payload":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "medium":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "requester":
+                    Requester = source.Populate(Requester);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "scheduledDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Scheduled, "scheduled");
+                    Scheduled = source.PopulateValue(Scheduled as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_scheduledDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Scheduled, "scheduled");
+                    Scheduled = source.Populate(Scheduled as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "scheduledPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Scheduled, "scheduled");
+                    Scheduled = source.Populate(Scheduled as Hl7.Fhir.Model.Period);
+                    return true;
+                case "reason":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "requestedOn":
+                    RequestedOnElement = source.PopulateValue(RequestedOnElement);
+                    return true;
+                case "_requestedOn":
+                    RequestedOnElement = source.Populate(RequestedOnElement);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "priority":
+                    Priority = source.Populate(Priority);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "recipient":
+                    source.PopulateListItem(Recipient, index);
+                    return true;
+                case "payload":
+                    source.PopulateListItem(Payload, index);
+                    return true;
+                case "medium":
+                    source.PopulateListItem(Medium, index);
+                    return true;
+                case "reason":
+                    source.PopulateListItem(Reason, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

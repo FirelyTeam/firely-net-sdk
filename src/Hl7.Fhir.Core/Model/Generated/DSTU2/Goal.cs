@@ -85,6 +85,26 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "resultCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Result, "result");
+                        Result = source.Populate(Result as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                    case "resultReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Result, "result");
+                        Result = source.Populate(Result as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OutcomeComponent;
@@ -537,6 +557,114 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "startDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Start, "start");
+                    Start = source.PopulateValue(Start as Hl7.Fhir.Model.Date);
+                    return true;
+                case "_startDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Start, "start");
+                    Start = source.Populate(Start as Hl7.Fhir.Model.Date);
+                    return true;
+                case "startCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Start, "start");
+                    Start = source.Populate(Start as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "targetDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Target, "target");
+                    Target = source.PopulateValue(Target as Hl7.Fhir.Model.Date);
+                    return true;
+                case "_targetDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Target, "target");
+                    Target = source.Populate(Target as Hl7.Fhir.Model.Date);
+                    return true;
+                case "targetDuration":
+                    source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Duration>(Target, "target");
+                    Target = source.Populate(Target as Hl7.Fhir.Model.DSTU2.Duration);
+                    return true;
+                case "category":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "statusDate":
+                    StatusDateElement = source.PopulateValue(StatusDateElement);
+                    return true;
+                case "_statusDate":
+                    StatusDateElement = source.Populate(StatusDateElement);
+                    return true;
+                case "statusReason":
+                    StatusReason = source.Populate(StatusReason);
+                    return true;
+                case "author":
+                    Author = source.Populate(Author);
+                    return true;
+                case "priority":
+                    Priority = source.Populate(Priority);
+                    return true;
+                case "addresses":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "outcome":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "category":
+                    source.PopulateListItem(Category, index);
+                    return true;
+                case "addresses":
+                    source.PopulateListItem(Addresses, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "outcome":
+                    source.PopulateListItem(Outcome, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

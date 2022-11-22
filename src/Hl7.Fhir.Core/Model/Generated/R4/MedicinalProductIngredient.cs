@@ -137,6 +137,45 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "group":
+                        Group = source.Populate(Group);
+                        return true;
+                    case "confidentiality":
+                        Confidentiality = source.Populate(Confidentiality);
+                        return true;
+                    case "strength":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "strength":
+                        source.PopulateListItem(Strength, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SpecifiedSubstanceComponent;
@@ -369,6 +408,60 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "presentation":
+                        Presentation = source.Populate(Presentation);
+                        return true;
+                    case "presentationLowLimit":
+                        PresentationLowLimit = source.Populate(PresentationLowLimit);
+                        return true;
+                    case "concentration":
+                        Concentration = source.Populate(Concentration);
+                        return true;
+                    case "concentrationLowLimit":
+                        ConcentrationLowLimit = source.Populate(ConcentrationLowLimit);
+                        return true;
+                    case "measurementPoint":
+                        MeasurementPointElement = source.PopulateValue(MeasurementPointElement);
+                        return true;
+                    case "_measurementPoint":
+                        MeasurementPointElement = source.Populate(MeasurementPointElement);
+                        return true;
+                    case "country":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "referenceStrength":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "country":
+                        source.PopulateListItem(Country, index);
+                        return true;
+                    case "referenceStrength":
+                        source.PopulateListItem(ReferenceStrength, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as StrengthComponent;
@@ -580,6 +673,51 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "substance":
+                        Substance = source.Populate(Substance);
+                        return true;
+                    case "strength":
+                        Strength = source.Populate(Strength);
+                        return true;
+                    case "strengthLowLimit":
+                        StrengthLowLimit = source.Populate(StrengthLowLimit);
+                        return true;
+                    case "measurementPoint":
+                        MeasurementPointElement = source.PopulateValue(MeasurementPointElement);
+                        return true;
+                    case "_measurementPoint":
+                        MeasurementPointElement = source.Populate(MeasurementPointElement);
+                        return true;
+                    case "country":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "country":
+                        source.PopulateListItem(Country, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ReferenceStrengthComponent;
@@ -715,6 +853,39 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "strength":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "strength":
+                        source.PopulateListItem(Strength, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -973,6 +1144,57 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
             sink.Element("substance", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Substance?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "role":
+                    Role = source.Populate(Role);
+                    return true;
+                case "allergenicIndicator":
+                    AllergenicIndicatorElement = source.PopulateValue(AllergenicIndicatorElement);
+                    return true;
+                case "_allergenicIndicator":
+                    AllergenicIndicatorElement = source.Populate(AllergenicIndicatorElement);
+                    return true;
+                case "manufacturer":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "specifiedSubstance":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "substance":
+                    Substance = source.Populate(Substance);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "manufacturer":
+                    source.PopulateListItem(Manufacturer, index);
+                    return true;
+                case "specifiedSubstance":
+                    source.PopulateListItem(SpecifiedSubstance, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

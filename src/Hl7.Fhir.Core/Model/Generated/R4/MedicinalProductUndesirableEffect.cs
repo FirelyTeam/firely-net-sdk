@@ -204,6 +204,51 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "subject":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "symptomConditionEffect":
+                    SymptomConditionEffect = source.Populate(SymptomConditionEffect);
+                    return true;
+                case "classification":
+                    Classification = source.Populate(Classification);
+                    return true;
+                case "frequencyOfOccurrence":
+                    FrequencyOfOccurrence = source.Populate(FrequencyOfOccurrence);
+                    return true;
+                case "population":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "subject":
+                    source.PopulateListItem(Subject, index);
+                    return true;
+                case "population":
+                    source.PopulateListItem(Population, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

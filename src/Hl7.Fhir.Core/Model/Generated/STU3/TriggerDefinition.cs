@@ -211,6 +211,57 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "eventName":
+                    EventNameElement = source.PopulateValue(EventNameElement);
+                    return true;
+                case "_eventName":
+                    EventNameElement = source.Populate(EventNameElement);
+                    return true;
+                case "eventTimingTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Timing>(EventTiming, "eventTiming");
+                    EventTiming = source.Populate(EventTiming as Hl7.Fhir.Model.STU3.Timing);
+                    return true;
+                case "eventTimingReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(EventTiming, "eventTiming");
+                    EventTiming = source.Populate(EventTiming as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "eventTimingDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(EventTiming, "eventTiming");
+                    EventTiming = source.PopulateValue(EventTiming as Hl7.Fhir.Model.Date);
+                    return true;
+                case "_eventTimingDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(EventTiming, "eventTiming");
+                    EventTiming = source.Populate(EventTiming as Hl7.Fhir.Model.Date);
+                    return true;
+                case "eventTimingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(EventTiming, "eventTiming");
+                    EventTiming = source.PopulateValue(EventTiming as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_eventTimingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(EventTiming, "eventTiming");
+                    EventTiming = source.Populate(EventTiming as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "eventData":
+                    EventData = source.Populate(EventData);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

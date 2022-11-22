@@ -133,6 +133,30 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "action":
+                        Action = source.Populate(Action);
+                        return true;
+                    case "date":
+                        DateElement = source.PopulateValue(DateElement);
+                        return true;
+                    case "_date":
+                        DateElement = source.Populate(DateElement);
+                        return true;
+                    case "author":
+                        Author = source.Populate(Author);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as MitigationComponent;
@@ -523,6 +547,78 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "category":
+                    Category = source.Populate(Category);
+                    return true;
+                case "severity":
+                    SeverityElement = source.PopulateValue(SeverityElement);
+                    return true;
+                case "_severity":
+                    SeverityElement = source.Populate(SeverityElement);
+                    return true;
+                case "implicated":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "detail":
+                    DetailElement = source.PopulateValue(DetailElement);
+                    return true;
+                case "_detail":
+                    DetailElement = source.Populate(DetailElement);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "author":
+                    Author = source.Populate(Author);
+                    return true;
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "reference":
+                    ReferenceElement = source.PopulateValue(ReferenceElement);
+                    return true;
+                case "_reference":
+                    ReferenceElement = source.Populate(ReferenceElement);
+                    return true;
+                case "mitigation":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "implicated":
+                    source.PopulateListItem(Implicated, index);
+                    return true;
+                case "mitigation":
+                    source.PopulateListItem(Mitigation, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

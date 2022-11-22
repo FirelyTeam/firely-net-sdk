@@ -249,6 +249,60 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "manufacturedDoseForm":
+                    ManufacturedDoseForm = source.Populate(ManufacturedDoseForm);
+                    return true;
+                case "unitOfPresentation":
+                    UnitOfPresentation = source.Populate(UnitOfPresentation);
+                    return true;
+                case "quantity":
+                    Quantity = source.Populate(Quantity);
+                    return true;
+                case "manufacturer":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "ingredient":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "physicalCharacteristics":
+                    PhysicalCharacteristics = source.Populate(PhysicalCharacteristics);
+                    return true;
+                case "otherCharacteristics":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "manufacturer":
+                    source.PopulateListItem(Manufacturer, index);
+                    return true;
+                case "ingredient":
+                    source.PopulateListItem(Ingredient, index);
+                    return true;
+                case "otherCharacteristics":
+                    source.PopulateListItem(OtherCharacteristics, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

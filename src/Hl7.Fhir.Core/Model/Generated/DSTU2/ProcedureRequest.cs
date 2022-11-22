@@ -437,6 +437,117 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "code":
+                    Code = source.Populate(Code);
+                    return true;
+                case "bodySite":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "scheduledDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Scheduled, "scheduled");
+                    Scheduled = source.PopulateValue(Scheduled as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_scheduledDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Scheduled, "scheduled");
+                    Scheduled = source.Populate(Scheduled as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "scheduledPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Scheduled, "scheduled");
+                    Scheduled = source.Populate(Scheduled as Hl7.Fhir.Model.Period);
+                    return true;
+                case "scheduledTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Timing>(Scheduled, "scheduled");
+                    Scheduled = source.Populate(Scheduled as Hl7.Fhir.Model.DSTU2.Timing);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "performer":
+                    Performer = source.Populate(Performer);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "notes":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "asNeededBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                    AsNeeded = source.PopulateValue(AsNeeded as Hl7.Fhir.Model.FhirBoolean);
+                    return true;
+                case "_asNeededBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                    AsNeeded = source.Populate(AsNeeded as Hl7.Fhir.Model.FhirBoolean);
+                    return true;
+                case "asNeededCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(AsNeeded, "asNeeded");
+                    AsNeeded = source.Populate(AsNeeded as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "orderedOn":
+                    OrderedOnElement = source.PopulateValue(OrderedOnElement);
+                    return true;
+                case "_orderedOn":
+                    OrderedOnElement = source.Populate(OrderedOnElement);
+                    return true;
+                case "orderer":
+                    Orderer = source.Populate(Orderer);
+                    return true;
+                case "priority":
+                    PriorityElement = source.PopulateValue(PriorityElement);
+                    return true;
+                case "_priority":
+                    PriorityElement = source.Populate(PriorityElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "bodySite":
+                    source.PopulateListItem(BodySite, index);
+                    return true;
+                case "notes":
+                    source.PopulateListItem(Notes, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

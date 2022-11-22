@@ -7,6 +7,7 @@ namespace Hl7.Fhir.Model
         Type GetTypeForFhirType(string name);
         string GetFhirTypeNameForType(Type type);
         bool IsProfiledQuantity(string type);
+        Resource CreateResource(string resourceType);
     }
 
     public static class ModelInfos
@@ -44,7 +45,12 @@ namespace Hl7.Fhir.Model
             {
                 return DSTU2.ModelInfo.IsProfiledQuantity(type);
             }
-        }
+
+            public Resource CreateResource(string resourceType)
+            {
+                return DSTU2.ModelInfo.CreateResource(resourceType);
+            }
+    }
 
         private class STU3ModelInfo : IModelInfo
         {
@@ -63,6 +69,11 @@ namespace Hl7.Fhir.Model
             public bool IsProfiledQuantity(string type)
             {
                 return STU3.ModelInfo.IsProfiledQuantity(type);
+            }
+
+            public Resource CreateResource(string resourceType)
+            {
+                return STU3.ModelInfo.CreateResource(resourceType);
             }
         }
 
@@ -83,6 +94,11 @@ namespace Hl7.Fhir.Model
             public bool IsProfiledQuantity(string type)
             {
                 return R4.ModelInfo.IsProfiledQuantity(type);
+            }
+
+            public Resource CreateResource(string resourceType)
+            {
+                return R4.ModelInfo.CreateResource(resourceType);
             }
         }
     }

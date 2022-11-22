@@ -366,6 +366,83 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "height" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Height = source.Populate(Height);
+                    return true;
+                case "width" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Width = source.Populate(Width);
+                    return true;
+                case "depth" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Depth = source.Populate(Depth);
+                    return true;
+                case "weight" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Weight = source.Populate(Weight);
+                    return true;
+                case "nominalVolume" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    NominalVolume = source.Populate(NominalVolume);
+                    return true;
+                case "externalDiameter" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    ExternalDiameter = source.Populate(ExternalDiameter);
+                    return true;
+                case "shape" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    ShapeElement = source.PopulateValue(ShapeElement);
+                    return true;
+                case "_shape" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    ShapeElement = source.Populate(ShapeElement);
+                    return true;
+                case "color" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                case "_color" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "imprint" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                case "_imprint" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "image" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "scoring" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Scoring = source.Populate(Scoring);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "color" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.PopulatePrimitiveListItemValue(ColorElement, index);
+                    return true;
+                case "_color" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.PopulatePrimitiveListItem(ColorElement, index);
+                    return true;
+                case "imprint" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.PopulatePrimitiveListItemValue(ImprintElement, index);
+                    return true;
+                case "_imprint" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.PopulatePrimitiveListItem(ImprintElement, index);
+                    return true;
+                case "image" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.PopulateListItem(Image, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

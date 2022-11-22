@@ -284,6 +284,57 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "subunit":
+                        SubunitElement = source.PopulateValue(SubunitElement);
+                        return true;
+                    case "_subunit":
+                        SubunitElement = source.Populate(SubunitElement);
+                        return true;
+                    case "sequence":
+                        SequenceElement = source.PopulateValue(SequenceElement);
+                        return true;
+                    case "_sequence":
+                        SequenceElement = source.Populate(SequenceElement);
+                        return true;
+                    case "length":
+                        LengthElement = source.PopulateValue(LengthElement);
+                        return true;
+                    case "_length":
+                        LengthElement = source.Populate(LengthElement);
+                        return true;
+                    case "sequenceAttachment":
+                        SequenceAttachment = source.Populate(SequenceAttachment);
+                        return true;
+                    case "nTerminalModificationId":
+                        NTerminalModificationId = source.Populate(NTerminalModificationId);
+                        return true;
+                    case "nTerminalModification":
+                        NTerminalModificationElement = source.PopulateValue(NTerminalModificationElement);
+                        return true;
+                    case "_nTerminalModification":
+                        NTerminalModificationElement = source.Populate(NTerminalModificationElement);
+                        return true;
+                    case "cTerminalModificationId":
+                        CTerminalModificationId = source.Populate(CTerminalModificationId);
+                        return true;
+                    case "cTerminalModification":
+                        CTerminalModificationElement = source.PopulateValue(CTerminalModificationElement);
+                        return true;
+                    case "_cTerminalModification":
+                        CTerminalModificationElement = source.Populate(CTerminalModificationElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as SubunitComponent;
@@ -548,6 +599,55 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "sequenceType":
+                    SequenceType = source.Populate(SequenceType);
+                    return true;
+                case "numberOfSubunits":
+                    NumberOfSubunitsElement = source.PopulateValue(NumberOfSubunitsElement);
+                    return true;
+                case "_numberOfSubunits":
+                    NumberOfSubunitsElement = source.Populate(NumberOfSubunitsElement);
+                    return true;
+                case "disulfideLinkage":
+                case "_disulfideLinkage":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subunit":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "disulfideLinkage":
+                    source.PopulatePrimitiveListItemValue(DisulfideLinkageElement, index);
+                    return true;
+                case "_disulfideLinkage":
+                    source.PopulatePrimitiveListItem(DisulfideLinkageElement, index);
+                    return true;
+                case "subunit":
+                    source.PopulateListItem(Subunit, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

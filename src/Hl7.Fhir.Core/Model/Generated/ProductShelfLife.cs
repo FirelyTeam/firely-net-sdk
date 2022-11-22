@@ -179,6 +179,45 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "type" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Type = source.Populate(Type);
+                    return true;
+                case "period" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Period = source.Populate(Period);
+                    return true;
+                case "specialPrecautionsForStorage" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "specialPrecautionsForStorage" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.PopulateListItem(SpecialPrecautionsForStorage, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

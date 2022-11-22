@@ -482,6 +482,87 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "subtype":
+                    Subtype = source.Populate(Subtype);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "operator":
+                    Operator = source.Populate(Operator);
+                    return true;
+                case "view":
+                    View = source.Populate(View);
+                    return true;
+                case "deviceName":
+                    DeviceNameElement = source.PopulateValue(DeviceNameElement);
+                    return true;
+                case "_deviceName":
+                    DeviceNameElement = source.Populate(DeviceNameElement);
+                    return true;
+                case "height":
+                    HeightElement = source.PopulateValue(HeightElement);
+                    return true;
+                case "_height":
+                    HeightElement = source.Populate(HeightElement);
+                    return true;
+                case "width":
+                    WidthElement = source.PopulateValue(WidthElement);
+                    return true;
+                case "_width":
+                    WidthElement = source.Populate(WidthElement);
+                    return true;
+                case "frames":
+                    FramesElement = source.PopulateValue(FramesElement);
+                    return true;
+                case "_frames":
+                    FramesElement = source.Populate(FramesElement);
+                    return true;
+                case "duration":
+                    DurationElement = source.PopulateValue(DurationElement);
+                    return true;
+                case "_duration":
+                    DurationElement = source.Populate(DurationElement);
+                    return true;
+                case "content":
+                    Content = source.Populate(Content);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

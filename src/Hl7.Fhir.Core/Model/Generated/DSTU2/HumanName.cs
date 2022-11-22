@@ -351,6 +351,85 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "use":
+                    UseElement = source.PopulateValue(UseElement);
+                    return true;
+                case "_use":
+                    UseElement = source.Populate(UseElement);
+                    return true;
+                case "text":
+                    TextElement = source.PopulateValue(TextElement);
+                    return true;
+                case "_text":
+                    TextElement = source.Populate(TextElement);
+                    return true;
+                case "family":
+                case "_family":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "given":
+                case "_given":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "prefix":
+                case "_prefix":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "suffix":
+                case "_suffix":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "family":
+                    source.PopulatePrimitiveListItemValue(FamilyElement, index);
+                    return true;
+                case "_family":
+                    source.PopulatePrimitiveListItem(FamilyElement, index);
+                    return true;
+                case "given":
+                    source.PopulatePrimitiveListItemValue(GivenElement, index);
+                    return true;
+                case "_given":
+                    source.PopulatePrimitiveListItem(GivenElement, index);
+                    return true;
+                case "prefix":
+                    source.PopulatePrimitiveListItemValue(PrefixElement, index);
+                    return true;
+                case "_prefix":
+                    source.PopulatePrimitiveListItem(PrefixElement, index);
+                    return true;
+                case "suffix":
+                    source.PopulatePrimitiveListItemValue(SuffixElement, index);
+                    return true;
+                case "_suffix":
+                    source.PopulatePrimitiveListItem(SuffixElement, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

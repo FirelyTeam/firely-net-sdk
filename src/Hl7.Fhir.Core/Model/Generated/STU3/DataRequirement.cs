@@ -197,6 +197,70 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "valueSetString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(ValueSet, "valueSet");
+                        ValueSet = source.PopulateValue(ValueSet as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "_valueSetString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(ValueSet, "valueSet");
+                        ValueSet = source.Populate(ValueSet as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "valueSetReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(ValueSet, "valueSet");
+                        ValueSet = source.Populate(ValueSet as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "valueCode":
+                    case "_valueCode":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "valueCoding":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "valueCodeableConcept":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "valueCode":
+                        source.PopulatePrimitiveListItemValue(ValueCodeElement, index);
+                        return true;
+                    case "_valueCode":
+                        source.PopulatePrimitiveListItem(ValueCodeElement, index);
+                        return true;
+                    case "valueCoding":
+                        source.PopulateListItem(ValueCoding, index);
+                        return true;
+                    case "valueCodeableConcept":
+                        source.PopulateListItem(ValueCodeableConcept, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CodeFilterComponent;
@@ -346,6 +410,40 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PathElement?.Serialize(sink);
                 sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Value?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "valueDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Value, "value");
+                        Value = source.PopulateValue(Value as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "_valueDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "valuePeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.Period);
+                        return true;
+                    case "valueDuration":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Duration>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.STU3.Duration);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -635,6 +733,68 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "profile":
+                case "_profile":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "mustSupport":
+                case "_mustSupport":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "codeFilter":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "dateFilter":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "profile":
+                    source.PopulatePrimitiveListItemValue(ProfileElement, index);
+                    return true;
+                case "_profile":
+                    source.PopulatePrimitiveListItem(ProfileElement, index);
+                    return true;
+                case "mustSupport":
+                    source.PopulatePrimitiveListItemValue(MustSupportElement, index);
+                    return true;
+                case "_mustSupport":
+                    source.PopulatePrimitiveListItem(MustSupportElement, index);
+                    return true;
+                case "codeFilter":
+                    source.PopulateListItem(CodeFilter, index);
+                    return true;
+                case "dateFilter":
+                    source.PopulateListItem(DateFilter, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]
