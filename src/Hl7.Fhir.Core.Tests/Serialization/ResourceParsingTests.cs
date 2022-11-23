@@ -28,7 +28,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = "<Patient xmlns='http://hl7.org/fhir'><gender value='ox'/><daytona></daytona></Patient>";
             var parser = new FhirXmlParser();
             parser.Settings.AllowUnrecognizedEnums = true;
-            parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) => {
+            parser.Settings.ExceptionHandler = (object source, Utility.ExceptionNotification args) =>
+            {
                 Debug.WriteLine(args.Message);
                 if (args.Exception is StructuralTypeException && args.Severity == Utility.ExceptionSeverity.Error)
                 {
@@ -396,6 +397,28 @@ namespace Hl7.Fhir.Tests.Serialization
             (i.Substance.Strength[0].Presentation as Quantity).Value.Should().Be(1);
             (i.Substance.Strength[0].Concentration as CodeableConcept).Text.Should().Be("text");
             i.Substance.Strength[0].ConcentrationText.Should().Be("Another text");
+        }
+
+        [TestMethod]
+        public async Tasks.Task ParseBinaryForR4andHigher()
+        {
+            var json = "{\"resourceType\":\"Binary\",\"data\":\"ZGF0YQ==\"}";
+            var binary = await new FhirJsonParser().ParseAsync<Binary>(json);
+
+            var result = new FhirJsonSerializer().SerializeToString(binary);
+
+            result.Should().Be(json);
+            binary.Data.Should().NotBeNull();
+            binary.Content.Should().BeNull();
+        }
+
+        [TestMethod]
+        public async Tasks.Task ParseBinaryForR4andHigherWithUnknownSTU3Element()
+        {
+            var json = "{\"resourceType\":\"Binary\",\"content\":\"ZGF0YQ==\"}";
+            Func<Tasks.Task> act = () => new FhirJsonParser().ParseAsync<Binary>(json);
+
+            await act.Should().ThrowAsync<StructuralTypeException>();
         }
     }
 }
