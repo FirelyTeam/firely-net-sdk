@@ -286,61 +286,6 @@ namespace Hl7.Fhir.Model
                 return inspector;
             }
         }
-
-        public static readonly Type[] OpenTypes =
-        {
-            typeof(Model.Address),
-            typeof(Model.Age),
-            typeof(Model.Annotation),
-            typeof(Model.Attachment),
-            typeof(Model.Base64Binary),
-            typeof(Model.FhirBoolean),
-            typeof(Model.Canonical),
-            typeof(Model.Code),
-            typeof(Model.CodeableConcept),
-            typeof(Model.Coding),
-            typeof(Model.ContactDetail),
-            typeof(Model.ContactPoint),
-            typeof(Model.Contributor),
-            typeof(Model.Count),
-            typeof(Model.DataRequirement),
-            typeof(Model.Date),
-            typeof(Model.FhirDateTime),
-            typeof(Model.FhirDecimal),
-            typeof(Model.Distance),
-            typeof(Model.Dosage),
-            typeof(Model.Duration),
-          //  typeof(Model.Expression),
-            typeof(Model.HumanName),
-            typeof(Model.Id),
-            typeof(Model.Identifier),
-            typeof(Model.Instant),
-            typeof(Model.Integer),
-            typeof(Model.Markdown),
-            typeof(Model.Meta),
-            typeof(Model.Money),
-            typeof(Model.Oid),
-            typeof(Model.ParameterDefinition),
-            typeof(Model.Period),
-            typeof(Model.PositiveInt),
-            typeof(Model.Quantity),
-            typeof(Model.Range),
-            typeof(Model.Ratio),
-            typeof(Model.ResourceReference),
-            typeof(Model.RelatedArtifact),
-            typeof(Model.SampledData),
-            typeof(Model.Signature),
-            typeof(Model.FhirString),
-            typeof(Model.Time),
-            typeof(Model.Timing),
-            typeof(Model.TriggerDefinition),
-            typeof(Model.UnsignedInt),
-            typeof(Model.FhirUri),
-            typeof(Model.FhirUrl),
-            typeof(Model.UsageContext),
-            typeof(Model.Uuid)
-        };
-
     }
 
     public static class ModelInfoExtensions
