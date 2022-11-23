@@ -23,12 +23,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Specification\Validation\**" />
+	  <EmbeddedResource Remove="Specification\Validation\**" />
+	  <None Remove="Specification\Validation\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="Specification\Validation\" />
 	</ItemGroup>
 	
 	
