@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var validCodeParams = new ValidateCodeParameters(parameters);
 
-            var valueSet = validCodeParams.ValueSet;
+            var valueSet = validCodeParams.ValueSet as ValueSet;
             if (valueSet is null)
             {
                 if (validCodeParams.Url is null)
