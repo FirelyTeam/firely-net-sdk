@@ -19,6 +19,5 @@
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\Summary\ArtifactSummaryExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\WebResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\Source\ZipSource.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Specification\Validation\SchemaCollection.cs" />
   </ItemGroup>
 </Project>
