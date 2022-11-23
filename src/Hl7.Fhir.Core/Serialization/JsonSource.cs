@@ -709,16 +709,13 @@ namespace Hl7.Fhir.Serialization
 
         public T Populate<T>(T element) where T: Base, new()
         {
-            if (element == null)
-            {
-                element = new T();
-            }
-            if (PopulateBase(element, isRoot: false))
+            var elementToPopulate = element ?? new T();
+            if (PopulateBase(elementToPopulate, isRoot: false))
             {
                 SetHasElements();
-                return element;
+                return elementToPopulate;
             }
-            return null;
+            return element;
         }
 
         public void SetList(Base element, string jsonPropertyName)

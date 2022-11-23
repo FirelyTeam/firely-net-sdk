@@ -1039,55 +1039,111 @@ $@"{{
             var rest = Single(capabilityStatement.Rest);
             Assert.AreEqual("### Headline\nThe body text", rest.Documentation);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.CapabilityStatement>(
-                    "{\"resourceType\":\"CapabilityStatement\",\"rest\":[{\"documentation\": 12}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"CapabilityStatement\",\"rest\":[{\"documentation\": 12}]}",
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.CapabilityStatement>(
-                    "{\"resourceType\":\"CapabilityStatement\",\"rest\":[{\"documentation\": \"\"}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"CapabilityStatement\",\"rest\":[{\"documentation\": \"\"}]}",
                 "Empty strings are not allowed"
             );
+
+            void AssertErrorAndSuccess(string capabilityStatementJson, string expectedErrorMessage)
+            {
+                Throws(
+                    () => JsonSerializer.Deserialize<Model.R4.CapabilityStatement>(
+                        capabilityStatementJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+                var emptyCapabilityStatement = JsonSerializer.Deserialize<Model.R4.CapabilityStatement>(
+                    capabilityStatementJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) {  PermissiveParsing = true })
+                );
+                Assert.AreEqual(0, emptyCapabilityStatement.Rest.Count);
+            }
         }
 
         [TestMethod]
         public void IdTest()
         {
-            var bundle = JsonSerializer.Deserialize<Model.R4.Bundle>(
+            AssertSuccess(
                 "{\"resourceType\":\"Bundle\",\"id\":\"BBB-19022\"}",
-                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                "BBB-19022", null
             );
-            Assert.AreEqual("BBB-19022", bundle.Id);
 
             // There is no id validation . . .
 
-            bundle = JsonSerializer.Deserialize<Model.R4.Bundle>(
+            AssertSuccess(
                 "{\"resourceType\":\"Bundle\",\"id\":\"f(g(123))\"}",
-                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                "f(g(123))", null
             );
-            Assert.AreEqual("f(g(123))", bundle.Id);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.Bundle>(
-                    "{\"resourceType\":\"Bundle\",\"id\":12}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertSuccess(
+                "{\"resourceType\":\"Bundle\",\"_id\":{\"id\":\"ID-1\"}}",
+                null, "ID-1"
+            );
+
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Bundle\",\"id\":12}",
+                null, null,
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.Bundle>(
-                    "{\"resourceType\":\"Bundle\",\"id\":\"\"}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Bundle\",\"id\":\"\",\"_id\":{\"id\":\"ID-1\"}}",
+                null, "ID-1", 
                 "Empty strings are not allowed"
             );
+
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Bundle\",\"_id\":{\"id\":\"ID-1\"},\"id\":\"\"}",
+                null, "ID-1",
+                "Empty strings are not allowed"
+            );
+
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Bundle\",\"id\":\"BBB-19022\",\"_id\":{\"id\":\"\"}}",
+                "BBB-19022", null,
+                "Empty strings are not allowed"
+            );
+
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Bundle\",\"_id\":{\"id\":\"\"},\"id\":\"BBB-19022\"}",
+                "BBB-19022", null,
+                "Empty strings are not allowed"
+            );
+
+            void AssertSuccessAndError(string bundleJson, string expectedId, string expectedIdId, string expectedErrorMessage)
+            {
+                AssertSuccess(bundleJson, expectedId, expectedIdId, permissiveParsing: true);
+                Throws(
+                    () => JsonSerializer.Deserialize<Model.R4.Bundle>(
+                        bundleJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+            }
+
+            void AssertSuccess(string bundleJson, string expectedId, string expectedIdId, bool permissiveParsing = false)
+            {
+                var bundle = JsonSerializer.Deserialize<Model.R4.Bundle>(
+                    bundleJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) {  PermissiveParsing = permissiveParsing })
+                );
+                if (expectedId == null && expectedIdId == null)
+                {
+                    Assert.IsNull(bundle.IdElement);
+                }
+                else
+                {
+                    Assert.AreEqual(expectedId, bundle.Id);
+                    Assert.AreEqual(expectedIdId, bundle.IdElement.ElementId);
+                }
+            }
         }
 
         [TestMethod]
@@ -1100,21 +1156,31 @@ $@"{{
             var link = Single(bundle.Link);
             Assert.AreEqual("http://something.com/root/search", link.Url);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.Bundle>(
-                    "{\"resourceType\":\"Bundle\",\"link\":[{\"url\": 12}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"Bundle\",\"link\":[{\"url\": 12}]}",
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.Bundle>(
-                    "{\"resourceType\":\"Bundle\",\"link\":[{\"url\": \"\"}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"Bundle\",\"link\":[{\"url\": \"\"}]}",
                 "Empty strings are not allowed"
             );
+
+            void AssertErrorAndSuccess(string bundleJson, string expectedErrorMessage)
+            {
+                Throws(
+                    () => JsonSerializer.Deserialize<Model.R4.Bundle>(
+                        bundleJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+                var emptyBundle = JsonSerializer.Deserialize<Model.R4.Bundle>(
+                    bundleJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = true })
+                );
+                Assert.AreEqual(0, emptyBundle.Link.Count);
+            }
         }
 
         [TestMethod]
@@ -1127,93 +1193,143 @@ $@"{{
             var presentedForm = Single(diagnosticReport.PresentedForm);
             Assert.AreEqual("http://something.com/root/Binary/12", presentedForm.Url);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.DiagnosticReport>(
-                    "{\"resourceType\":\"DiagnosticReport\",\"presentedForm\":[{\"url\": 12}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"DiagnosticReport\",\"presentedForm\":[{\"url\": 12}]}",
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Model.R4.DiagnosticReport>(
-                    "{\"resourceType\":\"DiagnosticReport\",\"presentedForm\":[{\"url\": \"\"}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"DiagnosticReport\",\"presentedForm\":[{\"url\": \"\"}]}",
                 "Empty strings are not allowed"
             );
+
+            void AssertErrorAndSuccess(string diagnosticReportJson, string expectedErrorMessage)
+            {
+                Throws(
+                    () => JsonSerializer.Deserialize<Model.R4.DiagnosticReport>(
+                        diagnosticReportJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+                var emptyDiagnosticReport = JsonSerializer.Deserialize<Model.R4.DiagnosticReport>(
+                    diagnosticReportJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = true })
+                );
+                Assert.AreEqual(0, emptyDiagnosticReport.PresentedForm.Count);
+            }
         }
 
         [TestMethod]
         public void UuidTest()
         {
-            var parameters = JsonSerializer.Deserialize<Parameters>(
+            AssertSuccess(
                 "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":\"urn:uuid:c757873d-ec9a-4326-a141-556f43239520\"}]}",
-                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                "urn:uuid:c757873d-ec9a-4326-a141-556f43239520", null
             );
-            var parameter = Single(parameters.Parameter);
-            Assert.AreEqual("urn:uuid:c757873d-ec9a-4326-a141-556f43239520", IsType<Uuid>(parameter.Value).Value);
 
             // Currently there is no UUID validation. . . 
 
-            parameters = JsonSerializer.Deserialize<Parameters>(
-                "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":\"ZZZ\"}]}",
-                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+            AssertSuccess(
+                "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":\"ZZZ\", \"_valueUuid\":{\"id\":\"007\"}}]}",
+                "ZZZ", "007"
             );
-            parameter = Single(parameters.Parameter);
-            Assert.AreEqual("ZZZ", IsType<Uuid>(parameter.Value).Value);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Parameters>(
-                    "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":12}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":12}]}",
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Parameters>(
-                    "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":\"\"}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueUuid\":\"\"}]}",
                 "Empty strings are not allowed"
             );
+
+            void AssertSuccessAndError(string parametersJson, string expectedErrorMessage)
+            {
+                AssertSuccess(parametersJson, null, null, permissiveParsing: true);
+                Throws(
+                    () => JsonSerializer.Deserialize<Parameters>(
+                        parametersJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+            }
+
+            void AssertSuccess(string parametersJson, string expectedUuid, string expectedUuidId, bool permissiveParsing = false)
+            {
+                var parameters = JsonSerializer.Deserialize<Parameters>(
+                    parametersJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = permissiveParsing })
+                );
+                if (expectedUuid == null && expectedUuidId == null)
+                {
+                    Assert.AreEqual(0, parameters.Parameter.Count);
+                }
+                else
+                {
+                    var parameter = Single(parameters.Parameter);
+                    Assert.AreEqual(expectedUuid, IsType<Uuid>(parameter.Value).Value);
+                    Assert.AreEqual(expectedUuidId, parameter.Value.ElementId);
+                }
+            }
         }
 
         [TestMethod]
         public void OidTest()
         {
-            var parameters = JsonSerializer.Deserialize<Parameters>(
+            AssertSuccess(
                 "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueOid\":\"urn:oid:1.2.3.4.5\"}]}",
-                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                "urn:oid:1.2.3.4.5", null
             );
-            var parameter = Single(parameters.Parameter);
-            Assert.AreEqual("urn:oid:1.2.3.4.5", IsType<Oid>(parameter.Value).Value);
 
             // Currently there is no OID validation. . . 
 
-            parameters = JsonSerializer.Deserialize<Parameters>(
+            AssertSuccess(
                 "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueOid\":\"ZZZ\"}]}",
-                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                "ZZZ", null
             );
-            parameter = Single(parameters.Parameter);
-            Assert.AreEqual("ZZZ", IsType<Oid>(parameter.Value).Value);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Parameters>(
-                    "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueOid\":12}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertSuccessAndError(
+                "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueOid\":12}]}",
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Parameters>(
-                    "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueOid\":\"\"}]}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertSuccessAndError(
+                 "{\"resourceType\":\"Parameters\",\"parameter\":[{\"valueOid\":\"\"}]}",
                 "Empty strings are not allowed"
             );
+
+            void AssertSuccessAndError(string parametersJson, string expectedErrorMessage)
+            {
+                AssertSuccess(parametersJson, null, null, permissiveParsing: true);
+                Throws(
+                    () => JsonSerializer.Deserialize<Parameters>(
+                        parametersJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+            }
+
+            void AssertSuccess(string parametersJson, string expectedOid, string expectedOidId, bool permissiveParsing = false)
+            {
+                var parameters = JsonSerializer.Deserialize<Parameters>(
+                    parametersJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = permissiveParsing })
+                );
+                if (expectedOid == null && expectedOidId == null)
+                {
+                    Assert.AreEqual(0, parameters.Parameter.Count);
+                }
+                else
+                {
+                    var parameter = Single(parameters.Parameter);
+                    Assert.AreEqual(expectedOid, IsType<Oid>(parameter.Value).Value);
+                    Assert.AreEqual(expectedOidId, parameter.Value.ElementId);
+                }
+            }
         }
 
         [TestMethod]
@@ -1226,21 +1342,31 @@ $@"{{
             var profile = Single(parameters.Meta.ProfileElement);
             Assert.AreEqual("https://myserver.com/profiles/first", profile.Value);
 
-            Throws(
-                () => JsonSerializer.Deserialize<Parameters>(
-                    "{\"resourceType\":\"Parameters\",\"meta\":{\"profile\":[12]}}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"Parameters\",\"meta\":{\"profile\":[12]}}",
                 "Expected a string but found a number ('12')"
             );
 
-            Throws(
-                () => JsonSerializer.Deserialize<Parameters>(
-                    "{\"resourceType\":\"Parameters\",\"meta\":{\"profile\":[\"\"]}}",
-                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
-                ),
+            AssertErrorAndSuccess(
+                "{\"resourceType\":\"Parameters\",\"meta\":{\"profile\":[\"\"]}}",
                 "Empty strings are not allowed"
             );
+
+            void AssertErrorAndSuccess(string parametersJson, string expectedErrorMessage)
+            {
+                Throws(
+                    () => JsonSerializer.Deserialize<Parameters>(
+                        parametersJson,
+                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    ),
+                    expectedErrorMessage
+                );
+                var emptyParameters = JsonSerializer.Deserialize<Parameters>(
+                    parametersJson,
+                    new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) {  PermissiveParsing = true })
+                );
+                Assert.IsNull(emptyParameters.Meta);
+            }
         }
 
         [TestMethod]
@@ -1254,9 +1380,10 @@ $@"{{
             );
             Assert.AreEqual(0, patient.Name.Count);
 
+            var patientJsonWithObjectInsteadOfArray = "{\"resourceType\":\"Patient\",\"name\": {\"family\":\"Smith\"}}";
             Throws(
                 () => JsonSerializer.Deserialize<Model.R4.Patient>(
-                    "{\"resourceType\":\"Patient\",\"name\": {\"family\":\"Smith\"}}",
+                    patientJsonWithObjectInsteadOfArray,
                     new JsonSerializerOptions().ForFhir(Model.Version.R4)
                 ),
                 "Expected '[' but found '{'"
@@ -1265,7 +1392,7 @@ $@"{{
             // When PermissiveParsing is true single values are OK for lists element
 
             patient = JsonSerializer.Deserialize<Model.R4.Patient>(
-                "{\"resourceType\":\"Patient\",\"name\": {\"family\":\"Smith\"}}",
+                patientJsonWithObjectInsteadOfArray,
                 new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = true })
             );
             Assert.AreEqual("Smith", Single(patient.Name).Family);
