@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2017, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -13,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
@@ -23,7 +24,9 @@ namespace Hl7.Fhir.Specification.Source
     [DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")]
     public class CommonZipSource : ISummarySource, ICommonConformanceSource, IArtifactSource, IResourceResolver, IAsyncResourceResolver
     {
+#pragma warning disable IDE1006 // Naming Styles - cannot fix this name because of bw-compatibility
         public const string SpecificationZipFileName = "specification.zip";
+#pragma warning restore IDE1006 // Naming Styles
 
         private string _mask;
         // [WMR 20171102] Use Lazy<T> for thread-safe initialization
@@ -34,30 +37,37 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
         /// <param name="inspector"></param>
         /// <param name="zipPath">File path to a Zip archive.</param>
-        /// <param name="targetDirectory">The directory within the users temp directory to unzip the archive to.</param>
-        public CommonZipSource(ModelInspector inspector, string zipPath, string targetDirectory) : this(inspector, zipPath, targetDirectory, DirectorySourceSettings.CreateDefault()) { }
-
-        /// <summary>Create a new <see cref="CommonZipSource"/> instance for the ZIP archive with the specified file path.</summary>
-        /// <param name="inspector"></param>
-        /// <param name="zipPath">File path to a ZIP archive.</param>
-        /// <param name="targetDirectory">The directory within the users temp directory to unzip the archive to.</param>
+        /// <param name="cacheDirectory">Path of the directory to unzip the archive to.</param>
         /// <param name="settings">Configuration settings for the internal <see cref="CommonDirectorySource"/> instance.</param>
-        public CommonZipSource(ModelInspector inspector, string zipPath, string targetDirectory, DirectorySourceSettings settings)
+        public CommonZipSource(ModelInspector inspector, string zipPath, string cacheDirectory, DirectorySourceSettings settings)
         {
-            if (string.IsNullOrEmpty(zipPath)) { throw Error.ArgumentNull(nameof(zipPath)); }
-            if (string.IsNullOrEmpty(targetDirectory)) { throw Error.ArgumentNull(nameof(targetDirectory)); }
+            if (string.IsNullOrEmpty(zipPath)) throw Error.ArgumentNull(nameof(zipPath));
+            if (string.IsNullOrEmpty(cacheDirectory)) throw Error.ArgumentNull(nameof(cacheDirectory));
+            if (settings is null) throw Error.ArgumentNull(nameof(settings));
+
             _inspector = inspector;
             ZipPath = zipPath;
-            TargetDirectory = targetDirectory;
-            if (settings == null) { throw Error.ArgumentNull(nameof(settings)); }
+            CacheDirectory = cacheDirectory;
+
             // Always clone the incoming reference, especially since we're forcing IncludeSubDirectories
             _settings = settings.Clone();
             _lazySource = new Lazy<CommonDirectorySource>(createSource);
+            _mask = settings.Mask;
         }
+
+        /// <inheritdoc cref="CommonZipSource.CommonZipSource(ModelInspector, string, string, DirectorySourceSettings)"/>
+        public CommonZipSource(ModelInspector inspector, string zipPath, string cacheDirectory)
+            : this(inspector, zipPath, cacheDirectory, DirectorySourceSettings.CreateDefault()) { }
 
         /// <summary>Gets the location of the ZIP archive, as specified in the constructor.</summary>
         public string ZipPath { get; }
-        public string TargetDirectory { get; }
+
+        /// <summary>
+        /// Gets the location of the directory where the zip archive will be extracted and cached.
+        /// </summary>
+        /// <remarks>This differs from the <see cref="ExtractPath"/>, which is the <see cref="CacheDirectory"/>
+        /// with a subdirectory named after the Zip archive.</remarks>
+        public string CacheDirectory { get; }
 
         /// <summary>Determines if the <see cref="CommonZipSource"/> has already extracted the contents of the specified ZIP archive.</summary>
         /// <remarks>The <see cref="CommonZipSource"/> extracts the contents of the ZIP archive on demand.</remarks>
@@ -69,9 +79,8 @@ namespace Hl7.Fhir.Specification.Source
         /// If <see cref="IsPrepared"/> equals <c>false</c>, then the extraction folder is not yet known
         /// and <see cref="ExtractPath"/> returns <c>null</c>.
         /// </remarks>
-        public string ExtractPath => _lazySource.IsValueCreated
-            ? _lazySource.Value?.ContentDirectory
-            : null;
+        public string? ExtractPath =>
+            _lazySource.IsValueCreated ? _lazySource.Value.ContentDirectory : null;
 
         /// <summary>
         /// Gets or sets the search string to match against the names of files in the ZIP archive.
@@ -84,13 +93,7 @@ namespace Hl7.Fhir.Specification.Source
             set
             {
                 _mask = value;
-                // No need to lock, DirectorySource is synchronized
-                var source = _lazySource.Value;
-                if (source != null)
-                {
-                    source.Mask = Mask;
-                }
-                // Otherwise, CreateSource will assign the specified mask
+                FileSource.Mask = Mask;
             }
         }
 
@@ -114,13 +117,13 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Load the artifact with the specified filename.</summary>
         /// <param name="name">The filename of the artifact.</param>
-        public Stream LoadArtifactByName(string name) => FileSource.LoadArtifactByName(name);
+        public Stream? LoadArtifactByName(string name) => FileSource.LoadArtifactByName(name);
 
         #endregion
 
         #region ICommonConformanceSource
         /// <inheritdoc/>
-        public CodeSystem FindCodeSystemByValueSet(string valueSetUri) => FileSource.FindCodeSystemByValueSet(valueSetUri);
+        public CodeSystem? FindCodeSystemByValueSet(string valueSetUri) => FileSource.FindCodeSystemByValueSet(valueSetUri);
         #endregion
 
         #region ISummarySource
@@ -144,7 +147,7 @@ namespace Hl7.Fhir.Specification.Source
         /// The <see cref="ArtifactSummary.Origin"/> and <see cref="ArtifactSummary.Position"/>
         /// summary properties allow the source to identify and resolve the artifact.
         /// </remarks>
-        public Resource LoadBySummary(ArtifactSummary summary) => FileSource.LoadBySummary(summary);
+        public Resource? LoadBySummary(ArtifactSummary summary) => FileSource.LoadBySummary(summary);
 
         #endregion
 
@@ -152,14 +155,14 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Find a resource based on its relative or absolute uri.</summary>
         /// <param name="uri">A resource uri.</param>
-        public Resource ResolveByUri(string uri) => FileSource.ResolveByUri(uri);
+        public Resource? ResolveByUri(string uri) => FileSource.ResolveByUri(uri);
 
         /// <summary>Find a (conformance) resource based on its canonical uri.</summary>
         /// <param name="uri">The canonical url of a (conformance) resource.</param>
-        public Resource ResolveByCanonicalUri(string uri) => FileSource.ResolveByCanonicalUri(uri);
+        public Resource? ResolveByCanonicalUri(string uri) => FileSource.ResolveByCanonicalUri(uri);
 
-        public Task<Resource> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
-        public Task<Resource> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
+        public Task<Resource?> ResolveByUriAsync(string uri) => FileSource.ResolveByUriAsync(uri);
+        public Task<Resource?> ResolveByCanonicalUriAsync(string uri) => FileSource.ResolveByCanonicalUriAsync(uri);
 
         #endregion
 
@@ -175,7 +178,7 @@ namespace Hl7.Fhir.Specification.Source
                 throw new FileNotFoundException($"Cannot prepare {nameof(CommonZipSource)}: file '{ZipPath}' was not found");
             }
 
-            var zc = new ZipCacher(ZipPath, TargetDirectory);
+            var zc = new ZipCacher(ZipPath, CacheDirectory);
             var source = new CommonDirectorySource(_inspector, zc.GetContentDirectory(), _settings);
 
             var mask = Mask;
@@ -186,17 +189,6 @@ namespace Hl7.Fhir.Specification.Source
             return source;
         }
 
-        /// <summary>
-        /// Builds a directory name to use as the target of the unzipped data. The name is based
-        /// on the product and version information of the assembly given.
-        /// </summary>
-        /// <param name="satellite">The assembly from which to take product and version information.</param>
-        public static string BuildDefaultCacheDirectoryName(Assembly satellite)
-        {
-            var versionInfo = satellite.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
-            var productInfo = satellite.GetCustomAttribute<AssemblyProductAttribute>();
-            return $"FhirArtifactCache-{versionInfo.InformationalVersion}-{productInfo.Product}";
-        }
 
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
@@ -207,3 +199,5 @@ namespace Hl7.Fhir.Specification.Source
 
     }
 }
+
+#nullable restore
