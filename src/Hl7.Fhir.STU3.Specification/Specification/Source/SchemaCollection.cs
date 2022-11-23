@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Source
     /// </summary>
     public class SchemaCollection
     {
-        private static readonly string[] minimalSchemas = { "xml.xsd", "fhir-single.xsd", "fhir-xhtml.xsd", "xmldsig-core-schema.xsd" };
+        private static readonly string[] MINIMALSCHEMAS = { "xml.xsd", "fhir-single.xsd", "fhir-xhtml.xsd", "xmldsig-core-schema.xsd" };
 
         /// <summary>
         /// Constructs a SchemaCollection which retrieves XML schemas from the given <see cref="IArtifactSource"/>.
@@ -54,14 +54,14 @@ namespace Hl7.Fhir.Specification.Source
         public static XmlSchemaSet ValidationSchemaSet => Default.MinimalSchemas;
 
 
-        public static SchemaCollection Default = new();
+        public static readonly SchemaCollection Default = new();
 
 
         private static XmlSchemaSet compileValidationSchemas(IArtifactSource source)
         {
             var schemas = new XmlSchemaSet();
 
-            foreach (var schemaName in minimalSchemas)
+            foreach (var schemaName in MINIMALSCHEMAS)
             {
                 using var schema = source.LoadArtifactByName(schemaName);
 

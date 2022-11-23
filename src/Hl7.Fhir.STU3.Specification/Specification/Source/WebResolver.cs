@@ -6,14 +6,14 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
-using System;
-using System.Diagnostics;
-using System.Net;
-using T=System.Threading.Tasks;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
+using System.Diagnostics;
+using System.Net;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -23,8 +23,7 @@ namespace Hl7.Fhir.Specification.Source
     {
         /// <summary>Default request timeout in milliseconds.</summary>
         public const int DefaultTimeOut = 5000;
-
-        readonly Func<Uri, FhirClient> _clientFactory;
+        private readonly Func<Uri, FhirClient> _clientFactory;
 
         /// <summary>Default constructor.</summary>
         public WebResolver() { }
@@ -57,7 +56,7 @@ namespace Hl7.Fhir.Specification.Source
             if (!ResourceIdentity.IsRestResourceIdentity(uri))
             {
                 // Weakness in FhirClient, need to have the base :-(  So return null if we cannot determine it.
-                return null;     
+                return null;
             }
 
             var id = new ResourceIdentity(uri);
@@ -97,7 +96,7 @@ namespace Hl7.Fhir.Specification.Source
         // Allow derived classes to override
         // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        internal protected virtual string DebuggerDisplay
+        protected internal virtual string DebuggerDisplay
             => $"{GetType().Name}"
             + (LastError != null ? $" LastError: '{LastError.Message}'" : null);
 
