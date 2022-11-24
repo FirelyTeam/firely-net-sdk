@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+	<Import Project="..\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems" Label="Shared" />
+
+	<Import Project="..\firely-net-sdk-tests.props" />
+
+	<PropertyGroup>
+		<AssemblyName>Hl7.Fhir.R4.Specification.Tests</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.R4.Core\Hl7.Fhir.R4.Core.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.R4.Specification.Data\Hl7.Fhir.R4.Specification.Data.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
+		<PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
+		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="6.0.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
+		<PackageReference Include="System.AppContext" Version="4.3.0" />
+	</ItemGroup>
+
+</Project>
