@@ -1,0 +1,11 @@
+<Patient xmlns="http://hl7.org/fhir">
+    <id value="patient-error-gender"/>
+      <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+*FAILURE* validating ./examplesNonValid/patient/patient-error-gender.xml:  error:1 warn:1 info:0
+  Error @ Patient.gender (line 3, col34) : The value provided ('asdfafafafd') is not in the value set http://hl7.org/fhir/ValueSet/administrative-gender|4.0.0 (http://hl7.org/fhir/ValueSet/administrative-gender, and a code is required from this value set) (error message = Unknown Code org.hl7.fhir.r4.model.Coding@5ee34b1b in http://hl7.org/fhir/administrative-gender)
+    </div>
+  </text>
+    <gender value="asdfafafafd"/>
+</Patient>

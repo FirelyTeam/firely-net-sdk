@@ -1,0 +1,2 @@
+del *.bak
+del *-actual.*

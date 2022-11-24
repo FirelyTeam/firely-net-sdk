@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="IHE.MHD.ProvideDocumentBundle.Degenerate" />
+	<url value="http://ihe.net/fhir/ihe.mhd.fhir/StructureDefinition/IHE.MHD.ProvideDocumentBundle.Degenerate" />
+	<version value="3.1.1" />
+	<name value="IHE_MHD_ProvideDocumentBundle_Degenerate" />
+	<title value="IHE MHD profile on Provide Document Bundle (ITI-65) transaction with Degenerate Metadata" />
+	<status value="active" />
+	<experimental value="false" />
+	<date value="2020-01-06" />
+	<publisher value="Integrating the Healthcare Enterprise (IHE)" />
+	<contact>
+		<name value="IHE" />
+		<telecom>
+			<system value="url" />
+			<value value="http://ihe.net" />
+		</telecom>
+	</contact>
+	<contact>
+		<name value="John Moehrke" />
+		<telecom>
+			<system value="email" />
+			<value value="JohnMoehrke@gmail.com" />
+		</telecom>
+	</contact>
+	<description value="Profile on Transaction Bundle based on IHE IT Infrastructure Technical Framework Supplement - Mobile access to Health Documents (MHD) Rev. 3.1.  See http://wiki.ihe.net/index.php/Mobile_access_to_Health_Documents_(MHD)   The IHE MHD Profile text is Normative, this conformance resource is Informative." />
+
+	<copyright value="IHE http://www.ihe.net/Governance/#Intellectual_Property" />
+	<fhirVersion value="4.0.0" />
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Bundle" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Bundle" />
+	<derivation value="constraint" />
+	<differential>
+		<element>
+			<path value="Bundle.entry.resource" />
+			<min value="1" />
+			<type>
+				<code value="Resource" />
+				<profile value="http://hl7.org/fhir/StructureDefinition/DocumentManifest" />
+			</type>
+		</element>
+	</differential>
+  
+</StructureDefinition>

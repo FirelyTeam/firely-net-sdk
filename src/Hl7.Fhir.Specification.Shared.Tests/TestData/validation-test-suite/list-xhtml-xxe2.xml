@@ -1,0 +1,13 @@
+<List xmlns="http://hl7.org/fhir">
+  <id value="val1"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+       <!DOCTYPE foo [ <!ENTITY xxe SYSTEM "file://c:\temp\xxe.txt">]> 
+      <p>This is some narrative with an entity &xxe;</p>
+    </div>
+  </text>
+  <status value="current"/>
+  <mode value="changes"/>
+</List>
+

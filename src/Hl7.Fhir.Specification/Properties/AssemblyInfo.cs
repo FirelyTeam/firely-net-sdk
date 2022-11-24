@@ -8,11 +8,13 @@ using System.Runtime.CompilerServices;
 [assembly: CLSCompliant(true)]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Tests")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.Specification")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.R4.Core")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.R4B.Core")]
 [assembly: InternalsVisibleTo("Hl7.Fhir.R5.Core")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R4.Specification.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R4B.Specification.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R5.Specification.Tests")]
 #endif
 
 #if RELEASE

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><Patient xmlns="http://hl7.org/fhir">
+	<id value="ext-ctxt-good-name"/>
+	<active value="true"/>
+  <name>
+    <extension url="http://hl7.org/fhir/test/StructureDefinition/ext-ctxt-defn">
+      <valueBoolean value="true"/>
+    </extension>
+  </name>
+</Patient>

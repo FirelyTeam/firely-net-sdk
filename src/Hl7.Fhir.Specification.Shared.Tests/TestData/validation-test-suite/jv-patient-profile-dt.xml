@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://hl7.dk/fhir/StructureDefinition/dk-core-sor-identifier" />
+  <name value="SORIdentifier" />
+  <status value="draft" />
+  <fhirVersion value="4.0.0" />
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="servd" />
+    <uri value="http://www.omg.org/spec/ServD/1.0/" />
+    <name value="ServD" />
+  </mapping>
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <type value="Identifier" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Identifier" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Identifier.use">
+      <path value="Identifier.use" />
+      <fixedCode value="official" />
+    </element>
+    <element id="Identifier.system">
+      <path value="Identifier.system" />
+      <min value="1" />
+      <fixedUri value="urn:oid:1.2.208.176.1.1" />
+    </element>
+    <element id="Identifier.value">
+      <path value="Identifier.value" />
+      <min value="1" />
+      <constraint>
+        <key value="min-digits-sor" />
+        <requirements value="SOR Identifiers are at minimum 15 digits long" />
+        <severity value="warning" />
+        <human value="SOR Identifiers are at minimum 15 digits long" />
+        <expression value="matches('^([0-9]){15,}$')" />
+        <source value="https://sundhedsdatastyrelsen.dk/-/media/sds/filer/rammer-og-retningslinjer/organisationsregistrering/adgang-til-sor/info-om-opbygningen-af-sor-ider.pdf" />
+      </constraint>
+    </element>
+  </differential>
+</StructureDefinition>

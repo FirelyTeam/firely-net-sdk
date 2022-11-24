@@ -1,0 +1,43 @@
+<Bundle xmlns="http://hl7.org/fhir">
+	<id value="bundle" />
+	<meta>
+		<lastUpdated value="2019-05-29T15:00:54.948+02:00" />
+	</meta>
+	<identifier>
+		<system value="urn:ietf:rfc:3986" />
+		<value value="urn:uuid:8a1d50f3-3f0c-471d-954d-dca1182dbcf3" />
+	</identifier>
+	<type value="document" />
+	<entry>
+		<fullUrl value="http://acme.com/Composition/1" />
+		<resource>
+			<Composition>
+				<id value="1" />
+				<status value="final" />
+				<type>
+					<coding>
+						<system value="http://loinc.org" />
+						<code value="11488-4" />
+					</coding>
+				</type>
+				<subject>
+					<reference value="http://acme.com/Patient/pat2" />
+				</subject>
+				<date value="2016-09-12T11:46:09+02:00" />
+				<author>
+					<reference value="Patient/pat2" />
+				</author>
+				<title value="testreferencesubject" />
+			</Composition>
+		</resource>
+	</entry>
+	<entry>
+		<fullUrl value="http://acme.com/Patient/pat2" />
+		<resource>
+			<Patient>
+				<id value="pat2" />
+			</Patient>
+		</resource>
+	</entry>
+</Bundle>
+

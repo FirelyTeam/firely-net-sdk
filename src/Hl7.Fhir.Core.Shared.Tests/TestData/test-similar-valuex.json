@@ -1,0 +1,40 @@
+{
+  "resourceType": "Ingredient",
+  "id": "example",
+  "text": {
+    "status": "generated",
+    "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative</b></p><p><b>role</b>: <span>ActiveBase</span></p><p><b>manufacturer</b>: <a>Organization/example</a></p><blockquote><p><b>specifiedSubstance</b></p><h3>Codes</h3><table><tr><td>-</td></tr><tr><td>*</td></tr></table><p><b>group</b>: <span>2</span></p></blockquote><blockquote><p><b>specifiedSubstance</b></p><h3>Codes</h3><table><tr><td>-</td></tr><tr><td>*</td></tr></table><p><b>group</b>: <span>2</span></p></blockquote></div>"
+  },
+  "role": {
+    "coding": [
+      {
+        "system": "http://ema.europa.eu/example/ingredientRole",
+        "code": "ActiveBase"
+      }
+    ]
+  },
+  "substance": {
+    "code": {
+      "concept": {
+        "coding": [
+          {
+            "system": "http://ema.europa.eu/example/specifiedSubstance",
+            "code": "equixabanCompany1"
+          }
+        ]
+      }
+    },
+    "strength": [
+      {
+        "presentationQuantity": {
+          "value": "1",
+          "unit": "mm"
+        },
+        "concentrationCodeableConcept": {
+          "text": "text"
+        },
+        "concentrationText": "Another text"
+      }
+    ]
+  }
+}

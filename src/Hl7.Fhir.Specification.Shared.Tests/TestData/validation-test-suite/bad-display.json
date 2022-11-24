@@ -1,0 +1,24 @@
+{
+  "resourceType" : "Patient",
+  "id" : "patient-baby-example",
+  "active" : true,
+  "contact" : [
+    {
+      "relationship" : [
+        {
+          "coding" : [
+            {
+              "system" : "http://hl7.org/fhir/v3/RoleCode",
+              "code" : "MTH",
+              "display": "Cother"
+            }
+          ],
+          "text" : "Mother"
+        }
+      ],
+      "name" : {
+        "text" : "something"
+      }
+     }
+  ]
+}

@@ -1,0 +1,16 @@
+<Person xmlns="http://hl7.org/fhir">
+	<address>
+		<extension url="http://example.org/fhir/StructureDefinition/SimpleExtension">
+			<valueString value="streng"/>
+		</extension>
+		<extension url="http://example.org/fhir/StructureDefinition/SimpleExtension">
+			<valueString value="streng"/>
+		</extension>
+		<use value="home"/>
+		<line value="Nyhaugveien 3"/>
+		<city value="BERGEN"/> <!-- Poststed -->
+		<district value="BERGEN"/> <!-- Kommunenavn -->
+		<postalCode value="5067"/> <!-- postnummer -->
+		<country value="NO"/> <!-- land (er overflødig i norge -->
+	</address>
+</Person>

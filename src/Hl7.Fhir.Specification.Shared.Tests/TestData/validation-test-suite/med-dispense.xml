@@ -1,0 +1,11 @@
+<MedicationDispense xmlns="http://hl7.org/fhir"> 
+  <status value="completed"/>
+  <medicationCodeableConcept>
+    <text value="something"/>
+  </medicationCodeableConcept>
+  <whenHandedOver>
+    <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+      <valueCode value="NI"/>
+    </extension>
+  </whenHandedOver>
+</MedicationDispense>

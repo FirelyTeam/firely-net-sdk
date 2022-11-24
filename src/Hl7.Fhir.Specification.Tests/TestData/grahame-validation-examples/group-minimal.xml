@@ -1,4 +1,0 @@
-<Group xmlns="http://hl7.org/fhir">
-  <type value="person"/>
-  <actual value="true"/>
-</Group>

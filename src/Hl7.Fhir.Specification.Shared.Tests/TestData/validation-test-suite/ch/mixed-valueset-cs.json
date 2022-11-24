@@ -1,0 +1,128 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "2.16.756.5.30.1.127.3.4",
+  "meta" : {
+    "source" : "http://art-decor.org/fhir/ValueSet/2.16.756.5.30.1.127.3.10.1.3--20190607164639"
+  },
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><h2>SNOMED CT Swiss Extension</h2><div><p>Document class as per EPRO-FDHA Annex 3</p>\n</div><p><b>Copyright Statement:</b> This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.</p><p>This code system urn:oid:2.16.756.5.30.1.127.3.4 defines the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td><td><b>Definition</b></td></tr><tr><td style=\"white-space:nowrap\">2171000195109<a name=\"2.16.756.5.30.1.127.3.4-2171000195109\"> </a></td><td>Obstetrical Record (record artifact)</td><td/></tr><tr><td style=\"white-space:nowrap\">4201000179104<a name=\"2.16.756.5.30.1.127.3.4-4201000179104\"> </a></td><td>Imaging report (record artifact)</td><td/></tr><tr><td style=\"white-space:nowrap\">1141000195107<a name=\"2.16.756.5.30.1.127.3.4-1141000195107\"> </a></td><td>Secret (qualifier value)</td><td/></tr></table></div>"
+  },
+  "extension" : [
+    {
+      "url" : "http://hl7.org/fhir/StructureDefinition/resource-effectivePeriod",
+      "valuePeriod" : {
+        "start" : "2019-06-07T16:46:39+02:00"
+      }
+    }
+  ],
+  "url" : "urn:oid:2.16.756.5.30.1.127.3.4",
+  "identifier" : [
+    {
+      "use" : "official",
+      "system" : "http://art-decor.org/ns/oids/vs",
+      "value" : "2.16.756.5.30.1.127.3.10.1.3"
+    }
+  ],
+  "version" : "2.0.1",
+  "name" : "SNOMEDCTSwissExtension",
+  "title" : "SNOMED CT Swiss Extension",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2019-11-15T10:02:59+01:00",
+  "publisher" : "eHealth Suisse",
+  "contact" : [
+    {
+      "name" : "eHealth Suisse",
+      "telecom" : [
+        {
+          "system" : "url",
+          "value" : "www.e-health-suisse.ch"
+        }
+      ]
+    }
+  ],
+  "description" : "Document class as per EPRO-FDHA Annex 3",
+  "copyright" : "This artefact includes content from SNOMED Clinical Terms® (SNOMED CT®) which is copyright of the International Health Terminology Standards Development Organisation (IHTSDO). Implementers of these artefacts must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/getsnomed-ct or info@snomed.org.",
+  "content" : "complete",
+  "concept" : [
+    {
+      "code" : "2171000195109",
+      "display" : "Obstetrical Record (record artifact)",
+      "designation" : [
+        {
+          "language" : "de-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "fr-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "it-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "rm-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "en-US",
+          "value" : "Obstetrical Record"
+        }
+      ]
+    },
+    {
+      "code" : "4201000179104",
+      "display" : "Imaging report (record artifact)",
+      "designation" : [
+        {
+          "language" : "de-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "fr-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "it-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "rm-CH",
+          "value" : "TODO"
+        },
+        {
+          "language" : "en-US",
+          "value" : "Imaging report"
+        }
+      ]
+    },
+    {
+      "code" : "1141000195107",
+      "display" : "Secret (qualifier value)",
+      "designation" : [
+        {
+          "language" : "de-CH",
+          "value" : "Geheim"
+        },
+        {
+          "language" : "fr-CH",
+          "value" : "Confidentiel"
+        },
+        {
+          "language" : "it-CH",
+          "value" : "Segreto"
+        },
+        {
+          "language" : "en-US",
+          "value" : "Secret"
+        },
+        {
+          "language" : "rm-CH",
+          "value" : "TODO"
+        }
+      ]
+    }
+  ]
+}

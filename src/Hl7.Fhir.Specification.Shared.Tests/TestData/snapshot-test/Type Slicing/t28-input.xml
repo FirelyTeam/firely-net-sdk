@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t28"/>
+  <url value="urn:uuid:7c3e3bd7-7919-4348-bed7-a65af1690842"/>
+  <name value="t28"/>
+  <status value="draft"/>
+  <description value="fixture for #28: Test children of a polymorphic type"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="OperationOutcome"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/OperationOutcome"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="OperationOutcome"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.details"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.details.text"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.details.text.extension"/>
+      <sliceName value="translation"/>
+      <type>
+        <code value="Extension"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/iso21090-ST-translation"/>
+      </type>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.details.text.extension.value[x]"/>
+      <slicing>
+        <discriminator>
+          <type value="type"/>
+          <path value="$this"/>
+        </discriminator>
+      </slicing>
+      <type>
+        <code value="string"/>
+      </type>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.details.text.extension.valueString"/>
+      <sliceName value="string"/>
+    </element>
+    <element>
+      <path value="OperationOutcome.issue.details.text.extension.valueString.extension"/>
+      <sliceName value="language"/>
+      <type>
+        <code value="Extension"/>
+        <targetProfile value="http://hl7.org/fhir/StructureDefinition/iso21090-ST-language"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

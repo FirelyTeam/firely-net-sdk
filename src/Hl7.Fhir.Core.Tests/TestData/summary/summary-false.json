@@ -1,1 +1,0 @@
-﻿{"resourceType":"Patient","id":"patient-one","meta":{"id":"eric-clapton","versionId":"1234"},"text":{"status":"generated","div":"<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>"},"active":true,"name":[{"use":"official","family":"Clapton"}],"gender":"male","birthDate":"2015-07-09"}

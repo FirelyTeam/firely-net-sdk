@@ -1,2 +1,0 @@
-del *.bak
-del *-actual.*

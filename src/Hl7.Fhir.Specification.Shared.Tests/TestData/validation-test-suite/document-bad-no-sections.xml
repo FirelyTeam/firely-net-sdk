@@ -1,0 +1,17 @@
+<!--
+Does not conforms to the document-structure template:
+
+- no sections
+ -->
+<Composition xmlns="http://hl7.org/fhir"> 
+ <id value="test-document-good"/>
+ <status value="final"/>
+ <type>
+   <text value="test document"/>
+ </type>
+ <date value="2018-11-06T07:14:00+11:00"/>
+ <author>
+   <display value="grahame grieve"/>
+ </author>
+ <title value="TestDocument"/>
+</Composition>

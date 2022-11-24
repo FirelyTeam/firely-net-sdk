@@ -1,6 +1,0 @@
-{
-  "resourceType" : "Patient",
-  "id" : "pat-good",
-  "active": true,
-  "name" : [{"text" : "test"}]
-}

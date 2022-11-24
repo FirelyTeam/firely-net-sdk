@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Questionnaire xmlns="http://hl7.org/fhir">
+  <id value="questionnaire-enableWhen-test" />
+  <language value="en-US" />
+  <text>
+    <status value="generated" />
+    <div xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+      <p>enableWhen test</p>
+    </div>
+  </text>
+  <url value="http://hl7.org/fhir/us/hai/Questionnaire/questionnaire-enableWhen-test" />
+  <status value="draft" />
+  <item>
+    <linkId value="condition" />
+    <text value="condition" />
+    <type value="boolean" />
+    <required value="true" />
+    <repeats value="false" />
+  </item>
+  <item>
+    <linkId value="enable-when" />
+    <text value="enable when condition true" />
+    <type value="boolean" />
+    <enableWhen>
+      <question value="condition" />
+      <operator value="="/>
+      <answerBoolean value="true" />
+    </enableWhen>
+    <required value="true" />
+    <repeats value="false" />
+  </item>
+</Questionnaire>

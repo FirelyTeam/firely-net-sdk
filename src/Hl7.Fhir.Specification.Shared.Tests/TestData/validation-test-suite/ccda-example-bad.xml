@@ -1,0 +1,966 @@
+<Composition
+    xmlns="http://hl7.org/fhir">
+    <id value="CCDA-on-FHIR-Referral-Note-Example"/>
+    <meta>
+        <versionId value="1"/>
+        <lastUpdated value="2016-06-15T08:16:14Z"/>
+        <profile value="http://hl7.org/fhir/ccda/StructureDefinition/CCDA-on-FHIR-Referral-Note"/>
+    </meta>
+    <text>
+        <status value="generated"/>
+        <div
+            xmlns="http://www.w3.org/1999/xhtml">
+            <p>Referral Note document for Amy Shaw</p>
+            <p>Managed by Community Health and Hospitals</p>
+        </div>
+    </text>
+    <extension url="http://hl7.org/fhir/ccda/StructureDefinition/ccda-data-enterer-extension">
+        <valueUri value="http://hl7.org/fhir/us/core/Practitioner-practitioner-1.xml"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/ccda/StructureDefinition/ccda-informant-extension">
+        <valueUri value="http://hl7.org/fhir/us/core/Practitioner-practitioner-1.xml"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/ccda/StructureDefinition/ccda-information-recipient-extension">
+        <valueUri value="http://hl7.org/fhir/us/core/Practitioner-practitioner-1.xml"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/ccda/StructureDefinition/ccda-participant-extension">
+        <valueUri value="http://hl7.org/fhir/relatedperson-example-peter.xml.html"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/ccda/StructureDefinition/ccda-performer-extension">
+        <valueUri value="http://hl7.org/fhir/us/core/Practitioner-practitioner-1.xml"/>
+    </extension>
+    <extension url="http://hl7.org/fhir/ccda/StructureDefinition/ccda-authorization-extension">
+        <valueUri value="http://hl7.org/fhir/ccda/StructureDefinition/ccda-consent"/>
+    </extension>
+    <identifier>
+        <system value="http://hl7.org/fhir/ccda/StructureDefinition/CCDA_on_FHIR_Referral_Note"/>
+        <value value="1"/>
+    </identifier>
+    <status value="preliminary"/>
+    <type>
+        <coding>
+            <system value="http://loinc.org"/>
+            <code value="57133-1"/>
+            <display value="Referral Note"/>
+        </coding>
+    </type>
+    <!--  Patient Resource -->
+    <subject>
+        <reference value="http://hl7.org/fhir/us/core/Patient-example.xml"/>
+        <display value="Amy V. Shaw"/>
+    </subject>
+    <date value="2016-02-28T09:10:14Z"/>
+    <!--  Practitioner Resource -->
+    <author>
+        <reference value="http://hl7.org/fhir/us/core/Practitioner-practitioner-1.xml"/>
+        <display value="Ronald Boone, MD"/>
+    </author>
+    <title value="Referral Note"/>
+    <confidentiality value="N"/>
+    <attester>
+        <mode value="legal"/>
+        <time value="2012-01-04T09:10:14Z"/>
+        <party>
+            <reference value="http://hl7.org/fhir/us/core/Practitioner-practitioner-1.xml"/>
+            <display value="Ronald Boone, MD"/>
+        </party>
+    </attester>
+    <!--  Organization Resource -->
+    <custodian>
+        <reference value="http://hl7.org/fhir/us/core/Organization-acme-lab.xml"/>
+        <display value="Acme Labs"/>
+    </custodian>
+    <event>
+        <code>
+            <coding>
+                <system value="http://terminology.hl7.org/CodeSystem/v3-ActClass"/>
+                <code value="PCPR"/>
+                <display value="Care Provision"/>
+            </coding>
+        </code>
+        <period>
+            <start value="2015-11-18"/>
+            <end value="2015-12-12"/>
+        </period>
+    </event>
+    <!--  Encounter Resource -->
+    <!--<encounter><reference value="http://fhirtest.uhn.ca/baseDstu3/Encounter/117630"/></encounter>-->
+    <!--  Allergies and Intolerances Section Narrative -->
+    <section>
+        <title value="Allergies and Intolerances Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="48765-2"/>
+                <display value="Allergies and Adverse Reactions"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Substance</b>
+                        </td>
+                        <td>
+                            <b>Overall Severity</b>
+                        </td>
+                        <td>
+                            <b>Reaction</b>
+                        </td>
+                        <td>
+                            <b>Reaction Severity</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cashew Nut</td>
+                        <td>Severe</td>
+                        <td>Anaphylactic reaction</td>
+                        <td>Mild</td>
+                        <td>Active</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <mode value="snapshot"/>
+        <orderedBy>
+            <coding>
+                <system value="http://terminology.hl7.org/CodeSystem/list-order"/>
+                <code value="event-date"/>
+                <display value="Sorted by Event Date"/>
+            </coding>
+        </orderedBy>
+        <!--  Allergies and Intolerance Section Resource-->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/AllergyIntolerance-example.xml"/>
+        </entry>
+    </section>
+    <!--  SPM duplicate for error: Allergies and Intolerances Section Narrative -->
+    <section>
+        <title value="Allergies and Intolerances Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="48765-2"/>
+                <display value="Allergies and Adverse Reactions"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Substance</b>
+                        </td>
+                        <td>
+                            <b>Overall Severity</b>
+                        </td>
+                        <td>
+                            <b>Reaction</b>
+                        </td>
+                        <td>
+                            <b>Reaction Severity</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cashew Nut</td>
+                        <td>Severe</td>
+                        <td>Anaphylactic reaction</td>
+                        <td>Mild</td>
+                        <td>Active</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <mode value="snapshot"/>
+        <orderedBy>
+            <coding>
+                <system value="http://terminology.hl7.org/CodeSystem/list-order"/>
+                <code value="event-date"/>
+                <display value="Sorted by Event Date"/>
+            </coding>
+        </orderedBy>
+        <!--  Allergies and Intolerance Section Resource-->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/AllergyIntolerance-example.xml"/>
+        </entry>
+    </section>
+    <!--  Advance Directives Section Narrative -->
+    <section>
+        <title value="Advance Directives Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="42348-3"/>
+                <display value="Advance directives"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Name</b>
+                        </td>
+                        <td>
+                            <b>Applies Period</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Resuscitation</td>
+                        <td>2015/01/01 - 2016/12/31</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+    </section>
+    <!--  Assessment Section Narrative -->
+    <section>
+        <title value=" Assessment Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="51848-0"/>
+                <display value="Assessment (evaluation)"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>Obesity.</p>
+                <p>Uncontrolled brittle Type II diabetic.</p>
+                <p>Shortness of breath, mild wheezing.</p>
+                <p>Pressure ulder on left knee.</p>
+            </div>
+        </text>
+    </section>
+    <!--  Assessment and Plan Section Narrative -->
+    <section>
+        <title value="Assessment and Plan Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="51847-2"/>
+                <display value="Assessment (evaluation) and plan"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>Recurrent GI bleed of unknown etiology; hypotension perhaps
+                    secondary to this but as likely secondary to polypharmacy</p>
+                <p>Acute on chronic anemia secondary to #1.</p>
+                <p>Azotemia, acute renal failure with volume loss secondary tom#1.</p>
+                <p>Hyperkalemia secondary to #3 and on ACE and K+ supplement.</p>
+                <p>Other chronic diagnoses as noted above, currently stable.</p>
+            </div>
+        </text>
+    </section>
+    <!--  Family History Section Narrative -->
+    <section>
+        <title value="Family History Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="10157-6"/>
+                <display value="History of family member diseases"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Relationship</b>
+                        </td>
+                        <td>
+                            <b>Diagnosis</b>
+                        </td>
+                        <td>
+                            <b>Age at Onset</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Father</td>
+                        <td>Myocardial Infarction(cause of Death)</td>
+                        <td>57</td>
+                    </tr>
+                    <tr>
+                        <td>Father</td>
+                        <td>Diabetes</td>
+                        <td>40</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Family History Section Resource -->
+        <!-- <entry><reference value="http://fhirtest.uhn.ca/baseDstu3/FamilyMemberHistory/117652"/></entry>-->
+    </section>
+    <!--  History of Past Illness Section Narrative -->
+    <section>
+        <title value="History of Past Illness Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="11348-0"/>
+                <display value="History of past illness"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>See History of Present Illness</p>
+            </div>
+        </text>
+    </section>
+    <!--  History of Present Illness Section Narrative -->
+    <section>
+        <title value="History of Present Illness Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="10164-2"/>
+                <display value="History of present illness"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>This patient was only recently discharged for a recurrent GI bleed as described below. </p>
+                <p>He presented to the ER today c/o a dark stool yesterday but a normal brown
+                    stool today. On exam he was hypotensive in the 80?s resolved after .... .... .... </p>
+                <p>Lab at discharge: Glucose 112, BUN 16, creatinine 1.1, electrolytes normal.
+                    H. pylori antibody pending. Admission hematocrit 16%, discharge hematocrit 29%. WBC
+                    7300, platelet count 256,000. Urinalysis normal. Urine culture: No growth. INR 1.1,
+                    PTT 40. </p>
+                <p>He was transfused with 6 units of packed red blood cells with .... .... .... </p>
+                <p>GI evaluation 12 September: Colonoscopy showed single red clot in .... ........ </p>
+            </div>
+        </text>
+    </section>
+    <!--  Social History Section Narrative -->
+    <section>
+        <title value="Social History Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="29762-2"/>
+                <display value="Social history"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Social History Element</b>
+                        </td>
+                        <td>
+                            <b>Description</b>
+                        </td>
+                        <td>
+                            <b>Effective Dates</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Smoking</td>
+                        <td>1 pack tobacco per day</td>
+                        <td>2005/05/01 - 2010/02/28</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Social History Section Observation Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/Observation-some-day-smoker.xml"/>
+        </entry>
+    </section>
+    <!--  General Status Section Narrative -->
+    <section>
+        <title value=" General Status Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="10210-3"/>
+                <display value="Physical findings of General status"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>Alert and in good spirits, no acute distress.</p>
+            </div>
+        </text>
+    </section>
+    <!--  Functional Status Section Narrative -->
+    <section>
+        <title value="Functional Status Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="47420-5"/>
+                <display value="Functional status"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Functional or Cognitive Finding</b>
+                        </td>
+                        <td>
+                            <b>Observation</b>
+                        </td>
+                        <td>
+                            <b>Observation Date</b>
+                        </td>
+                        <td>
+                            <b>Condition Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ambulation (Dependent to Independent</td>
+                        <td>Independently able</td>
+                        <td>2010/03/11</td>
+                        <td>Active</td>
+                    </tr>
+                    <tr>
+                        <td>Finding of Functional Performance and Activity</td>
+                        <td>Dyspnea</td>
+                        <td>2008/02/16</td>
+                        <td>Active</td>
+                    </tr>
+                    <tr>
+                        <td>Cognitive Function Finding</td>
+                        <td>Memory Impairment</td>
+                        <td>2014/04/29</td>
+                        <td>Active</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+    </section>
+    <!--  Mental Status Section Narrative -->
+    <section>
+        <title value="Mental Status Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="10190-7"/>
+                <display value="Mental status"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table border="1" width="100%">
+                    <thead>
+                        <tr>
+                            <td>
+                                <b>Mental Status Findings</b>
+                            </td>
+                            <td>
+                                <b>Effective Dates</b>
+                            </td>
+                            <td>
+                                <b>Condition Status</b>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>Mental Function</td>
+                        <td>July 31, 2013</td>
+                        <td>Impaired</td>
+                    </tr>
+                    <tr>
+                        <td>Cognitive Abilities</td>
+                        <td>July 31, 2013</td>
+                        <td>Judgement, Intact</td>
+                    </tr>
+                    <tr>
+                        <td>Cognitive Function</td>
+                        <td>July 31, 2013</td>
+                        <td>Aggressive Behavior</td>
+                    </tr>
+                    <tr>
+                        <td>Cognitive Function</td>
+                        <td>July 31, 2013</td>
+                        <td>Difficulty understanding own emotions</td>
+                    </tr>
+                    <tr>
+                        <td>Cognitive Function</td>
+                        <td>July 31, 2013</td>
+                        <td>Difficulty communicating Thoughts </td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+    </section>
+    <!--  Immunization Section Narrative -->
+    <section>
+        <title value="Immunizations Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="11369-6"/>
+                <display value="History of immunization"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Vaccine</b>
+                        </td>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Fluvax (Influenza)</td>
+                        <td>2016-04-05</td>
+                        <td>Completed</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Immunization Section Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/Immunization-imm-1.xml"/>
+        </entry>
+    </section>
+    <!--  Nutrition Section Narrative -->
+    <section>
+        <title value=" Nutrition Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="61144-2"/>
+                <display value="Diet and nutrition"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td>
+                            <b>Nutritional Status</b>
+                        </td>
+                        <td>
+                            <b>Diet</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2005/12/29</td>
+                        <td>Well nourished</td>
+                        <td>Low sodium diet, excessive carbohydrate</td>
+                    </tr>
+                    <tr>
+                        <td>2010/05/26</td>
+                        <td>Slight dehydration</td>
+                        <td>High protein, low fibre</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+    </section>
+    <!--  Reason for Referral Section Narrative -->
+    <section>
+        <title value="Reason for Referral Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="42349-1"/>
+                <display value="Reason for Referral"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>Colonoscopy</p>
+            </div>
+        </text>
+    </section>
+    <!--  Physical Exam Section Narrative -->
+    <section>
+        <title value="Physical Exam Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="29545-1"/>
+                <display value="Physical findings"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>HEENT: All normal to examination.</p>
+                <p>&gt;HEART: RRR, no murmur.</p>
+                <p>THORAX &amp; LUNGS: Clear without rhonchi or wheeze.</p>
+                <p>ABDOMEN: Marked distension and tenderness, slightly obese, pos bowelsounds.</p>
+                <p>BACK: Normal to inspection and palpation, without tenderness; no presacral edema.</p>
+                <p>EXTREMITIES: Doughy edema bilaterally, chronic stasis changes, no asymmetrical swelling.</p>
+            </div>
+        </text>
+    </section>
+    <!--  Review of Systems Section Narrative -->
+    <section>
+        <title value="Review of Systems Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="10187-3"/>
+                <display value="Review of systems"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <p>Patient denies recent history of fever or malaise. Positive for weakness and
+                    shortness of breath. Several episodes of abdominal tenderness. No recent headaches. 
+                    Positive for osteoarthritis in hips, knees and hands. </p>
+            </div>
+        </text>
+    </section>
+    <!--  Medication Section Narrative -->
+    <section>
+        <title value="Medication Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="10160-0"/>
+                <display value="History of Medication Use"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Medication</b>
+                        </td>
+                        <td>
+                            <b>Directions</b>
+                        </td>
+                        <td>
+                            <b>Start Date</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                        <td>
+                            <b>Indications</b>
+                        </td>
+                        <td>
+                            <b>Fill Instructions</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Amoxicillin</td>
+                        <td>Amoxicillin Powder, for Suspension 250mg/5ml</td>
+                        <td>20160401</td>
+                        <td>Active</td>
+                        <td>Pneumonia</td>
+                        <td>Generic substitution allowed</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Medication Section Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/MedicationStatement-uscore-ms1.xml"/>
+        </entry>
+    </section>
+    <!--  Medical Equipment Section Narrative -->
+    <section>
+        <title value="Medical Equipment Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="46264-8"/>
+                <display value="Medical equipment"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Supply/Device</b>
+                        </td>
+                        <td>
+                            <b>Date Supplied</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Automatic Implantable cardioverter/defbrillator</td>
+                        <td>2008/11/16</td>
+                    </tr>
+                    <tr>
+                        <td>Wheelchair</td>
+                        <td>1999/12/01</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+    </section>
+    <!--  Plan of Treatment Section Narrative -->
+    <section>
+        <title value="Plan of Treatment Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="18776-5"/>
+                <display value="Plan of treatment"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Planned Activity</b>
+                        </td>
+                        <td>
+                            <b>Period</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Colonoscopy</td>
+                        <td>2010/08/16 - 2010/08/16</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td>Recommendation to Exercise</td>
+                        <td>2015/10/29</td>
+                        <td>Ongoing</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+    </section>
+    <!--  Problem Section Narrative -->
+    <section>
+        <title value="Problem Section"/>
+        <code>
+            <coding>
+                    <system value="http://loinc.org"/>
+                    <code value="11450-4"/>
+                    <display value="Problem List"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Problem Name</b>
+                        </td>
+                        <td>
+                            <b>Type</b>
+                        </td>
+                        <td>
+                            <b>Onset Date</b>
+                        </td>
+                        <td>
+                            <b>Abatement Date</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Fever</td>
+                        <td>Condition</td>
+                        <td>2016-04-01</td>
+                        <td>2016-04-14</td>
+                        <td>Complete</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Problem Section Condition Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/Condition-hc1.xml"/>
+        </entry>
+    </section>
+    <!--  Procedures Section Narrative -->
+    <section>
+        <title value="Procedures Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="47519-4"/>
+                <display value="History of procedures"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Procedure Name</b>
+                        </td>
+                        <td>
+                            <b>Body Site</b>
+                        </td>
+                        <td>
+                            <b>Performer</b>
+                        </td>
+                        <td>
+                            <b>Date Performed</b>
+                        </td>
+                        <td>
+                            <b>Reason</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Appendectomy (Procedure)</td>
+                        <td>Abdomen</td>
+                        <td>Dr. Adam Everyman</td>
+                        <td>20160405</td>
+                        <td>Generalized abdominal pain 24 hours. Localized in RIF with rebound and guarding</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Procedures Section Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/Procedure-rehab.xml"/>
+        </entry>
+    </section>
+    <!--  Results Section Narrative -->
+    <section>
+        <title value="Results Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="30954-2"/>
+                <display value="Relevant diagnostic tests and laboratory data"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Result Type</b>
+                        </td>
+                        <td>
+                            <b>Quantity Value</b>
+                        </td>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td>
+                            <b>Status</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Glucose [Moles/volume] in Blood</td>
+                        <td>6.3 mmol/l</td>
+                        <td>2016/04/01</td>
+                        <td>Final</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Results Section Observation Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/Observation-usg.xml"/>
+        </entry>
+    </section>
+    <!--  Vital Signs Section Narrative -->
+    <section>
+        <title value="Vital Signs Section"/>
+        <code>
+            <coding>
+                <system value="http://loinc.org"/>
+                <code value="8716-3"/>
+                <display value="Vital signs"/>
+            </coding>
+        </code>
+        <text>
+            <status value="generated"/>
+            <div
+                xmlns="http://www.w3.org/1999/xhtml">
+                <table>
+                    <tr>
+                        <td>
+                            <b>Vital Sign</b>
+                        </td>
+                        <td>
+                            <b>Date</b>
+                        </td>
+                        <td>
+                            <b>Value</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Temperature</td>
+                        <td>2016/04/05</td>
+                        <td>39 Degrees Celcius</td>
+                    </tr>
+                </table>
+            </div>
+        </text>
+        <!--  Vital Signs Section Observation Resource -->
+        <entry>
+            <reference value="http://hl7.org/fhir/us/core/Observation-temperature.xml"/>
+        </entry>
+    </section>
+</Composition>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t23"/>
+  <url value="urn:uuid:2e28117d-bb6f-4d8e-9ccd-5472535cc2d6"/>
+  <name value="t23"/>
+  <status value="draft"/>
+  <description value="fixture for #23: Test Slicing - unsorted differential"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient"/>
+    </element>
+    <element>
+      <path value="Patient.contact"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="gender"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.contact"/>
+      <sliceName value="males"/>
+    </element>
+    <element>
+      <path value="Patient.contact.gender"/>
+      <fixedCode value="male"/>
+    </element>
+    <element>
+      <path value="Patient.contact.telecom"/>
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>

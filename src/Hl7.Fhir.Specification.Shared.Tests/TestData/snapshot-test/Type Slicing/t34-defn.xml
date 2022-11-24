@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="extension-identifier-status"/>
+  <url value="http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status"/>
+  <name value="IdentifierStatus"/>
+  <title value="VhDir Identifier Status"/>
+  <status value="draft"/>
+  <kind value="complex-type"/>
+  <abstract value="false"/>
+  <context>
+    <type value="element"/>
+    <expression value="Identifier"/>
+  </context>
+  <type value="Extension"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Extension">
+      <path value="Extension"/>
+      <short value="Status"/>
+      <max value="1"/>
+      <isModifier value="false"/>
+    </element>
+    <element id="Extension.url">
+      <path value="Extension.url"/>
+      <fixedUri value="http://www.fhir.org/guides/test3/StructureDefinition/extension-identifier-status"/>
+    </element>
+    <element id="Extension.valueCode">
+      <path value="Extension.valueCode"/>
+      <label value="status"/>
+      <short value="active|inactive|issued in error|revoked|pending"/>
+      <definition value="Describes the status of an identifier"/>
+      <min value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <binding>
+        <strength value="preferred"/>
+        <valueSet value="http://www.fhir.org/guides/test3/ValueSet/blah-codes"/>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

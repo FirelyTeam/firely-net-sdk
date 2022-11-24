@@ -1,4 +1,0 @@
-<Patient xmlns="http://hl7.org/fhir">
-  <id value="patient-circle2-bad-target"/>
-  <gender value="male"/>
-</Patient>

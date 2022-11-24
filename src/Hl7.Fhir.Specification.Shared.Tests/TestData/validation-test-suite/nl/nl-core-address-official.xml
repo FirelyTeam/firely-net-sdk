@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="nl-core-address-official" />
+  <url value="http://fhir.nl/fhir/StructureDefinition/nl-core-address-official" />
+  <version value="2.0.0" />
+  <name value="nl core address official" />
+  <title value="nl-core-address-official" />
+  <status value="active" />
+  <publisher value="HL7 Netherlands" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="Mark an address as an 'officially registered' address. In Dutch context that means it is registered in the Basisregistratie persoonsgegevens (BRP)" />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.1" />
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <contextType value="resource" />
+  <context value="Address" />
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Extension.url">
+      <path value="Extension.url" />
+      <fixedUri value="http://fhir.nl/fhir/StructureDefinition/nl-core-address-official" />
+    </element>
+    <element id="Extension.value[x]:valueBoolean">
+      <path value="Extension.valueBoolean" />
+      <sliceName value="valueBoolean" />
+      <short value="true if part of an official registry. false if it is not" />
+      <definition value="When the value is true, this address is marked to be part of an official registry (Dutch realm: BRP). When the value is false, this address is explicitly marked as not part of an official registry." />
+      <alias value="true als deze deel is van een officieel register. false indien dat niet het geval is" />
+      <min value="1" />
+      <type>
+        <code value="boolean" />
+      </type>
+      <meaningWhenMissing value="When an address is not marked explicitly as official=true|false then no information can be inferred from that." />
+      <mapping>
+        <identity value="rim" />
+        <map value="AD/@use[.='OR']" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>
