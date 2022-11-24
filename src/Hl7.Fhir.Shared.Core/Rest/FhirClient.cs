@@ -8,14 +8,12 @@
 
 using Hl7.Fhir.Model;
 using System;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirClient : BaseFhirClient
+    public class FhirClient : CommonFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -30,20 +28,9 @@ namespace Hl7.Fhir.Rest
         /// </param>
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
-        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null)
-            : base(endpoint, ModelInfo.ModelInspector, ModelInfo.Version, settings)
+        public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null) :
+            base(endpoint, ModelInfo.ModelInspector, ModelInfo.Version, settings, messageHandler)
         {
-            // If user does not supply message handler, create our own and add decompression strategy in default handler.
-            var handler = messageHandler ?? new HttpClientHandler()
-            {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            };
-
-            HttpClientRequester requester = new HttpClientRequester(Endpoint, Settings, handler, messageHandler == null);
-            Requester = requester;
-
-            // Expose default request headers to user.
-            RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
         /// <summary>
@@ -60,13 +47,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="httpClient"></param>
         public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null)
-            : base(endpoint, ModelInfo.ModelInspector, ModelInfo.Version, settings)
+            : base(endpoint, httpClient, ModelInfo.ModelInspector, ModelInfo.Version, settings)
         {
-            HttpClientRequester requester = new HttpClientRequester(Endpoint, Settings, httpClient);
-            Requester = requester;
-
-            // Expose default request headers to user.
-            RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
         /// <summary>
@@ -103,29 +85,6 @@ namespace Hl7.Fhir.Rest
         public FhirClient(string endpoint, HttpClient httpClient, FhirClientSettings settings = null)
             : this(new Uri(endpoint), httpClient, settings)
         {
-        }
-
-        /// <summary>
-        /// Default request headers that can be modified to persist default headers to internal client.
-        /// </summary>
-        public HttpRequestHeaders RequestHeaders { get; protected set; }
-
-        /// <summary>
-        /// Override dispose in order to clean up request headers tied to disposed requester.
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    this.RequestHeaders = null;
-                    base.Dispose(disposing);
-                }
-
-                disposedValue = true;
-            }
         }
     }
 }

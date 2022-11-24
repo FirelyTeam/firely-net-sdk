@@ -80,6 +80,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Specification.Data", "Speci
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.STU3.Specification.Data", "src\Hl7.Fhir.STU3.Specification.Data\Hl7.Fhir.STU3.Specification.Data.csproj", "{B6FF0C25-0922-4A9E-BC00-AD822EF3EBBE}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shared.Core", "src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.shproj", "{C1652FE8-B037-4DF2-8588-AAC5827AF7C7}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Hl7.Fhir.Shared.Specification", "src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.shproj", "{3D696D26-C0FF-4C6C-B3B7-CFFB4F74079F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -284,7 +288,7 @@ Global
 		{16DC5969-D626-4BEA-AD2C-9E2077C4432B} = {5BE51C56-82E6-4665-AAF0-8C02341E2FA7}
 		{89850B42-8C34-40F8-A2B3-6447D53B5A37} = {5BE51C56-82E6-4665-AAF0-8C02341E2FA7}
 		{8417CB38-2B1B-41B8-A2A0-9FEAF2B5E51D} = {5BE51C56-82E6-4665-AAF0-8C02341E2FA7}
-		{5BE51C56-82E6-4665-AAF0-8C02341E2FA7} = {7089FA86-6527-4DFA-8018-AFEF25D74A48}
+		{5BE51C56-82E6-4665-AAF0-8C02341E2FA7} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 		{D7AEAE85-EEE2-4A91-9745-2429AB468DCB} = {2F40FABD-3062-491F-AE59-7EE29EA17558}
 		{03C86C5D-2C38-4C60-8E3C-831E19180E33} = {2F40FABD-3062-491F-AE59-7EE29EA17558}
 		{D26A8164-4607-454B-AEBE-4218971560FF} = {2F40FABD-3062-491F-AE59-7EE29EA17558}
@@ -292,5 +296,16 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD5B5B64-FEB1-4E05-90A1-64F3A1A0EB75}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{09fde03b-ebbf-4896-bda7-4f24e6429f8f}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{09fde03b-ebbf-4896-bda7-4f24e6429f8f}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{0c8e3262-fdef-4c0c-906d-668ebb34b74d}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{0c8e3262-fdef-4c0c-906d-668ebb34b74d}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{3d696d26-c0ff-4c6c-b3b7-cffb4f74079f}*SharedItemsImports = 13
+		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{8d6a9ac4-42a0-4cc9-b5b7-e87d4b18df65}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{9c69f3ec-abda-43f7-99bf-f794779ff69f}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{9c69f3ec-abda-43f7-99bf-f794779ff69f}*SharedItemsImports = 5
+		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{c1652fe8-b037-4df2-8588-aac5827af7c7}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal

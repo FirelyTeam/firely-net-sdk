@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(resourceIds.Count, numCoreDataTypes);
 
             // Assert.IsTrue(resourceIds.All(url => ModelInfo.CanonicalUriForFhirCoreType));
-            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName)).ToArray();
+            var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
             // Boths arrays should contains same urls, possibly in different order
             Assert.AreEqual(coreTypeUris.Length, resourceIds.Count);
             Assert.IsTrue(coreTypeUris.All(url => resourceIds.Contains(url)));

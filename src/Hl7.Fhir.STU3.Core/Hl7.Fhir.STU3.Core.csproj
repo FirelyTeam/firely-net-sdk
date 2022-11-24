@@ -2,6 +2,7 @@
 
 	<Import Project="..\firely-net-sdk.props" />
 	<Import Project="..\platforms.props" />
+	<Import Project="..\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems" Label="Shared" />
 
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.STU3</PackageId>
