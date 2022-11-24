@@ -188,7 +188,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Serialization test project
-          projects: '**/publish/Hl7.Fhir.Serialization.Tests.dll'
+          projects: '**/publish/Hl7.Fhir.*.Serialization.Tests.dll'
   - job:
     displayName: Tests Specification test project
     steps:
@@ -196,7 +196,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Specification test project
-          projects: '**/publish/Hl7.Fhir.Specification.Tests.dll' 
+          projects: '**/publish/Hl7.Fhir.*.Specification.Tests.dll' 
   - job:
     displayName: Tests Core test project
     steps:
@@ -204,7 +204,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Core test project
-          projects: '**/publish/Hl7.Fhir.Core.Tests.dll'
+          projects: '**/publish/Hl7.Fhir.*.Core.Tests.dll'
   - job:
     displayName: Tests ElementModel test project
     steps:
@@ -212,7 +212,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests ElementModel test project
-          projects: '**/publish/Hl7.Fhir.ElementModel.Tests.dll'
+          projects: '**/publish/Hl7.Fhir.*.ElementModel.Tests.dll'
 
 - stage: deploy_git
   displayName: Deploy to GitHub
