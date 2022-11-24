@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Specification.Tests
         private static string prepareExampleDirectory(out int numFiles)
         {
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
-            var zip = new ZipCacher(zipFile);
+            var zip = new ZipCacher(zipFile, Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString()));
             var zipPath = zip.GetContentDirectory();
 
             var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
@@ -67,10 +67,10 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void ZipCacherShouldCache()
         {
-            var cacheKey = Guid.NewGuid().ToString();
+            var cacheDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
 
-            var fa = new ZipCacher(zipFile, cacheKey);
+            var fa = new ZipCacher(zipFile, cacheDir);
 
             Assert.IsFalse(fa.IsActual());
 
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(firstRun > secondRun);
 
-            fa = new ZipCacher(zipFile, cacheKey);
+            fa = new ZipCacher(zipFile, cacheDir);
 
             Assert.IsTrue(fa.IsActual());
 

@@ -29,11 +29,5 @@
 		<ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
 	</ItemGroup>
 	
-	<ItemGroup>
-		<EmbeddedResource Include="xhtml\fhir-single.zip">
-			<LogicalName>xhtml.fhir-single.zip</LogicalName>
-		</EmbeddedResource>
-	</ItemGroup>
-	
 	
 </Project>

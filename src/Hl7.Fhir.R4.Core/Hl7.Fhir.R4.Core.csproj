@@ -35,4 +35,9 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
+		<Compile Include="..\Hl7.Fhir.R5.Core\**\*.cs" Exclude="..\Hl7.Fhir.R5.Core\Model\Generated\**;..\Hl7.Fhir.R5.Core\Model\RemovedResources\**;..\Hl7.Fhir.R5.Core\bin\**;..\Hl7.Fhir.R5.Core\obj\**;..\Hl7.Fhir.R5.Core\Specification\Source\CorePackageFileNames.cs;..\Hl7.Fhir.R5.Core\Properties\AssemblyInfo.cs;..\Hl7.Fhir.R5.Core\Model\IConformanceResource.cs">
+			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Compile>
+	</ItemGroup>
 </Project>
