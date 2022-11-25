@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
-	<Import Project="..\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems" Label="Shared" />
+	<Import Project="..\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems" Label="Shared" />
 
 	<Import Project="..\firely-net-sdk-tests.props" />
 

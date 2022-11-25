@@ -19,11 +19,9 @@
         </text>
         <status value="unknown"/>
         <intent value="order"/>
-        <medication>
-          <reference>
-            <reference value="Medication/example"/>
-          </reference>
-        </medication>
+        <medicationReference>
+          <reference value="Medication/example"/>
+        </medicationReference>
         <subject>
           <reference value="Patient/347"/>
         </subject>

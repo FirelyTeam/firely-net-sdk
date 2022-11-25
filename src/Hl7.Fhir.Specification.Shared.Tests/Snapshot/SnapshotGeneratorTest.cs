@@ -47,11 +47,7 @@ using T = System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass, TestCategory("Snapshot")]
-#if PORTABLE45
-	public class PortableSnapshotGeneratorTest
-#else
-    public class SnapshotGeneratorTest2
-#endif
+    public partial class SnapshotGeneratorTest2
     {
         private SnapshotGenerator _generator;
         private IResourceResolver _standardFhirSource;
@@ -6270,52 +6266,6 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
-        private static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
-        {
-            Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
-            Name = "MedicationUsageWithSimpleQuantitySlice",
-            Url = @"http://example.org/fhir/StructureDefinition/MedicationUsageWithSimpleQuantitySlice",
-            Derivation = StructureDefinition.TypeDerivationRule.Constraint,
-            Kind = StructureDefinition.StructureDefinitionKind.Resource,
-            Differential = new StructureDefinition.DifferentialComponent()
-            {
-                Element = new List<ElementDefinition>()
-                {
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
-                    {
-                        Slicing = new ElementDefinition.SlicingComponent()
-                        {
-                            Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
-                        }
-                    },
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
-                    {
-                        SliceName = "doseSimpleQuantity",
-                        Type = new List<ElementDefinition.TypeRefComponent>()
-                        {
-                            new ElementDefinition.TypeRefComponent()
-                            {
-                                Code = FHIRAllTypes.Quantity.GetLiteral(),
-                                Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity) }
-                            }
-                        }
-                    },
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
-                    {
-                        SliceName = "dosePeriod",
-                        Type = new List<ElementDefinition.TypeRefComponent>()
-                        {
-                            new ElementDefinition.TypeRefComponent()
-                            {
-                                Code = FHIRAllTypes.Period.GetLiteral()
-                            }
-                        }
-                    },
-
-                }
-            }
-        };
 
         [TestMethod]
         public async T.Task TestSimpleQuantitySlice()
@@ -6326,7 +6276,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
-            (_, var expanded) = await generateSnapshotAndCompare(sd);
+            (_, StructureDefinition expanded) = await generateSnapshotAndCompare(sd);
             dumpOutcome(_generator.Outcome);
             Assert.IsTrue(expanded.HasSnapshot);
             var elems = expanded.Snapshot.Element;

@@ -417,8 +417,8 @@ Global
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{4ff21c9f-6acb-4fd0-acd0-e0d8f4d321e9}*SharedItemsImports = 5
 		src\Hl7.Fhir.Core.Shared.Tests\Hl7.Fhir.Core.Shared.Tests.projitems*{6bb8bba9-2089-45ae-b54a-d2470ba8fc76}*SharedItemsImports = 5
 		src\Hl7.Fhir.Core.Shared.Tests\Hl7.Fhir.Core.Shared.Tests.projitems*{711e442d-c3ef-48bf-87fc-e89198f3645a}*SharedItemsImports = 5
-		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{73b84142-be9a-4c4e-8cdb-05da785f1308}*SharedItemsImports = 5
-		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{745baee7-a494-49ac-9b16-8d045191096c}*SharedItemsImports = 5
+		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{73b84142-be9a-4c4e-8cdb-05da785f1308}*SharedItemsImports = 5
+		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{745baee7-a494-49ac-9b16-8d045191096c}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{8d6a9ac4-42a0-4cc9-b5b7-e87d4b18df65}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{9c69f3ec-abda-43f7-99bf-f794779ff69f}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{9c69f3ec-abda-43f7-99bf-f794779ff69f}*SharedItemsImports = 5
@@ -426,7 +426,7 @@ Global
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{a6c175b5-11a0-4b01-804c-fb7f278eeefa}*SharedItemsImports = 13
 		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{bf947d03-072e-4bce-8f55-a3343550a5e2}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems*{c1652fe8-b037-4df2-8588-aac5827af7c7}*SharedItemsImports = 13
-		src\Hl7.Fhir.Shared.Specification\Hl7.Fhir.Shared.Specification.projitems*{ec476fdc-dd07-4966-bd3c-09374b97f218}*SharedItemsImports = 5
+		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{ec476fdc-dd07-4966-bd3c-09374b97f218}*SharedItemsImports = 5
 		src\Hl7.Fhir.Core.Shared.Tests\Hl7.Fhir.Core.Shared.Tests.projitems*{ff310658-a747-4ed0-87f2-fe5994ec24d0}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

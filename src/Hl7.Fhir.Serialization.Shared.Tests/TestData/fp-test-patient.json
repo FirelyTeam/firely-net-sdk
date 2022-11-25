@@ -82,7 +82,7 @@
                       "code": "COMORB"
                     }
                   ],
-                  "type": "coding",
+                  "type": "choice",
                   "answerValueSet": "#yesno",
                   "item": [
                     {
@@ -103,7 +103,7 @@
                               "code": "COMORBCAR"
                             }
                           ],
-                          "type": "coding",
+                          "type": "choice",
                           "answerValueSet": "#yesno"
                         },
                         {
@@ -120,7 +120,7 @@
                               "display": "Angina (disorder)"
                             }
                           ],
-                          "type": "coding",
+                          "type": "choice",
                           "answerValueSet": "#yesno"
                         },
                         {
@@ -132,7 +132,7 @@
                               "display": "Myocardial infarction (disorder)"
                             }
                           ],
-                          "type": "coding",
+                          "type": "choice",
                           "answerValueSet": "#yesno"
                         }
                       ]
