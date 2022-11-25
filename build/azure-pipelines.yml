@@ -45,16 +45,6 @@ stages:
       submodules: true
       fetchDepth: 1
     - template: templates/apply-versioning-steps-template.yml
-    
-    - powershell: |
-         [xml]$xml = Get-Content ./src/firely-net-sdk.props
-         #Get the variable RunFhirPathTests
-         [string]$RunFhirPathTests = $xml.Project.PropertyGroup.RunFhirPathTests
-         $RunFhirPathTests = $RunFhirPathTests.Trim()
-         Write-Host "RunFhirPathTests: $RunFhirPathTests"
-         Write-Host "##vso[task.setvariable variable=RunFhirPathTests;isOutput=true]$RunFhirPathTests"
-      displayName: Extract variable RunFhirPathTests
-      name: obtainFhirPathTest
 
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
@@ -80,20 +70,10 @@ stages:
         command: publish
         projects: |
          **/Hl7.*Tests/*.csproj
-         !**/Hl7.FhirPath.R4.Tests/*.csproj
+         **/Hl7.FhirPath.R4.Tests/*.csproj
         publishWebProjects: false
         zipAfterPublish: false
         arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
-
-    - task: DotNetCoreCLI@2
-      displayName: Create Test artifacts for FhirPath R4
-      inputs:
-        command: publish
-        projects: '**/Hl7.FhirPath.R4.Tests/*.csproj'
-        publishWebProjects: false
-        zipAfterPublish: false
-        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
-      condition: and(succeeded(), eq(variables['obtainFhirPathTest.RunFhirPathTests'], 'true'))
 
     - task: CopyFiles@2
       displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
@@ -158,8 +138,6 @@ stages:
 - stage: test
   displayName: Test
   dependsOn: build
-  variables:
-    RunFhirPathTests: $[ stageDependencies.build.restoreAndBuild.outputs['obtainFhirPathTest.RunFhirPathTests'] ]
   jobs:
   - job:
     displayName: Tests common test projects
@@ -180,23 +158,77 @@ stages:
         parameters:
           testRunTitle: Tests FhirPath Core test project
           projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
-    condition: and(succeeded(), eq(variables['RunFhirPathTests'], 'true'))
   - job:
-    displayName: Tests Serialization test project
+    displayName: Tests Serialization STU3 test project
     steps:
       - checkout: none
       - template: templates/test-job-template.yml
         parameters:
-          testRunTitle: Tests Serialization test project
-          projects: '**/publish/Hl7.Fhir.*.Serialization.Tests.dll'
+          testRunTitle: Tests Serialization STU3 test project
+          projects: |
+            **/publish/Hl7.Fhir.STU3.Serialization.Tests.dll
   - job:
-    displayName: Tests Specification test project
+    displayName: Tests Serialization R4 test project
     steps:
       - checkout: none
       - template: templates/test-job-template.yml
         parameters:
-          testRunTitle: Tests Specification test project
-          projects: '**/publish/Hl7.Fhir.*.Specification.Tests.dll' 
+          testRunTitle: Tests Serialization R4 test project
+          projects: |
+            **/publish/Hl7.Fhir.R4.Serialization.Tests.dll
+  - job:
+    displayName: Tests Serialization R4B test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization R4B test project
+          projects: |
+            **/publish/Hl7.Fhir.R4B.Serialization.Tests.dll
+  - job:
+    displayName: Tests Serialization R5 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization R5 test project
+          projects: |
+            **/publish/Hl7.Fhir.R5.Serialization.Tests.dll
+
+  - job:
+    displayName: Tests Specification STU3 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification STU3 test project
+          projects: '**/publish/Hl7.Fhir.STU3.Specification.Tests.dll' 
+
+  - job:
+    displayName: Tests Specification R4 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification R4 test project
+          projects: '**/publish/Hl7.Fhir.R4.Specification.Tests.dll' 
+
+  - job:
+    displayName: Tests Specification R4B test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification R4B test project
+          projects: '**/publish/Hl7.Fhir.R4B.Specification.Tests.dll' 
+  - job:
+    displayName: Tests Specification R5 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification R5 test project
+          projects: '**/publish/Hl7.Fhir.R5.Specification.Tests.dll' 
   - job:
     displayName: Tests Core test project
     steps:

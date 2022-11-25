@@ -4,7 +4,6 @@
 
 	<PropertyGroup>
     <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
-    <ContainsTests>true</ContainsTests>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,11 +12,6 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="TestData\bundle-contained-references.xml" />
-    <None Remove="TestData\Large-QuestionnaireResponse.xml" />
-  </ItemGroup>
-  
   <ItemGroup>
     <ProjectReference Include="..\Hl7.Fhir.R4.Core\Hl7.Fhir.R4.Core.csproj" />
     <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
