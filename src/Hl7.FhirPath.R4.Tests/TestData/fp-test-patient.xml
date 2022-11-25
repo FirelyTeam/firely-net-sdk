@@ -92,7 +92,7 @@
               <system value="http://example.org/system/code/questions"/>
               <code value="COMORB"/>
             </code>
-            <type value="coding"/>
+            <type value="choice"/>
             <answerValueSet value="ValueSet/yesno" />
             <item>
               <!--     COMORBIDITY/CARDIAL     -->
@@ -109,7 +109,7 @@
                   <system value="http://example.org/system/code/questions"/>
                   <code value="COMORBCAR"/>
                 </code>
-                <type value="coding"/>
+                <type value="choice"/>
                 <answerValueSet value="ValueSet/yesno" />
               </item>
               <item>
@@ -126,7 +126,7 @@
                   <code value="194828000"/>
                   <display value="Angina (disorder)"/>
                 </code>
-                <type value="coding"/>
+                <type value="choice"/>
                 <answerValueSet value="ValueSet/yesno" />
               </item>
               <item>
@@ -136,7 +136,7 @@
                   <code value="22298006"/>
                   <display value="Myocardial infarction (disorder)"/>
                 </code>
-                <type value="coding"/>
+                <type value="choice"/>
                 <answerValueSet value="ValueSet/yesno" />
               </item>
             </item>
