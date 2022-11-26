@@ -51,9 +51,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (JsonSourceException jsonSourceException)
             {
-                // This is necessary to capture the correct error position path and line number 
-                source.GetReader(ref reader);
-                throw new JsonException(jsonSourceException.Message);
+                throw new JsonException(jsonSourceException.Message, jsonSourceException.Path, jsonSourceException.LineNumber, jsonSourceException.BytePositionInLine);
             }
         }
 

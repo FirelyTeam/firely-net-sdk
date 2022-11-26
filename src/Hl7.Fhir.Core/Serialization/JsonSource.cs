@@ -3,6 +3,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using Hl7.Fhir.Model;
@@ -12,10 +13,18 @@ namespace Hl7.Fhir.Serialization
 {
     internal class JsonSourceException : Exception
     {
-        public JsonSourceException(string message) : base(message)
+        public JsonSourceException(string message, string path, long lineNumber, long bytePositionInLine) : base(message)
         {
-            // Empty
+            Path = path;
+            LineNumber = lineNumber;
+            BytePositionInLine = bytePositionInLine;
         }
+
+        public string Path { get; }
+
+        public long LineNumber { get; }
+
+        public long BytePositionInLine { get; }
     }
 
     internal ref struct JsonSource
@@ -65,14 +74,14 @@ namespace Hl7.Fhir.Serialization
             {
                 throw CreateWrongResourceTypeException(expectedResourceType, resourceType);
             }
-            SetHasElements();
+            SetHasNonEmptyElements();
         }
 
         public string GetElementId()
         {
             if (TryGetNonEmptyString(out var id))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 return id;
             }
             return null;
@@ -82,7 +91,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var url))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 return url;
             }
             return null;
@@ -100,7 +109,7 @@ namespace Hl7.Fhir.Serialization
                     }
                     catch (FormatException ex)
                     {
-                        throw new JsonSourceException(ex.Message);
+                        throw CreateException(ex.Message);
                     }
 
                     // The old parser optionally validates the XML against the XHtml schema, with code like this:
@@ -115,7 +124,7 @@ namespace Hl7.Fhir.Serialization
                     //
                     // ValidateFhirXhtml is by default false and cannot be set via ParserSettings though
                 }
-                SetHasElements();
+                SetHasNonEmptyElements();
                 return xml;
             }
             return null;
@@ -146,7 +155,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (!isRoot)
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                 }
                 return result;
             }
@@ -362,7 +371,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirBase64Binary == null)
                     {
                         fhirBase64Binary = new Base64Binary();
@@ -377,7 +386,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirCode == null)
                 {
                     fhirCode = new Code();
@@ -396,12 +405,12 @@ namespace Hl7.Fhir.Serialization
                 {
                     if (!_settings.AllowUnrecognizedEnums)
                     {
-                        throw new JsonSourceException($"'{code}' is not a valid {EnumUtility.GetName<TEnum>()}");
+                        throw CreateException($"'{code}' is not a valid {EnumUtility.GetName<TEnum>()}");
                     }
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirCode == null)
                     {
                         fhirCode = new Code<TEnum>();
@@ -416,7 +425,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetBoolean(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirBoolean == null)
                 {
                     fhirBoolean = new FhirBoolean();
@@ -436,7 +445,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirDate == null)
                     {
                         fhirDate = new Date();
@@ -458,7 +467,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirDateTime == null)
                     {
                         fhirDateTime = new FhirDateTime();
@@ -479,7 +488,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirInstant == null)
                     {
                         fhirInstant = new Instant();
@@ -500,7 +509,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirTime == null)
                     {
                         fhirTime = new Time();
@@ -515,7 +524,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirString == null)
                 {
                     fhirString = new FhirString();
@@ -529,7 +538,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirMarkdown == null)
                 {
                     fhirMarkdown = new Markdown();
@@ -543,7 +552,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirUri == null)
                 {
                     fhirUri = new FhirUri();
@@ -557,7 +566,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirUrl == null)
                 {
                     fhirUrl = new Url();
@@ -571,7 +580,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirUuid == null)
                 {
                     fhirUuid = new Uuid();
@@ -585,7 +594,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirOid == null)
                 {
                     fhirOid = new Oid();
@@ -599,7 +608,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirCanonical == null)
                 {
                     fhirCanonical = new Canonical();
@@ -619,7 +628,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirInteger == null)
                     {
                         fhirInteger = new Integer();
@@ -640,7 +649,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirPositiveInt == null)
                     {
                         fhirPositiveInt = new PositiveInt();
@@ -661,7 +670,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirUnsignedInt == null)
                     {
                         fhirUnsignedInt = new UnsignedInt();
@@ -682,7 +691,7 @@ namespace Hl7.Fhir.Serialization
                 }
                 else
                 {
-                    SetHasElements();
+                    SetHasNonEmptyElements();
                     if (fhirDecimal == null)
                     {
                         fhirDecimal = new FhirDecimal();
@@ -697,7 +706,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetNonEmptyString(out var value))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 if (fhirId == null)
                 {
                     fhirId = new Id();
@@ -712,7 +721,7 @@ namespace Hl7.Fhir.Serialization
             var elementToPopulate = element ?? new T();
             if (PopulateBase(elementToPopulate, isRoot: false))
             {
-                SetHasElements();
+                SetHasNonEmptyElements();
                 return elementToPopulate;
             }
             return element;
@@ -721,7 +730,8 @@ namespace Hl7.Fhir.Serialization
         public void SetList(Base element, string jsonPropertyName)
         {
             var elementName = GetElementName(jsonPropertyName, out var _);
-            var elementsWithNull = _states.Peek().ElementsWithNull;
+            var currentState = _states.Peek();
+            var elementsWithNull = currentState.ListElementsWithNull;
             var hadNulls = elementsWithNull.ContainsKey(elementName);
 
             if (_reader.TokenType != JsonTokenType.StartArray)
@@ -737,14 +747,16 @@ namespace Hl7.Fhir.Serialization
                 var index = 0;
                 while (_reader.Read() && _reader.TokenType != JsonTokenType.EndArray)
                 {
+                    currentState.CurrentArrayIndex = index;
                     element.SetListElementFromJson(jsonPropertyName, index, ref this);
                     index++;
                 }
+                currentState.CurrentArrayIndex = null;
             }
 
             if (hadNulls)
             {
-                ProcessPropertyWithNull(elementsWithNull, elementName, hasMatchingProperty: true);
+                ProcessListElementWithNulls(elementsWithNull, elementName, hasMatchingProperty: true);
                 elementsWithNull.Remove(elementName);
             }
         }
@@ -776,7 +788,7 @@ namespace Hl7.Fhir.Serialization
                     var elementName = GetElementName(jsonPropertyName, out var _);
                     throw CreateRepeatedElementException(elementName);
                 }
-                state.CurrentJsonPropertyName = jsonPropertyName;
+                state.CurrentPropertyName = jsonPropertyName;
                 if (!element.SetElementFromJson(jsonPropertyName, ref this))
                 {
                     if (jsonPropertyName == "fhir_comments")
@@ -788,23 +800,23 @@ namespace Hl7.Fhir.Serialization
                     }
                     else if (!_settings.AcceptUnknownMembers)
                     {
-                        throw new JsonSourceException($"Unrecognized element '{jsonPropertyName}'");
+                        throw CreateException($"Unrecognized element '{jsonPropertyName}'");
                     }
                     _reader.Skip();
                 }
             }
-            var elementsWithNull = state.ElementsWithNull;
+            var elementsWithNull = state.ListElementsWithNull;
             foreach (var elementName in elementsWithNull.Keys)
             {
-                ProcessPropertyWithNull(elementsWithNull, elementName, hasMatchingProperty: false);
+                ProcessListElementWithNulls(elementsWithNull, elementName, hasMatchingProperty: false);
             }
             elementsWithNull.Clear();
             _states.Pop();
-            if (!state.HasElements)
+            if (!state.HasNonEmptyElements)
             {
                 if (isRoot || !_settings.PermissiveParsing)
                 {
-                    throw new JsonSourceException("Empty objects are not allowed");
+                    throw CreateException("Empty objects are not allowed");
                 }
                 return false;
             }
@@ -851,11 +863,11 @@ namespace Hl7.Fhir.Serialization
         private void CurrentElementHasNull<TItem>(List<TItem> items)
         {
             var state = _states.Peek();
-            var elementName = GetElementName(state.CurrentJsonPropertyName, out var isShadowProperty);
-            var elementsWithNull = _states.Peek().ElementsWithNull;
+            var elementName = GetElementName(state.CurrentPropertyName, out var isShadowProperty);
+            var elementsWithNull = _states.Peek().ListElementsWithNull;
             if (!elementsWithNull.ContainsKey(elementName))
             {
-                elementsWithNull[elementName] = new PropertyDescription(items, isShadowProperty);
+                elementsWithNull[elementName] = new ListElementDescription(items, isShadowProperty);
             }
         }
 
@@ -867,14 +879,16 @@ namespace Hl7.Fhir.Serialization
                 jsonPropertyName;
         }
 
-        private void ProcessPropertyWithNull(Dictionary<string, PropertyDescription> propertiesWithNull, string elementName, bool hasMatchingProperty)
+        private void ProcessListElementWithNulls(Dictionary<string, ListElementDescription> listElementsWithNulls, string elementName, bool hasMatchingProperty)
         {
-            var propertyDescription = propertiesWithNull[elementName];
+            var propertyDescription = listElementsWithNulls[elementName];
             var items = propertyDescription.Items;
+            // Check if the element still has nulls - normally they should all have been populated after both 'x' and '_x' properties have been processed
             if (items.Contains(null))
             {
                 if (!_settings.PermissiveParsing)
                 {
+                    // We still have nulls, if we are not in permissive parsing mode that is an error
                     var jsonPropertyWithExtraNulls = propertyDescription.IsShadow ?
                         "_" + elementName :
                         elementName;
@@ -884,8 +898,9 @@ namespace Hl7.Fhir.Serialization
                     var message = hasMatchingProperty ?
                         $"The '{jsonPropertyWithExtraNulls}' property has one or more 'null'(s) not matched by values in the '{jsonMatchingProperty}' property" :
                         $"The '{jsonPropertyWithExtraNulls}' property has one or more 'null'(s) and no matching '{jsonMatchingProperty}' property";
-                    throw new JsonSourceException(message);
+                    throw CreateException(message);
                 }
+                // . . .in permissive parsing mode we do not throw an error and we just remove the nulls
                 for (var i = items.Count - 1; i >= 0; i--)
                 {
                     if (items[i] == null)
@@ -925,7 +940,7 @@ namespace Hl7.Fhir.Serialization
                         } 
                     }
                 }
-                throw new JsonSourceException($"Missing '{ResourceTypePropertyName}' property");
+                throw CreateException($"Missing '{ResourceTypePropertyName}' property");
             }
             finally
             {
@@ -933,9 +948,9 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private void SetHasElements()
+        private void SetHasNonEmptyElements()
         {
-            _states.Peek().HasElements = true;
+            _states.Peek().HasNonEmptyElements = true;
         }
 
         private bool TryGetNonEmptyString(out string value)
@@ -1023,18 +1038,18 @@ namespace Hl7.Fhir.Serialization
         {
             if (!_settings.PermissiveParsing)
             {
-                throw new JsonSourceException(message);
+                throw CreateException(message);
             }
         }
 
         private JsonSourceException CreateWrongResourceTypeException(string expectedResourceType, string actualResourceType)
         {
-            return new JsonSourceException($"Expected a {expectedResourceType} but found a {actualResourceType}");
+            return CreateException($"Expected a {expectedResourceType} but found a {actualResourceType}");
         }
 
         private JsonSourceException CreateUnknownResourceTypeException(string resourceType)
         {
-            return new JsonSourceException($"Unknown resource type '{resourceType}'");
+            return CreateException($"Unknown resource type '{resourceType}'");
         }
 
         private JsonSourceException CreateNotAStringException()
@@ -1044,17 +1059,43 @@ namespace Hl7.Fhir.Serialization
 
         private JsonSourceException CreateUnexpectedTokenTypeException(string expected)
         {
-            throw new JsonSourceException($"Expected {expected} but found {TokenDescription()}");
+            throw CreateException($"Expected {expected} but found {TokenDescription()}");
         }
 
         private JsonSourceException CreateEmptyStringException()
         {
-            return new JsonSourceException("Empty strings are not allowed");
+            return CreateException("Empty strings are not allowed");
         }
 
         private JsonSourceException CreateRepeatedElementException(string elementName)
         {
-            return new JsonSourceException($"Element '{elementName}' must not repeat");
+            return CreateException($"Element '{elementName}' must not repeat");
+        }
+
+        private JsonSourceException CreateException(string message)
+        {
+            return new JsonSourceException(message, GetCurrentPath(), GETLINENUMBER.Value(_reader.CurrentState), GETPOSITION.Value(_reader.CurrentState) );
+        }
+
+        private string GetCurrentPath()
+        {
+            var result = string.Empty;
+            foreach (var state in _states.Reverse())
+            {
+                if (state.CurrentPropertyName != null)
+                {
+                    if (result.Length > 0)
+                    {
+                        result += ".";
+                    }
+                    result += state.CurrentPropertyName;
+                }
+                if (state.CurrentArrayIndex != null)
+                {
+                    result += $"[{state.CurrentArrayIndex}]";
+                }
+            }
+            return result;
         }
 
         private string TokenDescription()
@@ -1152,16 +1193,18 @@ namespace Hl7.Fhir.Serialization
 
         private class State
         {
-            public Dictionary<string, PropertyDescription> ElementsWithNull { get; } = new Dictionary<string, PropertyDescription>();
+            public Dictionary<string, ListElementDescription> ListElementsWithNull { get; } = new Dictionary<string, ListElementDescription>();
 
-            public string CurrentJsonPropertyName { get; set; } = null;
+            public string CurrentPropertyName { get; set; } = null;
 
-            public bool HasElements { get; set; } = false;
+            public int? CurrentArrayIndex { get; set; } = null;
+
+            public bool HasNonEmptyElements { get; set; } = false;
         }
 
-        private struct PropertyDescription
+        private struct ListElementDescription
         {
-            public PropertyDescription(System.Collections.IList items, bool isShadow)
+            public ListElementDescription(System.Collections.IList items, bool isShadow)
             {
                 Items = items ?? throw new ArgumentNullException(nameof(items));
                 IsShadow = isShadow;
@@ -1169,6 +1212,22 @@ namespace Hl7.Fhir.Serialization
 
             public System.Collections.IList Items { get; }
             public bool IsShadow { get; }
+        }
+
+        // While we are waiting for this https://github.com/dotnet/runtime/issues/28482,
+        // there's no other option than to just force our way to these valuable properties.
+        private static readonly Lazy<Func<JsonReaderState, long>> GETLINENUMBER =
+            new Lazy<Func<JsonReaderState, long>>(() => GetField<JsonReaderState, long>("_lineNumber"));
+        private static readonly Lazy<Func<JsonReaderState, long>> GETPOSITION =
+            new Lazy<Func<JsonReaderState, long>>(() => GetField<JsonReaderState, long>("_bytePositionInLine"));
+
+        private static Func<C, T> GetField<C, T>(string fieldName)
+        {
+            var field = typeof(C).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            if (field is null) throw new ArgumentException($"Cannot find field {fieldName} in type {typeof(C).Name}.", nameof(fieldName));
+            return getField;
+
+            T getField(C instance) => (T)field.GetValue(instance);
         }
 
         private Utf8JsonReader _reader;

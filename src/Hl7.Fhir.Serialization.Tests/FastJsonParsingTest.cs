@@ -771,11 +771,8 @@ namespace Hl7.Fhir.Serialization.Tests
             void TestValidDateTime(string dateTimeString)
             {
                 var observation = JsonSerializer.Deserialize<Model.R4.Observation>(
-$@"{{
-    ""resourceType"":""Observation"",
-    ""effectiveDateTime"": ""{dateTimeString}""
-}}",
-                        new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                    $"{{\"resourceType\":\"Observation\", \"effectiveDateTime\": \"{dateTimeString}\"}}",
+                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
                 );
                 Assert.AreEqual(dateTimeString, IsType<FhirDateTime>(observation.Effective).Value);
                 Assert.IsNull(observation.Effective.ElementId);
@@ -1970,12 +1967,80 @@ $@"{{
                 "Empty strings are not allowed"
             );
 
-            Throws(
+            var jsonException = Throws(
                 () => JsonSerializer.Deserialize<Model.R4.Patient>(
                     "{\"resourceType\":\"Patient\",\"deceasedBoolean\":",
                     new JsonSerializerOptions().ForFhir(Model.Version.R4)
                 ),
                 "Expected depth to be zero at the end of the JSON payload. There is an open JSON object or array that should be closed."
+            );
+            Assert.AreEqual(0, jsonException.LineNumber);
+            Assert.AreEqual(44, jsonException.BytePositionInLine);
+            var formatException = jsonException.ToFormatException();
+            Assert.AreEqual(
+                "Expected depth to be zero at the end of the JSON payload. There is an open JSON object or array that should be closed. (at line 1, 45)",
+                formatException.Message
+            );
+
+            var bundleWithInnerErrorJson =
+@"{
+    ""resourceType"":""Bundle"",
+    ""entry"":[
+        {
+            ""fullUrl"": ""Patient/1"",
+            ""resource"": {
+                ""resourceType"":""Patient"",
+                ""gender"": ""male"",
+                ""name"": [
+                    {
+                        ""family"": ""Smith"",
+                        ""given"": [
+                            ""John"",
+                            ""R.""
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            ""fullUrl"": ""Patient/2"",
+            ""resource"": {
+                ""resourceType"":""Patient"",
+                ""gender"": ""female"",
+                ""name"": [
+                    {
+                        ""family"": ""Smith"",
+                        ""given"": [
+                            ""Jane""
+                        ]
+                    }
+                ],
+                ""address"": [
+                    {
+                        ""city"": ""Ann Arbor""
+                    },
+                    {
+                        ""city"": 13
+                    }
+                ]
+            }
+        }
+    ]
+}";
+            jsonException = Throws(
+                () => JsonSerializer.Deserialize<Model.R4.Bundle>(
+                    bundleWithInnerErrorJson,
+                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                ),
+                "Expected a string but found a number ('13')"
+            );
+            Assert.AreEqual("entry[1].resource.address[1].city", jsonException.Path);
+            Assert.AreEqual(37, jsonException.LineNumber);
+            Assert.AreEqual(34, jsonException.BytePositionInLine);
+            formatException = jsonException.ToFormatException();
+            Assert.AreEqual(
+                "Expected a string but found a number ('13') (at entry[1].resource.address[1].city line 38, 35)",
+                formatException.Message
             );
         }
 
@@ -2064,11 +2129,11 @@ $@"{{
         {
             Throws(
                 () => JsonSerializer.Deserialize<Resource>(
-@"{
-    ""resourceType"":""Patient"",
-    ""multipleBirthInteger"": 3,
-    ""multipleBirthBoolean"": true
-}",
+                    @"{
+                        ""resourceType"":""Patient"",
+                        ""multipleBirthInteger"": 3,
+                        ""multipleBirthBoolean"": true
+                    }",
                     new JsonSerializerOptions().ForFhir(Model.Version.R4)
                 ),
                 "Element 'multipleBirth[x]' must not repeat"
@@ -2076,11 +2141,11 @@ $@"{{
 
             Throws(
                 () => JsonSerializer.Deserialize<Resource>(
-@"{
-    ""resourceType"":""Patient"",
-    ""multipleBirthInteger"": 3,
-    ""_multipleBirthBoolean"": {""id"": ""MBB-1""}
-}",
+                    @"{
+                        ""resourceType"":""Patient"",
+                        ""multipleBirthInteger"": 3,
+                        ""_multipleBirthBoolean"": {""id"": ""MBB-1""}
+                    }",
                     new JsonSerializerOptions().ForFhir(Model.Version.R4)
                 ),
                 "Element 'multipleBirth[x]' must not repeat"
@@ -2088,11 +2153,11 @@ $@"{{
 
             Throws(
                 () => JsonSerializer.Deserialize<Resource>(
-@"{
-    ""resourceType"":""Patient"",
-    ""_multipleBirthInteger"": {""id"": ""MBI-1""},
-    ""multipleBirthBoolean"": true
-}",
+                    @"{
+                        ""resourceType"":""Patient"",
+                        ""_multipleBirthInteger"": {""id"": ""MBI-1""},
+                        ""multipleBirthBoolean"": true
+                    }",
                     new JsonSerializerOptions().ForFhir(Model.Version.R4)
                 ),
                 "Element 'multipleBirth[x]' must not repeat"
@@ -2145,14 +2210,14 @@ $@"{{
             return objs[0];
         }
 
-        private static void Throws(Action action, string expectedMessage)
+        private static JsonException Throws(Action action, string expectedMessage)
         {
             var jsonException = Assert.ThrowsException<JsonException>( action );
             Assert.IsTrue(
                 jsonException.Message.StartsWith(expectedMessage),
                 $"Actual message: {jsonException.Message}"
             );
-            Console.WriteLine("Path: {0} | LineNumber: {1} | BytePositionInLine: {2}", jsonException.Path, jsonException.LineNumber, jsonException.BytePositionInLine);
+            return jsonException;
         }
     }
 }
