@@ -1367,6 +1367,28 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void ResourceLanguageTest()
+        {
+            var parameters = JsonSerializer.Deserialize<Parameters>(
+                "{\"resourceType\":\"Parameters\",\"language\":\"en-US\",\"_language\":{\"id\":\"L-101\"}}",
+                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+            );
+            Assert.AreEqual("en-US", parameters.Language);
+            Assert.AreEqual("L-101", parameters.LanguageElement.ElementId);
+        }
+
+        [TestMethod]
+        public void ResourceImplicitRulesTest()
+        {
+            var parameters = JsonSerializer.Deserialize<Parameters>(
+                "{\"resourceType\":\"Parameters\",\"implicitRules\":\"https://mysite.com/rules\",\"_implicitRules\":{\"id\":\"RULE-101\"}}",
+                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+            );
+            Assert.AreEqual("https://mysite.com/rules", parameters.ImplicitRules);
+            Assert.AreEqual("RULE-101", parameters.ImplicitRulesElement.ElementId);
+        }
+
+        [TestMethod]
         public void SimpleQuantityTest()
         {
             var json = "{\"resourceType\":\"MedicationDispense\", \"dosageInstruction\":[{\"doseQuantity\":{\"value\": 10.7}}]}";

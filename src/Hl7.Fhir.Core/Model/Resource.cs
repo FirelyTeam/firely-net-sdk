@@ -293,16 +293,16 @@ namespace Hl7.Fhir.Model
                     return true;
                 case "implicitRules":
                     ImplicitRulesElement = source.PopulateValue(ImplicitRulesElement);
-                    break;
+                    return true;
                 case "_implicitRules":
                     ImplicitRulesElement = source.Populate(ImplicitRulesElement);
-                    break;
+                    return true;
                 case "language":
                     LanguageElement = source.PopulateValue(LanguageElement);
-                    break;
+                    return true;
                 case "_language":
                     LanguageElement = source.Populate(LanguageElement);
-                    break;
+                    return true;
             }
             return false;
         }
