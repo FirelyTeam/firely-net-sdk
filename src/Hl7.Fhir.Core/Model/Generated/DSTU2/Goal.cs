@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     source.CheckDuplicates<Hl7.Fhir.Model.Date>(Target, "target");
                     Target = source.Populate(Target as Hl7.Fhir.Model.Date);
                     return true;
-                case "targetDuration":
+                case "targetQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Duration>(Target, "target");
                     Target = source.Populate(Target as Hl7.Fhir.Model.DSTU2.Duration);
                     return true;

@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     case "outcome":
                         Outcome = source.Populate(Outcome);
                         return true;
-                    case "onsetAge":
+                    case "onsetQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Age>(Onset, "onset");
                         Onset = source.Populate(Onset as Hl7.Fhir.Model.DSTU2.Age);
                         return true;
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Born, "born");
                     Born = source.Populate(Born as Hl7.Fhir.Model.FhirString);
                     return true;
-                case "ageAge":
+                case "ageQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Age>(Age, "age");
                     Age = source.Populate(Age as Hl7.Fhir.Model.DSTU2.Age);
                     return true;
@@ -710,7 +710,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(Deceased, "deceased");
                     Deceased = source.Populate(Deceased as Hl7.Fhir.Model.FhirBoolean);
                     return true;
-                case "deceasedAge":
+                case "deceasedQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Age>(Deceased, "deceased");
                     Deceased = source.Populate(Deceased as Hl7.Fhir.Model.DSTU2.Age);
                     return true;

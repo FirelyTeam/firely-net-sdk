@@ -1320,6 +1320,14 @@ public class ResourceDetails
         return PrimitiveTypeName;
     }
 
+    public string GetFhirTypeName()
+    {
+        // If this is just a contraint the FHIR type name used for serialization etc. must be the base type name
+        return IsConstraint ?
+            BaseType.Split('.').Last() :
+            FhirName;
+    }
+
     /// <summary>
     /// Dumps the resource details to the specified text writer - used for debugging
     /// </summary>
@@ -1471,11 +1479,7 @@ public class ResourceDetails
             var isResource = !isElement ?
                 ", IsResource=true" :
                 string.Empty;
-            // If this is just a contraint the FHIR type name used for serialization etc. must be the base type name
-            var fhirTypeName = IsConstraint ?
-                BaseType.Split( '.' ).Last() :
-                FhirName;
-            yield return $"[FhirType({version}, \"{ fhirTypeName }\"{ isResource })]";
+            yield return $"[FhirType({version}, \"{ GetFhirTypeName() }\"{ isResource })]";
         }
         yield return $"[DataContract]";
 
@@ -3593,7 +3597,7 @@ public class AllVersionsModelInfo : ModelInfoBase
             .SelectMany(
                 pair => pair.Value.Values
                     .Where(r => !r.IsResource())
-                    .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
+                    .Select(r => Tuple.Create(r.GetFhirTypeName(), "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
             )
             .Distinct()
             .OrderBy(nameAndType => nameAndType.Item1)

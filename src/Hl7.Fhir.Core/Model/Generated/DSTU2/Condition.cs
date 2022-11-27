@@ -884,7 +884,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Onset, "onset");
                     Onset = source.Populate(Onset as Hl7.Fhir.Model.FhirDateTime);
                     return true;
-                case "onsetAge":
+                case "onsetQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Age>(Onset, "onset");
                     Onset = source.Populate(Onset as Hl7.Fhir.Model.DSTU2.Age);
                     return true;
@@ -912,7 +912,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Abatement, "abatement");
                     Abatement = source.Populate(Abatement as Hl7.Fhir.Model.FhirDateTime);
                     return true;
-                case "abatementAge":
+                case "abatementQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Age>(Abatement, "abatement");
                     Abatement = source.Populate(Abatement as Hl7.Fhir.Model.DSTU2.Age);
                     return true;

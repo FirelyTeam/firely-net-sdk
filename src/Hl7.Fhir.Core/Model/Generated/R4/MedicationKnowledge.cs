@@ -1278,7 +1278,7 @@ namespace Hl7.Fhir.Model.R4
                         source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Characteristic, "characteristic");
                         Characteristic = source.Populate(Characteristic as Hl7.Fhir.Model.CodeableConcept);
                         return true;
-                    case "characteristicSimpleQuantity":
+                    case "characteristicQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Characteristic, "characteristic");
                         Characteristic = source.Populate(Characteristic as Hl7.Fhir.Model.SimpleQuantity);
                         return true;
@@ -1730,7 +1730,7 @@ namespace Hl7.Fhir.Model.R4
                         source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Value, "value");
                         Value = source.Populate(Value as Hl7.Fhir.Model.FhirString);
                         return true;
-                    case "valueSimpleQuantity":
+                    case "valueQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Value, "value");
                         Value = source.Populate(Value as Hl7.Fhir.Model.SimpleQuantity);
                         return true;

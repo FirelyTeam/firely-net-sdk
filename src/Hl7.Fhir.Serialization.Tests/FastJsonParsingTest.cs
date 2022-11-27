@@ -1367,6 +1367,19 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void SimpleQuantityTest()
+        {
+            var json = "{\"resourceType\":\"MedicationDispense\", \"dosageInstruction\":[{\"doseQuantity\":{\"value\": 10.7}}]}";
+            var medicationDispense = JsonSerializer.Deserialize<Model.STU3.MedicationDispense>(
+                json,
+                new JsonSerializerOptions().ForFhir(Model.Version.STU3)
+            );
+            var dosageInstruction = Single(medicationDispense.DosageInstruction);
+            var dose = IsType<SimpleQuantity>(dosageInstruction.Dose);
+            Assert.AreEqual(10.7M, dose.Value);
+        }
+
+        [TestMethod]
         public void ListTest()
         {
             // Empty lists are OK

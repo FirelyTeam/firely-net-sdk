@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model.DSTU2
                         source.CheckDuplicates<Hl7.Fhir.Model.Range>(Dose, "dose");
                         Dose = source.Populate(Dose as Hl7.Fhir.Model.Range);
                         return true;
-                    case "doseSimpleQuantity":
+                    case "doseQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Dose, "dose");
                         Dose = source.Populate(Dose as Hl7.Fhir.Model.SimpleQuantity);
                         return true;

@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model.DSTU2
                     case "method":
                         Method = source.Populate(Method);
                         return true;
-                    case "quantitySimpleQuantity":
+                    case "quantityQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Quantity, "quantity");
                         Quantity = source.Populate(Quantity as Hl7.Fhir.Model.SimpleQuantity);
                         return true;

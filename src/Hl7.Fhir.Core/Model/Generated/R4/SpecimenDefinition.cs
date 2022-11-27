@@ -613,7 +613,7 @@ namespace Hl7.Fhir.Model.R4
                     case "capacity":
                         Capacity = source.Populate(Capacity);
                         return true;
-                    case "minimumVolumeSimpleQuantity":
+                    case "minimumVolumeQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(MinimumVolume, "minimumVolume");
                         MinimumVolume = source.Populate(MinimumVolume as Hl7.Fhir.Model.SimpleQuantity);
                         return true;

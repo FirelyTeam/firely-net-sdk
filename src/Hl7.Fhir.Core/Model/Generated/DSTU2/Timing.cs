@@ -431,7 +431,7 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
                 switch (jsonPropertyName)
                 {
-                    case "boundsDuration":
+                    case "boundsQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Duration>(Bounds, "bounds");
                         Bounds = source.Populate(Bounds as Hl7.Fhir.Model.DSTU2.Duration);
                         return true;

@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model.STU3
                     source.CheckDuplicates<Hl7.Fhir.Model.Range>(Dose, "dose");
                     Dose = source.Populate(Dose as Hl7.Fhir.Model.Range);
                     return true;
-                case "doseSimpleQuantity":
+                case "doseQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Dose, "dose");
                     Dose = source.Populate(Dose as Hl7.Fhir.Model.SimpleQuantity);
                     return true;
@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model.STU3
                     source.CheckDuplicates<Hl7.Fhir.Model.Range>(Rate, "rate");
                     Rate = source.Populate(Rate as Hl7.Fhir.Model.Range);
                     return true;
-                case "rateSimpleQuantity":
+                case "rateQuantity":
                     source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Rate, "rate");
                     Rate = source.Populate(Rate as Hl7.Fhir.Model.SimpleQuantity);
                     return true;

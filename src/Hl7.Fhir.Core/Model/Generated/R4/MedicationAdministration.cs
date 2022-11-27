@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model.R4
                         source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(Rate, "rate");
                         Rate = source.Populate(Rate as Hl7.Fhir.Model.Ratio);
                         return true;
-                    case "rateSimpleQuantity":
+                    case "rateQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Rate, "rate");
                         Rate = source.Populate(Rate as Hl7.Fhir.Model.SimpleQuantity);
                         return true;

@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model.R4
                     case "type":
                         Type = source.Populate(Type);
                         return true;
-                    case "valueSimpleQuantity":
+                    case "valueQuantity":
                         source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Value, "value");
                         Value = source.Populate(Value as Hl7.Fhir.Model.SimpleQuantity);
                         return true;
