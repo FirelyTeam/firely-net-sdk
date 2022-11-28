@@ -18,7 +18,7 @@ using System.Xml.Linq;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-    public class ModelTests
+    public partial class ModelTests
     {
         [TestMethod]
         public void ValidateElementAssertions()
@@ -451,20 +451,6 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void TestNamingSystemCanonical()
-        {
-            NamingSystem ns = new NamingSystem();
-
-            Assert.IsNull(ns.Url);
-            Assert.IsNull(ns.UrlElement);
-
-            ns.Url = "http://nu.nl";
-
-            Assert.AreEqual("http://nu.nl", ns.Url);
-            Assert.AreEqual("http://nu.nl", ns.UrlElement.Value);
-        }
-
-        [TestMethod]
         public void TestChildren_EmptyPatient()
         {
             var patient = new Patient();
@@ -724,22 +710,6 @@ namespace Hl7.Fhir.Tests.Model
                     }
                 }
             }
-        }
-        [TestMethod]
-        public void TestCheckMinorVersionCompatibiliy()
-        {
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("5.0.0"));
-            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("5.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.6.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.6"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.1"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("4.0.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.2.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
         }
 
         [TestMethod]

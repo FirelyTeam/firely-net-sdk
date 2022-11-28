@@ -7,16 +7,13 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using Hl7.Fhir.Serialization;
-using System.Xml;
-using static Hl7.Fhir.Tests.TestDataHelper;
 using System.Diagnostics;
+using System.Linq;
+using static Hl7.Fhir.Tests.TestDataHelper;
 using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Tests.Model
@@ -33,17 +30,6 @@ namespace Hl7.Fhir.Tests.Model
             var p2 = (Patient)p.DeepCopy();
             var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
             XmlAssert.AreSame("TestPatient.xml", xml, xml2);
-        }
-
-        [TestMethod]
-        public async Task CheckCopyCarePlan()
-        {
-            string xml = ReadTestData(@"careplan-example-f201-renal.xml");
-
-            var p = await new FhirXmlParser().ParseAsync<CarePlan>(xml);
-            var p2 = (CarePlan)p.DeepCopy();
-            var xml2 = await new FhirXmlSerializer().SerializeToStringAsync(p2);
-            XmlAssert.AreSame("careplan-example-f201-renal.xml", xml, xml2);
         }
 
         [TestMethod]
@@ -68,7 +54,7 @@ namespace Hl7.Fhir.Tests.Model
             var sw = new Stopwatch();
 
             sw.Start();
-            for(var loop=0; loop<1000; loop++)
+            for (var loop = 0; loop < 1000; loop++)
             {
                 p.DeepCopy();
             }

@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <!-- First comment -->
-<Patient xmlns="http://hl7.org/fhir">
+<Patient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://hl7.org/fhir ../../../Hl7.Fhir.Specification/data/fhir-all.xsd"
+ xmlns="http://hl7.org/fhir">
   <!-- Comments here -->
   <id value="pat1"/>
   <!-- where's this comment? -->
   <text>
     <status value="generated"/>
     <div xmlns="http://www.w3.org/1999/xhtml">
-
       <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
-
     </div>
   </text>
   <!-- comment on contained -->
@@ -53,11 +53,13 @@
     </Patient>
   </contained>
   <contained>
-    <Questionnaire xmlns="http://hl7.org/fhir">
+    <Questionnaire>
       <id value="3141"/>
       <text>
         <status value="generated"/>
         <div xmlns="http://www.w3.org/1999/xhtml">
+
+
           <pre>
             Comorbidity? YES
             Cardial Comorbidity? YES
@@ -71,110 +73,112 @@
             pT category: 1a
             ...
           </pre>
+
+
         </div>
       </text>
-      <title value="Cancer Quality Forum Questionnaire 2012"/>
       <status value="draft"/>
       <subjectType value="Patient"/>
       <date value="2012-01"/>
       <item>
-        <!--     COMORBIDITY     -->
-        <!--     First main section of the form, questions about comorbidity     -->
-        <linkId value="1.1"/>
-        <code>
-          <system value="http://example.org/system/code/sections"/>
-          <code value="COMORBIDITY"/>
-        </code>
-        <!--     section contains one question: whether there is comorbidity     -->
-        <type value="group"/>
+        <linkId value="1"/>
+        <text value="Cancer Quality Forum Questionnaire 2012"/>
+        <type value="display" />
         <item>
-          <linkId value="1.1.1"/>
-          <code>
-            <system value="http://example.org/system/code/questions"/>
-            <code value="COMORB"/>
-          </code>
-          <type value="coding"/>
-          <answerValueSet value="ValueSet/yesno" />
-          <item>
-            <!--     COMORBIDITY/CARDIAL     -->
-            <!--     Subsection about specific comorbidity: cardial     -->
-            <linkId value="1.1.1.1"/>
-            <code>
-              <system value="http://example.org/system/code/sections"/>
-              <code value="CARDIAL"/>
-            </code>
-            <type value="group"/>
-            <item>
-              <linkId value="1.1.1.1.1"/>
-              <code>
-                <system value="http://example.org/system/code/questions"/>
-                <code value="COMORBCAR"/>
-              </code>
-              <type value="coding"/>
-              <answerValueSet value="ValueSet/yesno" />
-            </item>
-            <item>
-              <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
-             CT code     -->
-              <linkId value="1.1.1.1.2"/>
-              <code>
-                <system value="http://example.org/system/code/items"/>
-                <code value="COMCAR00"/>
-                <display value="Angina Pectoris"/>
-              </code>
-              <code>
-                <system value="http://snomed.info/sct"/>
-                <code value="194828000"/>
-                <display value="Angina (disorder)"/>
-              </code>
-              <type value="coding"/>
-              <answerValueSet value="ValueSet/yesno" />
-            </item>
-            <item>
-              <linkId value="1.1.1.1.3"/>
-              <code>
-                <system value="http://snomed.info/sct"/>
-                <code value="22298006"/>
-                <display value="Myocardial infarction (disorder)"/>
-              </code>
-              <type value="coding"/>
-              <answerValueSet value="ValueSet/yesno" />
-            </item>
-          </item>
-          <item>
-            <!--     COMORBIDITY/VASCULAR     -->
-            <linkId value="1.1.1.2"/>
-            <code>
-              <system value="http://example.org/system/code/sections"/>
-              <code value="VASCULAR"/>
-            </code>
-            <type value="group"/>
-          </item>
-        </item>
-      </item>
-      <!--     Todo: What's supposed to go here?     -->
-      <item>
-        <!--     HISTOPATHOLOGY     -->
-        <linkId value="1.2"/>
-        <code>
-          <system value="http://example.org/system/code/sections"/>
-          <code value="HISTOPATHOLOGY"/>
-        </code>
-        <type value="group"/>
-        <item>
-          <linkId value="1.2.1"/>
+          <!--     COMORBIDITY     -->
+          <!--     First main section of the form, questions about comorbidity     -->
+          <linkId value="1.1"/>
           <code>
             <system value="http://example.org/system/code/sections"/>
-            <code value="ABDOMINAL"/>
+            <code value="COMORBIDITY"/>
           </code>
-          <type value="group"/>
+          <!--     section contains one question: whether there is comorbidity     -->
+          <type value="display" />
           <item>
-            <linkId value="1.2.1.2"/>
+            <linkId value="1.1.1"/>
             <code>
               <system value="http://example.org/system/code/questions"/>
-              <code value="STADPT"/>
-              <display value="pT category"/>
+              <code value="COMORB"/>
             </code>
+            <type value="coding"/>
+            <answerValueSet value="#yesno"/>
+            <item>
+              <!--     COMORBIDITY/CARDIAL     -->
+              <!--     Subsection about specific comorbidity: cardial     -->
+              <linkId value="1.1.1.1"/>
+              <code>
+                <system value="http://example.org/system/code/sections"/>
+                <code value="CARDIAL"/>
+              </code>
+              <type value="display" />
+              <item>
+                <linkId value="1.1.1.1.1"/>
+                <code>
+                  <system value="http://example.org/system/code/questions"/>
+                  <code value="COMORBCAR"/>
+                </code>
+                <type value="coding"/>
+                <answerValueSet value="#yesno"/>
+              </item>
+              <item>
+                <!--     This answer carries both the questionnaire-specific name and an equivalent SNOMED
+             CT code     -->
+                <linkId value="1.1.1.1.2"/>
+                <code>
+                  <system value="http://example.org/system/code/questions"/>
+                  <code value="COMCAR00"/>
+                  <display value="Angina Pectoris"/>
+                </code>
+                <code>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="194828000"/>
+                  <display value="Angina (disorder)"/>
+                </code>
+                <type value="coding"/>
+                <answerValueSet value="#yesno"/>
+              </item>
+              <item>
+                <linkId value="1.1.1.1.3"/>
+                <code>
+                  <system value="http://snomed.info/sct"/>
+                  <code value="22298006"/>
+                  <display value="Myocardial infarction (disorder)"/>
+                </code>
+                <type value="coding"/>
+                <answerValueSet value="#yesno"/>
+              </item>
+            </item>
+            <item>
+              <!--     COMORBIDITY/VASCULAR     -->
+              <linkId value="1.1.1.2"/>
+              <code>
+                <system value="http://example.org/system/code/sections"/>
+                <code value="VASCULAR"/>
+              </code>
+              <type value="display" />
+            </item>
+          </item>
+        </item>
+        <!--     Todo: What's supposed to go here?     -->
+        <item>
+          <!--     HISTOPATHOLOGY     -->
+          <linkId value="1.2"/>
+          <code>
+            <system value="http://example.org/system/code/sections"/>
+            <code value="HISTOPATHOLOGY"/>
+          </code>
+          <type value="display" />
+          <item>
+            <linkId value="1.2.1"/>
+            <code>
+              <system value="http://example.org/system/code/sections"/>
+              <code value="ABDOMINAL"/>
+            </code>
+            <type value="display" />
+            <item>
+              <linkId value="1.2.1.2"/>
+              <type value="display" />
+            </item>
           </item>
         </item>
       </item>
@@ -236,6 +240,11 @@
     </organization>
   </contact>
   <communication>
+    <language>
+      <coding>
+        <code value="nl-nl" />
+      </coding>
+    </language>
     <preferred value="true">
       <extension url="http://example.org/StructureDefinition/language-preference">
         <valueCode value="in-writing" />
@@ -243,6 +252,11 @@
     </preferred>
   </communication>
   <communication>
+    <language>
+      <coding>
+        <code value="nl-nl" />
+      </coding>
+    </language>
     <preferred value="true">
       <extension url="http://example.org/StructureDefinition/language-preference">
         <valueCode value="oral" />
