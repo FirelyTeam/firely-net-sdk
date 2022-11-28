@@ -9,6 +9,7 @@
 // To introduce the DSTU2 FHIR specification
 //extern alias dstu2;
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -397,6 +398,7 @@ namespace Hl7.FhirPath.Tests
                 {
                     var snapShotGenerator = new SnapshotGenerator(_resolver);
                     await snapShotGenerator.UpdateAsync(sd);
+                    snapShotGenerator.Outcome?.Errors.Should().Be(0);
                 }
 
                 return sd;

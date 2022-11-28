@@ -24,4 +24,10 @@
 		<PackageReference Include="System.AppContext" Version="4.3.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Content Include="TestData\**\*.xml;TestData\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
 </Project>

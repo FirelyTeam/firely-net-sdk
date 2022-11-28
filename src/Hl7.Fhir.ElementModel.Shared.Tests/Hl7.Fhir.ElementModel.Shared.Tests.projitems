@@ -15,9 +15,6 @@
     <Content Include="$(MSBuildThisFileDirectory)TestData\CCDA_With_Xhtml_Tag.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="$(MSBuildThisFileDirectory)TestData\fp-test-patient.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="$(MSBuildThisFileDirectory)TestData\TestSd\BasicWithTel-StructureDefinition-R4.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
