@@ -654,11 +654,7 @@ namespace Hl7.Fhir.Tests.Model
             {
                 if (type == typeof(Base)) continue;
 
-                var isDataType =
-                    type == typeof(Resource)
-                    || type == typeof(DomainResource)
-                    || (type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(PrimitiveType)));
-                var typeName = ModelInfo.GetFhirTypeNameForType(type);
+                var isDataType = type.CanBeTreatedAsType(typeof(Element)) && !type.CanBeTreatedAsType(typeof(PrimitiveType)); var typeName = ModelInfo.GetFhirTypeNameForType(type);
                 Assert.IsNotNull(typeName);
                 Assert.AreEqual(isDataType, ModelInfo.IsDataType(type), type.Name);
                 Assert.AreEqual(isDataType, ModelInfo.IsDataType(typeName));

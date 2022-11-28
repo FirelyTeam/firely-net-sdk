@@ -26,7 +26,7 @@ using static Hl7.Fhir.Model.ModelInfo;
 namespace Hl7.Fhir.Test.Validation
 {
     [TestClass]
-    public class ValidateSearchExtractionAllExamplesTest
+    public partial class ValidateSearchExtractionAllExamplesTest
     {
         [TestMethod]
         [TestCategory("LongRunner")]
@@ -34,30 +34,21 @@ namespace Hl7.Fhir.Test.Validation
         {
             string examplesZip = @"TestData\examples.zip";
 
-            FhirXmlParser parser = new FhirXmlParser();
+            FhirXmlParser parser = new();
             int errorCount = 0;
             int parserErrorCount = 0;
             int testFileCount = 0;
-            Dictionary<String, int> exampleSearchValues = new Dictionary<string, int>();
-            Dictionary<string, int> failedInvariantCodes = new Dictionary<string, int>();
+            Dictionary<String, int> exampleSearchValues = new();
+            Dictionary<string, int> failedInvariantCodes = new();
 
             using var zip = ZipFile.OpenRead(examplesZip);
             foreach (var entry in zip.Entries)
             {
+                if (mustSkip(entry.Name)) continue;
+
                 Stream file = entry.Open();
                 using (file)
                 {
-                    // Verified examples that fail validations
-
-                    if (entry.Name.Contains("v2-tables"))
-                        continue; // this file is known to have a single dud valueset - have reported on Zulip
-                                  // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
-                    if (entry.Name == "observation-decimal(decimal).xml")
-                        continue; // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
-                    if (entry.Name == "citation-example(example).xml")
-                        continue; // resource Citation is not generated because of generator errors
-
-
                     testFileCount++;
 
                     try
@@ -89,7 +80,7 @@ namespace Hl7.Fhir.Test.Validation
             }
 
             var missingSearchValues = exampleSearchValues.Where(i => i.Value == 0);
-            if (missingSearchValues.Count() > 0)
+            if (missingSearchValues.Any())
             {
                 Debug.WriteLine(String.Format("\r\n------------------\r\nValidation failed, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
                 foreach (var item in missingSearchValues)
@@ -102,6 +93,8 @@ namespace Hl7.Fhir.Test.Validation
 
             Assert.IsTrue(43 >= errorCount, String.Format("Failed Validating, missing data in {0} of {1} search parameters", missingSearchValues.Count(), exampleSearchValues.Count));
             Assert.AreEqual(0, parserErrorCount, String.Format("Failed search parameter data extraction, {0} files failed parsing", parserErrorCount));
+
+            bool mustSkip(string fileName) => _filesToBeSkipped.Any(s => s.StartsWith(fileName));
         }
 
         private static void ExtractValuesForSearchParameterFromFile(Dictionary<string, int> exampleSearchValues, Resource resource)
