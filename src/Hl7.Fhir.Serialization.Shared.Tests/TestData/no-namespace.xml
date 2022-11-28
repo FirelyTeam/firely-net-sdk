@@ -6,9 +6,9 @@
   <type value="searchset"/>
   <total value="3"/>
   <entry>
-    <fullUrl value="https://example.com/base/MedicationRequest/3123"/>
+    <fullUrl value="https://example.com/base/Observation/3123"/>
     <resource>
-      <MedicationRequest>
+      <Observation>
         <id value="3123"/>
         <!--    snip    -->
         <text>
@@ -18,14 +18,10 @@
           </div>
         </text>
         <status value="unknown"/>
-        <intent value="order"/>
-        <medicationReference>
-          <reference value="Medication/example"/>
-        </medicationReference>
         <subject>
           <reference value="Patient/347"/>
         </subject>
-      </MedicationRequest>
+      </Observation>
     </resource>
     <search>
       <mode value="match"/>
