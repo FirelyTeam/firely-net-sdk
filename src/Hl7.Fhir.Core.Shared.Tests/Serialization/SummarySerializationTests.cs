@@ -268,44 +268,44 @@ namespace Hl7.Fhir.Tests.Serialization
                 { "summary\\bundle-summary-count.xml", SummaryType.Count }
             };
 
+            var patientOne = new Patient
+            {
+
+                Id = "patient-one",
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
+                Meta = new Meta { VersionId = "eric-clapton" },
+
+                Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
+
+                Active = true,
+                BirthDate = "2015-07-09",
+                Gender = AdministrativeGender.Male
+            };
+
+            var patientTwo = new Patient()
+            {
+                Id = "patient-two",
+                Active = true,
+                Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
+                Meta = new Meta { VersionId = "bb-king" },
+                Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
+            };
+
+            var bundle = new Bundle()
+            {
+                Id = "my-bundle",
+                Total = 1803,
+                Type = Bundle.BundleType.Searchset,
+                Entry = new List<Bundle.EntryComponent> {
+                        new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
+                        new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
+                    }
+            };
+
             foreach (var pair in data)
             {
                 var expectedFile = pair.Key;
                 var mode = pair.Value;
-
-                var patientOne = new Patient
-                {
-
-                    Id = "patient-one",
-                    Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>A great blues player</div>" },
-                    Meta = new Meta { VersionId = "eric-clapton" },
-
-                    Name = new List<HumanName> { new HumanName { Family = "Clapton", Use = HumanName.NameUse.Official } },
-
-                    Active = true,
-                    BirthDate = "2015-07-09",
-                    Gender = AdministrativeGender.Male
-                };
-
-                var patientTwo = new Patient()
-                {
-                    Id = "patient-two",
-                    Active = true,
-                    Text = new Narrative { Div = "<div xmlns='http://www.w3.org/1999/xhtml'>Another great blues player</div>", Status = Narrative.NarrativeStatus.Additional },
-                    Meta = new Meta { VersionId = "bb-king" },
-                    Name = new List<HumanName> { new HumanName { Family = "King", Use = HumanName.NameUse.Nickname } }
-                };
-
-                var bundle = new Bundle()
-                {
-                    Id = "my-bundle",
-                    Total = 1803,
-                    Type = Bundle.BundleType.Searchset,
-                    Entry = new List<Bundle.EntryComponent> {
-                        new Bundle.EntryComponent { Resource = patientOne, FullUrl = "http://base/Patient/patient-one", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } },
-                        new Bundle.EntryComponent { Resource = patientTwo, FullUrl = "http://base/Patient/patient-two", Search = new Bundle.SearchComponent() { Mode = Bundle.SearchEntryMode.Match } }
-                    }
-                };
 
                 bool inJson = Path.GetExtension(expectedFile) == ".json";
                 var actualData = inJson ? await FhirJsonSerializer.SerializeToStringAsync(bundle, mode) :
