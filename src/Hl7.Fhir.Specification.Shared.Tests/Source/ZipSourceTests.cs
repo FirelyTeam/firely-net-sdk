@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -10,7 +8,7 @@ using System.Linq;
 namespace Hl7.Fhir.Specification.Tests.Source
 {
     [TestClass]
-    public class ZipSourceTests
+    public partial class ZipSourceTests
     {
         /// <summary>
         /// This unittest proves issue https://github.com/FirelyTeam/firely-net-sdk/issues/883
@@ -54,23 +52,5 @@ namespace Hl7.Fhir.Specification.Tests.Source
             var summaries = zip.ListSummaries();
             summaries.First().Origin.Should().StartWith(extractDir);
         }
-
-
-        //issue #2031
-        [TestMethod]
-        public void TestIncorrectFullUrlForValuesetComposeIncludeValueSetTitle()
-        {
-            var _resolver = ZipSource.CreateValidationSource();
-            var stream = _resolver.LoadArtifactByName("extension-definitions.xml");
-            var text = new StreamReader(stream).ReadToEnd();
-            var bundle = new FhirXmlParser().Parse<Bundle>(text);
-
-            var extensionEntry = bundle.Entry.Where(e => e.FullUrl == "http://hl7.org/fhir/StructureDefinition/valueset-compose-include-valueSetTitle").FirstOrDefault();
-            extensionEntry.Should().NotBeNull();
-            var sd = extensionEntry.Resource as StructureDefinition;
-            sd.Url.Should().Be("http://hl7.org/fhir/StructureDefinition/valueset-compose-include-valueSetTitle");
-            sd.Id.Should().Be("valueset-compose-include-valueSetTitle");
-        }
-
     }
 }

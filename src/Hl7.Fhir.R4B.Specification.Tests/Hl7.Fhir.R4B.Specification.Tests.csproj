@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="TestData\**\*.xml;TestData\**\*.json">
+		<Content Include="TestData\**\*.xml;TestData\**\*.json; TestData\**\*.tgz">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>

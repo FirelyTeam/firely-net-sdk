@@ -10,8 +10,8 @@ namespace Firely.Fhir.Packages.Tests
     [TestClass]
     public class FhirPackageSourceTests
     {
-        private const string CORE_PACKAGE_PATH = "TestData/hl7.fhir.r5.core.tgz";
-        private const string CORE_EXPANSIONS_PACKAGE_PATH = "TestData/hl7.fhir.r5.expansions.tgz";
+        private const string CORE_PACKAGE_PATH = "TestData/" + CorePackageFileNames.CORE_PACKAGENAME;
+        private const string CORE_EXPANSIONS_PACKAGE_PATH = "TestData/" + CorePackageFileNames.EXPANSIONS_PACKAGENAME;
         private readonly FhirPackageSource _resolver = new(new string[] { CORE_PACKAGE_PATH, CORE_EXPANSIONS_PACKAGE_PATH });
 
         [TestMethod]

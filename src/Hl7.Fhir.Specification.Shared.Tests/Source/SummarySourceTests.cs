@@ -19,7 +19,7 @@ using Tasks = System.Threading.Tasks;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-    public class SummarySourceTests
+    public partial class SummarySourceTests
     {
         [ClassInitialize]
         public static void SetupSource(TestContext t)
@@ -28,60 +28,6 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         static ISummarySource source = null;
-
-
-        [TestMethod]
-        public void GetSomeArtifactsBySummary()
-        {
-            var fa = source;
-
-            var summaries = fa.ListSummaries();
-
-            var summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/administrative-gender");
-            Assert.IsNotNull(summary);
-            var vs = fa.LoadBySummary(summary);
-            Assert.IsNotNull(vs);
-            Assert.IsTrue(vs is ValueSet);
-
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/ValueSet/location-status");
-            Assert.IsNotNull(summary);
-            vs = fa.LoadBySummary(summary);
-            Assert.IsNotNull(vs);
-            Assert.IsTrue(vs is ValueSet);
-
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Condition");
-            Assert.IsNotNull(summary);
-            var rs = fa.LoadBySummary(summary);
-            Assert.IsNotNull(rs);
-            Assert.IsTrue(rs is StructureDefinition);
-            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
-
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
-            Assert.IsNotNull(summary);
-            rs = fa.LoadBySummary(summary);
-            Assert.IsNotNull(rs);
-            Assert.IsTrue(rs is StructureDefinition);
-
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/Money");
-            Assert.IsNotNull(summary);
-            var dt = fa.LoadBySummary(summary);
-            Assert.IsNotNull(dt);
-            Assert.IsTrue(dt is StructureDefinition);
-
-            // Try to find a core extension
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/valueset-system");
-            Assert.IsNotNull(summary);
-            var ext = fa.LoadBySummary(summary);
-            Assert.IsNotNull(ext);
-            Assert.IsTrue(ext is StructureDefinition);
-
-            // Try to find an additional US profile (they are distributed with the spec for now)
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
-            Assert.IsNotNull(summary);
-            var us = fa.LoadBySummary(summary);
-            Assert.IsNotNull(us);
-            Assert.IsTrue(us is StructureDefinition);
-        }
 
         [TestMethod]
         public void ListSummaries()

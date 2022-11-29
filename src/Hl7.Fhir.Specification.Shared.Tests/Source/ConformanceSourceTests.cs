@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Specification.Tests
     // [WMR 20171016] Renamed from: ArtifactResolverTests
 
     [TestClass]
-    public class ConformanceSourceTests
+    public partial class ConformanceSourceTests
     {
         [ClassInitialize]
         public static void SetupSource(TestContext _)
@@ -154,48 +154,6 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
             Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
             Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
-        }
-
-        [TestMethod]
-        public void GetSomeArtifactsById()
-        {
-            var fa = ZipSource.CreateValidationSource();
-
-            //MV: No longer part of the spec
-            //var vs = fa.ResolveByUri("http://terminology.hl7.org/ValueSet/v2-0292");
-            //Assert.IsNotNull(vs);
-            //Assert.IsTrue(vs is ValueSet);
-
-            var vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/administrative-gender");
-            Assert.IsNotNull(vs);
-            Assert.IsTrue(vs is ValueSet);
-
-            vs = fa.ResolveByUri("http://hl7.org/fhir/ValueSet/location-status");
-            Assert.IsNotNull(vs);
-            Assert.IsTrue(vs is ValueSet);
-
-            var rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Condition");
-            Assert.IsNotNull(rs);
-            Assert.IsTrue(rs is StructureDefinition);
-            Assert.IsTrue(rs.GetOrigin().EndsWith("profiles-resources.xml"));
-
-            rs = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ValueSet");
-            Assert.IsNotNull(rs);
-            Assert.IsTrue(rs is StructureDefinition);
-
-            var dt = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/Money");
-            Assert.IsNotNull(dt);
-            Assert.IsTrue(dt is StructureDefinition);
-
-            // Try to find a core extension
-            var ext = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/valueset-system");
-            Assert.IsNotNull(ext);
-            Assert.IsTrue(ext is StructureDefinition);
-
-            // Try to find an additional non-hl7 profile (they are distributed with the spec for now)
-            var us = fa.ResolveByUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
-            Assert.IsNotNull(us);
-            Assert.IsTrue(us is StructureDefinition);
         }
 
         [TestMethod]
