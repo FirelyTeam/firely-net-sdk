@@ -2725,7 +2725,9 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var coreTypes = ModelInfo.FhirCsTypeToString.Values.Where(s => ModelInfo.IsPrimitive(s) || ModelInfo.IsDataType(s));
                 var coreDefs = await T.Task.WhenAll(coreTypes.Select(ct => resolver.FindStructureDefinitionForCoreTypeAsync(ct)));
-                ProfileInfo[] coreProfileInfo = coreDefs.Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
+                ProfileInfo[] coreProfileInfo = coreDefs
+                    .Where(sd => sd is not null)
+                    .Select(sd => new ProfileInfo() { Url = sd.Url, BaseDefinition = sd.BaseDefinition }).ToArray();
 
                 await expandStructuresBasedOn(resolver, coreProfileInfo, null);
             }

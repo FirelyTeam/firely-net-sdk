@@ -252,6 +252,8 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestZipSourceMask()
         {
+            var specialTypes = new[] { "BackboneType", "Base", "DataType", "PrimitiveType" };
+
             var zipFile = Path.Combine(Directory.GetCurrentDirectory(), "specification.zip");
             Assert.IsTrue(File.Exists(zipFile), "Error! specification.zip is not available.");
             var za = new ZipSource(zipFile)
@@ -260,8 +262,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
             var artifacts = za.ListArtifactNames().ToArray();
-            Assert.AreEqual(1, artifacts.Length);
-            Assert.AreEqual("profiles-types.xml", artifacts[0]);
+            artifacts.Should().BeEquivalentTo(new[] { "profiles-types.xml" });
 
             var resourceIds = za.ListResourceUris(ResourceType.StructureDefinition).ToList();
             Assert.IsNotNull(resourceIds);
@@ -270,17 +271,24 @@ namespace Hl7.Fhir.Specification.Tests
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
             resourceIds.Remove("http://hl7.org/fhir/StructureDefinition/MoneyQuantity");
 
+            foreach (var specialType in specialTypes)
+            {
+                resourceIds.Remove(ModelInfo.CanonicalUriForFhirCoreType(specialType));
+            }
+
+
             // + total number of known FHIR core types
             // - total number of known (concrete) resources
             // - 1 for abstract type Resource
             // - 1 for abstract type DomainResource
             // =======================================
             //   total number of known FHIR (complex & primitive) datatypes
-            var coreDataTypes = ModelInfo.FhirCsTypeToString.Where(kvp => !ModelInfo.IsKnownResource(kvp.Key)
-                                                                            && kvp.Value != "Resource"
-                                                                            && kvp.Value != "DomainResource"
-                                                                            )
-                                                            .Select(kvp => kvp.Value);
+
+            var coreDataTypes = ModelInfo.FhirCsTypeToString
+                .Where(kvp => (ModelInfo.IsDataType(kvp.Key) ||
+                               ModelInfo.IsPrimitive(kvp.Key)) &&
+                              !specialTypes.Contains(kvp.Value))
+                .Select(kvp => kvp.Value);
 
             var coreTypeUris = coreDataTypes.Select(typeName => ModelInfo.CanonicalUriForFhirCoreType(typeName).Value).ToArray();
 

@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Linq;
@@ -49,33 +51,48 @@ namespace Firely.Fhir.Packages.Tests
         {
             //check StructureDefinitions
             var names = _resolver.ListArtifactNames();
-            names.Should().Contain("StructureDefinition-Patient.json");
+            names.Select(n => Path.GetFileNameWithoutExtension(n)).Should().Contain("StructureDefinition-Patient");
         }
 
         [TestMethod]
         public void TestLoadArtifactByName()
         {
             //check StructureDefinitions
-            var stream = _resolver.LoadArtifactByName("StructureDefinition-Patient.json");
+            string filename = getArtifactFileName("StructureDefinition-Patient");
+            var stream = _resolver.LoadArtifactByName(filename);
 
             using var reader = new StreamReader(stream);
             var artifact = reader.ReadToEnd();
 
-            artifact.Should().Contain("resourceType\":\"StructureDefinition\"");
-            artifact.Should().Contain("\"id\":\"Patient\"");
+            var resource = parse(artifact);
+
+            resource.Should().NotBeNull();
+            resource.Should().BeOfType<StructureDefinition>().Subject.Id.Should().Be("Patient");
         }
+
+        private Base parse(string input) =>
+            input.StartsWith('{') ?
+                new FhirJsonParser().Parse(input) :
+                new FhirXmlParser().Parse(input);
+
+        private string getArtifactFileName(string artifactName) =>
+                    _resolver.ListArtifactNames()
+                        .Single(n => Path.GetFileNameWithoutExtension(n) == artifactName);
 
         [TestMethod]
         public void TestLoadArtifactByPath()
         {
             //check StructureDefinitions
-            var stream = _resolver.LoadArtifactByPath("package/StructureDefinition-Patient.json");
+            string filename = "package/" + getArtifactFileName("StructureDefinition-Patient");
+            var stream = _resolver.LoadArtifactByPath(filename);
 
             using var reader = new StreamReader(stream);
             var artifact = reader.ReadToEnd();
 
-            artifact.Should().Contain("resourceType\":\"StructureDefinition\"");
-            artifact.Should().Contain("\"id\":\"Patient\"");
+            var resource = parse(artifact);
+
+            resource.Should().NotBeNull();
+            resource.Should().BeOfType<StructureDefinition>().Subject.Id.Should().Be("Patient");
         }
 
         [TestMethod]
