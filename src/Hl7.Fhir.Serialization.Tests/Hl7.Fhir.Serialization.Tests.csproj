@@ -29,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="TestData\bundle.json" />
     <Content Remove="TestData\patient.json" />
   </ItemGroup>
 
@@ -68,6 +69,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\bundle.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\patient.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

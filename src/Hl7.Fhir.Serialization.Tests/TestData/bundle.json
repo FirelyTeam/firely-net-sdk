@@ -1,0 +1,4399 @@
+{
+  "resourceType": "Bundle",
+  "type": "searchset",
+  "link": [
+    {
+      "relation": "self",
+      "url": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit?patient.family=Mirren&_include=ExplanationOfBenefit%3Acoverage&_include=ExplanationOfBenefit%3Apatient&_include=ExplanationOfBenefit%3Aprovider&_count=100"
+    }
+  ],
+  "entry": [
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/9a6b869a-47b7-ec11-818a-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "9a6b869a-47b7-ec11-818a-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-04-08T14:24:33.733+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#properties",
+            "extension": [
+              {
+                "url": "Source",
+                "valueString": "TN"
+              },
+              {
+                "url": "MedicationName",
+                "valueString": "IPRATROPIUM-ALBUTEROL 0.5-3MG/3 (180)"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "679614053"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                    "code": "P",
+                    "display": "Paid",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "pharmacy"
+            },
+            {
+              "system": "http://anthem.com/codes/TnPharmacy/ClaimType",
+              "code": "P",
+              "display": "Pharmacy",
+              "userSelected": true
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/CARIN-BB-Claim-Type/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/fhir-claim-type-link/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "created": "2019-06-18T00:00:00-05:00",
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/076b869a-47b7-ec11-818a-0a69c1b3225b"
+        },
+        "payee": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/payeetype",
+                "code": "provider"
+              }
+            ]
+          },
+          "party": {
+            "reference": "Practitioner/540accd5-3eb7-ec11-818a-0a69c1b3225b"
+          }
+        },
+        "outcome": "complete",
+        "supportingInfo": [
+          {
+            "sequence": 1,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "refillnum"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "refillnum"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 180.0
+            }
+          },
+          {
+            "sequence": 2,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "dayssupply"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "dayssupply"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 10.0
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "_sequence": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#literal",
+                  "valueString": "6796140"
+                }
+              ]
+            },
+            "productOrService": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/WLP-NDC/MedicationType",
+                  "code": "00487020160",
+                  "display": "IPRATROPIUM/ SOL ALBUTER",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1437702",
+                  "display": "Albuterol 0.833 MG/ML / Ipratropium Bromide 0.167 MG/ML Inhalation Solution",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/ndc",
+                  "code": "00487020160",
+                  "display": "Albuterol 0.833 MG/ML / Ipratropium Bromide 0.167 MG/ML Inhalation Solution",
+                  "userSelected": false
+                }
+              ]
+            },
+            "servicedDate": "2019-06-18"
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 132.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 19.8600000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 19.8600000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 132.0000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                "code": "P",
+                "display": "Paid",
+                "userSelected": true
+              }
+            ]
+          },
+          "amount": {
+            "value": 19.8600000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/936b869a-47b7-ec11-818a-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "936b869a-47b7-ec11-818a-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-04-08T14:24:33.703+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#properties",
+            "extension": [
+              {
+                "url": "Source",
+                "valueString": "TN"
+              },
+              {
+                "url": "MedicationName",
+                "valueString": "HYDRALAZINE HCL 25 MG (90)"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "679617651"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                    "code": "P",
+                    "display": "Paid",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "pharmacy"
+            },
+            {
+              "system": "http://anthem.com/codes/TnPharmacy/ClaimType",
+              "code": "P",
+              "display": "Pharmacy",
+              "userSelected": true
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/CARIN-BB-Claim-Type/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/fhir-claim-type-link/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "created": "2019-06-24T00:00:00-05:00",
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/ea6a869a-47b7-ec11-818a-0a69c1b3225b"
+        },
+        "payee": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/payeetype",
+                "code": "provider"
+              }
+            ]
+          },
+          "party": {
+            "reference": "Practitioner/540accd5-3eb7-ec11-818a-0a69c1b3225b"
+          }
+        },
+        "outcome": "complete",
+        "supportingInfo": [
+          {
+            "sequence": 1,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "refillnum"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "refillnum"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 90.0
+            }
+          },
+          {
+            "sequence": 2,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "dayssupply"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "dayssupply"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 30.0
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "_sequence": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#literal",
+                  "valueString": "6796176"
+                }
+              ]
+            },
+            "productOrService": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/WLP-NDC/MedicationType",
+                  "code": "50111032703",
+                  "display": "HYDRALAZINE  TAB 25MG",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "905225",
+                  "display": "Hydralazine Hydrochloride 25 MG Oral Tablet",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/ndc",
+                  "code": "50111032703",
+                  "display": "Hydralazine Hydrochloride 25 MG Oral Tablet",
+                  "userSelected": false
+                }
+              ]
+            },
+            "servicedDate": "2019-06-24"
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 50.8500000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 9.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 9.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 50.8500000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                "code": "P",
+                "display": "Paid",
+                "userSelected": true
+              }
+            ]
+          },
+          "amount": {
+            "value": 9.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/8c6b869a-47b7-ec11-818a-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "8c6b869a-47b7-ec11-818a-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-04-08T14:24:33.687+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#properties",
+            "extension": [
+              {
+                "url": "Source",
+                "valueString": "TN"
+              },
+              {
+                "url": "MedicationName",
+                "valueString": "IPRATROPIUM-ALBUTEROL 0.5-3MG/3 (252)"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "675757548"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                    "code": "P",
+                    "display": "Paid",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "pharmacy"
+            },
+            {
+              "system": "http://anthem.com/codes/TnPharmacy/ClaimType",
+              "code": "P",
+              "display": "Pharmacy",
+              "userSelected": true
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/CARIN-BB-Claim-Type/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/fhir-claim-type-link/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "created": "2019-06-27T00:00:00-05:00",
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/e16a869a-47b7-ec11-818a-0a69c1b3225b"
+        },
+        "payee": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/payeetype",
+                "code": "provider"
+              }
+            ]
+          },
+          "party": {
+            "reference": "Practitioner/f46a869a-47b7-ec11-818a-0a69c1b3225b"
+          }
+        },
+        "outcome": "complete",
+        "supportingInfo": [
+          {
+            "sequence": 1,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "refillnum"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "refillnum"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 252.0
+            }
+          },
+          {
+            "sequence": 2,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "dayssupply"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "dayssupply"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 14.0
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "_sequence": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#literal",
+                  "valueString": "6757575"
+                }
+              ]
+            },
+            "productOrService": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/WLP-NDC/MedicationType",
+                  "code": "00487020160",
+                  "display": "IPRATROPIUM/ SOL ALBUTER",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "1437702",
+                  "display": "Albuterol 0.833 MG/ML / Ipratropium Bromide 0.167 MG/ML Inhalation Solution",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/ndc",
+                  "code": "00487020160",
+                  "display": "Albuterol 0.833 MG/ML / Ipratropium Bromide 0.167 MG/ML Inhalation Solution",
+                  "userSelected": false
+                }
+              ]
+            },
+            "servicedDate": "2019-06-27"
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 182.4000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 26.6000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 26.6000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 182.4000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                "code": "P",
+                "display": "Paid",
+                "userSelected": true
+              }
+            ]
+          },
+          "amount": {
+            "value": 26.6000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/856b869a-47b7-ec11-818a-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "856b869a-47b7-ec11-818a-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-04-08T14:24:33.657+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-ExplanationOfBenefit-Pharmacy"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#properties",
+            "extension": [
+              {
+                "url": "Source",
+                "valueString": "TN"
+              },
+              {
+                "url": "MedicationName",
+                "valueString": "HYDROXYZINE PAMOATE 25 MG (30)"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "680550909"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                    "code": "P",
+                    "display": "Paid",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "pharmacy"
+            },
+            {
+              "system": "http://anthem.com/codes/TnPharmacy/ClaimType",
+              "code": "P",
+              "display": "Pharmacy",
+              "userSelected": true
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/CARIN-BB-Claim-Type/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/fhir-claim-type-link/Reference",
+              "code": "pharmacy",
+              "userSelected": false
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "created": "2019-06-28T00:00:00-05:00",
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/490accd5-3eb7-ec11-818a-0a69c1b3225b"
+        },
+        "payee": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://terminology.hl7.org/CodeSystem/payeetype",
+                "code": "provider"
+              }
+            ]
+          },
+          "party": {
+            "reference": "Practitioner/fe6a869a-47b7-ec11-818a-0a69c1b3225b"
+          }
+        },
+        "outcome": "complete",
+        "supportingInfo": [
+          {
+            "sequence": 1,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "refillnum"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "refillnum"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 30.0
+            }
+          },
+          {
+            "sequence": 2,
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBSupportingInfoType",
+                  "code": "dayssupply"
+                },
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/ClaimInformationCategory",
+                  "code": "dayssupply"
+                }
+              ]
+            },
+            "valueQuantity": {
+              "value": 8.0
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "item": [
+          {
+            "sequence": 1,
+            "_sequence": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#literal",
+                  "valueString": "6805509"
+                }
+              ]
+            },
+            "productOrService": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/WLP-NDC/MedicationType",
+                  "code": "00185061305",
+                  "display": "HYDROXYZINE PAM 25 MG CAP",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+                  "code": "995253",
+                  "display": "Hydroxyzine Pamoate 25 MG Oral Capsule",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/ndc",
+                  "code": "00185061305",
+                  "display": "Hydroxyzine Pamoate 25 MG Oral Capsule",
+                  "userSelected": false
+                }
+              ]
+            },
+            "servicedDate": "2019-06-28"
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 14.7100000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 5.6700000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 5.6700000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 14.7100000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TnPharmacy/ClaimStatus",
+                "code": "P",
+                "display": "Paid",
+                "userSelected": true
+              }
+            ]
+          },
+          "amount": {
+            "value": 5.6700000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/5f1970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "5f1970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.38+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015195008306"
+          },
+          {
+            "use": "secondary",
+            "value": "cd0fb377-5e51-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-22T00:00:00-04:00",
+          "end": "2019-06-22T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/2b101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-22T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "9596",
+                  "display": "Injury, other and unspecified, hip and thigh",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "9596",
+                  "display": "Hip and thigh injury",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "959.6",
+                  "display": "Hip and thigh injury",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "9596",
+                  "display": "Hip and thigh injury",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "73510",
+                  "display": "Radiologic examination, hip, unilateral; complete, minimum of 2 views",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "73510",
+                  "display": "X-RAY EXAM OF HIP",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 49.1400000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 49.1400000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-17",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/5a1970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "5a1970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.363+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015194014317"
+          },
+          {
+            "use": "secondary",
+            "value": "bd4cf45c-3351-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-22T00:00:00-04:00",
+          "end": "2019-06-22T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/49101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-22T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "518.81",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "65710008",
+                  "display": "Acute respiratory failure (disorder)",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "99233",
+                  "display": "Subsequent hospital care",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "99233",
+                  "display": "SUBSEQUENT HOSPITAL CARE",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-17",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/551970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "551970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.35+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015194014327"
+          },
+          {
+            "use": "secondary",
+            "value": "5a6a88ad-2f51-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-23T00:00:00-04:00",
+          "end": "2019-06-23T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/49101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-23T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "518.81",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "65710008",
+                  "display": "Acute respiratory failure (disorder)",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "99233",
+                  "display": "Subsequent hospital care",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "99233",
+                  "display": "SUBSEQUENT HOSPITAL CARE",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-17",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/501970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "501970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.333+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015196009319"
+          },
+          {
+            "use": "secondary",
+            "value": "684df45c-3351-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-23T00:00:00-04:00",
+          "end": "2019-06-23T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/2b101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-23T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "7859",
+                  "display": "Other symptoms involving cardiovascular system",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "7859",
+                  "display": "Other symptoms involving cardiovascular system",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "785.9",
+                  "display": "Other symptoms involving cardiovascular system",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "7859",
+                  "display": "Other symptoms involving cardiovascular system",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "93925",
+                  "display": "DUPLEX SCAN OF LOWER EXTREMITY ARTE",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "93925",
+                  "display": "LOWER EXTREMITY STUDY",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 125.3700000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 125.3700000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-24",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/4b1970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "4b1970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.317+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015194014339"
+          },
+          {
+            "use": "secondary",
+            "value": "ea4b1ebc-3951-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-24T00:00:00-04:00",
+          "end": "2019-06-24T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/49101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-24T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "518.81",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "65710008",
+                  "display": "Acute respiratory failure (disorder)",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "99233",
+                  "display": "Subsequent hospital care",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "99233",
+                  "display": "SUBSEQUENT HOSPITAL CARE",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-17",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/461970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "461970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.3+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015198029744"
+          },
+          {
+            "use": "secondary",
+            "value": "724df45c-3351-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-25T00:00:00-04:00",
+          "end": "2019-06-25T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/49101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-25T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "518.81",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "65710008",
+                  "display": "Acute respiratory failure (disorder)",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "51881",
+                  "display": "Acute respiratory failure",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "99233",
+                  "display": "Subsequent hospital care",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "99233",
+                  "display": "SUBSEQUENT HOSPITAL CARE",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 240.0000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-24",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/ExplanationOfBenefit/401970ea-845d-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "ExplanationOfBenefit",
+        "id": "401970ea-845d-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-03-03T19:26:50.287+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "uc"
+                }
+              ]
+            },
+            "value": "2015197019603"
+          },
+          {
+            "use": "secondary",
+            "value": "566a88ad-2f51-e611-9456-8cdcd4a8b5cd"
+          }
+        ],
+        "status": "active",
+        "_status": {
+          "extension": [
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                    "code": "P",
+                    "display": "PAID",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+              "code": "professional"
+            }
+          ]
+        },
+        "use": "claim",
+        "patient": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "billablePeriod": {
+          "start": "2019-06-26T00:00:00-04:00",
+          "end": "2019-06-26T00:00:00-04:00"
+        },
+        "_created": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "insurer": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "provider": {
+          "reference": "Practitioner/01101ddd-b359-ea11-815d-0a69c1b3225b"
+        },
+        "outcome": "complete",
+        "diagnosis": [
+          {
+            "extension": [
+              {
+                "url": "http://careevolution.com/fhirextensions#claim-problemDate",
+                "valueDateTime": "2019-06-26T00:00:00-04:00"
+              }
+            ],
+            "sequence": 1,
+            "diagnosisCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/DiagnosisCode",
+                  "code": "V4984",
+                  "display": "Bed confinement status",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/z-ICD9-DONOTUSE/DiagnosisCode",
+                  "version": "LEGACY",
+                  "code": "V4984",
+                  "display": "Bed confinement status",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://hl7.org/fhir/sid/icd-9-cm",
+                  "code": "V49.84",
+                  "display": "Bed confinement status",
+                  "userSelected": false
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ICD9/DiagnosisCode",
+                  "code": "V4984",
+                  "display": "Bed confinement status",
+                  "userSelected": false
+                }
+              ]
+            },
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unsupported"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/CareEvolution/DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": true
+                  },
+                  {
+                    "system": "http://careevolution.com/fhircodes#DiagnosisType",
+                    "code": "Primary",
+                    "display": "Primary",
+                    "userSelected": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "procedure": [
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "A0425",
+                  "display": "GROUND MILEAGE, PER STATUTE MILE",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "A0425",
+                  "display": "Ground mileage",
+                  "userSelected": false
+                }
+              ]
+            }
+          },
+          {
+            "sequence": 1,
+            "type": [
+              {
+                "extension": [
+                  {
+                    "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                    "valueCode": "unknown"
+                  }
+                ],
+                "coding": [
+                  {
+                    "system": "http://careevolution.com/fhircodes#ProcedureType",
+                    "code": "Undefined",
+                    "userSelected": true
+                  }
+                ]
+              }
+            ],
+            "procedureCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/TNMCD/ProcedureCode",
+                  "code": "A0428",
+                  "display": "AMBULANCE SERVICE, BASIC LIFE SUPPO",
+                  "userSelected": true
+                },
+                {
+                  "system": "https://www.cms.gov/Medicare/Coding/HCPCSReleaseCodeSets",
+                  "code": "A0428",
+                  "display": "Bls",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "insurance": [
+          {
+            "extension": [
+              {
+                "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+                "valueCode": "unknown"
+              }
+            ]
+          }
+        ],
+        "adjudication": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 440.7000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          }
+        ],
+        "total": [
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBAdjudication",
+                  "code": "paidtoprovider"
+                }
+              ]
+            },
+            "amount": {
+              "value": 0.0000000000
+            }
+          },
+          {
+            "category": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/adjudication",
+                  "code": "submitted"
+                }
+              ]
+            },
+            "amount": {
+              "value": 440.7000000000
+            }
+          }
+        ],
+        "payment": {
+          "type": {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBPayerAdjudicationStatus",
+                "code": "paid"
+              },
+              {
+                "system": "http://anthem.com/codes/TNMCD/ClaimStatus",
+                "code": "P",
+                "display": "PAID",
+                "userSelected": true
+              }
+            ]
+          },
+          "date": "2019-07-24",
+          "amount": {
+            "value": 0.0000000000
+          }
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Coverage/f3e92fd4-e35d-ec11-8187-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Coverage",
+        "id": "f3e92fd4-e35d-ec11-8187-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2021-12-15T20:16:05.11+00:00",
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-groupName",
+            "valueString": "ESSILORLUXOTTICA"
+          },
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-pharmacyCoverage",
+            "valueString": "Y"
+          },
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-sponsor",
+            "valueString": "CDHP HSA W/NON-INTEGRATED BANKING W/AIM HSA2"
+          },
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-policyNumber",
+            "valueString": "LNC-AN6552996"
+          },
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-insuredName",
+            "valueString": "NANDA, RAJESH"
+          },
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-segment",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/EDW/InsuranceSegment",
+                  "code": "Int",
+                  "display": "Internal",
+                  "userSelected": true
+                }
+              ]
+            }
+          },
+          {
+            "url": "http://careevolution.com/fhirextensions#coverage-type",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/EDW/InsuranceType",
+                  "code": "04",
+                  "display": "Medical",
+                  "userSelected": true
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "value": "ZZZ310E1E16B74E1003820D3E46BC2D5"
+          }
+        ],
+        "_status": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            },
+            {
+              "url": "http://careevolution.com/fhirextensions#term",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://anthem.com/codes/EDW/InsuranceStatus",
+                    "code": "N/A",
+                    "display": "N/A",
+                    "userSelected": true
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "type": {
+          "coding": [
+            {
+              "system": "http://anthem.com/codes/EDW/InsurancePlanType",
+              "code": "212061-ESSILORLUX",
+              "display": "ESSILORLUXOTTICA",
+              "userSelected": true
+            }
+          ]
+        },
+        "subscriber": {
+          "display": "NANDA, RAJESH"
+        },
+        "_subscriberId": {
+          "extension": [
+            {
+              "url": "http://hl7.org/fhir/StructureDefinition/data-absent-reason",
+              "valueCode": "unknown"
+            }
+          ]
+        },
+        "beneficiary": {
+          "reference": "Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+          "identifier": {
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          }
+        },
+        "relationship": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/subscriber-relationship",
+              "code": "other"
+            },
+            {
+              "system": "http://fhir.carevolution.com/codes/FhirCodes/FamilyRelationship",
+              "code": "other",
+              "display": "other",
+              "userSelected": true
+            }
+          ]
+        },
+        "period": {
+          "start": "2020-01-01T00:00:00-05:00",
+          "end": "9999-12-01T23:59:59-04:00"
+        },
+        "class": [
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+                  "code": "plan"
+                }
+              ]
+            },
+            "value": "OH GENERIC HLTH SAVINGS ACCOUNT"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+                  "code": "group"
+                }
+              ]
+            },
+            "value": "212061"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/coverage-class",
+                  "code": "subgroup"
+                }
+              ]
+            },
+            "value": "ESSILORLUXOTTICA"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://careevolution.com/fhir/CoverageClass",
+                  "code": "product"
+                }
+              ]
+            },
+            "value": "GOHS",
+            "name": "OH GENERIC HLTH SAVINGS ACCOUNT"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Patient/be446404-4982-41d5-bdd3-b1dae0d26bd3",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "be446404-4982-41d5-bdd3-b1dae0d26bd3",
+        "meta": {
+          "lastUpdated": "2021-12-28T13:31:59.813+00:00"
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "id": "us-ethn1",
+            "extension": [
+              {
+                "url": "detailed",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2131-1",
+                  "display": "OTHER RACE",
+                  "userSelected": false
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Not Hispanic or Latino"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "id": "us-race1",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2028-9",
+                  "display": "ASIAN",
+                  "userSelected": false
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Asian"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "id": "id1",
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-Cedars",
+            "value": "16f811e9-a448-ea11-815b-0a69c1b3225b"
+          },
+          {
+            "id": "id2",
+            "system": "http://careevolution.com/fhiridentifiers#FhirPatientID",
+            "value": "example"
+          },
+          {
+            "id": "id3",
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "LaraVMirren19550301"
+          },
+          {
+            "id": "id4",
+            "system": "http://hospital.davinciproject.org",
+            "value": "123456"
+          },
+          {
+            "id": "id5",
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "4412d587-e267-ec11-8187-0a69c1b3225b"
+          },
+          {
+            "id": "id6",
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/PACode",
+            "value": "LaraVMirren19550301"
+          },
+          {
+            "id": "id7",
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "16f811e9-a448-ea11-815b-0a69c1b3225b"
+          },
+          {
+            "id": "id8",
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4",
+            "value": "LaraVMirren19550301-NonPharmacy"
+          },
+          {
+            "id": "id9",
+            "system": "http://careevolution.com/fhiridentifiers#FhirPatientID",
+            "value": "9fc3f944-8902-4763-8948-2f7c6d693596"
+          },
+          {
+            "id": "id10",
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "LaraVMirren19550301-NonPharmacy"
+          },
+          {
+            "id": "id11",
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "141970ea-845d-ea11-815d-0a69c1b3225b"
+          },
+          {
+            "id": "id12",
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR",
+            "value": "90a48477-0d58-ea11-815d-0a69c1b3225b"
+          },
+          {
+            "id": "id13",
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "8e488972-0fc5-ea11-8161-0a69c1b3225b"
+          },
+          {
+            "id": "id14",
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/XForm",
+            "value": "16f811e9-a448-ea11-815b-0a69c1b3225b"
+          },
+          {
+            "id": "id15",
+            "system": "http://careevolution.com/fhir/PatientId",
+            "value": "90a48477-0d58-ea11-815d-0a69c1b3225b"
+          }
+        ],
+        "name": [
+          {
+            "id": "name1",
+            "use": "official",
+            "family": "Mirren",
+            "given": [
+              "Lara",
+              "V."
+            ]
+          }
+        ],
+        "telecom": [
+          {
+            "id": "telco1",
+            "system": "phone",
+            "value": "555-555-5555",
+            "use": "home"
+          },
+          {
+            "id": "telco2",
+            "system": "email",
+            "value": "lara.mirren@example.com"
+          }
+        ],
+        "gender": "female",
+        "_gender": {
+          "id": "gender1"
+        },
+        "birthDate": "1955-03-01",
+        "_birthDate": {
+          "id": "birthdate1"
+        },
+        "deceasedBoolean": false,
+        "_deceasedBoolean": {
+          "id": "deceased1"
+        },
+        "address": [
+          {
+            "id": "address1",
+            "line": [
+              "221 Miller St"
+            ],
+            "city": "Orlando",
+            "state": "FL",
+            "postalCode": "32806",
+            "country": "US"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/b30f1ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "b30f1ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-02-27T22:52:44.987+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#practitioner-role",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/Facets/ProviderType",
+                  "code": "333300000X",
+                  "display": "Emergency Response System Companies",
+                  "userSelected": true
+                },
+                {
+                  "system": "http://fhir.carevolution.com/codes/ProviderTaxonomy/Reference",
+                  "code": "333300000X",
+                  "display": "Emergency Response System Companies",
+                  "userSelected": false
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "01975653"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "2546784960"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "01975653"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "Secure & Safe at Home"
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "723 Ravens Blvd"
+            ],
+            "city": "Cocoa Beach",
+            "state": "FL",
+            "postalCode": "32804"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/c00f1ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "c00f1ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-02-27T22:52:45.423+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "159805-ZZ"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "3410835318"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "159805-ZZ"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "MUELLER",
+            "given": [
+              "HANS"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "63 UNION ST"
+            ],
+            "city": "ORLANDO",
+            "state": "FL",
+            "postalCode": "32807"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/da0f1ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "da0f1ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-02-27T22:52:45.627+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "129580-AC"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "4655654539"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "129580-AC"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "MCCLUSKY",
+            "given": [
+              "ROGER"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "11 BADDOUR AVE"
+            ],
+            "city": "ORLANDO",
+            "state": "FL",
+            "postalCode": "32810"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/01101ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "01101ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-02-27T22:52:45.813+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "193247-AD"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "2795376856"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "193247-AD"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "MENACH",
+            "given": [
+              "ISAAC"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "980 HARBOR LAKES DR"
+            ],
+            "city": "ORLANDO",
+            "state": "FL",
+            "postalCode": "32751"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/2b101ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "2b101ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-02-27T22:52:46.11+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "109374-A"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "8246400997"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "109374-A"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "ZALENDIN",
+            "given": [
+              "FRED"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "302 BUSINESS PARK CIR"
+            ],
+            "city": "ORLANDO",
+            "state": "FL",
+            "postalCode": "32751"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/49101ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "49101ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-03-29T23:12:10.887+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#practitioner-role",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://fhir.carevolution.com/codes/FHIR-R4-HL7OrganizationType/CaregiverType",
+                  "code": "prov",
+                  "display": "Healthcare Provider",
+                  "userSelected": true
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "107378-ZX"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "3636189565"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "107378-ZX"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://careevolution.com/fhir/IdentifierType",
+                  "code": "providerid"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/providerid",
+            "value": "1535665"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "BARD",
+            "given": [
+              "ALEXANDER"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "121 S MAIN ST"
+            ],
+            "city": "ORLANDO",
+            "state": "FL",
+            "postalCode": "32806"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/1f111ddd-b359-ea11-815d-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "1f111ddd-b359-ea11-815d-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2020-02-27T22:52:47.83+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "193211-AF"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "8491252606"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "193211-AF"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "KNEHINDE",
+            "given": [
+              "JOE"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "use": "work",
+            "line": [
+              "11 BADDOUR AVE"
+            ],
+            "city": "ORLANDO",
+            "state": "FL",
+            "postalCode": "32810"
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/edd1b23b-de5d-ec11-8187-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "edd1b23b-de5d-ec11-8187-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-01-19T12:59:52.083+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#practitioner-role",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/EDW/CaregiverType",
+                  "code": "48",
+                  "display": "Podiatry",
+                  "userSelected": true
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "BALWAL-ATUL"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "1760461999"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "BALWAL-ATUL"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "BALWAL",
+            "given": [
+              "ATUL"
+            ]
+          }
+        ],
+        "address": [
+          {
+            "line": [
+              "601 PERIFERIC BUSINESS PKWY",
+              "SUITE 267"
+            ],
+            "city": "DAYTON",
+            "state": "OH",
+            "postalCode": "55120",
+            "period": {
+              "start": "2017-08-08T09:27:17.36+00:00"
+            }
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    },
+    {
+      "fullUrl": "https://fhir.careevolution.com/Master.Adapter1.WebClient/api/fhir-r4/Practitioner/490accd5-3eb7-ec11-818a-0a69c1b3225b",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "490accd5-3eb7-ec11-818a-0a69c1b3225b",
+        "meta": {
+          "lastUpdated": "2022-04-08T13:21:51.22+00:00",
+          "profile": [
+            "http://hl7.org/fhir/us/core/StructureDefinition/us-core-practitioner",
+            "http://hl7.org/fhir/us/carin-bb/StructureDefinition/C4BB-Practitioner"
+          ],
+          "source": "http://fhir.carevolution.com/identifiers/CareEvolution/MRN/FHIR-R4"
+        },
+        "extension": [
+          {
+            "url": "http://careevolution.com/fhirextensions#practitioner-role",
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://anthem.com/codes/EDW/CaregiverType",
+                  "code": "Provider",
+                  "display": "Provider",
+                  "userSelected": true
+                }
+              ]
+            }
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://fhir.carevolution.com/identifiers/CareEvolution/CaregiverIdentifier/FHIR-R4",
+            "value": "MC1654929|936|1245271022|TAYLORSVIL"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://hl7.org/fhir/us/carin-bb/CodeSystem/C4BBIdentifierType",
+                  "code": "npi"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-npi",
+            "value": "1245271022"
+          },
+          {
+            "system": "http://fhir.carevolution.com/identifiers/FHIR-R4/Auto_0",
+            "value": "MC1654929|936|1245271022|TAYLORSVIL"
+          },
+          {
+            "system": "http://anthem.com/identifiers/EDW/EnclarityID",
+            "value": "11769167270279800000000048660330865148"
+          },
+          {
+            "type": {
+              "coding": [
+                {
+                  "system": "http://careevolution.com/fhir/IdentifierType",
+                  "code": "providerid"
+                }
+              ]
+            },
+            "system": "http://fhir.carevolution.com/providerid",
+            "value": "502810"
+          }
+        ],
+        "name": [
+          {
+            "use": "official",
+            "_use": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#NameType",
+                        "code": "LegalName",
+                        "display": "Legal Name",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "family": "DONA F NP  CHILDERS"
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "_system": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#ContactInfoType",
+                        "code": "OfficePhone",
+                        "display": "Office Phone",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "value": "7065093000",
+            "use": "work"
+          },
+          {
+            "system": "fax",
+            "_system": {
+              "extension": [
+                {
+                  "url": "http://careevolution.com/fhirextensions#term",
+                  "valueCodeableConcept": {
+                    "coding": [
+                      {
+                        "system": "http://careevolution.com/fhircodes#ContactInfoType",
+                        "code": "Fax",
+                        "display": "Fax",
+                        "userSelected": true
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "value": "7065093271"
+          }
+        ],
+        "address": [
+          {
+            "use": "home",
+            "line": [
+              "TAYLORSVILLE",
+              "97 CHURCH STREET"
+            ],
+            "city": "TAYLORSVILLE",
+            "state": "GA",
+            "postalCode": "30178"
+          },
+          {
+            "use": "work",
+            "line": [
+              "TAYLORSVILLE",
+              "97 CHURCH STREET"
+            ],
+            "city": "TAYLORSVILLE",
+            "state": "GA",
+            "postalCode": "30178",
+            "period": {
+              "start": "2017-09-20T00:38:58.64+00:00"
+            }
+          }
+        ]
+      },
+      "search": {
+        "mode": "include"
+      }
+    }
+  ]
+}

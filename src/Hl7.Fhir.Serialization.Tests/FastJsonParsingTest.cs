@@ -1389,6 +1389,29 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void ElementExtensionTest()
+        {
+            var patient = JsonSerializer.Deserialize<Model.R4.Patient>(
+                "{\"resourceType\":\"Patient\",\"gender\":\"male\",\"_gender\":{\"extension\":[{\"url\":\"http://myserver.com/extensions/gendernumber\", \"valueInteger\":34}]}}",
+                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+            );
+            var genderExtension = Single(patient.GenderElement.Extension);
+            Assert.AreEqual("http://myserver.com/extensions/gendernumber", genderExtension.Url);
+            Assert.AreEqual(34, IsType<Integer>(genderExtension.Value).Value);
+        }
+
+        [TestMethod]
+        public void NarrativeStatusTest()
+        {
+            var patient = JsonSerializer.Deserialize<Model.R4.Patient>(
+                "{\"resourceType\":\"Patient\",\"text\":{\"status\":\"generated\",\"_status\":{\"id\":\"TEXT-101\"}}}",
+                new JsonSerializerOptions().ForFhir(Model.Version.R4)
+            );
+            Assert.AreEqual(Narrative.NarrativeStatus.Generated, patient.Text.Status);
+            Assert.AreEqual("TEXT-101", patient.Text.StatusElement.ElementId);
+        }
+
+        [TestMethod]
         public void SimpleQuantityTest()
         {
             var json = "{\"resourceType\":\"MedicationDispense\", \"dosageInstruction\":[{\"doseQuantity\":{\"value\": 10.7}}]}";
@@ -2200,24 +2223,33 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
-        public void RoundTripOneExampleDstu2()
+        public void RoundTripDstu2()
         {
             RoundTripOneExample(Model.Version.DSTU2, "testscript-example(example).xml");
             RoundTripOneExample(Model.Version.DSTU2, "TestPatient.xml");
         }
 
         [TestMethod]
-        public void RoundTripOneExampleStu3()
+        public void RoundTripStu3()
         {
             RoundTripOneExample(Model.Version.STU3, "testscript-example(example)-STU3-R4.xml");
             RoundTripOneExample(Model.Version.STU3, "TestPatient.xml");
         }
 
         [TestMethod]
-        public void RoundTripOneExampleR4()
+        public void RoundTripR4()
         {
             RoundTripOneExample(Model.Version.R4, "testscript-example(example)-STU3-R4.xml");
             RoundTripOneExample(Model.Version.R4, "TestPatient.xml");
+        }
+
+        [TestMethod]
+        public void RoundTripR4BundleJson()
+        {
+            var bundleJson = File.ReadAllText(GetFullPathForExample("bundle.json"));
+            var bundleOldParser = new FhirJsonParser(Model.Version.R4).Parse<Resource>(bundleJson);
+            var bundleNewParsr = JsonSerializer.Deserialize<Resource>(bundleJson, new JsonSerializerOptions().ForFhir(Model.Version.R4));
+            Assert.IsTrue(bundleOldParser.IsExactly(bundleNewParsr));
         }
 
         private void RoundTripOneExample(Model.Version version, string filename)
