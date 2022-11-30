@@ -1754,7 +1754,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(elem);
             var typeProfileUrl = elem.Type.FirstOrDefault().Profile;
             Assert.IsNotNull(typeProfileUrl);
-            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier));
+            Assert.AreEqual(typeProfileUrl, ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Identifier).Value);
 
             var settings = new SnapshotGeneratorSettings(_settings)
             {

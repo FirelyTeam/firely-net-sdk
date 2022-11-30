@@ -18,16 +18,19 @@ namespace Hl7.Fhir.Specification.Tests
 
         private static Uri _externalTerminologyServerEndpoint = new("https://ontoserver.csiro.au/stu3-latest");
 
+        // Use here a FhirPackageSource without the expansion package.
+        private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(new FhirPackageSource(new string[] { @"TestData\" + CorePackageFileNames.CORE_PACKAGENAME }));
+
         [Fact]
         public async T.Task ExpansionOfWholeSystem()
         {
-            var issueTypeVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
+            var issueTypeVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/issue-type")).DeepCopy() as ValueSet;
             Assert.False(issueTypeVs.HasExpansion);
 
             // Wipe the version so we don't have to update our tests all the time
             // issueTypeVs.CodeSystem.Version = null;
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
 
             await expander.ExpandAsync(issueTypeVs);
 
@@ -61,10 +64,10 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
+            var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/marital-status")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
             await expander.ExpandAsync(testVs);
             Assert.Equal(11, testVs.Expansion.Total);
         }
@@ -73,10 +76,10 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeImport()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/v3-ObservationMethod")).DeepCopy() as ValueSet;
+            var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/v3-ObservationMethod")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
             expander.Settings.MaxExpansionSize = 50;
 
             await Assert.ThrowsAsync<ValueSetExpansionTooBigException>(async () => await expander.ExpandAsync(testVs));
@@ -89,9 +92,9 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task TestIncludeDesignation()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
+            var testVs = (await _resolverWithoutExpansions.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/animal-genderstatus")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
-            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
+            var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolverWithoutExpansions });
 
             //Import codes from codesystem
             await expander.ExpandAsync(testVs);
@@ -248,7 +251,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task LocalTermServiceValidateCodeTest()
         {
-            var svc = new LocalTerminologyService(_resolver);
+            var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
             // Do common tests for service
             await testServiceAsync(svc);
@@ -269,7 +272,7 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async void LocalTermServiceValidateCodeWithParamsTest()
         {
-            var svc = new LocalTerminologyService(_resolver);
+            var svc = new LocalTerminologyService(_resolverWithoutExpansions);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
             var inParams = new ValidateCodeParameters()
