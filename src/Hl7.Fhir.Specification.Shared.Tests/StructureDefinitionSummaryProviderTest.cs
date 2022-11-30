@@ -10,11 +10,9 @@ using System.Linq;
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
-    public class StructureDefinitionSummaryProviderTest
+    public partial class StructureDefinitionSummaryProviderTest
     {
-        [TestMethod]
-        //[Ignore("This should be fixed with the next release R5:  type of Account.coverage.id differ! poco: string, sd: id")]
-        public void PocoAndSdSummaryProvidersShouldBeEqual()
+        private void assertPocoAndSdSummaryProviders()
         {
             IStructureDefinitionSummaryProvider pocoSdProvider = new PocoStructureDefinitionSummaryProvider();
             var resolver = ZipSource.CreateValidationSource();
@@ -76,7 +74,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (left is object && right is object)
             {
-                left.Count().Should().Be(right.Count(), context + ": left and right have different number of elements.");
+                left.Select(x => x.ElementName).Should().BeEquivalentTo(right.Select(x => x.ElementName), because: context + ": left and right have different number of elements.");
 
                 // this implicitly tests the correctness of order, without order having to be exactly
                 // the same for let and right.
