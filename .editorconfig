@@ -243,6 +243,3 @@ dotnet_naming_style.allupper.required_prefix =
 dotnet_naming_style.allupper.required_suffix = 
 dotnet_naming_style.allupper.word_separator = 
 dotnet_naming_style.allupper.capitalization = all_upper
-
-# CS0436: Type conflicts with imported type
-dotnet_diagnostic.CS0436.severity = none

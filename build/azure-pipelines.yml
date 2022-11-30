@@ -176,6 +176,8 @@ stages:
           testRunTitle: Tests Serialization R4 test project
           projects: |
             **/publish/Hl7.Fhir.R4.Serialization.Tests.dll
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+    
   - job:
     displayName: Tests Serialization R4B test project
     steps:
