@@ -296,6 +296,8 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <returns>The parent of <paramref name="structure"/>, skipping the interface classes</returns>
         internal async T.Task<StructureDefinition> getBaseDefinition(StructureDefinition structure)
         {
+            if (structure?.BaseDefinition is null) return null;
+
             structure = await AsyncResolver.FindStructureDefinitionAsync(structure.BaseDefinition);
             while (structure?.GetBoolExtension(SnapshotGeneratorExtensions.STRUCTURE_DEFINITION_INTERFACE_EXT) == true)
             {

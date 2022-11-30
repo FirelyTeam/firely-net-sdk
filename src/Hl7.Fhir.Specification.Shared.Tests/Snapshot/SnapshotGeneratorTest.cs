@@ -2601,7 +2601,7 @@ namespace Hl7.Fhir.Specification.Tests
         // [WMR 20190130] DEBUGGING
         [TestMethod]
         public async T.Task TestExpandCoreArtifacts()
-        {/*
+        {
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/integer");
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/positiveInt");
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/string");
@@ -2613,7 +2613,7 @@ namespace Hl7.Fhir.Specification.Tests
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Quantity");
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/SimpleQuantity");
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Money");
-            */
+
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/Resource");
             await testExpandResource(@"http://hl7.org/fhir/StructureDefinition/DomainResource");
 
