@@ -542,6 +542,102 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "product":
+                        Product = source.Populate(Product);
+                        return true;
+                    case "eye":
+                        EyeElement = source.PopulateValue(EyeElement);
+                        return true;
+                    case "_eye":
+                        EyeElement = source.Populate(EyeElement);
+                        return true;
+                    case "sphere":
+                        SphereElement = source.PopulateValue(SphereElement);
+                        return true;
+                    case "_sphere":
+                        SphereElement = source.Populate(SphereElement);
+                        return true;
+                    case "cylinder":
+                        CylinderElement = source.PopulateValue(CylinderElement);
+                        return true;
+                    case "_cylinder":
+                        CylinderElement = source.Populate(CylinderElement);
+                        return true;
+                    case "axis":
+                        AxisElement = source.PopulateValue(AxisElement);
+                        return true;
+                    case "_axis":
+                        AxisElement = source.Populate(AxisElement);
+                        return true;
+                    case "prism":
+                        PrismElement = source.PopulateValue(PrismElement);
+                        return true;
+                    case "_prism":
+                        PrismElement = source.Populate(PrismElement);
+                        return true;
+                    case "base":
+                        BaseElement = source.PopulateValue(BaseElement);
+                        return true;
+                    case "_base":
+                        BaseElement = source.Populate(BaseElement);
+                        return true;
+                    case "add":
+                        AddElement = source.PopulateValue(AddElement);
+                        return true;
+                    case "_add":
+                        AddElement = source.Populate(AddElement);
+                        return true;
+                    case "power":
+                        PowerElement = source.PopulateValue(PowerElement);
+                        return true;
+                    case "_power":
+                        PowerElement = source.Populate(PowerElement);
+                        return true;
+                    case "backCurve":
+                        BackCurveElement = source.PopulateValue(BackCurveElement);
+                        return true;
+                    case "_backCurve":
+                        BackCurveElement = source.Populate(BackCurveElement);
+                        return true;
+                    case "diameter":
+                        DiameterElement = source.PopulateValue(DiameterElement);
+                        return true;
+                    case "_diameter":
+                        DiameterElement = source.Populate(DiameterElement);
+                        return true;
+                    case "duration":
+                        Duration = source.Populate(Duration);
+                        return true;
+                    case "color":
+                        ColorElement = source.PopulateValue(ColorElement);
+                        return true;
+                    case "_color":
+                        ColorElement = source.Populate(ColorElement);
+                        return true;
+                    case "brand":
+                        BrandElement = source.PopulateValue(BrandElement);
+                        return true;
+                    case "_brand":
+                        BrandElement = source.Populate(BrandElement);
+                        return true;
+                    case "notes":
+                        NotesElement = source.PopulateValue(NotesElement);
+                        return true;
+                    case "_notes":
+                        NotesElement = source.Populate(NotesElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DispenseComponent;
@@ -883,6 +979,65 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "dateWritten":
+                    DateWrittenElement = source.PopulateValue(DateWrittenElement);
+                    return true;
+                case "_dateWritten":
+                    DateWrittenElement = source.Populate(DateWrittenElement);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "prescriber":
+                    Prescriber = source.Populate(Prescriber);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "dispense":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "dispense":
+                    source.PopulateListItem(Dispense, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

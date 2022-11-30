@@ -196,6 +196,56 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "outcome":
+                        Outcome = source.Populate(Outcome);
+                        return true;
+                    case "probabilityDecimal":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(Probability, "probability");
+                        Probability = source.PopulateValue(Probability as Hl7.Fhir.Model.FhirDecimal);
+                        return true;
+                    case "_probabilityDecimal":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(Probability, "probability");
+                        Probability = source.Populate(Probability as Hl7.Fhir.Model.FhirDecimal);
+                        return true;
+                    case "probabilityRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Probability, "probability");
+                        Probability = source.Populate(Probability as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "qualitativeRisk":
+                        QualitativeRisk = source.Populate(QualitativeRisk);
+                        return true;
+                    case "relativeRisk":
+                        RelativeRiskElement = source.PopulateValue(RelativeRiskElement);
+                        return true;
+                    case "_relativeRisk":
+                        RelativeRiskElement = source.Populate(RelativeRiskElement);
+                        return true;
+                    case "whenPeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(When, "when");
+                        When = source.Populate(When as Hl7.Fhir.Model.Period);
+                        return true;
+                    case "whenRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(When, "when");
+                        When = source.Populate(When as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "rationale":
+                        RationaleElement = source.PopulateValue(RationaleElement);
+                        return true;
+                    case "_rationale":
+                        RationaleElement = source.Populate(RationaleElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PredictionComponent;
@@ -717,6 +767,107 @@ namespace Hl7.Fhir.Model.STU3
             sink.Element("mitigation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); MitigationElement?.Serialize(sink);
             sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CommentElement?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "basedOn":
+                    BasedOn = source.Populate(BasedOn);
+                    return true;
+                case "parent":
+                    Parent = source.Populate(Parent);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "method":
+                    Method = source.Populate(Method);
+                    return true;
+                case "code":
+                    Code = source.Populate(Code);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "context":
+                    Context = source.Populate(Context);
+                    return true;
+                case "occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.PopulateValue(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "occurrencePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.Period);
+                    return true;
+                case "condition":
+                    Condition = source.Populate(Condition);
+                    return true;
+                case "performer":
+                    Performer = source.Populate(Performer);
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "basis":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "prediction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "mitigation":
+                    MitigationElement = source.PopulateValue(MitigationElement);
+                    return true;
+                case "_mitigation":
+                    MitigationElement = source.Populate(MitigationElement);
+                    return true;
+                case "comment":
+                    CommentElement = source.PopulateValue(CommentElement);
+                    return true;
+                case "_comment":
+                    CommentElement = source.Populate(CommentElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "basis":
+                    source.PopulateListItem(Basis, index);
+                    return true;
+                case "prediction":
+                    source.PopulateListItem(Prediction, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

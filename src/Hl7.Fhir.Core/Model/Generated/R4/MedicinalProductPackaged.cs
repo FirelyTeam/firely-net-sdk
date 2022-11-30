@@ -100,6 +100,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "outerPackaging":
+                        OuterPackaging = source.Populate(OuterPackaging);
+                        return true;
+                    case "immediatePackaging":
+                        ImmediatePackaging = source.Populate(ImmediatePackaging);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as BatchIdentifierComponent;
@@ -422,6 +440,93 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "type":
+                        Type = source.Populate(Type);
+                        return true;
+                    case "quantity":
+                        Quantity = source.Populate(Quantity);
+                        return true;
+                    case "material":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "alternateMaterial":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "device":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "manufacturedItem":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "packageItem":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "physicalCharacteristics":
+                        PhysicalCharacteristics = source.Populate(PhysicalCharacteristics);
+                        return true;
+                    case "otherCharacteristics":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "shelfLifeStorage":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "manufacturer":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        source.PopulateListItem(Identifier, index);
+                        return true;
+                    case "material":
+                        source.PopulateListItem(Material, index);
+                        return true;
+                    case "alternateMaterial":
+                        source.PopulateListItem(AlternateMaterial, index);
+                        return true;
+                    case "device":
+                        source.PopulateListItem(Device, index);
+                        return true;
+                    case "manufacturedItem":
+                        source.PopulateListItem(ManufacturedItem, index);
+                        return true;
+                    case "packageItem":
+                        source.PopulateListItem(PackageItem, index);
+                        return true;
+                    case "otherCharacteristics":
+                        source.PopulateListItem(OtherCharacteristics, index);
+                        return true;
+                    case "shelfLifeStorage":
+                        source.PopulateListItem(ShelfLifeStorage, index);
+                        return true;
+                    case "manufacturer":
+                        source.PopulateListItem(Manufacturer, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -809,6 +914,78 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "legalStatusOfSupply":
+                    LegalStatusOfSupply = source.Populate(LegalStatusOfSupply);
+                    return true;
+                case "marketingStatus":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "marketingAuthorization":
+                    MarketingAuthorization = source.Populate(MarketingAuthorization);
+                    return true;
+                case "manufacturer":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "batchIdentifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "packageItem":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "subject":
+                    source.PopulateListItem(Subject, index);
+                    return true;
+                case "marketingStatus":
+                    source.PopulateListItem(MarketingStatus, index);
+                    return true;
+                case "manufacturer":
+                    source.PopulateListItem(Manufacturer, index);
+                    return true;
+                case "batchIdentifier":
+                    source.PopulateListItem(BatchIdentifier, index);
+                    return true;
+                case "packageItem":
+                    source.PopulateListItem(PackageItem, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

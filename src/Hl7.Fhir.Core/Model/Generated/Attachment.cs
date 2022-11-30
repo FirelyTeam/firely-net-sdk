@@ -425,6 +425,66 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "contentType":
+                    ContentTypeElement = source.PopulateValue(ContentTypeElement);
+                    return true;
+                case "_contentType":
+                    ContentTypeElement = source.Populate(ContentTypeElement);
+                    return true;
+                case "language":
+                    LanguageElement = source.PopulateValue(LanguageElement);
+                    return true;
+                case "_language":
+                    LanguageElement = source.Populate(LanguageElement);
+                    return true;
+                case "data":
+                    DataElement = source.PopulateValue(DataElement);
+                    return true;
+                case "_data":
+                    DataElement = source.Populate(DataElement);
+                    return true;
+                case "url":
+                    UrlElement = source.PopulateValue(UrlElement);
+                    return true;
+                case "_url":
+                    UrlElement = source.Populate(UrlElement);
+                    return true;
+                case "size":
+                    SizeElement = source.PopulateValue(SizeElement);
+                    return true;
+                case "_size":
+                    SizeElement = source.Populate(SizeElement);
+                    return true;
+                case "hash":
+                    HashElement = source.PopulateValue(HashElement);
+                    return true;
+                case "_hash":
+                    HashElement = source.Populate(HashElement);
+                    return true;
+                case "title":
+                    TitleElement = source.PopulateValue(TitleElement);
+                    return true;
+                case "_title":
+                    TitleElement = source.Populate(TitleElement);
+                    return true;
+                case "creation":
+                    CreationElement = source.PopulateValue(CreationElement);
+                    return true;
+                case "_creation":
+                    CreationElement = source.Populate(CreationElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

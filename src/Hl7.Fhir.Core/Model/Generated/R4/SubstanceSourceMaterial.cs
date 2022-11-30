@@ -118,6 +118,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "fraction":
+                        FractionElement = source.PopulateValue(FractionElement);
+                        return true;
+                    case "_fraction":
+                        FractionElement = source.Populate(FractionElement);
+                        return true;
+                    case "materialType":
+                        MaterialType = source.Populate(MaterialType);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as FractionDescriptionComponent;
@@ -348,6 +369,60 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "family":
+                        Family = source.Populate(Family);
+                        return true;
+                    case "genus":
+                        Genus = source.Populate(Genus);
+                        return true;
+                    case "species":
+                        Species = source.Populate(Species);
+                        return true;
+                    case "intraspecificType":
+                        IntraspecificType = source.Populate(IntraspecificType);
+                        return true;
+                    case "intraspecificDescription":
+                        IntraspecificDescriptionElement = source.PopulateValue(IntraspecificDescriptionElement);
+                        return true;
+                    case "_intraspecificDescription":
+                        IntraspecificDescriptionElement = source.Populate(IntraspecificDescriptionElement);
+                        return true;
+                    case "author":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "hybrid":
+                        Hybrid = source.Populate(Hybrid);
+                        return true;
+                    case "organismGeneral":
+                        OrganismGeneral = source.Populate(OrganismGeneral);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "author":
+                        source.PopulateListItem(Author, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OrganismComponent;
@@ -510,6 +585,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("authorType", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorType?.Serialize(sink);
                 sink.Element("authorDescription", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); AuthorDescriptionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "authorType":
+                        AuthorType = source.Populate(AuthorType);
+                        return true;
+                    case "authorDescription":
+                        AuthorDescriptionElement = source.PopulateValue(AuthorDescriptionElement);
+                        return true;
+                    case "_authorDescription":
+                        AuthorDescriptionElement = source.Populate(AuthorDescriptionElement);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -748,6 +844,45 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "maternalOrganismId":
+                        MaternalOrganismIdElement = source.PopulateValue(MaternalOrganismIdElement);
+                        return true;
+                    case "_maternalOrganismId":
+                        MaternalOrganismIdElement = source.Populate(MaternalOrganismIdElement);
+                        return true;
+                    case "maternalOrganismName":
+                        MaternalOrganismNameElement = source.PopulateValue(MaternalOrganismNameElement);
+                        return true;
+                    case "_maternalOrganismName":
+                        MaternalOrganismNameElement = source.Populate(MaternalOrganismNameElement);
+                        return true;
+                    case "paternalOrganismId":
+                        PaternalOrganismIdElement = source.PopulateValue(PaternalOrganismIdElement);
+                        return true;
+                    case "_paternalOrganismId":
+                        PaternalOrganismIdElement = source.Populate(PaternalOrganismIdElement);
+                        return true;
+                    case "paternalOrganismName":
+                        PaternalOrganismNameElement = source.PopulateValue(PaternalOrganismNameElement);
+                        return true;
+                    case "_paternalOrganismName":
+                        PaternalOrganismNameElement = source.Populate(PaternalOrganismNameElement);
+                        return true;
+                    case "hybridType":
+                        HybridType = source.Populate(HybridType);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as HybridComponent;
@@ -908,6 +1043,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "kingdom":
+                        Kingdom = source.Populate(Kingdom);
+                        return true;
+                    case "phylum":
+                        Phylum = source.Populate(Phylum);
+                        return true;
+                    case "class":
+                        Class = source.Populate(Class);
+                        return true;
+                    case "order":
+                        Order = source.Populate(Order);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OrganismGeneralComponent;
@@ -1031,6 +1190,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("part", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Part?.Serialize(sink);
                 sink.Element("partLocation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); PartLocation?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "part":
+                        Part = source.Populate(Part);
+                        return true;
+                    case "partLocation":
+                        PartLocation = source.Populate(PartLocation);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1469,6 +1646,98 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "sourceMaterialClass":
+                    SourceMaterialClass = source.Populate(SourceMaterialClass);
+                    return true;
+                case "sourceMaterialType":
+                    SourceMaterialType = source.Populate(SourceMaterialType);
+                    return true;
+                case "sourceMaterialState":
+                    SourceMaterialState = source.Populate(SourceMaterialState);
+                    return true;
+                case "organismId":
+                    OrganismId = source.Populate(OrganismId);
+                    return true;
+                case "organismName":
+                    OrganismNameElement = source.PopulateValue(OrganismNameElement);
+                    return true;
+                case "_organismName":
+                    OrganismNameElement = source.Populate(OrganismNameElement);
+                    return true;
+                case "parentSubstanceId":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "parentSubstanceName":
+                case "_parentSubstanceName":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "countryOfOrigin":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "geographicalLocation":
+                case "_geographicalLocation":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "developmentStage":
+                    DevelopmentStage = source.Populate(DevelopmentStage);
+                    return true;
+                case "fractionDescription":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "organism":
+                    Organism = source.Populate(Organism);
+                    return true;
+                case "partDescription":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "parentSubstanceId":
+                    source.PopulateListItem(ParentSubstanceId, index);
+                    return true;
+                case "parentSubstanceName":
+                    source.PopulatePrimitiveListItemValue(ParentSubstanceNameElement, index);
+                    return true;
+                case "_parentSubstanceName":
+                    source.PopulatePrimitiveListItem(ParentSubstanceNameElement, index);
+                    return true;
+                case "countryOfOrigin":
+                    source.PopulateListItem(CountryOfOrigin, index);
+                    return true;
+                case "geographicalLocation":
+                    source.PopulatePrimitiveListItemValue(GeographicalLocationElement, index);
+                    return true;
+                case "_geographicalLocation":
+                    source.PopulatePrimitiveListItem(GeographicalLocationElement, index);
+                    return true;
+                case "fractionDescription":
+                    source.PopulateListItem(FractionDescription, index);
+                    return true;
+                case "partDescription":
+                    source.PopulateListItem(PartDescription, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

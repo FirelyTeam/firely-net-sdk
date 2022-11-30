@@ -438,6 +438,95 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "requestId":
+                    RequestIdElement = source.PopulateValue(RequestIdElement);
+                    return true;
+                case "_requestId":
+                    RequestIdElement = source.Populate(RequestIdElement);
+                    return true;
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "module":
+                    Module = source.Populate(Module);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "context":
+                    Context = source.Populate(Context);
+                    return true;
+                case "occurrenceDateTime":
+                    OccurrenceDateTimeElement = source.PopulateValue(OccurrenceDateTimeElement);
+                    return true;
+                case "_occurrenceDateTime":
+                    OccurrenceDateTimeElement = source.Populate(OccurrenceDateTimeElement);
+                    return true;
+                case "performer":
+                    Performer = source.Populate(Performer);
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "evaluationMessage":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "outputParameters":
+                    OutputParameters = source.Populate(OutputParameters);
+                    return true;
+                case "result":
+                    Result = source.Populate(Result);
+                    return true;
+                case "dataRequirement":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "evaluationMessage":
+                    source.PopulateListItem(EvaluationMessage, index);
+                    return true;
+                case "dataRequirement":
+                    source.PopulateListItem(DataRequirement, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

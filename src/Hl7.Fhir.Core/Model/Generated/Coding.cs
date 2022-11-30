@@ -284,6 +284,48 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "system":
+                    SystemElement = source.PopulateValue(SystemElement);
+                    return true;
+                case "_system":
+                    SystemElement = source.Populate(SystemElement);
+                    return true;
+                case "version":
+                    VersionElement = source.PopulateValue(VersionElement);
+                    return true;
+                case "_version":
+                    VersionElement = source.Populate(VersionElement);
+                    return true;
+                case "code":
+                    CodeElement = source.PopulateValue(CodeElement);
+                    return true;
+                case "_code":
+                    CodeElement = source.Populate(CodeElement);
+                    return true;
+                case "display":
+                    DisplayElement = source.PopulateValue(DisplayElement);
+                    return true;
+                case "_display":
+                    DisplayElement = source.Populate(DisplayElement);
+                    return true;
+                case "userSelected":
+                    UserSelectedElement = source.PopulateValue(UserSelectedElement);
+                    return true;
+                case "_userSelected":
+                    UserSelectedElement = source.Populate(UserSelectedElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

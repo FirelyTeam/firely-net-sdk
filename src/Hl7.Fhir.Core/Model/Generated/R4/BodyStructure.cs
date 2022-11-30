@@ -301,6 +301,69 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "active":
+                    ActiveElement = source.PopulateValue(ActiveElement);
+                    return true;
+                case "_active":
+                    ActiveElement = source.Populate(ActiveElement);
+                    return true;
+                case "morphology":
+                    Morphology = source.Populate(Morphology);
+                    return true;
+                case "location":
+                    Location = source.Populate(Location);
+                    return true;
+                case "locationQualifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "image":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "locationQualifier":
+                    source.PopulateListItem(LocationQualifier, index);
+                    return true;
+                case "image":
+                    source.PopulateListItem(Image, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

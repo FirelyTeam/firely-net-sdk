@@ -99,6 +99,24 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "schedule":
+                        Schedule = source.Populate(Schedule);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as WhenComponent;
@@ -411,6 +429,68 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "source":
+                    Source = source.Populate(Source);
+                    return true;
+                case "target":
+                    Target = source.Populate(Target);
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "when":
+                    When = source.Populate(When);
+                    return true;
+                case "detail":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "detail":
+                    source.PopulateListItem(Detail, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

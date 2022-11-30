@@ -306,6 +306,51 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "study":
+                    Study = source.Populate(Study);
+                    return true;
+                case "individual":
+                    Individual = source.Populate(Individual);
+                    return true;
+                case "assignedArm":
+                    AssignedArmElement = source.PopulateValue(AssignedArmElement);
+                    return true;
+                case "_assignedArm":
+                    AssignedArmElement = source.Populate(AssignedArmElement);
+                    return true;
+                case "actualArm":
+                    ActualArmElement = source.PopulateValue(ActualArmElement);
+                    return true;
+                case "_actualArm":
+                    ActualArmElement = source.Populate(ActualArmElement);
+                    return true;
+                case "consent":
+                    Consent = source.Populate(Consent);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

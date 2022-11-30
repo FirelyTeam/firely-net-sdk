@@ -190,6 +190,54 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "searchParam":
+                        SearchParamElement = source.PopulateValue(SearchParamElement);
+                        return true;
+                    case "_searchParam":
+                        SearchParamElement = source.Populate(SearchParamElement);
+                        return true;
+                    case "valueSet":
+                        ValueSetElement = source.PopulateValue(ValueSetElement);
+                        return true;
+                    case "_valueSet":
+                        ValueSetElement = source.Populate(ValueSetElement);
+                        return true;
+                    case "code":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        source.PopulateListItem(Code, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CodeFilterComponent;
@@ -369,6 +417,46 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "searchParam":
+                        SearchParamElement = source.PopulateValue(SearchParamElement);
+                        return true;
+                    case "_searchParam":
+                        SearchParamElement = source.Populate(SearchParamElement);
+                        return true;
+                    case "valueDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Value, "value");
+                        Value = source.PopulateValue(Value as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "_valueDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "valuePeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.Period);
+                        return true;
+                    case "valueDuration":
+                        source.CheckDuplicates<Hl7.Fhir.Model.R4.Duration>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.R4.Duration);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DateFilterComponent;
@@ -527,6 +615,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PathElement?.Serialize(sink);
                 sink.Element("direction", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DirectionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "path":
+                        PathElement = source.PopulateValue(PathElement);
+                        return true;
+                    case "_path":
+                        PathElement = source.Populate(PathElement);
+                        return true;
+                    case "direction":
+                        DirectionElement = source.PopulateValue(DirectionElement);
+                        return true;
+                    case "_direction":
+                        DirectionElement = source.Populate(DirectionElement);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -918,6 +1030,88 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "profile":
+                case "_profile":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subjectCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Subject, "subject");
+                    Subject = source.Populate(Subject as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "subjectReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Subject, "subject");
+                    Subject = source.Populate(Subject as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "mustSupport":
+                case "_mustSupport":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "codeFilter":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "dateFilter":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "limit":
+                    LimitElement = source.PopulateValue(LimitElement);
+                    return true;
+                case "_limit":
+                    LimitElement = source.Populate(LimitElement);
+                    return true;
+                case "sort":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "profile":
+                    source.PopulatePrimitiveListItemValue(ProfileElement, index);
+                    return true;
+                case "_profile":
+                    source.PopulatePrimitiveListItem(ProfileElement, index);
+                    return true;
+                case "mustSupport":
+                    source.PopulatePrimitiveListItemValue(MustSupportElement, index);
+                    return true;
+                case "_mustSupport":
+                    source.PopulatePrimitiveListItem(MustSupportElement, index);
+                    return true;
+                case "codeFilter":
+                    source.PopulateListItem(CodeFilter, index);
+                    return true;
+                case "dateFilter":
+                    source.PopulateListItem(DateFilter, index);
+                    return true;
+                case "sort":
+                    source.PopulateListItem(Sort, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

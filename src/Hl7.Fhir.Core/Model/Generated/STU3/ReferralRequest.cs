@@ -102,6 +102,24 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "agent":
+                        Agent = source.Populate(Agent);
+                        return true;
+                    case "onBehalfOf":
+                        OnBehalfOf = source.Populate(OnBehalfOf);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RequesterComponent;
@@ -818,6 +836,156 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "definition":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "basedOn":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "replaces":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "groupIdentifier":
+                    GroupIdentifier = source.Populate(GroupIdentifier);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "intent":
+                    IntentElement = source.PopulateValue(IntentElement);
+                    return true;
+                case "_intent":
+                    IntentElement = source.Populate(IntentElement);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "priority":
+                    PriorityElement = source.PopulateValue(PriorityElement);
+                    return true;
+                case "_priority":
+                    PriorityElement = source.Populate(PriorityElement);
+                    return true;
+                case "serviceRequested":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "context":
+                    Context = source.Populate(Context);
+                    return true;
+                case "occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.PopulateValue(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "occurrencePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.Period);
+                    return true;
+                case "authoredOn":
+                    AuthoredOnElement = source.PopulateValue(AuthoredOnElement);
+                    return true;
+                case "_authoredOn":
+                    AuthoredOnElement = source.Populate(AuthoredOnElement);
+                    return true;
+                case "requester":
+                    Requester = source.Populate(Requester);
+                    return true;
+                case "specialty":
+                    Specialty = source.Populate(Specialty);
+                    return true;
+                case "recipient":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonCode":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonReference":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "supportingInfo":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "relevantHistory":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "definition":
+                    source.PopulateListItem(Definition, index);
+                    return true;
+                case "basedOn":
+                    source.PopulateListItem(BasedOn, index);
+                    return true;
+                case "replaces":
+                    source.PopulateListItem(Replaces, index);
+                    return true;
+                case "serviceRequested":
+                    source.PopulateListItem(ServiceRequested, index);
+                    return true;
+                case "recipient":
+                    source.PopulateListItem(Recipient, index);
+                    return true;
+                case "reasonCode":
+                    source.PopulateListItem(ReasonCode, index);
+                    return true;
+                case "reasonReference":
+                    source.PopulateListItem(ReasonReference, index);
+                    return true;
+                case "supportingInfo":
+                    source.PopulateListItem(SupportingInfo, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "relevantHistory":
+                    source.PopulateListItem(RelevantHistory, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

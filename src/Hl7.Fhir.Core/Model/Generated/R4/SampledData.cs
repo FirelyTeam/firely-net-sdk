@@ -341,6 +341,57 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "origin":
+                    Origin = source.Populate(Origin);
+                    return true;
+                case "period":
+                    PeriodElement = source.PopulateValue(PeriodElement);
+                    return true;
+                case "_period":
+                    PeriodElement = source.Populate(PeriodElement);
+                    return true;
+                case "factor":
+                    FactorElement = source.PopulateValue(FactorElement);
+                    return true;
+                case "_factor":
+                    FactorElement = source.Populate(FactorElement);
+                    return true;
+                case "lowerLimit":
+                    LowerLimitElement = source.PopulateValue(LowerLimitElement);
+                    return true;
+                case "_lowerLimit":
+                    LowerLimitElement = source.Populate(LowerLimitElement);
+                    return true;
+                case "upperLimit":
+                    UpperLimitElement = source.PopulateValue(UpperLimitElement);
+                    return true;
+                case "_upperLimit":
+                    UpperLimitElement = source.Populate(UpperLimitElement);
+                    return true;
+                case "dimensions":
+                    DimensionsElement = source.PopulateValue(DimensionsElement);
+                    return true;
+                case "_dimensions":
+                    DimensionsElement = source.Populate(DimensionsElement);
+                    return true;
+                case "data":
+                    DataElement = source.PopulateValue(DataElement);
+                    return true;
+                case "_data":
+                    DataElement = source.Populate(DataElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

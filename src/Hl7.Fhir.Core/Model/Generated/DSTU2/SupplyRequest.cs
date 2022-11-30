@@ -99,6 +99,24 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "schedule":
+                        Schedule = source.Populate(Schedule);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as WhenComponent;
@@ -443,6 +461,74 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("reason", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); Reason?.Serialize(sink);
             sink.Element("when", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); When?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "source":
+                    Source = source.Populate(Source);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "kind":
+                    Kind = source.Populate(Kind);
+                    return true;
+                case "orderedItem":
+                    OrderedItem = source.Populate(OrderedItem);
+                    return true;
+                case "supplier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Populate(Reason as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "when":
+                    When = source.Populate(When);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "supplier":
+                    source.PopulateListItem(Supplier, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

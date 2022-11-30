@@ -157,6 +157,24 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "numerator":
+                    Numerator = source.Populate(Numerator);
+                    return true;
+                case "denominator":
+                    Denominator = source.Populate(Denominator);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

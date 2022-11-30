@@ -477,6 +477,90 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "group":
+                        GroupElement = source.PopulateValue(GroupElement);
+                        return true;
+                    case "_group":
+                        GroupElement = source.Populate(GroupElement);
+                        return true;
+                    case "groupDisplay":
+                        GroupDisplayElement = source.PopulateValue(GroupDisplayElement);
+                        return true;
+                    case "_groupDisplay":
+                        GroupDisplayElement = source.Populate(GroupDisplayElement);
+                        return true;
+                    case "subGroup":
+                        SubGroupElement = source.PopulateValue(SubGroupElement);
+                        return true;
+                    case "_subGroup":
+                        SubGroupElement = source.Populate(SubGroupElement);
+                        return true;
+                    case "subGroupDisplay":
+                        SubGroupDisplayElement = source.PopulateValue(SubGroupDisplayElement);
+                        return true;
+                    case "_subGroupDisplay":
+                        SubGroupDisplayElement = source.Populate(SubGroupDisplayElement);
+                        return true;
+                    case "plan":
+                        PlanElement = source.PopulateValue(PlanElement);
+                        return true;
+                    case "_plan":
+                        PlanElement = source.Populate(PlanElement);
+                        return true;
+                    case "planDisplay":
+                        PlanDisplayElement = source.PopulateValue(PlanDisplayElement);
+                        return true;
+                    case "_planDisplay":
+                        PlanDisplayElement = source.Populate(PlanDisplayElement);
+                        return true;
+                    case "subPlan":
+                        SubPlanElement = source.PopulateValue(SubPlanElement);
+                        return true;
+                    case "_subPlan":
+                        SubPlanElement = source.Populate(SubPlanElement);
+                        return true;
+                    case "subPlanDisplay":
+                        SubPlanDisplayElement = source.PopulateValue(SubPlanDisplayElement);
+                        return true;
+                    case "_subPlanDisplay":
+                        SubPlanDisplayElement = source.Populate(SubPlanDisplayElement);
+                        return true;
+                    case "class":
+                        ClassElement = source.PopulateValue(ClassElement);
+                        return true;
+                    case "_class":
+                        ClassElement = source.Populate(ClassElement);
+                        return true;
+                    case "classDisplay":
+                        ClassDisplayElement = source.PopulateValue(ClassDisplayElement);
+                        return true;
+                    case "_classDisplay":
+                        ClassDisplayElement = source.Populate(ClassDisplayElement);
+                        return true;
+                    case "subClass":
+                        SubClassElement = source.PopulateValue(SubClassElement);
+                        return true;
+                    case "_subClass":
+                        SubClassElement = source.Populate(SubClassElement);
+                        return true;
+                    case "subClassDisplay":
+                        SubClassDisplayElement = source.PopulateValue(SubClassDisplayElement);
+                        return true;
+                    case "_subClassDisplay":
+                        SubClassDisplayElement = source.Populate(SubClassDisplayElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as GroupComponent;
@@ -1065,6 +1149,105 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "policyHolder":
+                    PolicyHolder = source.Populate(PolicyHolder);
+                    return true;
+                case "subscriber":
+                    Subscriber = source.Populate(Subscriber);
+                    return true;
+                case "subscriberId":
+                    SubscriberIdElement = source.PopulateValue(SubscriberIdElement);
+                    return true;
+                case "_subscriberId":
+                    SubscriberIdElement = source.Populate(SubscriberIdElement);
+                    return true;
+                case "beneficiary":
+                    Beneficiary = source.Populate(Beneficiary);
+                    return true;
+                case "relationship":
+                    Relationship = source.Populate(Relationship);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "payor":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "grouping":
+                    Grouping = source.Populate(Grouping);
+                    return true;
+                case "dependent":
+                    DependentElement = source.PopulateValue(DependentElement);
+                    return true;
+                case "_dependent":
+                    DependentElement = source.Populate(DependentElement);
+                    return true;
+                case "sequence":
+                    SequenceElement = source.PopulateValue(SequenceElement);
+                    return true;
+                case "_sequence":
+                    SequenceElement = source.Populate(SequenceElement);
+                    return true;
+                case "order":
+                    OrderElement = source.PopulateValue(OrderElement);
+                    return true;
+                case "_order":
+                    OrderElement = source.Populate(OrderElement);
+                    return true;
+                case "network":
+                    NetworkElement = source.PopulateValue(NetworkElement);
+                    return true;
+                case "_network":
+                    NetworkElement = source.Populate(NetworkElement);
+                    return true;
+                case "contract":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "payor":
+                    source.PopulateListItem(Payor, index);
+                    return true;
+                case "contract":
+                    source.PopulateListItem(Contract, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

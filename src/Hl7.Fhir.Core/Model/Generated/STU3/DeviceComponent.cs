@@ -133,6 +133,30 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "specType":
+                        SpecType = source.Populate(SpecType);
+                        return true;
+                    case "componentId":
+                        ComponentId = source.Populate(ComponentId);
+                        return true;
+                    case "productionSpec":
+                        ProductionSpecElement = source.PopulateValue(ProductionSpecElement);
+                        return true;
+                    case "_productionSpec":
+                        ProductionSpecElement = source.Populate(ProductionSpecElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ProductionSpecificationComponent;
@@ -490,6 +514,72 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
             sink.Element("languageCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageCode?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "lastSystemChange":
+                    LastSystemChangeElement = source.PopulateValue(LastSystemChangeElement);
+                    return true;
+                case "_lastSystemChange":
+                    LastSystemChangeElement = source.Populate(LastSystemChangeElement);
+                    return true;
+                case "source":
+                    Source = source.Populate(Source);
+                    return true;
+                case "parent":
+                    Parent = source.Populate(Parent);
+                    return true;
+                case "operationalStatus":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "parameterGroup":
+                    ParameterGroup = source.Populate(ParameterGroup);
+                    return true;
+                case "measurementPrinciple":
+                    MeasurementPrincipleElement = source.PopulateValue(MeasurementPrincipleElement);
+                    return true;
+                case "_measurementPrinciple":
+                    MeasurementPrincipleElement = source.Populate(MeasurementPrincipleElement);
+                    return true;
+                case "productionSpecification":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "languageCode":
+                    LanguageCode = source.Populate(LanguageCode);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "operationalStatus":
+                    source.PopulateListItem(OperationalStatus, index);
+                    return true;
+                case "productionSpecification":
+                    source.PopulateListItem(ProductionSpecification, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

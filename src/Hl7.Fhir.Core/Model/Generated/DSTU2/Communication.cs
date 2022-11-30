@@ -86,6 +86,34 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.PopulateValue(Content as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "_contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "contentAttachment":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.Attachment);
+                        return true;
+                    case "contentReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PayloadComponent;
@@ -525,6 +553,93 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
             sink.Element("requestDetail", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RequestDetail?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "category":
+                    Category = source.Populate(Category);
+                    return true;
+                case "sender":
+                    Sender = source.Populate(Sender);
+                    return true;
+                case "recipient":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "payload":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "medium":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "sent":
+                    SentElement = source.PopulateValue(SentElement);
+                    return true;
+                case "_sent":
+                    SentElement = source.Populate(SentElement);
+                    return true;
+                case "received":
+                    ReceivedElement = source.PopulateValue(ReceivedElement);
+                    return true;
+                case "_received":
+                    ReceivedElement = source.Populate(ReceivedElement);
+                    return true;
+                case "reason":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "requestDetail":
+                    RequestDetail = source.Populate(RequestDetail);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "recipient":
+                    source.PopulateListItem(Recipient, index);
+                    return true;
+                case "payload":
+                    source.PopulateListItem(Payload, index);
+                    return true;
+                case "medium":
+                    source.PopulateListItem(Medium, index);
+                    return true;
+                case "reason":
+                    source.PopulateListItem(Reason, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

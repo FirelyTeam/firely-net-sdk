@@ -211,6 +211,36 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "country" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Country = source.Populate(Country);
+                    return true;
+                case "jurisdiction" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Jurisdiction = source.Populate(Jurisdiction);
+                    return true;
+                case "status" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Status = source.Populate(Status);
+                    return true;
+                case "dateRange" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    DateRange = source.Populate(DateRange);
+                    return true;
+                case "restoreDate" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    RestoreDateElement = source.PopulateValue(RestoreDateElement);
+                    return true;
+                case "_restoreDate" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    RestoreDateElement = source.Populate(RestoreDateElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

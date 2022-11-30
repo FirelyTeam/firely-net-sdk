@@ -270,6 +270,42 @@ namespace Hl7.Fhir.Model
             sink.Element("implicitRules"); ImplicitRulesElement?.Serialize(sink);
             sink.Element("language", summaryVersions: Version.None); LanguageElement?.Serialize(sink);
         }
+
+        internal override bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case JsonSource.ResourceTypePropertyName:
+                    source.CheckResourceType(TypeName);
+                    return true;
+                case "id":
+                    IdElement = source.PopulateValue(IdElement);
+                    return true;
+                case "_id":
+                    IdElement = source.Populate(IdElement);
+                    return true;
+                case "meta":
+                    Meta = source.Populate(Meta);
+                    return true;
+                case "implicitRules":
+                    ImplicitRulesElement = source.PopulateValue(ImplicitRulesElement);
+                    return true;
+                case "_implicitRules":
+                    ImplicitRulesElement = source.Populate(ImplicitRulesElement);
+                    return true;
+                case "language":
+                    LanguageElement = source.PopulateValue(LanguageElement);
+                    return true;
+                case "_language":
+                    LanguageElement = source.Populate(LanguageElement);
+                    return true;
+            }
+            return false;
+        }
     }
 }
 

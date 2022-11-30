@@ -415,6 +415,87 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "serviceCategory":
+                    ServiceCategory = source.Populate(ServiceCategory);
+                    return true;
+                case "serviceType":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "specialty":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "appointmentType":
+                    AppointmentType = source.Populate(AppointmentType);
+                    return true;
+                case "schedule":
+                    Schedule = source.Populate(Schedule);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "start":
+                    StartElement = source.PopulateValue(StartElement);
+                    return true;
+                case "_start":
+                    StartElement = source.Populate(StartElement);
+                    return true;
+                case "end":
+                    EndElement = source.PopulateValue(EndElement);
+                    return true;
+                case "_end":
+                    EndElement = source.Populate(EndElement);
+                    return true;
+                case "overbooked":
+                    OverbookedElement = source.PopulateValue(OverbookedElement);
+                    return true;
+                case "_overbooked":
+                    OverbookedElement = source.Populate(OverbookedElement);
+                    return true;
+                case "comment":
+                    CommentElement = source.PopulateValue(CommentElement);
+                    return true;
+                case "_comment":
+                    CommentElement = source.Populate(CommentElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "serviceType":
+                    source.PopulateListItem(ServiceType, index);
+                    return true;
+                case "specialty":
+                    source.PopulateListItem(Specialty, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

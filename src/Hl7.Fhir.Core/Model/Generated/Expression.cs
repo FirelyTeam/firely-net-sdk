@@ -299,6 +299,48 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "description" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "name" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "language" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    LanguageElement = source.PopulateValue(LanguageElement);
+                    return true;
+                case "_language" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    LanguageElement = source.Populate(LanguageElement);
+                    return true;
+                case "expression" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Expression_Element = source.PopulateValue(Expression_Element);
+                    return true;
+                case "_expression" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Expression_Element = source.Populate(Expression_Element);
+                    return true;
+                case "reference" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    ReferenceElement = source.PopulateValue(ReferenceElement);
+                    return true;
+                case "_reference" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    ReferenceElement = source.Populate(ReferenceElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

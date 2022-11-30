@@ -491,6 +491,102 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "specialty":
+                    Specialty = source.Populate(Specialty);
+                    return true;
+                case "priority":
+                    Priority = source.Populate(Priority);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "requester":
+                    Requester = source.Populate(Requester);
+                    return true;
+                case "recipient":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "dateSent":
+                    DateSentElement = source.PopulateValue(DateSentElement);
+                    return true;
+                case "_dateSent":
+                    DateSentElement = source.Populate(DateSentElement);
+                    return true;
+                case "reason":
+                    Reason = source.Populate(Reason);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "serviceRequested":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "supportingInformation":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "fulfillmentTime":
+                    FulfillmentTime = source.Populate(FulfillmentTime);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "recipient":
+                    source.PopulateListItem(Recipient, index);
+                    return true;
+                case "serviceRequested":
+                    source.PopulateListItem(ServiceRequested, index);
+                    return true;
+                case "supportingInformation":
+                    source.PopulateListItem(SupportingInformation, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -193,6 +193,42 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "authorReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Author, "author");
+                    Author = source.Populate(Author as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "authorString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Author, "author");
+                    Author = source.PopulateValue(Author as Hl7.Fhir.Model.FhirString);
+                    return true;
+                case "_authorString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Author, "author");
+                    Author = source.Populate(Author as Hl7.Fhir.Model.FhirString);
+                    return true;
+                case "time":
+                    TimeElement = source.PopulateValue(TimeElement);
+                    return true;
+                case "_time":
+                    TimeElement = source.Populate(TimeElement);
+                    return true;
+                case "text":
+                    TextElement = source.PopulateValue(TextElement);
+                    return true;
+                case "_text":
+                    TextElement = source.Populate(TextElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

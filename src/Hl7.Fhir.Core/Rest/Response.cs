@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 namespace Hl7.Fhir.Rest
 {
@@ -194,10 +194,28 @@ namespace Hl7.Fhir.Rest
 
             try
             {
-                if (fhirType == ResourceFormat.Json)
-                    result = new Serialization.FhirJsonParser(settings).Parse<Model.Resource>(bodyText);
+                if (fhirType == ResourceFormat.Xml)
+                {
+                    result = new FhirXmlParser(settings).Parse<Resource>(bodyText);
+                }
                 else
-                    result = new Serialization.FhirXmlParser(settings).Parse<Model.Resource>(bodyText);
+                {
+                    // To use the old JSON parser:
+                    //
+                    //     result = new FhirJsonParser(settings).Parse<Model.Resource>(bodyText);
+                    //
+                    try
+                    {
+                        result = JsonSerializer.Deserialize<Resource>(
+                            bodyText,
+                            new JsonSerializerOptions().ForFhir(settings)
+                        );
+                    }
+                    catch (JsonException jsonException)
+                    {
+                        throw jsonException.ToFormatException();
+                    }
+                }
             }
             catch (FormatException) when (!throwOnFormatException)
             {

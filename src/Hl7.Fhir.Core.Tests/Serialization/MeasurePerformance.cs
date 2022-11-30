@@ -6,11 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/fhir-net-api/master/LICENSE
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using Hl7.Fhir.Serialization;

@@ -458,6 +458,115 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "bodySiteCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(BodySite, "bodySite");
+                    BodySite = source.Populate(BodySite as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "bodySiteReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(BodySite, "bodySite");
+                    BodySite = source.Populate(BodySite as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "device":
+                    Device = source.Populate(Device);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "indication":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "notes":
+                case "_notes":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "prnReason":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "orderedOn":
+                    OrderedOnElement = source.PopulateValue(OrderedOnElement);
+                    return true;
+                case "_orderedOn":
+                    OrderedOnElement = source.Populate(OrderedOnElement);
+                    return true;
+                case "recordedOn":
+                    RecordedOnElement = source.PopulateValue(RecordedOnElement);
+                    return true;
+                case "_recordedOn":
+                    RecordedOnElement = source.Populate(RecordedOnElement);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "timingTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Timing>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.DSTU2.Timing);
+                    return true;
+                case "timingPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.Period);
+                    return true;
+                case "timingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Timing, "timing");
+                    Timing = source.PopulateValue(Timing as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_timingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Timing, "timing");
+                    Timing = source.Populate(Timing as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "priority":
+                    PriorityElement = source.PopulateValue(PriorityElement);
+                    return true;
+                case "_priority":
+                    PriorityElement = source.Populate(PriorityElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "indication":
+                    source.PopulateListItem(Indication, index);
+                    return true;
+                case "notes":
+                    source.PopulatePrimitiveListItemValue(NotesElement, index);
+                    return true;
+                case "_notes":
+                    source.PopulatePrimitiveListItem(NotesElement, index);
+                    return true;
+                case "prnReason":
+                    source.PopulateListItem(PrnReason, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

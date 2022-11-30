@@ -114,6 +114,41 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "type":
+                        Type = source.Populate(Type);
+                        return true;
+                    case "doseRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Dose, "dose");
+                        Dose = source.Populate(Dose as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "doseQuantity":
+                        source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Dose, "dose");
+                        Dose = source.Populate(Dose as Hl7.Fhir.Model.SimpleQuantity);
+                        return true;
+                    case "rateRatio":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(Rate, "rate");
+                        Rate = source.Populate(Rate as Hl7.Fhir.Model.Ratio);
+                        return true;
+                    case "rateRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Rate, "rate");
+                        Rate = source.Populate(Rate as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "rateQuantity":
+                        source.CheckDuplicates<Hl7.Fhir.Model.SimpleQuantity>(Rate, "rate");
+                        Rate = source.Populate(Rate as Hl7.Fhir.Model.SimpleQuantity);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DoseAndRateComponent;
@@ -541,6 +576,93 @@ namespace Hl7.Fhir.Model.R4
             sink.Element("maxDosePerAdministration", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerAdministration?.Serialize(sink);
             sink.Element("maxDosePerLifetime", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); MaxDosePerLifetime?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "sequence":
+                    SequenceElement = source.PopulateValue(SequenceElement);
+                    return true;
+                case "_sequence":
+                    SequenceElement = source.Populate(SequenceElement);
+                    return true;
+                case "text":
+                    TextElement = source.PopulateValue(TextElement);
+                    return true;
+                case "_text":
+                    TextElement = source.Populate(TextElement);
+                    return true;
+                case "additionalInstruction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "patientInstruction":
+                    PatientInstructionElement = source.PopulateValue(PatientInstructionElement);
+                    return true;
+                case "_patientInstruction":
+                    PatientInstructionElement = source.Populate(PatientInstructionElement);
+                    return true;
+                case "timing":
+                    Timing = source.Populate(Timing);
+                    return true;
+                case "asNeededBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                    AsNeeded = source.PopulateValue(AsNeeded as Hl7.Fhir.Model.FhirBoolean);
+                    return true;
+                case "_asNeededBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                    AsNeeded = source.Populate(AsNeeded as Hl7.Fhir.Model.FhirBoolean);
+                    return true;
+                case "asNeededCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(AsNeeded, "asNeeded");
+                    AsNeeded = source.Populate(AsNeeded as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "site":
+                    Site = source.Populate(Site);
+                    return true;
+                case "route":
+                    Route = source.Populate(Route);
+                    return true;
+                case "method":
+                    Method = source.Populate(Method);
+                    return true;
+                case "doseAndRate":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "maxDosePerPeriod":
+                    MaxDosePerPeriod = source.Populate(MaxDosePerPeriod);
+                    return true;
+                case "maxDosePerAdministration":
+                    MaxDosePerAdministration = source.Populate(MaxDosePerAdministration);
+                    return true;
+                case "maxDosePerLifetime":
+                    MaxDosePerLifetime = source.Populate(MaxDosePerLifetime);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "additionalInstruction":
+                    source.PopulateListItem(AdditionalInstruction, index);
+                    return true;
+                case "doseAndRate":
+                    source.PopulateListItem(DoseAndRate, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

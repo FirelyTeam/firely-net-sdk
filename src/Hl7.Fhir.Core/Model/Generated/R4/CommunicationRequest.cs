@@ -86,6 +86,34 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.PopulateValue(Content as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "_contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.FhirString);
+                        return true;
+                    case "contentAttachment":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.Attachment);
+                        return true;
+                    case "contentReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Content, "content");
+                        Content = source.Populate(Content as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as PayloadComponent;
@@ -740,6 +768,150 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "basedOn":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "replaces":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "groupIdentifier":
+                    GroupIdentifier = source.Populate(GroupIdentifier);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "statusReason":
+                    StatusReason = source.Populate(StatusReason);
+                    return true;
+                case "category":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "priority":
+                    PriorityElement = source.PopulateValue(PriorityElement);
+                    return true;
+                case "_priority":
+                    PriorityElement = source.Populate(PriorityElement);
+                    return true;
+                case "doNotPerform":
+                    DoNotPerformElement = source.PopulateValue(DoNotPerformElement);
+                    return true;
+                case "_doNotPerform":
+                    DoNotPerformElement = source.Populate(DoNotPerformElement);
+                    return true;
+                case "medium":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "about":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "payload":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.PopulateValue(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "occurrencePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.Period);
+                    return true;
+                case "authoredOn":
+                    AuthoredOnElement = source.PopulateValue(AuthoredOnElement);
+                    return true;
+                case "_authoredOn":
+                    AuthoredOnElement = source.Populate(AuthoredOnElement);
+                    return true;
+                case "requester":
+                    Requester = source.Populate(Requester);
+                    return true;
+                case "recipient":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "sender":
+                    Sender = source.Populate(Sender);
+                    return true;
+                case "reasonCode":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonReference":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "basedOn":
+                    source.PopulateListItem(BasedOn, index);
+                    return true;
+                case "replaces":
+                    source.PopulateListItem(Replaces, index);
+                    return true;
+                case "category":
+                    source.PopulateListItem(Category, index);
+                    return true;
+                case "medium":
+                    source.PopulateListItem(Medium, index);
+                    return true;
+                case "about":
+                    source.PopulateListItem(About, index);
+                    return true;
+                case "payload":
+                    source.PopulateListItem(Payload, index);
+                    return true;
+                case "recipient":
+                    source.PopulateListItem(Recipient, index);
+                    return true;
+                case "reasonCode":
+                    source.PopulateListItem(ReasonCode, index);
+                    return true;
+                case "reasonReference":
+                    source.PopulateListItem(ReasonReference, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

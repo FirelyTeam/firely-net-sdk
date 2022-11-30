@@ -667,6 +667,141 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "basedOn":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "partOf":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "modality":
+                    Modality = source.Populate(Modality);
+                    return true;
+                case "view":
+                    View = source.Populate(View);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "createdDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Created, "created");
+                    Created = source.PopulateValue(Created as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_createdDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Created, "created");
+                    Created = source.Populate(Created as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "createdPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Created, "created");
+                    Created = source.Populate(Created as Hl7.Fhir.Model.Period);
+                    return true;
+                case "issued":
+                    IssuedElement = source.PopulateValue(IssuedElement);
+                    return true;
+                case "_issued":
+                    IssuedElement = source.Populate(IssuedElement);
+                    return true;
+                case "operator":
+                    Operator = source.Populate(Operator);
+                    return true;
+                case "reasonCode":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "bodySite":
+                    BodySite = source.Populate(BodySite);
+                    return true;
+                case "deviceName":
+                    DeviceNameElement = source.PopulateValue(DeviceNameElement);
+                    return true;
+                case "_deviceName":
+                    DeviceNameElement = source.Populate(DeviceNameElement);
+                    return true;
+                case "device":
+                    Device = source.Populate(Device);
+                    return true;
+                case "height":
+                    HeightElement = source.PopulateValue(HeightElement);
+                    return true;
+                case "_height":
+                    HeightElement = source.Populate(HeightElement);
+                    return true;
+                case "width":
+                    WidthElement = source.PopulateValue(WidthElement);
+                    return true;
+                case "_width":
+                    WidthElement = source.Populate(WidthElement);
+                    return true;
+                case "frames":
+                    FramesElement = source.PopulateValue(FramesElement);
+                    return true;
+                case "_frames":
+                    FramesElement = source.Populate(FramesElement);
+                    return true;
+                case "duration":
+                    DurationElement = source.PopulateValue(DurationElement);
+                    return true;
+                case "_duration":
+                    DurationElement = source.Populate(DurationElement);
+                    return true;
+                case "content":
+                    Content = source.Populate(Content);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "basedOn":
+                    source.PopulateListItem(BasedOn, index);
+                    return true;
+                case "partOf":
+                    source.PopulateListItem(PartOf, index);
+                    return true;
+                case "reasonCode":
+                    source.PopulateListItem(ReasonCode, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

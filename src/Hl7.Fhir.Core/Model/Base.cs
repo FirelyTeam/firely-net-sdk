@@ -55,6 +55,16 @@ namespace Hl7.Fhir.Model
             // Empty
         }
 
+        internal virtual bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
+        {
+            return false;
+        }
+
+        internal virtual bool SetListElementFromJson(string jsonPropertyName, int index, ref JsonSource source)
+        {
+            return false;
+        }
+
         /// <summary>
         /// 
         /// </summary>

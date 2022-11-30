@@ -204,6 +204,58 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "daysOfWeek":
+                    case "_daysOfWeek":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "allDay":
+                        AllDayElement = source.PopulateValue(AllDayElement);
+                        return true;
+                    case "_allDay":
+                        AllDayElement = source.Populate(AllDayElement);
+                        return true;
+                    case "availableStartTime":
+                        AvailableStartTimeElement = source.PopulateValue(AvailableStartTimeElement);
+                        return true;
+                    case "_availableStartTime":
+                        AvailableStartTimeElement = source.Populate(AvailableStartTimeElement);
+                        return true;
+                    case "availableEndTime":
+                        AvailableEndTimeElement = source.PopulateValue(AvailableEndTimeElement);
+                        return true;
+                    case "_availableEndTime":
+                        AvailableEndTimeElement = source.Populate(AvailableEndTimeElement);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "daysOfWeek":
+                        source.PopulatePrimitiveListItemValue(DaysOfWeekElement, index);
+                        return true;
+                    case "_daysOfWeek":
+                        source.PopulatePrimitiveListItem(DaysOfWeekElement, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as AvailableTimeComponent;
@@ -345,6 +397,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); DescriptionElement?.Serialize(sink);
                 sink.Element("during", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); During?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "during":
+                        During = source.Populate(During);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -817,6 +890,105 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "active":
+                    ActiveElement = source.PopulateValue(ActiveElement);
+                    return true;
+                case "_active":
+                    ActiveElement = source.Populate(ActiveElement);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "practitioner":
+                    Practitioner = source.Populate(Practitioner);
+                    return true;
+                case "organization":
+                    Organization = source.Populate(Organization);
+                    return true;
+                case "code":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "specialty":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "location":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "healthcareService":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "telecom":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "availableTime":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "notAvailable":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "availabilityExceptions":
+                    AvailabilityExceptionsElement = source.PopulateValue(AvailabilityExceptionsElement);
+                    return true;
+                case "_availabilityExceptions":
+                    AvailabilityExceptionsElement = source.Populate(AvailabilityExceptionsElement);
+                    return true;
+                case "endpoint":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "code":
+                    source.PopulateListItem(Code, index);
+                    return true;
+                case "specialty":
+                    source.PopulateListItem(Specialty, index);
+                    return true;
+                case "location":
+                    source.PopulateListItem(Location, index);
+                    return true;
+                case "healthcareService":
+                    source.PopulateListItem(HealthcareService, index);
+                    return true;
+                case "telecom":
+                    source.PopulateListItem(Telecom, index);
+                    return true;
+                case "availableTime":
+                    source.PopulateListItem(AvailableTime, index);
+                    return true;
+                case "notAvailable":
+                    source.PopulateListItem(NotAvailable, index);
+                    return true;
+                case "endpoint":
+                    source.PopulateListItem(Endpoint, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

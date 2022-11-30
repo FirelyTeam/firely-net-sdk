@@ -102,6 +102,29 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "therapyRelationshipType":
+                        TherapyRelationshipType = source.Populate(TherapyRelationshipType);
+                        return true;
+                    case "medicationCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Medication, "medication");
+                        Medication = source.Populate(Medication as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                    case "medicationReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Medication, "medication");
+                        Medication = source.Populate(Medication as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as OtherTherapyComponent;
@@ -375,6 +398,66 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "subject":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "disease":
+                    Disease = source.Populate(Disease);
+                    return true;
+                case "diseaseStatus":
+                    DiseaseStatus = source.Populate(DiseaseStatus);
+                    return true;
+                case "comorbidity":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "therapeuticIndication":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "otherTherapy":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "population":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "subject":
+                    source.PopulateListItem(Subject, index);
+                    return true;
+                case "comorbidity":
+                    source.PopulateListItem(Comorbidity, index);
+                    return true;
+                case "therapeuticIndication":
+                    source.PopulateListItem(TherapeuticIndication, index);
+                    return true;
+                case "otherTherapy":
+                    source.PopulateListItem(OtherTherapy, index);
+                    return true;
+                case "population":
+                    source.PopulateListItem(Population, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

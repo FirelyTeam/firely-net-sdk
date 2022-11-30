@@ -423,6 +423,95 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "connectionType":
+                    ConnectionType = source.Populate(ConnectionType);
+                    return true;
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "managingOrganization":
+                    ManagingOrganization = source.Populate(ManagingOrganization);
+                    return true;
+                case "contact":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "payloadType":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "payloadMimeType":
+                case "_payloadMimeType":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "address":
+                    AddressElement = source.PopulateValue(AddressElement);
+                    return true;
+                case "_address":
+                    AddressElement = source.Populate(AddressElement);
+                    return true;
+                case "header":
+                case "_header":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "contact":
+                    source.PopulateListItem(Contact, index);
+                    return true;
+                case "payloadType":
+                    source.PopulateListItem(PayloadType, index);
+                    return true;
+                case "payloadMimeType":
+                    source.PopulatePrimitiveListItemValue(PayloadMimeTypeElement, index);
+                    return true;
+                case "_payloadMimeType":
+                    source.PopulatePrimitiveListItem(PayloadMimeTypeElement, index);
+                    return true;
+                case "header":
+                    source.PopulatePrimitiveListItemValue(HeaderElement, index);
+                    return true;
+                case "_header":
+                    source.PopulatePrimitiveListItem(HeaderElement, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

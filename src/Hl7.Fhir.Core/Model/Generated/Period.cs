@@ -195,6 +195,30 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "start":
+                    StartElement = source.PopulateValue(StartElement);
+                    return true;
+                case "_start":
+                    StartElement = source.Populate(StartElement);
+                    return true;
+                case "end":
+                    EndElement = source.PopulateValue(EndElement);
+                    return true;
+                case "_end":
+                    EndElement = source.Populate(EndElement);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

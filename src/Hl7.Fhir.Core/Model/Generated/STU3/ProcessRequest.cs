@@ -103,6 +103,24 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.PopulateValue(SequenceLinkIdElement);
+                        return true;
+                    case "_sequenceLinkId":
+                        SequenceLinkIdElement = source.Populate(SequenceLinkIdElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ItemsComponent;
@@ -629,6 +647,110 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
             sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Period?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "action":
+                    ActionElement = source.PopulateValue(ActionElement);
+                    return true;
+                case "_action":
+                    ActionElement = source.Populate(ActionElement);
+                    return true;
+                case "target":
+                    Target = source.Populate(Target);
+                    return true;
+                case "created":
+                    CreatedElement = source.PopulateValue(CreatedElement);
+                    return true;
+                case "_created":
+                    CreatedElement = source.Populate(CreatedElement);
+                    return true;
+                case "provider":
+                    Provider = source.Populate(Provider);
+                    return true;
+                case "organization":
+                    Organization = source.Populate(Organization);
+                    return true;
+                case "request":
+                    Request = source.Populate(Request);
+                    return true;
+                case "response":
+                    Response = source.Populate(Response);
+                    return true;
+                case "nullify":
+                    NullifyElement = source.PopulateValue(NullifyElement);
+                    return true;
+                case "_nullify":
+                    NullifyElement = source.Populate(NullifyElement);
+                    return true;
+                case "reference":
+                    ReferenceElement = source.PopulateValue(ReferenceElement);
+                    return true;
+                case "_reference":
+                    ReferenceElement = source.Populate(ReferenceElement);
+                    return true;
+                case "item":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "include":
+                case "_include":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "exclude":
+                case "_exclude":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "item":
+                    source.PopulateListItem(Item, index);
+                    return true;
+                case "include":
+                    source.PopulatePrimitiveListItemValue(IncludeElement, index);
+                    return true;
+                case "_include":
+                    source.PopulatePrimitiveListItem(IncludeElement, index);
+                    return true;
+                case "exclude":
+                    source.PopulatePrimitiveListItemValue(ExcludeElement, index);
+                    return true;
+                case "_exclude":
+                    source.PopulatePrimitiveListItem(ExcludeElement, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

@@ -235,6 +235,105 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "description":
+                        DescriptionElement = source.PopulateValue(DescriptionElement);
+                        return true;
+                    case "_description":
+                        DescriptionElement = source.Populate(DescriptionElement);
+                        return true;
+                    case "definitionReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Definition, "definition");
+                        Definition = source.Populate(Definition as Hl7.Fhir.Model.ResourceReference);
+                        return true;
+                    case "definitionCanonical":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Canonical>(Definition, "definition");
+                        Definition = source.PopulateValue(Definition as Hl7.Fhir.Model.Canonical);
+                        return true;
+                    case "_definitionCanonical":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Canonical>(Definition, "definition");
+                        Definition = source.Populate(Definition as Hl7.Fhir.Model.Canonical);
+                        return true;
+                    case "definitionCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Definition, "definition");
+                        Definition = source.Populate(Definition as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                    case "definitionExpression":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Expression>(Definition, "definition");
+                        Definition = source.Populate(Definition as Hl7.Fhir.Model.Expression);
+                        return true;
+                    case "definitionDataRequirement":
+                        source.CheckDuplicates<Hl7.Fhir.Model.R4.DataRequirement>(Definition, "definition");
+                        Definition = source.Populate(Definition as Hl7.Fhir.Model.R4.DataRequirement);
+                        return true;
+                    case "definitionTriggerDefinition":
+                        source.CheckDuplicates<Hl7.Fhir.Model.R4.TriggerDefinition>(Definition, "definition");
+                        Definition = source.Populate(Definition as Hl7.Fhir.Model.R4.TriggerDefinition);
+                        return true;
+                    case "usageContext":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "exclude":
+                        ExcludeElement = source.PopulateValue(ExcludeElement);
+                        return true;
+                    case "_exclude":
+                        ExcludeElement = source.Populate(ExcludeElement);
+                        return true;
+                    case "participantEffectiveDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(ParticipantEffective, "participantEffective");
+                        ParticipantEffective = source.PopulateValue(ParticipantEffective as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "_participantEffectiveDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(ParticipantEffective, "participantEffective");
+                        ParticipantEffective = source.Populate(ParticipantEffective as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "participantEffectivePeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(ParticipantEffective, "participantEffective");
+                        ParticipantEffective = source.Populate(ParticipantEffective as Hl7.Fhir.Model.Period);
+                        return true;
+                    case "participantEffectiveDuration":
+                        source.CheckDuplicates<Hl7.Fhir.Model.R4.Duration>(ParticipantEffective, "participantEffective");
+                        ParticipantEffective = source.Populate(ParticipantEffective as Hl7.Fhir.Model.R4.Duration);
+                        return true;
+                    case "participantEffectiveTiming":
+                        source.CheckDuplicates<Hl7.Fhir.Model.R4.Timing>(ParticipantEffective, "participantEffective");
+                        ParticipantEffective = source.Populate(ParticipantEffective as Hl7.Fhir.Model.R4.Timing);
+                        return true;
+                    case "timeFromStart":
+                        TimeFromStart = source.Populate(TimeFromStart);
+                        return true;
+                    case "groupMeasure":
+                        GroupMeasureElement = source.PopulateValue(GroupMeasureElement);
+                        return true;
+                    case "_groupMeasure":
+                        GroupMeasureElement = source.Populate(GroupMeasureElement);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "usageContext":
+                        source.PopulateListItem(UsageContext, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as CharacteristicComponent;
@@ -1207,6 +1306,189 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "url":
+                    UrlElement = source.PopulateValue(UrlElement);
+                    return true;
+                case "_url":
+                    UrlElement = source.Populate(UrlElement);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "version":
+                    VersionElement = source.PopulateValue(VersionElement);
+                    return true;
+                case "_version":
+                    VersionElement = source.Populate(VersionElement);
+                    return true;
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "title":
+                    TitleElement = source.PopulateValue(TitleElement);
+                    return true;
+                case "_title":
+                    TitleElement = source.Populate(TitleElement);
+                    return true;
+                case "shortTitle":
+                    ShortTitleElement = source.PopulateValue(ShortTitleElement);
+                    return true;
+                case "_shortTitle":
+                    ShortTitleElement = source.Populate(ShortTitleElement);
+                    return true;
+                case "subtitle":
+                    SubtitleElement = source.PopulateValue(SubtitleElement);
+                    return true;
+                case "_subtitle":
+                    SubtitleElement = source.Populate(SubtitleElement);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "publisher":
+                    PublisherElement = source.PopulateValue(PublisherElement);
+                    return true;
+                case "_publisher":
+                    PublisherElement = source.Populate(PublisherElement);
+                    return true;
+                case "contact":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "useContext":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "jurisdiction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "copyright":
+                    CopyrightElement = source.PopulateValue(CopyrightElement);
+                    return true;
+                case "_copyright":
+                    CopyrightElement = source.Populate(CopyrightElement);
+                    return true;
+                case "approvalDate":
+                    ApprovalDateElement = source.PopulateValue(ApprovalDateElement);
+                    return true;
+                case "_approvalDate":
+                    ApprovalDateElement = source.Populate(ApprovalDateElement);
+                    return true;
+                case "lastReviewDate":
+                    LastReviewDateElement = source.PopulateValue(LastReviewDateElement);
+                    return true;
+                case "_lastReviewDate":
+                    LastReviewDateElement = source.Populate(LastReviewDateElement);
+                    return true;
+                case "effectivePeriod":
+                    EffectivePeriod = source.Populate(EffectivePeriod);
+                    return true;
+                case "topic":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "author":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "editor":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reviewer":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "endorser":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "relatedArtifact":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "characteristic":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "contact":
+                    source.PopulateListItem(Contact, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "useContext":
+                    source.PopulateListItem(UseContext, index);
+                    return true;
+                case "jurisdiction":
+                    source.PopulateListItem(Jurisdiction, index);
+                    return true;
+                case "topic":
+                    source.PopulateListItem(Topic, index);
+                    return true;
+                case "author":
+                    source.PopulateListItem(Author, index);
+                    return true;
+                case "editor":
+                    source.PopulateListItem(Editor, index);
+                    return true;
+                case "reviewer":
+                    source.PopulateListItem(Reviewer, index);
+                    return true;
+                case "endorser":
+                    source.PopulateListItem(Endorser, index);
+                    return true;
+                case "relatedArtifact":
+                    source.PopulateListItem(RelatedArtifact, index);
+                    return true;
+                case "characteristic":
+                    source.PopulateListItem(Characteristic, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

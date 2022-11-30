@@ -99,6 +99,41 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "code":
+                        Code = source.Populate(Code);
+                        return true;
+                    case "valueCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.CodeableConcept);
+                        return true;
+                    case "valueQuantity":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.Quantity);
+                        return true;
+                    case "valueRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "valueBoolean":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(Value, "value");
+                        Value = source.PopulateValue(Value as Hl7.Fhir.Model.FhirBoolean);
+                        return true;
+                    case "_valueBoolean":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(Value, "value");
+                        Value = source.Populate(Value as Hl7.Fhir.Model.FhirBoolean);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ParameterComponent;
@@ -835,6 +870,176 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "instantiatesCanonical":
+                case "_instantiatesCanonical":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "instantiatesUri":
+                case "_instantiatesUri":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "basedOn":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "priorRequest":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "groupIdentifier":
+                    GroupIdentifier = source.Populate(GroupIdentifier);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "intent":
+                    IntentElement = source.PopulateValue(IntentElement);
+                    return true;
+                case "_intent":
+                    IntentElement = source.Populate(IntentElement);
+                    return true;
+                case "priority":
+                    PriorityElement = source.PopulateValue(PriorityElement);
+                    return true;
+                case "_priority":
+                    PriorityElement = source.Populate(PriorityElement);
+                    return true;
+                case "codeReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Code, "code");
+                    Code = source.Populate(Code as Hl7.Fhir.Model.ResourceReference);
+                    return true;
+                case "codeCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Code, "code");
+                    Code = source.Populate(Code as Hl7.Fhir.Model.CodeableConcept);
+                    return true;
+                case "parameter":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "encounter":
+                    Encounter = source.Populate(Encounter);
+                    return true;
+                case "occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.PopulateValue(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "_occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.FhirDateTime);
+                    return true;
+                case "occurrencePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.Period);
+                    return true;
+                case "occurrenceTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.R4.Timing>(Occurrence, "occurrence");
+                    Occurrence = source.Populate(Occurrence as Hl7.Fhir.Model.R4.Timing);
+                    return true;
+                case "authoredOn":
+                    AuthoredOnElement = source.PopulateValue(AuthoredOnElement);
+                    return true;
+                case "_authoredOn":
+                    AuthoredOnElement = source.Populate(AuthoredOnElement);
+                    return true;
+                case "requester":
+                    Requester = source.Populate(Requester);
+                    return true;
+                case "performerType":
+                    PerformerType = source.Populate(PerformerType);
+                    return true;
+                case "performer":
+                    Performer = source.Populate(Performer);
+                    return true;
+                case "reasonCode":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "reasonReference":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "insurance":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "supportingInfo":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "note":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "relevantHistory":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "instantiatesCanonical":
+                    source.PopulatePrimitiveListItemValue(InstantiatesCanonicalElement, index);
+                    return true;
+                case "_instantiatesCanonical":
+                    source.PopulatePrimitiveListItem(InstantiatesCanonicalElement, index);
+                    return true;
+                case "instantiatesUri":
+                    source.PopulatePrimitiveListItemValue(InstantiatesUriElement, index);
+                    return true;
+                case "_instantiatesUri":
+                    source.PopulatePrimitiveListItem(InstantiatesUriElement, index);
+                    return true;
+                case "basedOn":
+                    source.PopulateListItem(BasedOn, index);
+                    return true;
+                case "priorRequest":
+                    source.PopulateListItem(PriorRequest, index);
+                    return true;
+                case "parameter":
+                    source.PopulateListItem(Parameter, index);
+                    return true;
+                case "reasonCode":
+                    source.PopulateListItem(ReasonCode, index);
+                    return true;
+                case "reasonReference":
+                    source.PopulateListItem(ReasonReference, index);
+                    return true;
+                case "insurance":
+                    source.PopulateListItem(Insurance, index);
+                    return true;
+                case "supportingInfo":
+                    source.PopulateListItem(SupportingInfo, index);
+                    return true;
+                case "note":
+                    source.PopulateListItem(Note, index);
+                    return true;
+                case "relevantHistory":
+                    source.PopulateListItem(RelevantHistory, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

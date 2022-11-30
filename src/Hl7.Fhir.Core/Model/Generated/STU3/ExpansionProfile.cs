@@ -174,6 +174,36 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "system":
+                        SystemElement = source.PopulateValue(SystemElement);
+                        return true;
+                    case "_system":
+                        SystemElement = source.Populate(SystemElement);
+                        return true;
+                    case "version":
+                        VersionElement = source.PopulateValue(VersionElement);
+                        return true;
+                    case "_version":
+                        VersionElement = source.Populate(VersionElement);
+                        return true;
+                    case "mode":
+                        ModeElement = source.PopulateValue(ModeElement);
+                        return true;
+                    case "_mode":
+                        ModeElement = source.Populate(ModeElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as FixedVersionComponent;
@@ -333,6 +363,30 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "system":
+                        SystemElement = source.PopulateValue(SystemElement);
+                        return true;
+                    case "_system":
+                        SystemElement = source.Populate(SystemElement);
+                        return true;
+                    case "version":
+                        VersionElement = source.PopulateValue(VersionElement);
+                        return true;
+                    case "_version":
+                        VersionElement = source.Populate(VersionElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as ExcludedSystemComponent;
@@ -448,6 +502,24 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "include":
+                        Include = source.Populate(Include);
+                        return true;
+                    case "exclude":
+                        Exclude = source.Populate(Exclude);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DesignationComponent;
@@ -552,6 +624,36 @@ namespace Hl7.Fhir.Model.STU3
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "designation":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "designation":
+                        source.PopulateListItem(Designation, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -683,6 +785,27 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "language":
+                        LanguageElement = source.PopulateValue(LanguageElement);
+                        return true;
+                    case "_language":
+                        LanguageElement = source.Populate(LanguageElement);
+                        return true;
+                    case "use":
+                        Use = source.Populate(Use);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as DesignationIncludeDesignationComponent;
@@ -787,6 +910,36 @@ namespace Hl7.Fhir.Model.STU3
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "designation":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "designation":
+                        source.PopulateListItem(Designation, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -916,6 +1069,27 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("language", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageElement?.Serialize(sink);
                 sink.Element("use", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Use?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "language":
+                        LanguageElement = source.PopulateValue(LanguageElement);
+                        return true;
+                    case "_language":
+                        LanguageElement = source.Populate(LanguageElement);
+                        return true;
+                    case "use":
+                        Use = source.Populate(Use);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -1801,6 +1975,159 @@ namespace Hl7.Fhir.Model.STU3
             sink.Element("displayLanguage", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DisplayLanguageElement?.Serialize(sink);
             sink.Element("limitedExpansion", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LimitedExpansionElement?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "url":
+                    UrlElement = source.PopulateValue(UrlElement);
+                    return true;
+                case "_url":
+                    UrlElement = source.Populate(UrlElement);
+                    return true;
+                case "identifier":
+                    Identifier = source.Populate(Identifier);
+                    return true;
+                case "version":
+                    VersionElement = source.PopulateValue(VersionElement);
+                    return true;
+                case "_version":
+                    VersionElement = source.Populate(VersionElement);
+                    return true;
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "experimental":
+                    ExperimentalElement = source.PopulateValue(ExperimentalElement);
+                    return true;
+                case "_experimental":
+                    ExperimentalElement = source.Populate(ExperimentalElement);
+                    return true;
+                case "date":
+                    DateElement = source.PopulateValue(DateElement);
+                    return true;
+                case "_date":
+                    DateElement = source.Populate(DateElement);
+                    return true;
+                case "publisher":
+                    PublisherElement = source.PopulateValue(PublisherElement);
+                    return true;
+                case "_publisher":
+                    PublisherElement = source.Populate(PublisherElement);
+                    return true;
+                case "contact":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "description":
+                    DescriptionElement = source.PopulateValue(DescriptionElement);
+                    return true;
+                case "_description":
+                    DescriptionElement = source.Populate(DescriptionElement);
+                    return true;
+                case "useContext":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "jurisdiction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "fixedVersion":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "excludedSystem":
+                    ExcludedSystem = source.Populate(ExcludedSystem);
+                    return true;
+                case "includeDesignations":
+                    IncludeDesignationsElement = source.PopulateValue(IncludeDesignationsElement);
+                    return true;
+                case "_includeDesignations":
+                    IncludeDesignationsElement = source.Populate(IncludeDesignationsElement);
+                    return true;
+                case "designation":
+                    Designation = source.Populate(Designation);
+                    return true;
+                case "includeDefinition":
+                    IncludeDefinitionElement = source.PopulateValue(IncludeDefinitionElement);
+                    return true;
+                case "_includeDefinition":
+                    IncludeDefinitionElement = source.Populate(IncludeDefinitionElement);
+                    return true;
+                case "activeOnly":
+                    ActiveOnlyElement = source.PopulateValue(ActiveOnlyElement);
+                    return true;
+                case "_activeOnly":
+                    ActiveOnlyElement = source.Populate(ActiveOnlyElement);
+                    return true;
+                case "excludeNested":
+                    ExcludeNestedElement = source.PopulateValue(ExcludeNestedElement);
+                    return true;
+                case "_excludeNested":
+                    ExcludeNestedElement = source.Populate(ExcludeNestedElement);
+                    return true;
+                case "excludeNotForUI":
+                    ExcludeNotForUIElement = source.PopulateValue(ExcludeNotForUIElement);
+                    return true;
+                case "_excludeNotForUI":
+                    ExcludeNotForUIElement = source.Populate(ExcludeNotForUIElement);
+                    return true;
+                case "excludePostCoordinated":
+                    ExcludePostCoordinatedElement = source.PopulateValue(ExcludePostCoordinatedElement);
+                    return true;
+                case "_excludePostCoordinated":
+                    ExcludePostCoordinatedElement = source.Populate(ExcludePostCoordinatedElement);
+                    return true;
+                case "displayLanguage":
+                    DisplayLanguageElement = source.PopulateValue(DisplayLanguageElement);
+                    return true;
+                case "_displayLanguage":
+                    DisplayLanguageElement = source.Populate(DisplayLanguageElement);
+                    return true;
+                case "limitedExpansion":
+                    LimitedExpansionElement = source.PopulateValue(LimitedExpansionElement);
+                    return true;
+                case "_limitedExpansion":
+                    LimitedExpansionElement = source.Populate(LimitedExpansionElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "contact":
+                    source.PopulateListItem(Contact, index);
+                    return true;
+                case "useContext":
+                    source.PopulateListItem(UseContext, index);
+                    return true;
+                case "jurisdiction":
+                    source.PopulateListItem(Jurisdiction, index);
+                    return true;
+                case "fixedVersion":
+                    source.PopulateListItem(FixedVersion, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

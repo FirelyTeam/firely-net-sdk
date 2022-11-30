@@ -453,6 +453,91 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "use":
+                    UseElement = source.PopulateValue(UseElement);
+                    return true;
+                case "_use":
+                    UseElement = source.Populate(UseElement);
+                    return true;
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "text":
+                    TextElement = source.PopulateValue(TextElement);
+                    return true;
+                case "_text":
+                    TextElement = source.Populate(TextElement);
+                    return true;
+                case "line":
+                case "_line":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "city":
+                    CityElement = source.PopulateValue(CityElement);
+                    return true;
+                case "_city":
+                    CityElement = source.Populate(CityElement);
+                    return true;
+                case "district":
+                    DistrictElement = source.PopulateValue(DistrictElement);
+                    return true;
+                case "_district":
+                    DistrictElement = source.Populate(DistrictElement);
+                    return true;
+                case "state":
+                    StateElement = source.PopulateValue(StateElement);
+                    return true;
+                case "_state":
+                    StateElement = source.Populate(StateElement);
+                    return true;
+                case "postalCode":
+                    PostalCodeElement = source.PopulateValue(PostalCodeElement);
+                    return true;
+                case "_postalCode":
+                    PostalCodeElement = source.Populate(PostalCodeElement);
+                    return true;
+                case "country":
+                    CountryElement = source.PopulateValue(CountryElement);
+                    return true;
+                case "_country":
+                    CountryElement = source.Populate(CountryElement);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "line":
+                    source.PopulatePrimitiveListItemValue(LineElement, index);
+                    return true;
+                case "_line":
+                    source.PopulatePrimitiveListItem(LineElement, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

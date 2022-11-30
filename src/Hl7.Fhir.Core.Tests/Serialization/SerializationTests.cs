@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using Hl7.Fhir.ElementModel;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
@@ -484,7 +483,7 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsNotNull(xml);
         }
 
-        [FhirType(Fhir.Model.Version.DSTU2, "Bundle", IsResource = true)]
+        [FhirType(Fhir.Model.Version.DSTU2, "CustomBundle", IsResource = true)]
         //[DataContract]
         public class CustomBundle : Bundle
         {

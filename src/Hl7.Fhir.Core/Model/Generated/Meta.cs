@@ -298,6 +298,70 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "versionId":
+                    VersionIdElement = source.PopulateValue(VersionIdElement);
+                    return true;
+                case "_versionId":
+                    VersionIdElement = source.Populate(VersionIdElement);
+                    return true;
+                case "lastUpdated":
+                    LastUpdatedElement = source.PopulateValue(LastUpdatedElement);
+                    return true;
+                case "_lastUpdated":
+                    LastUpdatedElement = source.Populate(LastUpdatedElement);
+                    return true;
+                case "profile":
+                case "_profile":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "security":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "tag":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "source" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    SourceElement = source.PopulateValue(SourceElement);
+                    return true;
+                case "_source" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    SourceElement = source.Populate(SourceElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "profile":
+                    source.PopulatePrimitiveListItemValue(ProfileElement, index);
+                    return true;
+                case "_profile":
+                    source.PopulatePrimitiveListItem(ProfileElement, index);
+                    return true;
+                case "security":
+                    source.PopulateListItem(Security, index);
+                    return true;
+                case "tag":
+                    source.PopulateListItem(Tag, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

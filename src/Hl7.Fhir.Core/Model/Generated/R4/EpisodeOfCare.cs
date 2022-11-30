@@ -118,6 +118,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "status":
+                        StatusElement = source.PopulateValue(StatusElement);
+                        return true;
+                    case "_status":
+                        StatusElement = source.Populate(StatusElement);
+                        return true;
+                    case "period":
+                        Period = source.Populate(Period);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as StatusHistoryComponent;
@@ -267,6 +288,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("role", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Role?.Serialize(sink);
                 sink.Element("rank", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); RankElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "condition":
+                        Condition = source.Populate(Condition);
+                        return true;
+                    case "role":
+                        Role = source.Populate(Role);
+                        return true;
+                    case "rank":
+                        RankElement = source.PopulateValue(RankElement);
+                        return true;
+                    case "_rank":
+                        RankElement = source.Populate(RankElement);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -675,6 +720,90 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "statusHistory":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "type":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "diagnosis":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "patient":
+                    Patient = source.Populate(Patient);
+                    return true;
+                case "managingOrganization":
+                    ManagingOrganization = source.Populate(ManagingOrganization);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "referralRequest":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "careManager":
+                    CareManager = source.Populate(CareManager);
+                    return true;
+                case "team":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "account":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "statusHistory":
+                    source.PopulateListItem(StatusHistory, index);
+                    return true;
+                case "type":
+                    source.PopulateListItem(Type, index);
+                    return true;
+                case "diagnosis":
+                    source.PopulateListItem(Diagnosis, index);
+                    return true;
+                case "referralRequest":
+                    source.PopulateListItem(ReferralRequest, index);
+                    return true;
+                case "team":
+                    source.PopulateListItem(Team, index);
+                    return true;
+                case "account":
+                    source.PopulateListItem(Account, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

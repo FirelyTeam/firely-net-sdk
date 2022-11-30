@@ -29,8 +29,15 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
+public static class Globals
+{
+    public static Dictionary<string, string> FhirDataTypeByCsType;
+    public static List<string> AllVersions;
+}
+
 public static class StringUtils
 {
+
     /// <summary>
     /// Quotes a string for output in C# source code -e.g. a\b becomes "a\\b"
     /// </summary>
@@ -69,6 +76,12 @@ public static class StringUtils
         if (char.IsDigit(result[0]))
             result = "N" + result;
         return result;
+    }
+
+    public static string FirstToUpper(string str)
+    {
+        if (string.IsNullOrEmpty(str)) return str;
+        return str.Substring(0, 1).ToUpper() + str.Substring(1);
     }
 
     /// <summary>
@@ -271,6 +284,52 @@ using Hl7.Fhir.Utility;
             yield return $"    sink.End();";
         }
         yield return $"}}";
+    }
+
+    public static IEnumerable<string> RenderSetElementFromJson(IEnumerable<PropertyDetails> properties)
+    {
+        yield return $"internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)";
+        yield return $"{{";
+        yield return $"    if (base.SetElementFromJson(jsonPropertyName, ref source))";
+        yield return $"    {{";
+        yield return $"        return true;";
+        yield return $"    }}";
+        yield return $"    switch (jsonPropertyName)";
+        yield return $"    {{";
+        var hasLists = false;
+        foreach (var property in properties)
+        {
+            if (property.IsMultiCard())
+            {
+                hasLists = true;
+            }
+            foreach (var line in property.RenderSetElementFromJson()) yield return "        " + line;
+        }
+        yield return $"    }}";
+        yield return $"    return false;";
+        yield return $"}}";
+        if (hasLists)
+        {
+            yield return String.Empty;
+            yield return $"internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)";
+            yield return $"{{";
+            yield return $"    if (base.SetListElementFromJson(jsonPropertyName, index, ref source))";
+            yield return $"    {{";
+            yield return $"        return true;";
+            yield return $"    }}";
+            yield return $"    switch (jsonPropertyName)";
+            yield return $"    {{";
+            foreach (var property in properties)
+            {
+                if (property.IsMultiCard())
+                {
+                    foreach (var line in property.RenderSetListElementFromJson()) yield return "        " + line;
+                }
+            }
+            yield return $"    }}";
+            yield return $"    return false;";
+            yield return $"}}";
+        }
     }
 
     /// <summary>
@@ -1261,6 +1320,14 @@ public class ResourceDetails
         return PrimitiveTypeName;
     }
 
+    public string GetFhirTypeName()
+    {
+        // If this is just a contraint the FHIR type name used for serialization etc. must be the base type name
+        return IsConstraint ?
+            BaseType.Split('.').Last() :
+            FhirName;
+    }
+
     /// <summary>
     /// Dumps the resource details to the specified text writer - used for debugging
     /// </summary>
@@ -1412,11 +1479,7 @@ public class ResourceDetails
             var isResource = !isElement ?
                 ", IsResource=true" :
                 string.Empty;
-            // If this is just a contraint the FHIR type name used for serialization etc. must be the base type name
-            var fhirTypeName = IsConstraint ?
-                BaseType.Split( '.' ).Last() :
-                FhirName;
-            yield return $"[FhirType({version}, \"{ fhirTypeName }\"{ isResource })]";
+            yield return $"[FhirType({version}, \"{ GetFhirTypeName() }\"{ isResource })]";
         }
         yield return $"[DataContract]";
 
@@ -1540,6 +1603,8 @@ public class ResourceDetails
             {
                 yield return string.Empty;
                 foreach (var line in StringUtils.RenderSerialize(FhirName, AbstractType, isElement, Properties)) yield return "    " + line;
+                yield return string.Empty;
+                foreach (var line in StringUtils.RenderSetElementFromJson(Properties)) yield return "    " + line;
                 yield return string.Empty;
                 foreach (var line in StringUtils.RenderChildrenMethods(Properties)) yield return "    " + line;
             }
@@ -2354,6 +2419,9 @@ public class ComponentDetails
         foreach (var line in StringUtils.RenderSerialize(Name, false, true, Properties)) yield return "    " + line;
 
         yield return string.Empty;
+        foreach (var line in StringUtils.RenderSetElementFromJson(Properties)) yield return "    " + line;
+
+        yield return string.Empty;
         foreach (var line in StringUtils.RenderCopyAndComparisonMethods(Name, false, Properties)) yield return "    " + line;
 
         yield return string.Empty;
@@ -2649,19 +2717,16 @@ public class PropertyDetails
     {
         const string prefix = "Hl7.Fhir.Model.";
 
-        var allVersions = resourcesByNameByVersion.Keys
-            .Where( v => !string.IsNullOrEmpty( v) )
-            .ToList();
-        if (EqualsAnyOrder(allVersions, Versions))
+        if (EqualsAnyOrder(Globals.AllVersions, Versions))
         {
             // All versions
             Versions = new HashSet<string>();
         }
-        if (InSummaryVersions.Count > 0 && EqualsAnyOrder(allVersions, InSummaryVersions))
+        if (InSummaryVersions.Count > 0 && EqualsAnyOrder(Globals.AllVersions, InSummaryVersions))
         {
             InSummaryVersions = new HashSet<string>(new[] { string.Empty });
         }
-        var allowedTypesAllVersions = EqualsAnyOrder(allVersions, AllowedTypesByVersion.Keys);
+        var allowedTypesAllVersions = EqualsAnyOrder(Globals.AllVersions, AllowedTypesByVersion.Keys);
         if (allowedTypesAllVersions)
         {
             var allowedTypesList = AllowedTypesByVersion.Values.ToList();
@@ -2725,7 +2790,7 @@ public class PropertyDetails
         foreach (var line in StringUtils.RenderSummary(Summary)) yield return line;
 
         var versionsString = VersionsString(Versions);
-        var versionsAttribute = string.IsNullOrEmpty(versionsString) ? 
+        var versionsAttribute = string.IsNullOrEmpty(versionsString) ?
             string.Empty :
             ", Versions=" + versionsString;
 
@@ -2747,7 +2812,7 @@ public class PropertyDetails
         }
         if (ReferenceTargets.Count > 0)
         {
-            yield return $"[References({ string.Join(",",ReferenceTargets.Select(rt => "\"" + rt + "\"")) })]";
+            yield return $"[References({ string.Join(",", ReferenceTargets.Select(rt => "\"" + rt + "\"")) })]";
         }
         foreach (var pair in AllowedTypesByVersion)
         {
@@ -2791,8 +2856,8 @@ public class PropertyDetails
             yield return "/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>";
             yield return "[NotMapped]";
             yield return "[IgnoreDataMemberAttribute]";
-            var nativeType = IsMultiCard() ? 
-                $"IEnumerable<{ NativeType }>" : 
+            var nativeType = IsMultiCard() ?
+                $"IEnumerable<{ NativeType }>" :
                 NativeType;
             yield return $"public { nativeType  } { NativeName }";
             yield return "{";
@@ -2850,6 +2915,141 @@ public class PropertyDetails
             }
             yield return $"sink.End();";
         }
+    }
+
+    public IEnumerable<string> RenderSetElementFromJson()
+    {
+        var versionsWhen = VersionsWhen(Versions);
+        if (IsMultiCard())
+        {
+            yield return $"case \"{FhirName}\"{versionsWhen}:";
+            if (NativeType != null)
+            {
+                yield return $"case \"_{FhirName}\"{versionsWhen}:";
+            }
+            yield return $"    source.SetList(this, jsonPropertyName);";
+            yield return $"    return true;";
+        }
+        else if (PropType == "Hl7.Fhir.Model.Resource")
+        {
+            yield return $"case \"{FhirName}\"{versionsWhen}:";
+            yield return $"    {Name} = source.GetResource();";
+            yield return $"    return true;";
+        }
+        else
+        {
+            var versionsByAllowedType = ComputeVersionsByAllowedType();
+            if (versionsByAllowedType != null && versionsByAllowedType.Any())
+            {
+                foreach (var pair in versionsByAllowedType)
+                {
+                    foreach (var line in RenderSetElementXFromJson(pair.Key, pair.Value)) yield return line;
+                }
+            }
+            else if (NativeType == null)
+            {
+                yield return $"case \"{FhirName}\"{versionsWhen}:";
+                yield return $"    {Name} = source.Populate({Name});";
+                yield return $"    return true;";
+            }
+            else
+            {
+                yield return $"case \"{FhirName}\"{versionsWhen}:";
+                yield return $"    {Name} = source.PopulateValue({Name});";
+                yield return $"    return true;";
+                yield return $"case \"_{FhirName}\"{versionsWhen}:";
+                yield return $"    {Name} = source.Populate({Name});";
+                yield return $"    return true;";
+            }
+        }
+    }
+
+    private Dictionary<string, HashSet<string>> ComputeVersionsByAllowedType()
+    {
+        if (AllowedTypesByVersion == null || !AllowedTypesByVersion.Any())
+        {
+            return null;
+        }
+
+        if (AllowedTypesByVersion.TryGetValue(string.Empty, out var allVersionsTypes))
+        {
+            return allVersionsTypes.ToDictionary(type => type, _ => (HashSet<string>)null);
+        }
+
+        var result = new Dictionary<string, HashSet<string>>();
+        foreach (var pair in AllowedTypesByVersion)
+        {
+            var version = pair.Key;
+            foreach (var type in pair.Value)
+            {
+                if (!result.TryGetValue(type, out var versions))
+                {
+                    versions = new HashSet<string>();
+                    result.Add(type, versions);
+                }
+                versions.Add(version);
+            }
+        }
+        foreach (var versions in result.Values)
+        {
+            if (EqualsAnyOrder(Globals.AllVersions, versions))
+            {
+                versions.Clear();
+            }
+        }
+        return result;
+    }
+
+    private IEnumerable<string> RenderSetElementXFromJson(string type, HashSet<string> versions)
+    {
+        var versionsWhen = VersionsWhen(versions);
+        var fhirType = Globals.FhirDataTypeByCsType[type];
+        var propertyName = FhirName + StringUtils.FirstToUpper(fhirType);
+        yield return $"case \"{propertyName}\"{versionsWhen}:";
+        if (PrimitiveType.Get(fhirType) == null)
+        {
+            yield return $"    source.CheckDuplicates<{type}>({Name}, \"{FhirName}\");";
+            yield return $"    {Name} = source.Populate({Name} as {type});";
+            yield return $"    return true;";
+        }
+        else
+        {
+            yield return $"    source.CheckDuplicates<{type}>({Name}, \"{FhirName}\");";
+            yield return $"    {Name} = source.PopulateValue({Name} as {type});";
+            yield return $"    return true;";
+            yield return $"case \"_{propertyName}\"{versionsWhen}:";
+            yield return $"    source.CheckDuplicates<{type}>({Name}, \"{FhirName}\");";
+            yield return $"    {Name} = source.Populate({Name} as {type});";
+            yield return $"    return true;";
+
+        }
+    }
+
+    public IEnumerable<string> RenderSetListElementFromJson()
+    {
+        var versionsWhen = VersionsWhen(Versions);
+        yield return $"case \"{FhirName}\"{versionsWhen}:";
+        if (NativeType == null)
+        {
+            yield return $"    source.PopulateListItem({Name}, index);";
+            yield return $"    return true;";
+        }
+        else
+        {
+            yield return $"    source.PopulatePrimitiveListItemValue({Name}, index);";
+            yield return $"    return true;";
+            yield return $"case \"_{FhirName}\"{versionsWhen}:";
+            yield return $"    source.PopulatePrimitiveListItem({Name}, index);";
+            yield return $"    return true;";
+
+        }
+    }
+
+    private static string VersionsWhen(HashSet<string> versions)
+    {
+        var versionsString = VersionsString(versions);
+        if (string.IsNullOrEmpty(versionsString)) return null;
+        return $" when source.IsVersion({versionsString})";
     }
 
     private static string VersionsString(HashSet<string> versions, string ifEmpty = "")
@@ -3358,6 +3558,25 @@ public class ModelInfoBase
         }
         yield return $"    }};";
     }
+
+    protected IEnumerable<string> RenderCreateResource()
+    {
+        yield return $"public static Resource CreateResource(string resourceType)";
+        yield return $"{{";
+        yield return $"    switch (resourceType)";
+        yield return $"    {{";
+        foreach (var nameAndType in _resourcesNameAndType)
+        {
+            if (nameAndType.Item1 != "Resource" && nameAndType.Item1 != "DomainResource")
+            {
+                yield return $"        case \"{ nameAndType.Item1 }\":";
+                yield return $"            return new { nameAndType.Item2 }();";
+            }
+        }
+        yield return $"    }}";
+        yield return $"    return null;";
+        yield return $"}}";
+    }
 }
 
 public class AllVersionsModelInfo : ModelInfoBase
@@ -3378,7 +3597,7 @@ public class AllVersionsModelInfo : ModelInfoBase
             .SelectMany(
                 pair => pair.Value.Values
                     .Where(r => !r.IsResource())
-                    .Select(r => Tuple.Create(r.FhirName, "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
+                    .Select(r => Tuple.Create(r.GetFhirTypeName(), "Hl7.Fhir.Model." + (string.IsNullOrEmpty(pair.Key) ? string.Empty : pair.Key + ".") + r.Name))
             )
             .Distinct()
             .OrderBy(nameAndType => nameAndType.Item1)
@@ -3414,6 +3633,11 @@ public class AllVersionsModelInfo : ModelInfoBase
         yield return string.Empty;
         foreach (var line in RenderFhirCsTypeToString()) yield return "    " + line;
         yield return $"}}";
+    }
+
+    public Dictionary<string, string> GetFhirDataTypeByCsType()
+    {
+        return _typesNameAndType.ToDictionary( tuple => tuple.Item2, tuple => tuple.Item1 );
     }
 }
 
@@ -3491,6 +3715,8 @@ public class ModelInfo : ModelInfoBase
         foreach (var line in RenderFhirTypeToCsType()) yield return "    " + line;
         yield return string.Empty;
         foreach (var line in RenderFhirCsTypeToString()) yield return "    " + line;
+        yield return string.Empty;
+        foreach (var line in RenderCreateResource()) yield return "    " + line;
         yield return string.Empty;
         yield return $"    public static List<SearchParamDefinition> SearchParameters =";
         yield return $"        new List<SearchParamDefinition>";
@@ -3669,6 +3895,10 @@ var rootDirectory = GetMyDirectory();
 var loadedVersions = LoadedVersion.LoadAll(rootDirectory);
 Console.WriteLine("Generating code for versions {0}", string.Join(", ", loadedVersions.Select(lv => lv.Version)));
 
+Globals.AllVersions = loadedVersions
+    .Select(lv => lv.Version)
+    .ToList();
+
 var valueSetsByUrlByVersion = ValueSet.LoadAll(loadedVersions);
 valueSetsByUrlByVersion[string.Empty].Add(
     "http://hl7.org/fhir/ValueSet/versions",
@@ -3713,6 +3943,8 @@ var allVersionsModelInfo = new AllVersionsModelInfo(resourcesByNameByVersion, lo
 var allVersionsModelInfoFilePath = Path.Combine(generatedDirectory, "AllVersionsModelInfo.cs");
 Console.WriteLine("Creating {0}", allVersionsModelInfoFilePath);
 allVersionsModelInfo.Write(allVersionsModelInfoFilePath);
+
+Globals.FhirDataTypeByCsType = allVersionsModelInfo.GetFhirDataTypeByCsType();
 
 var sharedResourcesByName = resourcesByNameByVersion[string.Empty];
 var toSkip = new[] { "Element", "Extension", "Narrative", "Resource", "XHtml" };

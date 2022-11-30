@@ -462,6 +462,93 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "issuer":
+                    Issuer = source.Populate(Issuer);
+                    return true;
+                case "bin":
+                    Bin = source.Populate(Bin);
+                    return true;
+                case "period":
+                    Period = source.Populate(Period);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "subscriberId":
+                    SubscriberId = source.Populate(SubscriberId);
+                    return true;
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "group":
+                    GroupElement = source.PopulateValue(GroupElement);
+                    return true;
+                case "_group":
+                    GroupElement = source.Populate(GroupElement);
+                    return true;
+                case "plan":
+                    PlanElement = source.PopulateValue(PlanElement);
+                    return true;
+                case "_plan":
+                    PlanElement = source.Populate(PlanElement);
+                    return true;
+                case "subPlan":
+                    SubPlanElement = source.PopulateValue(SubPlanElement);
+                    return true;
+                case "_subPlan":
+                    SubPlanElement = source.Populate(SubPlanElement);
+                    return true;
+                case "dependent":
+                    DependentElement = source.PopulateValue(DependentElement);
+                    return true;
+                case "_dependent":
+                    DependentElement = source.Populate(DependentElement);
+                    return true;
+                case "sequence":
+                    SequenceElement = source.PopulateValue(SequenceElement);
+                    return true;
+                case "_sequence":
+                    SequenceElement = source.Populate(SequenceElement);
+                    return true;
+                case "subscriber":
+                    Subscriber = source.Populate(Subscriber);
+                    return true;
+                case "network":
+                    Network = source.Populate(Network);
+                    return true;
+                case "contract":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "contract":
+                    source.PopulateListItem(Contract, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

@@ -313,6 +313,75 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "active":
+                    ActiveElement = source.PopulateValue(ActiveElement);
+                    return true;
+                case "_active":
+                    ActiveElement = source.Populate(ActiveElement);
+                    return true;
+                case "serviceCategory":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "serviceType":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "specialty":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "actor":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "planningHorizon":
+                    PlanningHorizon = source.Populate(PlanningHorizon);
+                    return true;
+                case "comment":
+                    CommentElement = source.PopulateValue(CommentElement);
+                    return true;
+                case "_comment":
+                    CommentElement = source.Populate(CommentElement);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "serviceCategory":
+                    source.PopulateListItem(ServiceCategory, index);
+                    return true;
+                case "serviceType":
+                    source.PopulateListItem(ServiceType, index);
+                    return true;
+                case "specialty":
+                    source.PopulateListItem(Specialty, index);
+                    return true;
+                case "actor":
+                    source.PopulateListItem(Actor, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

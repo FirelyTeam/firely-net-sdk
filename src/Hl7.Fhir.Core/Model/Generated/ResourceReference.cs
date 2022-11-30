@@ -258,6 +258,39 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "reference":
+                    ReferenceElement = source.PopulateValue(ReferenceElement);
+                    return true;
+                case "_reference":
+                    ReferenceElement = source.Populate(ReferenceElement);
+                    return true;
+                case "display":
+                    DisplayElement = source.PopulateValue(DisplayElement);
+                    return true;
+                case "_display":
+                    DisplayElement = source.Populate(DisplayElement);
+                    return true;
+                case "type" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "identifier" when source.IsVersion(Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3):
+                    Identifier = source.Populate(Identifier);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

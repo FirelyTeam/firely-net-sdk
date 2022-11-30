@@ -384,6 +384,78 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "request":
+                    Request = source.Populate(Request);
+                    return true;
+                case "response":
+                    Response = source.Populate(Response);
+                    return true;
+                case "created":
+                    CreatedElement = source.PopulateValue(CreatedElement);
+                    return true;
+                case "_created":
+                    CreatedElement = source.Populate(CreatedElement);
+                    return true;
+                case "provider":
+                    Provider = source.Populate(Provider);
+                    return true;
+                case "payment":
+                    Payment = source.Populate(Payment);
+                    return true;
+                case "paymentDate":
+                    PaymentDateElement = source.PopulateValue(PaymentDateElement);
+                    return true;
+                case "_paymentDate":
+                    PaymentDateElement = source.Populate(PaymentDateElement);
+                    return true;
+                case "payee":
+                    Payee = source.Populate(Payee);
+                    return true;
+                case "recipient":
+                    Recipient = source.Populate(Recipient);
+                    return true;
+                case "amount":
+                    Amount = source.Populate(Amount);
+                    return true;
+                case "paymentStatus":
+                    PaymentStatus = source.Populate(PaymentStatus);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

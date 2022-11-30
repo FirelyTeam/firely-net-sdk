@@ -423,6 +423,90 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "boundsQuantity":
+                        source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Duration>(Bounds, "bounds");
+                        Bounds = source.Populate(Bounds as Hl7.Fhir.Model.DSTU2.Duration);
+                        return true;
+                    case "boundsRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Bounds, "bounds");
+                        Bounds = source.Populate(Bounds as Hl7.Fhir.Model.Range);
+                        return true;
+                    case "boundsPeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Bounds, "bounds");
+                        Bounds = source.Populate(Bounds as Hl7.Fhir.Model.Period);
+                        return true;
+                    case "count":
+                        CountElement = source.PopulateValue(CountElement);
+                        return true;
+                    case "_count":
+                        CountElement = source.Populate(CountElement);
+                        return true;
+                    case "duration":
+                        DurationElement = source.PopulateValue(DurationElement);
+                        return true;
+                    case "_duration":
+                        DurationElement = source.Populate(DurationElement);
+                        return true;
+                    case "durationMax":
+                        DurationMaxElement = source.PopulateValue(DurationMaxElement);
+                        return true;
+                    case "_durationMax":
+                        DurationMaxElement = source.Populate(DurationMaxElement);
+                        return true;
+                    case "durationUnits":
+                        DurationUnitsElement = source.PopulateValue(DurationUnitsElement);
+                        return true;
+                    case "_durationUnits":
+                        DurationUnitsElement = source.Populate(DurationUnitsElement);
+                        return true;
+                    case "frequency":
+                        FrequencyElement = source.PopulateValue(FrequencyElement);
+                        return true;
+                    case "_frequency":
+                        FrequencyElement = source.Populate(FrequencyElement);
+                        return true;
+                    case "frequencyMax":
+                        FrequencyMaxElement = source.PopulateValue(FrequencyMaxElement);
+                        return true;
+                    case "_frequencyMax":
+                        FrequencyMaxElement = source.Populate(FrequencyMaxElement);
+                        return true;
+                    case "period":
+                        PeriodElement = source.PopulateValue(PeriodElement);
+                        return true;
+                    case "_period":
+                        PeriodElement = source.Populate(PeriodElement);
+                        return true;
+                    case "periodMax":
+                        PeriodMaxElement = source.PopulateValue(PeriodMaxElement);
+                        return true;
+                    case "_periodMax":
+                        PeriodMaxElement = source.Populate(PeriodMaxElement);
+                        return true;
+                    case "periodUnits":
+                        PeriodUnitsElement = source.PopulateValue(PeriodUnitsElement);
+                        return true;
+                    case "_periodUnits":
+                        PeriodUnitsElement = source.Populate(PeriodUnitsElement);
+                        return true;
+                    case "when":
+                        WhenElement = source.PopulateValue(WhenElement);
+                        return true;
+                    case "_when":
+                        WhenElement = source.Populate(WhenElement);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RepeatComponent;
@@ -724,6 +808,46 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Repeat?.Serialize(sink);
             sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "event":
+                case "_event":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "repeat":
+                    Repeat = source.Populate(Repeat);
+                    return true;
+                case "code":
+                    Code = source.Populate(Code);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "event":
+                    source.PopulatePrimitiveListItemValue(EventElement, index);
+                    return true;
+                case "_event":
+                    source.PopulatePrimitiveListItem(EventElement, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

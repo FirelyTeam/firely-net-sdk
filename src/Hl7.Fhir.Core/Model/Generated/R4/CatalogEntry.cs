@@ -120,6 +120,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "relationtype":
+                        RelationtypeElement = source.PopulateValue(RelationtypeElement);
+                        return true;
+                    case "_relationtype":
+                        RelationtypeElement = source.Populate(RelationtypeElement);
+                        return true;
+                    case "item":
+                        Item = source.Populate(Item);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as RelatedEntryComponent;
@@ -574,6 +595,99 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "type":
+                    Type = source.Populate(Type);
+                    return true;
+                case "orderable":
+                    OrderableElement = source.PopulateValue(OrderableElement);
+                    return true;
+                case "_orderable":
+                    OrderableElement = source.Populate(OrderableElement);
+                    return true;
+                case "referencedItem":
+                    ReferencedItem = source.Populate(ReferencedItem);
+                    return true;
+                case "additionalIdentifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "classification":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    StatusElement = source.PopulateValue(StatusElement);
+                    return true;
+                case "_status":
+                    StatusElement = source.Populate(StatusElement);
+                    return true;
+                case "validityPeriod":
+                    ValidityPeriod = source.Populate(ValidityPeriod);
+                    return true;
+                case "validTo":
+                    ValidToElement = source.PopulateValue(ValidToElement);
+                    return true;
+                case "_validTo":
+                    ValidToElement = source.Populate(ValidToElement);
+                    return true;
+                case "lastUpdated":
+                    LastUpdatedElement = source.PopulateValue(LastUpdatedElement);
+                    return true;
+                case "_lastUpdated":
+                    LastUpdatedElement = source.Populate(LastUpdatedElement);
+                    return true;
+                case "additionalCharacteristic":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "additionalClassification":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "relatedEntry":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "additionalIdentifier":
+                    source.PopulateListItem(AdditionalIdentifier, index);
+                    return true;
+                case "classification":
+                    source.PopulateListItem(Classification, index);
+                    return true;
+                case "additionalCharacteristic":
+                    source.PopulateListItem(AdditionalCharacteristic, index);
+                    return true;
+                case "additionalClassification":
+                    source.PopulateListItem(AdditionalClassification, index);
+                    return true;
+                case "relatedEntry":
+                    source.PopulateListItem(RelatedEntry, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]

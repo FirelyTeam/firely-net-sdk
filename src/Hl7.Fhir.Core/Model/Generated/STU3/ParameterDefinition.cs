@@ -342,6 +342,57 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "name":
+                    NameElement = source.PopulateValue(NameElement);
+                    return true;
+                case "_name":
+                    NameElement = source.Populate(NameElement);
+                    return true;
+                case "use":
+                    UseElement = source.PopulateValue(UseElement);
+                    return true;
+                case "_use":
+                    UseElement = source.Populate(UseElement);
+                    return true;
+                case "min":
+                    MinElement = source.PopulateValue(MinElement);
+                    return true;
+                case "_min":
+                    MinElement = source.Populate(MinElement);
+                    return true;
+                case "max":
+                    MaxElement = source.PopulateValue(MaxElement);
+                    return true;
+                case "_max":
+                    MaxElement = source.Populate(MaxElement);
+                    return true;
+                case "documentation":
+                    DocumentationElement = source.PopulateValue(DocumentationElement);
+                    return true;
+                case "_documentation":
+                    DocumentationElement = source.Populate(DocumentationElement);
+                    return true;
+                case "type":
+                    TypeElement = source.PopulateValue(TypeElement);
+                    return true;
+                case "_type":
+                    TypeElement = source.Populate(TypeElement);
+                    return true;
+                case "profile":
+                    Profile = source.Populate(Profile);
+                    return true;
+            }
+            return false;
+        }
+    
         [NotMapped]
         public override IEnumerable<Base> Children
         {

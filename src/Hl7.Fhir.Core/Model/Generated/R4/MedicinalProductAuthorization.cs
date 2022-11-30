@@ -156,6 +156,51 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "country":
+                        Country = source.Populate(Country);
+                        return true;
+                    case "jurisdiction":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                    case "legalStatusOfSupply":
+                        LegalStatusOfSupply = source.Populate(LegalStatusOfSupply);
+                        return true;
+                    case "validityPeriod":
+                        ValidityPeriod = source.Populate(ValidityPeriod);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        source.PopulateListItem(Identifier, index);
+                        return true;
+                    case "jurisdiction":
+                        source.PopulateListItem(Jurisdiction, index);
+                        return true;
+                }
+                return false;
+            }
+        
             public override IDeepCopyable CopyTo(IDeepCopyable other)
             {
                 var dest = other as JurisdictionalAuthorizationComponent;
@@ -322,6 +367,54 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+            {
+                if (base.SetElementFromJson(jsonPropertyName, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "identifier":
+                        Identifier = source.Populate(Identifier);
+                        return true;
+                    case "type":
+                        Type = source.Populate(Type);
+                        return true;
+                    case "datePeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Date, "date");
+                        Date = source.Populate(Date as Hl7.Fhir.Model.Period);
+                        return true;
+                    case "dateDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Date, "date");
+                        Date = source.PopulateValue(Date as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "_dateDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Date, "date");
+                        Date = source.Populate(Date as Hl7.Fhir.Model.FhirDateTime);
+                        return true;
+                    case "application":
+                        source.SetList(this, jsonPropertyName);
+                        return true;
+                }
+                return false;
+            }
+            
+            internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+            {
+                if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+                {
+                    return true;
+                }
+                switch (jsonPropertyName)
+                {
+                    case "application":
+                        source.PopulateListItem(Application, index);
+                        return true;
+                }
+                return false;
             }
         
             public override IDeepCopyable CopyTo(IDeepCopyable other)
@@ -840,6 +933,102 @@ namespace Hl7.Fhir.Model.R4
             sink.Element("regulator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Regulator?.Serialize(sink);
             sink.Element("procedure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Procedure?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
+        {
+            if (base.SetElementFromJson(jsonPropertyName, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "subject":
+                    Subject = source.Populate(Subject);
+                    return true;
+                case "country":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "jurisdiction":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "status":
+                    Status = source.Populate(Status);
+                    return true;
+                case "statusDate":
+                    StatusDateElement = source.PopulateValue(StatusDateElement);
+                    return true;
+                case "_statusDate":
+                    StatusDateElement = source.Populate(StatusDateElement);
+                    return true;
+                case "restoreDate":
+                    RestoreDateElement = source.PopulateValue(RestoreDateElement);
+                    return true;
+                case "_restoreDate":
+                    RestoreDateElement = source.Populate(RestoreDateElement);
+                    return true;
+                case "validityPeriod":
+                    ValidityPeriod = source.Populate(ValidityPeriod);
+                    return true;
+                case "dataExclusivityPeriod":
+                    DataExclusivityPeriod = source.Populate(DataExclusivityPeriod);
+                    return true;
+                case "dateOfFirstAuthorization":
+                    DateOfFirstAuthorizationElement = source.PopulateValue(DateOfFirstAuthorizationElement);
+                    return true;
+                case "_dateOfFirstAuthorization":
+                    DateOfFirstAuthorizationElement = source.Populate(DateOfFirstAuthorizationElement);
+                    return true;
+                case "internationalBirthDate":
+                    InternationalBirthDateElement = source.PopulateValue(InternationalBirthDateElement);
+                    return true;
+                case "_internationalBirthDate":
+                    InternationalBirthDateElement = source.Populate(InternationalBirthDateElement);
+                    return true;
+                case "legalBasis":
+                    LegalBasis = source.Populate(LegalBasis);
+                    return true;
+                case "jurisdictionalAuthorization":
+                    source.SetList(this, jsonPropertyName);
+                    return true;
+                case "holder":
+                    Holder = source.Populate(Holder);
+                    return true;
+                case "regulator":
+                    Regulator = source.Populate(Regulator);
+                    return true;
+                case "procedure":
+                    Procedure = source.Populate(Procedure);
+                    return true;
+            }
+            return false;
+        }
+        
+        internal override bool SetListElementFromJson(string jsonPropertyName, int index, ref Serialization.JsonSource source)
+        {
+            if (base.SetListElementFromJson(jsonPropertyName, index, ref source))
+            {
+                return true;
+            }
+            switch (jsonPropertyName)
+            {
+                case "identifier":
+                    source.PopulateListItem(Identifier, index);
+                    return true;
+                case "country":
+                    source.PopulateListItem(Country, index);
+                    return true;
+                case "jurisdiction":
+                    source.PopulateListItem(Jurisdiction, index);
+                    return true;
+                case "jurisdictionalAuthorization":
+                    source.PopulateListItem(JurisdictionalAuthorization, index);
+                    return true;
+            }
+            return false;
         }
     
         [NotMapped]
