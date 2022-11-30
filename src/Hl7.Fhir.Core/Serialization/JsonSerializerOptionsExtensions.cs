@@ -20,6 +20,11 @@ namespace Hl7.Fhir.Serialization
         {
             var result = new JsonSerializerOptions(options);
             result.Converters.Add(new FhirJsonConverter(settings));
+            if (settings.PermissiveParsing)
+            {
+                // The old parser always allowed commas after the last element in an array or object, here we do that only in PermissiveParsing mode
+                result.AllowTrailingCommas = true;
+            }
             return result;
         }
     }

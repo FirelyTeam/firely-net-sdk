@@ -2103,6 +2103,42 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void TrailingCommasTest()
+        {
+            var json = "{\"resourceType\":\"Patient\",\"gender\":\"male\",}";
+
+            Throws(
+                () => JsonSerializer.Deserialize<Model.R4.Patient>(
+                    json,
+                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                ),
+                "The JSON object contains a trailing comma at the end which is not supported in this mode"
+            );
+
+            var patient = JsonSerializer.Deserialize<Model.R4.Patient>(
+                json,
+                new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = true })
+            );
+            Assert.AreEqual(AdministrativeGender.Male, patient.Gender);
+
+            json = "{\"resourceType\":\"Patient\",\"name\":[{\"family\":\"Smith\"},]}";
+
+            Throws(
+                () => JsonSerializer.Deserialize<Model.R4.Patient>(
+                    json,
+                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                ),
+                "The JSON array contains a trailing comma at the end which is not supported in this mode"
+            );
+
+            patient = JsonSerializer.Deserialize<Model.R4.Patient>(
+                json,
+                new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = true })
+            );
+            Assert.AreEqual("Smith", Single(patient.Name).Family);
+        }
+
+        [TestMethod]
         public void BundleR4Test()
         {
             var json =
