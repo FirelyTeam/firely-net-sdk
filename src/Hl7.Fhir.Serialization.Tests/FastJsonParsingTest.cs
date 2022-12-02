@@ -2288,6 +2288,36 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(bundleOldParser.IsExactly(bundleNewParsr));
         }
 
+        [TestMethod]
+        public void SerializeAndParseSpecialCharacters()
+        {
+            var patient = new Model.R4.Patient
+            {
+                Text = new Narrative
+                {
+                    Status = Narrative.NarrativeStatus.Additional,
+                    Div = @"<div xmlns=""http://www.w3.org/1999/xhtml"">
+	<p>Patient Ďonald ĎUCK @ Acme Healthcare, Inc. MR = 654—321</p>
+</div>"
+                },
+                Identifier = new List<Identifier>
+                {
+                    new Identifier { Value = "654—321" }
+                },
+                Name = new List<Model.R4.HumanName>
+                {
+                    new Model.R4.HumanName
+                    {
+                        Family = "Ďuck",
+                        Given = new[] { "Ďonald" }
+                    }
+                }
+            };
+            var patientJson = new FhirJsonFastSerializer(Model.Version.R4).SerializeToString(patient);
+            var parsedPatient = JsonSerializer.Deserialize<Model.R4.Patient>(patientJson, new JsonSerializerOptions().ForFhir(Model.Version.R4));
+            Assert.IsTrue(patient.IsExactly(parsedPatient));
+        }
+
         private void RoundTripOneExample(Model.Version version, string filename)
         {
             var original = File.ReadAllText(GetFullPathForExample(filename));
