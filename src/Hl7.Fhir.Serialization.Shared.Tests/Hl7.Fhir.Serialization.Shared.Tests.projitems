@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlUntyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseXMLElements.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripBinarySerialization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoundtripNewSerializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientXml.cs" />

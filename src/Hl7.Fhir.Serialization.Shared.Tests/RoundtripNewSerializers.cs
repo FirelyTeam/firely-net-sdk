@@ -68,16 +68,16 @@ namespace Hl7.Fhir.Serialization.Tests
             var intermediate2Path = Path.Combine(targetDir, intermediate2Folder);
             createEmptyDir(intermediate2Path);
 
-            var xmlSerializer = new FhirXmlPocoSerializer(Specification.FhirRelease.R4);
-            var xmlDeserializer = new FhirXmlPocoDeserializer(typeof(ModelInfo).Assembly);
+            var xmlSerializer = new FhirXmlPocoSerializer(ModelInfo.ModelInspector.FhirRelease);
+            var xmlDeserializer = new FhirXmlPocoDeserializer(typeof(Patient).Assembly);
             var jsonOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
 
-            files.Where(f => !SkipFile(f)).ToList()
+            files.Where(f => !skipFile(f)).ToList()
                  .ForEach(f => objects.Add(new object[] { f, targetDir, xmlSerializer, xmlDeserializer, jsonOptions }));
 
             return objects;
         }
-        static bool SkipFile(string file)
+        private static bool skipFile(string file)
         {
             if (file.Contains("examplescenario-example"))
                 return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
