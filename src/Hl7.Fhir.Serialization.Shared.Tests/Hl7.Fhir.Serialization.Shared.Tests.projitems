@@ -71,5 +71,8 @@
     <Content Include="$(MSBuildThisFileDirectory)TestData\xml-with-different-elements.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\SomeExampleResources.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
