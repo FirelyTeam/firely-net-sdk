@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk.props" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.Support</PackageId>
+		<Title>HL7 FHIR support library</Title>
+		<Summary>Common interfaces and classes used by all FHIR .NET assemblies</Summary>
+		<Description>Common interfaces and classes used by all FHIR .NET assemblies</Description>
+		<PackageTags>HL7;FHIR;Elements;Utility;Firely;SDK</PackageTags>
+		<AssemblyName>Hl7.Fhir.Support</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
+		<PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
+	</ItemGroup>
+</Project>

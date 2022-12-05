@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk.props" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.Support.Poco</PackageId>
+		<Title>HL7 FHIR library containing support classes for POCO support in the Firely .NET SDK</Title>
+		<Summary>Base classes and supporting infrastructure to work with FHIR data using POCOs.</Summary>
+		<Description>This is the support library for working with the POCO representation of HL7's FHIR model data</Description>
+		<PackageTags>HL7;FHIR;POCO;REST;PARSE;SERIALIZE;Firely;SDK</PackageTags>
+		<AssemblyName>Hl7.Fhir.Support.Poco</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="System.Buffers" Version="4.5.1" />
+		<PackageReference Include="System.Text.Json" Version="6.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Firely.Fhir.Packages" Version="3.*" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.ElementModel\Hl7.Fhir.ElementModel.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
+		<ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+	</ItemGroup>
+
+</Project>
