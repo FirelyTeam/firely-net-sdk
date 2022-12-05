@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="TestData\**\*.xml;TestData\**\*.json">
+		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.zip">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
@@ -32,14 +32,4 @@
 		<None Remove="TestData\test-empty-nodes.xml" />
 		<None Remove="TestData\typeErrors.xml" />
 	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="..\Hl7.Fhir.STU3.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-		<None Include="..\Hl7.Fhir.STU3.Tests\TestData\examples.zip" Link="TestData\examples.zip">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
 </Project>
