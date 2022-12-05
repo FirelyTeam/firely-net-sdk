@@ -42,7 +42,6 @@ stages:
     steps:
     - checkout: self
       clean: true
-      submodules: true
       fetchDepth: 1
     - template: templates/apply-versioning-steps-template.yml
 
