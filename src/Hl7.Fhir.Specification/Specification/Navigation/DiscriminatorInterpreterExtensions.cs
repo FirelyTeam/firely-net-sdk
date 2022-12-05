@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             var interpeter = new DiscriminatorInterpreter(walker);
             //interpeter.AssertSupportedRootExpression(expr);
-            return expr.Accept(interpeter, new SymbolTable());
+            return expr.Accept(interpeter);
         }
 
         /// <summary>

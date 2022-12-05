@@ -27,16 +27,16 @@ namespace Hl7.Fhir.Specification.Navigation
             Root = root;
         }
 
-        public override IEnumerable<StructureDefinitionWalker> VisitConstant(ConstantExpression expression, SymbolTable _) =>
+        public override IEnumerable<StructureDefinitionWalker> VisitConstant(ConstantExpression expression) =>
             throw new DiscriminatorFormatException("Discriminator paths cannot contain constants.");
 
         /// <summary>
         /// Visit a function call appearing in a discriminator expression
         /// </summary>
         /// <remarks>May only be 'builtin.children', 'resolve' and 'extension'</remarks>
-        public override IEnumerable<StructureDefinitionWalker> VisitFunctionCall(FunctionCallExpression call, SymbolTable scope)
+        public override IEnumerable<StructureDefinitionWalker> VisitFunctionCall(FunctionCallExpression call)
         {
-            var parentSet = call.Focus.Accept(this, scope);
+            var parentSet = call.Focus.Accept(this);
 
             if (call is ChildExpression childExpr)
                 return parentSet.Child(childExpr.ChildName);
@@ -83,12 +83,12 @@ namespace Hl7.Fhir.Specification.Navigation
             throw new DiscriminatorFormatException($"Function '{call.FunctionName}' should be invoked with a single parameter or type string");
         }
 
-        public override IEnumerable<StructureDefinitionWalker> VisitNewNodeListInit(NewNodeListInitExpression expression, SymbolTable scope) =>
+        public override IEnumerable<StructureDefinitionWalker> VisitNewNodeListInit(NewNodeListInitExpression expression) =>
             throw new DiscriminatorFormatException("The empty set constructor '{}', is not supported in discriminators.");
 
         public StructureDefinitionWalker Root { get; private set; }
 
-        public override IEnumerable<StructureDefinitionWalker> VisitVariableRef(VariableRefExpression expression, SymbolTable scope)
+        public override IEnumerable<StructureDefinitionWalker> VisitVariableRef(VariableRefExpression expression)
         {
             if (expression.Name == "builtin.this")
                 return new[] { Root };
