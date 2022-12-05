@@ -147,9 +147,9 @@ stages:
         parameters:
           testRunTitle: Tests common test projects
           projects: |
-            **/common/**/publish/Hl7.Fhir.Support.Tests.dll
-            **/common/**/publish/HL7.FhirPath.Tests.dll
-            **/common/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
+            **/publish/Hl7.Fhir.Support.Tests.dll
+            **/publish/HL7.FhirPath.Tests.dll
+            **/publish/Hl7.Fhir.Support.Poco.Tests.dll
   - job:
     displayName: Tests FhirPath Core test project
     steps:
