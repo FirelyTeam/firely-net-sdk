@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Terminology
         {
             var valueset = await _resolver.FindValueSetAsync(canonical).ConfigureAwait(false);
 
-            if (valueset == null && _resolver is IConformanceSource source)
+            if (valueset == null && _resolver is ICommonConformanceSource source)
             {
                 var cs = source.FindCodeSystemByValueSet(canonical);
                 if (cs != null)
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             var validCodeParams = new ValidateCodeParameters(parameters);
 
-            var valueSet = validCodeParams.ValueSet;
+            var valueSet = validCodeParams.ValueSet as ValueSet;
             if (valueSet is null)
             {
                 if (validCodeParams.Url is null)

@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir http://hl7.org/fhir/STU3/bundle.xsd" xmlns="http://hl7.org/fhir">
+  <meta>
+    <profile value="http://nictiz.nl/fhir/StructureDefinition/Bundle-MedicationOverview"/>
+  </meta>
+  <type value="searchset"/>
+  <entry>
+    <resource>
+      <List xmlns="http://hl7.org/fhir">
+        <meta>
+          <profile value="http://nictiz.nl/fhir/StructureDefinition/MedicationOverview"/>
+        </meta>        
+        <status value="current"/>
+        <mode value="snapshot"/>
+        <code>
+          <coding>
+            <system value="urn:oid:2.16.840.1.113883.2.4.3.11.60.20.77.4"/>
+            <code value="129"/>
+            <display value="Medicatieoverzicht"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/nl-core-patient-example-1"/>
+        </subject>
+        <entry>
+          <item>
+            <reference value="MedicationRequest/medicationAgreement-example"/>
+          </item>
+        </entry>
+        <entry>
+          <item>
+            <reference value="MedicationDispense/medicationadministrationagreement-example"/>
+          </item>
+        </entry>
+        <entry>
+          <item>
+            <reference value="MedicationStatement/medicationuse-example"/>
+          </item>
+        </entry>
+      </List>      
+    </resource>
+  </entry>
+  <entry>
+    <resource>
+      <MedicationRequest xmlns="http://hl7.org/fhir">
+        <id value="medicationAgreement-example"/>
+        <meta>
+          <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationAgreement"/>
+        </meta>
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse-Duration">
+          <valueDuration>
+            <value value="4"/>
+            <unit value="week"/>
+            <system value="http://unitsofmeasure.org"/>
+            <code value="wk"/>
+          </valueDuration>
+        </extension>
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-Medication-PeriodOfUse">
+          <valuePeriod>
+            <start value="2016-06-15"/>
+            <end value="2016-07-13"/>
+          </valuePeriod>
+        </extension>
+        <identifier>
+          <system value="http://example-implementer.com/fhir/MedicationRequest-ID"/>
+          <value value="875452574"/>
+        </identifier>
+        <status value="active"/>
+        <intent value="order"/>
+        <medicationReference>
+          <reference value="Medication/example"/>
+          <display value="Glimepiride tablet 3mg"/>
+        </medicationReference>
+        <subject>
+          <reference value="Patient/nl-core-patient-example-1"/>
+          <display value="dhr. P. Jansen"/>
+        </subject>
+        <authoredOn value="2016-06-15"/>
+        <requester>
+          <agent>
+            <reference value="Practitioner/example"/>
+            <display value="H.Huis"/>
+          </agent>
+        </requester>
+        <reasonCode>
+          <text value="Diabetus Mellitus"/>
+        </reasonCode>
+        <note>
+          <text value="Exact 4 weken"/>
+        </note>
+        <dosageInstruction>
+          <text value="1 maal per dag 2 tabletten"/>
+          <timing>
+            <repeat>
+              <boundsDuration>
+                <value value="4"/>
+                <unit value="week"/>
+                <system value="http://unitsofmeasure.org"/>
+                <code value="wk"/>
+              </boundsDuration>
+              <frequency value="1"/>
+              <period value="1"/>
+              <periodUnit value="d"/>
+            </repeat>
+          </timing>
+          <route>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.2.4.4.9"/>
+              <code value="oraal"/>
+              <display value="Oraal"/>
+            </coding>
+          </route>
+          <doseQuantity>
+            <value value="2"/>
+            <unit value="tablet"/>
+          </doseQuantity>
+        </dosageInstruction>
+      </MedicationRequest>
+    </resource>
+  </entry>
+  <entry>
+    <resource>
+      <MedicationStatement xmlns="http://hl7.org/fhir">
+        <id value="medicationuse-example"/>
+        <meta>
+          <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse"/>
+        </meta>
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-MedicationUse-AsAgreedIndicator">
+          <valueBoolean value="true"/>
+        </extension>
+        <identifier>
+          <system value="http://example-implementer.com/fhir/MedicationUseID"/>
+          <value value="123456654321"/>
+        </identifier>
+        <status value="active"/>
+        <medicationReference>
+          <reference value="Medication/example"/>
+          <display value="Ibuprofen"/>
+        </medicationReference>
+        <effectivePeriod>
+          <start value="2016-06-27"/>
+          <end value="2016-06-30"/>
+        </effectivePeriod>
+        <dateAsserted value="2016-06-25"/>
+        <informationSource>
+          <reference value="Patient/nl-core-patient-example-1"/>
+          <display value="dhr. P. Jansen"/>
+        </informationSource>
+        <subject>
+          <reference value="Patient/nl-core-patient-example-1"/>
+          <display value="dhr. P. Jansen"/>
+        </subject>
+        <taken value="y"/>
+        <reasonCode>
+          <text value="Pijn"/>
+        </reasonCode>
+        <dosage>
+          <text value="4x per dag 1 tablet"/>
+          <timing>
+            <repeat>
+              <boundsDuration>
+                <value value="3"/>
+                <unit value="day"/>
+                <system value="http://unitsofmeasure.org"/>
+                <code value="d"/>
+              </boundsDuration>
+              <frequency value="4"/>
+              <period value="1"/>
+              <periodUnit value="d"/>
+            </repeat>
+          </timing>
+          <route>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.2.4.4.9"/>
+              <code value="oraal"/>
+              <display value="Oraal"/>
+            </coding>
+          </route>
+          <doseQuantity>
+            <value value="1"/>
+            <unit value="tablet"/>
+          </doseQuantity>
+        </dosage>
+      </MedicationStatement>
+    </resource>
+  </entry>
+  <entry>
+    <resource>
+      <MedicationDispense xmlns="http://hl7.org/fhir">
+        <id value="medicationadministrationagreement-example"/>
+        <meta>
+          <profile value="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement"/>
+        </meta>
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-Medication-PeriodOfUse">
+          <valuePeriod>
+            <start value="2016-06-17"/>
+            <end value="2016-08-07"/>
+          </valuePeriod>
+        </extension>
+        <extension url="http://nictiz.nl/fhir/StructureDefinition/zib-AdministrationAgreement-ReasonForDispense">
+          <valueString value="Eczeem oogleden"/>
+        </extension>
+        <identifier>
+          <system value="http://example-implementer.com/fhir/MedicationDispense-ID"/>
+          <value value="123456654321"/>
+        </identifier>
+        <status value="completed"/>
+        <medicationReference>
+          <reference value="Medication/example"/>
+          <display value="Emovate zalf 0,5 mg/g"/>
+        </medicationReference>
+        <subject>
+          <reference value="Patient/nl-core-patient-example-1"/>
+          <display value="dhr. P. Jansen"/>
+        </subject>
+        <performer>
+          <actor>
+            <reference value="Organization/example"/>
+            <display value="Apotheek De Gulle Gaper"/>
+          </actor>
+        </performer>
+        <dosageInstruction>
+          <sequence value="1"/>
+          <text value="2 maal per dag zalf gedurende 7 dagen"/>
+          <route>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.2.4.4.9"/>
+              <code value="cutaan"/>
+              <display value="Cutaan"/>
+            </coding>
+          </route>
+          <rateRatio>
+            <numerator>
+              <value value="2"/>
+              <unit value="zalf"/>
+            </numerator>
+            <denominator>
+              <value value="1"/>
+              <unit value="day"/>
+              <system value="http://unitsofmeasure.org"/>
+              <code value="d"/>
+            </denominator>
+          </rateRatio>
+        </dosageInstruction>
+        <dosageInstruction>
+          <sequence value="2"/>
+          <text value="1 maal per dag zalf gedurende 7 dagen"/>
+          <route>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.2.4.4.9"/>
+              <code value="cutaan"/>
+              <display value="Cutaan"/>
+            </coding>
+          </route>
+          <rateRatio>
+            <numerator>
+              <value value="1"/>
+              <unit value="zalf"/>
+            </numerator>
+            <denominator>
+              <value value="1"/>
+              <unit value="day"/>
+              <system value="http://unitsofmeasure.org"/>
+              <code value="d"/>
+            </denominator>
+          </rateRatio>
+        </dosageInstruction>
+        <dosageInstruction>
+          <sequence value="3"/>
+          <text value="3 maal per week zalf gedurende 7 dagen"/>
+          <route>
+            <coding>
+              <system value="urn:oid:2.16.840.1.113883.2.4.4.9"/>
+              <code value="cutaan"/>
+              <display value="Cutaan"/>
+            </coding>
+          </route>
+          <rateRatio>
+            <numerator>
+              <value value="3"/>
+              <unit value="zalf"/>
+            </numerator>
+            <denominator>
+              <value value="1"/>
+              <unit value="week"/>
+              <system value="http://unitsofmeasure.org"/>
+              <code value="w"/>
+            </denominator>
+          </rateRatio>
+        </dosageInstruction>
+      </MedicationDispense>
+    </resource>
+  </entry>
+</Bundle>

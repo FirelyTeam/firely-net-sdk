@@ -6,6 +6,8 @@
  * available at https://github.com/FirelyTeam/firely-net-sdk/blob/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
@@ -22,33 +24,29 @@ namespace Hl7.Fhir.Specification.Source
         public static IEnumerable<ArtifactSummary> Errors(this IEnumerable<ArtifactSummary> summaries)
             => summaries.Where(s => s.IsFaulted);
 
-        /// <summary>Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.</summary>
-        public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType resourceType)
-            => summaries.Where(s => s.ResourceType == resourceType);
-
         /// <summary>
-        /// Filter <see cref="ArtifactSummary"/> instances for resources with the specified <see cref="ResourceType"/>.
-        /// If <paramref name="resourceType"/> equals <c>null</c>, then filter summaries for all valid FHIR resources.
+        /// Filter <see cref="ArtifactSummary"/> instances for resources with the specified <paramref name="resourceTypeName"/>.
+        /// If <paramref name="resourceTypeName"/> equals <c>null</c>, then filter summaries for all valid FHIR resources.
         /// </summary>
-        public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, ResourceType? resourceType)
-            => resourceType.HasValue
-            ? summaries.Where(s => s.ResourceType == resourceType.Value)
+        public static IEnumerable<ArtifactSummary> OfResourceType(this IEnumerable<ArtifactSummary> summaries, string? resourceTypeName)
+            => resourceTypeName is not null
+            ? summaries.Where(s => s.ResourceTypeName == resourceTypeName)
             : summaries.Where(s => s.IsFhirResource);
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for valid FHIR resources.</summary>
         public static IEnumerable<ArtifactSummary> FhirResources(this IEnumerable<ArtifactSummary> summaries)
             => summaries.Where(s => s.IsFhirResource);
 
-        /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="NamingSystem"/> resources with the specified uniqueId value.</summary>
+        /// <summary>Find <see cref="ArtifactSummary"/> instances for <c>NamingSystem</c> resources with the specified uniqueId value.</summary>
         public static IEnumerable<ArtifactSummary> FindNamingSystems(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
-            => summaries.OfResourceType(ResourceType.NamingSystem).Where(ns => ns.HasNamingSystemUniqueId(uniqueId));
+            => summaries.OfResourceType(FhirTypeNames.NAMINGSYSTEM_NAME).Where(ns => ns.HasNamingSystemUniqueId(uniqueId));
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for conformance resources.</summary>
-        public static IEnumerable<ArtifactSummary> ConformanceResources(this IEnumerable<ArtifactSummary> summaries)
-            => summaries.Where(s => ModelInfo.IsConformanceResource(s.ResourceType));
+        public static IEnumerable<ArtifactSummary> ConformanceResources(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo)
+            => summaries.Where(s => s.ResourceTypeName is not null && modelInfo.IsConformanceResource(s.ResourceTypeName));
 
         /// <summary>Find <see cref="ArtifactSummary"/> instances for conformance resources with the specified canonical url.</summary>
-        public static IEnumerable<ArtifactSummary> FindConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
+        public static IEnumerable<ArtifactSummary> FindConformanceResources(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl, IModelInfo modelInfo)
         {
             var values = canonicalUrl.Split('|');
             if (values.Length > 2)
@@ -56,23 +54,23 @@ namespace Hl7.Fhir.Specification.Source
 
             var version = values.Length == 2 ? values[1] : string.Empty;
 
-            return summaries.ConformanceResources().Where(r => r.GetConformanceCanonicalUrl() == values[0] &&
+            return summaries.ConformanceResources(modelInfo).Where(r => r.GetConformanceCanonicalUrl() == values[0] &&
                                                                (string.IsNullOrEmpty(version) || r.GetConformanceVersion() == version));
         }
 
         /// <summary>Filter <see cref="ArtifactSummary"/> instances for <see cref="CodeSystem"/> resources with the specified valueSet uri.</summary>
         public static IEnumerable<ArtifactSummary> FindCodeSystems(this IEnumerable<ArtifactSummary> summaries, string valueSetUri)
-            => summaries.OfResourceType(ResourceType.CodeSystem).Where(r => r.GetCodeSystemValueSet() == valueSetUri);
+            => summaries.OfResourceType(FhirTypeNames.CODESYSTEM_NAME).Where(r => r.GetCodeSystemValueSet() == valueSetUri);
 
-        /// <summary>Find <see cref="ArtifactSummary"/> instances for <see cref="ConceptMap"/> resources with the specified source and/or target uri(s).</summary>
-        public static IEnumerable<ArtifactSummary> FindConceptMaps(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
+        /// <summary>Find <see cref="ArtifactSummary"/> instances for <c>ConceptMap</c> resources with the specified source and/or target uri(s).</summary>
+        public static IEnumerable<ArtifactSummary> FindConceptMaps(this IEnumerable<ArtifactSummary> summaries, string? sourceUri = null, string? targetUri = null)
         {
-            IEnumerable<ArtifactSummary> result = summaries.OfResourceType(ResourceType.ConceptMap);
-            if (sourceUri != null)
+            IEnumerable<ArtifactSummary> result = summaries.OfResourceType(FhirTypeNames.CONCEPTMAP_NAME);
+            if (sourceUri is not null)
             {
                 result = result.Where(cm => cm.GetConceptMapSource() == sourceUri);
             }
-            if (targetUri != null)
+            if (targetUri is not null)
             {
                 result = result.Where(cm => cm.GetConceptMapTarget() == targetUri);
             }
@@ -84,38 +82,40 @@ namespace Hl7.Fhir.Specification.Source
             => summaries.Where(s => StringComparer.OrdinalIgnoreCase.Equals(s.Origin, filePath));
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the resource with the specified uri.</summary>
-        public static ArtifactSummary ResolveByUri(this IEnumerable<ArtifactSummary> summaries, string uri)
+        public static ArtifactSummary? ResolveByUri(this IEnumerable<ArtifactSummary> summaries, string uri, IModelInfo modelInfo)
         {
             var matches = summaries.Where(r => r.ResourceUri == uri);
-            return matches.SingleOrDefault(ResourceUriConflictExceptionFactory);
+            return matches.SingleOrDefault(modelInfo, ResourceUriConflictExceptionFactory);
         }
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the comformance resource with the specified canonical uri.</summary>
-        /// <exception cref="ResolvingConflictException">The <see cref="ISummarySource"/> instance encountered conflicting Conformance Resource artifacts with the same canonical url identifier.</exception>
-        public static ArtifactSummary ResolveByCanonicalUri(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl)
+        /// <exception cref="ResolvingConflictException">
+        /// The <see cref="ISummarySource"/> instance encountered conflicting Conformance Resource artifacts with the same canonical url identifier.
+        /// </exception>
+        public static ArtifactSummary? ResolveByCanonicalUri(this IEnumerable<ArtifactSummary> summaries, string canonicalUrl, IModelInfo modelInfo)
         {
-            var matches = summaries.FindConformanceResources(canonicalUrl);
-            return matches.SingleOrDefault(CanonicalUrlConflictExceptionFactory);
+            var matches = summaries.FindConformanceResources(canonicalUrl, modelInfo);
+            return matches.SingleOrDefault(modelInfo, CanonicalUrlConflictExceptionFactory);
         }
 
-        /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="NamingSystem"/> resource with the specified uniqueId.</summary>
-        public static ArtifactSummary ResolveNamingSystem(this IEnumerable<ArtifactSummary> summaries, string uniqueId)
-            => summaries.FindNamingSystems(uniqueId).SingleOrDefault(NamingSystemUrlConflictExceptionFactory);
+        /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <c>NamingSystem</c> resource with the specified uniqueId.</summary>
+        public static ArtifactSummary? ResolveNamingSystem(this IEnumerable<ArtifactSummary> summaries, string uniqueId, IModelInfo modelInfo)
+            => summaries.FindNamingSystems(uniqueId).SingleOrDefault(modelInfo, NamingSystemUrlConflictExceptionFactory);
 
         /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="CodeSystem"/> resource with the specified ValueSet uri.</summary>
-        public static ArtifactSummary ResolveCodeSystem(this IEnumerable<ArtifactSummary> summaries, string uri)
-            => summaries.FindCodeSystems(uri).SingleOrDefault(CodeSystemConflictExceptionFactory);
+        public static ArtifactSummary? ResolveCodeSystem(this IEnumerable<ArtifactSummary> summaries, string uri, IModelInfo modelInfo)
+            => summaries.FindCodeSystems(uri).SingleOrDefault(modelInfo, CodeSystemConflictExceptionFactory);
 
-        /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <see cref="ConceptMap"/> resource with the specified source and/or target uri(s).</summary>
-        public static ArtifactSummary ResolveConceptMap(this IEnumerable<ArtifactSummary> summaries, string sourceUri = null, string targetUri = null)
-            => summaries.FindConceptMaps(sourceUri, targetUri).SingleOrDefault(ConceptMapUrlConflictExceptionFactory);
+        /// <summary>Resolve the <see cref="ArtifactSummary"/> for the <c>ConceptMap</c> resource with the specified source and/or target uri(s).</summary>
+        public static ArtifactSummary? ResolveConceptMap(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo, string? sourceUri = null, string? targetUri = null)
+            => summaries.FindConceptMaps(sourceUri, targetUri).SingleOrDefault(modelInfo, ConceptMapUrlConflictExceptionFactory);
 
         #region Private helpers
 
-        static readonly Func<IEnumerable<ArtifactSummary>, Exception> ResourceUriConflictExceptionFactory
-            = new Func<IEnumerable<ArtifactSummary>, Exception>(ToResourceUriConflictException);
+        private static readonly Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception> ResourceUriConflictExceptionFactory
+            = new Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception>(ToResourceUriConflictException);
 
-        static ResolvingConflictException ToResourceUriConflictException(this IEnumerable<ArtifactSummary> summaries)
+        private static ResolvingConflictException ToResourceUriConflictException(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo)
         {
             // Check for duplicate resource uris
             var duplicates =
@@ -130,14 +130,14 @@ namespace Hl7.Fhir.Specification.Source
             return ResolvingConflictException.ResourceUriConflict(conflicts);
         }
 
-        static readonly Func<IEnumerable<ArtifactSummary>, Exception> CanonicalUrlConflictExceptionFactory
-            = new Func<IEnumerable<ArtifactSummary>, Exception>(ToCanonicalUrlConflictException);
+        private static readonly Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception> CanonicalUrlConflictExceptionFactory
+            = new Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception>(ToCanonicalUrlConflictException);
 
-        static ResolvingConflictException ToCanonicalUrlConflictException(this IEnumerable<ArtifactSummary> summaries)
+        private static ResolvingConflictException ToCanonicalUrlConflictException(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo)
         {
             // Check for duplicate canonical urls
             var duplicates =
-                from cr in summaries.ConformanceResources()
+                from cr in summaries.ConformanceResources(modelInfo)
                 let canonical = cr.GetConformanceCanonicalUrl()
                 where canonical != null
                 group cr by canonical into g
@@ -148,15 +148,15 @@ namespace Hl7.Fhir.Specification.Source
             return ResolvingConflictException.CanonicalUrlConflict(conflicts);
         }
 
-        static readonly Func<IEnumerable<ArtifactSummary>, Exception> NamingSystemUrlConflictExceptionFactory
-            = new Func<IEnumerable<ArtifactSummary>, Exception>(ToNamingSystemUrlConflictException);
+        private static readonly Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception> NamingSystemUrlConflictExceptionFactory
+            = new Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception>(ToNamingSystemUrlConflictException);
 
-        static ResolvingConflictException ToNamingSystemUrlConflictException(this IEnumerable<ArtifactSummary> summaries)
+        private static ResolvingConflictException ToNamingSystemUrlConflictException(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo)
         {
             // Check for duplicate NamingSystem.uniqueId values
             var duplicates =
-                from ns in summaries.OfResourceType(ResourceType.NamingSystem)
-                from ids in ns.GetNamingSystemUniqueId()
+                from ns in summaries.OfResourceType(FhirTypeNames.NAMINGSYSTEM_NAME)
+                from ids in ns.GetNamingSystemUniqueId() ?? Enumerable.Empty<string>()
                 where ids != null
                 group ns by ids into g
                 where g.Count() > 1 // g.Skip(1).Any()
@@ -166,14 +166,14 @@ namespace Hl7.Fhir.Specification.Source
             return ResolvingConflictException.NamingSystemUniqueIdConflict(conflicts);
         }
 
-        static readonly Func<IEnumerable<ArtifactSummary>, Exception> CodeSystemConflictExceptionFactory
-                 = new Func<IEnumerable<ArtifactSummary>, Exception>(ToCodeSystemConflictException);
+        private static readonly Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception> CodeSystemConflictExceptionFactory
+                 = new Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception>(ToCodeSystemConflictException);
 
-        static ResolvingConflictException ToCodeSystemConflictException(this IEnumerable<ArtifactSummary> summaries)
+        private static ResolvingConflictException ToCodeSystemConflictException(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo)
         {
             // Check for duplicate CodeSystem.valueSet values
             var duplicates =
-                from cs in summaries.OfResourceType(ResourceType.CodeSystem)
+                from cs in summaries.OfResourceType(FhirTypeNames.CODESYSTEM_NAME)
                 let system = cs.GetCodeSystemValueSet()
                 where system != null
                 group cs by system into g
@@ -184,14 +184,14 @@ namespace Hl7.Fhir.Specification.Source
             return ResolvingConflictException.CodeSystemConflict(conflicts);
         }
 
-        static readonly Func<IEnumerable<ArtifactSummary>, Exception> ConceptMapUrlConflictExceptionFactory
-            = new Func<IEnumerable<ArtifactSummary>, Exception>(ToConceptMapUrlConflictException);
+        private static readonly Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception> ConceptMapUrlConflictExceptionFactory
+            = new Func<IEnumerable<ArtifactSummary>, IModelInfo, Exception>(ToConceptMapUrlConflictException);
 
-        static ResolvingConflictException ToConceptMapUrlConflictException(this IEnumerable<ArtifactSummary> summaries)
+        private static ResolvingConflictException ToConceptMapUrlConflictException(this IEnumerable<ArtifactSummary> summaries, IModelInfo modelInfo)
         {
             // Check for duplicate concept map source/target urls
             var duplicates =
-                from cm in summaries.OfResourceType(ResourceType.ConceptMap)
+                from cm in summaries.OfResourceType(FhirTypeNames.CONCEPTMAP_NAME)
                 from url in GetConceptMapUrls(cm)
                 where url != null
                 group cm by url into g
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Specification.Source
             return ResolvingConflictException.ConceptMapUrlConflict(conflicts);
         }
 
-        static IEnumerable<string> GetConceptMapUrls(ArtifactSummary conceptMapSummary)
+        private static IEnumerable<string> GetConceptMapUrls(ArtifactSummary conceptMapSummary)
         {
             var source = conceptMapSummary.GetConceptMapSource();
             if (source != null) { yield return source; }
@@ -210,11 +210,11 @@ namespace Hl7.Fhir.Specification.Source
             if (target != null) { yield return target; }
         }
 
-        static IEnumerable<ResolvingConflictException.ResolvingConflict> ToConflicts(IEnumerable<IGrouping<string, ArtifactSummary>> duplicates)
+        private static IEnumerable<ResolvingConflictException.ResolvingConflict> ToConflicts(IEnumerable<IGrouping<string, ArtifactSummary>> duplicates)
             => duplicates.Select(d => new ResolvingConflictException.ResolvingConflict(d.Key, d.Select(ci => ci.Origin)));
 
         // Based on System.Enumerable.SingleOrDefault, but with custom exception message
-        static TSource SingleOrDefault<TSource>(this IEnumerable<TSource> source, Func<IEnumerable<TSource>, Exception> createException)
+        private static TSource? SingleOrDefault<TSource>(this IEnumerable<TSource> source, IModelInfo modelInfo, Func<IEnumerable<TSource>, IModelInfo, Exception> createException)
         {
             if (source == null) { throw Error.ArgumentNull("source"); }
             if (createException == null) { throw Error.ArgumentNull("createException"); }
@@ -245,9 +245,10 @@ namespace Hl7.Fhir.Specification.Source
                 }
             }
             //throw Error.MoreThanOneElement();
-            throw createException(source);
+            throw createException(source, modelInfo);
         }
 
         #endregion
     }
 }
+#nullable restore

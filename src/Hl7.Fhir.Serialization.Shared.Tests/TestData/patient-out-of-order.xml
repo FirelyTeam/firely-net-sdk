@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Patient xmlns="http://hl7.org/fhir">
+  <!-- comment on contained -->
+  <active value ="true"/>
+  <telecom>
+    <system value="phone"/>
+    <value value="555-555-2003"/>
+    <use value="work"/>
+    <rank value="1"/>
+  </telecom>
+  <identifier>
+    <use value="usual"/>
+    <system value="urn:oid:0.1.2.3.4.5.6.7"/>
+    <value value="654321"/>
+  </identifier>
+  <identifier>
+    <use value="official"/>
+    <system value="urn:oid:9.0.1.2.3.4.5.6.7"/>
+    <value value="7654321"/>
+  </identifier>
+  <name>
+    <given value="Duck"/>
+    <family value="Donald"/>
+    <use value="official"/>
+  </name>
+  <id value="pat1"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      <p>Patient Donald DUCK @ Acme Healthcare, Inc. MR = 654321</p>
+    </div>
+  </text>
+</Patient>

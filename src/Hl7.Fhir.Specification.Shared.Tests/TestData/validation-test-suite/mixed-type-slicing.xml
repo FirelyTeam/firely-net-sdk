@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+	<id value="mixed-type-slicing"/>
+	<type value="searchset"/>
+	<link>
+		<relation value="self"/>
+		<url value="https://example.com/fhir/Communication?_include=Communication:payload"/>
+	</link>
+	<entry>
+		<fullUrl value="https://example.com/fhir/Communication/comm"/>
+    <resource>
+      <Communication>
+        <id value="comm"/>
+        <meta>
+          <profile value="http://example.com/fhir/StructureDefinition/profile-communication"/>
+        </meta>
+        <status value="in-progress"/>
+        <payload>
+          <contentString value="Put some clinically significant paragraphs"/>
+        </payload>
+        <payload>
+          <contentReference>
+            <reference value="DocumentReference/doc1"/>
+          </contentReference>
+        </payload>
+        <payload>
+          <contentReference>
+            <reference value="Task/task1"/>
+          </contentReference>
+        </payload>
+      </Communication>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="https://example.com/fhir/DocumentReference/doc1"/>
+    <resource>
+      <DocumentReference>
+        <id value="doc1"/>
+        <status value="current"/>
+        <content>
+          <attachment>
+            <contentType value="application/pdf"/>
+            <url value="https://example.com/rest/v1/THP/MD/Binary/GUID"/>
+            <size value="893"/>
+          </attachment>
+        </content>
+      </DocumentReference>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="https://example.com/fhir/Task/task1"/>
+    <resource>
+      <Task>
+        <id value="task1"/>
+        <status value="requested"/>
+        <intent value="order"/>
+      </Task>
+    </resource>
+  </entry>
+</Bundle>

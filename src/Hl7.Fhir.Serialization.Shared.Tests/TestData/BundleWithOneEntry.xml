@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="searchParams" />
+  <!-- Removed Meta/LastModified -->
+  <type value="collection" />
+  <entry>
+    <fullUrl value="http://hl7.org/fhir/SearchParameter/DomainResource-text" />
+    <resource>
+      <SearchParameter>
+        <id value="DomainResource-text" />
+        <url value="http://hl7.org/fhir/SearchParameter/DomainResource-text" />
+        <name value="_text" />
+        <status value="draft" />
+        <experimental value="false" />
+        <!-- Removed date -->
+        <publisher value="Health Level Seven International (FHIR Infrastructure)" />
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://hl7.org/fhir" />
+          </telecom>
+        </contact>
+        <contact>
+          <telecom>
+            <system value="url" />
+            <value value="http://www.hl7.org/Special/committees/fiwg/index.cfm" />
+          </telecom>
+        </contact>
+        <code value="_text" />
+        <base value="DomainResource" />
+        <type value="string" />
+        <description value="Search on the narrative of the resource" />
+        <xpathUsage value="normal" />
+      </SearchParameter>
+    </resource>
+  </entry>
+</Bundle>

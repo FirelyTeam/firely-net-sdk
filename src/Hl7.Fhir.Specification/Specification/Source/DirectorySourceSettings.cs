@@ -16,11 +16,11 @@ using System.Linq;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    /// <summary>Configuration settings for the <see cref="DirectorySource"/> class.</summary>
+    /// <summary>Configuration settings for the <see cref="CommonDirectorySource"/> class.</summary>
     public sealed class DirectorySourceSettings
     {
         /// <summary>Default value of the <see cref="FormatPreference"/> configuration setting.</summary>
-        public const DirectorySource.DuplicateFilenameResolution DefaultFormatPreference = DirectorySource.DuplicateFilenameResolution.PreferXml;
+        public const CommonDirectorySource.DuplicateFilenameResolution DefaultFormatPreference = CommonDirectorySource.DuplicateFilenameResolution.PreferXml;
 
         /// <summary>Default value of the <see cref="Masks"/> configuration setting (*.*)</summary>
         public readonly static string[] DefaultMasks = new[] { "*.*" };
@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Creates a new <see cref="DirectorySourceSettings"/> object that is a copy of the current instance.</summary>
         public DirectorySourceSettings Clone() => new DirectorySourceSettings(this);
 
-        /// <summary>Returns the default content directory of the <see cref="DirectorySource"/>.</summary>
+        /// <summary>Returns the default content directory of the <see cref="CommonDirectorySource"/>.</summary>
         public static string SpecificationDirectory
         {
             get
@@ -86,14 +86,14 @@ namespace Hl7.Fhir.Specification.Source
         }
 
         /// <summary>
-        /// Gets or sets a value that determines wether the <see cref="DirectorySource"/> should
+        /// Gets or sets a value that determines wether the <see cref="CommonDirectorySource"/> should
         /// also include artifacts from (nested) subdirectories of the specified content directory.
         /// <para>
         /// Returns <c>false</c> by default.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// Enabling this setting requires the <see cref="DirectorySource"/> instance
+        /// Enabling this setting requires the <see cref="CommonDirectorySource"/> instance
         /// to recursively scan all xml and json files that exist in the target directory
         /// structure, which could unexpectedly turn into a long running operation.
         /// Therefore, consumers should usually try to avoid to enable this setting when
@@ -236,15 +236,15 @@ namespace Hl7.Fhir.Specification.Source
         public string[] Excludes { get; set; }
 
         /// <summary>Gets or sets a value that determines how to process duplicate files with multiple serialization formats.</summary>
-        /// <remarks>The default value is <see cref="DirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
-        public DirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
+        /// <remarks>The default value is <see cref="CommonDirectorySource.DuplicateFilenameResolution.PreferXml"/>.</remarks>
+        public CommonDirectorySource.DuplicateFilenameResolution FormatPreference { get; set; } = DefaultFormatPreference;
 
         /// <summary>
-        /// Determines if the <see cref="DirectorySource"/> instance should harvest artifact
+        /// Determines if the <see cref="CommonDirectorySource"/> instance should harvest artifact
         /// summary information in parallel on the thread pool.
         /// </summary>
         /// <remarks>
-        /// By default, the <see cref="DirectorySource"/> harvests artifact summaries serially
+        /// By default, the <see cref="CommonDirectorySource"/> harvests artifact summaries serially
         /// on the calling thread. However if this option is enabled, then the DirectorySource
         /// performs summary harvesting in parallel on the thread pool, in order to speed up
         /// the process. This is especially effective when the content directory contains many

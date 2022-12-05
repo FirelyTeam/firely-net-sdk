@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\platforms.props" />
+	<Import Project="..\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems" Label="Shared" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.STU3</PackageId>
+		<Title>HL7 FHIR Core support SDK for STU3</Title>
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0.2)</Summary>
+		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
+		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
+		<AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
+		<RootNamespace>Hl7.Fhir</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
+		<Reference Include="System.ComponentModel.DataAnnotations" />
+		<Reference Include="System.Net.Http" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
+		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+	</ItemGroup>
+
+</Project>

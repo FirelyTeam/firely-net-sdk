@@ -10,6 +10,7 @@
 // e.g. diff: "valueString" => snap: "value[x]:valueString"
 #define NORMALIZE_RENAMED_TYPESLICE
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
@@ -172,7 +173,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Binding = mergeBinding(snap.Binding, diff.Binding);
 
                 // [MV 20220803] Remove Binding when the element has no bindable type
-                if (snap.Binding is not null && !snap.Type.Any(t => ModelInfo.IsBindable(t.Code)))
+                if (snap.Binding is not null && !snap.Type.Any(t => ModelInspector.Common.IsBindable(t.Code)))
                 {
                     snap.Binding = null;
                 }

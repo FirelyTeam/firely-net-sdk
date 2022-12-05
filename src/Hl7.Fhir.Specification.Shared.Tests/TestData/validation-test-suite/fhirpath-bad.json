@@ -1,0 +1,14 @@
+{
+  "resourceType": "CareTeam",
+  "participant": [
+    {
+      "member": {
+        "reference": "Practitioner/notprac"
+      },
+
+      "onBehalfOf": {
+        "reference": "Organization/2"
+      }
+    }
+  ]
+}

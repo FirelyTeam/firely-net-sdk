@@ -1,5 +1,5 @@
-﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.FhirPath;
+﻿using Hl7.Fhir.FhirPath;
+using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 

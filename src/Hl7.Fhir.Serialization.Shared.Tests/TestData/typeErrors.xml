@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Patient xmlns="http://hl7.org/fhir" >
+  <id value="pat1"/>
+  <contained>
+    <Patient>
+      <contained> <!-- contained without a resource type (1) -->
+        <active value="true" />
+      </contained>
+      <deceased value="false" />   <!-- choice element without a type (2) -->
+    </Patient>
+  </contained>
+  <contained>
+    <Kwestionnaire>  <!-- unknown resource (3) -->
+      <id value="3141"/>
+      <status value="draft"/>
+      <date value="2012-01"/>
+      <subjectType value="Patient"/>
+    </Kwestionnaire>
+  </contained>
+  <identifier value="8"> <!-- complex value with a value (4)-->
+    <use value="usual"/>
+    <system value="urn:oid:0.1.2.3.4.5.6.7"/>
+    <value value="654321"/>
+  </identifier>
+  <identifier>
+    <Observation>   <!-- unexpected contained resource (5) -->
+      <status value="final"/>
+      <unknown value="huh" />  <!-- unknown element (6) -->
+    </Observation>
+  </identifier>
+  <active value="4" />
+  <!-- value not parseable as a boolean (7) -->
+  <inactive value ="true"/>   <!-- unknown element (8) -->
+  <deceasedCode value="false" />  <!-- choice with illegal type (9) -->
+  <contact>
+    <relationship>
+      <codings>   <!-- unknown element (10) -->
+        <system value="http://hl7.org/fhir/ValueSet/patient-contact-relationship"/>
+        <code value="owner"/>
+      </codings>
+    </relationship>
+  </contact>
+</Patient>

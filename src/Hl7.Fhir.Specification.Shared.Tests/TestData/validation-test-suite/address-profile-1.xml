@@ -1,0 +1,19 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="29a8b2a7-070f-4383-af2c-bdea61d358c9" />
+	<url value="urn:oid:29a8b2a7-070f-4383-af2c-bdea61d358c9" />
+	<version value="4.0.0" />
+	<name value="address profile 1" />
+	<status value="draft" />
+	<fhirVersion value="4.0.0" />
+	<kind value="complex-type" />
+	<abstract value="false" />
+	<type value="Address" />
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Address" />
+	<derivation value="constraint" />
+	<differential>
+		<element id="Address.use">
+			<path value="Address.use" />
+			<min value="1" />
+		</element>
+	</differential>
+</StructureDefinition>

@@ -1,0 +1,15 @@
+<Parameters xmlns="http://hl7.org/fhir">
+  <parameter>
+    <name value="string"/>
+    <valueString value="ccc">
+      <extension url="http://hl7.org/fhir/StructureDefinition/translation">
+        <extension url="lang">
+          <valueCode value="en"/>
+        </extension>
+        <extension url="content">
+          <valueString value="ddd"/>
+        </extension>
+      </extension>
+    </valueString>
+  </parameter>
+</Parameters>

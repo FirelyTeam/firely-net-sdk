@@ -63,15 +63,7 @@ namespace Hl7.Fhir.Model
             return ed;
         }
 
-        /// <inheritdoc cref="OfType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, IEnumerable<string>? profiles = null)
-            => ed.OfType(type.GetLiteral(), profiles);
-
-        /// <inheritdoc cref="OfType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OfType(this ElementDefinition ed, FHIRAllTypes type, string profile)
-            => ed.OfType(type.GetLiteral(), new[] { profile });
-
-        private static readonly string REFERENCE_LITERAL = FHIRAllTypes.Reference.GetLiteral();
+        private static readonly string REFERENCE_LITERAL = FhirTypeNames.REFERENCE_NAME;
 
         /// <summary>
         /// Adds a <see cref="ElementDefinition.TypeRefComponent"/> to the given <see cref="ElementDefinition"/>.
@@ -90,14 +82,6 @@ namespace Hl7.Fhir.Model
 
             return ed;
         }
-
-        /// <inheritdoc cref="OrType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, string profile)
-            => ed.OrType(type.GetLiteral(), new[] { profile });
-
-        /// <inheritdoc cref="OrType(ElementDefinition, string, IEnumerable{string}?)"/>
-        public static ElementDefinition OrType(this ElementDefinition ed, FHIRAllTypes type, IEnumerable<string>? profiles = null)
-            => ed.OrType(type.GetLiteral(), profiles);
 
         /// <summary>
         /// Sets <see cref="ElementDefinition.Type"/> to a single "reference" with the given attributes.
@@ -277,14 +261,14 @@ namespace Hl7.Fhir.Model
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
         public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile.SafeSingleOrDefault() ?? (elemType?.Code is not null ? ModelInfo.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
+            elemType?.Profile.SafeSingleOrDefault() ?? (elemType?.Code is not null ? Canonical.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
 
         /// <summary>
         /// Returns the profiles on the given <see cref="ElementDefinition.TypeRefComponent"/> if specified, 
         /// or otherwise the core profile url for the specified type code.
         /// </summary>
         public static IEnumerable<string>? GetTypeProfiles(this ElementDefinition.TypeRefComponent elemType) =>
-            elemType?.Profile.Any() == true ? elemType.Profile : (elemType?.Code is not null ? new[] { ModelInfo.CanonicalUriForFhirCoreType(elemType.Code).Value } : null);
+            elemType?.Profile.Any() == true ? elemType.Profile : (elemType?.Code is not null ? new[] { Canonical.CanonicalUriForFhirCoreType(elemType.Code).Value } : null);
 
         /// <inheritdoc cref="GetTypeProfile(ElementDefinition.TypeRefComponent)"/>
         [Obsolete("This function is a duplicate of GetTypeProfile()")]

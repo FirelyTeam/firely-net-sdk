@@ -5,21 +5,18 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/";
+$server = "http://hl7.org/fhir/5.0.0-snapshot1/";
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
-
 # These are all files from the spec that we need. Narratives are stripped after download
-$allFiles = @("conceptmaps.xml",				
-				"extension-definitions.xml", 
+$allFiles = @("conceptmaps.xml",
+                "extension-definitions.xml", 
 				"namingsystem-registry.xml",
 				"profiles-others.xml", 
 				"profiles-resources.xml", 
 				"profiles-types.xml" 
 				"search-parameters.xml",
-				"v2-tables.xml",
-				"v3-codesystems.xml",
 				"valuesets.xml"
 				"fhir-all-xsd.zip"
 				);
@@ -132,6 +129,83 @@ function RemoveNarrative($name)
 	$xml.Save($file)
 }
 
+function RemoveDoubleVersionsInValueSets($name)
+{
+	if ($server.EndsWith('2021May/') )
+	{
+		# Correction for R5, 4.6.0:
+		# Removed double version '|4.6.0|4.6.0' from <valueSet> 
+		
+		$filename = Join-Path $tempDir $name
+		[xml]$xml = Get-Content $filename
+		
+		$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+		$ns.AddNamespace("ns", "http://hl7.org/fhir") 
+		
+		$valuesets = $xml.SelectNodes('//ns:valueSet[substring(@value,string-length(@value) - string-length("|4.6.0|4.6.0") + 1) = "|4.6.0|4.6.0"]', $ns)
+		
+		foreach ($valueset in $valuesets)
+		{
+			$valueAttribute = $valueset.GetAttribute('value')
+			$valueAttribute = $valueAttribute.Replace("|4.6.0|", "|");
+			$valueset.SetAttribute('value', $valueAttribute)  | Out-null
+		}
+		
+		Write-Output "Removed double version '|4.6.0|4.6.0' from '<valueSet> $file"
+		$xml.Save($filename)
+	}
+}
+
+function ChangeValueElement($name)
+{
+	# Correction for 4B:
+	# changes Element "valueUri" to "valueUrl" of extension `structuredefinition-fhir-type`
+
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type"]', $ns)
+	
+	foreach ($extension in $extensionNodes)
+	{
+		$valueElement = $extension.FirstChild
+		$correctedValueElement = $xml.CreateElement("valueUrl", $ns.LookupNamespace("ns"))
+		$correctedValueElement.SetAttribute("value", $valueElement.Value) | Out-null
+		$extension.ReplaceChild($correctedValueElement, $valueElement)  | Out-null
+	}
+
+	Write-Output "Changed 'valueUri' to 'valueUrl' for extension 'structuredefinition-fhir-type' from $file"
+	$xml.Save($filename)
+}
+
+
+function RemoveDefinitonExtension($name)
+{
+	# Correction for 4B:
+	# remove the extension http://hl7.org/fhir/build/StructureDefinition/definition
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$extensionNodes = $xml.SelectNodes('//ns:extension[@url="http://hl7.org/fhir/build/StructureDefinition/definition"]', $ns)
+	
+	foreach ($extension in $extensionNodes)
+	{
+		[void]$extension.ParentNode.RemoveChild($extension)
+	}
+	
+	Write-Output "Removed the extension http://hl7.org/fhir/build/StructureDefinition/definition from $file"
+	
+	$xml.Save($filename)
+}
+
+
 function ExtractXsdZipFile($destPath)
 {
 	Write-Host -ForegroundColor White "Extract xsd zip file..."
@@ -139,16 +213,93 @@ function ExtractXsdZipFile($destPath)
 	$extractPath = Join-Path $tempDir "extracted"
 	expand-archive -path $zipPath -destinationpath $extractPath
 	
-	if ($server.EndsWith('2020Sep/') )
+	if ($server.EndsWith('2020Sep/') -or $server.EndsWith('2021Mar/') )
 	{
 		# In release 2020Sep is an error in the fhir-single.xsd.  
-		Write-Host -ForegroundColor White ".. correct errors in fhir-single.xsd"
+		Write-Host -ForegroundColor White ".. corrected errors in fhir-single.xsd"
 		$xsdFile = Join-Path $extractPath "fhir-single.xsd"
 		RemoveIncorrectXsdElements $xsdFile
 	}
 	Write-Host -ForegroundColor White "Copy extracted files to $destPath ..."
 	Copy-Item -Path $extractPath\* -Recurse -Container:$false -Destination $destPath
 }
+
+function ChangeValueElementOfFhirType($name)
+{
+	# Correction for R5 (5.0.0-snapshot1):
+	# Change type of value[x] of the extension structuredefinition-fhir-type to url
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$typeNodes = $xml.SelectNodes('//ns:StructureDefinition[ns:id[@value = "structuredefinition-fhir-type"]]//ns:element[@id = "Extension.value[x]"]/ns:type', $ns)
+	
+	foreach ($typeNode in $typeNodes)
+	{
+		$codeElement = $typeNode.FirstChild
+		$correctedCodeElement = $xml.CreateElement("code", $ns.LookupNamespace("ns"))
+		$correctedCodeElement.SetAttribute("value", "url") | Out-null
+		$typeNode.ReplaceChild($correctedCodeElement, $codeElement)  | Out-null
+	}
+	
+	Write-Output "Changed type of 'value[x]' of structuredefinition-fhir-type from 'uri' to 'url'"
+	
+	$xml.Save($filename)
+}
+
+function CorrectConceptmap($name)
+{
+	# Correction for R4B (4.3.0-snapshot1):
+	# Change node <relationship> to <equivalence> for resource ConceptMap
+	
+	if (!$name.EndsWith('.xml'))
+	{
+		return;
+	}
+	
+	$filename = Join-Path $tempDir $name
+	[xml]$xml = Get-Content $filename
+	
+	$ns = New-Object System.Xml.XmlNamespaceManager($xml.NameTable)
+	$ns.AddNamespace("ns", "http://hl7.org/fhir")
+
+	$relationships = $xml.SelectNodes('//ns:ConceptMap/ns:group/ns:element/ns:target/ns:relationship', $ns)
+	
+	foreach ($relationship in $relationships)
+	{
+		$correctedElement = $xml.CreateElement("equivalence", $ns.LookupNamespace("ns"))
+		
+		$equivalenceValue = $relationship.Value
+		if ($equivalenceValue -eq "source-is-broader-than-target")
+		{
+			$equivalenceValue = "wider"
+		}
+		if ($equivalenceValue -eq "source-is-narrower-than-target")
+		{
+			$equivalenceValue = "narrower"
+		}
+		$correctedElement.SetAttribute("value", $equivalenceValue) | Out-null
+		
+		$childNodes = $relationship.ChildNodes;
+		
+		foreach ($childNode in $childNodes)
+		{
+			$newChild = $childNode.CloneNode("False")
+			$correctedElement.AppendChild($newChild)| Out-null
+		}
+		
+		$relationship.ParentNode.AppendChild($correctedElement) | Out-null
+        $relationship.ParentNode.RemoveChild($relationship) | Out-null
+	}
+	
+	Write-Output "Change node <relationship> to <equivalence> for resource ConceptMap"
+	
+	$xml.Save($filename)
+}
+
 
 foreach($file in $allFiles)			
 {
@@ -157,7 +308,44 @@ foreach($file in $allFiles)
 	{
 		RemoveNarrative $file
 	}
+	
+	# Corrections for 4B:
+	if ($server.EndsWith("2021Mar/"))
+	{
+		if ($file.EndsWith('.xml'))
+		{
+			RemoveDefinitonExtension $file
+			ChangeValueElement $file
+		}
+	}
+	
+	# Corrections for R4B (4.3.0-snapshot1)
+	if ($server.EndsWith("4.3.0-snapshot1/"))
+	{
+		CorrectConceptmap $file
+	}
+	
+	# Corrections for R5 (4.6.0)
+	if ($server.EndsWith("2021May/"))
+	{
+		if ($file.EndsWith('profiles-resources.xml'))
+		{
+			RemoveDoubleVersionsInValueSets $file
+			RemoveDefinitonExtension $file
+		}
+	}
+	
+	# Corrections for R5 (5.0.0-snapshot1)
+	if ($server.EndsWith("5.0.0-snapshot1/"))
+	{
+		if ($file.EndsWith('extension-definitions.xml'))
+		{
+			ChangeValueElementOfFhirType $file
+		}
+	}
+
 }
+
 
 Write-Host -ForegroundColor White "Copy files to project..."
 
@@ -170,20 +358,18 @@ CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "profiles-types.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "search-parameters.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "v2-tables.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "v3-codesystems.xml" "$srcdir\Hl7.Fhir.Specification\data"
 CopySpecFile "valuesets.xml" "$srcdir\Hl7.Fhir.Specification\data"
 
 # Add example files used for testing
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\valueset-v2-0717.json" "$server/v2/0717/v2-0717.vs.json"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples.zip" "$server/examples.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
 PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Serialization.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
+PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-resources.json" "$server/profiles-resources.json"
 
 # extract schemas and xsd from fhir-all.zip -> data
 ExtractXsdZipFile "$srcdir\Hl7.Fhir.Specification\data"

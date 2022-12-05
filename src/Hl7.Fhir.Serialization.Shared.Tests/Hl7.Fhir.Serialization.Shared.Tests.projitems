@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a6c175b5-11a0-4b01-804c-fb7f278eeefa</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Hl7.Fhir.Serialization.Shared.Tests</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientJsonTyped.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientJsonUntyped.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlTyped.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientXmlUntyped.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ParseXMLElements.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoundtripBinarySerialization.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RoundtripTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializePartialTree.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StreamJsonResources.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)StreamXmlResources.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SummaryTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\all-xml-features.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\BundleWithOneEntry.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\BundleWithOneEntry.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\json-edge-cases.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\json-edge-cases.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\mask-text.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\no-namespace.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\patient-out-of-order.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\profiles-types.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\profiles-types.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\source-test\books.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\source-test\project.assets.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\test-empty-nodes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\test-empty-nodes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\typeErrors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\with-errors.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)TestData\xml-with-different-elements.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

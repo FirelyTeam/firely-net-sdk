@@ -150,6 +150,7 @@ namespace Hl7.Fhir.Specification
 
     internal struct ElementDefinitionSerializationInfo : IElementDefinitionSummary
     {
+        private const string FHIR_TYPE_EXTENSION = "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type";
         private readonly Lazy<ITypeSerializationInfo[]> _types;
         private readonly ElementDefinition _definition;
 
@@ -183,7 +184,7 @@ namespace Hl7.Fhir.Specification
                 return new[] { (ITypeSerializationInfo)new BackboneElementComplexTypeSerializationInfo(reference) };
             }
             else
-            {                
+            {
                 var basePath = nav.Current?.Base?.Path;
                 if (basePath == "Resource.id" || nav?.Current?.Path == "Resource.id")
                 {
@@ -194,12 +195,17 @@ namespace Hl7.Fhir.Specification
 
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("id") };
                 }
-                else if(basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
+                else if (basePath == "xhtml.id" || nav.Current?.Path == "xhtml.id")
                 {
                     // [EK 20200423] xhtml.id is missing the structuredefinition-fhir-type extension
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
                 }
-                else if (nav.Current.Type[0].GetExtension("http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type")?.Value is FhirUrl url)
+                else if ((basePath == "Element.id" || nav.Current?.Path == "Element.id") && nav.Current.Type[0].GetExtension(FHIR_TYPE_EXTENSION)?.Value is FhirUrl u && u.Value == "id")
+                {
+                    // Correction for R4B (4.3.0)
+                    return new[] { (ITypeSerializationInfo)new TypeReferenceInfo("string") };
+                }
+                else if (nav.Current.Type[0].GetExtension(FHIR_TYPE_EXTENSION)?.Value is FhirUrl url)
                 {
                     return new[] { (ITypeSerializationInfo)new TypeReferenceInfo(url?.Value) };
                 }

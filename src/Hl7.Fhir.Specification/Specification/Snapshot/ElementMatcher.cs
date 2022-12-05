@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Specification.Snapshot
         /// <summary>Returns true if the element has type Extension and also specifies a custom type profile.</summary>
         private static bool isExtensionSlice(ElementDefinition element) => isExtensionSlice(element.Type.FirstOrDefault());
 
-        private static readonly string EXTENSION_TYPENAME = FHIRAllTypes.Extension.GetLiteral();
+        private static readonly string EXTENSION_TYPENAME = FhirTypeNames.EXTENSION_NAME;
 
         private static bool isExtensionSlice(ElementDefinition.TypeRefComponent type)
             => !(type is null)

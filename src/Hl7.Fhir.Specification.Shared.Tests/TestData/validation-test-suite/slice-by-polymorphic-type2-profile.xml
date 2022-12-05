@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="slice-by-polymorphic-type2-profile"/>
+	<url value="http://hl7.org/fhir/StructureDefinition/slice-by-polymorphic-type2-profile"/>
+	<name value="SliceByPolymorphicType2Profile"/>
+	<title value="Test slicing by polymorphic type"/>
+	<status value="draft"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="PlanDefinition"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
+	<derivation value="constraint"/>
+  <differential>
+		<element id="PlanDefinition">
+			<path value="PlanDefinition"/>
+		</element>
+		<element id="PlanDefinition.goal">
+			<path value="PlanDefinition.goal"/>
+		</element>
+		<element id="PlanDefinition.goal.target">
+			<path value="PlanDefinition.goal.target"/>
+		</element>
+    <element id="PlanDefinition.goal.target.detail[x]">
+      <path value="PlanDefinition.goal.target.detail[x]"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <type>
+        <code value="Range"/>
+      </type>
+    </element>
+    <element id="PlanDefinition.goal.target.detailCodeableConcept">
+      <path value="PlanDefinition.goal.target.detailCodeableConcept"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+	</differential>
+</StructureDefinition>
