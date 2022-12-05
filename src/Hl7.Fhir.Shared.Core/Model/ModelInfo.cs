@@ -282,7 +282,11 @@ namespace Hl7.Fhir.Model
             get
             {
                 var inspector = ModelInspector.ForAssembly(typeof(ModelInfo).GetTypeInfo().Assembly);
-                inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
+                if (inspector.FhirRelease != Specification.FhirRelease.STU3)
+                {
+                    // In case of release 4 or higher, also load the assembly with common conformance resources, like StructureDefinition
+                    inspector.Import(typeof(StructureDefinition).GetTypeInfo().Assembly);
+                }
                 return inspector;
             }
         }

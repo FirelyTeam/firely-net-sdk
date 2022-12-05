@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var source = ZipSource.CreateValidationSource();
             var summaries = source.ListSummaries();
-            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
+            var patientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient).Value;
             var patientSummary = summaries.FindConformanceResources(patientUrl).FirstOrDefault();
             Assert.IsNotNull(patientSummary);
             Assert.AreEqual(ResourceType.StructureDefinition, patientSummary.ResourceType);
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Specification.Tests
             // JsonNavigatorStream cannot support zip streams; ctor needs to call Reset after scanning resourceType
 
             ArtifactSummary corePatientSummary;
-            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient);
+            var corePatientUrl = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient).Value;
             string zipEntryName = "profiles-resources.xml";
 
             // Generate summaries from core ZIP resource definitions (extract in memory)

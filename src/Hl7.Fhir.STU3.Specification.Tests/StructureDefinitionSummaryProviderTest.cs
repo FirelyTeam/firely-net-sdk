@@ -75,7 +75,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             if (left is object && right is object)
             {
-                left.Count().Should().Be(right.Count(), context + ": left and right have different number of elements.");
+                left.Select(x => x.ElementName).Should().BeEquivalentTo(right.Select(x => x.ElementName), because: context + ": left and right have different number of elements.");
 
                 // this implicitly tests the correctness of order, without order having to be exactly
                 // the same for let and right.

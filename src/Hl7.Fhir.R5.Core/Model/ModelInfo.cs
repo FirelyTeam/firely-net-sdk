@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Model
     public partial class ModelInfo
     {
         public static readonly Type[] OpenTypes =
-{
+        {
             typeof(Model.Address),
             typeof(Model.Age),
             typeof(Model.Annotation),
