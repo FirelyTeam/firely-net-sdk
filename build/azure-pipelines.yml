@@ -42,7 +42,6 @@ stages:
     steps:
     - checkout: self
       clean: true
-      submodules: true
       fetchDepth: 1
     - template: templates/apply-versioning-steps-template.yml
 
@@ -147,9 +146,9 @@ stages:
         parameters:
           testRunTitle: Tests common test projects
           projects: |
-            **/common/**/publish/Hl7.Fhir.Support.Tests.dll
-            **/common/**/publish/HL7.FhirPath.Tests.dll
-            **/common/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
+            **/Hl7.Fhir.Support.Tests/**/publish/Hl7.Fhir.Support.Tests.dll
+            **/Hl7.FhirPath.Tests/**/publish/HL7.FhirPath.Tests.dll
+            **/Hl7.Fhir.Support.Poco.Tests/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
   - job:
     displayName: Tests FhirPath Core test project
     steps:

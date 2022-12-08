@@ -9,9 +9,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
-		<ProjectReference Include="..\..\common\src\Hl7.FhirPath\Hl7.FhirPath.csproj" />
-		<ProjectReference Include="..\..\common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />
+		<ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.R4B.Core\Hl7.Fhir.R4B.Core.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.R4B.Specification.Data\Hl7.Fhir.R4B.Specification.Data.csproj" />
 	</ItemGroup>
@@ -19,7 +19,7 @@
 	<ItemGroup>
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
-		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="6.0.0" />
+		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
 		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
 		<PackageReference Include="System.AppContext" Version="4.3.0" />
 	</ItemGroup>

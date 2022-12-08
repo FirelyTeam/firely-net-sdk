@@ -5,8 +5,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2836B1CC-7AAF-46AB-BEA8-98DFEA170414}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
-		common\src\firely-net-common-tests.props = common\src\firely-net-common-tests.props
-		common\src\firely-net-common.props = common\src\firely-net-common.props
 		src\firely-net-sdk-tests.props = src\firely-net-sdk-tests.props
 		src\firely-net-sdk.props = src\firely-net-sdk.props
 		src\specification.data.props = src\specification.data.props
@@ -30,27 +28,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8FA842
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DB63F8A9-84B4-4220-860C-79FC979FB435}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.ElementModel", "common\src\Hl7.Fhir.ElementModel\Hl7.Fhir.ElementModel.csproj", "{CF3D47D6-459A-443F-B403-1CCA35DD895F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.ElementModel", "src\Hl7.Fhir.ElementModel\Hl7.Fhir.ElementModel.csproj", "{CF3D47D6-459A-443F-B403-1CCA35DD895F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Serialization", "common\src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj", "{726037A1-6341-47CE-9DCC-ED75A38D493F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Serialization", "src\Hl7.Fhir.Serialization\Hl7.Fhir.Serialization.csproj", "{726037A1-6341-47CE-9DCC-ED75A38D493F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support", "common\src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj", "{84323265-9E5F-4351-99BE-D403C742BF00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support", "src\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj", "{84323265-9E5F-4351-99BE-D403C742BF00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Poco", "common\src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj", "{60C1C387-79DF-4651-A96E-6C3509AF520D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Poco", "src\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj", "{60C1C387-79DF-4651-A96E-6C3509AF520D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath", "common\src\Hl7.FhirPath\Hl7.FhirPath.csproj", "{11D29FA2-930D-432A-9DC1-DECA85E3DE19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath", "src\Hl7.FhirPath\Hl7.FhirPath.csproj", "{11D29FA2-930D-432A-9DC1-DECA85E3DE19}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Tests", "common\src\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj", "{34145125-E6ED-47AE-B2F1-D5F39F7ED94D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Tests", "src\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj", "{34145125-E6ED-47AE-B2F1-D5F39F7ED94D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HL7.FhirPath.Tests", "common\src\Hl7.FhirPath.Tests\HL7.FhirPath.Tests.csproj", "{98390A5A-0F65-4275-ADF1-ADF4BD915FA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HL7.FhirPath.Tests", "src\Hl7.FhirPath.Tests\HL7.FhirPath.Tests.csproj", "{98390A5A-0F65-4275-ADF1-ADF4BD915FA3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.FhirPath.R4.Tests", "src\Hl7.FhirPath.R4.Tests\Hl7.FhirPath.R4.Tests.csproj", "{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Poco.Tests", "common\src\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj", "{88E59825-ADF2-4B46-892F-BCC95B68559F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Support.Poco.Tests", "src\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj", "{88E59825-ADF2-4B46-892F-BCC95B68559F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "src\Benchmarks\Benchmarks.csproj", "{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmarks", "common\src\Benchmarks\Benchmarks.csproj", "{12D4C7CE-68D5-404C-B794-256887CB9653}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.R5.Core", "src\Hl7.Fhir.R5.Core\Hl7.Fhir.R5.Core.csproj", "{9C69F3EC-ABDA-43F7-99BF-F794779FF69F}"
 EndProject
@@ -220,12 +216,6 @@ Global
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12D4C7CE-68D5-404C-B794-256887CB9653}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12D4C7CE-68D5-404C-B794-256887CB9653}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12D4C7CE-68D5-404C-B794-256887CB9653}.FullDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12D4C7CE-68D5-404C-B794-256887CB9653}.FullDebug|Any CPU.Build.0 = Debug|Any CPU
-		{12D4C7CE-68D5-404C-B794-256887CB9653}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12D4C7CE-68D5-404C-B794-256887CB9653}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C69F3EC-ABDA-43F7-99BF-F794779FF69F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C69F3EC-ABDA-43F7-99BF-F794779FF69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C69F3EC-ABDA-43F7-99BF-F794779FF69F}.FullDebug|Any CPU.ActiveCfg = FullDebug|Any CPU
@@ -372,7 +362,6 @@ Global
 		{0398FF0A-D09D-45FB-AFC4-6A01F1BDB364} = {0B17BA5F-07FE-49C0-B0BD-7A25AA5E8238}
 		{88E59825-ADF2-4B46-892F-BCC95B68559F} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 		{B28A75F1-AC9A-4CC9-9F6B-3DB78BAF7D8E} = {7089FA86-6527-4DFA-8018-AFEF25D74A48}
-		{12D4C7CE-68D5-404C-B794-256887CB9653} = {DB63F8A9-84B4-4220-860C-79FC979FB435}
 		{16DC5969-D626-4BEA-AD2C-9E2077C4432B} = {78311E35-C64C-4F73-B973-8E8885385E8A}
 		{89850B42-8C34-40F8-A2B3-6447D53B5A37} = {78311E35-C64C-4F73-B973-8E8885385E8A}
 		{8417CB38-2B1B-41B8-A2A0-9FEAF2B5E51D} = {78311E35-C64C-4F73-B973-8E8885385E8A}
