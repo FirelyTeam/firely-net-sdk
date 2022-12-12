@@ -992,20 +992,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("responseRequired", Order=300)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.messageheader_response_request> ResponseRequiredElement
+    public Code<Hl7.Fhir.Model.MessageheaderResponseRequest> ResponseRequiredElement
     {
       get { return _ResponseRequiredElement; }
       set { _ResponseRequiredElement = value; OnPropertyChanged("ResponseRequiredElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.messageheader_response_request> _ResponseRequiredElement;
+    private Code<Hl7.Fhir.Model.MessageheaderResponseRequest> _ResponseRequiredElement;
 
     /// <summary>
     /// always | on-error | never | on-success
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.messageheader_response_request? ResponseRequired
+    public Hl7.Fhir.Model.MessageheaderResponseRequest? ResponseRequired
     {
       get { return ResponseRequiredElement != null ? ResponseRequiredElement.Value : null; }
       set
@@ -1013,7 +1013,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ResponseRequiredElement = null;
         else
-          ResponseRequiredElement = new Code<Hl7.Fhir.Model.messageheader_response_request>(value);
+          ResponseRequiredElement = new Code<Hl7.Fhir.Model.MessageheaderResponseRequest>(value);
         OnPropertyChanged("ResponseRequired");
       }
     }
@@ -1095,7 +1095,7 @@ namespace Hl7.Fhir.Model
       if(Event != null) dest.Event = (Hl7.Fhir.Model.DataType)Event.DeepCopy();
       if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory>)CategoryElement.DeepCopy();
       if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.MessageDefinition.FocusComponent>(Focus.DeepCopy());
-      if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Code<Hl7.Fhir.Model.messageheader_response_request>)ResponseRequiredElement.DeepCopy();
+      if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Code<Hl7.Fhir.Model.MessageheaderResponseRequest>)ResponseRequiredElement.DeepCopy();
       if(AllowedResponse != null) dest.AllowedResponse = new List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent>(AllowedResponse.DeepCopy());
       if(GraphElement != null) dest.GraphElement = new List<Hl7.Fhir.Model.Canonical>(GraphElement.DeepCopy());
       return dest;

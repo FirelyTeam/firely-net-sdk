@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
     /// </summary>
     [FhirEnumeration("medicationrequestStatus")]
-    public enum medicationrequestStatus
+    public enum MedicationrequestStatus
     {
       /// <summary>
       /// The request is 'actionable', but not all actions that are implied by it have occurred yet.
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
     /// </summary>
     [FhirEnumeration("medicationRequestIntent")]
-    public enum medicationRequestIntent
+    public enum MedicationRequestIntent
     {
       /// <summary>
       /// The request is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act
@@ -1067,20 +1067,20 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MedicationRequest.medicationrequestStatus> StatusElement
+    public Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus> StatusElement
     {
       get { return _StatusElement; }
       set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MedicationRequest.medicationrequestStatus> _StatusElement;
+    private Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus> _StatusElement;
 
     /// <summary>
     /// active | on-hold | ended | stopped | completed | cancelled | entered-in-error | draft | unknown
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.MedicationRequest.medicationrequestStatus? Status
+    public Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus? Status
     {
       get { return StatusElement != null ? StatusElement.Value : null; }
       set
@@ -1088,7 +1088,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           StatusElement = null;
         else
-          StatusElement = new Code<Hl7.Fhir.Model.MedicationRequest.medicationrequestStatus>(value);
+          StatusElement = new Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus>(value);
         OnPropertyChanged("Status");
       }
     }
@@ -1144,20 +1144,20 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent> IntentElement
+    public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> IntentElement
     {
       get { return _IntentElement; }
       set { _IntentElement = value; OnPropertyChanged("IntentElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent> _IntentElement;
+    private Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> _IntentElement;
 
     /// <summary>
     /// proposal | plan | order | original-order | reflex-order | filler-order | instance-order | option
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent? Intent
+    public Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent? Intent
     {
       get { return IntentElement != null ? IntentElement.Value : null; }
       set
@@ -1165,7 +1165,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           IntentElement = null;
         else
-          IntentElement = new Code<Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent>(value);
+          IntentElement = new Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent>(value);
         OnPropertyChanged("Intent");
       }
     }
@@ -1587,10 +1587,10 @@ namespace Hl7.Fhir.Model
       if(BasedOn != null) dest.BasedOn = new List<Hl7.Fhir.Model.ResourceReference>(BasedOn.DeepCopy());
       if(PriorPrescription != null) dest.PriorPrescription = (Hl7.Fhir.Model.ResourceReference)PriorPrescription.DeepCopy();
       if(GroupIdentifier != null) dest.GroupIdentifier = (Hl7.Fhir.Model.Identifier)GroupIdentifier.DeepCopy();
-      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationRequest.medicationrequestStatus>)StatusElement.DeepCopy();
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus>)StatusElement.DeepCopy();
       if(StatusReason != null) dest.StatusReason = (Hl7.Fhir.Model.CodeableConcept)StatusReason.DeepCopy();
       if(StatusChangedElement != null) dest.StatusChangedElement = (Hl7.Fhir.Model.FhirDateTime)StatusChangedElement.DeepCopy();
-      if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.MedicationRequest.medicationRequestIntent>)IntentElement.DeepCopy();
+      if(IntentElement != null) dest.IntentElement = (Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent>)IntentElement.DeepCopy();
       if(Category != null) dest.Category = new List<Hl7.Fhir.Model.CodeableConcept>(Category.DeepCopy());
       if(PriorityElement != null) dest.PriorityElement = (Code<Hl7.Fhir.Model.RequestPriority>)PriorityElement.DeepCopy();
       if(DoNotPerformElement != null) dest.DoNotPerformElement = (Hl7.Fhir.Model.FhirBoolean)DoNotPerformElement.DeepCopy();

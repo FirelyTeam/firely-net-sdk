@@ -174,7 +174,7 @@
   // Used in model class (resource): Measure.group.improvementNotation
   // Used in model class (resource): MeasureReport.improvementNotation
 
-// Generated Shared Enumeration: messageheader_response_request (http://hl7.org/fhir/ValueSet/messageheader-response-request)
+// Generated Shared Enumeration: MessageheaderResponseRequest (http://hl7.org/fhir/ValueSet/messageheader-response-request)
   // Used in model class (resource): MessageDefinition.responseRequired
   // Used in model class (type): Extension.value[x]
 

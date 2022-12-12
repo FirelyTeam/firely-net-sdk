@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/CodeSystem/status)
     /// </summary>
     [FhirEnumeration("status")]
-    public enum status
+    public enum Status
     {
       /// <summary>
       /// ***TODO***
@@ -928,20 +928,20 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.VerificationResult.status> Status_Element
+    public Code<Hl7.Fhir.Model.VerificationResult.Status> Status_Element
     {
       get { return _Status_Element; }
       set { _Status_Element = value; OnPropertyChanged("Status_Element"); }
     }
 
-    private Code<Hl7.Fhir.Model.VerificationResult.status> _Status_Element;
+    private Code<Hl7.Fhir.Model.VerificationResult.Status> _Status_Element;
 
     /// <summary>
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.VerificationResult.status? Status_
+    public Hl7.Fhir.Model.VerificationResult.Status? Status_
     {
       get { return Status_Element != null ? Status_Element.Value : null; }
       set
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           Status_Element = null;
         else
-          Status_Element = new Code<Hl7.Fhir.Model.VerificationResult.status>(value);
+          Status_Element = new Code<Hl7.Fhir.Model.VerificationResult.Status>(value);
         OnPropertyChanged("Status_");
       }
     }
@@ -1154,7 +1154,7 @@ namespace Hl7.Fhir.Model
       if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
       if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
       if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
-      if(Status_Element != null) dest.Status_Element = (Code<Hl7.Fhir.Model.VerificationResult.status>)Status_Element.DeepCopy();
+      if(Status_Element != null) dest.Status_Element = (Code<Hl7.Fhir.Model.VerificationResult.Status>)Status_Element.DeepCopy();
       if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
       if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopy();
       if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());

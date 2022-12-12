@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
     /// </summary>
     [FhirEnumeration("v3.ConfidentialityClassification")]
-    public enum v3_ConfidentialityClassification
+    public enum V3ConfidentialityClassification
     {
       /// <summary>
       /// Definition: Privacy metadata indicating that the information is not classified as sensitive.
@@ -1234,20 +1234,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("confidentiality", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification> ConfidentialityElement
+    public Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification> ConfidentialityElement
     {
       get { return _ConfidentialityElement; }
       set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification> _ConfidentialityElement;
+    private Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification> _ConfidentialityElement;
 
     /// <summary>
     /// As defined by affinity domain
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification? Confidentiality
+    public Hl7.Fhir.Model.Composition.V3ConfidentialityClassification? Confidentiality
     {
       get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
       set
@@ -1255,7 +1255,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ConfidentialityElement = null;
         else
-          ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification>(value);
+          ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification>(value);
         OnPropertyChanged("Confidentiality");
       }
     }
@@ -1350,7 +1350,7 @@ namespace Hl7.Fhir.Model
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.v3_ConfidentialityClassification>)ConfidentialityElement.DeepCopy();
+      if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.V3ConfidentialityClassification>)ConfidentialityElement.DeepCopy();
       if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
       if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
       if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(RelatesTo.DeepCopy());

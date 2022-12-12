@@ -3580,7 +3580,7 @@ namespace Hl7.Fhir.Model
   /// (system: http://hl7.org/fhir/messageheader-response-request)
   /// </summary>
   [FhirEnumeration("messageheader-response-request")]
-  public enum messageheader_response_request
+  public enum MessageheaderResponseRequest
   {
     /// <summary>
     /// initiator expects a response for this message.
