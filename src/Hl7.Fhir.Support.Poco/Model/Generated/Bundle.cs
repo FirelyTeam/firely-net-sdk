@@ -1427,7 +1427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the bundle was assembled
     /// </summary>
-    [FhirElement("timestamp", InSummary=true, Order=70, Since = FhirRelease.R4, FiveWs="FiveWs.init")]
+    [FhirElement("timestamp", InSummary=true, Order=70, FiveWs="FiveWs.init", Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Instant TimestampElement
     {

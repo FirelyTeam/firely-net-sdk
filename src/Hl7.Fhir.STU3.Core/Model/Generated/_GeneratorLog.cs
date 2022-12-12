@@ -242,7 +242,6 @@
 // Ratio.cs
 // RelatedArtifact.cs
 // SampledData.cs
-// Signature.cs
 // Timing.cs
 // TriggerDefinition.cs
 // Account.cs
@@ -253,9 +252,7 @@
 // AppointmentResponse.cs
 // AuditEvent.cs
 // Basic.cs
-// Binary.cs
 // BodySite.cs
-// Bundle.cs
 // CapabilityStatement.cs
 // CarePlan.cs
 // CareTeam.cs

@@ -354,7 +354,10 @@
 // Quantity.cs
 // Range.cs
 // ResourceReference.cs
+// Signature.cs
 // UsageContext.cs
+// Binary.cs
+// Bundle.cs
 // DomainResource.cs
 // OperationOutcome.cs
 // Parameters.cs

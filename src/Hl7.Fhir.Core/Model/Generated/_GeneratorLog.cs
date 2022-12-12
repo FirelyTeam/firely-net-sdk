@@ -321,9 +321,6 @@
 
 // Generated items
 // ElementDefinition.cs
-// Signature.cs
-// Binary.cs
-// Bundle.cs
 // CapabilityStatement.cs
 // CodeSystem.cs
 // StructureDefinition.cs

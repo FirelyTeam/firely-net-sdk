@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// A copyright statement for the specific code system included in the value set
       /// </summary>
-      [FhirElement("copyright", Order=90, Since =FhirRelease.R5)]
+      [FhirElement("copyright", Order=90, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString CopyrightElement
       {
@@ -1350,7 +1350,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional information supplied about each concept
       /// </summary>
-      [FhirElement("property", Order = 90, Since = FhirRelease.R5)]
+      [FhirElement("property", Order=90, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ValueSet.PropertyComponent> Property
@@ -2048,7 +2048,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value for the concept
       /// </summary>
-      [FhirElement("property", Order = 110, Since = FhirRelease.R5)]
+      [FhirElement("property", Order=110, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ValueSet.ConceptPropertyComponent> Property
@@ -2993,7 +2993,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of the semantic space the Value Set Expansion is intended to cover
     /// </summary>
-    [FhirElement("scope", Order=270, Since = FhirRelease.R5)]
+    [FhirElement("scope", Order=270, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.ValueSet.ScopeComponent Scope
     {
