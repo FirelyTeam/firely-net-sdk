@@ -1250,20 +1250,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("variableType", Order=400)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EvidenceVariableType> VariableTypeElement
+    public Code<Hl7.Fhir.Model.VariableTypeCode> VariableTypeElement
     {
       get { return _VariableTypeElement; }
       set { _VariableTypeElement = value; OnPropertyChanged("VariableTypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.EvidenceVariableType> _VariableTypeElement;
+    private Code<Hl7.Fhir.Model.VariableTypeCode> _VariableTypeElement;
 
     /// <summary>
     /// dichotomous | continuous | descriptive
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.EvidenceVariableType? VariableType
+    public Hl7.Fhir.Model.VariableTypeCode? VariableType
     {
       get { return VariableTypeElement != null ? VariableTypeElement.Value : null; }
       set
@@ -1271,7 +1271,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           VariableTypeElement = null;
         else
-          VariableTypeElement = new Code<Hl7.Fhir.Model.EvidenceVariableType>(value);
+          VariableTypeElement = new Code<Hl7.Fhir.Model.VariableTypeCode>(value);
         OnPropertyChanged("VariableType");
       }
     }
@@ -1331,7 +1331,7 @@ namespace Hl7.Fhir.Model
       if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(LibraryElement != null) dest.LibraryElement = new List<Hl7.Fhir.Model.Canonical>(LibraryElement.DeepCopy());
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>)TypeElement.DeepCopy();
-      if(VariableTypeElement != null) dest.VariableTypeElement = (Code<Hl7.Fhir.Model.EvidenceVariableType>)VariableTypeElement.DeepCopy();
+      if(VariableTypeElement != null) dest.VariableTypeElement = (Code<Hl7.Fhir.Model.VariableTypeCode>)VariableTypeElement.DeepCopy();
       if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent>(Characteristic.DeepCopy());
       return dest;
     }

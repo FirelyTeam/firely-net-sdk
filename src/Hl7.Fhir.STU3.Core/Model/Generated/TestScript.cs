@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/content-type)
     /// </summary>
     [FhirEnumeration("ContentType")]
-    public enum ContentType
+    public enum ContentTypeCode
     {
       /// <summary>
       /// XML content-type corresponding to the application/fhir+xml mime-type.
@@ -2995,20 +2995,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("accept", Order=80)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.TestScript.ContentType> AcceptElement
+      public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> AcceptElement
       {
         get { return _AcceptElement; }
         set { _AcceptElement = value; OnPropertyChanged("AcceptElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.TestScript.ContentType> _AcceptElement;
+      private Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> _AcceptElement;
 
       /// <summary>
       /// xml | json | ttl | none
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.TestScript.ContentType? Accept
+      public Hl7.Fhir.Model.TestScript.ContentTypeCode? Accept
       {
         get { return AcceptElement != null ? AcceptElement.Value : null; }
         set
@@ -3016,7 +3016,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             AcceptElement = null;
           else
-            AcceptElement = new Code<Hl7.Fhir.Model.TestScript.ContentType>(value);
+            AcceptElement = new Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>(value);
           OnPropertyChanged("Accept");
         }
       }
@@ -3027,29 +3027,29 @@ namespace Hl7.Fhir.Model
       [FhirElement("contentType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.TestScript.ContentType> ContentType_Element
+      public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> ContentTypeElement
       {
-        get { return _ContentType_Element; }
-        set { _ContentType_Element = value; OnPropertyChanged("ContentType_Element"); }
+        get { return _ContentTypeElement; }
+        set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.TestScript.ContentType> _ContentType_Element;
+      private Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> _ContentTypeElement;
 
       /// <summary>
       /// xml | json | ttl | none
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.TestScript.ContentType? ContentType_
+      public Hl7.Fhir.Model.TestScript.ContentTypeCode? ContentType
       {
-        get { return ContentType_Element != null ? ContentType_Element.Value : null; }
+        get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
         set
         {
           if (value == null)
-            ContentType_Element = null;
+            ContentTypeElement = null;
           else
-            ContentType_Element = new Code<Hl7.Fhir.Model.TestScript.ContentType>(value);
-          OnPropertyChanged("ContentType_");
+            ContentTypeElement = new Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>(value);
+          OnPropertyChanged("ContentType");
         }
       }
 
@@ -3360,8 +3360,8 @@ namespace Hl7.Fhir.Model
         if(ResourceElement != null) dest.ResourceElement = (Code<Hl7.Fhir.Model.FHIRDefinedType>)ResourceElement.DeepCopy();
         if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(AcceptElement != null) dest.AcceptElement = (Code<Hl7.Fhir.Model.TestScript.ContentType>)AcceptElement.DeepCopy();
-        if(ContentType_Element != null) dest.ContentType_Element = (Code<Hl7.Fhir.Model.TestScript.ContentType>)ContentType_Element.DeepCopy();
+        if(AcceptElement != null) dest.AcceptElement = (Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>)AcceptElement.DeepCopy();
+        if(ContentTypeElement != null) dest.ContentTypeElement = (Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>)ContentTypeElement.DeepCopy();
         if(DestinationElement != null) dest.DestinationElement = (Hl7.Fhir.Model.Integer)DestinationElement.DeepCopy();
         if(EncodeRequestUrlElement != null) dest.EncodeRequestUrlElement = (Hl7.Fhir.Model.FhirBoolean)EncodeRequestUrlElement.DeepCopy();
         if(OriginElement != null) dest.OriginElement = (Hl7.Fhir.Model.Integer)OriginElement.DeepCopy();
@@ -3392,7 +3392,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
         if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.Matches(AcceptElement, otherT.AcceptElement)) return false;
-        if( !DeepComparable.Matches(ContentType_Element, otherT.ContentType_Element)) return false;
+        if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
         if( !DeepComparable.Matches(DestinationElement, otherT.DestinationElement)) return false;
         if( !DeepComparable.Matches(EncodeRequestUrlElement, otherT.EncodeRequestUrlElement)) return false;
         if( !DeepComparable.Matches(OriginElement, otherT.OriginElement)) return false;
@@ -3418,7 +3418,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
         if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.IsExactly(AcceptElement, otherT.AcceptElement)) return false;
-        if( !DeepComparable.IsExactly(ContentType_Element, otherT.ContentType_Element)) return false;
+        if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
         if( !DeepComparable.IsExactly(DestinationElement, otherT.DestinationElement)) return false;
         if( !DeepComparable.IsExactly(EncodeRequestUrlElement, otherT.EncodeRequestUrlElement)) return false;
         if( !DeepComparable.IsExactly(OriginElement, otherT.OriginElement)) return false;
@@ -3444,7 +3444,7 @@ namespace Hl7.Fhir.Model
           if (LabelElement != null) yield return LabelElement;
           if (DescriptionElement != null) yield return DescriptionElement;
           if (AcceptElement != null) yield return AcceptElement;
-          if (ContentType_Element != null) yield return ContentType_Element;
+          if (ContentTypeElement != null) yield return ContentTypeElement;
           if (DestinationElement != null) yield return DestinationElement;
           if (EncodeRequestUrlElement != null) yield return EncodeRequestUrlElement;
           if (OriginElement != null) yield return OriginElement;
@@ -3469,7 +3469,7 @@ namespace Hl7.Fhir.Model
           if (LabelElement != null) yield return new ElementValue("label", LabelElement);
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
           if (AcceptElement != null) yield return new ElementValue("accept", AcceptElement);
-          if (ContentType_Element != null) yield return new ElementValue("contentType", ContentType_Element);
+          if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
           if (DestinationElement != null) yield return new ElementValue("destination", DestinationElement);
           if (EncodeRequestUrlElement != null) yield return new ElementValue("encodeRequestUrl", EncodeRequestUrlElement);
           if (OriginElement != null) yield return new ElementValue("origin", OriginElement);
@@ -3503,8 +3503,8 @@ namespace Hl7.Fhir.Model
             value = AcceptElement;
             return AcceptElement is not null;
           case "contentType":
-            value = ContentType_Element;
-            return ContentType_Element is not null;
+            value = ContentTypeElement;
+            return ContentTypeElement is not null;
           case "destination":
             value = DestinationElement;
             return DestinationElement is not null;
@@ -3549,7 +3549,7 @@ namespace Hl7.Fhir.Model
         if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (AcceptElement is not null) yield return new KeyValuePair<string,object>("accept",AcceptElement);
-        if (ContentType_Element is not null) yield return new KeyValuePair<string,object>("contentType",ContentType_Element);
+        if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
         if (DestinationElement is not null) yield return new KeyValuePair<string,object>("destination",DestinationElement);
         if (EncodeRequestUrlElement is not null) yield return new KeyValuePair<string,object>("encodeRequestUrl",EncodeRequestUrlElement);
         if (OriginElement is not null) yield return new KeyValuePair<string,object>("origin",OriginElement);
@@ -3939,29 +3939,29 @@ namespace Hl7.Fhir.Model
       [FhirElement("contentType", Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.TestScript.ContentType> ContentType_Element
+      public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> ContentTypeElement
       {
-        get { return _ContentType_Element; }
-        set { _ContentType_Element = value; OnPropertyChanged("ContentType_Element"); }
+        get { return _ContentTypeElement; }
+        set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.TestScript.ContentType> _ContentType_Element;
+      private Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> _ContentTypeElement;
 
       /// <summary>
       /// xml | json | ttl | none
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.TestScript.ContentType? ContentType_
+      public Hl7.Fhir.Model.TestScript.ContentTypeCode? ContentType
       {
-        get { return ContentType_Element != null ? ContentType_Element.Value : null; }
+        get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
         set
         {
           if (value == null)
-            ContentType_Element = null;
+            ContentTypeElement = null;
           else
-            ContentType_Element = new Code<Hl7.Fhir.Model.TestScript.ContentType>(value);
-          OnPropertyChanged("ContentType_");
+            ContentTypeElement = new Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>(value);
+          OnPropertyChanged("ContentType");
         }
       }
 
@@ -4476,7 +4476,7 @@ namespace Hl7.Fhir.Model
         if(CompareToSourceIdElement != null) dest.CompareToSourceIdElement = (Hl7.Fhir.Model.FhirString)CompareToSourceIdElement.DeepCopy();
         if(CompareToSourceExpressionElement != null) dest.CompareToSourceExpressionElement = (Hl7.Fhir.Model.FhirString)CompareToSourceExpressionElement.DeepCopy();
         if(CompareToSourcePathElement != null) dest.CompareToSourcePathElement = (Hl7.Fhir.Model.FhirString)CompareToSourcePathElement.DeepCopy();
-        if(ContentType_Element != null) dest.ContentType_Element = (Code<Hl7.Fhir.Model.TestScript.ContentType>)ContentType_Element.DeepCopy();
+        if(ContentTypeElement != null) dest.ContentTypeElement = (Code<Hl7.Fhir.Model.TestScript.ContentTypeCode>)ContentTypeElement.DeepCopy();
         if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
         if(HeaderFieldElement != null) dest.HeaderFieldElement = (Hl7.Fhir.Model.FhirString)HeaderFieldElement.DeepCopy();
         if(MinimumIdElement != null) dest.MinimumIdElement = (Hl7.Fhir.Model.FhirString)MinimumIdElement.DeepCopy();
@@ -4515,7 +4515,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.Matches(CompareToSourceIdElement, otherT.CompareToSourceIdElement)) return false;
         if( !DeepComparable.Matches(CompareToSourceExpressionElement, otherT.CompareToSourceExpressionElement)) return false;
         if( !DeepComparable.Matches(CompareToSourcePathElement, otherT.CompareToSourcePathElement)) return false;
-        if( !DeepComparable.Matches(ContentType_Element, otherT.ContentType_Element)) return false;
+        if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
         if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
         if( !DeepComparable.Matches(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
         if( !DeepComparable.Matches(MinimumIdElement, otherT.MinimumIdElement)) return false;
@@ -4549,7 +4549,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(CompareToSourceIdElement, otherT.CompareToSourceIdElement)) return false;
         if( !DeepComparable.IsExactly(CompareToSourceExpressionElement, otherT.CompareToSourceExpressionElement)) return false;
         if( !DeepComparable.IsExactly(CompareToSourcePathElement, otherT.CompareToSourcePathElement)) return false;
-        if( !DeepComparable.IsExactly(ContentType_Element, otherT.ContentType_Element)) return false;
+        if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
         if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
         if( !DeepComparable.IsExactly(HeaderFieldElement, otherT.HeaderFieldElement)) return false;
         if( !DeepComparable.IsExactly(MinimumIdElement, otherT.MinimumIdElement)) return false;
@@ -4583,7 +4583,7 @@ namespace Hl7.Fhir.Model
           if (CompareToSourceIdElement != null) yield return CompareToSourceIdElement;
           if (CompareToSourceExpressionElement != null) yield return CompareToSourceExpressionElement;
           if (CompareToSourcePathElement != null) yield return CompareToSourcePathElement;
-          if (ContentType_Element != null) yield return ContentType_Element;
+          if (ContentTypeElement != null) yield return ContentTypeElement;
           if (ExpressionElement != null) yield return ExpressionElement;
           if (HeaderFieldElement != null) yield return HeaderFieldElement;
           if (MinimumIdElement != null) yield return MinimumIdElement;
@@ -4616,7 +4616,7 @@ namespace Hl7.Fhir.Model
           if (CompareToSourceIdElement != null) yield return new ElementValue("compareToSourceId", CompareToSourceIdElement);
           if (CompareToSourceExpressionElement != null) yield return new ElementValue("compareToSourceExpression", CompareToSourceExpressionElement);
           if (CompareToSourcePathElement != null) yield return new ElementValue("compareToSourcePath", CompareToSourcePathElement);
-          if (ContentType_Element != null) yield return new ElementValue("contentType", ContentType_Element);
+          if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
           if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
           if (HeaderFieldElement != null) yield return new ElementValue("headerField", HeaderFieldElement);
           if (MinimumIdElement != null) yield return new ElementValue("minimumId", MinimumIdElement);
@@ -4660,8 +4660,8 @@ namespace Hl7.Fhir.Model
             value = CompareToSourcePathElement;
             return CompareToSourcePathElement is not null;
           case "contentType":
-            value = ContentType_Element;
-            return ContentType_Element is not null;
+            value = ContentTypeElement;
+            return ContentTypeElement is not null;
           case "expression":
             value = ExpressionElement;
             return ExpressionElement is not null;
@@ -4728,7 +4728,7 @@ namespace Hl7.Fhir.Model
         if (CompareToSourceIdElement is not null) yield return new KeyValuePair<string,object>("compareToSourceId",CompareToSourceIdElement);
         if (CompareToSourceExpressionElement is not null) yield return new KeyValuePair<string,object>("compareToSourceExpression",CompareToSourceExpressionElement);
         if (CompareToSourcePathElement is not null) yield return new KeyValuePair<string,object>("compareToSourcePath",CompareToSourcePathElement);
-        if (ContentType_Element is not null) yield return new KeyValuePair<string,object>("contentType",ContentType_Element);
+        if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
         if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
         if (HeaderFieldElement is not null) yield return new KeyValuePair<string,object>("headerField",HeaderFieldElement);
         if (MinimumIdElement is not null) yield return new KeyValuePair<string,object>("minimumId",MinimumIdElement);

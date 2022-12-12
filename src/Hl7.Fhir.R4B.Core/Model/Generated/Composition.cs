@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (systems: 0)
     /// </summary>
     [FhirEnumeration("Confidentiality")]
-    public enum Confidentiality
+    public enum ConfidentialityCode
     {
       /// <summary>
       /// MISSING DESCRIPTION
@@ -1183,29 +1183,29 @@ namespace Hl7.Fhir.Model
     [FhirElement("confidentiality", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Composition.Confidentiality> Confidentiality_Element
+    public Code<Hl7.Fhir.Model.Composition.ConfidentialityCode> ConfidentialityElement
     {
-      get { return _Confidentiality_Element; }
-      set { _Confidentiality_Element = value; OnPropertyChanged("Confidentiality_Element"); }
+      get { return _ConfidentialityElement; }
+      set { _ConfidentialityElement = value; OnPropertyChanged("ConfidentialityElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Composition.Confidentiality> _Confidentiality_Element;
+    private Code<Hl7.Fhir.Model.Composition.ConfidentialityCode> _ConfidentialityElement;
 
     /// <summary>
     /// As defined by affinity domain
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.Composition.Confidentiality? Confidentiality_
+    public Hl7.Fhir.Model.Composition.ConfidentialityCode? Confidentiality
     {
-      get { return Confidentiality_Element != null ? Confidentiality_Element.Value : null; }
+      get { return ConfidentialityElement != null ? ConfidentialityElement.Value : null; }
       set
       {
         if (value == null)
-          Confidentiality_Element = null;
+          ConfidentialityElement = null;
         else
-          Confidentiality_Element = new Code<Hl7.Fhir.Model.Composition.Confidentiality>(value);
-        OnPropertyChanged("Confidentiality_");
+          ConfidentialityElement = new Code<Hl7.Fhir.Model.Composition.ConfidentialityCode>(value);
+        OnPropertyChanged("Confidentiality");
       }
     }
 
@@ -1299,7 +1299,7 @@ namespace Hl7.Fhir.Model
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(Author != null) dest.Author = new List<Hl7.Fhir.Model.ResourceReference>(Author.DeepCopy());
       if(TitleElement != null) dest.TitleElement = (Hl7.Fhir.Model.FhirString)TitleElement.DeepCopy();
-      if(Confidentiality_Element != null) dest.Confidentiality_Element = (Code<Hl7.Fhir.Model.Composition.Confidentiality>)Confidentiality_Element.DeepCopy();
+      if(ConfidentialityElement != null) dest.ConfidentialityElement = (Code<Hl7.Fhir.Model.Composition.ConfidentialityCode>)ConfidentialityElement.DeepCopy();
       if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.Composition.AttesterComponent>(Attester.DeepCopy());
       if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
       if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.Composition.RelatesToComponent>(RelatesTo.DeepCopy());
@@ -1329,7 +1329,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
       if( !DeepComparable.Matches(Author, otherT.Author)) return false;
       if( !DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
-      if( !DeepComparable.Matches(Confidentiality_Element, otherT.Confidentiality_Element)) return false;
+      if( !DeepComparable.Matches(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
       if( !DeepComparable.Matches(Attester, otherT.Attester)) return false;
       if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
       if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
@@ -1354,7 +1354,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
       if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
       if( !DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
-      if( !DeepComparable.IsExactly(Confidentiality_Element, otherT.Confidentiality_Element)) return false;
+      if( !DeepComparable.IsExactly(ConfidentialityElement, otherT.ConfidentialityElement)) return false;
       if( !DeepComparable.IsExactly(Attester, otherT.Attester)) return false;
       if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
       if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
@@ -1379,7 +1379,7 @@ namespace Hl7.Fhir.Model
         if (DateElement != null) yield return DateElement;
         foreach (var elem in Author) { if (elem != null) yield return elem; }
         if (TitleElement != null) yield return TitleElement;
-        if (Confidentiality_Element != null) yield return Confidentiality_Element;
+        if (ConfidentialityElement != null) yield return ConfidentialityElement;
         foreach (var elem in Attester) { if (elem != null) yield return elem; }
         if (Custodian != null) yield return Custodian;
         foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
         if (DateElement != null) yield return new ElementValue("date", DateElement);
         foreach (var elem in Author) { if (elem != null) yield return new ElementValue("author", elem); }
         if (TitleElement != null) yield return new ElementValue("title", TitleElement);
-        if (Confidentiality_Element != null) yield return new ElementValue("confidentiality", Confidentiality_Element);
+        if (ConfidentialityElement != null) yield return new ElementValue("confidentiality", ConfidentialityElement);
         foreach (var elem in Attester) { if (elem != null) yield return new ElementValue("attester", elem); }
         if (Custodian != null) yield return new ElementValue("custodian", Custodian);
         foreach (var elem in RelatesTo) { if (elem != null) yield return new ElementValue("relatesTo", elem); }
@@ -1444,8 +1444,8 @@ namespace Hl7.Fhir.Model
           value = TitleElement;
           return TitleElement is not null;
         case "confidentiality":
-          value = Confidentiality_Element;
-          return Confidentiality_Element is not null;
+          value = ConfidentialityElement;
+          return ConfidentialityElement is not null;
         case "attester":
           value = Attester;
           return Attester?.Any() == true;
@@ -1479,7 +1479,7 @@ namespace Hl7.Fhir.Model
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (Author?.Any() == true) yield return new KeyValuePair<string,object>("author",Author);
       if (TitleElement is not null) yield return new KeyValuePair<string,object>("title",TitleElement);
-      if (Confidentiality_Element is not null) yield return new KeyValuePair<string,object>("confidentiality",Confidentiality_Element);
+      if (ConfidentialityElement is not null) yield return new KeyValuePair<string,object>("confidentiality",ConfidentialityElement);
       if (Attester?.Any() == true) yield return new KeyValuePair<string,object>("attester",Attester);
       if (Custodian is not null) yield return new KeyValuePair<string,object>("custodian",Custodian);
       if (RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/exposure-state)
     /// </summary>
     [FhirEnumeration("ExposureState")]
-    public enum ExposureState
+    public enum ExposureStateCode
     {
       /// <summary>
       /// used when the results by exposure is describing the results for the primary exposure of interest.
@@ -334,29 +334,29 @@ namespace Hl7.Fhir.Model
       [FhirElement("exposureState", Order=50)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureState> ExposureState_Element
+      public Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode> ExposureStateElement
       {
-        get { return _ExposureState_Element; }
-        set { _ExposureState_Element = value; OnPropertyChanged("ExposureState_Element"); }
+        get { return _ExposureStateElement; }
+        set { _ExposureStateElement = value; OnPropertyChanged("ExposureStateElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureState> _ExposureState_Element;
+      private Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode> _ExposureStateElement;
 
       /// <summary>
       /// exposure | exposure-alternative
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureState? ExposureState_
+      public Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode? ExposureState
       {
-        get { return ExposureState_Element != null ? ExposureState_Element.Value : null; }
+        get { return ExposureStateElement != null ? ExposureStateElement.Value : null; }
         set
         {
           if (value == null)
-            ExposureState_Element = null;
+            ExposureStateElement = null;
           else
-            ExposureState_Element = new Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureState>(value);
-          OnPropertyChanged("ExposureState_");
+            ExposureStateElement = new Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode>(value);
+          OnPropertyChanged("ExposureState");
         }
       }
 
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.FhirString)DescriptionElement.DeepCopy();
-        if(ExposureState_Element != null) dest.ExposureState_Element = (Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureState>)ExposureState_Element.DeepCopy();
+        if(ExposureStateElement != null) dest.ExposureStateElement = (Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode>)ExposureStateElement.DeepCopy();
         if(VariantState != null) dest.VariantState = (Hl7.Fhir.Model.CodeableConcept)VariantState.DeepCopy();
         if(RiskEvidenceSynthesis != null) dest.RiskEvidenceSynthesis = (Hl7.Fhir.Model.ResourceReference)RiskEvidenceSynthesis.DeepCopy();
         return dest;
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.Matches(ExposureState_Element, otherT.ExposureState_Element)) return false;
+        if( !DeepComparable.Matches(ExposureStateElement, otherT.ExposureStateElement)) return false;
         if( !DeepComparable.Matches(VariantState, otherT.VariantState)) return false;
         if( !DeepComparable.Matches(RiskEvidenceSynthesis, otherT.RiskEvidenceSynthesis)) return false;
 
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
-        if( !DeepComparable.IsExactly(ExposureState_Element, otherT.ExposureState_Element)) return false;
+        if( !DeepComparable.IsExactly(ExposureStateElement, otherT.ExposureStateElement)) return false;
         if( !DeepComparable.IsExactly(VariantState, otherT.VariantState)) return false;
         if( !DeepComparable.IsExactly(RiskEvidenceSynthesis, otherT.RiskEvidenceSynthesis)) return false;
 
@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (DescriptionElement != null) yield return DescriptionElement;
-          if (ExposureState_Element != null) yield return ExposureState_Element;
+          if (ExposureStateElement != null) yield return ExposureStateElement;
           if (VariantState != null) yield return VariantState;
           if (RiskEvidenceSynthesis != null) yield return RiskEvidenceSynthesis;
         }
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
-          if (ExposureState_Element != null) yield return new ElementValue("exposureState", ExposureState_Element);
+          if (ExposureStateElement != null) yield return new ElementValue("exposureState", ExposureStateElement);
           if (VariantState != null) yield return new ElementValue("variantState", VariantState);
           if (RiskEvidenceSynthesis != null) yield return new ElementValue("riskEvidenceSynthesis", RiskEvidenceSynthesis);
         }
@@ -474,8 +474,8 @@ namespace Hl7.Fhir.Model
             value = DescriptionElement;
             return DescriptionElement is not null;
           case "exposureState":
-            value = ExposureState_Element;
-            return ExposureState_Element is not null;
+            value = ExposureStateElement;
+            return ExposureStateElement is not null;
           case "variantState":
             value = VariantState;
             return VariantState is not null;
@@ -492,7 +492,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
-        if (ExposureState_Element is not null) yield return new KeyValuePair<string,object>("exposureState",ExposureState_Element);
+        if (ExposureStateElement is not null) yield return new KeyValuePair<string,object>("exposureState",ExposureStateElement);
         if (VariantState is not null) yield return new KeyValuePair<string,object>("variantState",VariantState);
         if (RiskEvidenceSynthesis is not null) yield return new KeyValuePair<string,object>("riskEvidenceSynthesis",RiskEvidenceSynthesis);
       }

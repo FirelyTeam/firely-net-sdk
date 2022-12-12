@@ -56,7 +56,7 @@
   // Used in model class (resource): CapabilityStatement.kind
   // Used in model class (resource): TerminologyCapabilities.kind
 
-// Generated Shared Enumeration: Use (http://hl7.org/fhir/ValueSet/claim-use)
+// Generated Shared Enumeration: ClaimUseCode (http://hl7.org/fhir/ValueSet/claim-use)
   // Used in model class (resource): Claim.use
   // Used in model class (resource): ClaimResponse.use
   // Used in model class (resource): ExplanationOfBenefit.use
@@ -267,7 +267,7 @@
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
 
-// Generated Shared Enumeration: EvidenceVariableType (http://hl7.org/fhir/ValueSet/variable-type)
+// Generated Shared Enumeration: VariableTypeCode (http://hl7.org/fhir/ValueSet/variable-type)
   // Used in model class (resource): EvidenceVariable.type
   // Used in model class (resource): ResearchElementDefinition.variableType
 

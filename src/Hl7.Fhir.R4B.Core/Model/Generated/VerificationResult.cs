@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/verificationresult-status)
     /// </summary>
     [FhirEnumeration("status")]
-    public enum Status
+    public enum StatusCode
     {
       /// <summary>
       /// ***TODO***
@@ -928,29 +928,29 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.VerificationResult.Status> Status_Element
+    public Code<Hl7.Fhir.Model.VerificationResult.StatusCode> StatusElement
     {
-      get { return _Status_Element; }
-      set { _Status_Element = value; OnPropertyChanged("Status_Element"); }
+      get { return _StatusElement; }
+      set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.VerificationResult.Status> _Status_Element;
+    private Code<Hl7.Fhir.Model.VerificationResult.StatusCode> _StatusElement;
 
     /// <summary>
     /// attested | validated | in-process | req-revalid | val-fail | reval-fail
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.VerificationResult.Status? Status_
+    public Hl7.Fhir.Model.VerificationResult.StatusCode? Status
     {
-      get { return Status_Element != null ? Status_Element.Value : null; }
+      get { return StatusElement != null ? StatusElement.Value : null; }
       set
       {
         if (value == null)
-          Status_Element = null;
+          StatusElement = null;
         else
-          Status_Element = new Code<Hl7.Fhir.Model.VerificationResult.Status>(value);
-        OnPropertyChanged("Status_");
+          StatusElement = new Code<Hl7.Fhir.Model.VerificationResult.StatusCode>(value);
+        OnPropertyChanged("Status");
       }
     }
 
@@ -1154,7 +1154,7 @@ namespace Hl7.Fhir.Model
       if(Target != null) dest.Target = new List<Hl7.Fhir.Model.ResourceReference>(Target.DeepCopy());
       if(TargetLocationElement != null) dest.TargetLocationElement = new List<Hl7.Fhir.Model.FhirString>(TargetLocationElement.DeepCopy());
       if(Need != null) dest.Need = (Hl7.Fhir.Model.CodeableConcept)Need.DeepCopy();
-      if(Status_Element != null) dest.Status_Element = (Code<Hl7.Fhir.Model.VerificationResult.Status>)Status_Element.DeepCopy();
+      if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.VerificationResult.StatusCode>)StatusElement.DeepCopy();
       if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
       if(ValidationType != null) dest.ValidationType = (Hl7.Fhir.Model.CodeableConcept)ValidationType.DeepCopy();
       if(ValidationProcess != null) dest.ValidationProcess = new List<Hl7.Fhir.Model.CodeableConcept>(ValidationProcess.DeepCopy());
@@ -1183,7 +1183,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Target, otherT.Target)) return false;
       if( !DeepComparable.Matches(TargetLocationElement, otherT.TargetLocationElement)) return false;
       if( !DeepComparable.Matches(Need, otherT.Need)) return false;
-      if( !DeepComparable.Matches(Status_Element, otherT.Status_Element)) return false;
+      if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
       if( !DeepComparable.Matches(ValidationType, otherT.ValidationType)) return false;
       if( !DeepComparable.Matches(ValidationProcess, otherT.ValidationProcess)) return false;
@@ -1207,7 +1207,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Target, otherT.Target)) return false;
       if( !DeepComparable.IsExactly(TargetLocationElement, otherT.TargetLocationElement)) return false;
       if( !DeepComparable.IsExactly(Need, otherT.Need)) return false;
-      if( !DeepComparable.IsExactly(Status_Element, otherT.Status_Element)) return false;
+      if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
       if( !DeepComparable.IsExactly(ValidationType, otherT.ValidationType)) return false;
       if( !DeepComparable.IsExactly(ValidationProcess, otherT.ValidationProcess)) return false;
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Target) { if (elem != null) yield return elem; }
         foreach (var elem in TargetLocationElement) { if (elem != null) yield return elem; }
         if (Need != null) yield return Need;
-        if (Status_Element != null) yield return Status_Element;
+        if (StatusElement != null) yield return StatusElement;
         if (StatusDateElement != null) yield return StatusDateElement;
         if (ValidationType != null) yield return ValidationType;
         foreach (var elem in ValidationProcess) { if (elem != null) yield return elem; }
@@ -1254,7 +1254,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Target) { if (elem != null) yield return new ElementValue("target", elem); }
         foreach (var elem in TargetLocationElement) { if (elem != null) yield return new ElementValue("targetLocation", elem); }
         if (Need != null) yield return new ElementValue("need", Need);
-        if (Status_Element != null) yield return new ElementValue("status", Status_Element);
+        if (StatusElement != null) yield return new ElementValue("status", StatusElement);
         if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
         if (ValidationType != null) yield return new ElementValue("validationType", ValidationType);
         foreach (var elem in ValidationProcess) { if (elem != null) yield return new ElementValue("validationProcess", elem); }
@@ -1282,8 +1282,8 @@ namespace Hl7.Fhir.Model
           value = Need;
           return Need is not null;
         case "status":
-          value = Status_Element;
-          return Status_Element is not null;
+          value = StatusElement;
+          return StatusElement is not null;
         case "statusDate":
           value = StatusDateElement;
           return StatusDateElement is not null;
@@ -1326,7 +1326,7 @@ namespace Hl7.Fhir.Model
       if (Target?.Any() == true) yield return new KeyValuePair<string,object>("target",Target);
       if (TargetLocationElement?.Any() == true) yield return new KeyValuePair<string,object>("targetLocation",TargetLocationElement);
       if (Need is not null) yield return new KeyValuePair<string,object>("need",Need);
-      if (Status_Element is not null) yield return new KeyValuePair<string,object>("status",Status_Element);
+      if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (ValidationType is not null) yield return new KeyValuePair<string,object>("validationType",ValidationType);
       if (ValidationProcess?.Any() == true) yield return new KeyValuePair<string,object>("validationProcess",ValidationProcess);

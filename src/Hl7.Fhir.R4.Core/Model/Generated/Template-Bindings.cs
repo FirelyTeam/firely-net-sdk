@@ -1636,7 +1636,7 @@ namespace Hl7.Fhir.Model
   /// (system: http://hl7.org/fhir/claim-use)
   /// </summary>
   [FhirEnumeration("Use")]
-  public enum Use
+  public enum ClaimUseCode
   {
     /// <summary>
     /// The treatment is complete and this represents a Claim for the services.
@@ -4840,7 +4840,7 @@ namespace Hl7.Fhir.Model
   /// (system: http://hl7.org/fhir/variable-type)
   /// </summary>
   [FhirEnumeration("EvidenceVariableType")]
-  public enum EvidenceVariableType
+  public enum VariableTypeCode
   {
     /// <summary>
     /// The variable is dichotomous, such as present or absent.

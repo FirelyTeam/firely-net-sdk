@@ -66,7 +66,7 @@
   // Used in model class (resource): ClaimResponse.outcome
   // Used in model class (resource): ExplanationOfBenefit.outcome
 
-// Generated Shared Enumeration: Use (http://hl7.org/fhir/ValueSet/claim-use)
+// Generated Shared Enumeration: ClaimUseCode (http://hl7.org/fhir/ValueSet/claim-use)
   // Used in model class (resource): Claim.use
   // Used in model class (resource): ClaimResponse.use
   // Used in model class (resource): ExplanationOfBenefit.use
