@@ -38,9 +38,6 @@ namespace Hl7.Fhir.ElementModel.Types
             return Parse(representation);
         }
 
-        [Obsolete("FromDateTime() has been renamed to FromDateTimeOffset()")]
-        public static DateTime FromDateTime(DateTimeOffset dto) => FromDateTimeOffset(dto);
-
         public static DateTime Now() => FromDateTimeOffset(DateTimeOffset.Now);
 
         public static DateTime Today() => DateTime.Parse(DateTimeOffset.Now.ToString("yyyy-MM-ddK"));

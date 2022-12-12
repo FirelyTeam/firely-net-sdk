@@ -71,11 +71,6 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        [Obsolete("Use FhirDateTime(DateTimeOffset dt) instead")]
-        public FhirDateTime(DateTime dt) : this(new DateTimeOffset(dt))
-        {
-        }
-
         [Obsolete("Use FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset) instead")]
         public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
             : this(new DateTime(year, month, day, hr, min, sec, DateTimeKind.Local))

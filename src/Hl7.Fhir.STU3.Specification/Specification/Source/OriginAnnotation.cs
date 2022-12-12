@@ -9,16 +9,9 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
-using System;
 
 namespace Hl7.Fhir.Specification.Source
 {
-    [Obsolete("OriginInformation has been renamed to OriginAnnotation")]
-    public class OriginInformation
-    {
-        // Replaced by OriginAnnotation
-    }
-
     /// <summary>Annotation for the location from which a resource was originally resolved.</summary>
     public class OriginAnnotation
     {

@@ -239,12 +239,6 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Get the <c>status</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of conformance resources.</remarks>
-        [Obsolete("Use GetPublicationStatus")]
-        public static string? GetConformanceStatus(this IArtifactSummaryPropertyBag properties)
-            => properties.GetValueOrDefault<string>(StatusKey);
-
-        /// <summary>Get the <c>status</c> property value from the specified artifact summary property bag, if available.</summary>
-        /// <remarks>Only applies to summaries of conformance resources.</remarks>
         public static string? GetPublicationStatus(this IArtifactSummaryPropertyBag properties)
             => properties.GetValueOrDefault<string>(StatusKey);
 
