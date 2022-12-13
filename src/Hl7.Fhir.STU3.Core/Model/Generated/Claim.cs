@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
     [FhirEnumeration("Use")]
-    public enum Use
+    public enum ClaimUseCode
     {
       /// <summary>
       /// The treatment is complete and this represents a Claim for the services.
@@ -3273,29 +3273,29 @@ namespace Hl7.Fhir.Model
     [FhirElement("use", Order=130)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Claim.Use> Use_Element
+    public Code<Hl7.Fhir.Model.Claim.ClaimUseCode> UseElement
     {
-      get { return _Use_Element; }
-      set { _Use_Element = value; OnPropertyChanged("Use_Element"); }
+      get { return _UseElement; }
+      set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Claim.Use> _Use_Element;
+    private Code<Hl7.Fhir.Model.Claim.ClaimUseCode> _UseElement;
 
     /// <summary>
     /// complete | proposed | exploratory | other
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.Claim.Use? Use_
+    public Hl7.Fhir.Model.Claim.ClaimUseCode? Use
     {
-      get { return Use_Element != null ? Use_Element.Value : null; }
+      get { return UseElement != null ? UseElement.Value : null; }
       set
       {
         if (value == null)
-          Use_Element = null;
+          UseElement = null;
         else
-          Use_Element = new Code<Hl7.Fhir.Model.Claim.Use>(value);
-        OnPropertyChanged("Use_");
+          UseElement = new Code<Hl7.Fhir.Model.Claim.ClaimUseCode>(value);
+        OnPropertyChanged("Use");
       }
     }
 
@@ -3681,7 +3681,7 @@ namespace Hl7.Fhir.Model
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(SubType != null) dest.SubType = new List<Hl7.Fhir.Model.CodeableConcept>(SubType.DeepCopy());
-      if(Use_Element != null) dest.Use_Element = (Code<Hl7.Fhir.Model.Claim.Use>)Use_Element.DeepCopy();
+      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Claim.ClaimUseCode>)UseElement.DeepCopy();
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(BillablePeriod != null) dest.BillablePeriod = (Hl7.Fhir.Model.Period)BillablePeriod.DeepCopy();
       if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();
@@ -3726,7 +3726,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.Matches(Type, otherT.Type)) return false;
       if( !DeepComparable.Matches(SubType, otherT.SubType)) return false;
-      if( !DeepComparable.Matches(Use_Element, otherT.Use_Element)) return false;
+      if( !DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
       if( !DeepComparable.Matches(Patient, otherT.Patient)) return false;
       if( !DeepComparable.Matches(BillablePeriod, otherT.BillablePeriod)) return false;
       if( !DeepComparable.Matches(CreatedElement, otherT.CreatedElement)) return false;
@@ -3766,7 +3766,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
       if( !DeepComparable.IsExactly(SubType, otherT.SubType)) return false;
-      if( !DeepComparable.IsExactly(Use_Element, otherT.Use_Element)) return false;
+      if( !DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;
       if( !DeepComparable.IsExactly(Patient, otherT.Patient)) return false;
       if( !DeepComparable.IsExactly(BillablePeriod, otherT.BillablePeriod)) return false;
       if( !DeepComparable.IsExactly(CreatedElement, otherT.CreatedElement)) return false;
@@ -3806,7 +3806,7 @@ namespace Hl7.Fhir.Model
         if (StatusElement != null) yield return StatusElement;
         if (Type != null) yield return Type;
         foreach (var elem in SubType) { if (elem != null) yield return elem; }
-        if (Use_Element != null) yield return Use_Element;
+        if (UseElement != null) yield return UseElement;
         if (Patient != null) yield return Patient;
         if (BillablePeriod != null) yield return BillablePeriod;
         if (CreatedElement != null) yield return CreatedElement;
@@ -3845,7 +3845,7 @@ namespace Hl7.Fhir.Model
         if (StatusElement != null) yield return new ElementValue("status", StatusElement);
         if (Type != null) yield return new ElementValue("type", Type);
         foreach (var elem in SubType) { if (elem != null) yield return new ElementValue("subType", elem); }
-        if (Use_Element != null) yield return new ElementValue("use", Use_Element);
+        if (UseElement != null) yield return new ElementValue("use", UseElement);
         if (Patient != null) yield return new ElementValue("patient", Patient);
         if (BillablePeriod != null) yield return new ElementValue("billablePeriod", BillablePeriod);
         if (CreatedElement != null) yield return new ElementValue("created", CreatedElement);
@@ -3891,8 +3891,8 @@ namespace Hl7.Fhir.Model
           value = SubType;
           return SubType?.Any() == true;
         case "use":
-          value = Use_Element;
-          return Use_Element is not null;
+          value = UseElement;
+          return UseElement is not null;
         case "patient":
           value = Patient;
           return Patient is not null;
@@ -3981,7 +3981,7 @@ namespace Hl7.Fhir.Model
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
       if (SubType?.Any() == true) yield return new KeyValuePair<string,object>("subType",SubType);
-      if (Use_Element is not null) yield return new KeyValuePair<string,object>("use",Use_Element);
+      if (UseElement is not null) yield return new KeyValuePair<string,object>("use",UseElement);
       if (Patient is not null) yield return new KeyValuePair<string,object>("patient",Patient);
       if (BillablePeriod is not null) yield return new KeyValuePair<string,object>("billablePeriod",BillablePeriod);
       if (CreatedElement is not null) yield return new KeyValuePair<string,object>("created",CreatedElement);

@@ -900,20 +900,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=340)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.EvidenceVariableType> TypeElement
+    public Code<Hl7.Fhir.Model.VariableTypeCode> TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.EvidenceVariableType> _TypeElement;
+    private Code<Hl7.Fhir.Model.VariableTypeCode> _TypeElement;
 
     /// <summary>
     /// dichotomous | continuous | descriptive
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.EvidenceVariableType? Type
+    public Hl7.Fhir.Model.VariableTypeCode? Type
     {
       get { return TypeElement != null ? TypeElement.Value : null; }
       set
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           TypeElement = null;
         else
-          TypeElement = new Code<Hl7.Fhir.Model.EvidenceVariableType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.VariableTypeCode>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
       if(Reviewer != null) dest.Reviewer = new List<Hl7.Fhir.Model.ContactDetail>(Reviewer.DeepCopy());
       if(Endorser != null) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
       if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.EvidenceVariableType>)TypeElement.DeepCopy();
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.VariableTypeCode>)TypeElement.DeepCopy();
       if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.EvidenceVariable.CharacteristicComponent>(Characteristic.DeepCopy());
       return dest;
     }

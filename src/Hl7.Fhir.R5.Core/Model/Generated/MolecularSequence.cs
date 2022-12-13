@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
     [FhirEnumeration("sequenceType")]
-    public enum sequenceType
+    public enum SequenceType
     {
       /// <summary>
       /// Amino acid sequence.
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
     [FhirEnumeration("orientationType")]
-    public enum orientationType
+    public enum OrientationType
     {
       /// <summary>
       /// Sense orientation of reference sequence.
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
     [FhirEnumeration("strandType")]
-    public enum strandType
+    public enum StrandType
     {
       /// <summary>
       /// Watson strand of reference sequence.
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
     [FhirEnumeration("qualityType")]
-    public enum qualityType
+    public enum QualityType
     {
       /// <summary>
       /// INDEL Comparison.
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
     [FhirEnumeration("repositoryType")]
-    public enum repositoryType
+    public enum RepositoryType
     {
       /// <summary>
       /// When URL is clicked, the resource can be seen directly (by webpage or by download link format).
@@ -258,20 +258,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("orientation", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.orientationType> OrientationElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> OrientationElement
       {
         get { return _OrientationElement; }
         set { _OrientationElement = value; OnPropertyChanged("OrientationElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.orientationType> _OrientationElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> _OrientationElement;
 
       /// <summary>
       /// sense | antisense
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.MolecularSequence.orientationType? Orientation
+      public Hl7.Fhir.Model.MolecularSequence.OrientationType? Orientation
       {
         get { return OrientationElement != null ? OrientationElement.Value : null; }
         set
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             OrientationElement = null;
           else
-            OrientationElement = new Code<Hl7.Fhir.Model.MolecularSequence.orientationType>(value);
+            OrientationElement = new Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>(value);
           OnPropertyChanged("Orientation");
         }
       }
@@ -349,20 +349,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("strand", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.strandType> StrandElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.StrandType> StrandElement
       {
         get { return _StrandElement; }
         set { _StrandElement = value; OnPropertyChanged("StrandElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.strandType> _StrandElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.StrandType> _StrandElement;
 
       /// <summary>
       /// watson | crick
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.MolecularSequence.strandType? Strand
+      public Hl7.Fhir.Model.MolecularSequence.StrandType? Strand
       {
         get { return StrandElement != null ? StrandElement.Value : null; }
         set
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             StrandElement = null;
           else
-            StrandElement = new Code<Hl7.Fhir.Model.MolecularSequence.strandType>(value);
+            StrandElement = new Code<Hl7.Fhir.Model.MolecularSequence.StrandType>(value);
           OnPropertyChanged("Strand");
         }
       }
@@ -449,11 +449,11 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Chromosome != null) dest.Chromosome = (Hl7.Fhir.Model.CodeableConcept)Chromosome.DeepCopy();
         if(GenomeBuildElement != null) dest.GenomeBuildElement = (Hl7.Fhir.Model.FhirString)GenomeBuildElement.DeepCopy();
-        if(OrientationElement != null) dest.OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.orientationType>)OrientationElement.DeepCopy();
+        if(OrientationElement != null) dest.OrientationElement = (Code<Hl7.Fhir.Model.MolecularSequence.OrientationType>)OrientationElement.DeepCopy();
         if(ReferenceSeqId != null) dest.ReferenceSeqId = (Hl7.Fhir.Model.CodeableConcept)ReferenceSeqId.DeepCopy();
         if(ReferenceSeqPointer != null) dest.ReferenceSeqPointer = (Hl7.Fhir.Model.ResourceReference)ReferenceSeqPointer.DeepCopy();
         if(ReferenceSeqStringElement != null) dest.ReferenceSeqStringElement = (Hl7.Fhir.Model.FhirString)ReferenceSeqStringElement.DeepCopy();
-        if(StrandElement != null) dest.StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.strandType>)StrandElement.DeepCopy();
+        if(StrandElement != null) dest.StrandElement = (Code<Hl7.Fhir.Model.MolecularSequence.StrandType>)StrandElement.DeepCopy();
         if(WindowStartElement != null) dest.WindowStartElement = (Hl7.Fhir.Model.Integer)WindowStartElement.DeepCopy();
         if(WindowEndElement != null) dest.WindowEndElement = (Hl7.Fhir.Model.Integer)WindowEndElement.DeepCopy();
         return dest;
@@ -923,20 +923,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.qualityType> TypeElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.QualityType> TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.qualityType> _TypeElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.QualityType> _TypeElement;
 
       /// <summary>
       /// indel | snp | unknown
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.MolecularSequence.qualityType? Type
+      public Hl7.Fhir.Model.MolecularSequence.QualityType? Type
       {
         get { return TypeElement != null ? TypeElement.Value : null; }
         set
@@ -944,7 +944,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             TypeElement = null;
           else
-            TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.qualityType>(value);
+            TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.QualityType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -1321,7 +1321,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.qualityType>)TypeElement.DeepCopy();
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.QualityType>)TypeElement.DeepCopy();
         if(StandardSequence != null) dest.StandardSequence = (Hl7.Fhir.Model.CodeableConcept)StandardSequence.DeepCopy();
         if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.Integer)StartElement.DeepCopy();
         if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.Integer)EndElement.DeepCopy();
@@ -1914,20 +1914,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.MolecularSequence.repositoryType> TypeElement
+      public Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType> TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.MolecularSequence.repositoryType> _TypeElement;
+      private Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType> _TypeElement;
 
       /// <summary>
       /// directlink | openapi | login | oauth | other
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.MolecularSequence.repositoryType? Type
+      public Hl7.Fhir.Model.MolecularSequence.RepositoryType? Type
       {
         get { return TypeElement != null ? TypeElement.Value : null; }
         set
@@ -1935,7 +1935,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             TypeElement = null;
           else
-            TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.repositoryType>(value);
+            TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -2105,7 +2105,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.repositoryType>)TypeElement.DeepCopy();
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType>)TypeElement.DeepCopy();
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
         if(DatasetIdElement != null) dest.DatasetIdElement = (Hl7.Fhir.Model.FhirString)DatasetIdElement.DeepCopy();
@@ -2810,20 +2810,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MolecularSequence.sequenceType> TypeElement
+    public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> TypeElement
     {
       get { return _TypeElement; }
       set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MolecularSequence.sequenceType> _TypeElement;
+    private Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> _TypeElement;
 
     /// <summary>
     /// aa | dna | rna
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.MolecularSequence.sequenceType? Type
+    public Hl7.Fhir.Model.MolecularSequence.SequenceType? Type
     {
       get { return TypeElement != null ? TypeElement.Value : null; }
       set
@@ -2831,7 +2831,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           TypeElement = null;
         else
-          TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.sequenceType>(value);
+          TypeElement = new Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>(value);
         OnPropertyChanged("Type");
       }
     }
@@ -3099,7 +3099,7 @@ namespace Hl7.Fhir.Model
 
       base.CopyTo(dest);
       if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
-      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.sequenceType>)TypeElement.DeepCopy();
+      if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.MolecularSequence.SequenceType>)TypeElement.DeepCopy();
       if(CoordinateSystemElement != null) dest.CoordinateSystemElement = (Hl7.Fhir.Model.Integer)CoordinateSystemElement.DeepCopy();
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(Specimen != null) dest.Specimen = (Hl7.Fhir.Model.ResourceReference)Specimen.DeepCopy();

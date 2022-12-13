@@ -3310,20 +3310,20 @@ namespace Hl7.Fhir.Model
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Code<Hl7.Fhir.Model.Use> UseElement
+    public Code<Hl7.Fhir.Model.ClaimUseCode> UseElement
     {
       get { return _UseElement; }
       set { _UseElement = value; OnPropertyChanged("UseElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.Use> _UseElement;
+    private Code<Hl7.Fhir.Model.ClaimUseCode> _UseElement;
 
     /// <summary>
     /// claim | preauthorization | predetermination
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.Use? Use
+    public Hl7.Fhir.Model.ClaimUseCode? Use
     {
       get { return UseElement != null ? UseElement.Value : null; }
       set
@@ -3331,7 +3331,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           UseElement = null;
         else
-          UseElement = new Code<Hl7.Fhir.Model.Use>(value);
+          UseElement = new Code<Hl7.Fhir.Model.ClaimUseCode>(value);
         OnPropertyChanged("Use");
       }
     }
@@ -3681,7 +3681,7 @@ namespace Hl7.Fhir.Model
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>)StatusElement.DeepCopy();
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
       if(SubType != null) dest.SubType = (Hl7.Fhir.Model.CodeableConcept)SubType.DeepCopy();
-      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.Use>)UseElement.DeepCopy();
+      if(UseElement != null) dest.UseElement = (Code<Hl7.Fhir.Model.ClaimUseCode>)UseElement.DeepCopy();
       if(Patient != null) dest.Patient = (Hl7.Fhir.Model.ResourceReference)Patient.DeepCopy();
       if(BillablePeriod != null) dest.BillablePeriod = (Hl7.Fhir.Model.Period)BillablePeriod.DeepCopy();
       if(CreatedElement != null) dest.CreatedElement = (Hl7.Fhir.Model.FhirDateTime)CreatedElement.DeepCopy();

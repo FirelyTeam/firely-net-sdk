@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/variable-type)
     /// </summary>
     [FhirEnumeration("VariableType")]
-    public enum VariableType
+    public enum VariableTypeCode
     {
       /// <summary>
       /// The variable is dichotomous, such as present or absent.
@@ -1278,29 +1278,29 @@ namespace Hl7.Fhir.Model
     [FhirElement("variableType", Order=400)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableType> VariableType_Element
+    public Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode> VariableTypeElement
     {
-      get { return _VariableType_Element; }
-      set { _VariableType_Element = value; OnPropertyChanged("VariableType_Element"); }
+      get { return _VariableTypeElement; }
+      set { _VariableTypeElement = value; OnPropertyChanged("VariableTypeElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableType> _VariableType_Element;
+    private Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode> _VariableTypeElement;
 
     /// <summary>
     /// dichotomous | continuous | descriptive
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.ResearchElementDefinition.VariableType? VariableType_
+    public Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode? VariableType
     {
-      get { return VariableType_Element != null ? VariableType_Element.Value : null; }
+      get { return VariableTypeElement != null ? VariableTypeElement.Value : null; }
       set
       {
         if (value == null)
-          VariableType_Element = null;
+          VariableTypeElement = null;
         else
-          VariableType_Element = new Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableType>(value);
-        OnPropertyChanged("VariableType_");
+          VariableTypeElement = new Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode>(value);
+        OnPropertyChanged("VariableType");
       }
     }
 
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
       if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(LibraryElement != null) dest.LibraryElement = new List<Hl7.Fhir.Model.Canonical>(LibraryElement.DeepCopy());
       if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType>)TypeElement.DeepCopy();
-      if(VariableType_Element != null) dest.VariableType_Element = (Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableType>)VariableType_Element.DeepCopy();
+      if(VariableTypeElement != null) dest.VariableTypeElement = (Code<Hl7.Fhir.Model.ResearchElementDefinition.VariableTypeCode>)VariableTypeElement.DeepCopy();
       if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.ResearchElementDefinition.CharacteristicComponent>(Characteristic.DeepCopy());
       return dest;
     }
@@ -1407,7 +1407,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
       if( !DeepComparable.Matches(LibraryElement, otherT.LibraryElement)) return false;
       if( !DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.Matches(VariableType_Element, otherT.VariableType_Element)) return false;
+      if( !DeepComparable.Matches(VariableTypeElement, otherT.VariableTypeElement)) return false;
       if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
 
       return true;
@@ -1450,7 +1450,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
       if( !DeepComparable.IsExactly(LibraryElement, otherT.LibraryElement)) return false;
       if( !DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
-      if( !DeepComparable.IsExactly(VariableType_Element, otherT.VariableType_Element)) return false;
+      if( !DeepComparable.IsExactly(VariableTypeElement, otherT.VariableTypeElement)) return false;
       if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
 
       return true;
@@ -1493,7 +1493,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
         foreach (var elem in LibraryElement) { if (elem != null) yield return elem; }
         if (TypeElement != null) yield return TypeElement;
-        if (VariableType_Element != null) yield return VariableType_Element;
+        if (VariableTypeElement != null) yield return VariableTypeElement;
         foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
       }
     }
@@ -1535,7 +1535,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
         foreach (var elem in LibraryElement) { if (elem != null) yield return new ElementValue("library", elem); }
         if (TypeElement != null) yield return new ElementValue("type", TypeElement);
-        if (VariableType_Element != null) yield return new ElementValue("variableType", VariableType_Element);
+        if (VariableTypeElement != null) yield return new ElementValue("variableType", VariableTypeElement);
         foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
       }
     }
@@ -1638,8 +1638,8 @@ namespace Hl7.Fhir.Model
           value = TypeElement;
           return TypeElement is not null;
         case "variableType":
-          value = VariableType_Element;
-          return VariableType_Element is not null;
+          value = VariableTypeElement;
+          return VariableTypeElement is not null;
         case "characteristic":
           value = Characteristic;
           return Characteristic?.Any() == true;
@@ -1683,7 +1683,7 @@ namespace Hl7.Fhir.Model
       if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
       if (LibraryElement?.Any() == true) yield return new KeyValuePair<string,object>("library",LibraryElement);
       if (TypeElement is not null) yield return new KeyValuePair<string,object>("type",TypeElement);
-      if (VariableType_Element is not null) yield return new KeyValuePair<string,object>("variableType",VariableType_Element);
+      if (VariableTypeElement is not null) yield return new KeyValuePair<string,object>("variableType",VariableTypeElement);
       if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);
     }
 

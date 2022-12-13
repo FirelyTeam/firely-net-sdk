@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/group-measure)
     /// </summary>
     [FhirEnumeration("GroupMeasure")]
-    public enum GroupMeasure
+    public enum GroupMeasureCode
     {
       /// <summary>
       /// Aggregated using Mean of participant values.
@@ -463,29 +463,29 @@ namespace Hl7.Fhir.Model
       [FhirElement("groupMeasure", Order=110)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure> GroupMeasure_Element
+      public Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasureCode> GroupMeasureElement
       {
-        get { return _GroupMeasure_Element; }
-        set { _GroupMeasure_Element = value; OnPropertyChanged("GroupMeasure_Element"); }
+        get { return _GroupMeasureElement; }
+        set { _GroupMeasureElement = value; OnPropertyChanged("GroupMeasureElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure> _GroupMeasure_Element;
+      private Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasureCode> _GroupMeasureElement;
 
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.EvidenceVariable.GroupMeasure? GroupMeasure_
+      public Hl7.Fhir.Model.EvidenceVariable.GroupMeasureCode? GroupMeasure
       {
-        get { return GroupMeasure_Element != null ? GroupMeasure_Element.Value : null; }
+        get { return GroupMeasureElement != null ? GroupMeasureElement.Value : null; }
         set
         {
           if (value == null)
-            GroupMeasure_Element = null;
+            GroupMeasureElement = null;
           else
-            GroupMeasure_Element = new Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure>(value);
-          OnPropertyChanged("GroupMeasure_");
+            GroupMeasureElement = new Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasureCode>(value);
+          OnPropertyChanged("GroupMeasure");
         }
       }
 
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
         if(Device != null) dest.Device = (Hl7.Fhir.Model.ResourceReference)Device.DeepCopy();
         if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
         if(TimeFromEvent != null) dest.TimeFromEvent = new List<Hl7.Fhir.Model.EvidenceVariable.TimeFromEventComponent>(TimeFromEvent.DeepCopy());
-        if(GroupMeasure_Element != null) dest.GroupMeasure_Element = (Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasure>)GroupMeasure_Element.DeepCopy();
+        if(GroupMeasureElement != null) dest.GroupMeasureElement = (Code<Hl7.Fhir.Model.EvidenceVariable.GroupMeasureCode>)GroupMeasureElement.DeepCopy();
         return dest;
       }
 
@@ -529,7 +529,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.Matches(Device, otherT.Device)) return false;
         if( !DeepComparable.Matches(ExcludeElement, otherT.ExcludeElement)) return false;
         if( !DeepComparable.Matches(TimeFromEvent, otherT.TimeFromEvent)) return false;
-        if( !DeepComparable.Matches(GroupMeasure_Element, otherT.GroupMeasure_Element)) return false;
+        if( !DeepComparable.Matches(GroupMeasureElement, otherT.GroupMeasureElement)) return false;
 
         return true;
       }
@@ -547,7 +547,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(Device, otherT.Device)) return false;
         if( !DeepComparable.IsExactly(ExcludeElement, otherT.ExcludeElement)) return false;
         if( !DeepComparable.IsExactly(TimeFromEvent, otherT.TimeFromEvent)) return false;
-        if( !DeepComparable.IsExactly(GroupMeasure_Element, otherT.GroupMeasure_Element)) return false;
+        if( !DeepComparable.IsExactly(GroupMeasureElement, otherT.GroupMeasureElement)) return false;
 
         return true;
       }
@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
           if (Device != null) yield return Device;
           if (ExcludeElement != null) yield return ExcludeElement;
           foreach (var elem in TimeFromEvent) { if (elem != null) yield return elem; }
-          if (GroupMeasure_Element != null) yield return GroupMeasure_Element;
+          if (GroupMeasureElement != null) yield return GroupMeasureElement;
         }
       }
 
@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
           if (Device != null) yield return new ElementValue("device", Device);
           if (ExcludeElement != null) yield return new ElementValue("exclude", ExcludeElement);
           foreach (var elem in TimeFromEvent) { if (elem != null) yield return new ElementValue("timeFromEvent", elem); }
-          if (GroupMeasure_Element != null) yield return new ElementValue("groupMeasure", GroupMeasure_Element);
+          if (GroupMeasureElement != null) yield return new ElementValue("groupMeasure", GroupMeasureElement);
         }
       }
 
@@ -612,8 +612,8 @@ namespace Hl7.Fhir.Model
             value = TimeFromEvent;
             return TimeFromEvent?.Any() == true;
           case "groupMeasure":
-            value = GroupMeasure_Element;
-            return GroupMeasure_Element is not null;
+            value = GroupMeasureElement;
+            return GroupMeasureElement is not null;
           default:
             return base.TryGetValue(key, out value);
         };
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
         if (Device is not null) yield return new KeyValuePair<string,object>("device",Device);
         if (ExcludeElement is not null) yield return new KeyValuePair<string,object>("exclude",ExcludeElement);
         if (TimeFromEvent?.Any() == true) yield return new KeyValuePair<string,object>("timeFromEvent",TimeFromEvent);
-        if (GroupMeasure_Element is not null) yield return new KeyValuePair<string,object>("groupMeasure",GroupMeasure_Element);
+        if (GroupMeasureElement is not null) yield return new KeyValuePair<string,object>("groupMeasure",GroupMeasureElement);
       }
 
     }
