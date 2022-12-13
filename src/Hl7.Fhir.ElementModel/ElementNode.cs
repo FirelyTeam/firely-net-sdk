@@ -268,9 +268,6 @@ namespace Hl7.Fhir.ElementModel
             return success;
         }
 
-        [Obsolete("The Clone() function actually only performs a shallow copy, so this function has been renamed to ShallowCopy()")]
-        public ElementNode Clone() => ShallowCopy();
-
         public ElementNode ShallowCopy()
         {
             var copy = new ElementNode(Name, Value, InstanceType, Definition)

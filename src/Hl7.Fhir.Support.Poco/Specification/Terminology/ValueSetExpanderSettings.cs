@@ -18,9 +18,6 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <summary>Default value of the <see cref="MaxExpansionSize"/> property.</summary>
         public const int DefaultMaxExpansionSize = 500;
 
-        [Obsolete("Use the CreateDefault() method, as using this static member may cause threading issues.")]
-        public static ValueSetExpanderSettings Default = new();
-
         /// <summary>
         /// The <see cref="IResourceResolver"/> or <see cref="IAsyncResourceResolver" /> to use when a reference 
         /// to another valueset is encountered.

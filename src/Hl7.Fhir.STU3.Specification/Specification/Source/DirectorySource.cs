@@ -9,6 +9,7 @@
 // [WMR 20171023] TODO
 // - Allow configuration of duplicate canonical url handling strategy
 
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
@@ -18,11 +19,10 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Threading;
-using T=System.Threading.Tasks;
-using Hl7.Fhir.ElementModel;
+using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Source
 {
@@ -73,31 +73,6 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>
         /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified content directory and optionally also from subdirectories.
-        /// </summary>
-        /// <param name="includeSubdirectories">
-        /// Determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
-        /// </param>
-        [Obsolete("Instead, use DirectorySource(DirectorySourceSettings settings)")]
-        public DirectorySource(bool includeSubdirectories)
-            : this(SpecificationDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
-        /// from the specified <paramref name="contentDirectory"/> and optionally also from subdirectories.
-        /// </summary>
-        /// <param name="contentDirectory">The file path of the target directory.</param>
-        /// <param name="includeSubdirectories">
-        /// Determines wether the <see cref="DirectorySource"/> should also
-        /// recursively scan all subdirectories of the specified content directory.
-        /// </param>
-        [Obsolete("Instead, use DirectorySource(string contentDirectory, DirectorySourceSettings settings)")]
-        public DirectorySource(string contentDirectory, bool includeSubdirectories)
-            : this(contentDirectory, new DirectorySourceSettings(includeSubdirectories), false) { }
-
-        /// <summary>
-        /// Create a new <see cref="DirectorySource"/> instance to browse and resolve resources
         /// using the specified <see cref="DirectorySourceSettings"/>.
         /// </summary>
         /// <param name="settings">Configuration settings that control the behavior of the <see cref="DirectorySource"/>.</param>
@@ -129,7 +104,7 @@ namespace Hl7.Fhir.Specification.Source
             ContentDirectory = Path.GetFullPath(contentDirectory);
 
             // [WMR 20171023] Clone specified settings to prevent shared state
-            _settings = settings != null 
+            _settings = settings != null
                 ? (cloneSettings ? new DirectorySourceSettings(settings) : settings)
                 : DirectorySourceSettings.CreateDefault();
             _summaryGenerator = new ArtifactSummaryGenerator(_settings.ExcludeSummariesForUnknownArtifacts);
@@ -366,7 +341,8 @@ namespace Hl7.Fhir.Specification.Source
         public bool ExcludeSummariesForUnknownArtifacts
         {
             get { return _settings.ExcludeSummariesForUnknownArtifacts; }
-            set {
+            set
+            {
                 _settings.ExcludeSummariesForUnknownArtifacts = value;
                 _summaryGenerator.ExcludeSummariesForUnknownArtifacts = value;
                 Refresh();
@@ -726,7 +702,7 @@ namespace Hl7.Fhir.Specification.Source
 
                 // local helper function to validate file/folder attributes, exclude system and/or hidden
                 bool isValid(FileAttributes attr) => (attr & (FileAttributes.System | FileAttributes.Hidden)) == 0;
-                
+
                 // local helper function to filter executables (*.exe, *.dll)
                 bool isExtensionSafe(string extension) => !ExecutableExtensions.Contains(extension, PathComparer);
 

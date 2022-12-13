@@ -111,16 +111,6 @@ namespace Hl7.Fhir.Introspection
         public Type ImplementingType { get; private set; }
 
         /// <summary>
-        /// The native type of the element.
-        /// </summary>
-        [Obsolete("This element had a different name in R3 and R4. Please use ImplementingType from now on.")]
-        public Type ElementType
-        {
-            get => ImplementingType;
-            set => ImplementingType = value;
-        }
-
-        /// <summary>
         /// The numeric order of the element (relevant for the XML serialization, which
         /// needs to be in order).
         /// </summary>
@@ -139,13 +129,6 @@ namespace Hl7.Fhir.Introspection
         /// the StructureDefinition and allow a (possibly restricted) set of types to be used. 
         /// These are reflected in the <see cref="FhirType"/> property.</remarks>
         public ChoiceType Choice { get; private set; }
-
-        /// <summary>
-        /// This element is a polymorphic Resource, any resource is allowed here.
-        /// </summary>
-        /// <remarks>These are elements like DomainResource.contained, Parameters.resource etc.</remarks>
-        [Obsolete("This property is never initialized and its value will always be false.")]
-        public bool IsResourceChoice { get; private set; }
 
         /// <summary>
         /// The list of possible FHIR types for this element, listed as the representative .NET types. 
@@ -188,10 +171,6 @@ namespace Hl7.Fhir.Introspection
         /// The release of FHIR for which the metadata was extracted from the property.
         /// </summary>
         public readonly FhirRelease Release;
-
-        [Obsolete("Use TryCreate() instead.")]
-        public static PropertyMapping? Create(PropertyInfo prop, ClassMapping declaringClass, FhirRelease version = (FhirRelease)int.MaxValue)
-            => TryCreate(prop, out var mapping, declaringClass, version) ? mapping : null;
 
         /// <summary>
         /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.

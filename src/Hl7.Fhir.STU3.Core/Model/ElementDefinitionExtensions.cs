@@ -228,10 +228,6 @@ namespace Hl7.Fhir.Model
         public static string? GetTypeProfile(this ElementDefinition.TypeRefComponent elemType) =>
             elemType?.Profile ?? (elemType?.Code is not null ? ModelInfo.CanonicalUriForFhirCoreType(elemType.Code).Value : null);
 
-        /// <inheritdoc cref="GetTypeProfile(ElementDefinition.TypeRefComponent)"/>
-        [Obsolete("This function is a duplicate of GetTypeProfile()")]
-        public static string? GetDeclaredProfiles(this ElementDefinition.TypeRefComponent typeRef) => typeRef.GetTypeProfile();
-
         /// <summary>
         /// Determines if the specified element definition represents a <see cref="ResourceReference"/>.
         /// </summary>

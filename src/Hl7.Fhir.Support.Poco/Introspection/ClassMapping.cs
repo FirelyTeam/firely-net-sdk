@@ -105,13 +105,6 @@ namespace Hl7.Fhir.Introspection
             return true;
         }
 
-
-        [Obsolete("This method was supposed to be used internally - do not use it anymore.")]  // EK, 20210728
-        public static void AddMappingForType(Type t, FhirRelease release, ClassMapping mapping)
-        {
-            _mappedClasses[(t, release)] = mapping;
-        }
-
         private ClassMapping(string name, Type nativeType, FhirRelease release)
         {
             Name = name;
@@ -146,9 +139,6 @@ namespace Hl7.Fhir.Introspection
         /// The .NET class that implements the FHIR datatype/resource
         /// </summary>
         public Type NativeType { get; private set; }
-
-        [Obsolete("This property is never initialized and its value will always be null.")]
-        public Type? DeclaredType { get; private set; } = null;
 
         /// <summary>
         /// Is <c>true</c> when this class represents a Resource datatype.
@@ -320,12 +310,6 @@ namespace Hl7.Fhir.Introspection
 
         private Func<IList>? _listFactory;
 
-        [Obsolete("Create is obsolete, call TryCreate instead.")]
-        public static ClassMapping Create(Type type) =>
-            TryCreate(type, out var result)
-                ? result!
-                : throw Error.Argument($"Type {nameof(type)} is not marked with the FhirTypeAttribute or is an open generic type");
-
         // Enumerate this class' properties using reflection, create PropertyMappings
         // for them and add them to the PropertyMappings.
         private static PropertyMappingCollection inspectProperties(Type nativeType, ClassMapping declaringClass, FhirRelease fhirVersion)
@@ -360,9 +344,6 @@ namespace Hl7.Fhir.Introspection
 
             return name;
         }
-
-        [Obsolete("ClassMapping.IsMappable() is slow and obsolete, use ClassMapping.TryCreate() instead.")]
-        public static bool IsMappableType(Type type) => TryCreate(type, out var _);
 
         // This is the list of .NET "primitive" types that can be used in the generated POCOs and that we
         // can generate ClassMappings for.

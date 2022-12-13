@@ -15,9 +15,6 @@ namespace Hl7.Fhir.Serialization
     /// <summary>Common parser configuration settings for BaseFhirParser and subclasses.</summary>
     public class ParserSettings
     {
-        [Obsolete("Due to a bug, the Default has always been ignored, so it is now officially deprecated")]
-        public static readonly ParserSettings Default = new ParserSettings() { AcceptUnknownMembers = false, AllowUnrecognizedEnums = false, DisallowXsiAttributesOnRoot = true };
-
         /// <summary>
         /// Raise an error when an xsi:schemaLocation is encountered.
         /// </summary>

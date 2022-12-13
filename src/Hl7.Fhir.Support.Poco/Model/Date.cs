@@ -63,10 +63,6 @@ namespace Hl7.Fhir.Model
         /// <returns>Gets the current date in the timezone UTC</returns>
         public static Date UtcToday() => new(DateTimeOffset.UtcNow.ToString("yyyy-MM-dd"));
 
-        [Obsolete("Use ToDateTimeOffset instead")]
-        public DateTime? ToDateTime() =>
-            Value == null ? null : PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(Value).DateTime;
-
         /// <summary>
         /// Converts this instance of a (partial) date into a .NET <see cref="DateTimeOffset"/>.
         /// </summary>

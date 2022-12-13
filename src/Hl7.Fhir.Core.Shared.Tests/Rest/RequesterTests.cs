@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -50,118 +49,6 @@ namespace Hl7.Fhir.Test
             }
         }
 
-        #region EntryRequest To Webclient
-
-        [TestMethod]
-        [Obsolete]
-        public void TestPreferSetting()
-        {
-            var entry = _Entry;
-
-            var settings = _Settings;
-
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("return=minimal", request.Headers["Prefer"]);
-
-            settings.PreferredReturn = Prefer.RespondAsync;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("respond-async", request.Headers["Prefer"]);
-
-            settings.PreferredReturn = null;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.IsNull(request.Headers["Prefer"]);
-
-            entry.Type = InteractionType.Search;
-            settings.PreferredReturn = Prefer.OperationOutcome;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("handling=lenient", request.Headers["Prefer"]);
-
-            settings.PreferredReturn = Prefer.RespondAsync;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("handling=lenient, respond-async", request.Headers["Prefer"]);
-
-            settings.PreferredReturn = Prefer.ReturnRepresentation;
-            settings.PreferredParameterHandling = null;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.IsNull(request.Headers["Prefer"]);
-        }
-
-        [TestMethod]
-        [Obsolete]
-        public void TestRequestedBodyContent()
-        {
-            var entry = _Entry;
-            entry.RequestBodyContent = Encoding.UTF8.GetBytes("Test body");
-            var settings = _Settings;
-
-            ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpWebRequest(_endpoint, settings));
-
-            entry.Method = HTTPVerb.POST;
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-        }
-
-        [TestMethod]
-        [Obsolete]
-        public void TestFormatParameters()
-        {
-            var entry = _Entry;
-            var settings = _Settings;
-
-            settings.UseFormatParameter = true;
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.IsTrue(request.RequestUri.ToString().Contains("_format=json"));
-        }
-
-        [TestMethod]
-        [Obsolete]
-        public void TestEntryRequestHeaders()
-        {
-            var entry = _Entry;
-            entry.Headers = new EntryRequestHeaders
-            {
-                IfMatch = "Test-IfMatch",
-                IfModifiedSince = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan()),
-                IfNoneExist = "Test-IfNoneExists",
-                IfNoneMatch = "Test-IfNoneMatch"
-            };
-
-            var settings = _Settings;
-
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual("Test-IfMatch", request.Headers["If-Match"]);
-            Assert.AreEqual(entry.Headers.IfModifiedSince.Value.UtcDateTime.ToString("r"), request.Headers["If-Modified-Since"]);
-            Assert.AreEqual("Test-IfNoneExists", request.Headers["If-None-Exist"]);
-            Assert.AreEqual("Test-IfNoneMatch", request.Headers["If-None-Match"]);
-        }
-
-        [TestMethod]
-        [Obsolete]
-        public void TestSetAgent()
-        {
-            var entry = _Entry;
-            entry.Agent = "testAgent";
-            var settings = _Settings;
-
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
-            Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
-
-            EntryToHttpExtensions.SetUserAgentUsingReflection = false;
-            request = entry.ToHttpWebRequest(_endpoint, settings);
-            try
-            {
-                Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.UserAgent);
-            }
-            catch (Exception)
-            {
-                Assert.AreEqual(EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation, false);
-            }
-
-            EntryToHttpExtensions.SetUserAgentUsingReflection = true;
-            EntryToHttpExtensions.SetUserAgentUsingDirectHeaderManipulation = true;
-        }
-
-        #endregion
-
         #region EntryRequest To Httpclient
         [TestMethod]
         public void TestPreferSettingHttpClient()
@@ -193,20 +80,6 @@ namespace Hl7.Fhir.Test
             settings.PreferredParameterHandling = null;
             request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.IsNull(request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value);
-        }
-
-        [TestMethod]
-        [Obsolete]
-        public void TestRequestedBodyContentHttpClient()
-        {
-            var entry = _Entry;
-            entry.RequestBodyContent = Encoding.UTF8.GetBytes("Test body");
-            var settings = _Settings;
-
-            ExceptionAssert.Throws<InvalidOperationException>(() => entry.ToHttpRequestMessage(_endpoint, settings));
-
-            entry.Method = HTTPVerb.POST;
-            var request = entry.ToHttpWebRequest(_endpoint, settings);
         }
 
         [TestMethod]

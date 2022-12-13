@@ -165,9 +165,9 @@ namespace Hl7.Fhir.ElementModel.Tests
             var inner0 = _bundleNode!.Children("entry").First().Children("resource").Children("active").SingleOrDefault() as ScopedNode;
             Assert.IsNotNull(inner0);
 
-            Assert.AreEqual("http://example.org/fhir/Patient/3", inner0.MakeAbsolute("Patient/3"));
-            Assert.AreEqual("http://nu.nl/myPat/3x", inner0.MakeAbsolute("http://nu.nl/myPat/3x"));
-            Assert.AreEqual("http://example.org/fhir/Organization/5", inner0.MakeAbsolute("http://example.org/fhir/Organization/5"));
+            Assert.AreEqual("http://example.org/fhir/Patient/3", inner0!.MakeAbsolute("Patient/3"));
+            Assert.AreEqual("http://nu.nl/myPat/3x", inner0!.MakeAbsolute("http://nu.nl/myPat/3x"));
+            Assert.AreEqual("http://example.org/fhir/Organization/5", inner0!.MakeAbsolute("http://example.org/fhir/Organization/5"));
 
             var inner1 = _bundleNode.Children("entry").Skip(1).First().Children("resource").Children("active").SingleOrDefault() as ScopedNode;
 

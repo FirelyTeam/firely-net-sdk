@@ -29,7 +29,6 @@
 */
 
 using Hl7.Fhir.Utility;
-using System;
 using System.Linq;
 using System.Xml;
 
@@ -43,27 +42,6 @@ namespace Hl7.Fhir.Model
     public partial class XHtml
     {
         /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        [Obsolete("Use the more explicit IsValidNarrativeXhtml function instead (or IsValidXml if that is more appropriate).")]
-        public static bool IsValidValue(string value) => IsValidNarrativeXhtml(value);
-
-#if NETSTANDARD1_6
-        /// <summary>
-        /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html. Note
-        /// that due to unavailability of XML validation under netstandard1.6, this function always returns true.
-        /// </summary>
-        public static bool IsValidNarrativeXhtml(string _, out string[] errors)
-        {
-            errors = new string[0];
-            return true;
-        }
-
-        /// <inheritdoc cref="IsValidNarrativeXhtml(string, out string[])"/>
-        public static bool IsValidNarrativeXhtml(string value) => IsValidNarrativeXhtml(value, out _);
-#else
-
-        /// <summary>
         /// Verifies the given string of XML against the FHIR narrative requirements from https://www.hl7.org/fhir/narrative.html. 
         /// </summary>
         public static bool IsValidNarrativeXhtml(string value, out string[] errors)
@@ -74,7 +52,6 @@ namespace Hl7.Fhir.Model
 
         /// <inheritdoc cref="IsValidNarrativeXhtml(string, out string[])"/>
         public static bool IsValidNarrativeXhtml(string value) => IsValidNarrativeXhtml(value, out _);
-#endif
 
         /// <summary>
         /// Validates whether the given string of Xml is well-formatted.

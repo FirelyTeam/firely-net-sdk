@@ -17,21 +17,6 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// When encountering a member without type information, just skip it instead of reporting an error.
         /// </summary>
-        [Obsolete("Use IgnoreUnknownElements instead")]
-        public bool SkipUnknownElements {
-            get
-            {
-                return IgnoreUnknownElements;
-            }
-            set
-            {
-                IgnoreUnknownElements = value;
-            }
-        }
-
-        /// <summary>
-        /// When encountering a member without type information, just skip it instead of reporting an error.
-        /// </summary>
         public bool IgnoreUnknownElements;
 
         /// <summary>
