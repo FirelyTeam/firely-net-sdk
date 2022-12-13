@@ -14,11 +14,6 @@
 		<ProjectReference Include="..\Hl7.Fhir.R5.Core\Hl7.Fhir.R5.Core.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<Content Include="TestData\**\*.xml;TestData\**\*.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

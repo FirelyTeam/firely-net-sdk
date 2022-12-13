@@ -15,18 +15,8 @@
 		<RootNamespace>Hl7.Fhir</RootNamespace>
 	</PropertyGroup>
 
-	<ItemGroup Condition=" '$(TargetFramework)' != 'net452'">
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net452'">
-		<Reference Include="System.ComponentModel.DataAnnotations" />
-		<Reference Include="System.Net.Http" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.Core.R4Plus\Hl7.Fhir.Core.R4Plus.csproj" />
 	</ItemGroup>
-	
 	
 </Project>

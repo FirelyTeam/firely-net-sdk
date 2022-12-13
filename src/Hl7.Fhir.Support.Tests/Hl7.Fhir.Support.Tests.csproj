@@ -6,17 +6,10 @@
 		<AssemblyName>Hl7.Fhir.Support.Tests</AssemblyName>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
-		<PackageReference Include="System.AppContext" Version="4.3.0" />
+	<ItemGroup>
 		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
-		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-		<Reference Include="System.ComponentModel.DataAnnotations" />
-	</ItemGroup>
-
+	
 	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj" />
 	</ItemGroup>
