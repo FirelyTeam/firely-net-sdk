@@ -13,9 +13,8 @@
 	</ItemGroup>
 
 	<ItemGroup>		
-		<ProjectReference Include="..\Hl7.Fhir.Support.Poco\Hl7.Fhir.Support.Poco.csproj" />		
-		<ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />		
-		<ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj" />		
+		<ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
 	</ItemGroup>
 	
 </Project>

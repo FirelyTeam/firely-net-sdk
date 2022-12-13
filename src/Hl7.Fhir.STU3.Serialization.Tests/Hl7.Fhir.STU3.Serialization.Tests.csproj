@@ -1,50 +1,49 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\firely-net-sdk-tests.props" />
+	<Import Project="..\firely-net-sdk-tests.props" />
 
-  <PropertyGroup>
-    <AssemblyName>Hl7.Fhir.STU3.Serialization.Tests</AssemblyName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<AssemblyName>Hl7.Fhir.STU3.Serialization.Tests</AssemblyName>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.STU3.Core\Hl7.Fhir.STU3.Core.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.STU3.Specification\Hl7.Fhir.STU3.Specification.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.STU3.Core\Hl7.Fhir.STU3.Core.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
+	</ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.IO.Compression" Version="4.3.0" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
+		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="TestData\**\*.xml;TestData\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="TestData\**\*.xml;TestData\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="TestData\BundleWithOneEntry.json" />
-    <None Remove="TestData\mask-text.xml" />
-    <None Remove="TestData\no-namespace.xml" />
-    <None Remove="TestData\patient-out-of-order.xml" />
-    <None Remove="TestData\profiles-types.json" />
-    <None Remove="TestData\profiles-types.xml" />
-    <None Remove="TestData\source-test\books.xml" />
-    <None Remove="TestData\source-test\project.assets.json" />
-    <None Remove="TestData\test-empty-nodes.json" />
-    <None Remove="TestData\test-empty-nodes.xml" />
-    <None Remove="TestData\typeErrors.xml" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="TestData\BundleWithOneEntry.json" />
+		<None Remove="TestData\mask-text.xml" />
+		<None Remove="TestData\no-namespace.xml" />
+		<None Remove="TestData\patient-out-of-order.xml" />
+		<None Remove="TestData\profiles-types.json" />
+		<None Remove="TestData\profiles-types.xml" />
+		<None Remove="TestData\source-test\books.xml" />
+		<None Remove="TestData\source-test\project.assets.json" />
+		<None Remove="TestData\test-empty-nodes.json" />
+		<None Remove="TestData\test-empty-nodes.xml" />
+		<None Remove="TestData\typeErrors.xml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="..\Hl7.Fhir.STU3.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\Hl7.Fhir.STU3.Core.Tests\TestData\examples.zip" Link="TestData\examples.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\Hl7.Fhir.STU3.Core.Tests\TestData\examples-json.zip" Link="TestData\examples-json.zip">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Include="..\Hl7.Fhir.STU3.Core.Tests\TestData\examples.zip" Link="TestData\examples.zip">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

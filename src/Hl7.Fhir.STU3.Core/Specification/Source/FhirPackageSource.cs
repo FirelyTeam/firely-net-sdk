@@ -11,7 +11,6 @@
  * TODO BIG_COMMON. This class should be removed!
  */
 
-
 #nullable enable
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
@@ -77,10 +76,15 @@ namespace Hl7.Fhir.Specification.Source
         {
             return _resolver.LoadArtifactByName(artifactName);
         }
+        public Stream? LoadArtifactByPath(string filePath)
+        {
+            return _resolver.LoadArtifactByName(filePath);
+        }
+
         ///<inheritdoc/>
         public IEnumerable<string> ListResourceUris(ResourceType? filter = null)
         {
-            return _resolver.ListResourceUris(filter?.GetLiteral());
+            return _resolver.ListResourceUris(filter);
         }
 
         ///<inheritdoc/>

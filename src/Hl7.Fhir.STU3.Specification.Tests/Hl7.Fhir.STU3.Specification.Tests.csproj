@@ -1,37 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
 
-  <Import Project="..\firely-net-sdk-tests.props" />
+	<Import Project="..\firely-net-sdk-tests.props" />
 
-  <PropertyGroup>
-    <AssemblyName>Hl7.Fhir.STU3.Specification.Tests</AssemblyName>   
-  </PropertyGroup>
+	<PropertyGroup>
+		<AssemblyName>Hl7.Fhir.STU3.Specification.Tests</AssemblyName>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.STU3.Core\Hl7.Fhir.STU3.Core.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.STU3.Specification\Hl7.Fhir.STU3.Specification.csproj" />
-	<ProjectReference Include="..\Hl7.Fhir.STU3.Specification.Data\Hl7.Fhir.STU3.Specification.Data.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Support\Hl7.Fhir.Support.csproj" />
-  </ItemGroup>
-	
-  <ItemGroup>         
-      <PackageReference Include="System.IO.Compression" Version="4.3.0" />
-      <PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
-      <PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
-      <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-      <PackageReference Include="System.AppContext" Version="4.3.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.STU3.Core\Hl7.Fhir.STU3.Core.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.STU3.Specification.Data\Hl7.Fhir.STU3.Specification.Data.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.tgz">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
- 
-  <ItemGroup>
-    <Content Include="TestData\ResourcesInSubfolder.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>  
+	<ItemGroup>
+		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
+		<PackageReference Include="System.IO.FileSystem.AccessControl" Version="5.0.0" />
+		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
+		<PackageReference Include="System.AppContext" Version="4.3.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.tgz">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="TestData\ResourcesInSubfolder.zip">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
 </Project>

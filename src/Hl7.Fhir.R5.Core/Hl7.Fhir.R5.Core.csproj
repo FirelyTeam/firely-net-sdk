@@ -25,8 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Hl7.Fhir.Core\Hl7.Fhir.Core.csproj" />
-		<ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Core.R4Plus\Hl7.Fhir.Core.R4Plus.csproj" />
 	</ItemGroup>
 	
 	
