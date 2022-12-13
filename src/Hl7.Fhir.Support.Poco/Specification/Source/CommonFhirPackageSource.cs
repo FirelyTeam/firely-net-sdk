@@ -259,6 +259,17 @@ namespace Hl7.Fhir.Specification.Source
         ///<inheritdoc/>
         public IEnumerable<string> ListResourceUris(string? filter = null)
         {
+            return _context.Value.ListResourceUris(filter);
+        }
+
+
+        /// <summary>
+        /// Lists all canonical Uri's of a package, with optional filter on resource type 
+        /// </summary>
+        /// <param name="filter">Resource type as string used to filter</param>
+        /// <returns>Sequence of canonical uri strings.</returns>
+        public IEnumerable<string> ListCanonicalUris(string? filter = null)
+        {
             return _context.Value.ListCanonicalUris(filter);
         }
 

@@ -83,6 +83,16 @@ namespace Hl7.Fhir.Specification.Source
             return _resolver.ListResourceUris(filter?.GetLiteral());
         }
 
+        /// <summary>
+        /// Lists all canonical Uri's of a package, with optional filter on resource type 
+        /// </summary>
+        /// <param name="filter">Resource type enum used to filter</param>
+        /// <returns>Sequence of canonical uri strings.</returns>
+        public IEnumerable<string> ListCanonicalUris(ResourceType? filter = null)
+        {
+            return _resolver.ListCanonicalUris(filter?.GetLiteral());
+        }
+
         ///<inheritdoc/>
         public async Task<CodeSystem?> FindCodeSystemByValueSetAsync(string valueSetUri)
         {
