@@ -31,11 +31,11 @@
 
 
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Rest
 {
@@ -76,8 +76,8 @@ namespace Hl7.Fhir.Rest
             SEARCH_PARAM_CONTAINEDTYPE,
             SEARCH_PARAM_ELEMENTS
             };
-     
-     
+
+
         public const string SEARCH_MODIF_ASCENDING = "asc";
         public const string SEARCH_MODIF_DESCENDING = "desc";
 
@@ -119,10 +119,10 @@ namespace Hl7.Fhir.Rest
             }
             else if (name.StartsWith(SEARCH_PARAM_INCLUDE + SEARCH_MODIFIERSEPARATOR))
             {
-                if (Enum.TryParse<IncludeModifier>(name.Substring(SEARCH_PARAM_INCLUDE.Length + 1), ignoreCase: true, out var modifier))               
-                    addNonEmpty(name, Include, (value, modifier));               
+                if (Enum.TryParse<IncludeModifier>(name.Substring(SEARCH_PARAM_INCLUDE.Length + 1), ignoreCase: true, out var modifier))
+                    addNonEmpty(name, Include, (value, modifier));
                 else
-                    throw Error.Format($"Invalid include modifier in {name}");                
+                    throw Error.Format($"Invalid include modifier in {name}");
             }
             else if (name == SEARCH_PARAM_INCLUDE) addNonEmpty(name, Include, (value, IncludeModifier.None));
             else if (name.StartsWith(SEARCH_PARAM_REVINCLUDE + SEARCH_MODIFIERSEPARATOR))
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Rest
                 throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: encountered DSTU2 (modifier) based sort, please change to newer format");
             else if (name == SEARCH_PARAM_SORT)
             {
-                if(String.IsNullOrEmpty(value))
+                if (String.IsNullOrEmpty(value))
                     throw Error.Format($"Invalid {SEARCH_PARAM_SORT}: value cannot be empty");
                 var elements = value.Split(',');
                 if (elements.Any(f => String.IsNullOrEmpty(f)))
@@ -201,14 +201,14 @@ namespace Hl7.Fhir.Rest
             {
                 var newTuple = e[0] == '-' ? (e.Substring(1), SortOrder.Descending) :
                            (e, SortOrder.Ascending);
-                Sort.Add(newTuple);                    
+                Sort.Add(newTuple);
             }
         }
 
         /// <summary>
         /// The 'regular' parameters. The parameters that have no special meaning.
         /// </summary>
-        public IList<Tuple<string,string>> Parameters { get; private set; }
+        public IList<Tuple<string, string>> Parameters { get; private set; }
 
 
         public const string SEARCH_PARAM_QUERY = "_query";
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Text{ get; set; }
+        public string Text { get; set; }
 
 
         public const string SEARCH_PARAM_CONTENT = "_content";
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         [NotMapped]
         [IgnoreDataMemberAttribute]
-        public string Content{ get; set; }
+        public string Content { get; set; }
 
 
         public const string SEARCH_PARAM_COUNT = "_count";
@@ -326,11 +326,11 @@ namespace Hl7.Fhir.Rest
 
         public const string SEARCH_PARAM_ELEMENTS = "_elements";
 
-        public List<string> Elements { get; private set;  }
+        public List<string> Elements { get; private set; }
 
 
 
-        public static SearchParams FromUriParamList(IEnumerable<Tuple<string,string>> parameters)
+        public static SearchParams FromUriParamList(IEnumerable<Tuple<string, string>> parameters)
         {
             var result = new SearchParams();
 
@@ -356,18 +356,18 @@ namespace Hl7.Fhir.Rest
             if (!String.IsNullOrEmpty(Filter)) result.Add(Tuple.Create(SEARCH_PARAM_FILTER, Filter));
             if (Contained != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINED, Contained.Value.ToString().ToLower()));
             if (ContainedType != null) result.Add(Tuple.Create(SEARCH_PARAM_CONTAINEDTYPE, ContainedType.Value.ToString().ToLower()));
-            if (Elements.Any()) result.Add(Tuple.Create(SEARCH_PARAM_ELEMENTS, String.Join(",",Elements)));
+            if (Elements.Any()) result.Add(Tuple.Create(SEARCH_PARAM_ELEMENTS, String.Join(",", Elements)));
 
             result.AddRange(Parameters);
             return result;
 
-            Tuple<string,string> createSortParam(IList<(string,SortOrder)> sorts)
+            Tuple<string, string> createSortParam(IList<(string, SortOrder)> sorts)
             {
-                var values = 
+                var values =
                     from s in sorts
                     let orderPrefix = s.Item2 == SortOrder.Descending ? "-" : ""
                     select orderPrefix + s.Item1;
-                return new Tuple<string,string>(SEARCH_PARAM_SORT, String.Join(",", values));
+                return new Tuple<string, string>(SEARCH_PARAM_SORT, String.Join(",", values));
             }
 
             IEnumerable<Tuple<string, string>> createIncludeParams(string paramtype, IList<(string path, IncludeModifier modifier)> includes)
@@ -375,14 +375,8 @@ namespace Hl7.Fhir.Rest
                 return from i in includes
                        let modifier = (i.modifier != IncludeModifier.None) ? SEARCH_MODIFIERSEPARATOR + i.modifier.GetLiteral() : ""
                        select new Tuple<string, string>(paramtype + modifier, i.path);
-              
+
             }
-        }
-        
-        [Obsolete("Use the Parameters.ToSearchParameters() method instead.", true)]
-        public static SearchParams FromParameters(object parameters)
-        {
-            throw new NotImplementedException();
         }
     }
 

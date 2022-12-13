@@ -76,12 +76,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
             f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>", out _));
             t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _));
             t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>", out _));
-#pragma warning disable CS0618 // Type or member is obsolete
-            f(XHtml.IsValidValue("hi!"));
-            f(XHtml.IsValidValue("<hi>hi!</hi>"));
-            t(XHtml.IsValidValue("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
-            t(XHtml.IsValidValue("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
-#pragma warning restore CS0618 // Type or member is obsolete
+            f(XHtml.IsValidNarrativeXhtml("hi!"));
+            f(XHtml.IsValidNarrativeXhtml("<hi>hi!</hi>"));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
+            t(XHtml.IsValidNarrativeXhtml("<div xmlns=\"http://www.w3.org/1999/xhtml\">some text</div>"));
         }
 
         public static IEnumerable<object[]> ValidUris => cases(

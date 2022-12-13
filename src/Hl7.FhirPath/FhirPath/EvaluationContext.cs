@@ -44,10 +44,5 @@ namespace Hl7.FhirPath
         /// A delegate that handles the output for the <c>trace()</c> function.
         /// </summary>
         public Action<string, IEnumerable<ITypedElement>> Tracer { get; set; }
-
-        #region Obsolete members
-        [Obsolete("Please use CreateDefault() instead of this member, which may cause raise conditions.")]
-        public static readonly EvaluationContext Default = new();
-        #endregion
     }
 }

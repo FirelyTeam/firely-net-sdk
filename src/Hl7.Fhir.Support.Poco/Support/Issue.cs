@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
-using System;
 using System.Collections.Generic;
 
 #pragma warning disable 1591 // suppress XML summary warnings
@@ -109,8 +108,6 @@ namespace Hl7.Fhir.Support
         public static readonly Issue PROFILE_ELEMENTDEF_INVALID_FHIRPATH_EXPRESSION = Create(2009, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
         public static readonly Issue PROFILE_NO_PROFILE_TO_VALIDATE_AGAINST = Create(2010, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue PROFILE_ELEMENTDEF_INCORRECT = Create(2012, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.BusinessRule);
-        [Obsolete("This issue will not be raised by the validator anymore. Use 'PROFILE_ELEMENTDEF_INCORRECT' instead.")] // Obsolete on 20190409 by Marco
-        public static readonly Issue PROFILE_INCOMPLETE_BINDING = Create(2011, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Incomplete);
         public static readonly Issue PROFILE_INSTANCE_MATCHES_MULTIPLE_SLICES = Create(2013, OperationOutcome.IssueSeverity.Warning, OperationOutcome.IssueType.Structure);
 
         // Unsupported 

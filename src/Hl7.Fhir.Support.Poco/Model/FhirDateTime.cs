@@ -71,12 +71,6 @@ namespace Hl7.Fhir.Model
         {
         }
 
-        [Obsolete("Use FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset) instead")]
-        public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
-            : this(new DateTime(year, month, day, hr, min, sec, DateTimeKind.Local))
-        {
-        }
-
         public FhirDateTime(int year, int month, int day, int hr, int min, int sec, TimeSpan offset)
             : this(new DateTimeOffset(year, month, day, hr, min, sec, offset))
         {
@@ -102,10 +96,6 @@ namespace Hl7.Fhir.Model
         {
             return new FhirDateTime(PrimitiveTypeConverter.ConvertTo<string>(DateTimeOffset.Now));
         }
-
-        [Obsolete("Use ToDateTimeOffset(TimeSpan zone) instead. Obsolete since 2018-11-22")]
-        public DateTimeOffset ToDateTimeOffset(TimeSpan? zone = null) =>
-           ToDateTimeOffset(zone ?? TimeSpan.Zero);
 
         /// <summary>
         /// Converts this Fhir DateTime as a .NET DateTimeOffset
@@ -190,10 +180,6 @@ namespace Hl7.Fhir.Model
             timezone = matches.Groups["offset"]?.Value;
             return !string.IsNullOrEmpty(timezone);
         }
-
-        [Obsolete("Use ToDateTimeOffset(TimeSpan zone) instead")]
-        public DateTime? ToDateTime()
-            => Value == null ? null : PrimitiveTypeConverter.ConvertTo<DateTime>(Value);
 
         /// <summary>
         /// Checks whether the given literal is correctly formatted.

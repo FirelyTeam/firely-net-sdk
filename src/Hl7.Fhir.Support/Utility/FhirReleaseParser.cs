@@ -125,10 +125,6 @@ namespace Hl7.Fhir.Utility
             return release != null;
         }
 
-        [Obsolete("This method is obsolete. Use TryGetFhirReleaseFromMimeVersion instead")]
-        public static bool TryFhirReleaseFromMimeVersion(string fhirMimeVersion, out FhirRelease? release) =>
-            TryGetFhirReleaseFromMimeVersion(fhirMimeVersion, out release);
-
         /// <summary>
         /// Returns the value of the 'fhirversion' MIME-type parameter corresponding to a specific FHIR Version
         /// </summary>
@@ -182,12 +178,6 @@ namespace Hl7.Fhir.Utility
 
             return release != null;
         }
-
-        [Obsolete("This method is obsolete. Use TryGetFhirReleaseFromCorePackageName instead")]
-        public static bool TryFhirReleaseFromCorePackageName(string packageName, out FhirRelease? release) =>
-            TryGetFhirReleaseFromCorePackageName(packageName, out release);
-
-
 
         /// <summary>
         /// Returns the corresponding FHIR core package of the specific FHIR Release version
