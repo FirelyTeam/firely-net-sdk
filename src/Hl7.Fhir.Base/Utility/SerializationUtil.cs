@@ -23,9 +23,9 @@ namespace Hl7.Fhir.Utility
 {
     public static class SerializationUtil
     {
-        private const string XML_XSD_RESOURCENAME = "Hl7.Fhir.Fundamental.Serialization.xhtml.xml.xsd";
-        private const string XMLDSIGCORESCHEMA_XSD_RESOURCENAME = "Hl7.Fhir.Fundamental.Serialization.xhtml.xmldsig-core-schema.xsd";
-        private const string FHIRXHTML_XSD_RESOURCENAME = "Hl7.Fhir.Fundamental.Serialization.xhtml.fhir-xhtml.xsd";
+        private static readonly string XML_XSD_RESOURCENAME = typeof(SerializationUtil).Assembly.FullName + ".Serialization.xhtml.xml.xsd";
+        private static readonly string XMLDSIGCORESCHEMA_XSD_RESOURCENAME = typeof(SerializationUtil).Assembly.FullName + ".Serialization.xhtml.xmldsig-core-schema.xsd";
+        private static readonly string FHIRXHTML_XSD_RESOURCENAME = typeof(SerializationUtil).Assembly.FullName + ".Serialization.xhtml.fhir-xhtml.xsd";
 
         /// <summary>
         /// A set of Xsd schemas used by the full FHIR schemaset. These include xml.xsd, xmldsig-core-schema.xsd and fhir-xhtml.xsd.
