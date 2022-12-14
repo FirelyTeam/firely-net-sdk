@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Utility
     /// Conforms with v2.0.0 of http://semver.org
     /// </summary>
 #if !NET452
-    public sealed class SemVersion : IComparable<SemVersion>, IComparable
+    internal sealed class SemVersion : IComparable<SemVersion>, IComparable
 #else
     [Serializable]
     public sealed class SemVersion : IComparable<SemVersion>, IComparable, ISerializable
@@ -571,6 +571,20 @@ namespace Hl7.Fhir.Utility
         public static bool operator <=(SemVersion left, SemVersion right)
         {
             return Equals(left, right) || Compare(left, right) < 0;
+        }
+
+
+        internal static bool CheckMinorVersionCompatibility(string version, string externalVersion) =>
+          compareByMajorMinor(Parse(version), Parse(externalVersion)) == 0;
+
+
+        private static int compareByMajorMinor(SemVersion @this, SemVersion other)
+        {
+            if (other is null || @this is null)
+                return 1;
+
+            var r = @this.Major.CompareTo(other.Major);
+            return r != 0 ? r : @this.Minor.CompareTo(other.Minor);
         }
     }
 }
