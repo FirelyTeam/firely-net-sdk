@@ -3,12 +3,12 @@
 	<Import Project="..\firely-net-sdk.props" />
 
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.Fundamental</PackageId>
+		<PackageId>Hl7.Fhir.Base</PackageId>
 		<Title>HL7 FHIR library for the base ElementModel classes</Title>
 		<Summary>Interfaces and classes to work with FHIR data without using POCOs.</Summary>
 		<Description>Interfaces and classes to work with FHIR data without using POCOs, in concert with the Hl7.Fhir.Serialization assembly.</Description>
 		<PackageTags>HL7;FHIR;Elements;Firely;SDK</PackageTags>
-		<AssemblyName>Hl7.Fhir.Fundamental</AssemblyName>
+		<AssemblyName>Hl7.Fhir.Base</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">

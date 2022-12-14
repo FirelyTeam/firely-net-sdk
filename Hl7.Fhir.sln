@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7089FA86-6527-4DFA-8018-AFEF25D74A48}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Core.R4Plus", "src\Hl7.Fhir.Core.R4Plus\Hl7.Fhir.Core.R4Plus.csproj", "{1826F7DB-EA5D-4761-B393-06BF931217DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Conformance", "src\Hl7.Fhir.Conformance\Hl7.Fhir.Conformance.csproj", "{1826F7DB-EA5D-4761-B393-06BF931217DA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.R5.Core.Tests", "src\Hl7.Fhir.R5.Core.Tests\Hl7.Fhir.R5.Core.Tests.csproj", "{FF310658-A747-4ED0-87F2-FE5994EC24D0}"
 EndProject
@@ -98,7 +98,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.R4.Specification.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.STU3.ElementModel.Tests", "src\Hl7.Fhir.STU3.ElementModel.Tests\Hl7.Fhir.STU3.ElementModel.Tests.csproj", "{E7994064-6441-4375-B9FC-A69D583DD75D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Fundamental", "src\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj", "{66E0207E-D211-4414-9FCC-ED975F921CC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hl7.Fhir.Base", "src\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj", "{66E0207E-D211-4414-9FCC-ED975F921CC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

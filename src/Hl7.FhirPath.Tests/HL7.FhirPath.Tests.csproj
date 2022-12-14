@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />
 	</ItemGroup>
 
 </Project>

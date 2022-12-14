@@ -4,7 +4,7 @@
 	<Import Project="..\platforms.props" />
 
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.Core.R4Plus</PackageId>
+		<PackageId>Hl7.Fhir.Conformance</PackageId>
 		<Title>HL7 FHIR Core support SDK</Title>
 		<Summary>Core .NET support for working with HL7 FHIR.</Summary>
 		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
@@ -14,7 +14,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Hl7.Fhir.Fundamental\Hl7.Fhir.Fundamental.csproj" />
+	  <ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />
 	</ItemGroup>
 
 </Project>
