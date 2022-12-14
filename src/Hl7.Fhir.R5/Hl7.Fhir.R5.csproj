@@ -2,20 +2,21 @@
 
 	<Import Project="..\firely-net-sdk.props" />
 	<Import Project="..\platforms.props" />
-	<Import Project="..\Hl7.Fhir.Shared.Core\Hl7.Fhir.Shared.Core.projitems" Label="Shared" />
+	<Import Project="..\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems" Label="Shared" />
+	<Import Project="..\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems" Label="Shared" />
 
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.STU3</PackageId>
-		<Title>HL7 FHIR Core support SDK for STU3</Title>
-		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR STU3 (3.0.2)</Summary>
+		<PackageId>Hl7.Fhir.R5</PackageId>
+		<Title>HL7 FHIR Core support SDK for R5</Title>
+		<Summary>Core .NET support for working with HL7 FHIR. Supports FHIR R5 (5.0.0-snapshot1)</Summary>
 		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
+		<AssemblyName>Hl7.Fhir.R5.Core</AssemblyName>
 		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
-		<AssemblyName>Hl7.Fhir.STU3.Core</AssemblyName>
 		<RootNamespace>Hl7.Fhir</RootNamespace>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Conformance\Hl7.Fhir.Conformance.csproj" />
 	</ItemGroup>
-
+	
 </Project>

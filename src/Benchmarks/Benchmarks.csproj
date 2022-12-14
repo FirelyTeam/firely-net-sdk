@@ -13,7 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Hl7.Fhir.R5.Core\Hl7.Fhir.R5.Core.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.R5\Hl7.Fhir.R5.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj" />
 	</ItemGroup>
 

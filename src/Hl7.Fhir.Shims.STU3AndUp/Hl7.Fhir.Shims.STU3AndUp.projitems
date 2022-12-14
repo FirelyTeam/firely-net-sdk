@@ -6,7 +6,7 @@
     <SharedGUID>c1652fe8-b037-4df2-8588-aac5827af7c7</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Hl7.Fhir.Shared.Core</Import_RootNamespace>
+    <Import_RootNamespace>Hl7.Fhir.Shims.STU3AndUp</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ElementModel\PocoBuilderExtensions.cs" />

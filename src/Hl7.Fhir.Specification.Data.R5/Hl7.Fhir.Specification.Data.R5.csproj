@@ -5,8 +5,8 @@
 	<Import Project="..\specification.data.props" />
 	
 	<PropertyGroup>
-		<PackageId>Hl7.Fhir.STU3.Specification.Data</PackageId>
-		<AssemblyName>Hl7.Fhir.STU3.Specification.Data</AssemblyName>
+		<PackageId>Hl7.Fhir.Specification.Data.R5</PackageId>
+		<AssemblyName>Hl7.Fhir.Specification.Data.R5</AssemblyName>
 	</PropertyGroup>
 
 </Project>
