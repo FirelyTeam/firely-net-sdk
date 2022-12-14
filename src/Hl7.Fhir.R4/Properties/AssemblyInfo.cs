@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 
 #if DEBUG
 [assembly: InternalsVisibleTo("Hl7.FhirPath.R4.Tests")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4.Specification.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.R4.Tests")]
 #endif
 
 #if RELEASE

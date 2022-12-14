@@ -8,15 +8,15 @@ using System.Runtime.CompilerServices;
 [assembly: FhirModelAssembly]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4.Core")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4B.Core")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R5.Core")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4.Specification.Tests")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4B.Specification.Tests")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R5.Specification.Tests")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4.Serialization.Tests")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R4B.Serialization.Tests")]
-[assembly: InternalsVisibleTo("Hl7.Fhir.R5.Serialization.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R4")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R4B")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.R5")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.R4.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.R4B.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.R5.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Serialization.R4.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Serialization.R4B.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Serialization.R5.Tests")]
 #endif
 
 #if RELEASE

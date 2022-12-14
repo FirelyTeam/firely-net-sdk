@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 [assembly: FhirModelAssembly(Hl7.Fhir.Specification.FhirRelease.R5)]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.R5.Specification.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.R5.Tests")]
 #endif
 
 #if RELEASE
