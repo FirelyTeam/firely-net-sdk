@@ -14,7 +14,7 @@ namespace Firely.Sdk.Benchmarks
 
         public ToTypedElementBenchmarks()
         {
-            _provider = new StructureDefinitionSummaryProvider(FhirPackageSource.CreateFhirCorePackageSource());
+            _provider = new StructureDefinitionSummaryProvider(ZipSource.CreateValidationSource());
         }
 
 

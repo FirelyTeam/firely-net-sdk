@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Specification.Tests
                 new SnapshotSource(
                 new MultiResolver(
                     new DirectorySource(@"TestData\validation"),
-                    FhirPackageSource.CreateFhirCorePackageSource())));
+                    ZipSource.CreateValidationSource())));
         }
 
         [ClassInitialize]

@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Serialization.Tests
         public static void SetupSource(TestContext t)
         {
             source = new MultiResolver(
-                FhirPackageSource.CreateFhirCorePackageSource(),
+                ZipSource.CreateValidationSource(),
                 new DirectorySource("TestData", new DirectorySourceSettings(includeSubdirectories: true)),
                 new TestProfileArtifactSource()
                 );

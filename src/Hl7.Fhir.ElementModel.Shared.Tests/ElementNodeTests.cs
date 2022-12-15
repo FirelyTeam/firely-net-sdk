@@ -387,7 +387,7 @@ namespace Hl7.FhirPath.Tests
             public CustomResourceResolver()
             {
                 _resolver = new CachedResolver(new MultiResolver(
-                    FhirPackageSource.CreateFhirCorePackageSource(),
+                    ZipSource.CreateValidationSource(),
                     new DirectorySource("TestData/TestSd")));
             }
 

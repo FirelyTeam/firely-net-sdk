@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Specification.Tests
         [ClassInitialize]
         public static void SetupSource(TestContext _)
         {
-            source = FhirPackageSource.CreateFhirCorePackageSource();
+            source = ZipSource.CreateValidationSource();
         }
 
         static IResourceResolver source = null;
@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var src = new CachedResolver(
                 new MultiResolver(
-                    FhirPackageSource.CreateFhirCorePackageSource(),
+                    ZipSource.CreateValidationSource(),
                     new WebResolver() { TimeOut = DefaultTimeOut }));
 
             Stopwatch sw1 = new Stopwatch();
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestCacheInvalidation()
         {
-            var src = new CachedResolver(new MultiResolver(FhirPackageSource.CreateFhirCorePackageSource()));
+            var src = new CachedResolver(new MultiResolver(ZipSource.CreateValidationSource()));
             CachedResolver.LoadResourceEventArgs eventArgs = null;
             src.Load += (sender, args) => { eventArgs = args; };
 
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNull(resource);
 
             // Resolve core resource from FhirPackageSource and refresh in-memory resolver
-            var source = FhirPackageSource.CreateFhirCorePackageSource();
+            var source = ZipSource.CreateValidationSource();
             var original = source.ResolveByCanonicalUri(resourceUri) as ValueSet;
             Assert.IsNotNull(original);
             mem.Reload(original);
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public void TestSetupIsOnce()
         {
-            var fa = FhirPackageSource.CreateFhirCorePackageSource();
+            var fa = ZipSource.CreateValidationSource();
 
             var sw = new Stopwatch();
             sw.Start();
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Specification.Tests
             const string dupFileName = "patient-birthtime";
             const string url = "http://hl7.org/fhir/StructureDefinition/patient-birthTime";
 
-            var source = FhirPackageSource.CreateFhirCorePackageSource();
+            var source = ZipSource.CreateValidationSource();
 
             // Try to find a core extension
             var ext = source.ResolveByCanonicalUri(url);

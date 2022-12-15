@@ -14,11 +14,11 @@ namespace Hl7.Fhir.Specification.Tests
 {
     public partial class TerminologyTests
     {
-        private readonly IAsyncResourceResolver _resolver = new CachedResolver(FhirPackageSource.CreateFhirCorePackageSource());
+        private readonly IAsyncResourceResolver _resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
         private static Uri _externalTerminologyServerEndpoint = new("https://r4.ontoserver.csiro.au/fhir");
         // Use here a FhirPackageSource without the expansion package.
-        private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(new FhirPackageSource("http://packages2.fhir.org/packages", new string[] { "hl7.fhir.r5.core@5.0.0-snapshot1" }));
+        private readonly IAsyncResourceResolver _resolverWithoutExpansions = new CachedResolver(ZipSource.CreateValidationSource());
 
         [Fact]
         public async T.Task ExpansionOfWholeSystem()

@@ -23,7 +23,7 @@ namespace Vonk.FhirPath.R4.Tests
         public static void Initialize(TestContext ctx)
         {
             Context = ctx;
-            var specSource = FhirPackageSource.CreateFhirCorePackageSource();
+            var specSource = ZipSource.CreateValidationSource();
 
             Resources = specSource.FindAll<ValueSet>().ToDictionary<ValueSet, string>(sd => sd.Url);
             //By putting all the url's in a dictionary we can be sure there are no duplicates. 

@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification.Navigation;
 using Hl7.Fhir.Specification.Source;
-using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ namespace Hl7.Fhir.Specification.Tests
             _source = new CachedResolver(
                 new MultiResolver(
                     new DirectorySource("TestData/validation"),
-                    FhirPackageSource.CreateFhirCorePackageSource()));
+                    ZipSource.CreateValidationSource()));
         }
 
 
