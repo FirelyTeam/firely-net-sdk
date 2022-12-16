@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class WebRequestExtensions
+    internal static class WebRequestExtensions
     {
         internal static void WriteBody(this HttpWebRequest request, bool CompressRequestBody, byte[] data)
         {

@@ -6,13 +6,13 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Model;
 using System;
 using System.Collections.Generic;
 
 namespace Hl7.Fhir.Rest
 {
-    public class EntryResponse
+    internal class EntryResponse
     {
         public string Status { get; set; }
         public Dictionary<string, string> Headers { get; set; }
@@ -30,9 +30,9 @@ namespace Hl7.Fhir.Rest
     }
 
 
-    public class TypedEntryResponse : EntryResponse
+    internal class TypedEntryResponse : EntryResponse
     {
-        public ITypedElement TypedElement { get; set; }
+        public Resource BodyResource { get; set; }
     }
 
 }

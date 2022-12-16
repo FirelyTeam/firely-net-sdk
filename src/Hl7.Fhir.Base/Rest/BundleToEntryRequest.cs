@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
@@ -17,13 +17,13 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class BundleToEntryRequest
+    internal static class BundleToEntryRequest
     {
-        public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings, ModelInspector modelInspector, string fhirVersion)
+        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, IFhirSerializationEngine ser, string fhirVersion)
         {
             var result = new EntryRequest
             {
-                Agent = fhirVersion,
+                FhirRelease = fhirVersion,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -47,41 +47,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                TaskHelper.Await(() => setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, modelInspector, fhirVersion));
-            }
-
-            return result;
-        }
-
-        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, ModelInspector modelInspector, string fhirVersion)
-        {
-            var result = new EntryRequest
-            {
-                Agent = fhirVersion,
-                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
-                Type = entry.Annotation<InteractionType>(),
-                Url = entry.Request.Url,
-                Headers = new EntryRequestHeaders
-                {
-                    IfMatch = entry.Request.IfMatch,
-                    IfModifiedSince = entry.Request.IfModifiedSince,
-                    IfNoneExist = entry.Request.IfNoneExist,
-                    IfNoneMatch = entry.Request.IfNoneMatch
-                }
-            };
-
-            if (!settings.UseFormatParameter)
-            {
-                result.Headers.Accept = ContentType.BuildContentType(settings, fhirVersion);
-            }
-
-            if (entry.Resource != null)
-            {
-                bool searchUsingPost =
-                    result.Method == HTTPVerb.POST
-                    && entry.Annotation<InteractionType>() == InteractionType.Search
-                    && entry.Resource is Parameters;
-                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, modelInspector, fhirVersion).ConfigureAwait(false);
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, ser, fhirVersion).ConfigureAwait(false);
             }
 
             return result;
@@ -106,7 +72,7 @@ namespace Hl7.Fhir.Rest
                 case Bundle.HTTPVerb.PUT:
                     {
                         //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
-                        return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT; ;
+                        return type == InteractionType.Patch ? HTTPVerb.PATCH : HTTPVerb.PUT;
                     }
                 case Bundle.HTTPVerb.PATCH:
                     {
@@ -119,7 +85,8 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, bool searchUsingPost, ModelInspector modelInspector, string fhirVersion)
+        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, 
+            bool searchUsingPost, IFhirSerializationEngine ser, string fhirVersion)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
 
@@ -155,9 +122,9 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                request.RequestBodyContent = settings.PreferredFormat == ResourceFormat.Xml ?
-                    await new CommonFhirXmlSerializer(modelInspector).SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false) :
-                    await new CommonFhirJsonSerializer(modelInspector).SerializeToBytesAsync(data, summary: Fhir.Rest.SummaryType.False).ConfigureAwait(false);
+                request.RequestBodyContent = settings.PreferredFormat == ResourceFormat.Xml
+                    ? ser.SerializeToXml(data)
+                    : ser.SerializeToJson(data);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed

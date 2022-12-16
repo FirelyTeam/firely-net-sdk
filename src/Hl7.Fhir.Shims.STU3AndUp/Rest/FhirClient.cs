@@ -13,7 +13,7 @@ using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirClient : CommonFhirClient
+    public class FhirClient : BaseFhirClient
     {
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
         public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null) :
-            base(endpoint, ModelInfo.ModelInspector, ModelInfo.Version, settings, messageHandler)
+            base(endpoint, ModelInfo.ModelInspector, null, ModelInfo.Version, settings, messageHandler)
         {
         }
 
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="httpClient"></param>
         public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null)
-            : base(endpoint, httpClient, ModelInfo.ModelInspector, ModelInfo.Version, settings)
+            : base(endpoint, httpClient, ModelInfo.ModelInspector, null, ModelInfo.Version, settings)
         {
         }
 

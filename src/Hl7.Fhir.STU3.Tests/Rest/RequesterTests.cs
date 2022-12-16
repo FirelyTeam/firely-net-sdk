@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Test
         public void TestSetAgentHttpClient()
         {
             var entry = _Entry;
-            entry.Agent = "testAgent";
+            entry.FhirRelease = "testAgent";
             var settings = _Settings;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
+            var entryRequest = bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -240,9 +240,10 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
+            var result = response.ToTypedEntryResponse();
+            
 
-            var typedElementXml = await result.TypedElement.ToXmlAsync();
+            var typedElementXml = await result.BodyResource.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
             Assert.AreEqual(response.ContentType, result.ContentType);
             Assert.AreEqual(response.Etag, result.Etag);
@@ -273,7 +274,7 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = await response.ToTypedEntryResponseAsync(new PocoStructureDefinitionSummaryProvider());
+            var typedresponse = response.ToTypedEntryResponse();
 
             var settings = new ParserSettings
             {

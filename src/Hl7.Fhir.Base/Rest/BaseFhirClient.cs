@@ -1,30 +1,145 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿//using Hl7.Fhir.ElementModel;
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class BaseFhirClient : IDisposable
+    public partial class BaseFhirClient : IDisposable
     {
         private readonly ModelInspector _inspector;
+        private readonly IFhirSerializationEngine _serializationEngine;
         private readonly string _fhirVersion;
 
-        protected BaseFhirClient(Uri endpoint, ModelInspector inspector, string fhirVersion, FhirClientSettings settings = null)
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
+        /// <remarks>
+        /// If the messageHandler is provided then it must be disposed by the caller
+        /// </remarks>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="inspector"></param>
+        /// <param name="ser"></param>
+        /// <param name="fhirVersion"></param>
+        /// <param name="settings"></param>
+        /// <param name="messageHandler"></param>
+        public BaseFhirClient(Uri endpoint, ModelInspector inspector, IFhirSerializationEngine ser,
+            string fhirVersion, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null)
         {
+            _inspector = inspector;
+            _serializationEngine = ser;
+            _fhirVersion = fhirVersion;
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _inspector = inspector;
-            _fhirVersion = fhirVersion;
+            
+            // If user does not supply message handler, create our own and add decompression strategy in default handler.
+            var handler = messageHandler ?? new HttpClientHandler()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+
+            HttpClientRequester requester = new(Endpoint, Settings, handler, messageHandler == null);
+            Requester = requester;
+
+            // Expose default request headers to user.
+            RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
-        protected IClientRequester Requester { get; set; }
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
+        /// <remarks>
+        /// The httpClient must be disposed by the caller
+        /// </remarks>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="settings"></param>
+        /// <param name="httpClient"></param>
+        /// <param name="inspector"></param>
+        /// <param name="fhirVersion"></param>
+        public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, 
+            string fhirVersion, FhirClientSettings settings = null)
+            : this(endpoint, inspector, GetElementModelSerializers(inspector), fhirVersion, settings)
+        {
+            HttpClientRequester requester = new(Endpoint, Settings, httpClient);
+            Requester = requester;
 
+            // Expose default request headers to user.
+            RequestHeaders = requester.Client.DefaultRequestHeaders;
+        }
+
+        public static IFhirSerializationEngine GetElementModelSerializers(ModelInspector inspector) 
+            => new ElementModelSerializers(inspector);
+
+        private class PocoSerializers : IFhirSerializationEngine
+        {
+            private readonly ModelInspector _inspector;
+
+            public PocoSerializers(ModelInspector inspector)
+            {
+                _inspector = inspector;
+                
+                var options = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
+                string patientJson = JsonSerializer.Serialize(p, options);
+            }
+
+            public Resource DeserializeFromXml(string data) => throw new NotImplementedException();
+
+            public Resource DeserializeFromJson(string data) => throw new NotImplementedException();
+
+            public byte[] SerializeToXml(Base instance) => throw new NotImplementedException();
+
+            public byte[] SerializeToJson(Base instance) => throw new NotImplementedException();
+        }
+
+        private class ElementModelSerializers: IFhirSerializationEngine
+        {
+            private readonly ModelInspector _inspector;
+
+            public ElementModelSerializers(ModelInspector inspector)
+            {
+                _inspector = inspector;
+            }
+
+            public Resource DeserializeFromXml(string data) =>
+                (Resource)FhirXmlNode.Parse(data).ToPoco(_inspector);
+            
+            public Resource DeserializeFromJson(string data) => 
+                (Resource)FhirJsonNode.Parse(data).ToPoco(_inspector);
+
+            public byte[] SerializeToXml(Base instance) =>
+                new CommonFhirXmlSerializer(_inspector).SerializeToBytes(instance, summary: SummaryType.False);
+
+            public byte[] SerializeToJson(Base instance) => 
+                new CommonFhirJsonSerializer(_inspector).SerializeToBytes(instance, summary: SummaryType.False);
+        }
+        
+
+        internal IClientRequester Requester { get; init; }
+        
+        /// <summary>
+        /// Default request headers that can be modified to persist default headers to internal client.
+        /// </summary>
+        public HttpRequestHeaders RequestHeaders { get; protected set; }
+        
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints. This will always have a trailing "/"
@@ -35,7 +150,7 @@ namespace Hl7.Fhir.Rest
             protected set;
         }
 
-        public FhirClientSettings Settings = new FhirClientSettings();
+        public FhirClientSettings Settings;
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
@@ -207,7 +322,7 @@ namespace Hl7.Fhir.Rest
             else
                 upd.Update(resource.Id, resource);
 
-            return internalUpdateAsync<TResource>(resource, upd.ToBundle());
+            return internalUpdateAsync(resource, upd.ToBundle());
         }
         /// <summary>
         /// Update (or create) a resource
@@ -221,7 +336,7 @@ namespace Hl7.Fhir.Rest
         /// created.</remarks>
         public TResource Update<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
         {
-            return UpdateAsync<TResource>(resource, versionAware).WaitResult();
+            return UpdateAsync(resource, versionAware).WaitResult();
         }
 
         /// <summary>
@@ -939,14 +1054,14 @@ namespace Hl7.Fhir.Rest
             var request = tx.Entry[0];
             // tx (-> ITyped)? -> entryRequest 
             // entry -> ITyped -> tx
-            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, _fhirVersion).ConfigureAwait(false);
+            var entryRequest = await request.ToEntryRequestAsync(Settings, _serializationEngine, _fhirVersion).ConfigureAwait(false);
 
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
             try
             {
-                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_inspector).ConfigureAwait(false);
+                typedEntryResponse = entryResponse.ToTypedEntryResponse(_serializationEngine);
             }
             catch (UnsupportedBodyTypeException ex)
             {
@@ -1122,6 +1237,8 @@ namespace Hl7.Fhir.Rest
             {
                 if (disposing)
                 {
+                    this.RequestHeaders = null;
+                    
                     if (Requester is IDisposable disposableRequester)
                     {
                         disposableRequester.Dispose();
@@ -1131,7 +1248,7 @@ namespace Hl7.Fhir.Rest
                 disposedValue = true;
             }
         }
-
+        
         public void Dispose()
         {
             Dispose(true);
