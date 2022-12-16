@@ -238,8 +238,8 @@ stages:
         parameters:
           testRunTitle: Tests Core test project
           projects: |
-            '**/publish/Hl7.Fhir.R*.Tests.dll'
-            '**/publish/Hl7.Fhir.STU3.Tests.dll'
+            **/publish/Hl7.Fhir.R*.Tests.dll
+            **/publish/Hl7.Fhir.STU3.Tests.dll
   - job:
     displayName: Tests ElementModel test project
     steps:
