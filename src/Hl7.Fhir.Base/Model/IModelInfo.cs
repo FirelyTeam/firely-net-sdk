@@ -8,10 +8,13 @@
 
 #nullable enable
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Serialization;
 using System;
 
 namespace Hl7.Fhir.Model
 {
+    
     public interface IModelInfo
     {
         Canonical? CanonicalUriForFhirCoreType(string typeName);

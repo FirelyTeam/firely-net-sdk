@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Test
         public void TestSetAgentHttpClient()
         {
             var entry = _Entry;
-            entry.Agent = "testAgent";
+            entry.FhirRelease = "testAgent";
             var settings = _Settings;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Test
 
             var result = await response.ToTypedEntryResponseAsync(ModelInfo.ModelInspector);
 
-            var typedElementXml = await result.TypedElement.ToXmlAsync();
+            var typedElementXml = await result.BodyResource.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
             Assert.AreEqual(response.ContentType, result.ContentType);
             Assert.AreEqual(response.Etag, result.Etag);

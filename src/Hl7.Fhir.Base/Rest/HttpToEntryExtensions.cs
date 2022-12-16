@@ -16,7 +16,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class HttpToEntryExtensions
+    internal static class HttpToEntryExtensions
     {
 
 

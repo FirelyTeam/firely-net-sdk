@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Rest
 
             var request = new HttpRequestMessage(getMethod(entry.Method), location.Uri);
 
-            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + entry.Agent);
+            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + entry.FhirRelease);
 
             if (!settings.UseFormatParameter && !string.IsNullOrEmpty(entry.Headers.Accept))
                 request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(entry.Headers.Accept));

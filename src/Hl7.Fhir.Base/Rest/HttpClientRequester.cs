@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public class HttpClientRequester : IClientRequester, IDisposable
+    internal class HttpClientRequester : IClientRequester, IDisposable
     {
         public FhirClientSettings Settings { get; set; }
         public Uri BaseUrl { get; private set; }

@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class TypedEntryResponseToBundle
+    internal static class TypedEntryResponseToBundle
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
@@ -56,11 +56,11 @@ namespace Hl7.Fhir.Rest
                 }
                 else
                 {
-                    if (entry.TypedElement != null)
+                    if (entry.BodyResource != null)
                     {
                         try
                         {
-                            result.Resource = new BaseFhirParser(inspector, parserSettings).Parse<Resource>(entry.TypedElement);
+                            result.Resource = entry.BodyResource;
 
                             //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
                             // see also issue #1681
