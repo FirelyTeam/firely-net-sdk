@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Initializes an instance of the deserializer.
         /// </summary>
-        /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
+        /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         public FhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new())
         {
             // nothing

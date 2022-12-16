@@ -64,6 +64,13 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
+        /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
+        /// </summary>
+        public byte[] SerializeToUtf8Bytes(IReadOnlyDictionary<string, object> members, SerializationFilter? summary = default) =>
+            SerializationUtil.WriteXmlToBytes(w => Serialize(members, w, summary));
+
+
+        /// <summary>
         /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
         /// </summary>
         /// <remarks>Not serializing the "value" element is useful when serializing FHIR primitives into two properties, one

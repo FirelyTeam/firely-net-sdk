@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector), ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -183,7 +183,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Patch);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, getSerializationEngine(), ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -195,6 +195,8 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual(InteractionType.Patch, entryRequest.Type);
             Assert.IsNull(entryRequest.RequestBodyContent);
         }
+
+        IFhirSerializationEngine getSerializationEngine() => BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector);
 
         [TestMethod]
         public async Tasks.Task TestBundleToEntryRequestBody()
@@ -213,7 +215,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, ModelInfo.ModelInspector, ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, getSerializationEngine(), ModelInfo.Version);
             Assert.IsNotNull(entryRequest);
             Assert.IsNotNull(entryRequest.RequestBodyContent);
             Assert.AreEqual("test content type", entryRequest.ContentType);
@@ -240,7 +242,7 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = response.ToTypedEntryResponse();
+            var result = response.ToTypedEntryResponse(getSerializationEngine());
             
 
             var typedElementXml = await result.BodyResource.ToXmlAsync();
@@ -260,7 +262,7 @@ namespace Hl7.Fhir.Test
         #region TypedEntryResponse To BundleEntryResponse
 
         [TestMethod]
-        public async Tasks.Task TestTypedEntryResponseToBundle()
+        public void TestTypedEntryResponseToBundle()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
             var response = new EntryResponse
@@ -274,7 +276,7 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = response.ToTypedEntryResponse();
+            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine());
 
             var settings = new ParserSettings
             {

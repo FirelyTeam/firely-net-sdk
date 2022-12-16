@@ -10,6 +10,7 @@
 
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System.Reflection;
 using System.Text.Json;
@@ -31,20 +32,20 @@ namespace Hl7.Fhir.Serialization
         public static JsonSerializerOptions ForFhir(
             this JsonSerializerOptions options,
             FhirJsonPocoSerializerSettings serializerSettings) =>
-            options.ForFhir(typeof(ModelInfo).Assembly, serializerSettings);
+            options.ForFhir(ModelInfo.ModelInspector, serializerSettings);
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions)"/>
         public static JsonSerializerOptions ForFhir(
             this JsonSerializerOptions options,
             FhirJsonPocoDeserializerSettings deserializerSettings) =>
-            options.ForFhir(typeof(ModelInfo).Assembly, deserializerSettings);
+            options.ForFhir(ModelInfo.ModelInspector, deserializerSettings);
 
         /// <inheritdoc cref="ForFhir(JsonSerializerOptions)"/>
         public static JsonSerializerOptions ForFhir(
             this JsonSerializerOptions options,
             FhirJsonPocoSerializerSettings serializerSettings,
             FhirJsonPocoDeserializerSettings deserializerSettings) =>
-            options.ForFhir(typeof(ModelInfo).Assembly, serializerSettings, deserializerSettings);
+            options.ForFhir(ModelInfo.ModelInspector, serializerSettings, deserializerSettings);
     }
 }
 

@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Utility;
 using System;
 using System.Net.Http;
@@ -40,7 +42,7 @@ namespace Hl7.Fhir.Rest
             _disposeHttpClient = false;
         }
 
-        public EntryResponse LastResult { get; private set; }
+        public EntryResponse? LastResult { get; private set; }
 
         public EntryResponse Execute(EntryRequest interaction)
         {
@@ -59,7 +61,7 @@ namespace Hl7.Fhir.Rest
                 requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
             }
 
-            byte[] outgoingBody = null;
+            byte[]? outgoingBody = null;
             if (requestMessage.Content is not null && (requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put))
             {
                 outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
@@ -103,3 +105,5 @@ namespace Hl7.Fhir.Rest
     }
 
 }
+
+#nullable restore

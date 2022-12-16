@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="messageHandler"></param>
         public FhirClient(Uri endpoint, FhirClientSettings settings = null, HttpMessageHandler messageHandler = null) :
-            base(endpoint, ModelInfo.ModelInspector, null, ModelInfo.Version, settings, messageHandler)
+            base(endpoint, messageHandler, ModelInfo.ModelInspector, ModelInfo.Version, null, settings)
         {
         }
 
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="httpClient"></param>
         public FhirClient(Uri endpoint, HttpClient httpClient, FhirClientSettings settings = null)
-            : base(endpoint, httpClient, ModelInfo.ModelInspector, null, ModelInfo.Version, settings)
+            : base(endpoint, httpClient, ModelInfo.ModelInspector, ModelInfo.Version, null, settings)
         {
         }
 
