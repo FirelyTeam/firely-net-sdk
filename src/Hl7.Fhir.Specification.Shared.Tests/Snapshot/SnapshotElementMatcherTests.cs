@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Specification.Tests
             _testResolver = new CachedResolver(
                 new MultiResolver(
                     new DirectorySource("TestData/snapshot-test", new DirectorySourceSettings { IncludeSubDirectories = true }),
-                    FhirPackageSource.CreateFhirCorePackageSource()
+                    ZipSource.CreateValidationSource()
                     )
                 );
         }

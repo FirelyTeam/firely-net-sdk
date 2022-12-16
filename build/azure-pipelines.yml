@@ -165,7 +165,7 @@ stages:
         parameters:
           testRunTitle: Tests Serialization STU3 test project
           projects: |
-            **/publish/Hl7.Fhir.STU3.Serialization.Tests.dll
+            **/publish/Hl7.Fhir.Serialization.STU3.Tests.dll
   - job:
     displayName: Tests Serialization R4 test project
     steps:
@@ -174,7 +174,7 @@ stages:
         parameters:
           testRunTitle: Tests Serialization R4 test project
           projects: |
-            **/publish/Hl7.Fhir.R4.Serialization.Tests.dll
+            **/publish/Hl7.Fhir.Serialization.R4.Tests.dll
     condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
     
   - job:
@@ -185,7 +185,7 @@ stages:
         parameters:
           testRunTitle: Tests Serialization R4B test project
           projects: |
-            **/publish/Hl7.Fhir.R4B.Serialization.Tests.dll
+            **/publish/Hl7.Fhir.Serialization.R4B.Tests.dll
   - job:
     displayName: Tests Serialization R5 test project
     steps:
@@ -194,7 +194,7 @@ stages:
         parameters:
           testRunTitle: Tests Serialization R5 test project
           projects: |
-            **/publish/Hl7.Fhir.R5.Serialization.Tests.dll
+            **/publish/Hl7.Fhir.Serialization.R5.Tests.dll
 
   - job:
     displayName: Tests Specification STU3 test project
@@ -203,7 +203,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Specification STU3 test project
-          projects: '**/publish/Hl7.Fhir.STU3.Specification.Tests.dll' 
+          projects: '**/publish/Hl7.Fhir.Specification.STU3.Tests.dll' 
 
   - job:
     displayName: Tests Specification R4 test project
@@ -212,7 +212,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Specification R4 test project
-          projects: '**/publish/Hl7.Fhir.R4.Specification.Tests.dll' 
+          projects: '**/publish/Hl7.Fhir.Specification.R4.Tests.dll' 
 
   - job:
     displayName: Tests Specification R4B test project
@@ -221,7 +221,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Specification R4B test project
-          projects: '**/publish/Hl7.Fhir.R4B.Specification.Tests.dll' 
+          projects: '**/publish/Hl7.Fhir.Specification.R4B.Tests.dll' 
   - job:
     displayName: Tests Specification R5 test project
     steps:
@@ -229,7 +229,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Specification R5 test project
-          projects: '**/publish/Hl7.Fhir.R5.Specification.Tests.dll' 
+          projects: '**/publish/Hl7.Fhir.Specification.R5.Tests.dll' 
   - job:
     displayName: Tests Core test project
     steps:
@@ -237,7 +237,9 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests Core test project
-          projects: '**/publish/Hl7.Fhir.*.Core.Tests.dll'
+          projects: |
+            **/publish/Hl7.Fhir.R*.Tests.dll
+            **/publish/Hl7.Fhir.STU3.Tests.dll
   - job:
     displayName: Tests ElementModel test project
     steps:
@@ -245,7 +247,7 @@ stages:
       - template: templates/test-job-template.yml
         parameters:
           testRunTitle: Tests ElementModel test project
-          projects: '**/publish/Hl7.Fhir.*.ElementModel.Tests.dll'
+          projects: '**/publish/Hl7.Fhir.ElementModel.*.Tests.dll'
 
 - stage: deploy_git
   displayName: Deploy to GitHub

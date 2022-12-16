@@ -29,7 +29,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSourceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSummaryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ConformanceSourceTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Source\FhirPackageSourceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ResolverAndSourceExtensionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ResourceResolverTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\SummarySourceTests.cs" />

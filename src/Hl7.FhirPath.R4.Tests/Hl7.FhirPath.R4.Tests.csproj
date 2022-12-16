@@ -3,25 +3,24 @@
 	<Import Project="..\firely-net-sdk-tests.props" />
 
 	<PropertyGroup>
-    <AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
-  </PropertyGroup>
+		<AssemblyName>Hl7.FhirPath.R4.Tests</AssemblyName>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="TestData\**\*.xml;TestData\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="TestData\**\*.xml;TestData\**\*.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Hl7.Fhir.R4.Core\Hl7.Fhir.R4.Core.csproj" />
-    <ProjectReference Include="..\Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath\Hl7.FhirPath.csproj" />
-    <ProjectReference Include="..\Hl7.FhirPath.Tests\HL7.FhirPath.Tests.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.R4\Hl7.Fhir.R4.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Specification.Data.R4\Hl7.Fhir.Specification.Data.R4.csproj" />
+		<ProjectReference Include="..\Hl7.FhirPath.Tests\HL7.FhirPath.Tests.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
+	</ItemGroup>
 
 </Project>

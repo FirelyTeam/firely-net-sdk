@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
             // [WMR 20170810] Order is important!
             // Specify source first to override core defs from
             // TestData\snapshot-test\profiles-resources.xml and profiles-types.xml
-            _standardFhirSource = FhirPackageSource.CreateFhirCorePackageSource();
+            _standardFhirSource = ZipSource.CreateValidationSource();
             _testResolver = new CachedResolver(new MultiResolver(_standardFhirSource, _source));
         }
 
@@ -2716,7 +2716,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Start at root types without a base (Element, Extension), then recursively expand derived types
 
             var result = true;
-            var resolver = new CachedResolver(FhirPackageSource.CreateFhirCorePackageSource());
+            var resolver = new CachedResolver(ZipSource.CreateValidationSource());
 
             _generator = new SnapshotGenerator(resolver, _settings);
             _generator.PrepareElement += elementHandler;

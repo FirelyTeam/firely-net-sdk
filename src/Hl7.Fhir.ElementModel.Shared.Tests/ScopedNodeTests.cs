@@ -282,7 +282,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             {
                 _cache = new Dictionary<string, StructureDefinition>();
                 _coreResolver = new CachedResolver(new MultiResolver(
-                    FhirPackageSource.CreateFhirCorePackageSource(),
+                    ZipSource.CreateValidationSource(),
                     new DirectorySource("TestData/TestSd")));
             }
 

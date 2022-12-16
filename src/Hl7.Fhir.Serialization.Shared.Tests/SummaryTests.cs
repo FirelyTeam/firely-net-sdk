@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(maskedChildren, 2);
 
             ITypedElement getXmlNodeSDSP(string xml, FhirXmlParsingSettings s = null) =>
-                XmlParsingHelpers.ParseToTypedElement(xml, new StructureDefinitionSummaryProvider(FhirPackageSource.CreateFhirCorePackageSource()), s);
+                XmlParsingHelpers.ParseToTypedElement(xml, new StructureDefinitionSummaryProvider(ZipSource.CreateValidationSource()), s);
         }
     }
 }
