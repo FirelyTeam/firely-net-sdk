@@ -1167,7 +1167,7 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!checkMinorVersionCompatibility(_fhirVersion, serverVersion))
+            else if (!SemVersion.CheckMinorVersionCompatibility(_fhirVersion, serverVersion))
             {
                 throw Error.NotSupported($"This client supports FHIR version {_fhirVersion} but the server uses version {serverVersion}");
             }
@@ -1185,18 +1185,7 @@ namespace Hl7.Fhir.Rest
                 : null;
         }
 
-        private static bool checkMinorVersionCompatibility(string version, string externalVersion) =>
-            compareByMajorMinor(SemVersion.Parse(version), SemVersion.Parse(externalVersion)) == 0;
 
-        // TODO BIG_COMMON: Move to SemVersion perhaps?
-        private static int compareByMajorMinor(SemVersion @this, SemVersion other)
-        {
-            if (other is null || @this is null)
-                return 1;
-
-            var r = @this.Major.CompareTo(other.Major);
-            return r != 0 ? r : @this.Minor.CompareTo(other.Minor);
-        }
 
         #region IDisposable Support
         protected bool disposedValue = false; // To detect redundant calls
