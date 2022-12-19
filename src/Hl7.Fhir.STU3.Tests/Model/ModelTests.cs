@@ -617,7 +617,7 @@ namespace Hl7.Fhir.Tests.Model
             Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.1"));
             Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0"));
             Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3.0.2"));
-            Assert.IsFalse(ModelInfo.CheckMinorVersionCompatibility("3"));
+            Assert.IsTrue(ModelInfo.CheckMinorVersionCompatibility("3"));
         }
 
         [TestMethod]

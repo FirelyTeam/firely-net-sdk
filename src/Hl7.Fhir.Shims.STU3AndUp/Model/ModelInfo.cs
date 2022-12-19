@@ -221,35 +221,7 @@ namespace Hl7.Fhir.Model
 
         public static bool CheckMinorVersionCompatibility(string externalVersion)
         {
-            if (string.IsNullOrEmpty(externalVersion))
-            {
-                throw new ArgumentNullException();
-            }
-
-            var minorFhirVersion = getMajorAndMinorVersion(Version);
-            var externalMinorVersion = getMajorAndMinorVersion(externalVersion);
-
-            if (string.IsNullOrEmpty(minorFhirVersion) || string.IsNullOrEmpty(externalVersion))
-            {
-                return false;
-            }
-            else
-            {
-                return minorFhirVersion == externalMinorVersion;
-            }
-        }
-
-        private static string? getMajorAndMinorVersion(string version)
-        {
-            var versionnumbers = version.Split('.');
-            if (versionnumbers.Count() >= 2)
-            {
-                return string.Join(".", versionnumbers[0], versionnumbers[1]);
-            }
-            else
-            {
-                return null;
-            }
+            return SemVersion.CheckMinorVersionCompatibility(Version, externalVersion);
         }
 
         /// <inheritdoc cref="IModelInfo.IsInstanceTypeFor(string, string)"/>
