@@ -17,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\DebugExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\ElementDefinitionPropertyProxy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\ElementVerifier.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Snapshot\InMemoryProfileResolver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\ListExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotElementMatcherTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Snapshot\SnapshotGeneratorManifestTests.cs" />
@@ -29,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSourceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ArtifactSummaryTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ConformanceSourceTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Source\InMemoryResolverTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ResolverAndSourceExtensionTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\ResourceResolverTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Source\SummarySourceTests.cs" />
