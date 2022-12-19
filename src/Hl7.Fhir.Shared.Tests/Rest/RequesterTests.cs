@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Test
             Assert.IsNull(entryRequest.RequestBodyContent);
         }
 
-        IFhirSerializationEngine getSerializationEngine() => BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector);
+        IFhirSerializationEngine getSerializationEngine(ParserSettings settings=null) => BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector, settings);
 
         [TestMethod]
         public async Tasks.Task TestPatchBundleToEntryRequest()
@@ -274,7 +274,6 @@ namespace Hl7.Fhir.Test
                 Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
                 Body = Encoding.UTF8.GetBytes(xml),
             };
-            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine());
 
             var settings = new ParserSettings
             {
@@ -284,7 +283,8 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var bundleresponse = typedresponse.ToBundleEntry(ModelInfo.ModelInspector, settings);
+            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine(settings));         
+            var bundleresponse = typedresponse.ToBundleEntry();
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);

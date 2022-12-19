@@ -8,15 +8,15 @@
 
 #nullable enable
 
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Serialization;
 using System;
 
 namespace Hl7.Fhir.Model
 {
-    
+
     public interface IModelInfo
     {
+        public string? FhirVersion { get; }
+
         Canonical? CanonicalUriForFhirCoreType(string typeName);
 
         Canonical? CanonicalUriForFhirCoreType(Type type);

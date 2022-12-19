@@ -6,6 +6,8 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
@@ -46,3 +48,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore

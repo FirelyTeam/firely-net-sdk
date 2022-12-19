@@ -116,7 +116,19 @@ namespace Hl7.Fhir.Introspection
             FhirRelease = fhirRelease;
         }
 
-        public readonly FhirRelease FhirRelease;
+        /// <summary>
+        /// The release of FHIR (i.e. STU3, R4) that this metadata is constructor for.
+        /// </summary>
+        /// <remarks>This is taken in consideration when encountering versioned FHIR attributes, to be able to 
+        /// use a single POCO class to reflect the members for different FHIR releases.</remarks>
+        public FhirRelease FhirRelease { get; init; }
+
+        /// <summary>
+        /// The detected version of FHIR (i.e. 4.0.2) on the loaded assembly.
+        /// </summary>
+        /// <remarks>This is taken from the ModelInfo.Version string when the ModelInspector
+        /// reflects on a satellite assembly.</remarks>
+        public string? FhirVersion { get; private set; }
 
         // Index for easy lookup of datatypes.
         private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByName =
@@ -125,6 +137,9 @@ namespace Hl7.Fhir.Introspection
         private readonly ConcurrentDictionary<Type, ClassMapping> _classMappingsByType = new();
 
         private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByCanonical = new();
+
+        private const string MODELINFO_CLASSNAME = "ModelInfo";
+        private const string MODELINFO_VERSION_MEMBER = "Version";
 
         /// <summary>
         /// Locates all types in the assembly representing FHIR metadata and extracts
@@ -135,6 +150,14 @@ namespace Hl7.Fhir.Introspection
             if (assembly == null) throw Error.ArgumentNull(nameof(assembly));
 
             IEnumerable<Type> exportedTypes = assembly.ExportedTypes;
+
+            // Try to derive the literal FHIR version (e.g. 4.0.3) from the ModelInfo. This will only work
+            // if the added assembly is the satellite for a FHIR release.
+            if (exportedTypes.SingleOrDefault(et => et.Name == MODELINFO_CLASSNAME) is { } mi &&
+                mi.GetProperty(MODELINFO_VERSION_MEMBER, BindingFlags.Static | BindingFlags.Public) is { } pi)
+            {
+                FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
+            }
 
             return exportedTypes.Select(t => ImportType(t))
                 .Where(cm => cm is not null)
@@ -203,6 +226,7 @@ namespace Hl7.Fhir.Introspection
                 : FindClassMapping(canonical);
 
         #region IModelInfo
+       
         public Canonical? CanonicalUriForFhirCoreType(string typeName) => Canonical.CanonicalUriForFhirCoreType(typeName);
 
         public Canonical? CanonicalUriForFhirCoreType(Type type) => GetFhirTypeNameForType(type) is { } name ? CanonicalUriForFhirCoreType(name) : null;

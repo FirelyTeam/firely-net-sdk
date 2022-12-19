@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, ModelInspector inspector, ParserSettings parserSettings)
+        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry)
         {
             var result = new Bundle.EntryComponent
             {

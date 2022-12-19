@@ -111,39 +111,5 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public static bool SetUserAgentUsingReflection = true;
         public static bool SetUserAgentUsingDirectHeaderManipulation = true;
-
-        private static void setAgent(HttpWebRequest request, string agent)
-        {
-            bool userAgentSet = false;
-            if (SetUserAgentUsingReflection)
-            {
-                try
-                {
-                    PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
-
-                    if (prop != null)
-                        prop.SetValue(request, agent, null);
-                    userAgentSet = true;
-                }
-                catch (Exception)
-                {
-                    // This approach doesn't work on this platform, so don't try it again.
-                    SetUserAgentUsingReflection = false;
-                }
-            }
-            if (!userAgentSet && SetUserAgentUsingDirectHeaderManipulation)
-            {
-                // platform does not support UserAgent property...too bad
-                try
-                {
-                    request.UserAgent = agent;
-                }
-                catch (ArgumentException)
-                {
-                    SetUserAgentUsingDirectHeaderManipulation = false;
-                    throw;
-                }
-            }
-        }
     }
 }
