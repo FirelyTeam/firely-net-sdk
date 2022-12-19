@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Specification.Tests
             const string resourceUri = "http://hl7.org/fhir/ValueSet/currencies";
 
             // Create empty in-memory resolver
-            var mem = new InMemoryProfileResolver();
+            var mem = new InMemoryResourceResolver();
             var cache = new CachedResolver(mem);
 
             // Load on demand should return null
