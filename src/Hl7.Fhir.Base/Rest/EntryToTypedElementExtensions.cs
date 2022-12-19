@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Rest
                      ? ser.DeserializeFromJson(bodyText) : ser.DeserializeFromXml(bodyText);
 
             }
-            catch (Exception ex) when (ex is FormatException or DeserializationFailedException && !throwOnFormatException ||
+            catch (Exception ex) when ((ex is FormatException or DeserializationFailedException && !throwOnFormatException) ||
                                        ex is InvalidOperationException)
             {
                 return null;

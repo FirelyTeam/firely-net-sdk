@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Tasks.Task TestToTypedEntryResponse()
         {
-            var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
+            var xml = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"true\" /></Patient>";
             var response = new EntryResponse
             {
                 ContentType = "text/xml; charset=us-ascii",

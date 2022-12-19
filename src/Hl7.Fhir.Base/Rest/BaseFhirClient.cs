@@ -22,7 +22,6 @@ namespace Hl7.Fhir.Rest
     {
         private readonly ModelInspector _inspector;
         private readonly IFhirSerializationEngine _serializationEngine;
-        private readonly string _fhirVersion;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -41,13 +40,10 @@ namespace Hl7.Fhir.Rest
         public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
         {
             _inspector = inspector;
-            _serializationEngine = settings?.SerializationEngine ?? GetDefaultElementModelSerializers(inspector, settings?.ParserSettings);
-            _fhirVersion = settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ?? 
-                throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
-                $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            
+            _serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+
             HttpClientRequester requester = new(Endpoint, Settings, messageHandler ?? makeDefaultHandler(), messageHandler == null);
             Requester = requester;
 
@@ -72,12 +68,9 @@ namespace Hl7.Fhir.Rest
         public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)            
         {
             _inspector = inspector;
-            _serializationEngine = settings?.SerializationEngine ?? GetDefaultElementModelSerializers(inspector, settings?.ParserSettings);
-            _fhirVersion = settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ??
-                throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
-                $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
+            _serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
 
             HttpClientRequester requester = new(Endpoint, Settings, httpClient);
             Requester = requester;
@@ -85,6 +78,10 @@ namespace Hl7.Fhir.Rest
             // Expose default request headers to user.
             RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
+
+        private string fhirVersion => Settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ?? 
+                throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
+                $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
 
         public BaseFhirClient(Uri endpoint, ModelInspector inspector, FhirClientSettings? settings = null) : 
             this(endpoint, (HttpMessageHandler?)null, inspector, settings)
@@ -100,8 +97,11 @@ namespace Hl7.Fhir.Rest
             };
        
         internal static IFhirSerializationEngine GetDefaultElementModelSerializers(ModelInspector inspector, ParserSettings? settings = null) 
-            => new ElementModelSerializers(inspector, settings);
-       
+            => new ElementModelSerializers(inspector, () => settings);
+
+        private IFhirSerializationEngine getDefaultElementModelSerializers()
+            => new ElementModelSerializers(_inspector, () => Settings.ParserSettings);
+
         internal IClientRequester Requester { get; init; }
         
         /// <summary>
@@ -1025,14 +1025,26 @@ namespace Hl7.Fhir.Rest
             await verifyServerVersion();
 
             var request = tx.Entry[0];
-            var entryRequest = await request.ToEntryRequestAsync(Settings, _serializationEngine, _fhirVersion).ConfigureAwait(false);
+            var entryRequest = await request.ToEntryRequestAsync(Settings, _serializationEngine, fhirVersion).ConfigureAwait(false);
 
             var entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
             var typedEntryResponse = new TypedEntryResponse();
+            Bundle.EntryComponent? response = null;
 
             try
             {
                 typedEntryResponse = entryResponse.ToTypedEntryResponse(_serializationEngine);
+                response = typedEntryResponse.ToBundleEntry();
+
+                LastResult = response.Response;
+                LastBodyAsResource = response.Resource;
+
+                if (!typedEntryResponse.IsSuccessful())
+                {
+                    Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                    throw FhirOperationException.BuildFhirOperationException(code, response.Resource, typedEntryResponse.GetBodyAsText());
+                }
+
             }
             catch (UnsupportedBodyTypeException ex)
             {
@@ -1053,33 +1065,12 @@ namespace Hl7.Fhir.Rest
                 Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                 throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
             }
-
-            Bundle.EntryComponent? response = null;
-
-            try
-            {
-                response = typedEntryResponse.ToBundleEntry();
-
-                LastResult = response.Response;
-                LastBodyAsResource = response.Resource;
-
-                if (!typedEntryResponse.IsSuccessful())
-                {
-                    Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
-                    throw FhirOperationException.BuildFhirOperationException(code, response.Resource, typedEntryResponse.GetBodyAsText());
-                }
-
-            }
-            catch (AggregateException ae)
-            {
-                throw ae.GetBaseException();
-            }
             catch (StructuralTypeException ste)
             {
                 if (!Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {_fhirVersion}? " +
+                        $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
                         "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
                         ste.InnerException);
 
@@ -1167,9 +1158,9 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!SemVersion.CheckMinorVersionCompatibility(_fhirVersion, serverVersion))
+            else if (!SemVersion.CheckMinorVersionCompatibility(fhirVersion, serverVersion))
             {
-                throw Error.NotSupported($"This client supports FHIR version {_fhirVersion} but the server uses version {serverVersion}");
+                throw Error.NotSupported($"This client supports FHIR version {fhirVersion} but the server uses version {serverVersion}");
             }
 
         }
@@ -1242,19 +1233,25 @@ namespace Hl7.Fhir.Rest
         private class ElementModelSerializers : IFhirSerializationEngine
         {
             private readonly ModelInspector _inspector;
-            private readonly PocoBuilderSettings _settings;
+            private readonly Func<ParserSettings?> _settingsRetriever;
 
-            public ElementModelSerializers(ModelInspector inspector, ParserSettings? settings=null)
+            public ElementModelSerializers(ModelInspector inspector, Func<ParserSettings?> settingsRetriever)
             {
                 _inspector = inspector;
-                _settings = BaseFhirParser.BuildPocoBuilderSettings(settings ?? ParserSettings.CreateDefault());
+                _settingsRetriever = settingsRetriever;
             }
 
-            public virtual Resource DeserializeFromXml(string data) =>
-               (Resource)FhirXmlNode.Parse(data).ToPoco(_inspector, null, _settings);
+            public virtual Resource DeserializeFromXml(string data)
+            {
+                var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
+                return (Resource)FhirXmlNode.Parse(data).ToPoco(_inspector, null, settings);
+            }
 
-            public virtual Resource DeserializeFromJson(string data) =>
-                (Resource)FhirJsonNode.Parse(data).ToPoco(_inspector, null, _settings);
+            public virtual Resource DeserializeFromJson(string data)
+            {
+                var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
+                return (Resource)FhirJsonNode.Parse(data).ToPoco(_inspector, null, settings);
+            }
 
             public byte[] SerializeToXml(Base instance) =>
                 new CommonFhirXmlSerializer(_inspector).SerializeToBytes(instance, summary: SummaryType.False);

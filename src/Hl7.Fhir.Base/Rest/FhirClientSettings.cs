@@ -2,6 +2,8 @@
 using Hl7.Fhir.Utility;
 using System;
 
+#nullable enable
+
 namespace Hl7.Fhir.Rest
 {
     public class FhirClientSettings
@@ -16,7 +18,7 @@ namespace Hl7.Fhir.Rest
         /// Normally, the FhirClient will derive the FHIR version (e.g. 4.0.3) from the metadata of the assembly. Use this
         /// member to override this version.
         /// </summary>
-        public string ExplicitFhirVersion;
+        public string? ExplicitFhirVersion;
 
         /// <summary>
         /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
@@ -72,13 +74,13 @@ namespace Hl7.Fhir.Rest
         /// POCO's into FHIR xml/json data and vice versa. If not set, the FhirClient will use the default
         /// behaviour.
         /// </summary>
-        public IFhirSerializationEngine SerializationEngine;
+        public IFhirSerializationEngine? SerializationEngine;
 
         /// <summary>
         /// The settings used for the parser used by the FhirClient to turn the received FHIR data into
         /// POCO's. If <see cref="SerializationEngine"/> is set, these will be ignored.
         /// </summary>
-        public ParserSettings ParserSettings = ParserSettings.CreateDefault();
+        public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
         public FhirClientSettings() { }
 
@@ -117,3 +119,5 @@ namespace Hl7.Fhir.Rest
     }
 }
 
+
+#nullable restore
