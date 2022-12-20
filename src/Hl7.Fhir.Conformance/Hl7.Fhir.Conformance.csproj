@@ -5,12 +5,10 @@
 
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.Conformance</PackageId>
-		<Title>HL7 FHIR Core support SDK</Title>
-		<Summary>Core .NET support for working with HL7 FHIR.</Summary>
-		<Description>This is the core support library for HL7's FHIR standard (http://hl7.org/fhir). It contains the core functionality to working with RESTful FHIR servers: POCO classes for FHIR, parsing/serialization of FHIR data and a FhirClient for easy access to FHIR servers.</Description>
 		<AssemblyName>Hl7.Fhir.Conformance</AssemblyName>
-		<PackageTags>HL7;FHIR;REST;parse;serialize;class;model;Firely;SDK</PackageTags>
-		<RootNamespace>Hl7.Fhir</RootNamespace>
+		<Title>Firely's HL7 FHIR SDK Conformance functionality</Title>
+		<Description>Conformance POCOs and related functionality for Firely's HL7 FHIR SDK. Is a dependency for the FHIR release-specific NuGet packages, but could be used separately in conformance-only scenario's for release R4 and up.</Description>
+		<PackageTags>HL7;FHIR;Firely;SDK;Conformance</PackageTags>
 	</PropertyGroup>
 
 	<ItemGroup>
