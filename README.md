@@ -3,6 +3,8 @@
 |[![Build Status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/FirelyTeam.firely-net-sdk?branchName=develop-stu3)](https://dev.azure.com/firely/firely-net-sdk/_build/latest?definitionId=84&branchName=develop-stu3)|[![Build Status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/FirelyTeam.firely-net-sdk?branchName=develop-r4)](https://dev.azure.com/firely/firely-net-sdk/_build/latest?definitionId=84&branchName=develop-r4)|[![Build Status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/FirelyTeam.firely-net-sdk?branchName=develop-r4B)](https://dev.azure.com/firely/firely-net-sdk/_build/latest?definitionId=84&branchName=develop-r4B)|[![Build Status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/FirelyTeam.firely-net-sdk?branchName=develop-r5)](https://dev.azure.com/firely/firely-net-sdk/_build/latest?definitionId=84&branchName=develop-r5)|
 | [![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.STU3)](https://www.nuget.org/packages/Hl7.Fhir.STU3) |[![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.R4)](https://www.nuget.org/packages/Hl7.Fhir.R4) | [![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.R4B)](https://www.nuget.org/packages/Hl7.Fhir.R4B)|[![Nuget](https://img.shields.io/nuget/dt/Hl7.Fhir.R5)](https://www.nuget.org/packages/Hl7.Fhir.R5) |
 
+> NOTE: There is now a [5.0 beta version of the SDK](https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0) available.
+
 ## Introduction ##
 This is the official support SDK for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
 
