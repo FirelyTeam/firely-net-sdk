@@ -287,59 +287,14 @@ stages:
               artifact: NuGetPackages
               displayName: Download artifact NuGetPackages
             - task: NuGetCommand@2
-              displayName: 'NuGet Push DSTU2 packages only'
-              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-dstu2')) 
+              displayName: 'NuGet Push packages'
               inputs:
                   command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*DSTU2*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
                   verbosityPush: normal    
                   includeSymbols: true
-            
-            - task: NuGetCommand@2
-              displayName: 'NuGet Push STU3 packages only and common packages'
-              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-stu3')) 
-              inputs:
-                command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
-                nuGetFeedType: external
-                publishFeedCredentials: NuGet
-                verbosityPush: normal  
-                includeSymbols: true  
-
-            - task: NuGetCommand@2
-              displayName: 'NuGet Push R4 packages only'
-              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4')) 
-              inputs:
-                command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4*.nupkg'
-                nuGetFeedType: external
-                publishFeedCredentials: NuGet
-                verbosityPush: normal  
-                includeSymbols: true  
-            
-            - task: NuGetCommand@2
-              displayName: 'NuGet Push R4B packages only'
-              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r4B')) 
-              inputs:
-                command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R4B*.nupkg'
-                nuGetFeedType: external
-                publishFeedCredentials: NuGet
-                verbosityPush: normal  
-                includeSymbols: true  
-
-            - task: NuGetCommand@2
-              displayName: 'NuGet Push R5 packages only'
-              condition: and(succeeded(), endswith(variables['Build.SourceBranch'], '-r5')) 
-              inputs:
-                command: push
-                packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*R5*.nupkg'
-                nuGetFeedType: external
-                publishFeedCredentials: NuGet
-                verbosityPush: normal 
-                includeSymbols: true  
             
   - deployment: relNotes
     displayName: Release Notes
