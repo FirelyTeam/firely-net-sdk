@@ -5,7 +5,8 @@
 	<PropertyGroup>
 		<PackageId>Hl7.Fhir.Base</PackageId>
 		<AssemblyName>Hl7.Fhir.Base</AssemblyName>
-		<Description>Firely's HL7 FHIR SDK base class library. Is a dependency for the FHIR release-specific NuGet packages and is usually not directly referenced.</Description>
+		<Title>Firely's HL7 FHIR SDK Base Class Library</Title>
+		<Description>Firely's HL7 FHIR SDK Base Class Library. Is a dependency for the FHIR release-specific NuGet packages and is usually not directly referenced.</Description>
 		<PackageTags>HL7;FHIR;Firely;SDK;BCL</PackageTags>
 	</PropertyGroup>
 
