@@ -22,16 +22,12 @@ Read the releases notes on [firely-net-sdk/releases](https://github.com/FirelyTe
 ## Getting Started ##
 Before installing one of the NuGet packages (or clone the repo) it is important to understand that HL7 has published several updates of the FHIR specification, each with breaking changes - so you need to ensure you use the version that is right for you:
 
-* [DSTU1][dstu1-spec] (published September 2014) is mostly obsolete and we are no longer maintaining this library for DSTU1.
-* [DSTU2][dstu2-spec] (published October 2015) is mostly obsolete and and we are no longer maintaining this library for DSTU2.
-* [STU3][stu3-spec] (published March 2017) is older, but still widely in use. Is fully supported by this library.
-* [R4][r4-spec] (published January 2019) is in active use and fully supported by this library.
-* [R4B][r4B-spec] (published May 2022) is the latest official release of the FHIR spec and is fully supported by this library.
+* [STU3][stu3-spec] (published March 2017) is older, but still widely in use and fully supported by the SDK.
+* [R4][r4-spec] (published January 2019) is in active use and fully supported by the SDK.
+* [R4B][r4B-spec] (published May 2022) is the latest official release of the FHIR spec and is fully supported by the SDK.
 * [R5][r5-spec] (not yet published) is work-in-progress. This library currently supports "snapshot-1".
 
-Planned release DSTU2.1 was never published by HL7, but you will still find traces of it. We are not maintaining the version, but the NuGet package is still available.
-
-Read the [online documentation][netsdk-docu], and download the correct NuGet package for your FHIR release. Depending on the version of FHIR you require, you'll find the relevant link to the package below. For most developers, just including this NuGet package is enough to get started. 
+Read the [online documentation][netsdk-docu], and download the correct for your FHIR release. Depending on the version of FHIR you require, you'll find the relevant link to the package below. For most developers, just including this NuGet package is enough to get started. 
 
 |Spec version|Git branch| NuGet|
 |---|---|---|
@@ -39,7 +35,6 @@ Read the [online documentation][netsdk-docu], and download the correct NuGet pac
 |R4B| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4B |
 |R4| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4 | 
 |STU3| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.STU3 | 
-|DSTU2| https://github.com/FirelyTeam/firely-net-sdk/tree/develop-dstu2 | https://www.nuget.org/packages/Hl7.Fhir.DSTU2 | 
 
 ## Upgrading
 We spend a lot of effort trying to maintain *compile* compatibility (not binary compatibility) between minor releases of the SDK. We do, however, publish a new major version with breaking changes about once a year. The table below lists the breaking changes for each of the major upgrades.
@@ -51,11 +46,13 @@ We spend a lot of effort trying to maintain *compile* compatibility (not binary 
 |4.x|https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-4.0|
 |5.x|https://github.com/FirelyTeam/firely-net-sdk/wiki/Breaking-changes-in-5.0|
 
-The SDK has been totally restructured for the 5.0 release. Please take not of the following changes if you are upgrading:
-* The additional `Hl7.Fhir.Specification` packages are no longer relevant starting at version 5.0 of the SDK and should not be included in your projects anymore.
-* The main NuGet package no longer contains the `specification.zip` file that contains all the conformance resources used in the FHIR specification. If you are using the `ZipSource` resolvers (e.g. for profile validation), you will need to include the correct `HL7.Fhir.Specification.Data.*` NuGet packages. We recommend you look at the newer [`FhirPackageResolver`](https://www.nuget.org/packages/Firely.Fhir.Packages) that directly use the HL7-published NPM packages. Documentation can be found [here](https://docs.fire.ly/projects/Firely-NET-SDK/fhir-package-source/package-source.html).
-* The profile validator has been split off into its own [repository](https://github.com/FirelyTeam/Hl7.Fhir.Validation.Legacy). The NuGet packages for the 5.0 version of the profile validator will be posted soon.
+The SDK has been restructured for the 5.0 release. Please take note of the following changes if you are upgrading:
+* You should only reference the main package (`Hl7.Fhir.<release>`). 
+* If you need the `specification.zip` (for validation, if you are using the `ZipSource` resolver), add `Hl7.Fhir.Specification.Data.<release>`.
+* The "old" `Hl7.Fhir.Specification.<release>` package is now a metapackage that will include these two packages.
+* You should not reference any other packages that existed pre-5.0 (`Hl7.Fhir.ElementModel` etc.)
 
+The profile validator has been split off into its own [repository](https://github.com/FirelyTeam/Hl7.Fhir.Validation.Legacy). The NuGet packages for the validator that are compatible with the SDK 5.0 release can be found on [NuGet](https://www.nuget.org/packages?q=Hl7.Fhir.Validation.Legacy).
 
 ## Support 
 We actively monitor the issues coming in through the GitHub repository at [https://github.com/FirelyTeam/firely-net-sdk/issues](https://github.com/FirelyTeam/firely-net-sdk/issues). You are welcome to register your bugs and feature suggestions there. For questions and broader discussions, we use the .NET FHIR Implementers chat on [Zulip][netsdk-zulip].
