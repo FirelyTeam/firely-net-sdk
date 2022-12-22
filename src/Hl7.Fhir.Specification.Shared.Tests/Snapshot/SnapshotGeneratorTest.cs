@@ -2188,7 +2188,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var source = new CachedResolver(new MultiResolver(_standardFhirSource, new InMemoryProfileResolver(sd)));
+            var source = new CachedResolver(new MultiResolver(_standardFhirSource, new InMemoryResourceResolver(sd)));
 
             var settings = new SnapshotGeneratorSettings(_settings)
             {
@@ -2277,7 +2277,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestBaseAnnotations_BackboneElement()
         {
             var sd = MyTestObservation;
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -3135,7 +3135,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Create a profile with a type slice: { value[x], value[x] : String }
             var profile = ObservationTypeSliceProfile;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3200,7 +3200,7 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = ObservationTypeSliceProfile;
             profile.Differential = null;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3218,7 +3218,7 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = ObservationTypeSliceProfile;
             profile.BaseDefinition = "http://example.org/fhir/StructureDefinition/missing";
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3297,8 +3297,8 @@ namespace Hl7.Fhir.Specification.Tests
             var profile = ObservationTypeResliceProfile;
             var baseProfile = ObservationTypeSliceProfile;
 
-            var resources = new IConformanceResource[] { profile, baseProfile };
-            var resolver = new InMemoryProfileResolver(resources);
+            var resources = new Resource[] { profile, baseProfile };
+            var resolver = new InMemoryResourceResolver(resources);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3359,7 +3359,7 @@ namespace Hl7.Fhir.Specification.Tests
             // Create a profile with a choice type constraint: value[x] => valueString
             var profile = ObservationTypeConstraintProfile;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3407,7 +3407,7 @@ namespace Hl7.Fhir.Specification.Tests
                     }
             );
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3524,7 +3524,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(obsProfile);
+            var resolver = new InMemoryResourceResolver(obsProfile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3587,7 +3587,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(obsProfile);
+            var resolver = new InMemoryResourceResolver(obsProfile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3639,7 +3639,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(obsProfile);
+            var resolver = new InMemoryResourceResolver(obsProfile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3698,7 +3698,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(obsProfile);
+            var resolver = new InMemoryResourceResolver(obsProfile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -3769,7 +3769,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var profile = ClosedExtensionSliceObservationProfile;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -4012,7 +4012,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -4108,7 +4108,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sdLocation, sdFlag);
+            var resolver = new InMemoryResourceResolver(sdLocation, sdFlag);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             (_, var expanded) = await generateSnapshotAndCompare(sdFlag);
@@ -4214,7 +4214,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var profile = SlicedPatientProfile;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
@@ -4386,7 +4386,7 @@ namespace Hl7.Fhir.Specification.Tests
             var baseProfile = NationalPatientProfile;
             var profile = SlicedNationalPatientProfile;
 
-            var resolver = new InMemoryProfileResolver(baseProfile, profile);
+            var resolver = new InMemoryResourceResolver(baseProfile, profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             StructureDefinition expanded = null;
@@ -4581,7 +4581,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var baseProfile = NationalPatientProfile;
             var profile = ReslicedNationalPatientProfile;
-            var resolver = new InMemoryProfileResolver(baseProfile, profile);
+            var resolver = new InMemoryResourceResolver(baseProfile, profile);
 
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -4949,7 +4949,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var profile = PatientNonTypeSliceProfile;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -5000,7 +5000,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var profile = ObservationSimpleQuantityProfile;
 
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -5219,7 +5219,7 @@ namespace Hl7.Fhir.Specification.Tests
 #endif
 
             var profile = TestQuestionnaireProfile;
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -5364,7 +5364,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestElementIds_PatientWithTypeSlice()
         {
             var profile = TestPatientTypeSliceProfile;
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -5448,7 +5448,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestElementIds_SlicedPatientWithCustomIdProfile()
         {
             var profile = TestSlicedPatientWithCustomIdProfile;
-            var resolver = new InMemoryProfileResolver(profile);
+            var resolver = new InMemoryResourceResolver(profile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -5723,7 +5723,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestTypeProfileWithChildElementBinding()
         {
             var patientProfile = PatientProfileWithIdentifierProfile;
-            var resolver = new InMemoryProfileResolver(patientProfile, PatientIdentifierProfile);
+            var resolver = new InMemoryResourceResolver(patientProfile, PatientIdentifierProfile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -5815,7 +5815,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestQRSliceChildrenBindings()
         {
             var sd = QuestionnaireResponseWithSlice;
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -5885,7 +5885,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestDerivedObservation()
         {
             var derivedObs = MyDerivedObservation;
-            var resolver = new InMemoryProfileResolver(derivedObs);
+            var resolver = new InMemoryResourceResolver(derivedObs);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -5958,7 +5958,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestNamedTypeSlice()
         {
             var derivedObs = MyNamedTypeSlice;
-            var resolver = new InMemoryProfileResolver(derivedObs);
+            var resolver = new InMemoryResourceResolver(derivedObs);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -5996,7 +5996,7 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var derivedObs = MyDerivedObservation;
             var moreDerivedObs = MyMoreDerivedObservation;
-            var resolver = new InMemoryProfileResolver(derivedObs, moreDerivedObs);
+            var resolver = new InMemoryResourceResolver(derivedObs, moreDerivedObs);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -6086,7 +6086,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestNamedSliceMinCardinality()
         {
             var sd = MySlicedDocumentReference;
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -6195,7 +6195,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestConstraintOnSliceEntry()
         {
             var sd = MyMoreDerivedPatient;
-            var resolver = new InMemoryProfileResolver(sd, MySlicedBasePatient);
+            var resolver = new InMemoryResourceResolver(sd, MySlicedBasePatient);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -6274,7 +6274,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestSimpleQuantitySlice()
         {
             var sd = MedicationUsageWithSimpleQuantitySlice;
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -6429,7 +6429,7 @@ namespace Hl7.Fhir.Specification.Tests
         public async T.Task TestPatientDe()
         {
             var sd = SL_PatientDerived;
-            var resolver = new InMemoryProfileResolver(sd, SL_PatientBasis, SL_HumanNameBasis, SL_HumanNameTitleSuffix);
+            var resolver = new InMemoryResourceResolver(sd, SL_PatientBasis, SL_HumanNameBasis, SL_HumanNameTitleSuffix);
             var multiResolver = new MultiResolver(_testResolver, resolver);
 
             _generator = new SnapshotGenerator(multiResolver, _settings);
@@ -6514,7 +6514,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             var (_, expanded) = await generateSnapshotAndCompare(sd);
@@ -6640,7 +6640,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Kind = StructureDefinition.StructureDefinitionKind.Resource
             };
 
-            var resolver = new InMemoryProfileResolver(sdHumanNameExtension, sdHumanName, sdBasePatient, sdDerivedPatient);
+            var resolver = new InMemoryResourceResolver(sdHumanNameExtension, sdHumanName, sdBasePatient, sdDerivedPatient);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             (_, var expanded) = await generateSnapshotAndCompare(sdDerivedPatient);
@@ -6705,7 +6705,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             var (_, expanded) = await generateSnapshotAndCompare(sd);
@@ -6800,7 +6800,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             var (_, expanded) = await generateSnapshotAndCompare(sd);
@@ -6879,7 +6879,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
             var (_, expanded) = await generateSnapshotAndCompare(sd);
@@ -6997,7 +6997,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (!string.IsNullOrEmpty(differentialElement))
                 sd.Differential.Element.Add(new ElementDefinition($"{BundleEntryResource}.{differentialElement}") { Min = 1 });
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(resolver, _testResolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -7369,7 +7369,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sd, QuestionnaireWithNestedItems);
+            var resolver = new InMemoryResourceResolver(sd, QuestionnaireWithNestedItems);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -7468,7 +7468,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(sdBase, sdDerived);
+            var resolver = new InMemoryResourceResolver(sdBase, sdDerived);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -7586,7 +7586,7 @@ namespace Hl7.Fhir.Specification.Tests
             };
 
 
-            var resolver = new InMemoryProfileResolver(sd);
+            var resolver = new InMemoryResourceResolver(sd);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -7695,7 +7695,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(ReportProfile, ReferenceProfile);
+            var resolver = new InMemoryResourceResolver(ReportProfile, ReferenceProfile);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             var generator = _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -7862,7 +7862,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            //var resolver = new InMemoryProfileResolver(ObservationProfileWithImplicitTypeSlice);
+            //var resolver = new InMemoryResourceResolver(ObservationProfileWithImplicitTypeSlice);
             //var multiResolver = new MultiResolver(_testResolver, resolver);
             //_generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -8124,7 +8124,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestPatientWithExtensionWithImplicitTypeSlice()
         {
-            var resolver = new InMemoryProfileResolver(ExtensionWithImplicitTypeSlice);
+            var resolver = new InMemoryResourceResolver(ExtensionWithImplicitTypeSlice);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -8229,7 +8229,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestPatientWithExtensionWithImplicitTypeSliceMixed()
         {
-            var resolver = new InMemoryProfileResolver(ExtensionWithImplicitTypeSlice);
+            var resolver = new InMemoryResourceResolver(ExtensionWithImplicitTypeSlice);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -8413,7 +8413,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestPatientWithExtensionWithVerboseTypeSlice()
         {
-            var resolver = new InMemoryProfileResolver(ExtensionWithVerboseTypeSlice);
+            var resolver = new InMemoryResourceResolver(ExtensionWithVerboseTypeSlice);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -8511,7 +8511,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestPatientWithExtensionWithVerboseTypeSliceMixed()
         {
-            var resolver = new InMemoryProfileResolver(ExtensionWithVerboseTypeSlice);
+            var resolver = new InMemoryResourceResolver(ExtensionWithVerboseTypeSlice);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -8664,7 +8664,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(PatientWithExtension, SimplePatientExtension);
+            var resolver = new InMemoryResourceResolver(PatientWithExtension, SimplePatientExtension);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
@@ -9690,7 +9690,7 @@ namespace Hl7.Fhir.Specification.Tests
                 }
             };
 
-            var resolver = new InMemoryProfileResolver(baseStructureDefinition, derivedStructureDefinition);
+            var resolver = new InMemoryResourceResolver(baseStructureDefinition, derivedStructureDefinition);
             var multiResolver = new MultiResolver(_testResolver, resolver);
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
