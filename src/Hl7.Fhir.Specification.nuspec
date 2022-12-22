@@ -29,7 +29,7 @@ Example: nuget pack hl7.fhir.specification.nuspec -properties sdkversion=5.0.0-b
     </dependencies>
   </metadata>
   <files>
-    <file src="icon-firely-sdk-128.png" />
-    <file src="README.md" />
+    <file src="../icon-firely-sdk-128.png" />
+    <file src="../README.md" />
   </files>
 </package>
