@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Tests
 
                     var actS = (string)act;
 
-                    if (path.EndsWith("meta.lastUpdated"))
+                    if (path.EndsWith("meta.lastUpdated") || path.EndsWith("timestamp"))
                     {
                         // hack: ignore meta.lastUpdated values
 
