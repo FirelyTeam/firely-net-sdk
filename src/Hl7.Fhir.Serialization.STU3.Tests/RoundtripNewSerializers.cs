@@ -68,9 +68,9 @@ namespace Hl7.Fhir.Serialization.Tests
             var intermediate2Path = Path.Combine(targetDir, intermediate2Folder);
             createEmptyDir(intermediate2Path);
 
-            var xmlSerializer = new FhirXmlPocoSerializer(Specification.FhirRelease.STU3);
-            var xmlDeserializer = new FhirXmlPocoDeserializer(typeof(ModelInfo).Assembly);
-            var jsonOptions = new JsonSerializerOptions().ForFhir(typeof(Patient).Assembly).Pretty();
+            var xmlSerializer = new FhirXmlPocoSerializer(ModelInfo.ModelInspector.FhirRelease);
+            var xmlDeserializer = new FhirXmlPocoDeserializer(ModelInfo.ModelInspector);
+            var jsonOptions = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector).Pretty();
 
             files.ForEach(f => objects.Add(new object[] { f, targetDir, xmlSerializer, xmlDeserializer, jsonOptions }));
 
