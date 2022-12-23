@@ -25,19 +25,33 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Initializes an instance of the deserializer.
         /// </summary>
+        /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+        public FhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+        {
+            // nothing
+        }
+
+        /// <summary>
+        /// Initializes an instance of the deserializer.
+        /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
         public FhirXmlPocoDeserializer(Assembly assembly, FhirXmlPocoDeserializerSettings settings)
         {
-            Assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
             Settings = settings;
-            _inspector = ModelInspector.ForAssembly(assembly);
+            _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
         }
 
         /// <summary>
-        /// Assembly containing the POCO classes the deserializer will use to deserialize data into.
+        /// Initializes an instance of the deserializer.
         /// </summary>
-        public Assembly Assembly { get; }
+        /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+        /// <param name="settings">A settings object to be used by this instance.</param>
+        public FhirXmlPocoDeserializer(ModelInspector inspector, FhirXmlPocoDeserializerSettings settings)
+        {
+            Settings = settings;
+            _inspector = inspector;
+        }
 
         /// <summary>
         /// The settings that were passed to the constructor.
@@ -69,6 +83,17 @@ namespace Hl7.Fhir.Serialization
             return !state.Errors.HasExceptions
                 ? result!
                 : throw new DeserializationFailedException(result, state.Errors);
+        }
+
+        /// <summary>
+        /// Deserialize the FHIR xml from a string and create a new POCO resource containing the data from the reader.
+        /// </summary>
+        /// <param name="data">A string containing the XML from which to deserialize the resource.</param>
+        /// <returns>A fully initialized POCO with the data from the reader.</returns>
+        public Resource DeserializeResource(string data)
+        {
+            var xmlReader = SerializationUtil.XmlReaderFromXmlText(data);
+            return DeserializeResource(xmlReader);
         }
 
         /// <summary>
@@ -172,7 +197,7 @@ namespace Hl7.Fhir.Serialization
         internal Base DeserializeElementInternal(Type targetType, XmlReader reader, FhirXmlPocoDeserializerState state)
         {
             var mapping = _inspector.FindOrImportClassMapping(targetType) ??
-              throw new ArgumentException($"Type '{targetType}' could not be located in model assembly '{Assembly}' and can " +
+              throw new ArgumentException($"Type '{targetType}' could not be located and can " +
                   $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
 
             //check if we are at an opening element.

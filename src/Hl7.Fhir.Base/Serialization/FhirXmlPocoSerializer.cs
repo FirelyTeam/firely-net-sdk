@@ -63,6 +63,8 @@ namespace Hl7.Fhir.Serialization
             writer.WriteEndDocument();
         }
 
+
+
         /// <summary>
         /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
         /// </summary>

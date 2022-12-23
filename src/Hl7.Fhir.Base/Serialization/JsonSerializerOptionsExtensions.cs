@@ -10,6 +10,7 @@
 
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System.Reflection;
 using System.Text.Json;
@@ -47,6 +48,31 @@ namespace Hl7.Fhir.Serialization
             var converter = new FhirJsonConverterFactory(modelAssembly, serializerSettings, deserializerSettings);
             return options.ForFhir(converter);
         }
+
+        public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, ModelInspector inspector) =>
+            options.ForFhir(inspector, new(), new());
+
+        /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
+        public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoSerializerSettings serializerSettings) =>
+            options.ForFhir(inspector, serializerSettings, new());
+
+        /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
+        public static JsonSerializerOptions ForFhir(this JsonSerializerOptions options, ModelInspector inspector, FhirJsonPocoDeserializerSettings deserializerSettings) =>
+        options.ForFhir(inspector, new(), deserializerSettings);
+
+        /// <inheritdoc cref="ForFhir(JsonSerializerOptions, Assembly)"/>
+        public static JsonSerializerOptions ForFhir(
+                this JsonSerializerOptions options,
+                ModelInspector inspector,
+                FhirJsonPocoSerializerSettings serializerSettings,
+                FhirJsonPocoDeserializerSettings deserializerSettings
+                )
+        {
+            var converter = new FhirJsonConverterFactory(inspector, serializerSettings, deserializerSettings);
+            return options.ForFhir(converter);
+        }
+
+
 
         /// <summary>
         /// Initialize the options to serialize using the JsonFhirConverterFactory, producing compact output without whitespace.
