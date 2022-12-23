@@ -79,6 +79,10 @@ namespace Hl7.Fhir.Serialization.Tests
         }
         private static bool skipFile(string file)
         {
+            if (file.Contains("notification-") || file.Contains("subscriptionstatus-"))
+                return true; // These are Subscription resources that have invalid data in R5.
+            if (file.Contains("integer64.profile.json") || file.Contains("documentreference-example.json") || file.Contains("documentmanifest-fm-attachment.json") || file.Contains("communication-example-fm-solicited-attachment.json") || file.Contains("communication-example-fm-attachment.json"))
+                return true; // Are examples that have quotes around integers in R5
             if (file.Contains("examplescenario-example"))
                 return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("json-edge-cases"))
@@ -91,9 +95,14 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true;
             if (file.Contains("profiles-resources"))
                 return true;
+            if (file.Contains("profiles-types"))
+                return true;
+            if (file.Contains("dataelements"))
+                return true;
             if (file.Contains("valuesets"))
                 return true;
-
+            if (file.Contains("xver-paths-4.6") || file.Contains("hl7.fhir.r5.corexml.manifest") || file.Contains("hl7.fhir.r5.expansions.manifest") || file.Contains("hl7.fhir.r5.core.manifest") || file.Contains("uml"))
+                return true; // non-fhir-files in the R5 examples.zip
             return false;
         }
 
