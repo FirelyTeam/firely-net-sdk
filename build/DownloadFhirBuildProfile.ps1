@@ -6,7 +6,7 @@
 # Script to be run from 'build' directory
 
 param(
-     [Parameter(Mandatory, HelpMessage="Enter the url from which the specification is to be downloaded")]
+     [Parameter(Mandatory, HelpMessage="Enter the url 	from which the specification is to be downloaded")]
      [string]$server = "http://hl7.org/fhir/STU3/",
 	 
 	 [ValidateSet('STU3', 'R4', 'R4B', 'R5')]
@@ -357,12 +357,18 @@ CopySpecFile "search-parameters.xml" $specificationDir
 CopySpecFile "valuesets.xml" $specificationDir
 
 # Add example files used for testing
-PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
-PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
+
+if ($fhirRelease -eq "STU3") 
+{
+	PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
+	PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
+	PowerCurl "$srcdir\Hl7.Fhir.Serialization.$fhirRelease.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
+}
+
 PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\examples.zip" "$server/examples.zip"
 PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
 PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
-PowerCurl "$srcdir\Hl7.Fhir.Serialization.$fhirRelease.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
+
 PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
 
