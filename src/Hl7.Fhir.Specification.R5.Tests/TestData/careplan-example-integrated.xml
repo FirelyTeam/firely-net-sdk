@@ -43,7 +43,7 @@
           <tr>
             <td>27 Aug 2012</td>
             <td>Eve will increase her energy by being more active</td>
-            <td>Eve will walk her friend&#39;s dog up and down a big hill 15-30 minutes 3 days a week</td>
+            <td>Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week</td>
             <td>In Process</td>
             <td>10 Sep 2012</td>
             <td>8/27/12 Eve would like to try for 5 days a week.  9/10/12 Eve is still walking the dogs.</td>
@@ -117,7 +117,7 @@
     </div>
   </text>
   <contained>
-    <!--  Conditions could be further encoded and detailed.  
+      <!--  Conditions could be further encoded and detailed.  
       Could also be handled as references to external resources.
       And not essential to have them captured at all.
       For purposes of example, will represent this way.  -->
@@ -269,21 +269,21 @@
   <addresses>
     <reference>
       <reference value="#p1"/>    
-      <!--  Local reference  -->
+        <!--  Local reference  -->
       <display value="GERDS"/>
     </reference>
   </addresses>
   <addresses>
     <reference>
       <reference value="#p2"/>
-      <!--  Local reference  -->
+        <!--  Local reference  -->
       <display value="Obesity"/>
     </reference>
   </addresses>
   <addresses>
     <reference>
       <reference value="#p3"/>
-      <!--  Local reference  -->
+        <!--  Local reference  -->
       <display value="Psoriasis"/>
     </reference>
   </addresses>
@@ -380,7 +380,7 @@
       <scheduledPeriod>
         <start value="2012-08-27"/>
       </scheduledPeriod>
-      <description value="Eve will walk her friend&#39;s dog up and down a big hill 15-30 minutes 3 days a week"/>
+      <description value="Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week"/>
     </plannedActivityDetail>
   </activity>
   <activity>
