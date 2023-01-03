@@ -60,7 +60,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
             examples.ExtractToDirectory(inputPath);
             var files = getFiles(Path.Combine(inputPath), new[] { "*.xml", "*.json" }, SearchOption.AllDirectories).ToList();
-            var objects = new List<object[]>();
 
             var intermediate1Path = Path.Combine(targetDir, intermediate1Folder);
             createEmptyDir(intermediate1Path);
@@ -72,10 +71,9 @@ namespace Hl7.Fhir.Serialization.Tests
             var xmlDeserializer = new FhirXmlPocoDeserializer(ModelInfo.ModelInspector);
             var jsonOptions = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector).Pretty();
 
-            files.Where(f => !skipFile(f)).ToList()
-                 .ForEach(f => objects.Add(new object[] { f, targetDir, xmlSerializer, xmlDeserializer, jsonOptions }));
-
-            return objects;
+            return files.Where(f => !skipFile(f))
+                 .Select(f => new object[] { f, targetDir, xmlSerializer, xmlDeserializer, jsonOptions })
+                 .ToList();
         }
         private static bool skipFile(string file)
         {
