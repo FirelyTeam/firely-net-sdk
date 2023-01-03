@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Identifies where the resource comes from
+    /// Identifies where the resource comes from. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("source", InSummary=true, Order=50, Since=FhirRelease.R4)]
     [DataMember]
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
           return Tag?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
             return UrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -591,7 +591,7 @@ namespace Hl7.Fhir.Model
             return Response is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
             return ScoreElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
             return IfNoneExistElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1362,7 +1362,7 @@ namespace Hl7.Fhir.Model
             return Outcome is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1425,7 +1425,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the bundle was assembled
+    /// When the bundle was assembled. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("timestamp", InSummary=true, Order=70, FiveWs="FiveWs.init", Since=FhirRelease.R4)]
     [DataMember]
@@ -1646,7 +1646,7 @@ namespace Hl7.Fhir.Model
           return Signature is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

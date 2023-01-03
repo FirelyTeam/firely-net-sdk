@@ -66,7 +66,7 @@
   // Used in model class (resource): ClaimResponse.outcome
   // Used in model class (resource): ExplanationOfBenefit.outcome
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): Use (http://hl7.org/fhir/ValueSet/claim-use)
+// Deferred generation of Shared Enumeration (will be generated in another subset): ClaimUseCode (http://hl7.org/fhir/ValueSet/claim-use)
   // Used in model class (resource): Claim.use
   // Used in model class (resource): ClaimResponse.use
   // Used in model class (resource): ExplanationOfBenefit.use
@@ -174,7 +174,7 @@
   // Used in model class (resource): Measure.group.improvementNotation
   // Used in model class (resource): MeasureReport.improvementNotation
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): messageheader_response_request (http://hl7.org/fhir/ValueSet/messageheader-response-request)
+// Deferred generation of Shared Enumeration (will be generated in another subset): MessageheaderResponseRequest (http://hl7.org/fhir/ValueSet/messageheader-response-request)
   // Used in model class (resource): MessageDefinition.responseRequired
   // Used in model class (type): Extension.value[x]
 
