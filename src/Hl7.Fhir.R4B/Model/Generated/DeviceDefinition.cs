@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
             return JurisdictionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
             return TypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
             return VersionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -723,7 +723,7 @@ namespace Hl7.Fhir.Model
             return Description?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -878,7 +878,7 @@ namespace Hl7.Fhir.Model
             return ValueCode?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1068,7 +1068,7 @@ namespace Hl7.Fhir.Model
             return AllergenicIndicatorElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1699,7 +1699,7 @@ namespace Hl7.Fhir.Model
           return Material?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

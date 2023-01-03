@@ -1009,7 +1009,7 @@ namespace Hl7.Fhir.Model
           return RelevantHistory?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

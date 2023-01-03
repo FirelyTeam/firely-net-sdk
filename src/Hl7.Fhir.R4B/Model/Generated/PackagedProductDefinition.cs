@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
             return Jurisdiction is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
             return Package?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -663,7 +663,7 @@ namespace Hl7.Fhir.Model
             return SpecialPrecautionsForStorage?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -798,7 +798,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
             return Amount is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1365,7 +1365,7 @@ namespace Hl7.Fhir.Model
           return Package is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
             return Stratifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
             return SubjectResults is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -587,7 +587,7 @@ namespace Hl7.Fhir.Model
             return Stratum?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
             return MeasureScore is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -897,7 +897,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
             return SubjectResults is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1464,7 +1464,7 @@ namespace Hl7.Fhir.Model
           return EvaluatedResource?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             return Reference?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
             return Source is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Model
             return Strength is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
             return Cost is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -835,7 +835,7 @@ namespace Hl7.Fhir.Model
             return NameElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -992,7 +992,7 @@ namespace Hl7.Fhir.Model
             return PatientCharacteristics?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1126,7 +1126,7 @@ namespace Hl7.Fhir.Model
             return Dosage?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1279,7 +1279,7 @@ namespace Hl7.Fhir.Model
             return ValueElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1412,7 +1412,7 @@ namespace Hl7.Fhir.Model
             return Classification?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1543,7 +1543,7 @@ namespace Hl7.Fhir.Model
             return Quantity is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1676,7 +1676,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1854,7 +1854,7 @@ namespace Hl7.Fhir.Model
             return MaxDispense is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2007,7 +2007,7 @@ namespace Hl7.Fhir.Model
             return AllowedElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2118,7 +2118,7 @@ namespace Hl7.Fhir.Model
             return Schedule is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2249,7 +2249,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2403,7 +2403,7 @@ namespace Hl7.Fhir.Model
             return HalfLifePeriod is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3000,7 +3000,7 @@ namespace Hl7.Fhir.Model
           return Kinetics?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

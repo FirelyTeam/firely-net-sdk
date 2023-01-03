@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
             return MeasurementType is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -630,7 +630,7 @@ namespace Hl7.Fhir.Model
             return Amount is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
             return Representation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
             return Document is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1346,7 +1346,7 @@ namespace Hl7.Fhir.Model
             return Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1715,7 +1715,7 @@ namespace Hl7.Fhir.Model
             return Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1894,7 +1894,7 @@ namespace Hl7.Fhir.Model
             return DateElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2158,7 +2158,7 @@ namespace Hl7.Fhir.Model
             return Source?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2358,7 +2358,7 @@ namespace Hl7.Fhir.Model
             return CountryOfOrigin?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2873,7 +2873,7 @@ namespace Hl7.Fhir.Model
           return SourceMaterial is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
