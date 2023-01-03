@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.ConceptSetComponent> _Exclude;
 
       /// <summary>
-      /// Property to return if client doesn't override
+      /// Property to return if client doesn't override. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
       [FhirElement("property", Order=80, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
             return PropertyElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// A copyright statement for the specific code system included in the value set
+      /// A copyright statement for the specific code system included in the value set. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
       [FhirElement("copyright", Order=90, Since=FhirRelease.R5)]
       [DataMember]
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
             return CopyrightElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -780,7 +780,7 @@ namespace Hl7.Fhir.Model
             return Designation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1181,7 +1181,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1348,7 +1348,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.ParameterComponent> _Parameter;
 
       /// <summary>
-      /// Additional information supplied about each concept
+      /// Additional information supplied about each concept. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
       [FhirElement("property", Order=90, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
@@ -1494,7 +1494,7 @@ namespace Hl7.Fhir.Model
             return Contains?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1651,7 +1651,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1819,7 +1819,7 @@ namespace Hl7.Fhir.Model
             return UriElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2046,7 +2046,7 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.ValueSet.DesignationComponent> _Designation;
 
       /// <summary>
-      /// Property value for the concept
+      /// Property value for the concept. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
       [FhirElement("property", Order=110, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
@@ -2208,7 +2208,7 @@ namespace Hl7.Fhir.Model
             return Contains?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2368,7 +2368,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2574,7 +2574,7 @@ namespace Hl7.Fhir.Model
             return ExclusionCriteriaElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2991,7 +2991,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ValueSet.ExpansionComponent _Expansion;
 
     /// <summary>
-    /// Description of the semantic space the Value Set Expansion is intended to cover
+    /// Description of the semantic space the Value Set Expansion is intended to cover. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
     [FhirElement("scope", Order=270, Since=FhirRelease.R5)]
     [DataMember]
@@ -3218,7 +3218,7 @@ namespace Hl7.Fhir.Model
           return Scope is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

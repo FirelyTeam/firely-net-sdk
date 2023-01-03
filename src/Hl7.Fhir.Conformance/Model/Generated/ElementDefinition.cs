@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
             return RulesElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -608,7 +608,7 @@ namespace Hl7.Fhir.Model
             return PathElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
             return MaxElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1108,7 +1108,7 @@ namespace Hl7.Fhir.Model
             return VersioningElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1262,7 +1262,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1628,7 +1628,7 @@ namespace Hl7.Fhir.Model
             return SourceElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1841,7 +1841,7 @@ namespace Hl7.Fhir.Model
             return ValueSetElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2089,7 +2089,7 @@ namespace Hl7.Fhir.Model
             return CommentElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3201,7 +3201,7 @@ namespace Hl7.Fhir.Model
           return Mapping?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
