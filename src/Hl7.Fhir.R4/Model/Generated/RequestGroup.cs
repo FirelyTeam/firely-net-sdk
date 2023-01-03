@@ -728,7 +728,7 @@ namespace Hl7.Fhir.Model
             return Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -896,7 +896,7 @@ namespace Hl7.Fhir.Model
             return Expression is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
             return Offset is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1678,7 +1678,7 @@ namespace Hl7.Fhir.Model
           return Action?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

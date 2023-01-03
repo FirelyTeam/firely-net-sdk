@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
             return Item is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Model
           return RelatedEntry?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

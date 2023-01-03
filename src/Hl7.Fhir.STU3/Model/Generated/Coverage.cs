@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
             return SubClassDisplayElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1143,7 +1143,7 @@ namespace Hl7.Fhir.Model
           return Contract?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             return ImmediatePackaging is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
             return Manufacturer?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -837,7 +837,7 @@ namespace Hl7.Fhir.Model
           return PackageItem?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
             return ValidityPeriod is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -418,7 +418,7 @@ namespace Hl7.Fhir.Model
             return Application?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -914,7 +914,7 @@ namespace Hl7.Fhir.Model
           return Procedure is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

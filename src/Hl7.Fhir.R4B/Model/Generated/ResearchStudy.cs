@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
             return DescriptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -458,7 +458,7 @@ namespace Hl7.Fhir.Model
             return Type is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1103,7 +1103,7 @@ namespace Hl7.Fhir.Model
           return Objective?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

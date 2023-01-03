@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
             return TimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -796,7 +796,7 @@ namespace Hl7.Fhir.Model
           return Calibration?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

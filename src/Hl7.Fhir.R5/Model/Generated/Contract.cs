@@ -498,7 +498,7 @@ namespace Hl7.Fhir.Model
             return Copyright is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -887,7 +887,7 @@ namespace Hl7.Fhir.Model
             return Group?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1092,7 +1092,7 @@ namespace Hl7.Fhir.Model
             return Control?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1455,7 +1455,7 @@ namespace Hl7.Fhir.Model
             return SecurityLabelNumberElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1598,7 +1598,7 @@ namespace Hl7.Fhir.Model
             return Role is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1712,7 +1712,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2200,7 +2200,7 @@ namespace Hl7.Fhir.Model
             return ValuedItem?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2386,7 +2386,7 @@ namespace Hl7.Fhir.Model
             return TextElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2905,7 +2905,7 @@ namespace Hl7.Fhir.Model
             return SecurityLabelNumberElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3553,7 +3553,7 @@ namespace Hl7.Fhir.Model
             return SecurityLabelNumberElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3704,7 +3704,7 @@ namespace Hl7.Fhir.Model
             return Role is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3861,7 +3861,7 @@ namespace Hl7.Fhir.Model
             return Signature?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3976,7 +3976,7 @@ namespace Hl7.Fhir.Model
             return Content is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4089,7 +4089,7 @@ namespace Hl7.Fhir.Model
             return Content is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4202,7 +4202,7 @@ namespace Hl7.Fhir.Model
             return Content is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5169,7 +5169,7 @@ namespace Hl7.Fhir.Model
           return LegallyBinding is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

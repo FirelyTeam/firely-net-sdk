@@ -938,7 +938,7 @@ namespace Hl7.Fhir.Model
           return Trigger?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

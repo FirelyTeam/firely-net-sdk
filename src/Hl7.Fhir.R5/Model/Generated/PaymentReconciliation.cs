@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Model
             return Amount is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
             return TextElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1076,7 +1076,7 @@ namespace Hl7.Fhir.Model
           return ProcessNote?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

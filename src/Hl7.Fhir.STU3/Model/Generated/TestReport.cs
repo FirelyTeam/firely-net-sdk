@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
             return DisplayElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -499,7 +499,7 @@ namespace Hl7.Fhir.Model
             return Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -629,7 +629,7 @@ namespace Hl7.Fhir.Model
             return Assert is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
             return DetailElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1010,7 +1010,7 @@ namespace Hl7.Fhir.Model
             return DetailElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
             return Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1332,7 +1332,7 @@ namespace Hl7.Fhir.Model
             return Assert is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1443,7 +1443,7 @@ namespace Hl7.Fhir.Model
             return Action?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1553,7 +1553,7 @@ namespace Hl7.Fhir.Model
             return Operation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1997,7 +1997,7 @@ namespace Hl7.Fhir.Model
           return Teardown is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

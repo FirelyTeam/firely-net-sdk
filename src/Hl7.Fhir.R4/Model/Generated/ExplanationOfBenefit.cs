@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
             return Reference is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
             return Party is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
             return Qualification is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
             return Reason is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
             return PackageCode is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1305,7 +1305,7 @@ namespace Hl7.Fhir.Model
             return Udi?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1501,7 +1501,7 @@ namespace Hl7.Fhir.Model
             return PreAuthRefElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1675,7 +1675,7 @@ namespace Hl7.Fhir.Model
             return Location is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2397,7 +2397,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2610,7 +2610,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3059,7 +3059,7 @@ namespace Hl7.Fhir.Model
             return SubDetail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3496,7 +3496,7 @@ namespace Hl7.Fhir.Model
             return Adjudication?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4082,7 +4082,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4417,7 +4417,7 @@ namespace Hl7.Fhir.Model
             return SubDetail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4721,7 +4721,7 @@ namespace Hl7.Fhir.Model
             return Adjudication?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4860,7 +4860,7 @@ namespace Hl7.Fhir.Model
             return Amount is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5093,7 +5093,7 @@ namespace Hl7.Fhir.Model
             return Identifier is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5325,7 +5325,7 @@ namespace Hl7.Fhir.Model
             return Language is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5640,7 +5640,7 @@ namespace Hl7.Fhir.Model
             return Financial?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5803,7 +5803,7 @@ namespace Hl7.Fhir.Model
             return Used is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -6955,7 +6955,7 @@ namespace Hl7.Fhir.Model
           return BenefitBalance?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

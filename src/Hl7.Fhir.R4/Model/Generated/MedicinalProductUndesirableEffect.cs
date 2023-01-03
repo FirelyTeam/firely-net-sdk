@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
           return Population?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

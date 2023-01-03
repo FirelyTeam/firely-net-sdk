@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
             return ModeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
             return VersionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -580,7 +580,7 @@ namespace Hl7.Fhir.Model
             return Exclude is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -691,7 +691,7 @@ namespace Hl7.Fhir.Model
             return Designation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -839,7 +839,7 @@ namespace Hl7.Fhir.Model
             return Use is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -950,7 +950,7 @@ namespace Hl7.Fhir.Model
             return Designation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1098,7 +1098,7 @@ namespace Hl7.Fhir.Model
             return Use is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1933,7 +1933,7 @@ namespace Hl7.Fhir.Model
           return LimitedExpansionElement is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

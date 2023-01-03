@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
             return Assessment?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -397,7 +397,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Model
           return Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

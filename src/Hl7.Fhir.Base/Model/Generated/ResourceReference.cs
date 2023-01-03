@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Type the reference refers to (e.g. "Patient")
+    /// Type the reference refers to (e.g. "Patient"). Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40, Since=FhirRelease.R4)]
     [DataMember]
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
           return DisplayElement is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

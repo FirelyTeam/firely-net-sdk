@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
             return AppliesToAllElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -460,7 +460,7 @@ namespace Hl7.Fhir.Model
             return BusinessArrangementElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -788,7 +788,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -909,7 +909,7 @@ namespace Hl7.Fhir.Model
             return Diagnosis is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1355,7 +1355,7 @@ namespace Hl7.Fhir.Model
           return Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

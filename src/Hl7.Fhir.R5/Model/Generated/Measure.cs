@@ -360,7 +360,7 @@ namespace Hl7.Fhir.Model
             return Stratifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -598,7 +598,7 @@ namespace Hl7.Fhir.Model
             return AggregateMethod is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
             return Component?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -966,7 +966,7 @@ namespace Hl7.Fhir.Model
             return Criteria is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1160,7 +1160,7 @@ namespace Hl7.Fhir.Model
             return Criteria is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2450,7 +2450,7 @@ namespace Hl7.Fhir.Model
           return SupplementalData?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

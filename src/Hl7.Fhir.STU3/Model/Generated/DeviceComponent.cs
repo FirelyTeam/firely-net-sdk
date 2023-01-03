@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
             return ProductionSpecElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
           return LanguageCode is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

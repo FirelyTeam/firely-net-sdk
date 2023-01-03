@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
             return UriElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
             return VerificationDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -850,7 +850,7 @@ namespace Hl7.Fhir.Model
             return Provision?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -994,7 +994,7 @@ namespace Hl7.Fhir.Model
             return Reference is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1148,7 +1148,7 @@ namespace Hl7.Fhir.Model
             return Reference is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1551,7 +1551,7 @@ namespace Hl7.Fhir.Model
           return Provision is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

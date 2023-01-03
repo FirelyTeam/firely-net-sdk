@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
             return OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -439,7 +439,7 @@ namespace Hl7.Fhir.Model
             return Agent?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
           return Signature?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

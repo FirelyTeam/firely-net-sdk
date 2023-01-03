@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
             return Items?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
             return ManufacturingDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -958,7 +958,7 @@ namespace Hl7.Fhir.Model
           return Note is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

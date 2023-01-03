@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
             return TextElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
             return Target is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
             return ReferenceRange?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1277,7 +1277,7 @@ namespace Hl7.Fhir.Model
           return Component?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

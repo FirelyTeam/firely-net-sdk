@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
             return Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -586,7 +586,7 @@ namespace Hl7.Fhir.Model
             return Target is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
             return Section?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1511,7 +1511,7 @@ namespace Hl7.Fhir.Model
           return Section?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

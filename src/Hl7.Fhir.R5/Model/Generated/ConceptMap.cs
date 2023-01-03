@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
             return Unmapped is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
             return Target?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -775,7 +775,7 @@ namespace Hl7.Fhir.Model
             return Product?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
             return DisplayElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
             return UrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1886,7 +1886,7 @@ namespace Hl7.Fhir.Model
           return Group?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

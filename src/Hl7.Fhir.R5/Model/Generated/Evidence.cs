@@ -263,7 +263,7 @@ namespace Hl7.Fhir.Model
             return DirectnessMatch is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
             return ModelCharacteristic?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
             return KnownDataCountElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
             return AttributeEstimate?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1356,7 +1356,7 @@ namespace Hl7.Fhir.Model
             return AttributeEstimate?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1577,7 +1577,7 @@ namespace Hl7.Fhir.Model
             return ValueRange?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1833,7 +1833,7 @@ namespace Hl7.Fhir.Model
             return Subcomponent?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2599,7 +2599,7 @@ namespace Hl7.Fhir.Model
           return Certainty?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

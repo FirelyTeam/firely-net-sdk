@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
             return EntryTypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
           return Safety?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

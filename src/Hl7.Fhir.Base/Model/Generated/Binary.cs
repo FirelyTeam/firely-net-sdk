@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _SecurityContext;
 
     /// <summary>
-    /// The actual content
+    /// The actual content. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("data", Order=70, Since=FhirRelease.R4)]
     [DataMember]
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The actual content
+    /// The actual content. Note: Element is deprecated since R4, do not use with R4 and newer releases.
     /// </summary>
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
           return ContentElement is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

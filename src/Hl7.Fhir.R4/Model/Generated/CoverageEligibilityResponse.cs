@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
             return Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -751,7 +751,7 @@ namespace Hl7.Fhir.Model
             return AuthorizationUrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -920,7 +920,7 @@ namespace Hl7.Fhir.Model
             return Used is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
             return Code is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1553,7 +1553,7 @@ namespace Hl7.Fhir.Model
           return Error?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

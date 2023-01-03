@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
             return VersionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
             return UrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
             return SubsumptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -898,7 +898,7 @@ namespace Hl7.Fhir.Model
             return PropertyElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
             return OpElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1320,7 +1320,7 @@ namespace Hl7.Fhir.Model
             return TextFilter is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1491,7 +1491,7 @@ namespace Hl7.Fhir.Model
             return DocumentationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1620,7 +1620,7 @@ namespace Hl7.Fhir.Model
             return TranslationsElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1748,7 +1748,7 @@ namespace Hl7.Fhir.Model
             return NeedsMapElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1875,7 +1875,7 @@ namespace Hl7.Fhir.Model
             return TranslationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2684,7 +2684,7 @@ namespace Hl7.Fhir.Model
           return Closure is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

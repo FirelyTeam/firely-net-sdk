@@ -875,7 +875,7 @@ namespace Hl7.Fhir.Model
           return Content?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -144,7 +144,7 @@
   // Used in model class (resource): PaymentReconciliation.status
   // Used in model class (resource): VisionPrescription.status
 
-// Generated Shared Enumeration: GroupMeasure (http://hl7.org/fhir/ValueSet/group-measure)
+// Generated Shared Enumeration: GroupMeasureCode (http://hl7.org/fhir/ValueSet/group-measure)
   // Used in model class (resource): EvidenceVariable.characteristic.groupMeasure
   // Used in model class (resource): ResearchElementDefinition.characteristic.studyEffectiveGroupMeasure
   // Used in model class (resource): ResearchElementDefinition.characteristic.participantEffectiveGroupMeasure
