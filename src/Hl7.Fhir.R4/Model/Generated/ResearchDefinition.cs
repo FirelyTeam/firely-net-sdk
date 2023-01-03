@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
           return Outcome is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

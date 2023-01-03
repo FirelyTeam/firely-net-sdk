@@ -666,7 +666,7 @@ namespace Hl7.Fhir.Model
             return Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -848,7 +848,7 @@ namespace Hl7.Fhir.Model
             return BaseElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1160,7 +1160,7 @@ namespace Hl7.Fhir.Model
           return LensSpecification?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

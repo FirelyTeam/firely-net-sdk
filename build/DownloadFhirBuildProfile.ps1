@@ -5,7 +5,15 @@
 
 # Script to be run from 'build' directory
 
-$server = "http://hl7.org/fhir/5.0.0-snapshot1/";
+param(
+     [Parameter(Mandatory, HelpMessage="Enter the url 	from which the specification is to be downloaded")]
+     [string]$server = "http://hl7.org/fhir/STU3/",
+	 
+	 [ValidateSet('STU3', 'R4', 'R4B', 'R5')]
+     [Parameter(Mandatory, HelpMessage="Enter the Fhir Release ('STU3', 'R4', 'R4B' or 'R5')")]
+     [string] $fhirRelease = "STU3" 
+)
+
 $baseDir = Resolve-Path ..
 $srcdir = "$baseDir\src";
 
@@ -53,18 +61,6 @@ function GetSpecFile($name)
 	$targetPath = Join-Path $tempDir $name
 	$sourceUrl = $server + $name
 	PowerCurl $targetPath $sourceUrl
-}
-
-
-function TransformSpecfile($name)
-{
-	Write-Host -ForegroundColor White "transforming $name..."
-	$transformPath = Join-Path $tempDir $name
-	$tempTransformPath = $transformPath + "-temp"
-
-	$xslt.Transform($transformPath, $tempTransformPath);
-	Remove-Item $transformPath
-	Move-Item $tempTransformPath $transformPath
 }
 
 function CopySpecFile($name, $destDir)
@@ -211,7 +207,7 @@ function ExtractXsdZipFile($destPath)
 	Write-Host -ForegroundColor White "Extract xsd zip file..."
 	$zipPath = Join-Path $tempDir "fhir-all-xsd.zip"
 	$extractPath = Join-Path $tempDir "extracted"
-	expand-archive -path $zipPath -destinationpath $extractPath
+	Expand-Archive -path $zipPath -destinationpath $extractPath
 	
 	if ($server.EndsWith('2020Sep/') -or $server.EndsWith('2021Mar/') )
 	{
@@ -346,30 +342,37 @@ foreach($file in $allFiles)
 
 }
 
+$specificationDir = New-TemporaryDirectory
 
 Write-Host -ForegroundColor White "Copy files to project..."
 
 # Copy the files necessary for the specification library (specification.zip / data)
-Remove-Item "$srcdir\Hl7.Fhir.Specification\data\*.*" -Force
-CopySpecFile "conceptmaps.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "extension-definitions.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "namingsystem-registry.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "profiles-others.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "profiles-resources.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "profiles-types.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "search-parameters.xml" "$srcdir\Hl7.Fhir.Specification\data"
-CopySpecFile "valuesets.xml" "$srcdir\Hl7.Fhir.Specification\data"
+CopySpecFile "conceptmaps.xml" $specificationDir
+CopySpecFile "extension-definitions.xml" $specificationDir
+CopySpecFile "namingsystem-registry.xml" $specificationDir
+CopySpecFile "profiles-others.xml" $specificationDir
+CopySpecFile "profiles-resources.xml" $specificationDir
+CopySpecFile "profiles-types.xml" $specificationDir
+CopySpecFile "search-parameters.xml" $specificationDir
+CopySpecFile "valuesets.xml" $specificationDir
 
 # Add example files used for testing
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples.zip" "$server/examples.zip"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
-PowerCurl "$srcdir\Hl7.Fhir.Core.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
-PowerCurl "$srcdir\Hl7.Fhir.Serialization.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
-PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
-PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
-PowerCurl "$srcdir\Hl7.Fhir.Specification.Tests\TestData\snapshot-test\profiles-resources.json" "$server/profiles-resources.json"
 
-# extract schemas and xsd from fhir-all.zip -> data
-ExtractXsdZipFile "$srcdir\Hl7.Fhir.Specification\data"
+if ($fhirRelease -eq "STU3") 
+{
+	PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\careplan-example-f201-renal.xml" "$server/careplan-example-f201-renal.xml"
+	PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\testscript-example(example).xml" "$server/testscript-example.xml"
+	PowerCurl "$srcdir\Hl7.Fhir.Serialization.$fhirRelease.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
+}
+
+PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\examples.zip" "$server/examples.zip"
+PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\examples-json.zip" "$server/examples-json.zip"
+PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\json-edge-cases.json" "$server/json-edge-cases.json"
+
+PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
+PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
+
+# extract schemas and xsd from fhir-all.zip -> temp specification directory
+ExtractXsdZipFile $specificationDir
+
+Compress-Archive -Path $specificationDir\* -DestinationPath $srcdir\Hl7.Fhir.Specification.Data.$fhirRelease\specification.zip -Force

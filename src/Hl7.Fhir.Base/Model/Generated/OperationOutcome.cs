@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
             return ExpressionElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
           return Issue?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

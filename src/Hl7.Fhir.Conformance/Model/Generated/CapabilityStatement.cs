@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Model
             return ReleaseDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
             return Custodian is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -916,7 +916,7 @@ namespace Hl7.Fhir.Model
             return CompartmentElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1093,7 +1093,7 @@ namespace Hl7.Fhir.Model
             return Description is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1786,7 +1786,7 @@ namespace Hl7.Fhir.Model
             return Operation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1952,7 +1952,7 @@ namespace Hl7.Fhir.Model
             return Documentation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2182,7 +2182,7 @@ namespace Hl7.Fhir.Model
             return Documentation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2374,7 +2374,7 @@ namespace Hl7.Fhir.Model
             return Documentation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2526,7 +2526,7 @@ namespace Hl7.Fhir.Model
             return Documentation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2719,7 +2719,7 @@ namespace Hl7.Fhir.Model
             return SupportedMessage?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2872,7 +2872,7 @@ namespace Hl7.Fhir.Model
             return AddressElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3042,7 +3042,7 @@ namespace Hl7.Fhir.Model
             return DefinitionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3233,7 +3233,7 @@ namespace Hl7.Fhir.Model
             return ProfileElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4144,7 +4144,7 @@ namespace Hl7.Fhir.Model
           return Document?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

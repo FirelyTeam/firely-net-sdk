@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
             return Amount?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
             return Amount?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -470,7 +470,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
             return BiologicalSource is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1059,7 +1059,7 @@ namespace Hl7.Fhir.Model
           return Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -341,7 +341,7 @@ namespace Hl7.Fhir.Model
           return Assigner is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
             return CommentElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -485,7 +485,7 @@ namespace Hl7.Fhir.Model
             return Element?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
             return Element?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1582,7 +1582,7 @@ namespace Hl7.Fhir.Model
           return Differential is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
             return PreferredElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
           return Communication?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

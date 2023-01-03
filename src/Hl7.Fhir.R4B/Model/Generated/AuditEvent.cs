@@ -556,7 +556,7 @@ namespace Hl7.Fhir.Model
             return PurposeOfUse?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -733,7 +733,7 @@ namespace Hl7.Fhir.Model
             return TypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model
             return Type?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1244,7 +1244,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1404,7 +1404,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1792,7 +1792,7 @@ namespace Hl7.Fhir.Model
           return Entity?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

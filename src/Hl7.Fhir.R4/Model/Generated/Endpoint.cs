@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
           return HeaderElement?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

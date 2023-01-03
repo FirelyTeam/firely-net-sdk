@@ -88,9 +88,9 @@ namespace Hl7.Fhir.Tests
 
         public static void AssertAreTheSame(string context, string expected, string actual)
         {
-            if (context.EndsWith("meta[0].lastUpdated[0].value"))
+            if (context.EndsWith("meta[0].lastUpdated[0].value") || context.EndsWith("timestamp[0].value"))
             {
-                // hack: ignore meta.lastUpdated values
+                // hack: ignore meta.lastUpdated and bundle.timestamp values
 
                 if (P.DateTime.TryParse(actual, out var actualValue) &&
                    P.DateTime.TryParse(expected, out var expectedValue))

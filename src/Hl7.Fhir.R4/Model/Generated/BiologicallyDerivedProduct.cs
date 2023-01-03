@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
             return Collected is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
             return Time is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
             return Time is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -867,7 +867,7 @@ namespace Hl7.Fhir.Model
             return Duration is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1241,7 +1241,7 @@ namespace Hl7.Fhir.Model
           return Storage?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
           return Telecom?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

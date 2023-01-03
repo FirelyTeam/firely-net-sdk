@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
             return Handling?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -681,7 +681,7 @@ namespace Hl7.Fhir.Model
             return PreparationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -801,7 +801,7 @@ namespace Hl7.Fhir.Model
             return Additive is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -991,7 +991,7 @@ namespace Hl7.Fhir.Model
             return InstructionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1216,7 +1216,7 @@ namespace Hl7.Fhir.Model
           return TypeTested?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

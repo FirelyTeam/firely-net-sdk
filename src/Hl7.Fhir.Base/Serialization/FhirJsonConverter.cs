@@ -13,11 +13,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
-using System.Buffers;
-using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -39,7 +35,7 @@ namespace Hl7.Fhir.Serialization
         {
             // Nothing
         }
-        
+
         public FhirJsonConverterFactory(
             ModelInspector inspector,
             FhirJsonPocoSerializerSettings serializerSettings,
@@ -99,7 +95,7 @@ namespace Hl7.Fhir.Serialization
             _deserializer = new FhirJsonPocoDeserializer(inspector, deserializerSettings);
             _serializer = new FhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
         }
-        
+
         /// <summary>
         /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
         /// POCOs in a given assembly.

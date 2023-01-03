@@ -565,7 +565,7 @@ namespace Hl7.Fhir.Model
           return ResourceReference is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

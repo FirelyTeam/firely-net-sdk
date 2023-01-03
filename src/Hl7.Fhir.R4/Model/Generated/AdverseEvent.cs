@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
             return Causality?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -466,7 +466,7 @@ namespace Hl7.Fhir.Model
             return Method is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
           return Study?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

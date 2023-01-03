@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
             return AdditionalContext?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
           return Error?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

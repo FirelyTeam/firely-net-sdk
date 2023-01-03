@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
             return Part?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -717,7 +717,7 @@ namespace Hl7.Fhir.Model
             return ValueSetElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -885,7 +885,7 @@ namespace Hl7.Fhir.Model
             return SourceIdElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
             return CommentElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2015,7 +2015,7 @@ namespace Hl7.Fhir.Model
           return Overload?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

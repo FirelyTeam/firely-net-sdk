@@ -12,7 +12,6 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using System.Reflection;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization

@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
           return Author is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

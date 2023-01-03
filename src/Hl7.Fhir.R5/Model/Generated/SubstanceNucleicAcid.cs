@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
             return Sugar?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Model
             return ResidueSiteElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -778,7 +778,7 @@ namespace Hl7.Fhir.Model
             return ResidueSiteElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -997,7 +997,7 @@ namespace Hl7.Fhir.Model
           return Subunit?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

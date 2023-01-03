@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
           return Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

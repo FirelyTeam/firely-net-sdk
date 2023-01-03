@@ -193,7 +193,7 @@ namespace Hl7.Fhir.Model
             return Role is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
             return ExpressionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1472,7 +1472,7 @@ namespace Hl7.Fhir.Model
           return DynamicValue?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

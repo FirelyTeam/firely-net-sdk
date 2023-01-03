@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
             return Due is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -750,7 +750,7 @@ namespace Hl7.Fhir.Model
           return OutcomeReference?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

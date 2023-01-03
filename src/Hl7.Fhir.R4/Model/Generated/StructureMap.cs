@@ -582,7 +582,7 @@ namespace Hl7.Fhir.Model
             return DocumentationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -876,7 +876,7 @@ namespace Hl7.Fhir.Model
             return Rule?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
             return DocumentationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1386,7 +1386,7 @@ namespace Hl7.Fhir.Model
             return DocumentationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1894,7 +1894,7 @@ namespace Hl7.Fhir.Model
             return LogMessageElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2291,7 +2291,7 @@ namespace Hl7.Fhir.Model
             return Parameter?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2410,7 +2410,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2578,7 +2578,7 @@ namespace Hl7.Fhir.Model
             return VariableElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3205,7 +3205,7 @@ namespace Hl7.Fhir.Model
           return Group?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
             return Reference?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
             return Source is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
             return Cost is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -685,7 +685,7 @@ namespace Hl7.Fhir.Model
             return NameElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -818,7 +818,7 @@ namespace Hl7.Fhir.Model
             return DosingGuideline?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -993,7 +993,7 @@ namespace Hl7.Fhir.Model
             return PatientCharacteristic?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1128,7 +1128,7 @@ namespace Hl7.Fhir.Model
             return Dosage?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1262,7 +1262,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1418,7 +1418,7 @@ namespace Hl7.Fhir.Model
             return Classification?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1553,7 +1553,7 @@ namespace Hl7.Fhir.Model
             return PackagedProduct is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1731,7 +1731,7 @@ namespace Hl7.Fhir.Model
             return MaxDispense is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1884,7 +1884,7 @@ namespace Hl7.Fhir.Model
             return AllowedElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2016,7 +2016,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2216,7 +2216,7 @@ namespace Hl7.Fhir.Model
             return DrugCharacteristic?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2374,7 +2374,7 @@ namespace Hl7.Fhir.Model
             return Strength is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2508,7 +2508,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3040,7 +3040,7 @@ namespace Hl7.Fhir.Model
           return Definitional is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

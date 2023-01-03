@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1031,7 +1031,7 @@ namespace Hl7.Fhir.Model
           return MaxCountElement is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

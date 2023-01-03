@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
             return StatusElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
           return RequestedPeriod?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

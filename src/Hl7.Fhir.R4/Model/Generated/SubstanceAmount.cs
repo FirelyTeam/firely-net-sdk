@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
             return HighLimit is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
           return ReferenceRange is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

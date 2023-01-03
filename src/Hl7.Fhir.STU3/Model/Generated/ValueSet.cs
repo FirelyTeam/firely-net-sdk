@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
             return Exclude?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
             return ValueSetElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
             return Designation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1100,7 +1100,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1392,7 +1392,7 @@ namespace Hl7.Fhir.Model
             return Contains?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1548,7 +1548,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1915,7 +1915,7 @@ namespace Hl7.Fhir.Model
             return Contains?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2582,7 +2582,7 @@ namespace Hl7.Fhir.Model
           return Expansion is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
             return Item is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
           return Management is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

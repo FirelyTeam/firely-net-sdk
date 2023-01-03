@@ -14,23 +14,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="TestData\**\*.xml;TestData\**\*.json">
+		<Content Include="TestData\**\*.xml;TestData\**\*.json;">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Remove="TestData\BundleWithOneEntry.json" />
-		<None Remove="TestData\mask-text.xml" />
-		<None Remove="TestData\no-namespace.xml" />
-		<None Remove="TestData\patient-out-of-order.xml" />
-		<None Remove="TestData\profiles-types.json" />
-		<None Remove="TestData\profiles-types.xml" />
-		<None Remove="TestData\source-test\books.xml" />
-		<None Remove="TestData\source-test\project.assets.json" />
-		<None Remove="TestData\test-empty-nodes.json" />
-		<None Remove="TestData\test-empty-nodes.xml" />
-		<None Remove="TestData\typeErrors.xml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,5 +27,4 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-
 </Project>

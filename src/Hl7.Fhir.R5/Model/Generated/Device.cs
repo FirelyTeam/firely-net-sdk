@@ -447,7 +447,7 @@ namespace Hl7.Fhir.Model
             return EntryTypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
             return TypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -792,7 +792,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
             return Reason?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1193,7 +1193,7 @@ namespace Hl7.Fhir.Model
             return Reason?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1326,7 +1326,7 @@ namespace Hl7.Fhir.Model
             return RelatedDevice is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2235,7 +2235,7 @@ namespace Hl7.Fhir.Model
           return Parent is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
