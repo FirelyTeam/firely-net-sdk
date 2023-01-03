@@ -414,7 +414,7 @@ namespace Hl7.Fhir.Model
             return Performer is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
             return Duration is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
             return Reason is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1608,7 +1608,7 @@ namespace Hl7.Fhir.Model
           return EventHistory?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

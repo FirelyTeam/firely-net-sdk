@@ -355,7 +355,7 @@ namespace Hl7.Fhir.Model
             return DecimalPrecisionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
             return ConditionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1094,7 +1094,7 @@ namespace Hl7.Fhir.Model
           return CriticalCodedValueSet is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

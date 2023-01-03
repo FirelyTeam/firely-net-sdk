@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             return Status is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
             return TargetSpecies?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -550,7 +550,7 @@ namespace Hl7.Fhir.Model
             return WithdrawalPeriod?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -722,7 +722,7 @@ namespace Hl7.Fhir.Model
             return SupportingInformationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Model
           return RouteOfAdministration?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
             return AltitudeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -548,7 +548,7 @@ namespace Hl7.Fhir.Model
             return ClosingTimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1105,7 +1105,7 @@ namespace Hl7.Fhir.Model
           return Endpoint?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

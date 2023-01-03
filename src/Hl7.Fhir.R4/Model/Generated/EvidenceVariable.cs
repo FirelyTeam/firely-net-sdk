@@ -195,20 +195,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("groupMeasure", Order=100)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.GroupMeasure> GroupMeasureElement
+      public Code<Hl7.Fhir.Model.GroupMeasureCode> GroupMeasureElement
       {
         get { return _GroupMeasureElement; }
         set { _GroupMeasureElement = value; OnPropertyChanged("GroupMeasureElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.GroupMeasure> _GroupMeasureElement;
+      private Code<Hl7.Fhir.Model.GroupMeasureCode> _GroupMeasureElement;
 
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.GroupMeasure? GroupMeasure
+      public Hl7.Fhir.Model.GroupMeasureCode? GroupMeasure
       {
         get { return GroupMeasureElement != null ? GroupMeasureElement.Value : null; }
         set
@@ -216,7 +216,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             GroupMeasureElement = null;
           else
-            GroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasure>(value);
+            GroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasureCode>(value);
           OnPropertyChanged("GroupMeasure");
         }
       }
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
         if(ExcludeElement != null) dest.ExcludeElement = (Hl7.Fhir.Model.FhirBoolean)ExcludeElement.DeepCopy();
         if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.DataType)ParticipantEffective.DeepCopy();
         if(TimeFromStart != null) dest.TimeFromStart = (Hl7.Fhir.Model.Duration)TimeFromStart.DeepCopy();
-        if(GroupMeasureElement != null) dest.GroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)GroupMeasureElement.DeepCopy();
+        if(GroupMeasureElement != null) dest.GroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasureCode>)GroupMeasureElement.DeepCopy();
         return dest;
       }
 
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
             return GroupMeasureElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
           return Characteristic?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

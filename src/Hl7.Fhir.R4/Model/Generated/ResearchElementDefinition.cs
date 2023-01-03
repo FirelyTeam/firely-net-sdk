@@ -235,20 +235,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("studyEffectiveGroupMeasure", Order=110)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.GroupMeasure> StudyEffectiveGroupMeasureElement
+      public Code<Hl7.Fhir.Model.GroupMeasureCode> StudyEffectiveGroupMeasureElement
       {
         get { return _StudyEffectiveGroupMeasureElement; }
         set { _StudyEffectiveGroupMeasureElement = value; OnPropertyChanged("StudyEffectiveGroupMeasureElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.GroupMeasure> _StudyEffectiveGroupMeasureElement;
+      private Code<Hl7.Fhir.Model.GroupMeasureCode> _StudyEffectiveGroupMeasureElement;
 
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.GroupMeasure? StudyEffectiveGroupMeasure
+      public Hl7.Fhir.Model.GroupMeasureCode? StudyEffectiveGroupMeasure
       {
         get { return StudyEffectiveGroupMeasureElement != null ? StudyEffectiveGroupMeasureElement.Value : null; }
         set
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             StudyEffectiveGroupMeasureElement = null;
           else
-            StudyEffectiveGroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasure>(value);
+            StudyEffectiveGroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasureCode>(value);
           OnPropertyChanged("StudyEffectiveGroupMeasure");
         }
       }
@@ -326,20 +326,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("participantEffectiveGroupMeasure", Order=150)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.GroupMeasure> ParticipantEffectiveGroupMeasureElement
+      public Code<Hl7.Fhir.Model.GroupMeasureCode> ParticipantEffectiveGroupMeasureElement
       {
         get { return _ParticipantEffectiveGroupMeasureElement; }
         set { _ParticipantEffectiveGroupMeasureElement = value; OnPropertyChanged("ParticipantEffectiveGroupMeasureElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.GroupMeasure> _ParticipantEffectiveGroupMeasureElement;
+      private Code<Hl7.Fhir.Model.GroupMeasureCode> _ParticipantEffectiveGroupMeasureElement;
 
       /// <summary>
       /// mean | median | mean-of-mean | mean-of-median | median-of-mean | median-of-median
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.GroupMeasure? ParticipantEffectiveGroupMeasure
+      public Hl7.Fhir.Model.GroupMeasureCode? ParticipantEffectiveGroupMeasure
       {
         get { return ParticipantEffectiveGroupMeasureElement != null ? ParticipantEffectiveGroupMeasureElement.Value : null; }
         set
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             ParticipantEffectiveGroupMeasureElement = null;
           else
-            ParticipantEffectiveGroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasure>(value);
+            ParticipantEffectiveGroupMeasureElement = new Code<Hl7.Fhir.Model.GroupMeasureCode>(value);
           OnPropertyChanged("ParticipantEffectiveGroupMeasure");
         }
       }
@@ -369,11 +369,11 @@ namespace Hl7.Fhir.Model
         if(StudyEffectiveDescriptionElement != null) dest.StudyEffectiveDescriptionElement = (Hl7.Fhir.Model.FhirString)StudyEffectiveDescriptionElement.DeepCopy();
         if(StudyEffective != null) dest.StudyEffective = (Hl7.Fhir.Model.DataType)StudyEffective.DeepCopy();
         if(StudyEffectiveTimeFromStart != null) dest.StudyEffectiveTimeFromStart = (Hl7.Fhir.Model.Duration)StudyEffectiveTimeFromStart.DeepCopy();
-        if(StudyEffectiveGroupMeasureElement != null) dest.StudyEffectiveGroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)StudyEffectiveGroupMeasureElement.DeepCopy();
+        if(StudyEffectiveGroupMeasureElement != null) dest.StudyEffectiveGroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasureCode>)StudyEffectiveGroupMeasureElement.DeepCopy();
         if(ParticipantEffectiveDescriptionElement != null) dest.ParticipantEffectiveDescriptionElement = (Hl7.Fhir.Model.FhirString)ParticipantEffectiveDescriptionElement.DeepCopy();
         if(ParticipantEffective != null) dest.ParticipantEffective = (Hl7.Fhir.Model.DataType)ParticipantEffective.DeepCopy();
         if(ParticipantEffectiveTimeFromStart != null) dest.ParticipantEffectiveTimeFromStart = (Hl7.Fhir.Model.Duration)ParticipantEffectiveTimeFromStart.DeepCopy();
-        if(ParticipantEffectiveGroupMeasureElement != null) dest.ParticipantEffectiveGroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasure>)ParticipantEffectiveGroupMeasureElement.DeepCopy();
+        if(ParticipantEffectiveGroupMeasureElement != null) dest.ParticipantEffectiveGroupMeasureElement = (Code<Hl7.Fhir.Model.GroupMeasureCode>)ParticipantEffectiveGroupMeasureElement.DeepCopy();
         return dest;
       }
 
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
             return ParticipantEffectiveGroupMeasureElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1617,7 +1617,7 @@ namespace Hl7.Fhir.Model
           return Characteristic?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

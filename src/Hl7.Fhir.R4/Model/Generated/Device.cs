@@ -446,7 +446,7 @@ namespace Hl7.Fhir.Model
             return EntryTypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -620,7 +620,7 @@ namespace Hl7.Fhir.Model
             return TypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model
             return VersionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -941,7 +941,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1097,7 +1097,7 @@ namespace Hl7.Fhir.Model
             return ValueCode?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1921,7 +1921,7 @@ namespace Hl7.Fhir.Model
           return Parent is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

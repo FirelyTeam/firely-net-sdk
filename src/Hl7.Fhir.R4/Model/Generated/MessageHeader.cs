@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
             return Receiver is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -553,7 +553,7 @@ namespace Hl7.Fhir.Model
             return EndpointElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -749,7 +749,7 @@ namespace Hl7.Fhir.Model
             return Details is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1091,7 +1091,7 @@ namespace Hl7.Fhir.Model
           return DefinitionElement is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

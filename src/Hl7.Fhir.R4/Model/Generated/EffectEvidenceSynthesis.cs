@@ -270,7 +270,7 @@ namespace Hl7.Fhir.Model
             return NumberOfParticipantsElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
             return RiskEvidenceSynthesis is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -738,7 +738,7 @@ namespace Hl7.Fhir.Model
             return PrecisionEstimate?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -969,7 +969,7 @@ namespace Hl7.Fhir.Model
             return ToElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1126,7 +1126,7 @@ namespace Hl7.Fhir.Model
             return CertaintySubcomponent?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1281,7 +1281,7 @@ namespace Hl7.Fhir.Model
             return Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2241,7 +2241,7 @@ namespace Hl7.Fhir.Model
           return Certainty?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
             return Medication is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
           return Population?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

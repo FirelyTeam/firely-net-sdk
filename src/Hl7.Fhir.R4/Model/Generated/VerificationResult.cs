@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
             return PushTypeAvailable?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -667,7 +667,7 @@ namespace Hl7.Fhir.Model
             return SourceSignature is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model
             return AttestationSignature is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1316,7 +1316,7 @@ namespace Hl7.Fhir.Model
           return Validator?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
