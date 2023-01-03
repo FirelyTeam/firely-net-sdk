@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
             return Stratifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
             return CriteriaElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
             return PathElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -929,7 +929,7 @@ namespace Hl7.Fhir.Model
             return PathElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2070,7 +2070,7 @@ namespace Hl7.Fhir.Model
           return SupplementalData?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

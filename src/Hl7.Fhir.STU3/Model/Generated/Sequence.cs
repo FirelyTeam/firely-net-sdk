@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Model
             return WindowEndElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -774,7 +774,7 @@ namespace Hl7.Fhir.Model
             return VariantPointer is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1361,7 +1361,7 @@ namespace Hl7.Fhir.Model
             return FScoreElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1698,7 +1698,7 @@ namespace Hl7.Fhir.Model
             return ReadsetIdElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2181,7 +2181,7 @@ namespace Hl7.Fhir.Model
           return Pointer?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

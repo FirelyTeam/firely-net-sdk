@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
             return Item is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
             return OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -761,7 +761,7 @@ namespace Hl7.Fhir.Model
           return DeliverTo is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
