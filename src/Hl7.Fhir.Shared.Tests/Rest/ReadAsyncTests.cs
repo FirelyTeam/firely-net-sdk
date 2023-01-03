@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class FhirClientReadAsyncTests
     {
-        private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
+        private static string _endpoint = FhirClientTests.TestEndpoint.OriginalString;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)

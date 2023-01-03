@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Can be used to specifically override the serialization behaviour of the FhirClient to turn
         /// POCO's into FHIR xml/json data and vice versa. If not set, the FhirClient will use the default
-        /// behaviour.
+        /// behaviour which is  compatible with the pre-5.0 SDK.
         /// </summary>
         public IFhirSerializationEngine? SerializationEngine;
 

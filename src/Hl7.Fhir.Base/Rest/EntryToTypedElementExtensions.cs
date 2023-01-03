@@ -1,4 +1,5 @@
-﻿
+﻿#nullable enable
+
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
@@ -31,7 +32,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
         
-        private static Resource parseResourceAsync(string bodyText, string contentType, IFhirSerializationEngine ser, bool throwOnFormatException)
+        private static Resource? parseResourceAsync(string bodyText, string contentType, IFhirSerializationEngine ser, bool throwOnFormatException)
         {
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
@@ -46,9 +47,6 @@ namespace Hl7.Fhir.Rest
 
             try
             {
-                // return (fhirType == ResourceFormat.Json)
-                //      ? (await FhirJsonNode.ParseAsync(bodyText).ConfigureAwait(false)).ToTypedElement(provider)
-                //      : (await FhirXmlNode.ParseAsync(bodyText).ConfigureAwait(false)).ToTypedElement(provider);
                 return (fhirType == ResourceFormat.Json)
                      ? ser.DeserializeFromJson(bodyText) : ser.DeserializeFromXml(bodyText);
 
@@ -61,3 +59,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore

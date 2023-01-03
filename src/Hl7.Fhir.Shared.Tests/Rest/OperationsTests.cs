@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Tests.Rest
     public class OperationsTests
 
     {
-        string testEndpoint = FhirClientTests.testEndpoint.OriginalString;
+        string testEndpoint = FhirClientTests.TestEndpoint.OriginalString;
 
         [TestMethod]
         [TestCategory("IntegrationTest")]

@@ -21,40 +21,32 @@ namespace Hl7.Fhir.Test
     [TestClass]
     public class RequesterTests
     {
-        private readonly Uri _endpoint = new Uri("http://myserver.org/fhir");
-        private EntryRequest _Entry
-        {
-            get
-            {
-                return new EntryRequest
+        private readonly Uri _endpoint = new("http://myserver.org/fhir");
+        private static readonly EntryRequest ENTRY =
+                new()
                 {
                     Url = "test",
                     Method = HTTPVerb.GET,
                     Type = InteractionType.Create,
                     Headers = new EntryRequestHeaders()
                 };
-            }
-        }
-        private FhirClientSettings _Settings
-        {
-            get
-            {
-                return new FhirClientSettings
-                {
-                    PreferredParameterHandling = SearchParameterHandling.Lenient,
-                    PreferredReturn = Prefer.ReturnMinimal,
-                    PreferredFormat = ResourceFormat.Json,
-                    UseFormatParameter = false
-                };
-            }
-        }
+
+        private static readonly FhirClientSettings SETTINGS =
+               new()
+               {
+                   PreferredParameterHandling = SearchParameterHandling.Lenient,
+                   PreferredReturn = Prefer.ReturnMinimal,
+                   PreferredFormat = ResourceFormat.Json,
+                   UseFormatParameter = false
+               };
+
 
         #region EntryRequest To Httpclient
         [TestMethod]
         public void TestPreferSettingHttpClient()
         {
-            var entry = _Entry;
-            var settings = _Settings;
+            var entry = ENTRY;
+            var settings = SETTINGS;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual("return=minimal", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
@@ -85,8 +77,8 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestFormatParametersHttpClient()
         {
-            var entry = _Entry;
-            var settings = _Settings;
+            var entry = ENTRY;
+            var settings = SETTINGS;
 
             settings.UseFormatParameter = true;
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
@@ -96,7 +88,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestEntryRequestHeadersHttpClient()
         {
-            var entry = _Entry;
+            var entry = ENTRY;
 
             string testIfMatch = "W/\"23/\"";
             var testIfModifiedSince = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
@@ -111,7 +103,7 @@ namespace Hl7.Fhir.Test
                 IfNoneMatch = testIfNoneMatch
             };
 
-            var settings = _Settings;
+            var settings = SETTINGS;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual(testIfMatch, request.Headers.IfMatch.ToString());
@@ -123,15 +115,15 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestSetAgentHttpClient()
         {
-            var entry = _Entry;
+            var entry = ENTRY;
             entry.FhirRelease = "testAgent";
-            var settings = _Settings;
+            var settings = SETTINGS;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.Headers.UserAgent.ToString());
         }
 
-        #endregion       
+        #endregion
 
         #region Bundle.EntryComponent To EntryRequest
 
@@ -152,7 +144,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, getSerializationEngine(), ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(SETTINGS, getSerializationEngine(), ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -165,7 +157,7 @@ namespace Hl7.Fhir.Test
             Assert.IsNull(entryRequest.RequestBodyContent);
         }
 
-        IFhirSerializationEngine getSerializationEngine(ParserSettings settings=null) => BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector, settings);
+        private static IFhirSerializationEngine getSerializationEngine(ParserSettings settings = null) => BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector, settings);
 
         [TestMethod]
         public async Tasks.Task TestPatchBundleToEntryRequest()
@@ -184,7 +176,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Patch);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, getSerializationEngine(), ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(SETTINGS, getSerializationEngine(), ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -214,7 +206,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_Settings, getSerializationEngine(), ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(SETTINGS, getSerializationEngine(), ModelInfo.Version);
             Assert.IsNotNull(entryRequest);
             Assert.IsNotNull(entryRequest.RequestBodyContent);
             Assert.AreEqual("test content type", entryRequest.ContentType);
@@ -283,8 +275,8 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine(settings));         
-            var bundleresponse = typedresponse.ToBundleEntry();
+            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine(settings));
+            var bundleresponse = typedresponse.ToBundleEntry(Specification.FhirRelease.STU3);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);

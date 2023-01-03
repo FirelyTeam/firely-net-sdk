@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         /// <param name="httpClient"></param>
         /// <param name="inspector"></param>
-        public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)            
+        public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)
         {
             _inspector = inspector;
             Settings = (settings ?? new FhirClientSettings());
@@ -79,55 +79,55 @@ namespace Hl7.Fhir.Rest
             RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
-        private string fhirVersion => Settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ?? 
+        private string fhirVersion => Settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ??
                 throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
                 $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
 
-        public BaseFhirClient(Uri endpoint, ModelInspector inspector, FhirClientSettings? settings = null) : 
+        public BaseFhirClient(Uri endpoint, ModelInspector inspector, FhirClientSettings? settings = null) :
             this(endpoint, (HttpMessageHandler?)null, inspector, settings)
         {
             // nothing
         }
 
         // Create our own and add decompression strategy in default handler.
-        private static HttpClientHandler makeDefaultHandler() =>            
+        private static HttpClientHandler makeDefaultHandler() =>
             new()
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
-       
-        internal static IFhirSerializationEngine GetDefaultElementModelSerializers(ModelInspector inspector, ParserSettings? settings = null) 
+
+        internal static IFhirSerializationEngine GetDefaultElementModelSerializers(ModelInspector inspector, ParserSettings? settings = null)
             => new ElementModelSerializers(inspector, () => settings);
 
         private IFhirSerializationEngine getDefaultElementModelSerializers()
             => new ElementModelSerializers(_inspector, () => Settings.ParserSettings);
 
-        internal IClientRequester Requester { get; init; }
-        
+        internal HttpClientRequester Requester { get; init; }
+
         /// <summary>
         /// Default request headers that can be modified to persist default headers to internal client.
         /// </summary>
-        public HttpRequestHeaders? RequestHeaders { get; protected set; }
-        
+        public virtual HttpRequestHeaders? RequestHeaders { get; protected set; }
+
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints. This will always have a trailing "/"
         /// </summary>
-        public Uri Endpoint
+        public virtual Uri Endpoint
         {
             get;
             protected set;
         }
 
-        public FhirClientSettings Settings;
+        public virtual FhirClientSettings Settings { get; set; }
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.ResponseComponent? LastResult { get; private set; }
+        public virtual Bundle.ResponseComponent? LastResult { get; private set; }
 
-        public byte[]? LastBody => LastResult?.GetBody();
-        public string? LastBodyAsText => LastResult?.GetBodyAsText();
+        public virtual byte[]? LastBody => LastResult?.GetBody();
+        public virtual string? LastBodyAsText => LastResult?.GetBodyAsText();
         public virtual Resource? LastBodyAsResource { get; private set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
@@ -253,6 +253,7 @@ namespace Hl7.Fhir.Rest
 
             return ReadAsync<TResource>(ResourceIdentity.Build(current.TypeName, current.Id));
         }
+
         /// <summary>
         /// Refreshes the data in the resource passed as an argument by re-reading it from the server
         /// </summary>
@@ -1028,13 +1029,54 @@ namespace Hl7.Fhir.Rest
             var entryRequest = await request.ToEntryRequestAsync(Settings, _serializationEngine, fhirVersion).ConfigureAwait(false);
 
             var entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
-            var typedEntryResponse = new TypedEntryResponse();
-            Bundle.EntryComponent? response = null;
+            var response = entryComponentFromResponse(entryResponse, expect);
 
+            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
+            // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
+            // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
+            var noRealBody = response.Resource == null || 
+                (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
+            var fetchFromResponseLocation = noRealBody && isPostOrPut(request)
+                && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
+                && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity();
+
+            var result = fetchFromResponseLocation ? 
+                await GetAsync(response.Response.Location!).ConfigureAwait(false) 
+                : response.Resource;
+
+            // We have a success code (2xx), but the body may not be of the type we expect.
+            return result switch
+            {
+                // No body
+                null => null,
+
+                // If this is an operationoutcome, that may still be allright. The OperationOutcome was stored in 
+                // the LastResult, and return null as the result. 
+                OperationOutcome _ => null,
+
+                // Not an operation outcome, but also not the expected type or resource -> throw
+                not TResource => throwOperationException(),
+
+                // Finally, it must be not null and of type TResource, return it.
+                _ => (TResource)result
+            };
+
+            TResource throwOperationException()
+            {
+                var message = string.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
+                    request.Request.Url, typeof(TResource).Name, result.GetType().Name);
+
+                Enum.TryParse(response.Response.Status, out HttpStatusCode code);
+                throw new FhirOperationException(message, code);
+            }
+        }
+
+        private Bundle.EntryComponent entryComponentFromResponse(EntryResponse entryResponse, IEnumerable<HttpStatusCode> expect)
+        {
             try
             {
-                typedEntryResponse = entryResponse.ToTypedEntryResponse(_serializationEngine);
-                response = typedEntryResponse.ToBundleEntry();
+                var typedEntryResponse = entryResponse.ToTypedEntryResponse(_serializationEngine);
+                var response = typedEntryResponse.ToBundleEntry(_inspector.FhirRelease);
 
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;
@@ -1045,78 +1087,34 @@ namespace Hl7.Fhir.Rest
                     throw FhirOperationException.BuildFhirOperationException(code, response.Resource, typedEntryResponse.GetBodyAsText());
                 }
 
+                if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
+                {
+                    Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                    throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
+                }
+
+                return response;
             }
             catch (UnsupportedBodyTypeException ex)
             {
-
-                typedEntryResponse.Status = entryResponse.Status;
-
-                var errorResult = new Bundle.EntryComponent
-                {
-                    Response = new Bundle.ResponseComponent()
-                };
-                errorResult.Response.Status = typedEntryResponse.Status;
-
                 OperationOutcome operationOutcome = OperationOutcome.ForException(ex, OperationOutcome.IssueType.Invalid);
 
-                LastResult = errorResult.Response;
-                LastBodyAsResource = errorResult.Resource;
+                LastResult = new Bundle.ResponseComponent()
+                {
+                    Status = entryResponse.Status
+                };
+                LastBodyAsResource = null;
 
-                Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                Enum.TryParse(entryResponse.Status, out HttpStatusCode code);
                 throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
             }
-            catch (StructuralTypeException ste)
+            catch (StructuralTypeException ste) when (!Settings.VerifyFhirVersion)
             {
-                if (!Settings.VerifyFhirVersion)
-                {
-                    throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
-                        "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
-                        ste.InnerException);
-
-                }
-                throw;
+                throw new StructuralTypeException(ste.Message + Environment.NewLine +
+                    $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
+                    "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
+                    ste.InnerException);
             }
-
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
-            {
-                Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
-                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
-            }
-
-            Resource? result;
-
-            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
-            // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
-            // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
-            if (noRealBody && BaseFhirClient.isPostOrPut(request)
-                && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
-                && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
-            {
-                result = await GetAsync(response.Response.Location).ConfigureAwait(false);
-            }
-            else
-                result = response.Resource;
-
-            if (result == null) return null;
-
-            // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
-            if (result is not TResource)
-            {
-                // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
-                // the LastResult, and return null as the result. Otherwise, throw.
-                if (result is OperationOutcome)
-                    return null;
-
-                var message = string.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
-                    request.Request.Url, typeof(TResource).Name, result.GetType().Name);
-
-                Enum.TryParse(response.Response.Status, out HttpStatusCode code);
-                throw new FhirOperationException(message, code);
-            }
-            else
-                return (TResource)result;
         }
 
         private static bool isPostOrPut(Bundle.EntryComponent interaction)
@@ -1125,14 +1123,14 @@ namespace Hl7.Fhir.Rest
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
         }
 
-        private bool versionChecked = false;
+        private bool _versionChecked = false;
 
         private async Task verifyServerVersion()
         {
             if (!Settings.VerifyFhirVersion) return;
 
-            if (versionChecked) return;
-            versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
+            if (_versionChecked) return;
+            _versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
             string? serverVersion;
             var settings = Settings;
@@ -1188,7 +1186,7 @@ namespace Hl7.Fhir.Rest
                 if (disposing)
                 {
                     this.RequestHeaders = null;
-                    
+
                     if (Requester is IDisposable disposableRequester)
                     {
                         disposableRequester.Dispose();
@@ -1198,7 +1196,7 @@ namespace Hl7.Fhir.Rest
                 disposedValue = true;
             }
         }
-        
+
         public void Dispose()
         {
             Dispose(true);

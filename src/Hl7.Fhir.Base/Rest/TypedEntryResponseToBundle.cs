@@ -9,6 +9,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry)
+        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, FhirRelease release)
         {
             var result = new Bundle.EntryComponent
             {
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Rest
 
                 if (IsBinaryResponse(entry.ResponseUri.OriginalString, entry.ContentType))
                 {
-                    result.Resource = MakeBinaryResource(entry.Body, entry.ContentType);
+                    result.Resource = MakeBinaryResource(entry.Body, entry.ContentType, release);
                     if (result.Response.Location != null)
                     {
                         var ri = new ResourceIdentity(result.Response.Location);
@@ -58,24 +59,17 @@ namespace Hl7.Fhir.Rest
                 {
                     if (entry.BodyResource != null)
                     {
-                        try
-                        {
-                            result.Resource = entry.BodyResource;
+                        result.Resource = entry.BodyResource;
 
-                            //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
-                            // see also issue #1681
-                            if (result.Resource is OperationOutcome)
-                            {
-                                result.Response.Outcome = result.Resource;
-                            }
-
-                            if (result.Response.Location != null)
-                                result.Resource.ResourceBase = new ResourceIdentity(result.Response.Location).BaseUri;
-                        }
-                        catch (AggregateException ae)
+                        //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
+                        // see also issue #1681
+                        if (result.Resource is OperationOutcome)
                         {
-                            throw ae.GetBaseException();
+                            result.Response.Outcome = result.Resource;
                         }
+
+                        if (result.Response.Location != null)
+                            result.Resource.ResourceBase = new ResourceIdentity(result.Response.Location).BaseUri;
                     }
                 }
             }
@@ -104,13 +98,25 @@ namespace Hl7.Fhir.Rest
             return false;
         }
 
-        internal static Binary MakeBinaryResource(byte[] data, string contentType) =>
-            new()
+        internal static Binary MakeBinaryResource(byte[] data, string contentType, FhirRelease release)
+        {
+            var bin = new Binary()
             {
-                //Content is for STU3, from R4 Content has changed into Data
-                Data = data,
                 ContentType = contentType
             };
+
+            //Content is for STU3, from R4 Content has changed into Data
+            if (release <= FhirRelease.STU3)
+            {
+                bin.Content = data;
+            }
+            else
+            {
+                bin.Data = data;
+            }
+
+            return bin;
+        }
 
         private class Body
         {

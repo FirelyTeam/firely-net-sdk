@@ -56,15 +56,8 @@ namespace Hl7.Fhir.Rest
             return code >= 200 && code < 300;
         }
 
-        public static string GetBodyAsText(this EntryResponse interaction)
-        {
-            var body = interaction.Body;
-
-            if (body != null)
-                return HttpUtil.DecodeBody(body, Encoding.UTF8);
-            else
-                return null;
-        }
+        public static string GetBodyAsText(this EntryResponse interaction) =>
+            interaction.Body is { } body ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
 
         internal static EntryResponse ToEntryResponse(this HttpWebResponse response, byte[] body)
         {

@@ -19,11 +19,11 @@ namespace Hl7.Fhir.Rest
 {
     internal static class BundleToEntryRequest
     {
-        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, IFhirSerializationEngine ser, string fhirVersion)
+        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, IFhirSerializationEngine ser, string fhirRelease)
         {
             var result = new EntryRequest
             {
-                FhirRelease = fhirVersion,
+                FhirRelease = fhirRelease,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Rest
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings, fhirVersion);
+                result.Headers.Accept = ContentType.BuildContentType(settings, fhirRelease);
             }
 
             if (entry.Resource != null)
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Rest
                     result.Method == HTTPVerb.POST
                     && entry.Annotation<InteractionType>() == InteractionType.Search
                     && entry.Resource is Parameters;
-                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, ser, fhirVersion).ConfigureAwait(false);
+                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, ser, fhirRelease).ConfigureAwait(false);
             }
 
             return result;
@@ -92,7 +92,6 @@ namespace Hl7.Fhir.Rest
 
             if (data is Binary bin)
             {
-
                 //Binary.Content is available for STU3. This has changed for R4 as it is Binary.Data
                 request.RequestBodyContent = bin.Data ?? bin.Content;
 
@@ -103,7 +102,7 @@ namespace Hl7.Fhir.Rest
             }
             else if (searchUsingPost)
             {
-                List<KeyValuePair<string, string>> bodyParameters = new List<KeyValuePair<string, string>>();
+                var bodyParameters = new List<KeyValuePair<string, string>>();
                 foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
                     bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));

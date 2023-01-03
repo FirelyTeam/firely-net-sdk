@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class HttpClientRequester : IClientRequester, IDisposable
+    internal class HttpClientRequester : IDisposable
     {
         public FhirClientSettings Settings { get; set; }
         public Uri BaseUrl { get; private set; }
@@ -52,19 +52,12 @@ namespace Hl7.Fhir.Rest
         public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
-            bool compressRequestBody = Settings.CompressRequestBody;
 
             using var requestMessage = interaction.ToHttpRequestMessage(BaseUrl, Settings);
             if (Settings.PreferCompressedResponses)
             {
                 requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
                 requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
-            }
-
-            byte[]? outgoingBody = null;
-            if (requestMessage.Content is not null && (requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put))
-            {
-                outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
 
             using var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);
