@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Rest
         public FhirClientSettings Settings { get; set; }
         public Uri BaseUrl { get; private set; }
         public HttpClient Client { get; private set; }
-        private bool _disposeHttpClient = true;
+        private readonly bool _disposeHttpClient = true;
 
         public HttpClientRequester(Uri baseUrl, FhirClientSettings settings, HttpMessageHandler messageHandler, bool disposeHandler = true)
         {
@@ -44,10 +44,7 @@ namespace Hl7.Fhir.Rest
 
         public EntryResponse? LastResult { get; private set; }
 
-        public EntryResponse Execute(EntryRequest interaction)
-        {
-            return ExecuteAsync(interaction).WaitResult();
-        }
+        public EntryResponse Execute(EntryRequest interaction) => ExecuteAsync(interaction).WaitResult();
 
         public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction)
         {
@@ -61,32 +58,22 @@ namespace Hl7.Fhir.Rest
             }
 
             using var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);
-            try
-            {
-                var body = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-
-                LastResult = response.ToEntryResponse(body);
-                return LastResult;
-            }
-            catch (AggregateException ae)
-            {
-                throw ae.GetBaseException();
-            }
+            return LastResult = await response.ToEntryResponse();
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing && _disposeHttpClient)
                 {
                     // Only dispose the httpclient if was created here
                     this.Client.Dispose();
                 }
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

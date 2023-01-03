@@ -13,16 +13,12 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
     internal static class HttpToEntryExtensions
     {
-
-
-        private const string USERDATA_BODY = "$body";
-        private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
-
         internal static EntryResponse ToEntryResponse(this HttpResponseMessage response, byte[] body)
         {
             var result = new EntryResponse
@@ -35,10 +31,23 @@ namespace Hl7.Fhir.Rest
                 Etag = response.Headers.ETag?.Tag.Trim('\"'),
                 ContentType = response.Content.Headers.ContentType?.MediaType
             };
+
             result.SetHeaders(response.Headers);
 
-
             return result;
+        }
+
+        internal static async Task<EntryResponse> ToEntryResponse(this HttpResponseMessage response)
+        {
+            try
+            {
+                var body = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                return ToEntryResponse(response,body);
+            }
+            catch (AggregateException ae)
+            {
+                throw ae.GetBaseException();
+            }
         }
 
         internal static void SetHeaders(this EntryResponse interaction, HttpResponseHeaders headers)
@@ -93,16 +102,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static string getContentType(HttpWebResponse response)
-        {
-            if (!String.IsNullOrEmpty(response.ContentType))
-            {
-                return ContentType.GetMediaTypeFromHeaderValue(response.ContentType);
-            }
-            else
-                return null;
-        }
-
-
+        private static string getContentType(HttpWebResponse response) =>
+            !string.IsNullOrEmpty(response.ContentType) ? ContentType.GetMediaTypeFromHeaderValue(response.ContentType) : null;
     }
 }

@@ -286,10 +286,8 @@ namespace Hl7.Fhir.Test
             };
 
             var typedresponse = response.ToTypedEntryResponse(getSerializationEngine(settings));
-
-          
-
-            var bundleresponse = typedresponse.ToBundleEntry();
+         
+            var bundleresponse = typedresponse.ToBundleEntry(FhirRelease.STU3);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);
