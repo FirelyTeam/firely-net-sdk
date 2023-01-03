@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
             return MarketDistribution?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
             return SubJurisdictionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -670,7 +670,7 @@ namespace Hl7.Fhir.Model
             return TypeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
             return Justification?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -955,7 +955,7 @@ namespace Hl7.Fhir.Model
             return CountElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1191,7 +1191,7 @@ namespace Hl7.Fhir.Model
             return Packaging?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1347,7 +1347,7 @@ namespace Hl7.Fhir.Model
             return OrganizationReference?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1577,7 +1577,7 @@ namespace Hl7.Fhir.Model
             return MarketDistribution is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1728,7 +1728,7 @@ namespace Hl7.Fhir.Model
             return SubJurisdictionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1899,7 +1899,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2034,7 +2034,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2167,7 +2167,7 @@ namespace Hl7.Fhir.Model
             return RelatedDevice is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2356,7 +2356,7 @@ namespace Hl7.Fhir.Model
             return AllergenicIndicatorElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2616,7 +2616,7 @@ namespace Hl7.Fhir.Model
             return IntendedUseElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2812,7 +2812,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2989,7 +2989,7 @@ namespace Hl7.Fhir.Model
             return UseContext?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3693,7 +3693,7 @@ namespace Hl7.Fhir.Model
           return ChargeItem?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

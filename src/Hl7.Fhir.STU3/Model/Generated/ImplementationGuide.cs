@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
             return UriElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
             return Resource?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Model
             return ExampleFor is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Model
             return Profile is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1287,7 +1287,7 @@ namespace Hl7.Fhir.Model
             return Page?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1919,7 +1919,7 @@ namespace Hl7.Fhir.Model
           return Page is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

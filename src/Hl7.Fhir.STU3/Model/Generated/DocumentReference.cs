@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
             return Target is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
             return Format is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
             return Related?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
             return Ref is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1249,7 +1249,7 @@ namespace Hl7.Fhir.Model
           return Context is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

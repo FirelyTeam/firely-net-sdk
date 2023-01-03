@@ -2369,7 +2369,7 @@ namespace Hl7.Fhir.Model
             return VersionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2540,7 +2540,7 @@ namespace Hl7.Fhir.Model
             return ProfileElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2738,7 +2738,7 @@ namespace Hl7.Fhir.Model
             return Template?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2909,7 +2909,7 @@ namespace Hl7.Fhir.Model
             return DescriptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3203,7 +3203,7 @@ namespace Hl7.Fhir.Model
             return GroupingIdElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3424,7 +3424,7 @@ namespace Hl7.Fhir.Model
             return Page?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3595,7 +3595,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3803,7 +3803,7 @@ namespace Hl7.Fhir.Model
             return ScopeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4056,7 +4056,7 @@ namespace Hl7.Fhir.Model
             return OtherElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4234,7 +4234,7 @@ namespace Hl7.Fhir.Model
             return RelativePathElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4443,7 +4443,7 @@ namespace Hl7.Fhir.Model
             return AnchorElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5151,7 +5151,7 @@ namespace Hl7.Fhir.Model
           return Manifest is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

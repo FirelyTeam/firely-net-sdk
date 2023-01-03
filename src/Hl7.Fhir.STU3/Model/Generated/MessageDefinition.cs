@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
             return MaxElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -409,7 +409,7 @@ namespace Hl7.Fhir.Model
             return Situation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1166,7 +1166,7 @@ namespace Hl7.Fhir.Model
           return AllowedResponse?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

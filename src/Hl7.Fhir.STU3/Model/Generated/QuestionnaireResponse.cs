@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
             return Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -495,7 +495,7 @@ namespace Hl7.Fhir.Model
             return Item?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
           return Item?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

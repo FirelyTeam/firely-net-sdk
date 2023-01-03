@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
             return Contact is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
             return CountryLanguage?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Model
             return Type is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
             return Language is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
             return Type is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
             return ConfidentialityIndicator is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1122,7 +1122,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1845,7 +1845,7 @@ namespace Hl7.Fhir.Model
           return Characteristic?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

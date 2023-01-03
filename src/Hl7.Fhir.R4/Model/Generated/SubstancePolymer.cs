@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             return StartingMaterial?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
             return Amount is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -577,7 +577,7 @@ namespace Hl7.Fhir.Model
             return RepeatUnit?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
             return StructuralRepresentation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -927,7 +927,7 @@ namespace Hl7.Fhir.Model
             return Amount is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1097,7 +1097,7 @@ namespace Hl7.Fhir.Model
             return Attachment is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1322,7 +1322,7 @@ namespace Hl7.Fhir.Model
           return Repeat?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

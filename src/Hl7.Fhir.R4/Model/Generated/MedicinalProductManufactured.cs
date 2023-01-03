@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
           return OtherCharacteristics?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

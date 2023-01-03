@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
             return Quantity is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -376,7 +376,7 @@ namespace Hl7.Fhir.Model
             return Substance is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -641,7 +641,7 @@ namespace Hl7.Fhir.Model
           return Ingredient?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

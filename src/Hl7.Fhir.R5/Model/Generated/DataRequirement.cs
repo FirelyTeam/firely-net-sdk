@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
             return Code?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -484,7 +484,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
             return DirectionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -981,7 +981,7 @@ namespace Hl7.Fhir.Model
           return Sort?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

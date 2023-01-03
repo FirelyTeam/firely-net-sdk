@@ -292,7 +292,7 @@ namespace Hl7.Fhir.Model
             return Stratifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -487,7 +487,7 @@ namespace Hl7.Fhir.Model
             return Patients is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
             return Stratum?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -811,7 +811,7 @@ namespace Hl7.Fhir.Model
             return MeasureScoreElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1005,7 +1005,7 @@ namespace Hl7.Fhir.Model
             return Patients is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1362,7 +1362,7 @@ namespace Hl7.Fhir.Model
           return EvaluatedResources is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -664,7 +664,7 @@ namespace Hl7.Fhir.Model
             return SubDetail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -857,7 +857,7 @@ namespace Hl7.Fhir.Model
             return Adjudication?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1441,7 +1441,7 @@ namespace Hl7.Fhir.Model
             return Adjudication?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1674,7 +1674,7 @@ namespace Hl7.Fhir.Model
             return Code is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1909,7 +1909,7 @@ namespace Hl7.Fhir.Model
             return Identifier is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2122,7 +2122,7 @@ namespace Hl7.Fhir.Model
             return Language is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2419,7 +2419,7 @@ namespace Hl7.Fhir.Model
             return ClaimResponse is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3056,7 +3056,7 @@ namespace Hl7.Fhir.Model
           return Insurance?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

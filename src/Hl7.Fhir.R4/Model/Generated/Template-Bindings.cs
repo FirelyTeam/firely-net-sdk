@@ -3438,7 +3438,7 @@ namespace Hl7.Fhir.Model
   /// (system: http://hl7.org/fhir/group-measure)
   /// </summary>
   [FhirEnumeration("GroupMeasure")]
-  public enum GroupMeasure
+  public enum GroupMeasureCode
   {
     /// <summary>
     /// Aggregated using Mean of participant values.

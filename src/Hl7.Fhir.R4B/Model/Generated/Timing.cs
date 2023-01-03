@@ -925,7 +925,7 @@ namespace Hl7.Fhir.Model
             return OffsetElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1096,7 +1096,7 @@ namespace Hl7.Fhir.Model
           return Code is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

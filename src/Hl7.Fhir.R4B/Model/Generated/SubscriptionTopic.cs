@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
             return FhirPathCriteriaElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -732,7 +732,7 @@ namespace Hl7.Fhir.Model
             return RequireBothElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -907,7 +907,7 @@ namespace Hl7.Fhir.Model
             return ResourceElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1177,7 +1177,7 @@ namespace Hl7.Fhir.Model
             return ModifierElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1389,7 +1389,7 @@ namespace Hl7.Fhir.Model
             return RevIncludeElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2120,7 +2120,7 @@ namespace Hl7.Fhir.Model
           return NotificationShape?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
           return ProfileElement is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

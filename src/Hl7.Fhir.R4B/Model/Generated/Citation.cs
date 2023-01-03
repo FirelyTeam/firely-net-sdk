@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
             return Text is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
             return Classifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -637,7 +637,7 @@ namespace Hl7.Fhir.Model
             return Target is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1071,7 +1071,7 @@ namespace Hl7.Fhir.Model
             return Note?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1236,7 +1236,7 @@ namespace Hl7.Fhir.Model
             return BaseCitation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1408,7 +1408,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1563,7 +1563,7 @@ namespace Hl7.Fhir.Model
             return Text is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1738,7 +1738,7 @@ namespace Hl7.Fhir.Model
             return Copyright is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1912,7 +1912,7 @@ namespace Hl7.Fhir.Model
             return BaseCitation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2071,7 +2071,7 @@ namespace Hl7.Fhir.Model
             return Target is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2519,7 +2519,7 @@ namespace Hl7.Fhir.Model
             return Copyright is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2761,7 +2761,7 @@ namespace Hl7.Fhir.Model
             return PublisherLocationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2973,7 +2973,7 @@ namespace Hl7.Fhir.Model
             return DateOfPublication is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3298,7 +3298,7 @@ namespace Hl7.Fhir.Model
             return TextElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3451,7 +3451,7 @@ namespace Hl7.Fhir.Model
             return UrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3604,7 +3604,7 @@ namespace Hl7.Fhir.Model
             return WhoClassified is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3841,7 +3841,7 @@ namespace Hl7.Fhir.Model
             return FreeToShareElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4016,7 +4016,7 @@ namespace Hl7.Fhir.Model
             return Summary?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4436,7 +4436,7 @@ namespace Hl7.Fhir.Model
             return ListOrderElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4635,7 +4635,7 @@ namespace Hl7.Fhir.Model
             return Identifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4786,7 +4786,7 @@ namespace Hl7.Fhir.Model
             return TimeElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -4960,7 +4960,7 @@ namespace Hl7.Fhir.Model
             return Value is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -5843,7 +5843,7 @@ namespace Hl7.Fhir.Model
           return CitedArtifact is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
             return OtherTherapy?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
             return Therapy is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -618,7 +618,7 @@ namespace Hl7.Fhir.Model
             return OtherTherapy?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
             return Management?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -936,7 +936,7 @@ namespace Hl7.Fhir.Model
             return Item is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1087,7 +1087,7 @@ namespace Hl7.Fhir.Model
             return FrequencyOfOccurrence is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1219,7 +1219,7 @@ namespace Hl7.Fhir.Model
             return Code is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1554,7 +1554,7 @@ namespace Hl7.Fhir.Model
           return Warning is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

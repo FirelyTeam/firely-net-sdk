@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -344,7 +344,7 @@ namespace Hl7.Fhir.Model
             return Factor is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
             return Classifier?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -672,7 +672,7 @@ namespace Hl7.Fhir.Model
             return Party is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Model
             return ActualGroup is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
             return ObservedGroup is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1477,7 +1477,7 @@ namespace Hl7.Fhir.Model
             return Description is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1672,7 +1672,7 @@ namespace Hl7.Fhir.Model
             return Reference is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1824,7 +1824,7 @@ namespace Hl7.Fhir.Model
             return UrlElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2821,7 +2821,7 @@ namespace Hl7.Fhir.Model
           return WebLocation?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

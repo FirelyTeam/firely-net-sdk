@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
           return Value is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

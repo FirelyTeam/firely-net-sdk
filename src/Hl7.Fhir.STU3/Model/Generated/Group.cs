@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Model
             return Period is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
             return InactiveElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
           return Member?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

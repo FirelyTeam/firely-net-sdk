@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
             return BenefitBalance?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
             return Financial?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
             return Used is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
             return Code is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1242,7 +1242,7 @@ namespace Hl7.Fhir.Model
           return Error?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

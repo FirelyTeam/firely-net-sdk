@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
             return Description is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
             return ContainedInstance?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -725,7 +725,7 @@ namespace Hl7.Fhir.Model
             return Description is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -893,7 +893,7 @@ namespace Hl7.Fhir.Model
             return VersionIdElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1107,7 +1107,7 @@ namespace Hl7.Fhir.Model
             return Step?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Model
             return Alternative?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1731,7 +1731,7 @@ namespace Hl7.Fhir.Model
             return Response is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1911,7 +1911,7 @@ namespace Hl7.Fhir.Model
             return Step?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2499,7 +2499,7 @@ namespace Hl7.Fhir.Model
           return WorkflowElement?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
           return Note?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

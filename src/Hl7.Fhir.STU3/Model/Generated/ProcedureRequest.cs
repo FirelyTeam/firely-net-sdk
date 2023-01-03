@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
             return OnBehalfOf is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -933,7 +933,7 @@ namespace Hl7.Fhir.Model
           return RelevantHistory?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

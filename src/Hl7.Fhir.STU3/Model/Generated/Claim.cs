@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
             return Reference is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -386,7 +386,7 @@ namespace Hl7.Fhir.Model
             return Party is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -621,7 +621,7 @@ namespace Hl7.Fhir.Model
             return Qualification is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -864,7 +864,7 @@ namespace Hl7.Fhir.Model
             return Reason is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1065,7 +1065,7 @@ namespace Hl7.Fhir.Model
             return PackageCode is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1260,7 +1260,7 @@ namespace Hl7.Fhir.Model
             return Procedure is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1556,7 +1556,7 @@ namespace Hl7.Fhir.Model
             return ClaimResponse is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1738,7 +1738,7 @@ namespace Hl7.Fhir.Model
             return Location is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2397,7 +2397,7 @@ namespace Hl7.Fhir.Model
             return Detail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2800,7 +2800,7 @@ namespace Hl7.Fhir.Model
             return SubDetail?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3172,7 +3172,7 @@ namespace Hl7.Fhir.Model
             return Udi?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3970,7 +3970,7 @@ namespace Hl7.Fhir.Model
           return Total is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
