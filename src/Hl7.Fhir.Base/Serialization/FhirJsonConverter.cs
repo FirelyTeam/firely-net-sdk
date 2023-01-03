@@ -13,11 +13,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
-using System.Buffers;
-using System.IO;
 using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -28,16 +24,24 @@ namespace Hl7.Fhir.Serialization
     /// </summary>
     public class FhirJsonConverterFactory : JsonConverterFactory
     {
-        private readonly Assembly _assembly;
+        private readonly ModelInspector _inspector;
         private readonly FhirJsonPocoSerializerSettings _serializerSettings;
         private readonly FhirJsonPocoDeserializerSettings _deserializerSettings;
 
         public FhirJsonConverterFactory(
             Assembly assembly,
             FhirJsonPocoSerializerSettings serializerSettings,
+            FhirJsonPocoDeserializerSettings deserializerSettings) : this(ModelInspector.ForAssembly(assembly), serializerSettings, deserializerSettings)
+        {
+            // Nothing
+        }
+
+        public FhirJsonConverterFactory(
+            ModelInspector inspector,
+            FhirJsonPocoSerializerSettings serializerSettings,
             FhirJsonPocoDeserializerSettings deserializerSettings)
         {
-            _assembly = assembly;
+            _inspector = inspector;
             _serializerSettings = serializerSettings;
             _deserializerSettings = deserializerSettings;
         }
@@ -48,7 +52,7 @@ namespace Hl7.Fhir.Serialization
         {
             return (JsonConverter)Activator.CreateInstance(
                 typeof(FhirJsonConverter<>).MakeGenericType(typeToConvert),
-                new object[] { _assembly, _serializerSettings, _deserializerSettings })!;
+                new object[] { _inspector, _serializerSettings, _deserializerSettings })!;
         }
     }
 
@@ -70,9 +74,25 @@ namespace Hl7.Fhir.Serialization
             FhirJsonPocoSerializerSettings serializerSettings,
             FhirJsonPocoDeserializerSettings deserializerSettings)
         {
-            ModelInspector inspector = ModelInspector.ForAssembly(assembly);
+            var inspector = ModelInspector.ForAssembly(assembly);
 
             _deserializer = new FhirJsonPocoDeserializer(assembly, deserializerSettings);
+            _serializer = new FhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
+        }
+
+        /// <summary>
+        /// Constructs a <see cref="JsonConverter{T}"/> that (de)serializes FHIR json for the 
+        /// POCOs in a given assembly.
+        /// </summary>
+        /// <param name="inspector">The <see cref="ModelInspector" /> containing classes to be used for deserialization.</param>
+        /// <param name="serializerSettings">The optional features used during serialization.</param>
+        /// <param name="deserializerSettings">The optional features used during deserialization.</param>
+        public FhirJsonConverter(
+            ModelInspector inspector,
+            FhirJsonPocoSerializerSettings serializerSettings,
+            FhirJsonPocoDeserializerSettings deserializerSettings)
+        {
+            _deserializer = new FhirJsonPocoDeserializer(inspector, deserializerSettings);
             _serializer = new FhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
         }
 

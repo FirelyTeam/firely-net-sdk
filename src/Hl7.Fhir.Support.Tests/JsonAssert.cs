@@ -72,10 +72,22 @@ namespace Hl7.Fhir.Tests
                     {
                         if (jo.Count == 1 && jo.ContainsKey("fhir_comments")) return false;
                     }
+
+                    //MS 2022-12-23: ignore comparison of empty json arrays.
+                    if (p.Value is JArray a)
+                    {
+                        var children = a.Children();
+                        if (children.Count() == 1)
+                        {
+                            return children.Single().Type != JTokenType.Null;
+                        }
+                    }
+
                     return true;
                 }
                 else
                     return true;
+
             }
 
             var expecteds = expected.Children().Where(c => isRelevant(c));
@@ -130,7 +142,7 @@ namespace Hl7.Fhir.Tests
 
                     var actS = (string)act;
 
-                    if (path.EndsWith("meta.lastUpdated"))
+                    if (path.EndsWith("meta.lastUpdated") || path.EndsWith("timestamp"))
                     {
                         // hack: ignore meta.lastUpdated values
 

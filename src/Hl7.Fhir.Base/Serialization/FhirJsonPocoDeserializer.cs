@@ -39,19 +39,33 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Initializes an instance of the deserializer.
         /// </summary>
+        /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+        public FhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+        {
+            // nothing
+        }
+
+        /// <summary>
+        /// Initializes an instance of the deserializer.
+        /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
         public FhirJsonPocoDeserializer(Assembly assembly, FhirJsonPocoDeserializerSettings settings)
         {
-            Assembly = assembly ?? throw new ArgumentNullException(nameof(assembly));
             Settings = settings;
-            _inspector = ModelInspector.ForAssembly(assembly);
+            _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
         }
 
         /// <summary>
-        /// Assembly containing the POCO classes the deserializer will use to deserialize data into.
+        /// Initializes an instance of the deserializer.
         /// </summary>
-        public Assembly Assembly { get; }
+        /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
+        /// <param name="settings">A settings object to be used by this instance.</param>
+        public FhirJsonPocoDeserializer(ModelInspector inspector, FhirJsonPocoDeserializerSettings settings)
+        {
+            Settings = settings;
+            _inspector = inspector;
+        }
 
         /// <summary>
         /// The settings that were passed to the constructor.
@@ -85,7 +99,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
-        /// Reads a (subtree) of serialzed FHIR Json data into a POCO object.
+        /// Reads a (subtree) of serialized FHIR Json data into a POCO object.
         /// </summary>
         /// <param name="targetType">The type of POCO to construct and deserialize</param>
         /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
@@ -99,7 +113,7 @@ namespace Hl7.Fhir.Serialization
             if (reader.TokenType == JsonTokenType.None) reader.Read();
 
             var mapping = _inspector.FindOrImportClassMapping(targetType) ??
-                throw new ArgumentException($"Type '{targetType}' could not be located in model assembly '{Assembly}' and can " +
+                throw new ArgumentException($"Type '{targetType}' could not be located and can " +
                     $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
 
             // Create a new instance of the object to read the members into.

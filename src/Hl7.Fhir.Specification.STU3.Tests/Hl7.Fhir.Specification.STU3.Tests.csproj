@@ -13,13 +13,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.tgz">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="TestData\ResourcesInSubfolder.zip">
+		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\**\*.tgz;TestData\**\*.zip">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
