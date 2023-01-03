@@ -12,6 +12,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
@@ -109,7 +110,7 @@ namespace Hl7.Fhir.Rest
                 }
                 if (bodyParameters.Count > 0)
                 {
-                    FormUrlEncodedContent content = new FormUrlEncodedContent(bodyParameters);
+                    var content = new FormUrlEncodedContent(bodyParameters);
                     request.RequestBodyContent = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 else
@@ -121,9 +122,11 @@ namespace Hl7.Fhir.Rest
             }
             else
             {
-                request.RequestBodyContent = settings.PreferredFormat == ResourceFormat.Xml
+                var serialized = settings.PreferredFormat == ResourceFormat.Xml
                     ? ser.SerializeToXml(data)
                     : ser.SerializeToJson(data);
+
+                request.RequestBodyContent = Encoding.UTF8.GetBytes(serialized);
 
                 // This is done by the caller after the OnBeforeRequest is called so that other properties
                 // can be set before the content is committed

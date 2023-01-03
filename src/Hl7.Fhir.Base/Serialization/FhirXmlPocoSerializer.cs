@@ -68,8 +68,8 @@ namespace Hl7.Fhir.Serialization
         /// <summary>
         /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
         /// </summary>
-        public byte[] SerializeToUtf8Bytes(IReadOnlyDictionary<string, object> members, SerializationFilter? summary = default) =>
-            SerializationUtil.WriteXmlToBytes(w => Serialize(members, w, summary));
+        public string SerializeToString(IReadOnlyDictionary<string, object> members, SerializationFilter? summary = default) =>
+            SerializationUtil.WriteXmlToString(w => Serialize(members, w, summary));
 
 
         /// <summary>

@@ -10,7 +10,6 @@
 
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System.Text.Json;
 

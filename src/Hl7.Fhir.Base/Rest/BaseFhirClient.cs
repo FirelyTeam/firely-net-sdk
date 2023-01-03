@@ -1,6 +1,4 @@
-﻿//using Hl7.Fhir.ElementModel;
-
-#nullable enable
+﻿#nullable enable
 
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
@@ -9,6 +7,7 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -1034,14 +1033,14 @@ namespace Hl7.Fhir.Rest
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            var noRealBody = response.Resource == null || 
+            var noRealBody = response.Resource == null ||
                 (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
             var fetchFromResponseLocation = noRealBody && isPostOrPut(request)
                 && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity();
 
-            var result = fetchFromResponseLocation ? 
-                await GetAsync(response.Response.Location!).ConfigureAwait(false) 
+            var result = fetchFromResponseLocation ?
+                await GetAsync(response.Response.Location!).ConfigureAwait(false)
                 : response.Resource;
 
             // We have a success code (2xx), but the body may not be of the type we expect.
@@ -1223,41 +1222,10 @@ namespace Hl7.Fhir.Rest
             public virtual Resource DeserializeFromJson(string data) =>
                 JsonSerializer.Deserialize<Resource>(data, _options)!;
 
-            public byte[] SerializeToXml(Base instance) => new FhirXmlPocoSerializer(_inspector.FhirRelease).SerializeToUtf8Bytes(instance);
+            public string SerializeToXml(Resource instance) => new FhirXmlPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
 
-            public byte[] SerializeToJson(Base instance) => JsonSerializer.SerializeToUtf8Bytes(instance, _options);
+            public string SerializeToJson(Resource instance) => JsonSerializer.Serialize(instance, _options);
         }
-
-        private class ElementModelSerializers : IFhirSerializationEngine
-        {
-            private readonly ModelInspector _inspector;
-            private readonly Func<ParserSettings?> _settingsRetriever;
-
-            public ElementModelSerializers(ModelInspector inspector, Func<ParserSettings?> settingsRetriever)
-            {
-                _inspector = inspector;
-                _settingsRetriever = settingsRetriever;
-            }
-
-            public virtual Resource DeserializeFromXml(string data)
-            {
-                var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
-                return (Resource)FhirXmlNode.Parse(data).ToPoco(_inspector, null, settings);
-            }
-
-            public virtual Resource DeserializeFromJson(string data)
-            {
-                var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
-                return (Resource)FhirJsonNode.Parse(data).ToPoco(_inspector, null, settings);
-            }
-
-            public byte[] SerializeToXml(Base instance) =>
-                new CommonFhirXmlSerializer(_inspector).SerializeToBytes(instance, summary: SummaryType.False);
-
-            public byte[] SerializeToJson(Base instance) =>
-                new CommonFhirJsonSerializer(_inspector).SerializeToBytes(instance, summary: SummaryType.False);
-        }
-
     }
 }
 
