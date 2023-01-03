@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
             return MaterialType is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
             return OrganismGeneral is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -622,7 +622,7 @@ namespace Hl7.Fhir.Model
             return AuthorDescriptionElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
             return HybridType is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
             return Order is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1197,7 +1197,7 @@ namespace Hl7.Fhir.Model
             return PartLocation is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1606,7 +1606,7 @@ namespace Hl7.Fhir.Model
           return PartDescription?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

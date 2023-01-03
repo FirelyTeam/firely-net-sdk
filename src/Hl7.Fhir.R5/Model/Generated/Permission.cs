@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
             return Purpose?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
             return Grounds?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -701,7 +701,7 @@ namespace Hl7.Fhir.Model
           return UsageLimitations?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

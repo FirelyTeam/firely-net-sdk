@@ -443,7 +443,7 @@ namespace Hl7.Fhir.Model
             return ReleaseDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -635,7 +635,7 @@ namespace Hl7.Fhir.Model
             return Custodian is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
             return CompartmentElement?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1114,7 +1114,7 @@ namespace Hl7.Fhir.Model
             return ValueElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1432,7 +1432,7 @@ namespace Hl7.Fhir.Model
             return Operation?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1611,7 +1611,7 @@ namespace Hl7.Fhir.Model
             return Feature?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1864,7 +1864,7 @@ namespace Hl7.Fhir.Model
             return Feature?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2079,7 +2079,7 @@ namespace Hl7.Fhir.Model
             return Feature?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -2254,7 +2254,7 @@ namespace Hl7.Fhir.Model
             return Feature?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -3121,7 +3121,7 @@ namespace Hl7.Fhir.Model
           return Rest?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

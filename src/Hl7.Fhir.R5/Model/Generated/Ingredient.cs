@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
             return Manufacturer is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -309,7 +309,7 @@ namespace Hl7.Fhir.Model
             return Strength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -626,7 +626,7 @@ namespace Hl7.Fhir.Model
             return ReferenceStrength?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -827,7 +827,7 @@ namespace Hl7.Fhir.Model
             return Country?.Any() == true;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Model
           return Substance is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

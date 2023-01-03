@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
             return CTerminalModificationElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -593,7 +593,7 @@ namespace Hl7.Fhir.Model
           return Subunit?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

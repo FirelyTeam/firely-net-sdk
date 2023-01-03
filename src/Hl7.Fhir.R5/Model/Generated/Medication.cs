@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
             return Strength is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
             return ExpirationDateElement is not null;
           default:
             return base.TryGetValue(key, out value);
-        };
+        }
 
       }
 
@@ -678,7 +678,7 @@ namespace Hl7.Fhir.Model
           return Batch is not null;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 

@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
           return SpecialPrecautionsForStorage?.Any() == true;
         default:
           return base.TryGetValue(key, out value);
-      };
+      }
 
     }
 
