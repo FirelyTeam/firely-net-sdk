@@ -24,6 +24,12 @@ namespace Hl7.Fhir.Serialization
     /// set of errors detected using this aggregate exception.</remarks>
     public class DeserializationFailedException : Exception
     {
+        public DeserializationFailedException(Base? partialResult, CodedException innerException) :
+                this(partialResult, new[] { innerException })
+        {
+            // Nothing
+        }
+
         public DeserializationFailedException(Base? partialResult, IEnumerable<CodedException> innerExceptions) :
             base(generateMessage(innerExceptions))
         {

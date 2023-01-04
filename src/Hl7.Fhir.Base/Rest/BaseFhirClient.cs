@@ -1108,7 +1108,10 @@ namespace Hl7.Fhir.Rest
             {
                 var exception = unpackExceptionForLegacyPurposes(dfe);
 
-                if (!Settings.VerifyFhirVersion)
+                // TODO? Here, we augment the original exception with extra text. This worked fine with
+                // the ElementModel parsing exceptions, but you cannot do that with the DeserializationFailedException,
+                // so that will be thrown as-is.
+                if (exception is FormatException && !Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(exception.Message + Environment.NewLine +
                             $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
