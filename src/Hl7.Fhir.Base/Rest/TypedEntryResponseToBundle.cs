@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -22,7 +24,7 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        public static Bundle.EntryComponent ToBundleEntry(this EntryResponse entry, FhirRelease release, Resource bodyResource)
+        public static Bundle.EntryComponent ToBundleEntry(this EntryResponse entry, FhirRelease release, Resource? bodyResource)
         {
             var result = new Bundle.EntryComponent
             {
@@ -118,15 +120,11 @@ namespace Hl7.Fhir.Rest
             return bin;
         }
 
-        private class Body
-        {
-            public byte[] Data;
-        }
+        private record Body(byte[] Data);
 
+        public static byte[]? GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
 
-        public static byte[] GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
-
-        public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
+        public static string? GetBodyAsText(this Bundle.ResponseComponent interaction)
         {
             var body = interaction.GetBody();
             return body != null ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
@@ -135,7 +133,7 @@ namespace Hl7.Fhir.Rest
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
             interaction.RemoveAnnotations<Body>();
-            interaction.AddAnnotation(new Body { Data = data });
+            interaction.AddAnnotation(new Body(data));
         }
 
         internal static void SetHeaders(this Bundle.ResponseComponent interaction, IDictionary<string, string> headers)
@@ -147,3 +145,6 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+
+#nullable restore

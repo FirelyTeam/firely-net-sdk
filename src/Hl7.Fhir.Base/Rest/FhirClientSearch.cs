@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class BaseFhirClient
+    public partial class BaseFhirClient
     {
 #pragma warning disable CS1584 // XML comment has syntactically incorrect cref attribute
 #pragma warning disable CS1658 // Warning is overriding an error

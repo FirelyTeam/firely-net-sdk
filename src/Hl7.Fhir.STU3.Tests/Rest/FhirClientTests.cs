@@ -355,7 +355,6 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Bundle result;
 
-                client.Settings.CompressRequestBody = true;
                 handler.AutomaticDecompression = DecompressionMethods.GZip;
 
                 result = client.Search<DiagnosticReport>();
@@ -363,7 +362,6 @@ namespace Hl7.Fhir.Tests.Rest
                 Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
 
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-
 
                 result = client.Search<DiagnosticReport>(pageSize: 10);
                 Assert.IsNotNull(result);

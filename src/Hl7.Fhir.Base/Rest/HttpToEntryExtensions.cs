@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -24,7 +26,7 @@ namespace Hl7.Fhir.Rest
             var result = new EntryResponse
             {
                 Status = ((int)response.StatusCode).ToString(),
-                ResponseUri = response.RequestMessage.RequestUri,//this is actually the requestUri, can't find the responseUri
+                ResponseUri = response.RequestMessage?.RequestUri, //this is actually the requestUri, can't find the responseUri
                 Body = body,
                 Location = response.Headers.Location?.OriginalString ?? response.Content.Headers.ContentLocation?.OriginalString,
                 LastModified = response.Content.Headers.LastModified,
@@ -65,7 +67,7 @@ namespace Hl7.Fhir.Rest
             return code >= 200 && code < 300;
         }
 
-        public static string GetBodyAsText(this EntryResponse interaction) =>
+        public static string? GetBodyAsText(this EntryResponse interaction) =>
             interaction.Body is { } body ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
 
         internal static EntryResponse ToEntryResponse(this HttpWebResponse response, byte[] body)
@@ -89,7 +91,7 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static string getETag(HttpWebResponse response)
+        private static string? getETag(HttpWebResponse response)
         {
             var result = response.Headers[HttpUtil.ETAG];
 
@@ -102,7 +104,9 @@ namespace Hl7.Fhir.Rest
             return result;
         }
 
-        private static string getContentType(HttpWebResponse response) =>
-            !string.IsNullOrEmpty(response.ContentType) ? ContentType.GetMediaTypeFromHeaderValue(response.ContentType) : null;
+        private static string? getContentType(HttpWebResponse response) =>
+            !string.IsNullOrEmpty(response.ContentType) ? ContentType.GetMediaTypeFromHeaderValue(response.ContentType!) : null;
     }
 }
+
+#nullable restore

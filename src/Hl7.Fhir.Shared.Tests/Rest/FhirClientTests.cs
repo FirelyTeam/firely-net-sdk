@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testReadWrongResourceType(BaseFhirClient client)
         {
-            var loc = client.Read<Patient>("Location/" + locationId);
+            _ = client.Read<Patient>("Location/" + locationId);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -345,7 +345,6 @@ namespace Hl7.Fhir.Tests.Rest
             using FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler);
             Bundle result;
 
-            client.Settings.CompressRequestBody = true;
             handler.AutomaticDecompression = DecompressionMethods.GZip;
 
             result = client.Search<DiagnosticReport>();
@@ -1454,8 +1453,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Name = new List<HumanName> { new HumanName().WithGiven("testy").AndFamily("McTestFace") }
             };
-
-            var oo = client.Create<Patient>(pat);
+            _ = client.Create<Patient>(pat);
             Assert.IsNotNull(client.LastResult.Outcome);
         }
 

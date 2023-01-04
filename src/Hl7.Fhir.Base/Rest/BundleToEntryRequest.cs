@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -10,7 +12,10 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,35 +25,43 @@ namespace Hl7.Fhir.Rest
 {
     internal static class BundleToEntryRequest
     {
-        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, IFhirSerializationEngine ser, string fhirRelease)
+        public static async Task<EntryRequest> ToEntryRequestAsync(this Bundle.EntryComponent entry, FhirClientSettings settings, 
+            IFhirSerializationEngine ser, string fhirVersion)
         {
-            var result = new EntryRequest
+            var method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>());
+
+            byte[]? body = null;
+            string? contentType = null;
+
+            if (entry.Resource != null)
             {
-                FhirRelease = fhirRelease,
-                Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
-                Type = entry.Annotation<InteractionType>(),
-                Url = entry.Request.Url,
+                bool searchUsingPost =
+                    method == HTTPVerb.POST
+                    && entry.Annotation<InteractionType>() == InteractionType.Search
+                    && entry.Resource is Parameters;
+                (body, contentType) = await getBodyAndContentTypeAsync(entry.Resource, settings, searchUsingPost, ser, fhirVersion).ConfigureAwait(false);
+            }
+
+            var result = new EntryRequest(
+                Method: method,
+                Url: entry.Request.Url,
+                Type: entry.Annotation<InteractionType>())
+            {
+                FhirVersion = fhirVersion,                
                 Headers = new EntryRequestHeaders
                 {
                     IfMatch = entry.Request.IfMatch,
                     IfModifiedSince = entry.Request.IfModifiedSince,
                     IfNoneExist = entry.Request.IfNoneExist,
                     IfNoneMatch = entry.Request.IfNoneMatch
-                }
+                },
+                RequestBodyContent = body,
+                ContentType = contentType
             };
 
             if (!settings.UseFormatParameter)
             {
-                result.Headers.Accept = ContentType.BuildContentType(settings, fhirRelease);
-            }
-
-            if (entry.Resource != null)
-            {
-                bool searchUsingPost =
-                    result.Method == HTTPVerb.POST
-                    && entry.Annotation<InteractionType>() == InteractionType.Search
-                    && entry.Resource is Parameters;
-                await setBodyAndContentTypeAsync(result, entry.Resource, settings, searchUsingPost, ser, fhirRelease).ConfigureAwait(false);
+                result.Headers.Accept = ContentType.BuildContentType(settings, fhirVersion);
             }
 
             return result;
@@ -86,7 +99,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static async Task setBodyAndContentTypeAsync(EntryRequest request, Resource data, FhirClientSettings settings, 
+        private static async Task<(byte[]? body, string contentType)> getBodyAndContentTypeAsync(Resource data, FhirClientSettings settings, 
             bool searchUsingPost, IFhirSerializationEngine ser, string fhirVersion)
         {
             if (data == null) throw Error.ArgumentNull(nameof(data));
@@ -94,27 +107,24 @@ namespace Hl7.Fhir.Rest
             if (data is Binary bin)
             {
                 //Binary.Content is available for STU3. This has changed for R4 as it is Binary.Data
-                request.RequestBodyContent = bin.Data ?? bin.Content;
-                request.ContentType = bin.ContentType;
+                return (bin.Data ?? bin.Content, bin.ContentType);
             }
-            else if (searchUsingPost)
-            {
-                var bodyParameters = new List<KeyValuePair<string, string>>();
-                foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
+            else if (data is Parameters pars && searchUsingPost)
+            {                              
+                if (pars.Parameter.Any())
                 {
-                    bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));
-                }
-                if (bodyParameters.Count > 0)
-                {
+                    var bodyParameters = pars.Parameter
+                        .Where(p => p.Name is not null && p.Value is not null)
+                        .Select(p => new KeyValuePair<string, string>(p.Name, p.Value.ToString()!))
+                        .ToList();
+
                     var content = new FormUrlEncodedContent(bodyParameters);
-                    request.RequestBodyContent = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
+                    return (await content.ReadAsByteArrayAsync().ConfigureAwait(false), ContentType.FORM_URL_ENCODED);
                 }
                 else
                 {
-                    request.RequestBodyContent = null;
+                    return (null, ContentType.FORM_URL_ENCODED);
                 }
-
-                request.ContentType = "application/x-www-form-urlencoded";
             }
             else
             {
@@ -122,13 +132,10 @@ namespace Hl7.Fhir.Rest
                     ? ser.SerializeToXml(data)
                     : ser.SerializeToJson(data);
 
-                request.RequestBodyContent = Encoding.UTF8.GetBytes(serialized);
-
-                // This is done by the caller after the OnBeforeRequest is called so that other properties
-                // can be set before the content is committed
-                // request.WriteBody(CompressRequestBody, body);
-                request.ContentType = ContentType.BuildContentType(settings, fhirVersion);
+                return (Encoding.UTF8.GetBytes(serialized), ContentType.BuildContentType(settings, fhirVersion));
             }
         }
     }
 }
+
+#nullable restore

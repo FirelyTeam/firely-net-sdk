@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -11,24 +13,24 @@ using System;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class EntryRequest
+    internal record EntryRequest(HTTPVerb? Method, string Url, InteractionType Type)
     {
-        public HTTPVerb? Method { get; set; }
-        public string Url { get; set; }
-        public string ContentType { get; set; }
-        public byte[] RequestBodyContent { get; set; }
-        public EntryRequestHeaders Headers { get; set; }
-        public InteractionType Type { get; set; }
-        public string FhirRelease { get; set; }
+        public string? ContentType { get; set; }
+        public byte[]? RequestBodyContent { get; set; }
+        public EntryRequestHeaders Headers { get; set; } = new();
+
+        public string? FhirVersion { get; set; }
+
+        public bool IsPostOrPut => Method is HTTPVerb.POST or HTTPVerb.PUT;        
     }
-    
+
     internal class EntryRequestHeaders
     {
-        public string IfMatch { get; set; }
-        public string IfNoneMatch { get; set; }
-        public string IfNoneExist { get; set; }
+        public string? IfMatch { get; set; }
+        public string? IfNoneMatch { get; set; }
+        public string? IfNoneExist { get; set; }
         public DateTimeOffset? IfModifiedSince { get; set; }
-        public string Accept { get; set; }
+        public string? Accept { get; set; }
     }
 
     //Needs to be in sync with Bundle.HTTPVerbs
@@ -50,3 +52,5 @@ namespace Hl7.Fhir.Rest
         Patch
     }
 }
+
+#nullable restore

@@ -23,39 +23,24 @@ namespace Hl7.Fhir.Test
     public class RequesterTests
     {
         private readonly Uri _endpoint = new("http://myserver.org/fhir");
-        private static EntryRequest _entry
-        {
-            get
+
+        private static readonly EntryRequest ENTRY = new(HTTPVerb.GET, "test", InteractionType.Create);
+
+        private static readonly FhirClientSettings SETTINGS =
+            new()
             {
-                return new EntryRequest
-                {
-                    Url = "test",
-                    Method = HTTPVerb.GET,
-                    Type = InteractionType.Create,
-                    Headers = new EntryRequestHeaders()
-                };
-            }
-        }
-        private static FhirClientSettings _settings
-        {
-            get
-            {
-                return new FhirClientSettings
-                {
-                    PreferredParameterHandling = SearchParameterHandling.Lenient,
-                    PreferredReturn = Prefer.ReturnMinimal,
-                    PreferredFormat = ResourceFormat.Json,
-                    UseFormatParameter = false
-                };
-            }
-        }
+                PreferredParameterHandling = SearchParameterHandling.Lenient,
+                PreferredReturn = Prefer.ReturnMinimal,
+                PreferredFormat = ResourceFormat.Json,
+                UseFormatParameter = false
+            };
 
         #region EntryRequest To Httpclient
         [TestMethod]
         public void TestPreferSettingHttpClient()
         {
-            var entry = _entry;
-            var settings = _settings;
+            var entry = ENTRY;
+            var settings = SETTINGS;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual("return=minimal", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
@@ -67,27 +52,33 @@ namespace Hl7.Fhir.Test
             settings.PreferredReturn = null;
             request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.IsNull(request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value);
+        }
 
-            entry.Type = InteractionType.Search;
+        [TestMethod]
+        public void TestPreferSettingHttpClientWithSearch()
+        {
+            var settings = SETTINGS;
+
+            var searchEntry = ENTRY with { Type = InteractionType.Search };
             settings.PreferredReturn = Prefer.OperationOutcome;
-            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            var request = searchEntry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual("handling=lenient", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
 
             settings.PreferredReturn = Prefer.RespondAsync;
-            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            request = searchEntry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual("handling=lenient, respond-async", request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value.FirstOrDefault());
 
             settings.PreferredReturn = Prefer.ReturnRepresentation;
             settings.PreferredParameterHandling = null;
-            request = entry.ToHttpRequestMessage(_endpoint, settings);
+            request = searchEntry.ToHttpRequestMessage(_endpoint, settings);
             Assert.IsNull(request.Headers.Where(h => h.Key == "Prefer").FirstOrDefault().Value);
         }
 
         [TestMethod]
         public void TestFormatParametersHttpClient()
         {
-            var entry = _entry;
-            var settings = _settings;
+            var entry = ENTRY;
+            var settings = SETTINGS;
 
             settings.UseFormatParameter = true;
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
@@ -97,7 +88,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestEntryRequestHeadersHttpClient()
         {
-            var entry = _entry;
+            var entry = ENTRY;
 
             string testIfMatch = "W/\"23/\"";
             var testIfModifiedSince = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
@@ -112,7 +103,7 @@ namespace Hl7.Fhir.Test
                 IfNoneMatch = testIfNoneMatch
             };
 
-            var settings = _settings;
+            var settings = SETTINGS;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
             Assert.AreEqual(testIfMatch, request.Headers.IfMatch.ToString());
@@ -124,12 +115,11 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestSetAgentHttpClient()
         {
-            var entry = _entry;
-            entry.FhirRelease = "testAgent";
-            var settings = _settings;
+            var entry = ENTRY with { FhirVersion = "3.1415" };
+            var settings = SETTINGS;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);
-            Assert.AreEqual(".NET FhirClient for FHIR testAgent", request.Headers.UserAgent.ToString());
+            Assert.AreEqual(".NET FhirClient for FHIR 3.1415", request.Headers.UserAgent.ToString());
         }
 
         #endregion       
@@ -153,7 +143,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_settings, BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector), ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(SETTINGS, BaseFhirClient.GetDefaultElementModelSerializers(ModelInfo.ModelInspector), ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -183,7 +173,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Patch);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_settings, getSerializationEngine(), ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(SETTINGS, getSerializationEngine(), ModelInfo.Version);
 
             Assert.IsNotNull(entryRequest);
             Assert.AreEqual(bundleComponent.Request.Url, entryRequest.Url);
@@ -215,7 +205,7 @@ namespace Hl7.Fhir.Test
             };
             bundleComponent.AddAnnotation(InteractionType.Search);
 
-            var entryRequest = await bundleComponent.ToEntryRequestAsync(_settings, getSerializationEngine(), ModelInfo.Version);
+            var entryRequest = await bundleComponent.ToEntryRequestAsync(SETTINGS, getSerializationEngine(), ModelInfo.Version);
             Assert.IsNotNull(entryRequest);
             Assert.IsNotNull(entryRequest.RequestBodyContent);
             Assert.AreEqual("test content type", entryRequest.ContentType);
@@ -230,19 +220,8 @@ namespace Hl7.Fhir.Test
         public async Tasks.Task TestToTypedEntryResponse()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"true\" /></Patient>";
-            var response = new EntryResponse
-            {
-                ContentType = "text/xml; charset=us-ascii",
-                Etag = "Test-Etag",
-                LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan()),
-                Location = "Test-Location",
-                ResponseUri = new Uri("http://www.myserver.com"),
-                Status = "200",
-                Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
-                Body = Encoding.UTF8.GetBytes(xml),
-            };
-
-            var result = response.DecodeBodyToResource(getSerializationEngine());
+            var contentType = "text/xml; charset=us-ascii";
+            var result = EntryToTypedEntryExtensions.DecodeBodyToResource(xml, contentType, getSerializationEngine());
             
             var typedElementXml = await result.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
@@ -276,7 +255,7 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var resourceBody = response.DecodeBodyToResource(getSerializationEngine(settings));         
+            var resourceBody = EntryToTypedEntryExtensions.DecodeBodyToResource(xml, response.ContentType, getSerializationEngine(settings));         
             var bundleresponse = response.ToBundleEntry(FhirRelease.STU3, resourceBody);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);

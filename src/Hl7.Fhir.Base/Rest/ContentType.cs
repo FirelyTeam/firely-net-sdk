@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -25,6 +27,7 @@ namespace Hl7.Fhir.Rest
 
     public static class ContentType
     {
+        public const string FORM_URL_ENCODED = "application/x-www-form-urlencoded";
         public const string JSON_CONTENT_HEADER = "application/fhir+json";  // The formal FHIR mime type (still to be registered).
         public static readonly string[] JSON_CONTENT_HEADERS = new string[]
             { JSON_CONTENT_HEADER,
@@ -153,10 +156,9 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public static string GetCharSetFromHeaderValue(string mediaHeaderValue)
-        {
-            var ct = new System.Net.Mime.ContentType(mediaHeaderValue);
-            return ct.CharSet;
-        }
+        public static string? GetCharSetFromHeaderValue(string mediaHeaderValue) =>
+            new System.Net.Mime.ContentType(mediaHeaderValue).CharSet;
     }
 }
+
+#nullable restore

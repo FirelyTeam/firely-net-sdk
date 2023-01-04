@@ -37,33 +37,28 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        public Resource? DeserializeFromXml(string data, out DeserializationFailedException? report) =>
-            deserialize(() => FhirXmlNode.Parse(data), out report);
+        public Resource? DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data));
 
-        public Resource? DeserializeFromJson(string data, out DeserializationFailedException? report) =>
-            deserialize(() => FhirJsonNode.Parse(data), out report);
+        public Resource? DeserializeFromJson(string data) => deserialize(() => FhirJsonNode.Parse(data));
 
-        private Resource? deserialize(Func<ISourceNode> deserializer, out DeserializationFailedException? report)
+        private Resource? deserialize(Func<ISourceNode> deserializer)
         {
             var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
 
             try
             {
-                report = null;
                 return deserializer().ToPoco(_inspector, null, settings) as Resource;
             }
             catch (FormatException fe)
             {
-                report = new DeserializationFailedException(null, new ElementModelParserException(fe));
-                return null;
+                throw new DeserializationFailedException(null, new ElementModelParserException(fe));
             }
             catch (InvalidOperationException ioe)
             {
                 // Unfortunately, our ElementModel parsers treats resources without a type indicator with an InvalidOperationException.
                 // This should have been a parsing error, so let's turn it into one.
                 var fmt = new FormatException(ioe.Message);
-                report = new DeserializationFailedException(null, new ElementModelParserException(fmt));
-                return null;
+                throw new DeserializationFailedException(null, new ElementModelParserException(fmt));                
             }
         }
 

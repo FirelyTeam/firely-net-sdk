@@ -407,7 +407,12 @@ namespace Hl7.Fhir.Rest
         public ResourceIdentity MakeRelative()
         {
             if (IsAbsoluteRestUrl)
-                return ResourceIdentity.Build(this.ResourceType, this.Id, this.VersionId);
+            {
+                if (ResourceType is null || Id is null)
+                    throw Error.InvalidOperation("Can only make a resource identity relative if its resource type and id are set.");
+
+                return Build(ResourceType, Id, VersionId);
+            }
             else if (IsRelativeRestUrl)
                 return this;
             else
