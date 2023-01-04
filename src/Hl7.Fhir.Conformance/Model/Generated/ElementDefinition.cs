@@ -1443,9 +1443,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Suppress warning or hint in profile
+      /// Suppress warning or hint in profile. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("suppress", InSummary=true, Order=60)]
+      [FhirElement("suppress", InSummary=true, Order=60, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean SuppressElement
       {
@@ -1718,9 +1718,9 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ElementDefinition#Obligation"; } }
 
       /// <summary>
-      /// Combination code describing the nature of the obligation
+      /// Combination code describing the nature of the obligation. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=30)]
+      [FhirElement("code", InSummary=true, Order=30, Since=FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Coding Code
@@ -1732,9 +1732,9 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Code;
 
       /// <summary>
-      /// Actor(s) this obligation applies to (all actors if none)
+      /// Actor(s) this obligation applies to (all actors if none). Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=40)]
+      [FhirElement("actor", InSummary=true, Order=40, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Canonical> ActorElement
@@ -1764,9 +1764,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Documentation of the purpose or application of the obligation
+      /// Documentation of the purpose or application of the obligation. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("documentation", InSummary=true, Order=50)]
+      [FhirElement("documentation", InSummary=true, Order=50, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Documentation
       {
@@ -1777,9 +1777,9 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Markdown _Documentation;
 
       /// <summary>
-      /// Qualifies the usage - jurisdiction, gender, workflow status etc
+      /// Qualifies the usage - jurisdiction, gender, workflow status etc. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("usage", InSummary=true, Order=60)]
+      [FhirElement("usage", InSummary=true, Order=60, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.UsageContext> Usage
@@ -1791,9 +1791,9 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.UsageContext> _Usage;
 
       /// <summary>
-      /// Limits obligation to some repeats by FHIRPath
+      /// Limits obligation to some repeats by FHIRPath. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("filter", InSummary=true, Order=70)]
+      [FhirElement("filter", InSummary=true, Order=70, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString FilterElement
       {
@@ -1822,9 +1822,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Ddescribes the intent of the filter (short)
+      /// Ddescribes the intent of the filter (short). Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("filterDocumentation", InSummary=true, Order=80)]
+      [FhirElement("filterDocumentation", InSummary=true, Order=80, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString FilterDocumentationElement
       {
@@ -1853,9 +1853,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The obligation only applies when perfomring the indicated process
+      /// The obligation only applies when perfomring the indicated process. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("process", InSummary=true, Order=90)]
+      [FhirElement("process", InSummary=true, Order=90, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> ProcessElement
@@ -2112,9 +2112,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Additional Bindings - more rules about the binding
+      /// Additional Bindings - more rules about the binding. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("additional", InSummary=true, Order=60)]
+      [FhirElement("additional", InSummary=true, Order=60, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.ElementDefinition.AdditionalComponent> Additional
@@ -2249,9 +2249,9 @@ namespace Hl7.Fhir.Model
       public override string TypeName { get { return "ElementDefinition#Additional"; } }
 
       /// <summary>
-      /// maximum | minimum | required | extensible | candidate | current | preferred | ui | starter | component
+      /// maximum | minimum | required | extensible | candidate | current | preferred | ui | starter | component. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("purpose", InSummary=true, Order=30)]
+      [FhirElement("purpose", InSummary=true, Order=30, Since=FhirRelease.R5)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2282,9 +2282,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// The value set for the additional binding
+      /// The value set for the additional binding. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("valueSet", InSummary=true, Order=40)]
+      [FhirElement("valueSet", InSummary=true, Order=40, Since=FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Canonical ValueSetElement
@@ -2314,9 +2314,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Documentation of the purpose of use of the binding
+      /// Documentation of the purpose of use of the binding. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("documentation", InSummary=true, Order=50)]
+      [FhirElement("documentation", InSummary=true, Order=50, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Documentation
       {
@@ -2327,9 +2327,9 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Markdown _Documentation;
 
       /// <summary>
-      /// Concise documentation - for summary tables
+      /// Concise documentation - for summary tables. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("shortDoco", InSummary=true, Order=60)]
+      [FhirElement("shortDoco", InSummary=true, Order=60, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ShortDocoElement
       {
@@ -2358,9 +2358,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// Qualifies the usage - jurisdiction, gender, workflow status etc
+      /// Qualifies the usage - jurisdiction, gender, workflow status etc. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("usage", InSummary=true, Order=70)]
+      [FhirElement("usage", InSummary=true, Order=70, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.UsageContext> Usage
@@ -2372,9 +2372,9 @@ namespace Hl7.Fhir.Model
       private List<Hl7.Fhir.Model.UsageContext> _Usage;
 
       /// <summary>
-      /// Whether binding can applies to all repeats, or just one
+      /// Whether binding can applies to all repeats, or just one. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("any", InSummary=true, Order=80)]
+      [FhirElement("any", InSummary=true, Order=80, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean AnyElement
       {
@@ -3373,9 +3373,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ElementDefinition.ConstraintComponent> _Constraint;
 
     /// <summary>
-    /// For primitives, that a value must be present - not replaced by an extension
+    /// For primitives, that a value must be present - not replaced by an extension. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("mustHaveValue", InSummary=true, Order=320)]
+    [FhirElement("mustHaveValue", InSummary=true, Order=320, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean MustHaveValueElement
     {
@@ -3404,9 +3404,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Extensions that are allowed to replace a primitive value
+    /// Extensions that are allowed to replace a primitive value. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("valueAlternatives", InSummary=true, Order=330)]
+    [FhirElement("valueAlternatives", InSummary=true, Order=330, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Canonical> ValueAlternativesElement
@@ -3467,9 +3467,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Documents obligations for applications making use of this element
+    /// Documents obligations for applications making use of this element. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("obligation", InSummary=true, Order=350)]
+    [FhirElement("obligation", InSummary=true, Order=350, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ElementDefinition.ObligationComponent> Obligation

@@ -1551,9 +1551,9 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// If allows/uses conditional patch
+      /// If allows/uses conditional patch. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("conditionalPatch", Order=150)]
+      [FhirElement("conditionalPatch", Order=150, Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean ConditionalPatchElement
       {
@@ -3470,9 +3470,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("versionAlgorithm", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("versionAlgorithm", InSummary=true, Order=110, Choice=ChoiceType.DatatypeChoice, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
@@ -3755,9 +3755,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Markdown _Copyright;
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("copyrightLabel", Order=240)]
+    [FhirElement("copyrightLabel", Order=240, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CopyrightLabelElement
     {
@@ -4006,9 +4006,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Languages supported
+    /// Languages supported. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("acceptLanguage", InSummary=true, Order=330)]
+    [FhirElement("acceptLanguage", InSummary=true, Order=330, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> AcceptLanguageElement

@@ -977,9 +977,9 @@ namespace Hl7.Fhir.Model
       private Hl7.Fhir.Model.Coding _Use;
 
       /// <summary>
-      /// Additional ways how this designation would be used
+      /// Additional ways how this designation would be used. Note: Element was introduced in R5, do not use when working with older releases.
       /// </summary>
-      [FhirElement("additionalUse", Order=60)]
+      [FhirElement("additionalUse", Order=60, Since=FhirRelease.R5)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> AdditionalUse
@@ -1631,9 +1631,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Markdown _Copyright;
 
     /// <summary>
-    /// When the CodeSystem was approved by publisher
+    /// When the CodeSystem was approved by publisher. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("approvalDate", Order=240)]
+    [FhirElement("approvalDate", Order=240, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date ApprovalDateElement
     {
@@ -1662,9 +1662,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the CodeSystem was last reviewed
+    /// When the CodeSystem was last reviewed. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("lastReviewDate", Order=250)]
+    [FhirElement("lastReviewDate", Order=250, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date LastReviewDateElement
     {
@@ -1693,9 +1693,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// When the CodeSystem is expected to be used
+    /// When the CodeSystem is expected to be used. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("effectivePeriod", InSummary=true, Order=260)]
+    [FhirElement("effectivePeriod", InSummary=true, Order=260, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Period EffectivePeriod
     {
@@ -1706,9 +1706,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Period _EffectivePeriod;
 
     /// <summary>
-    /// E.g. Education, Treatment, Assessment, etc.
+    /// E.g. Education, Treatment, Assessment, etc.. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("topic", Order=270)]
+    [FhirElement("topic", Order=270, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic
@@ -1720,9 +1720,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.CodeableConcept> _Topic;
 
     /// <summary>
-    /// Who authored the CodeSystem
+    /// Who authored the CodeSystem. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("author", Order=280)]
+    [FhirElement("author", Order=280, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Author
@@ -1734,9 +1734,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Author;
 
     /// <summary>
-    /// Who edited the CodeSystem
+    /// Who edited the CodeSystem. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("editor", Order=290)]
+    [FhirElement("editor", Order=290, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Editor
@@ -1748,9 +1748,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Editor;
 
     /// <summary>
-    /// Who reviewed the CodeSystem
+    /// Who reviewed the CodeSystem. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("reviewer", Order=300)]
+    [FhirElement("reviewer", Order=300, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Reviewer
@@ -1762,9 +1762,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Reviewer;
 
     /// <summary>
-    /// Who endorsed the CodeSystem
+    /// Who endorsed the CodeSystem. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("endorser", Order=310)]
+    [FhirElement("endorser", Order=310, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactDetail> Endorser
@@ -1776,9 +1776,9 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.ContactDetail> _Endorser;
 
     /// <summary>
-    /// Additional documentation, citations, etc.
+    /// Additional documentation, citations, etc.. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("relatedArtifact", Order=320)]
+    [FhirElement("relatedArtifact", Order=320, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.RelatedArtifact> RelatedArtifact

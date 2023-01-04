@@ -855,9 +855,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How to compare versions
+    /// How to compare versions. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("versionAlgorithm", InSummary=true, Order=120, Choice=ChoiceType.DatatypeChoice, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirString),typeof(Hl7.Fhir.Model.Coding))]
     [DataMember]
@@ -1140,9 +1140,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Markdown _Copyright;
 
     /// <summary>
-    /// Copyright holder and year(s)
+    /// Copyright holder and year(s). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("copyrightLabel", Order=250)]
+    [FhirElement("copyrightLabel", Order=250, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString CopyrightLabelElement
     {

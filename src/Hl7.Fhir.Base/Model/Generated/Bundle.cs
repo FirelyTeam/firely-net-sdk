@@ -2430,9 +2430,9 @@ of the resource representation.")]
     private Hl7.Fhir.Model.Signature _Signature;
 
     /// <summary>
-    /// Issues with the Bundle
+    /// Issues with the Bundle. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice)]
+    [FhirElement("issues", InSummary=true, Order=120, Choice=ChoiceType.ResourceChoice, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
     [DataMember]
