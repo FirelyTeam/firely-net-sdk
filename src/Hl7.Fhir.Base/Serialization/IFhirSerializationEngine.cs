@@ -1,6 +1,8 @@
+#nullable enable
+
 using Hl7.Fhir.Model;
-using System.Collections.ObjectModel;
-using System.IO;
+using Hl7.Fhir.Utility;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -14,13 +16,13 @@ namespace Hl7.Fhir.Serialization
         /// Deserialize an XML string to a FHIR Resource POCO.
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Xml format.</exception>
-        public Resource DeserializeFromXml(string data);
+        public Resource? DeserializeFromXml(string data, out DeserializationFailedException? report);
 
         /// <summary>
         /// Deserialize a Json string to a FHIR Resource POCO.
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Json format.</exception>
-        public Resource DeserializeFromJson(string data);
+        public Resource? DeserializeFromJson(string data, out DeserializationFailedException? report);
         
         /// <summary>
         /// Serialize a FHIR Resource POCO into a string of Xml.
@@ -33,3 +35,5 @@ namespace Hl7.Fhir.Serialization
         public string SerializeToJson(Resource instance);
     }
 }
+
+#nullable restore

@@ -3,36 +3,30 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
-using System;
 
 namespace Hl7.Fhir.Rest
 {
     internal static class EntryToTypedEntryExtensions
     {
-        internal static TypedEntryResponse ToTypedEntryResponse(this EntryResponse response, IFhirSerializationEngine ser)
+        /// <summary>
+        /// Turns a straight-from-the-write <see cref="EntryResponse"/> into a reponse with a parsed Resource.
+        /// </summary>
+        /// <exception cref="UnsupportedBodyTypeException">If the body of the received HTTP request is unrecognizable.</exception>
+        /// <exception cref="DeserializationFailedException">If the body could not be parsed into a FHIR resource</exception>
+        internal static Resource? DecodeBodyToResource(this EntryResponse response, IFhirSerializationEngine ser)
         {
-            var result = new TypedEntryResponse
-            {
-                ContentType = response.ContentType,
-                Body = response.Body,
-                Etag = response.Etag,
-                Headers = response.Headers,
-                LastModified = response.LastModified,
-                Location = response.Location,
-                ResponseUri = response.ResponseUri,
-                Status = response.Status
-            };
-
             var body = response.GetBodyAsText();
+
             if (!string.IsNullOrEmpty(body))
             {
-                result.BodyResource = parseResourceAsync(body, response.ContentType, ser, response.IsSuccessful());
+                var (resource, report) = parseResourceAsync(body, response.ContentType, ser);
+                return response.IsSuccessful() && report is not null ? throw report : resource;
             }
-
-            return result;
+            else
+                return null;
         }
-        
-        private static Resource? parseResourceAsync(string bodyText, string contentType, IFhirSerializationEngine ser, bool throwOnFormatException)
+
+        private static (Resource?, DeserializationFailedException?) parseResourceAsync(string bodyText, string contentType, IFhirSerializationEngine ser)
         {
             var fhirType = ContentType.GetResourceFormatFromContentType(contentType);
 
@@ -45,17 +39,9 @@ namespace Hl7.Fhir.Rest
                 throw new UnsupportedBodyTypeException(
                         "Endpoint said it returned '{0}', but the body is not recognized as either xml or json.".FormatWith(contentType), contentType, bodyText);
 
-            try
-            {
-                return (fhirType == ResourceFormat.Json)
-                     ? ser.DeserializeFromJson(bodyText) : ser.DeserializeFromXml(bodyText);
-
-            }
-            catch (Exception ex) when ((ex is FormatException or DeserializationFailedException && !throwOnFormatException) ||
-                                       ex is InvalidOperationException)
-            {
-                return null;
-            }
+            return (fhirType == ResourceFormat.Json)
+                 ? (ser.DeserializeFromJson(bodyText, out var jsonErrors),jsonErrors) 
+                 : (ser.DeserializeFromXml(bodyText, out var xmlErrors), xmlErrors);
         }
     }
 }

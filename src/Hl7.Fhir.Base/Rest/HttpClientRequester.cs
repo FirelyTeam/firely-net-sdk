@@ -42,10 +42,6 @@ namespace Hl7.Fhir.Rest
             _disposeHttpClient = false;
         }
 
-        public EntryResponse? LastResult { get; private set; }
-
-        public EntryResponse Execute(EntryRequest interaction) => ExecuteAsync(interaction).WaitResult();
-
         public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
@@ -58,7 +54,7 @@ namespace Hl7.Fhir.Rest
             }
 
             using var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);
-            return LastResult = await response.ToEntryResponse();
+            return await response.ToEntryResponse();
         }
 
         #region IDisposable Support

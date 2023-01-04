@@ -6,6 +6,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hl7.Fhir.Rest
 {
@@ -20,31 +22,49 @@ namespace Hl7.Fhir.Rest
             _settingsRetriever = settingsRetriever;
         }
 
-        public Resource DeserializeFromXml(string data)
+        public static bool TryUnpackElementModelException(DeserializationFailedException dfe, out FormatException? fe)
         {
-            var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
-
-            try
+            if(dfe.Exceptions.Count == 1 && dfe.Exceptions.Single() is FhirClientElementModelSerializationEngine.ElementModelParserException empe)
             {
-                return (Resource)FhirXmlNode.Parse(data).ToPoco(_inspector, null, settings);
+                fe = (FormatException)empe.InnerException!;
+                return true;
             }
-            catch(FormatException fe)
+            else
             {
-                throw new DeserializationFailedException(null, new[] { new ElementModelParserException(fe) });
+                fe = null;
+                return false;
             }
         }
 
-        public Resource DeserializeFromJson(string data)
+        public Resource? DeserializeFromXml(string data, out DeserializationFailedException? report)
         {
             var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
 
             try
             {
-                return (Resource)FhirJsonNode.Parse(data).ToPoco(_inspector, null, settings);
+                report = null;
+                return FhirXmlNode.Parse(data).ToPoco(_inspector, null, settings) as Resource;
+            }
+            catch(FormatException fe)
+            {
+                report = new DeserializationFailedException(null, new[] { new ElementModelParserException(fe) });
+                return null;
+            }
+        }
+
+        public Resource? DeserializeFromJson(string data, out DeserializationFailedException? report)
+        {
+            var settings = BaseFhirParser.BuildPocoBuilderSettings(_settingsRetriever() ?? ParserSettings.CreateDefault());
+
+            try
+            {
+                report = null;
+                return FhirJsonNode.Parse(data).ToPoco(_inspector, null, settings) as Resource;
             }
             catch (FormatException fe)
             {
-                throw new DeserializationFailedException(null, new[] { new ElementModelParserException(fe) });
+                report = new DeserializationFailedException(null, new[] { new ElementModelParserException(fe) });
+                return null;
             }
         }
 

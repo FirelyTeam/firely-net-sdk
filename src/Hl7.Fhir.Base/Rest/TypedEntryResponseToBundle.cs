@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
-        public static Bundle.EntryComponent ToBundleEntry(this TypedEntryResponse entry, FhirRelease release)
+        public static Bundle.EntryComponent ToBundleEntry(this EntryResponse entry, FhirRelease release, Resource bodyResource)
         {
             var result = new Bundle.EntryComponent
             {
@@ -57,15 +57,15 @@ namespace Hl7.Fhir.Rest
                 }
                 else
                 {
-                    if (entry.BodyResource != null)
+                    if (bodyResource != null)
                     {
-                        result.Resource = entry.BodyResource;
+                        result.Resource = bodyResource;
 
                         //if the response is an operation outcome, add it to response.outcome. This is necessary for when a client uses return=OperationOutcome as a prefer header.
                         // see also issue #1681
-                        if (result.Resource is OperationOutcome)
+                        if (result.Resource is OperationOutcome oo)
                         {
-                            result.Response.Outcome = result.Resource;
+                            result.Response.Outcome = oo;
                         }
 
                         if (result.Response.Location != null)

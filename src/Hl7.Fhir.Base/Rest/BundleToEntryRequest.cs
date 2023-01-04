@@ -95,10 +95,6 @@ namespace Hl7.Fhir.Rest
             {
                 //Binary.Content is available for STU3. This has changed for R4 as it is Binary.Data
                 request.RequestBodyContent = bin.Data ?? bin.Content;
-
-                // This is done by the caller after the OnBeforeRequest is called so that other properties
-                // can be set before the content is committed
-                // request.WriteBody(CompressRequestBody, bin.Content);
                 request.ContentType = bin.ContentType;
             }
             else if (searchUsingPost)

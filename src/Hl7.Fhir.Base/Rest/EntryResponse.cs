@@ -28,11 +28,4 @@ namespace Hl7.Fhir.Rest
             Headers = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
     }
-
-
-    internal class TypedEntryResponse : EntryResponse
-    {
-        public Resource BodyResource { get; set; }
-    }
-
 }

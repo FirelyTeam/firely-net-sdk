@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -233,18 +234,10 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = response.ToTypedEntryResponse(getSerializationEngine());
+            var result = response.DecodeBodyToResource(getSerializationEngine());
 
-            var typedElementXml = await result.BodyResource.ToXmlAsync();
+            var typedElementXml = await result.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
-            Assert.AreEqual(response.ContentType, result.ContentType);
-            Assert.AreEqual(response.Etag, result.Etag);
-            Assert.AreEqual(response.LastModified, result.LastModified);
-            Assert.AreEqual(response.Location, result.Location);
-            Assert.AreEqual(response.ResponseUri, result.ResponseUri);
-            Assert.AreEqual(response.Status, result.Status);
-            Assert.AreEqual(response.GetBodyAsText(), result.GetBodyAsText());
-            Assert.AreEqual(response.Headers["Test-key"], result.Headers["Test-key"]);
         }
 
         #endregion
@@ -275,8 +268,8 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine(settings));
-            var bundleresponse = typedresponse.ToBundleEntry(Specification.FhirRelease.STU3);
+            var resourceBody = response.DecodeBodyToResource(getSerializationEngine(settings));
+            var bundleresponse = response.ToBundleEntry(FhirRelease.R4, resourceBody);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);

@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Test
     [TestClass]
     public class RequesterTests
     {
-        private readonly Uri _endpoint = new Uri("http://myserver.org/fhir");
+        private readonly Uri _endpoint = new("http://myserver.org/fhir");
         private static EntryRequest _entry
         {
             get
@@ -242,19 +242,10 @@ namespace Hl7.Fhir.Test
                 Body = Encoding.UTF8.GetBytes(xml),
             };
 
-            var result = response.ToTypedEntryResponse(getSerializationEngine());
+            var result = response.DecodeBodyToResource(getSerializationEngine());
             
-
-            var typedElementXml = await result.BodyResource.ToXmlAsync();
+            var typedElementXml = await result.ToXmlAsync();
             Assert.AreEqual(xml, typedElementXml);
-            Assert.AreEqual(response.ContentType, result.ContentType);
-            Assert.AreEqual(response.Etag, result.Etag);
-            Assert.AreEqual(response.LastModified, result.LastModified);
-            Assert.AreEqual(response.Location, result.Location);
-            Assert.AreEqual(response.ResponseUri, result.ResponseUri);
-            Assert.AreEqual(response.Status, result.Status);
-            Assert.AreEqual(response.GetBodyAsText(), result.GetBodyAsText());
-            Assert.AreEqual(response.Headers["Test-key"], result.Headers["Test-key"]);
         }
 
         #endregion
@@ -285,9 +276,8 @@ namespace Hl7.Fhir.Test
                 PermissiveParsing = false
             };
 
-            var typedresponse = response.ToTypedEntryResponse(getSerializationEngine(settings));
-         
-            var bundleresponse = typedresponse.ToBundleEntry(FhirRelease.STU3);
+            var resourceBody = response.DecodeBodyToResource(getSerializationEngine(settings));         
+            var bundleresponse = response.ToBundleEntry(FhirRelease.STU3, resourceBody);
 
             Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
             Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);
