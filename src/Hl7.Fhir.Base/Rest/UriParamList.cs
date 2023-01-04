@@ -23,11 +23,6 @@ namespace Hl7.Fhir.Rest
 
         public UriParamList(IEnumerable<Tuple<string, string>> contents) : base(contents) { }
 
-        public static UriParamList FromUri(string uri)       
-        {
-            return null;
-        }
-
         public void Add(string key, string value)
         {
             Add(Tuple.Create(key, value));

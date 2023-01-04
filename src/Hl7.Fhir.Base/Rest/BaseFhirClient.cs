@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Rest
 
             endpoint = new Uri(endpoint.OriginalString.EnsureEndsWith("/"));
 
-            if (!endpoint.IsAbsoluteUri) throw new ArgumentException(nameof(endpoint), "Endpoint must be absolute");
+            if (!endpoint.IsAbsoluteUri) throw new ArgumentException("Endpoint must be absolute", nameof(endpoint));
 
             return endpoint;
         }
@@ -1073,13 +1073,13 @@ namespace Hl7.Fhir.Rest
 
             if (!response.IsSuccessful())
             {
-                Enum.TryParse(response.Status, out HttpStatusCode code);
+                _ = Enum.TryParse(response.Status, out HttpStatusCode code);
                 throw FhirOperationException.BuildFhirOperationException(code, bodyAsResource, response.GetBodyAsText());
             }
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(response.Status))
             {
-                Enum.TryParse(response.Status, out HttpStatusCode code);
+                _ = Enum.TryParse(response.Status, out HttpStatusCode code);
                 throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(response.Status), code);
             }
 
@@ -1249,6 +1249,7 @@ namespace Hl7.Fhir.Rest
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this); 
         }
         #endregion
 
