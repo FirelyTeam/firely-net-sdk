@@ -22,7 +22,7 @@ using Tasks = System.Threading.Tasks;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-    public class SerializationTests
+    public partial class SerializationTests
     {
         private const string metaXml = "<meta xmlns=\"http://hl7.org/fhir\"><versionId value=\"3141\" /><lastUpdated value=\"2014-12-24T16:30:56.031+01:00\" /></meta>";
         private const string metaJson = "{\"versionId\":\"3141\",\"lastUpdated\":\"2014-12-24T16:30:56.031+01:00\"}";
@@ -374,26 +374,6 @@ namespace Hl7.Fhir.Tests.Serialization
 
             var xml = await FhirXmlSerializer.SerializeToStringAsync(pat);
             Assert.IsNotNull(xml);
-        }
-
-        /// <summary>
-        /// This test verifies that the parser can handle a backbone element that has a property of resourceType
-        /// (only found in the ExampleScenario resource in R4 - used to be in Claim)
-        /// </summary>
-        [TestMethod]
-        public void TestExampleScenarioJsonSerialization()
-        {
-            var es = new ExampleScenario();
-            es.Instance.Add(new ExampleScenario.InstanceComponent()
-            {
-                ResourceType = ResourceType.ExampleScenario,
-                Name = "brian"
-            });
-
-            string json = FhirJsonSerializer.SerializeToString(es);
-            var c2 = new FhirJsonParser().Parse<ExampleScenario>(json);
-            Assert.AreEqual("brian", c2.Instance[0].Name);
-            Assert.AreEqual("ExampleScenario", c2.Instance[0].ResourceTypeElement.ObjectValue as string);
         }
 
         [TestMethod]

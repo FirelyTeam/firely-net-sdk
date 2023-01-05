@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ElementModel\PocoBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ElementModel\TypedElementExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)FhirPath\FhirPathExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\ConceptMap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\HumanName.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\Initializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\ModelInfo.cs" />

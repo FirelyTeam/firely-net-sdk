@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 Code = FHIRAllTypes.Quantity.GetLiteral(),
-                                Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity) }
+                                Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType("SimpleQuantity") }
                             }
                         }
                     },
