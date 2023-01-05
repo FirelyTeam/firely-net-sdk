@@ -180,8 +180,7 @@ namespace Hl7.Fhir.Model
       ///       materials of historical interest.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("archives", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a collection of records, documents, or other
-      materials of historical interest.")]
+      [EnumLiteral("archives", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a collection of records, documents, or other      materials of historical interest.")]
       Archives,
       /// <summary>
       /// Refers to the context's author.
@@ -194,8 +193,7 @@ namespace Hl7.Fhir.Model
       ///       following receipt of a legal demand.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("blocked-by", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies the entity that blocks access to a resource
-      following receipt of a legal demand.")]
+      [EnumLiteral("blocked-by", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies the entity that blocks access to a resource      following receipt of a legal demand.")]
       BlockedBy,
       /// <summary>
       /// Gives a permanent link to use for bookmarking purposes.
@@ -240,18 +238,14 @@ namespace Hl7.Fhir.Model
       ///       the link relation would be "convertedFrom".
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("convertedFrom", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The document linked to was later converted to the
-      document that contains this link relation.  For example, an RFC can
-      have a link to the Internet-Draft that became the RFC; in that case,
-      the link relation would be \"convertedFrom\".")]
+      [EnumLiteral("convertedFrom", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The document linked to was later converted to the      document that contains this link relation.  For example, an RFC can      have a link to the Internet-Draft that became the RFC; in that case,      the link relation would be \"convertedFrom\".")]
       ConvertedFrom,
       /// <summary>
       /// Refers to a copyright statement that applies to the
       ///     link's context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("copyright", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a copyright statement that applies to the
-    link's context.")]
+      [EnumLiteral("copyright", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a copyright statement that applies to the    link's context.")]
       Copyright,
       /// <summary>
       /// The target IRI points to a resource where a submission form can be obtained.
@@ -264,16 +258,14 @@ namespace Hl7.Fhir.Model
       ///       item(s) in a collection of resources.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("current", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource containing the most recent
-      item(s) in a collection of resources.")]
+      [EnumLiteral("current", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource containing the most recent      item(s) in a collection of resources.")]
       Current,
       /// <summary>
       /// Refers to a resource providing information about the
       ///       link's context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("describedby", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource providing information about the
-      link's context.")]
+      [EnumLiteral("describedby", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource providing information about the      link's context.")]
       Describedby,
       /// <summary>
       /// The relationship A 'describes' B asserts that
@@ -282,18 +274,14 @@ namespace Hl7.Fhir.Model
       ///       neither are there any further constraints on either resource.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("describes", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The relationship A 'describes' B asserts that
-      resource A provides a description of resource B. There are no
-      constraints on the format or representation of either A or B,
-      neither are there any further constraints on either resource.")]
+      [EnumLiteral("describes", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The relationship A 'describes' B asserts that      resource A provides a description of resource B. There are no      constraints on the format or representation of either A or B,      neither are there any further constraints on either resource.")]
       Describes,
       /// <summary>
       /// Refers to a list of patent disclosures made with respect to 
       ///       material for which 'disclosure' relation is specified.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("disclosure", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a list of patent disclosures made with respect to 
-      material for which 'disclosure' relation is specified.")]
+      [EnumLiteral("disclosure", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a list of patent disclosures made with respect to       material for which 'disclosure' relation is specified.")]
       Disclosure,
       /// <summary>
       /// Used to indicate an origin that will be used to fetch required 
@@ -301,9 +289,7 @@ namespace Hl7.Fhir.Model
       ///       as early as possible.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("dns-prefetch", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Used to indicate an origin that will be used to fetch required 
-      resources for the link context, and that the user agent ought to resolve 
-      as early as possible.")]
+      [EnumLiteral("dns-prefetch", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Used to indicate an origin that will be used to fetch required       resources for the link context, and that the user agent ought to resolve       as early as possible.")]
       DnsPrefetch,
       /// <summary>
       /// Refers to a resource whose available representations
@@ -311,41 +297,35 @@ namespace Hl7.Fhir.Model
       ///       the context IRI.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("duplicate", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource whose available representations
-      are byte-for-byte identical with the corresponding representations of
-      the context IRI.")]
+      [EnumLiteral("duplicate", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource whose available representations      are byte-for-byte identical with the corresponding representations of      the context IRI.")]
       Duplicate,
       /// <summary>
       /// Refers to a resource that can be used to edit the
       ///       link's context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("edit", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that can be used to edit the
-      link's context.")]
+      [EnumLiteral("edit", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that can be used to edit the      link's context.")]
       Edit,
       /// <summary>
       /// The target IRI points to a resource where a submission form for
       ///       editing associated resource can be obtained.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("edit-form", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The target IRI points to a resource where a submission form for
-      editing associated resource can be obtained.")]
+      [EnumLiteral("edit-form", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The target IRI points to a resource where a submission form for      editing associated resource can be obtained.")]
       EditForm,
       /// <summary>
       /// Refers to a resource that can be used to edit media
       ///       associated with the link's context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("edit-media", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that can be used to edit media
-      associated with the link's context.")]
+      [EnumLiteral("edit-media", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that can be used to edit media      associated with the link's context.")]
       EditMedia,
       /// <summary>
       /// Identifies a related resource that is potentially
       ///       large and might require special handling.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("enclosure", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a related resource that is potentially
-      large and might require special handling.")]
+      [EnumLiteral("enclosure", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a related resource that is potentially      large and might require special handling.")]
       Enclosure,
       /// <summary>
       /// Refers to a resource that is not part of the same site as the current context.
@@ -358,8 +338,7 @@ namespace Hl7.Fhir.Model
       ///     in a series of resources.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("first", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("An IRI that refers to the furthest preceding resource
-    in a series of resources.")]
+      [EnumLiteral("first", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("An IRI that refers to the furthest preceding resource    in a series of resources.")]
       First,
       /// <summary>
       /// Refers to a glossary of terms.
@@ -378,16 +357,14 @@ namespace Hl7.Fhir.Model
       ///       the link context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("hosts", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource hosted by the server indicated by
-      the link context.")]
+      [EnumLiteral("hosts", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource hosted by the server indicated by      the link context.")]
       Hosts,
       /// <summary>
       /// Refers to a hub that enables registration for
       ///     notification of updates to the context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("hub", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a hub that enables registration for
-    notification of updates to the context.")]
+      [EnumLiteral("hub", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a hub that enables registration for    notification of updates to the context.")]
       Hub,
       /// <summary>
       /// Refers to an icon representing the link's context.
@@ -502,16 +479,14 @@ namespace Hl7.Fhir.Model
       ///       in a series of resources.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("last", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("An IRI that refers to the furthest following resource
-      in a series of resources.")]
+      [EnumLiteral("last", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("An IRI that refers to the furthest following resource      in a series of resources.")]
       Last,
       /// <summary>
       /// Points to a resource containing the latest (e.g.,
       ///       current) version of the context.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("latest-version", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the latest (e.g.,
-      current) version of the context.")]
+      [EnumLiteral("latest-version", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the latest (e.g.,      current) version of the context.")]
       LatestVersion,
       /// <summary>
       /// Refers to a license associated with this context.
@@ -526,9 +501,7 @@ namespace Hl7.Fhir.Model
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("linkset", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The link target of a link with the \"linkset\" relation
-      type provides a set of links, including links in which the link
-      context of the link participates.")]
+      [EnumLiteral("linkset", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The link target of a link with the \"linkset\" relation      type provides a set of links, including links in which the link      context of the link participates.")]
       Linkset,
       /// <summary>
       /// Refers to further information about the link's context,
@@ -541,14 +514,7 @@ namespace Hl7.Fhir.Model
       ///       MAY have others.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("lrdd", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to further information about the link's context,
-      expressed as a LRDD (\"Link-based Resource Descriptor Document\")
-      resource.  See  for information about
-      processing this relation type in host-meta documents. When used
-      elsewhere, it refers to additional links and other metadata.
-      Multiple instances indicate additional LRDD resources. LRDD
-      resources MUST have an \"application/xrd+xml\" representation, and
-      MAY have others.")]
+      [EnumLiteral("lrdd", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to further information about the link's context,      expressed as a LRDD (\"Link-based Resource Descriptor Document\")      resource.  See  for information about      processing this relation type in host-meta documents. When used      elsewhere, it refers to additional links and other metadata.      Multiple instances indicate additional LRDD resources. LRDD      resources MUST have an \"application/xrd+xml\" representation, and      MAY have others.")]
       Lrdd,
       /// <summary>
       /// Links to a manifest file for the context.
@@ -606,8 +572,7 @@ namespace Hl7.Fhir.Model
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("next", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Indicates that the link's context is a part of a series, and
-      that the next in the series is the link target.")]
+      [EnumLiteral("next", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Indicates that the link's context is a part of a series, and      that the next in the series is the link target.")]
       Next,
       /// <summary>
       /// Refers to the immediately following archive resource.
@@ -683,11 +648,7 @@ namespace Hl7.Fhir.Model
       ///       connection.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("preconnect", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Used to indicate an origin that will be used to fetch required 
-      resources for the link context. Initiating an early connection, which 
-      includes the DNS lookup, TCP handshake, and optional TLS negotiation, 
-      allows the user agent to mask the high latency costs of establishing a 
-      connection.")]
+      [EnumLiteral("preconnect", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Used to indicate an origin that will be used to fetch required       resources for the link context. Initiating an early connection, which       includes the DNS lookup, TCP handshake, and optional TLS negotiation,       allows the user agent to mask the high latency costs of establishing a       connection.")]
       Preconnect,
       /// <summary>
       /// Points to a resource containing the predecessor
@@ -695,8 +656,7 @@ namespace Hl7.Fhir.Model
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("predecessor-version", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the predecessor
-      version in the version history.")]
+      [EnumLiteral("predecessor-version", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the predecessor      version in the version history.")]
       PredecessorVersion,
       /// <summary>
       /// The prefetch link relation type is used to identify a resource 
@@ -705,18 +665,14 @@ namespace Hl7.Fhir.Model
       ///       faster response once the resource is requested in the future.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("prefetch", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The prefetch link relation type is used to identify a resource 
-      that might be required by the next navigation from the link context, and 
-      that the user agent ought to fetch, such that the user agent can deliver a 
-      faster response once the resource is requested in the future.")]
+      [EnumLiteral("prefetch", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The prefetch link relation type is used to identify a resource       that might be required by the next navigation from the link context, and       that the user agent ought to fetch, such that the user agent can deliver a       faster response once the resource is requested in the future.")]
       Prefetch,
       /// <summary>
       /// Refers to a resource that should be loaded early in the 
       ///       processing of the link's context, without blocking rendering.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("preload", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that should be loaded early in the 
-      processing of the link's context, without blocking rendering.")]
+      [EnumLiteral("preload", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that should be loaded early in the       processing of the link's context, without blocking rendering.")]
       Preload,
       /// <summary>
       /// Used to identify a resource that might be required by the next 
@@ -725,10 +681,7 @@ namespace Hl7.Fhir.Model
       ///       the resource is requested in the future.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("prerender", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Used to identify a resource that might be required by the next 
-      navigation from the link context, and that the user agent ought to fetch 
-      and execute, such that the user agent can deliver a faster response once 
-      the resource is requested in the future.")]
+      [EnumLiteral("prerender", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Used to identify a resource that might be required by the next       navigation from the link context, and that the user agent ought to fetch       and execute, such that the user agent can deliver a faster response once       the resource is requested in the future.")]
       Prerender,
       /// <summary>
       /// Indicates that the link's context is a part of a series, and
@@ -736,8 +689,7 @@ namespace Hl7.Fhir.Model
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("prev", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Indicates that the link's context is a part of a series, and
-      that the previous in the series is the link target.")]
+      [EnumLiteral("prev", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Indicates that the link's context is a part of a series, and      that the previous in the series is the link target.")]
       Prev,
       /// <summary>
       /// Refers to a resource that provides a preview of the link's context.
@@ -750,8 +702,7 @@ namespace Hl7.Fhir.Model
       ///       of resources.  Synonym for "prev".
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("previous", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to the previous resource in an ordered series
-      of resources.  Synonym for \"prev\".")]
+      [EnumLiteral("previous", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to the previous resource in an ordered series      of resources.  Synonym for \"prev\".")]
       Previous,
       /// <summary>
       /// Refers to the immediately preceding archive resource.
@@ -771,9 +722,7 @@ namespace Hl7.Fhir.Model
       /// of the resource representation.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("profile", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifying that a resource representation conforms
-to a certain profile, without affecting the non-profile semantics
-of the resource representation.")]
+      [EnumLiteral("profile", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifying that a resource representation conformsto a certain profile, without affecting the non-profile semanticsof the resource representation.")]
       Profile,
       /// <summary>
       /// Links to a publication manifest. A manifest represents 
@@ -781,9 +730,7 @@ of the resource representation.")]
       ///       a list of resources, and a default reading order.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("publication", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Links to a publication manifest. A manifest represents 
-      structured information about a publication, such as informative metadata, 
-      a list of resources, and a default reading order.")]
+      [EnumLiteral("publication", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Links to a publication manifest. A manifest represents       structured information about a publication, such as informative metadata,       a list of resources, and a default reading order.")]
       Publication,
       /// <summary>
       /// Identifies a related resource.
@@ -798,10 +745,7 @@ of the resource representation.")]
       ///       protocol versioning.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("restconf", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies the root of RESTCONF API as configured on this HTTP server.
-      The \"restconf\" relation defines the root of the API defined in RFC8040.
-      Subsequent revisions of RESTCONF will use alternate relation values to support 
-      protocol versioning.")]
+      [EnumLiteral("restconf", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies the root of RESTCONF API as configured on this HTTP server.      The \"restconf\" relation defines the root of the API defined in RFC8040.      Subsequent revisions of RESTCONF will use alternate relation values to support       protocol versioning.")]
       Restconf,
       /// <summary>
       /// Identifies a resource that is a reply to the context
@@ -809,8 +753,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("replies", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that is a reply to the context
-      of the link.")]
+      [EnumLiteral("replies", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that is a reply to the context      of the link.")]
       Replies,
       /// <summary>
       /// The resource identified by the link target provides an input value to an 
@@ -819,17 +762,14 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("ruleinput", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The resource identified by the link target provides an input value to an 
-    instance of a rule, where the resource which represents the rule instance is 
-    identified by the link context.")]
+      [EnumLiteral("ruleinput", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("The resource identified by the link target provides an input value to an     instance of a rule, where the resource which represents the rule instance is     identified by the link context.")]
       Ruleinput,
       /// <summary>
       /// Refers to a resource that can be used to search through
       ///       the link's context and related resources.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("search", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that can be used to search through
-      the link's context and related resources.")]
+      [EnumLiteral("search", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that can be used to search through      the link's context and related resources.")]
       Search,
       /// <summary>
       /// Refers to a section in a collection of resources.
@@ -849,56 +789,49 @@ of the resource representation.")]
       ///       service document.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("service", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Indicates a URI that can be used to retrieve a
-      service document.")]
+      [EnumLiteral("service", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Indicates a URI that can be used to retrieve a      service document.")]
       Service,
       /// <summary>
       /// Identifies service description for the context that
       ///       is primarily intended for consumption by machines.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("service-desc", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies service description for the context that
-      is primarily intended for consumption by machines.")]
+      [EnumLiteral("service-desc", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies service description for the context that      is primarily intended for consumption by machines.")]
       ServiceDesc,
       /// <summary>
       /// Identifies service documentation for the context that
       ///       is primarily intended for human consumption.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("service-doc", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies service documentation for the context that
-      is primarily intended for human consumption.")]
+      [EnumLiteral("service-doc", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies service documentation for the context that      is primarily intended for human consumption.")]
       ServiceDoc,
       /// <summary>
       /// Identifies general metadata for the context that is
       ///       primarily intended for consumption by machines.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("service-meta", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies general metadata for the context that is
-      primarily intended for consumption by machines.")]
+      [EnumLiteral("service-meta", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies general metadata for the context that is      primarily intended for consumption by machines.")]
       ServiceMeta,
       /// <summary>
       /// Refers to a resource that is within a context that is 
       /// 		sponsored (such as advertising or another compensation agreement).
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("sponsored", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that is within a context that is 
-		sponsored (such as advertising or another compensation agreement).")]
+      [EnumLiteral("sponsored", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource that is within a context that is 		sponsored (such as advertising or another compensation agreement).")]
       Sponsored,
       /// <summary>
       /// Refers to the first resource in a collection of
       ///       resources.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("start", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to the first resource in a collection of
-      resources.")]
+      [EnumLiteral("start", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to the first resource in a collection of      resources.")]
       Start,
       /// <summary>
       /// Identifies a resource that represents the context's
       ///       status.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("status", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that represents the context's
-      status.")]
+      [EnumLiteral("status", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that represents the context's      status.")]
       Status,
       /// <summary>
       /// Refers to a stylesheet.
@@ -911,8 +844,7 @@ of the resource representation.")]
       ///       collection of resources.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("subsection", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource serving as a subsection in a
-      collection of resources.")]
+      [EnumLiteral("subsection", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a resource serving as a subsection in a      collection of resources.")]
       Subsection,
       /// <summary>
       /// Points to a resource containing the successor version
@@ -920,8 +852,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("successor-version", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the successor version
-      in the version history.")]
+      [EnumLiteral("successor-version", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the successor version      in the version history.")]
       SuccessorVersion,
       /// <summary>
       /// Identifies a resource that provides information about
@@ -929,8 +860,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("sunset", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that provides information about
-      the context's retirement policy.")]
+      [EnumLiteral("sunset", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that provides information about      the context's retirement policy.")]
       Sunset,
       /// <summary>
       /// Gives a tag (identified by the given address) that applies to
@@ -938,8 +868,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("tag", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Gives a tag (identified by the given address) that applies to
-      the current document.")]
+      [EnumLiteral("tag", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Gives a tag (identified by the given address) that applies to      the current document.")]
       Tag,
       /// <summary>
       /// Refers to the terms of service associated with the link's context.
@@ -978,8 +907,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("up", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a parent document in a hierarchy of
-      documents.")]
+      [EnumLiteral("up", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Refers to a parent document in a hierarchy of      documents.")]
       Up,
       /// <summary>
       /// Points to a resource containing the version history
@@ -987,8 +915,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("version-history", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the version history
-      for the context.")]
+      [EnumLiteral("version-history", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to a resource containing the version history      for the context.")]
       VersionHistory,
       /// <summary>
       /// Identifies a resource that is the source of the
@@ -996,8 +923,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("via", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that is the source of the
-      information in the link's context.")]
+      [EnumLiteral("via", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a resource that is the source of the      information in the link's context.")]
       Via,
       /// <summary>
       /// Identifies a target URI that supports the Webmention protocol.
@@ -1005,9 +931,7 @@ of the resource representation.")]
       ///     to contact that endpoint and inform it that this resource has been mentioned.
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("webmention", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a target URI that supports the Webmention protocol.
-    This allows clients that mention a resource in some form of publishing process
-    to contact that endpoint and inform it that this resource has been mentioned.")]
+      [EnumLiteral("webmention", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Identifies a target URI that supports the Webmention protocol.    This allows clients that mention a resource in some form of publishing process    to contact that endpoint and inform it that this resource has been mentioned.")]
       Webmention,
       /// <summary>
       /// Points to a working copy for this resource.
@@ -1021,8 +945,7 @@ of the resource representation.")]
       ///     
       /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
       /// </summary>
-      [EnumLiteral("working-copy-of", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to the versioned resource from which this
-      working copy was obtained.")]
+      [EnumLiteral("working-copy-of", "http://hl7.org/fhir/CodeSystem/iana-link-relations"), Description("Points to the versioned resource from which this      working copy was obtained.")]
       WorkingCopyOf,
     }
 
@@ -1117,23 +1040,23 @@ of the resource representation.")]
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
       /// </summary>
       [FhirElement("relation", InSummary=true, Order=40)]
-      [DeclaredType(Type = typeof(Code))]
+      [DeclaredType(Type = typeof(Code), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Bundle.LinkRelationTypes> RelationElement
+      public Hl7.Fhir.Model.FhirString RelationElement
       {
         get { return _RelationElement; }
         set { _RelationElement = value; OnPropertyChanged("RelationElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Bundle.LinkRelationTypes> _RelationElement;
+      private Hl7.Fhir.Model.FhirString _RelationElement;
 
       /// <summary>
       /// See http://www.iana.org/assignments/link-relations/link-relations.xhtml#link-relations-1
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.Bundle.LinkRelationTypes? Relation
+      public string Relation
       {
         get { return RelationElement != null ? RelationElement.Value : null; }
         set
@@ -1141,7 +1064,7 @@ of the resource representation.")]
           if (value == null)
             RelationElement = null;
           else
-            RelationElement = new Code<Hl7.Fhir.Model.Bundle.LinkRelationTypes>(value);
+            RelationElement = new Hl7.Fhir.Model.FhirString(value);
           OnPropertyChanged("Relation");
         }
       }
@@ -1188,7 +1111,7 @@ of the resource representation.")]
         }
 
         base.CopyTo(dest);
-        if(RelationElement != null) dest.RelationElement = (Code<Hl7.Fhir.Model.Bundle.LinkRelationTypes>)RelationElement.DeepCopy();
+        if(RelationElement != null) dest.RelationElement = (Hl7.Fhir.Model.FhirString)RelationElement.DeepCopy();
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         return dest;
       }
