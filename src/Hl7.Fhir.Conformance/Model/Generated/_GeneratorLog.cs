@@ -84,7 +84,7 @@
   // Used in model class (resource): ClaimResponse.use
   // Used in model class (resource): ExplanationOfBenefit.use
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): CodeSystemContentMode (http://hl7.org/fhir/ValueSet/codesystem-content-mode)
+// Generated Shared Enumeration: CodeSystemContentMode (http://hl7.org/fhir/ValueSet/codesystem-content-mode)
   // Used in model class (resource): CodeSystem.content
   // Used in model class (resource): TerminologyCapabilities.codeSystem.content
 
@@ -366,7 +366,9 @@
   // Used in model class (resource): EvidenceVariable.handling
 
 // Generated items
+// Attachment.cs
 // ElementDefinition.cs
+// RelatedArtifact.cs
 // CapabilityStatement.cs
 // CodeSystem.cs
 // StructureDefinition.cs

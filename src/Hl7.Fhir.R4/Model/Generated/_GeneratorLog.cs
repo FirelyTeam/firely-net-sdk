@@ -275,7 +275,6 @@
 // Address.cs
 // Age.cs
 // Annotation.cs
-// Attachment.cs
 // Contributor.cs
 // Count.cs
 // DataRequirement.cs
@@ -291,7 +290,6 @@
 // ProdCharacteristic.cs
 // ProductShelfLife.cs
 // Ratio.cs
-// RelatedArtifact.cs
 // SampledData.cs
 // SubstanceAmount.cs
 // Timing.cs

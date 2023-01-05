@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
             entry = client.CapabilityStatement(SummaryType.True);
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");

@@ -97,6 +97,46 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
+  /// The extent of the content of the code system (the concepts and codes it defines) are represented in a code system resource.
+  /// (url: http://hl7.org/fhir/ValueSet/codesystem-content-mode)
+  /// (system: http://hl7.org/fhir/codesystem-content-mode)
+  /// </summary>
+  [FhirEnumeration("CodeSystemContentMode")]
+  public enum CodeSystemContentMode
+  {
+    /// <summary>
+    /// None of the concepts defined by the code system are included in the code system resource.
+    /// (system: http://hl7.org/fhir/codesystem-content-mode)
+    /// </summary>
+    [EnumLiteral("not-present", "http://hl7.org/fhir/codesystem-content-mode"), Description("Not Present")]
+    NotPresent,
+    /// <summary>
+    /// A subset of the valid externally defined concepts are included in the code system resource. There is no specific purpose or documented intent other than for illustrative purposes.
+    /// (system: http://hl7.org/fhir/codesystem-content-mode)
+    /// </summary>
+    [EnumLiteral("example", "http://hl7.org/fhir/codesystem-content-mode"), Description("Example")]
+    Example,
+    /// <summary>
+    /// A subset of the code system concepts are included in the code system resource. This is a curated subset released for a specific purpose under the governance of the code system steward, and that the intent, bounds and consequences of the fragmentation are clearly defined in the fragment or the code system documentation. Fragments are also known as partitions.
+    /// (system: http://hl7.org/fhir/codesystem-content-mode)
+    /// </summary>
+    [EnumLiteral("fragment", "http://hl7.org/fhir/codesystem-content-mode"), Description("Fragment")]
+    Fragment,
+    /// <summary>
+    /// All the concepts defined by the code system are included in the code system resource.
+    /// (system: http://hl7.org/fhir/codesystem-content-mode)
+    /// </summary>
+    [EnumLiteral("complete", "http://hl7.org/fhir/codesystem-content-mode"), Description("Complete")]
+    Complete,
+    /// <summary>
+    /// The resource doesn't define any new concepts; it just provides additional designations and properties to another code system.
+    /// (system: http://hl7.org/fhir/codesystem-content-mode)
+    /// </summary>
+    [EnumLiteral("supplement", "http://hl7.org/fhir/codesystem-content-mode"), Description("Supplement")]
+    Supplement,
+  }
+
+  /// <summary>
   /// SHALL applications comply with this constraint?
   /// (url: http://hl7.org/fhir/ValueSet/constraint-severity)
   /// (system: http://hl7.org/fhir/constraint-severity)

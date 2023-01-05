@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     Url = csUrl,
                     Status = PublicationStatus.Unknown,
-                    Content = CodeSystem.CodeSystemContentMode.Example,
+                    Content = CodeSystemContentMode.Example,
                     Concept = new()
                     {
                         new()
