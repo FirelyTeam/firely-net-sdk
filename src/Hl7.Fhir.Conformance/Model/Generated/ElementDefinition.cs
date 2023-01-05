@@ -164,6 +164,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/discriminator-type)
+      /// This enum is DEPRECATED.
       /// </summary>
       [EnumLiteral("pattern", "http://hl7.org/fhir/discriminator-type"), Description("Pattern")]
       Pattern,

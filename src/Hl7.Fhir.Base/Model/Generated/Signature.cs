@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "Signature"; } }
 
     /// <summary>
-    /// Indication of the reason the entity signed the object(s)
+    /// Indication of the reason the entity signed the object(s). Note: Since R5 the cardinality is expanded to 0..* (previous it was 1..*)
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [Cardinality(Min=0,Max=-1)]
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
     private List<Hl7.Fhir.Model.Coding> _Type;
 
     /// <summary>
-    /// When the signature was created
+    /// When the signature was created. Note: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1)
     /// </summary>
     [FhirElement("when", InSummary=true, Order=40)]
     [DataMember]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Who signed
+    /// Who signed. Note: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1)
     /// </summary>
     [FhirElement("who", InSummary=true, Order=50)]
     [CLSCompliant(false)]
