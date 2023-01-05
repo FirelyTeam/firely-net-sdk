@@ -2665,6 +2665,38 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
+      /// General focus of the Value Set as it relates to the intended semantic space. Note: Element is deprecated since R5, do not use with R5 and newer releases.
+      /// </summary>
+      [FhirElement("focus", Order=40)]
+      [NotMapped(Since=FhirRelease.R5)]
+      [DataMember]
+      public Hl7.Fhir.Model.FhirString FocusElement
+      {
+        get { return _FocusElement; }
+        set { _FocusElement = value; OnPropertyChanged("FocusElement"); }
+      }
+
+      private Hl7.Fhir.Model.FhirString _FocusElement;
+
+      /// <summary>
+      /// General focus of the Value Set as it relates to the intended semantic space
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Focus
+      {
+        get { return FocusElement != null ? FocusElement.Value : null; }
+        set
+        {
+          if (value == null)
+            FocusElement = null;
+          else
+            FocusElement = new Hl7.Fhir.Model.FhirString(value);
+          OnPropertyChanged("Focus");
+        }
+      }
+
+      /// <summary>
       /// Criteria describing which concepts or codes should be excluded and why
       /// </summary>
       [FhirElement("exclusionCriteria", Order=50)]
@@ -2706,6 +2738,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(InclusionCriteriaElement != null) dest.InclusionCriteriaElement = (Hl7.Fhir.Model.FhirString)InclusionCriteriaElement.DeepCopy();
+        if(FocusElement != null) dest.FocusElement = (Hl7.Fhir.Model.FhirString)FocusElement.DeepCopy();
         if(ExclusionCriteriaElement != null) dest.ExclusionCriteriaElement = (Hl7.Fhir.Model.FhirString)ExclusionCriteriaElement.DeepCopy();
         return dest;
       }
@@ -2723,6 +2756,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(InclusionCriteriaElement, otherT.InclusionCriteriaElement)) return false;
+        if( !DeepComparable.Matches(FocusElement, otherT.FocusElement)) return false;
         if( !DeepComparable.Matches(ExclusionCriteriaElement, otherT.ExclusionCriteriaElement)) return false;
 
         return true;
@@ -2735,6 +2769,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(InclusionCriteriaElement, otherT.InclusionCriteriaElement)) return false;
+        if( !DeepComparable.IsExactly(FocusElement, otherT.FocusElement)) return false;
         if( !DeepComparable.IsExactly(ExclusionCriteriaElement, otherT.ExclusionCriteriaElement)) return false;
 
         return true;
@@ -2747,6 +2782,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (InclusionCriteriaElement != null) yield return InclusionCriteriaElement;
+          if (FocusElement != null) yield return FocusElement;
           if (ExclusionCriteriaElement != null) yield return ExclusionCriteriaElement;
         }
       }
@@ -2758,6 +2794,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (InclusionCriteriaElement != null) yield return new ElementValue("inclusionCriteria", InclusionCriteriaElement);
+          if (FocusElement != null) yield return new ElementValue("focus", FocusElement);
           if (ExclusionCriteriaElement != null) yield return new ElementValue("exclusionCriteria", ExclusionCriteriaElement);
         }
       }
@@ -2769,6 +2806,9 @@ namespace Hl7.Fhir.Model
           case "inclusionCriteria":
             value = InclusionCriteriaElement;
             return InclusionCriteriaElement is not null;
+          case "focus":
+            value = FocusElement;
+            return FocusElement is not null;
           case "exclusionCriteria":
             value = ExclusionCriteriaElement;
             return ExclusionCriteriaElement is not null;
@@ -2782,41 +2822,10 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (InclusionCriteriaElement is not null) yield return new KeyValuePair<string,object>("inclusionCriteria",InclusionCriteriaElement);
+        if (FocusElement is not null) yield return new KeyValuePair<string,object>("focus",FocusElement);
         if (ExclusionCriteriaElement is not null) yield return new KeyValuePair<string,object>("exclusionCriteria",ExclusionCriteriaElement);
       }
 
-    }
-
-    /// <summary>
-    /// General focus of the Value Set as it relates to the intended semantic space. Note: Element is deprecated since R5, do not use with R5 and newer releases.
-    /// </summary>
-    [FhirElement("focus", Order=40)]
-    [NotMapped(Since=FhirRelease.R5)]
-    [DataMember]
-    public Hl7.Fhir.Model.FhirString FocusElement
-    {
-      get { return _FocusElement; }
-      set { _FocusElement = value; OnPropertyChanged("FocusElement"); }
-    }
-
-    private Hl7.Fhir.Model.FhirString _FocusElement;
-
-    /// <summary>
-    /// General focus of the Value Set as it relates to the intended semantic space
-    /// </summary>
-    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    [IgnoreDataMember]
-    public string Focus
-    {
-      get { return FocusElement != null ? FocusElement.Value : null; }
-      set
-      {
-        if (value == null)
-          FocusElement = null;
-        else
-          FocusElement = new Hl7.Fhir.Model.FhirString(value);
-        OnPropertyChanged("Focus");
-      }
     }
 
     /// <summary>
@@ -3403,7 +3412,6 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(FocusElement != null) dest.FocusElement = (Hl7.Fhir.Model.FhirString)FocusElement.DeepCopy();
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
       if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
@@ -3447,7 +3455,6 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(FocusElement, otherT.FocusElement)) return false;
       if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
       if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
@@ -3486,7 +3493,6 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(FocusElement, otherT.FocusElement)) return false;
       if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
       if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
@@ -3525,7 +3531,6 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.Children) yield return item;
-        if (FocusElement != null) yield return FocusElement;
         if (UrlElement != null) yield return UrlElement;
         foreach (var elem in Identifier) { if (elem != null) yield return elem; }
         if (VersionElement != null) yield return VersionElement;
@@ -3563,7 +3568,6 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.NamedChildren) yield return item;
-        if (FocusElement != null) yield return new ElementValue("focus", FocusElement);
         if (UrlElement != null) yield return new ElementValue("url", UrlElement);
         foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
         if (VersionElement != null) yield return new ElementValue("version", VersionElement);
@@ -3599,9 +3603,6 @@ namespace Hl7.Fhir.Model
     {
       switch (key)
       {
-        case "focus":
-          value = FocusElement;
-          return FocusElement is not null;
         case "url":
           value = UrlElement;
           return UrlElement is not null;
@@ -3695,7 +3696,6 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (FocusElement is not null) yield return new KeyValuePair<string,object>("focus",FocusElement);
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);

@@ -1538,6 +1538,38 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
+      /// XPath expression of constraint. Note: Element is deprecated since R5, do not use with R5 and newer releases.
+      /// </summary>
+      [FhirElement("xpath", InSummary=true, Order=80)]
+      [NotMapped(Since=FhirRelease.R5)]
+      [DataMember]
+      public Hl7.Fhir.Model.FhirString XpathElement
+      {
+        get { return _XpathElement; }
+        set { _XpathElement = value; OnPropertyChanged("XpathElement"); }
+      }
+
+      private Hl7.Fhir.Model.FhirString _XpathElement;
+
+      /// <summary>
+      /// XPath expression of constraint
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Xpath
+      {
+        get { return XpathElement != null ? XpathElement.Value : null; }
+        set
+        {
+          if (value == null)
+            XpathElement = null;
+          else
+            XpathElement = new Hl7.Fhir.Model.FhirString(value);
+          OnPropertyChanged("Xpath");
+        }
+      }
+
+      /// <summary>
       /// Reference to original source of constraint
       /// </summary>
       [FhirElement("source", InSummary=true, Order=90)]
@@ -1584,6 +1616,7 @@ namespace Hl7.Fhir.Model
         if(SuppressElement != null) dest.SuppressElement = (Hl7.Fhir.Model.FhirBoolean)SuppressElement.DeepCopy();
         if(HumanElement != null) dest.HumanElement = (Hl7.Fhir.Model.FhirString)HumanElement.DeepCopy();
         if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();
+        if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
         if(SourceElement != null) dest.SourceElement = (Hl7.Fhir.Model.Canonical)SourceElement.DeepCopy();
         return dest;
       }
@@ -1606,6 +1639,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.Matches(SuppressElement, otherT.SuppressElement)) return false;
         if( !DeepComparable.Matches(HumanElement, otherT.HumanElement)) return false;
         if( !DeepComparable.Matches(ExpressionElement, otherT.ExpressionElement)) return false;
+        if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
         if( !DeepComparable.Matches(SourceElement, otherT.SourceElement)) return false;
 
         return true;
@@ -1623,6 +1657,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(SuppressElement, otherT.SuppressElement)) return false;
         if( !DeepComparable.IsExactly(HumanElement, otherT.HumanElement)) return false;
         if( !DeepComparable.IsExactly(ExpressionElement, otherT.ExpressionElement)) return false;
+        if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
         if( !DeepComparable.IsExactly(SourceElement, otherT.SourceElement)) return false;
 
         return true;
@@ -1640,6 +1675,7 @@ namespace Hl7.Fhir.Model
           if (SuppressElement != null) yield return SuppressElement;
           if (HumanElement != null) yield return HumanElement;
           if (ExpressionElement != null) yield return ExpressionElement;
+          if (XpathElement != null) yield return XpathElement;
           if (SourceElement != null) yield return SourceElement;
         }
       }
@@ -1656,6 +1692,7 @@ namespace Hl7.Fhir.Model
           if (SuppressElement != null) yield return new ElementValue("suppress", SuppressElement);
           if (HumanElement != null) yield return new ElementValue("human", HumanElement);
           if (ExpressionElement != null) yield return new ElementValue("expression", ExpressionElement);
+          if (XpathElement != null) yield return new ElementValue("xpath", XpathElement);
           if (SourceElement != null) yield return new ElementValue("source", SourceElement);
         }
       }
@@ -1682,6 +1719,9 @@ namespace Hl7.Fhir.Model
           case "expression":
             value = ExpressionElement;
             return ExpressionElement is not null;
+          case "xpath":
+            value = XpathElement;
+            return XpathElement is not null;
           case "source":
             value = SourceElement;
             return SourceElement is not null;
@@ -1700,6 +1740,7 @@ namespace Hl7.Fhir.Model
         if (SuppressElement is not null) yield return new KeyValuePair<string,object>("suppress",SuppressElement);
         if (HumanElement is not null) yield return new KeyValuePair<string,object>("human",HumanElement);
         if (ExpressionElement is not null) yield return new KeyValuePair<string,object>("expression",ExpressionElement);
+        if (XpathElement is not null) yield return new KeyValuePair<string,object>("xpath",XpathElement);
         if (SourceElement is not null) yield return new KeyValuePair<string,object>("source",SourceElement);
       }
 
@@ -2921,38 +2962,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// XPath expression of constraint. Note: Element is deprecated since R5, do not use with R5 and newer releases.
-    /// </summary>
-    [FhirElement("xpath", InSummary=true, Order=80)]
-    [NotMapped(Since=FhirRelease.R5)]
-    [DataMember]
-    public Hl7.Fhir.Model.FhirString XpathElement
-    {
-      get { return _XpathElement; }
-      set { _XpathElement = value; OnPropertyChanged("XpathElement"); }
-    }
-
-    private Hl7.Fhir.Model.FhirString _XpathElement;
-
-    /// <summary>
-    /// XPath expression of constraint
-    /// </summary>
-    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-    [IgnoreDataMember]
-    public string Xpath
-    {
-      get { return XpathElement != null ? XpathElement.Value : null; }
-      set
-      {
-        if (value == null)
-          XpathElement = null;
-        else
-          XpathElement = new Hl7.Fhir.Model.FhirString(value);
-        OnPropertyChanged("Xpath");
-      }
-    }
-
-    /// <summary>
     /// Corresponding codes in terminologies
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90)]
@@ -3648,7 +3657,6 @@ namespace Hl7.Fhir.Model
       if(SliceNameElement != null) dest.SliceNameElement = (Hl7.Fhir.Model.FhirString)SliceNameElement.DeepCopy();
       if(SliceIsConstrainingElement != null) dest.SliceIsConstrainingElement = (Hl7.Fhir.Model.FhirBoolean)SliceIsConstrainingElement.DeepCopy();
       if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
-      if(XpathElement != null) dest.XpathElement = (Hl7.Fhir.Model.FhirString)XpathElement.DeepCopy();
       if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
       if(Slicing != null) dest.Slicing = (Hl7.Fhir.Model.ElementDefinition.SlicingComponent)Slicing.DeepCopy();
       if(ShortElement != null) dest.ShortElement = (Hl7.Fhir.Model.FhirString)ShortElement.DeepCopy();
@@ -3701,7 +3709,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(SliceNameElement, otherT.SliceNameElement)) return false;
       if( !DeepComparable.Matches(SliceIsConstrainingElement, otherT.SliceIsConstrainingElement)) return false;
       if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
-      if( !DeepComparable.Matches(XpathElement, otherT.XpathElement)) return false;
       if( !DeepComparable.Matches(Code, otherT.Code)) return false;
       if( !DeepComparable.Matches(Slicing, otherT.Slicing)) return false;
       if( !DeepComparable.Matches(ShortElement, otherT.ShortElement)) return false;
@@ -3749,7 +3756,6 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(SliceNameElement, otherT.SliceNameElement)) return false;
       if( !DeepComparable.IsExactly(SliceIsConstrainingElement, otherT.SliceIsConstrainingElement)) return false;
       if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
-      if( !DeepComparable.IsExactly(XpathElement, otherT.XpathElement)) return false;
       if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
       if( !DeepComparable.IsExactly(Slicing, otherT.Slicing)) return false;
       if( !DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
@@ -3797,7 +3803,6 @@ namespace Hl7.Fhir.Model
         if (SliceNameElement != null) yield return SliceNameElement;
         if (SliceIsConstrainingElement != null) yield return SliceIsConstrainingElement;
         if (LabelElement != null) yield return LabelElement;
-        if (XpathElement != null) yield return XpathElement;
         foreach (var elem in Code) { if (elem != null) yield return elem; }
         if (Slicing != null) yield return Slicing;
         if (ShortElement != null) yield return ShortElement;
@@ -3844,7 +3849,6 @@ namespace Hl7.Fhir.Model
         if (SliceNameElement != null) yield return new ElementValue("sliceName", SliceNameElement);
         if (SliceIsConstrainingElement != null) yield return new ElementValue("sliceIsConstraining", SliceIsConstrainingElement);
         if (LabelElement != null) yield return new ElementValue("label", LabelElement);
-        if (XpathElement != null) yield return new ElementValue("xpath", XpathElement);
         foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
         if (Slicing != null) yield return new ElementValue("slicing", Slicing);
         if (ShortElement != null) yield return new ElementValue("short", ShortElement);
@@ -3899,9 +3903,6 @@ namespace Hl7.Fhir.Model
         case "label":
           value = LabelElement;
           return LabelElement is not null;
-        case "xpath":
-          value = XpathElement;
-          return XpathElement is not null;
         case "code":
           value = Code;
           return Code?.Any() == true;
@@ -4012,7 +4013,6 @@ namespace Hl7.Fhir.Model
       if (SliceNameElement is not null) yield return new KeyValuePair<string,object>("sliceName",SliceNameElement);
       if (SliceIsConstrainingElement is not null) yield return new KeyValuePair<string,object>("sliceIsConstraining",SliceIsConstrainingElement);
       if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
-      if (XpathElement is not null) yield return new KeyValuePair<string,object>("xpath",XpathElement);
       if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       if (Slicing is not null) yield return new KeyValuePair<string,object>("slicing",Slicing);
       if (ShortElement is not null) yield return new KeyValuePair<string,object>("short",ShortElement);

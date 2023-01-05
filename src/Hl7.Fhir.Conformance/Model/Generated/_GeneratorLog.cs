@@ -143,7 +143,7 @@
   // Used in model class (resource): ActorDefinition.type
   // Used in model class (resource): ExampleScenario.actor.type
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): FHIRTypes (http://hl7.org/fhir/ValueSet/fhir-types)
+// Deferred generation of Shared Enumeration (will be generated in another subset): FHIRAllTypes (http://hl7.org/fhir/ValueSet/fhir-types)
   // Used in model class (type): DataRequirement.type
   // Used in model class (type): ParameterDefinition.type
   // Used in model class (resource): Measure.basis

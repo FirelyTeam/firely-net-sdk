@@ -277,12 +277,6 @@ namespace Hl7.Fhir.Model
     [EnumLiteral("4.2.0", "http://hl7.org/fhir/FHIR-version"), Description("4.2.0")]
     N4_2_0,
     /// <summary>
-    /// R4B .
-    /// (system: http://hl7.org/fhir/FHIR-version)
-    /// </summary>
-    [EnumLiteral("4.3.0", "http://hl7.org/fhir/FHIR-version"), Description("4.3.0")]
-    N4_3_0,
-    /// <summary>
     /// R4B version.
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
@@ -293,7 +287,7 @@ namespace Hl7.Fhir.Model
     /// (system: http://hl7.org/fhir/FHIR-version)
     /// </summary>
     [EnumLiteral("4.3.0", "http://hl7.org/fhir/FHIR-version"), Description("4.3.0")]
-    N4_3_0_2,
+    N4_3_0,
     /// <summary>
     /// FHIR Release 4B CI-Builld.
     /// (system: http://hl7.org/fhir/FHIR-version)
