@@ -304,9 +304,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Height of the image in pixels (photo/video)
+    /// Height of the image in pixels (photo/video). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("height", Order=110)]
+    [FhirElement("height", Order=110, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt HeightElement
     {
@@ -335,9 +335,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Width of the image in pixels (photo/video)
+    /// Width of the image in pixels (photo/video). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("width", Order=120)]
+    [FhirElement("width", Order=120, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt WidthElement
     {
@@ -366,9 +366,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Number of frames if &gt; 1 (photo)
+    /// Number of frames if &gt; 1 (photo). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("frames", Order=130)]
+    [FhirElement("frames", Order=130, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt FramesElement
     {
@@ -397,9 +397,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Length in seconds (audio / video)
+    /// Length in seconds (audio / video). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("duration", Order=140)]
+    [FhirElement("duration", Order=140, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDecimal DurationElement
     {
@@ -428,9 +428,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Number of printed pages
+    /// Number of printed pages. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("pages", Order=150)]
+    [FhirElement("pages", Order=150, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.PositiveInt PagesElement
     {

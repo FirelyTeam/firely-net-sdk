@@ -315,9 +315,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional classifiers
+    /// Additional classifiers. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("classifier", InSummary=true, Order=40)]
+    [FhirElement("classifier", InSummary=true, Order=40, Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Classifier
@@ -404,6 +404,38 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.Markdown _Citation;
 
     /// <summary>
+    /// Where the artifact can be accessed. Note: Element is deprecated since R5, do not use with R5 and newer releases.
+    /// </summary>
+    [FhirElement("url", InSummary=true, Order=70)]
+    [NotMapped(Since=FhirRelease.R5)]
+    [DataMember]
+    public Hl7.Fhir.Model.FhirUrl UrlElement
+    {
+      get { return _UrlElement; }
+      set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
+    }
+
+    private Hl7.Fhir.Model.FhirUrl _UrlElement;
+
+    /// <summary>
+    /// Where the artifact can be accessed
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Url
+    {
+      get { return UrlElement != null ? UrlElement.Value : null; }
+      set
+      {
+        if (value == null)
+          UrlElement = null;
+        else
+          UrlElement = new Hl7.Fhir.Model.FhirUrl(value);
+        OnPropertyChanged("Url");
+      }
+    }
+
+    /// <summary>
     /// What document is being referenced
     /// </summary>
     [FhirElement("document", InSummary=true, Order=80)]
@@ -448,9 +480,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// What artifact, if not a conformance resource
+    /// What artifact, if not a conformance resource. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("resourceReference", InSummary=true, Order=100)]
+    [FhirElement("resourceReference", InSummary=true, Order=100, Since=FhirRelease.R5)]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -463,9 +495,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.ResourceReference _ResourceReference;
 
     /// <summary>
-    /// draft | active | retired | unknown
+    /// draft | active | retired | unknown. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("publicationStatus", InSummary=true, Order=110)]
+    [FhirElement("publicationStatus", InSummary=true, Order=110, Since=FhirRelease.R5)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> PublicationStatusElement
@@ -495,9 +527,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Date of publication of the artifact being referred to
+    /// Date of publication of the artifact being referred to. Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("publicationDate", InSummary=true, Order=120)]
+    [FhirElement("publicationDate", InSummary=true, Order=120, Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Date PublicationDateElement
     {
@@ -540,6 +572,7 @@ namespace Hl7.Fhir.Model
       if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
       if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
       if(Citation != null) dest.Citation = (Hl7.Fhir.Model.Markdown)Citation.DeepCopy();
+      if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
       if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
       if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Canonical)ResourceElement.DeepCopy();
       if(ResourceReference != null) dest.ResourceReference = (Hl7.Fhir.Model.ResourceReference)ResourceReference.DeepCopy();
@@ -565,6 +598,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
       if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
       if( !DeepComparable.Matches(Citation, otherT.Citation)) return false;
+      if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.Matches(Document, otherT.Document)) return false;
       if( !DeepComparable.Matches(ResourceElement, otherT.ResourceElement)) return false;
       if( !DeepComparable.Matches(ResourceReference, otherT.ResourceReference)) return false;
@@ -585,6 +619,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
       if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
       if( !DeepComparable.IsExactly(Citation, otherT.Citation)) return false;
+      if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
       if( !DeepComparable.IsExactly(ResourceElement, otherT.ResourceElement)) return false;
       if( !DeepComparable.IsExactly(ResourceReference, otherT.ResourceReference)) return false;
@@ -605,6 +640,7 @@ namespace Hl7.Fhir.Model
         if (LabelElement != null) yield return LabelElement;
         if (DisplayElement != null) yield return DisplayElement;
         if (Citation != null) yield return Citation;
+        if (UrlElement != null) yield return UrlElement;
         if (Document != null) yield return Document;
         if (ResourceElement != null) yield return ResourceElement;
         if (ResourceReference != null) yield return ResourceReference;
@@ -624,6 +660,7 @@ namespace Hl7.Fhir.Model
         if (LabelElement != null) yield return new ElementValue("label", LabelElement);
         if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
         if (Citation != null) yield return new ElementValue("citation", Citation);
+        if (UrlElement != null) yield return new ElementValue("url", UrlElement);
         if (Document != null) yield return new ElementValue("document", Document);
         if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
         if (ResourceReference != null) yield return new ElementValue("resourceReference", ResourceReference);
@@ -651,6 +688,9 @@ namespace Hl7.Fhir.Model
         case "citation":
           value = Citation;
           return Citation is not null;
+        case "url":
+          value = UrlElement;
+          return UrlElement is not null;
         case "document":
           value = Document;
           return Document is not null;
@@ -680,6 +720,7 @@ namespace Hl7.Fhir.Model
       if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
       if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
       if (Citation is not null) yield return new KeyValuePair<string,object>("citation",Citation);
+      if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
       if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);
       if (ResourceReference is not null) yield return new KeyValuePair<string,object>("resourceReference",ResourceReference);
