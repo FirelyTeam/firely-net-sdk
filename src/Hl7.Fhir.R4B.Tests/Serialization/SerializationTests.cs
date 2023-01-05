@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Tests.Serialization
     {
         /// <summary>
         /// This test verifies that the parser can handle a backbone element that has a property of resourceType
-        /// (only found in the ExampleScenario resource in R4 - used to be in Claim)
+        /// (only found in the ExampleScenario resource in R4 and R4B - used to be in Claim)
         /// </summary>
         [TestMethod]
         public void TestExampleScenarioJsonSerialization()

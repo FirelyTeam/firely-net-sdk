@@ -387,6 +387,7 @@
 // FhirUrl.cs
 // Uuid.cs
 // XHtml.cs
+// Attachment.cs
 // BackboneElement.cs
 // BackboneType.cs
 // CodeableConcept.cs

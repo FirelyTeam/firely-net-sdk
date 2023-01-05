@@ -366,7 +366,6 @@
   // Used in model class (resource): EvidenceVariable.handling
 
 // Generated items
-// Attachment.cs
 // ElementDefinition.cs
 // RelatedArtifact.cs
 // CapabilityStatement.cs
