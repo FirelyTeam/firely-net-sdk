@@ -1582,6 +1582,62 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
+  /// How a resource reference is interpreted when testing consent restrictions.
+  /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
+  /// (system: http://hl7.org/fhir/consent-data-meaning)
+  /// </summary>
+  [FhirEnumeration("ConsentDataMeaning")]
+  public enum ConsentDataMeaning
+  {
+    /// <summary>
+    /// The consent applies directly to the instance of the resource.
+    /// (system: http://hl7.org/fhir/consent-data-meaning)
+    /// </summary>
+    [EnumLiteral("instance", "http://hl7.org/fhir/consent-data-meaning"), Description("Instance")]
+    Instance,
+    /// <summary>
+    /// The consent applies directly to the instance of the resource and instances it refers to.
+    /// (system: http://hl7.org/fhir/consent-data-meaning)
+    /// </summary>
+    [EnumLiteral("related", "http://hl7.org/fhir/consent-data-meaning"), Description("Related")]
+    Related,
+    /// <summary>
+    /// The consent applies directly to the instance of the resource and instances that refer to it.
+    /// (system: http://hl7.org/fhir/consent-data-meaning)
+    /// </summary>
+    [EnumLiteral("dependents", "http://hl7.org/fhir/consent-data-meaning"), Description("Dependents")]
+    Dependents,
+    /// <summary>
+    /// The consent applies to instances of resources that are authored by.
+    /// (system: http://hl7.org/fhir/consent-data-meaning)
+    /// </summary>
+    [EnumLiteral("authoredby", "http://hl7.org/fhir/consent-data-meaning"), Description("AuthoredBy")]
+    Authoredby,
+  }
+
+  /// <summary>
+  /// How a rule statement is applied, such as adding additional consent or removing consent.
+  /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
+  /// (system: http://hl7.org/fhir/consent-provision-type)
+  /// </summary>
+  [FhirEnumeration("ConsentProvisionType")]
+  public enum ConsentProvisionType
+  {
+    /// <summary>
+    /// Consent is denied for actions meeting these rules.
+    /// (system: http://hl7.org/fhir/consent-provision-type)
+    /// </summary>
+    [EnumLiteral("deny", "http://hl7.org/fhir/consent-provision-type"), Description("Deny")]
+    Deny,
+    /// <summary>
+    /// Consent is provided for actions meeting these rules.
+    /// (system: http://hl7.org/fhir/consent-provision-type)
+    /// </summary>
+    [EnumLiteral("permit", "http://hl7.org/fhir/consent-provision-type"), Description("Permit")]
+    Permit,
+  }
+
+  /// <summary>
   /// This value set defines a base set of codes for countries.   
   ///    
   ///    Note: The codes for countries are taken from    [ISO 3166](https://www.iso.org/iso-3166-country-codes.html).
@@ -21208,6 +21264,146 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/fhir-types"), Description("VisionPrescription")]
     VisionPrescription,
+  }
+
+  /// <summary>
+  /// FHIR search modifiers allowed for use in Subscriptions and SubscriptionTopics.
+  /// (url: http://hl7.org/fhir/ValueSet/subscription-search-modifier)
+  /// (system: http://hl7.org/fhir/subscription-search-modifier)
+  /// </summary>
+  [FhirEnumeration("SubscriptionSearchModifier")]
+  public enum SubscriptionSearchModifier
+  {
+    /// <summary>
+    /// Used to match a value according to FHIR Search rules (e.g., Patient/123, Encounter/2002).
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("=", "http://hl7.org/fhir/subscription-search-modifier"), Description("=")]
+    Equal,
+    /// <summary>
+    /// The value for the parameter in the resource is equal to the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("eq", "http://hl7.org/fhir/subscription-search-modifier"), Description("Equal")]
+    Eq,
+    /// <summary>
+    /// The value for the parameter in the resource is not equal to the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("ne", "http://hl7.org/fhir/subscription-search-modifier"), Description("Not Equal")]
+    Ne,
+    /// <summary>
+    /// The value for the parameter in the resource is greater than the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("gt", "http://hl7.org/fhir/subscription-search-modifier"), Description("Greater Than")]
+    Gt,
+    /// <summary>
+    /// The value for the parameter in the resource is less than the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("lt", "http://hl7.org/fhir/subscription-search-modifier"), Description("Less Than")]
+    Lt,
+    /// <summary>
+    /// The value for the parameter in the resource is greater or equal to the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("ge", "http://hl7.org/fhir/subscription-search-modifier"), Description("Greater Than or Equal")]
+    Ge,
+    /// <summary>
+    /// The value for the parameter in the resource is less or equal to the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("le", "http://hl7.org/fhir/subscription-search-modifier"), Description("Less Than or Equal")]
+    Le,
+    /// <summary>
+    /// The value for the parameter in the resource starts after the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("sa", "http://hl7.org/fhir/subscription-search-modifier"), Description("Starts After")]
+    Sa,
+    /// <summary>
+    /// The value for the parameter in the resource ends before the provided value.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("eb", "http://hl7.org/fhir/subscription-search-modifier"), Description("Ends Before")]
+    Eb,
+    /// <summary>
+    /// The value for the parameter in the resource is approximately the same to the provided value. Note that the recommended value for the approximation is 10% of the stated value (or for a date, 10% of the gap between now and the date), but systems may choose other values where appropriate.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("ap", "http://hl7.org/fhir/subscription-search-modifier"), Description("Approximately")]
+    Ap,
+    /// <summary>
+    /// The search parameter is a concept with the form [system]|[code], and the search parameter tests whether the coding in a resource subsumes the specified search code.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("above", "http://hl7.org/fhir/subscription-search-modifier"), Description("Above")]
+    Above,
+    /// <summary>
+    /// The search parameter is a concept with the form [system]|[code], and the search parameter tests whether the coding in a resource is subsumed by the specified search code.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("below", "http://hl7.org/fhir/subscription-search-modifier"), Description("Below")]
+    Below,
+    /// <summary>
+    /// The search parameter is a member of a Group or List, or the search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the value is present in the specified Group, List, or Value Set.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("in", "http://hl7.org/fhir/subscription-search-modifier"), Description("In")]
+    In,
+    /// <summary>
+    /// The search parameter is a member of a Group or List, or the search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the value is NOT present in the specified Group, List, or Value Set.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("not-in", "http://hl7.org/fhir/subscription-search-modifier"), Description("Not In")]
+    NotIn,
+    /// <summary>
+    /// The search parameter has the format system|code|value, where the system and code refer to a Identifier.type.coding.system and .code, and match if any of the type codes match. All 3 parts must be present.
+    /// (system: http://hl7.org/fhir/subscription-search-modifier)
+    /// </summary>
+    [EnumLiteral("of-type", "http://hl7.org/fhir/subscription-search-modifier"), Description("Of Type")]
+    OfType,
+  }
+
+  /// <summary>
+  /// State values for FHIR Subscriptions.
+  /// (url: http://hl7.org/fhir/ValueSet/subscription-status)
+  /// (system: http://hl7.org/fhir/subscription-status)
+  /// </summary>
+  [FhirEnumeration("SubscriptionStatusCodes")]
+  public enum SubscriptionStatusCodes
+  {
+    /// <summary>
+    /// The client has requested the subscription, and the server has not yet set it up.
+    /// (system: http://hl7.org/fhir/subscription-status)
+    /// </summary>
+    [EnumLiteral("requested", "http://hl7.org/fhir/subscription-status"), Description("Requested")]
+    Requested,
+    /// <summary>
+    /// The subscription is active.
+    /// (system: http://hl7.org/fhir/subscription-status)
+    /// </summary>
+    [EnumLiteral("active", "http://hl7.org/fhir/subscription-status"), Description("Active")]
+    Active,
+    /// <summary>
+    /// The server has an error executing the notification.
+    /// (system: http://hl7.org/fhir/subscription-status)
+    /// </summary>
+    [EnumLiteral("error", "http://hl7.org/fhir/subscription-status"), Description("Error")]
+    Error,
+    /// <summary>
+    /// Too many errors have occurred or the subscription has expired.
+    /// (system: http://hl7.org/fhir/subscription-status)
+    /// </summary>
+    [EnumLiteral("off", "http://hl7.org/fhir/subscription-status"), Description("Off")]
+    Off,
+    /// <summary>
+    /// This subscription has been flagged as incorrect.
+    /// (system: http://hl7.org/fhir/subscription-status)
+    /// </summary>
+    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/subscription-status"), Description("Entered in Error")]
+    EnteredInError,
   }
 
   /// <summary>

@@ -101,6 +101,14 @@
   // Used in model class (resource): Composition.status
   // Used in model class (resource): DocumentReference.docStatus
 
+// Generated Shared Enumeration: ConsentDataMeaning (http://hl7.org/fhir/ValueSet/consent-data-meaning)
+  // Used in model class (resource): Consent.provision.data.meaning
+  // Used in model class (resource): Permission.rule.data.resource.meaning
+
+// Generated Shared Enumeration: ConsentProvisionType (http://hl7.org/fhir/ValueSet/consent-provision-type)
+  // Used in model class (resource): Consent.provision.type
+  // Used in model class (resource): Permission.rule.type
+
 // Deferred generation of Shared Enumeration (will be generated in another subset): ConstraintSeverity (http://hl7.org/fhir/ValueSet/constraint-severity)
   // Used in model class (type): ElementDefinition.constraint.severity
   // Used in model class (type): Extension.extension.value[x]
@@ -134,6 +142,7 @@
   // Used in model class (resource): DocumentReference.status
 
 // Generated Shared Enumeration: EventStatus (http://hl7.org/fhir/ValueSet/event-status)
+  // Used in model class (resource): ClinicalImpression.status
   // Used in model class (resource): Communication.status
   // Used in model class (resource): NutritionIntake.status
   // Used in model class (resource): Procedure.status
@@ -152,6 +161,10 @@
   // Used in model class (resource): OperationDefinition.parameter.allowedType
   // Used in model class (resource): StructureDefinition.type
   // Used in model class (resource): Subscription.filterBy.resourceType
+  // Used in model class (resource): SubscriptionTopic.resourceTrigger.resource
+  // Used in model class (resource): SubscriptionTopic.eventTrigger.resource
+  // Used in model class (resource): SubscriptionTopic.canFilterBy.resource
+  // Used in model class (resource): SubscriptionTopic.notificationShape.resource
 
 // Deferred generation of Shared Enumeration (will be generated in another subset): FHIRVersion (http://hl7.org/fhir/ValueSet/FHIR-version)
   // Used in model class (resource): CapabilityStatement.fhirVersion
@@ -170,6 +183,8 @@
   // Used in model class (resource): Coverage.status
   // Used in model class (resource): CoverageEligibilityRequest.status
   // Used in model class (resource): CoverageEligibilityResponse.status
+  // Used in model class (resource): EnrollmentRequest.status
+  // Used in model class (resource): EnrollmentResponse.status
   // Used in model class (resource): PaymentNotice.status
   // Used in model class (resource): PaymentReconciliation.status
   // Used in model class (resource): VisionPrescription.status
@@ -179,8 +194,12 @@
   // Used in model class (resource): ActorDefinition.jurisdiction
   // Used in model class (resource): CanonicalResource.jurisdiction
   // Used in model class (resource): CapabilityStatement.jurisdiction
+  // Used in model class (resource): ChargeItemDefinition.jurisdiction
+  // Used in model class (resource): Citation.jurisdiction
   // Used in model class (resource): CodeSystem.jurisdiction
   // Used in model class (resource): ConceptMap.jurisdiction
+  // Used in model class (resource): ConditionDefinition.jurisdiction
+  // Used in model class (resource): EventDefinition.jurisdiction
   // Used in model class (resource): ExampleScenario.jurisdiction
   // Used in model class (resource): GraphDefinition.jurisdiction
   // Used in model class (resource): ImplementationGuide.jurisdiction
@@ -196,10 +215,12 @@
   // Used in model class (resource): Questionnaire.jurisdiction
   // Used in model class (resource): RegulatedAuthorization.region
   // Used in model class (resource): Requirements.jurisdiction
+  // Used in model class (resource): ResearchStudy.region
   // Used in model class (resource): SearchParameter.jurisdiction
   // Used in model class (resource): SpecimenDefinition.jurisdiction
   // Used in model class (resource): StructureDefinition.jurisdiction
   // Used in model class (resource): StructureMap.jurisdiction
+  // Used in model class (resource): SubscriptionTopic.jurisdiction
   // Used in model class (resource): SubstanceDefinition.name.jurisdiction
   // Used in model class (resource): TerminologyCapabilities.jurisdiction
   // Used in model class (resource): TestScript.jurisdiction
@@ -212,6 +233,9 @@
 // Generated Shared Enumeration: CommonLanguages (http://hl7.org/fhir/ValueSet/languages)
   // Used in model class (type): Attachment.language
   // Used in model class (resource): CapabilityStatement.acceptLanguage
+  // Used in model class (resource): Citation.citedArtifact.title.language
+  // Used in model class (resource): Citation.citedArtifact.abstract.language
+  // Used in model class (resource): Citation.citedArtifact.publicationForm.language
   // Used in model class (resource): ClaimResponse.processNote.language
   // Used in model class (resource): CodeSystem.concept.designation.language
   // Used in model class (resource): ExplanationOfBenefit.processNote.language
@@ -231,6 +255,7 @@
 
 // Generated Shared Enumeration: ListMode (http://hl7.org/fhir/ValueSet/list-mode)
   // Used in model class (resource): Composition.section.mode
+  // Used in model class (resource): EvidenceReport.section.mode
   // Used in model class (resource): List.mode
 
 // Generated Shared Enumeration: MeasureImprovementNotation (http://hl7.org/fhir/ValueSet/measure-improvement-notation)
@@ -267,16 +292,22 @@
   // Used in model class (resource): AdministrableProductDefinition.property.status
   // Used in model class (resource): CanonicalResource.status
   // Used in model class (resource): CapabilityStatement.status
+  // Used in model class (resource): ChargeItemDefinition.status
+  // Used in model class (resource): Citation.status
   // Used in model class (resource): ClinicalUseDefinition.status
   // Used in model class (resource): CodeSystem.status
   // Used in model class (resource): CompartmentDefinition.status
   // Used in model class (resource): ConceptMap.status
+  // Used in model class (resource): ConditionDefinition.status
+  // Used in model class (resource): EventDefinition.status
   // Used in model class (resource): Evidence.status
+  // Used in model class (resource): EvidenceReport.status
   // Used in model class (resource): EvidenceVariable.status
   // Used in model class (resource): ExampleScenario.status
   // Used in model class (resource): GraphDefinition.status
   // Used in model class (resource): ImplementationGuide.status
   // Used in model class (resource): Ingredient.status
+  // Used in model class (resource): InsurancePlan.status
   // Used in model class (resource): Library.status
   // Used in model class (resource): ManufacturedItemDefinition.status
   // Used in model class (resource): Measure.status
@@ -291,10 +322,13 @@
   // Used in model class (resource): RegulatedAuthorization.status
   // Used in model class (resource): RegulatedAuthorization.case.status
   // Used in model class (resource): Requirements.status
+  // Used in model class (resource): ResearchStudy.status
+  // Used in model class (resource): ResearchSubject.status
   // Used in model class (resource): SearchParameter.status
   // Used in model class (resource): SpecimenDefinition.status
   // Used in model class (resource): StructureDefinition.status
   // Used in model class (resource): StructureMap.status
+  // Used in model class (resource): SubscriptionTopic.status
   // Used in model class (resource): SubstanceDefinition.status
   // Used in model class (resource): SubstanceDefinition.code.status
   // Used in model class (resource): SubstanceDefinition.name.status
@@ -357,6 +391,14 @@
   // Used in model class (resource): OperationDefinition.parameter.searchType
   // Used in model class (resource): SearchParameter.type
 
+// Generated Shared Enumeration: SubscriptionSearchModifier (http://hl7.org/fhir/ValueSet/subscription-search-modifier)
+  // Used in model class (resource): Subscription.filterBy.modifier
+  // Used in model class (resource): SubscriptionTopic.canFilterBy.modifier
+
+// Generated Shared Enumeration: SubscriptionStatusCodes (http://hl7.org/fhir/ValueSet/subscription-status)
+  // Used in model class (resource): Subscription.status
+  // Used in model class (resource): SubscriptionStatus.status
+
 // Generated Shared Enumeration: IANATimezones (http://hl7.org/fhir/ValueSet/timezones)
   // Used in model class (resource): Appointment.recurrenceTemplate.timezone
   // Used in model class (type): Extension.value[x]
@@ -396,17 +438,23 @@
 // ActivityDefinition.cs
 // ActorDefinition.cs
 // AdministrableProductDefinition.cs
+// AdverseEvent.cs
 // AllergyIntolerance.cs
 // Appointment.cs
 // AppointmentResponse.cs
+// ArtifactAssessment.cs
 // AuditEvent.cs
 // Basic.cs
 // BiologicallyDerivedProduct.cs
 // BodyStructure.cs
 // CarePlan.cs
 // CareTeam.cs
+// ChargeItem.cs
+// ChargeItemDefinition.cs
+// Citation.cs
 // Claim.cs
 // ClaimResponse.cs
+// ClinicalImpression.cs
 // ClinicalUseDefinition.cs
 // Communication.cs
 // CommunicationRequest.cs
@@ -414,6 +462,7 @@
 // Composition.cs
 // ConceptMap.cs
 // Condition.cs
+// ConditionDefinition.cs
 // Consent.cs
 // Contract.cs
 // Coverage.cs
@@ -422,6 +471,7 @@
 // DetectedIssue.cs
 // Device.cs
 // DeviceDefinition.cs
+// DeviceDispense.cs
 // DeviceMetric.cs
 // DeviceRequest.cs
 // DeviceUsage.cs
@@ -430,24 +480,36 @@
 // DocumentReference.cs
 // Encounter.cs
 // Endpoint.cs
+// EnrollmentRequest.cs
+// EnrollmentResponse.cs
 // EpisodeOfCare.cs
+// EventDefinition.cs
 // Evidence.cs
+// EvidenceReport.cs
 // EvidenceVariable.cs
 // ExampleScenario.cs
 // ExplanationOfBenefit.cs
 // FamilyMemberHistory.cs
 // Flag.cs
+// FormularyItem.cs
+// GenomicStudy.cs
 // Goal.cs
 // GraphDefinition.cs
+// Group.cs
 // GuidanceResponse.cs
 // HealthcareService.cs
 // ImagingSelection.cs
 // ImagingStudy.cs
 // Immunization.cs
+// ImmunizationEvaluation.cs
 // ImmunizationRecommendation.cs
 // ImplementationGuide.cs
 // Ingredient.cs
+// InsurancePlan.cs
+// InventoryReport.cs
+// Invoice.cs
 // Library.cs
+// Linkage.cs
 // List.cs
 // Location.cs
 // ManufacturedItemDefinition.cs
@@ -471,10 +533,12 @@
 // ObservationDefinition.cs
 // OperationDefinition.cs
 // Organization.cs
+// OrganizationAffiliation.cs
 // PackagedProductDefinition.cs
 // Patient.cs
 // PaymentNotice.cs
 // PaymentReconciliation.cs
+// Permission.cs
 // Person.cs
 // PlanDefinition.cs
 // Practitioner.cs
@@ -487,6 +551,8 @@
 // RelatedPerson.cs
 // RequestOrchestration.cs
 // Requirements.cs
+// ResearchStudy.cs
+// ResearchSubject.cs
 // RiskAssessment.cs
 // Schedule.cs
 // SearchParameter.cs
@@ -496,12 +562,21 @@
 // SpecimenDefinition.cs
 // StructureMap.cs
 // Subscription.cs
+// SubscriptionStatus.cs
+// SubscriptionTopic.cs
 // Substance.cs
 // SubstanceDefinition.cs
+// SubstanceNucleicAcid.cs
+// SubstancePolymer.cs
+// SubstanceProtein.cs
+// SubstanceReferenceInformation.cs
+// SubstanceSourceMaterial.cs
 // SupplyDelivery.cs
 // SupplyRequest.cs
 // Task.cs
 // TerminologyCapabilities.cs
+// TestReport.cs
 // TestScript.cs
 // Transport.cs
+// VerificationResult.cs
 // VisionPrescription.cs

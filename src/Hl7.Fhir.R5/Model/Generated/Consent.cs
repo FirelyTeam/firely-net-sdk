@@ -102,62 +102,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// How a rule statement is applied, such as adding additional consent or removing consent.
-    /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
-    /// (system: http://hl7.org/fhir/consent-provision-type)
-    /// </summary>
-    [FhirEnumeration("ConsentProvisionType")]
-    public enum ConsentProvisionType
-    {
-      /// <summary>
-      /// Consent is denied for actions meeting these rules.
-      /// (system: http://hl7.org/fhir/consent-provision-type)
-      /// </summary>
-      [EnumLiteral("deny", "http://hl7.org/fhir/consent-provision-type"), Description("Deny")]
-      Deny,
-      /// <summary>
-      /// Consent is provided for actions meeting these rules.
-      /// (system: http://hl7.org/fhir/consent-provision-type)
-      /// </summary>
-      [EnumLiteral("permit", "http://hl7.org/fhir/consent-provision-type"), Description("Permit")]
-      Permit,
-    }
-
-    /// <summary>
-    /// How a resource reference is interpreted when testing consent restrictions.
-    /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
-    /// (system: http://hl7.org/fhir/consent-data-meaning)
-    /// </summary>
-    [FhirEnumeration("ConsentDataMeaning")]
-    public enum ConsentDataMeaning
-    {
-      /// <summary>
-      /// The consent applies directly to the instance of the resource.
-      /// (system: http://hl7.org/fhir/consent-data-meaning)
-      /// </summary>
-      [EnumLiteral("instance", "http://hl7.org/fhir/consent-data-meaning"), Description("Instance")]
-      Instance,
-      /// <summary>
-      /// The consent applies directly to the instance of the resource and instances it refers to.
-      /// (system: http://hl7.org/fhir/consent-data-meaning)
-      /// </summary>
-      [EnumLiteral("related", "http://hl7.org/fhir/consent-data-meaning"), Description("Related")]
-      Related,
-      /// <summary>
-      /// The consent applies directly to the instance of the resource and instances that refer to it.
-      /// (system: http://hl7.org/fhir/consent-data-meaning)
-      /// </summary>
-      [EnumLiteral("dependents", "http://hl7.org/fhir/consent-data-meaning"), Description("Dependents")]
-      Dependents,
-      /// <summary>
-      /// The consent applies to instances of resources that are authored by.
-      /// (system: http://hl7.org/fhir/consent-data-meaning)
-      /// </summary>
-      [EnumLiteral("authoredby", "http://hl7.org/fhir/consent-data-meaning"), Description("AuthoredBy")]
-      Authoredby,
-    }
-
-    /// <summary>
     /// Computable version of the backing policy
     /// </summary>
     [Serializable]
@@ -566,20 +510,20 @@ namespace Hl7.Fhir.Model
       [FhirElement("type", InSummary=true, IsModifier=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
+      public Code<Hl7.Fhir.Model.ConsentProvisionType> TypeElement
       {
         get { return _TypeElement; }
         set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> _TypeElement;
+      private Code<Hl7.Fhir.Model.ConsentProvisionType> _TypeElement;
 
       /// <summary>
       /// deny | permit
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.Consent.ConsentProvisionType? Type
+      public Hl7.Fhir.Model.ConsentProvisionType? Type
       {
         get { return TypeElement != null ? TypeElement.Value : null; }
         set
@@ -587,7 +531,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             TypeElement = null;
           else
-            TypeElement = new Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>(value);
+            TypeElement = new Code<Hl7.Fhir.Model.ConsentProvisionType>(value);
           OnPropertyChanged("Type");
         }
       }
@@ -767,7 +711,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.Consent.ConsentProvisionType>)TypeElement.DeepCopy();
+        if(TypeElement != null) dest.TypeElement = (Code<Hl7.Fhir.Model.ConsentProvisionType>)TypeElement.DeepCopy();
         if(Period != null) dest.Period = (Hl7.Fhir.Model.Period)Period.DeepCopy();
         if(Actor != null) dest.Actor = new List<Hl7.Fhir.Model.Consent.provisionActorComponent>(Actor.DeepCopy());
         if(Action != null) dest.Action = new List<Hl7.Fhir.Model.CodeableConcept>(Action.DeepCopy());
@@ -1101,20 +1045,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
+      public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
       {
         get { return _MeaningElement; }
         set { _MeaningElement = value; OnPropertyChanged("MeaningElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> _MeaningElement;
+      private Code<Hl7.Fhir.Model.ConsentDataMeaning> _MeaningElement;
 
       /// <summary>
       /// instance | related | dependents | authoredby
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.Consent.ConsentDataMeaning? Meaning
+      public Hl7.Fhir.Model.ConsentDataMeaning? Meaning
       {
         get { return MeaningElement != null ? MeaningElement.Value : null; }
         set
@@ -1122,7 +1066,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             MeaningElement = null;
           else
-            MeaningElement = new Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>(value);
+            MeaningElement = new Code<Hl7.Fhir.Model.ConsentDataMeaning>(value);
           OnPropertyChanged("Meaning");
         }
       }
@@ -1153,7 +1097,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning>)MeaningElement.DeepCopy();
+        if(MeaningElement != null) dest.MeaningElement = (Code<Hl7.Fhir.Model.ConsentDataMeaning>)MeaningElement.DeepCopy();
         if(Reference != null) dest.Reference = (Hl7.Fhir.Model.ResourceReference)Reference.DeepCopy();
         return dest;
       }
