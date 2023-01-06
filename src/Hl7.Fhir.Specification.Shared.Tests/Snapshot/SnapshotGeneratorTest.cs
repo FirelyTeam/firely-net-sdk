@@ -4017,15 +4017,15 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             var (_, expanded) = await generateSnapshotAndCompare(sd);
-            Assert.IsNotNull(expanded);
-            Assert.IsTrue(expanded.HasSnapshot);
+            expanded.Should().NotBeNull();
+            expanded.HasSnapshot.Should().BeTrue();
 
             var profileElem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Encounter.type");
-            Assert.IsNotNull(profileElem);
+            profileElem.Should().NotBeNull();
             var profileBinding = profileElem.Binding;
-            Assert.IsNotNull(profileBinding);
+            profileBinding.Should().NotBeNull();
 
-            Assert.AreEqual(BindingStrength.Preferred, profileBinding.Strength);
+            profileBinding.Strength.Should().Be(BindingStrength.Preferred);
 
             var sdEncounter = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Encounter);
             Assert.IsNotNull(sdEncounter);
@@ -4038,8 +4038,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
 
-            Assert.AreEqual(baseBinding.Description, profileBinding.Description);
-            Assert.AreEqual(baseBinding.ValueSet, profileBinding.ValueSet);
+            baseBinding.Description.Should().BeEquivalentTo(profileBinding.Description);
+            baseBinding.ValueSet.Should().BeEquivalentTo(profileBinding.ValueSet);
         }
 
         // [WMR 2017024] NEW: Snapshot generator should reject profile extensions mapped to a StructureDefinition that is not an Extension definition.

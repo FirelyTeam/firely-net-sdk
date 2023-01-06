@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Specification.Tests
             string location = typeof(TestDataHelper).GetTypeInfo().Assembly.Location;
             var path = Path.GetDirectoryName(location) + "\\TestData";
             Console.WriteLine(path);
-            List <string> issues = new List<string>();
+            List<string> issues = new List<string>();
             await ValidateFolder(path, path, issues);
             Assert.AreEqual(0, issues.Count);
         }
@@ -147,16 +147,16 @@ namespace Hl7.Fhir.Specification.Tests
 
                         try
                         {
-                            // and parse this into R4
+                            // and parse this
                             resource = xmlParser.Parse<Resource>(xmlDoc.OuterXml);
-                            Console.WriteLine($"        conversion to R4 success {new FileInfo(item).Name}");
+                            Console.WriteLine($"        conversion to {ModelInfo.Version} success {new FileInfo(item).Name}");
 
                             // Save this back to the filesystem since it works!
                             File.WriteAllText(item.Replace(@"bin\Debug\net462\", ""), xmlDoc.InnerXml);
                         }
                         catch (Exception ex3)
                         {
-                            Console.WriteLine($"        conversion to R4 failed {new FileInfo(item).Name}");
+                            Console.WriteLine($"        conversion to {ModelInfo.Version} failed {new FileInfo(item).Name}");
                             Console.WriteLine($"            --> {ex3.Message}");
                             issues.Add($"        --> {ex.Message} (conversion failed too) {ex3.Message}");
                         }

@@ -12,6 +12,12 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public partial class StructureDefinitionSummaryProviderTest
     {
+        [TestMethod]
+        public void PocoAndSdSummaryProvidersShouldBeEqual()
+        {
+            assertPocoAndSdSummaryProviders();
+        }
+
         private void assertPocoAndSdSummaryProviders()
         {
             IStructureDefinitionSummaryProvider pocoSdProvider = new PocoStructureDefinitionSummaryProvider();
@@ -112,7 +118,13 @@ namespace Hl7.Fhir.Specification.Tests
                 //   StructureDefinitions, while they are in the Poco's (=> seem to make sense).
                 // * The poco generator generates "in summary" for id, but this is not reflected in the
                 //   structuredefinition either.
-                left.InSummary.Should().Be(right.InSummary, context + ": InSummary differs");
+                if (!context.EndsWith(".modifierExtension"))
+                {
+                    // From 5.0.0-snapshot3 DomainResource.modifierExtension is a summary element. This means
+                    // that there is now a difference with StructureDefinitionSummaryProvider, because for STU3/R4/R4B
+                    // this correction has not been backported.
+                    left.InSummary.Should().Be(right.InSummary, context + ": InSummary differs");
+                }
                 left.IsModifier.Should().Be(right.IsModifier, context + ": IsModifier differs");
                 left.IsChoiceElement.Should().Be(right.IsChoiceElement, context + ": IsChoiceElement differs");
                 left.IsCollection.Should().Be(right.IsCollection, context + ": IsCollection differs");
