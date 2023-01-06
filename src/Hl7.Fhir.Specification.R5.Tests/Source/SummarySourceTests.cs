@@ -59,13 +59,6 @@ namespace Hl7.Fhir.Specification.Tests
             var ext = fa.LoadBySummary(summary);
             Assert.IsNotNull(ext);
             Assert.IsTrue(ext is StructureDefinition);
-
-            // Try to find an additional US profile (they are distributed with the spec for now)
-            summary = summaries.ResolveByCanonicalUri("http://hl7.org/fhir/StructureDefinition/ehrsrle-auditevent");
-            Assert.IsNotNull(summary);
-            var us = fa.LoadBySummary(summary);
-            Assert.IsNotNull(us);
-            Assert.IsTrue(us is StructureDefinition);
         }
     }
 }
