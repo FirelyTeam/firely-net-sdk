@@ -27,7 +27,7 @@
             "severity": "error",
             "human": "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
             "expression": "contained.contained.empty()",
-            "xpath": "not(parent::f:contained and f:contained)",
+            
             "source": "DomainResource"
           },
           {
@@ -35,7 +35,7 @@
             "severity": "error",
             "human": "If the resource is contained in another resource, it SHALL NOT contain any narrative",
             "expression": "contained.text.empty()",
-            "xpath": "not(parent::f:contained and f:text)",
+            
             "source": "DomainResource"
           },
           {
@@ -43,7 +43,7 @@
             "severity": "error",
             "human": "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
             "expression": "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
-            "xpath": "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))",
+            
             "source": "DomainResource"
           }
         ],

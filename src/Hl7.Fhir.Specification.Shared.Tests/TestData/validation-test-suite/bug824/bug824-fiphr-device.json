@@ -40,28 +40,28 @@
 						"severity": "error",
 						"human": "If the resource is contained in another resource, it SHALL NOT contain nested Resources",
 						"expression": "contained.contained.empty()",
-						"xpath": "not(parent::f:contained and f:contained)"
+						
 					},
 					{
 						"key": "dom-1",
 						"severity": "error",
 						"human": "If the resource is contained in another resource, it SHALL NOT contain any narrative",
 						"expression": "contained.text.empty()",
-						"xpath": "not(parent::f:contained and f:text)"
+						
 					},
 					{
 						"key": "dom-4",
 						"severity": "error",
 						"human": "If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated",
 						"expression": "contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()",
-						"xpath": "not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"
+						
 					},
 					{
 						"key": "dom-3",
 						"severity": "error",
 						"human": "If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource",
 						"expression": "contained.where(('#'+id in %resource.descendants().reference).not()).empty()",
-						"xpath": "not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))"
+						
 					}
 				],
 				"mapping": [
@@ -106,7 +106,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -143,7 +143,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -188,7 +188,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -239,14 +239,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -287,7 +287,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -325,7 +325,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -364,7 +364,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -402,7 +402,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -469,7 +469,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -532,7 +532,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isModifier": true,
@@ -571,7 +571,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"binding": {
@@ -638,7 +638,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -731,14 +731,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -785,14 +785,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -847,14 +847,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"isModifier": true,
@@ -899,7 +899,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -963,7 +963,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -1014,14 +1014,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -1063,7 +1063,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isModifier": true,
@@ -1124,7 +1124,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1207,7 +1207,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1263,7 +1263,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1313,14 +1313,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "per-1",
 						"severity": "error",
 						"human": "If present, start SHALL have a lower value than end",
 						"expression": "start.empty() or end.empty() or (start <= end)",
-						"xpath": "not(exists(f:start)) or not(exists(f:end)) or (f:start/@value <= f:end/@value)"
+						
 					}
 				],
 				"isSummary": true,
@@ -1379,14 +1379,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ref-1",
 						"severity": "error",
 						"human": "SHALL have a contained resource if a local reference is provided",
 						"expression": "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
-						"xpath": "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+						
 					}
 				],
 				"isSummary": true,
@@ -1440,7 +1440,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1489,7 +1489,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -1540,14 +1540,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -1593,14 +1593,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"isModifier": true,
@@ -1646,7 +1646,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1699,7 +1699,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1750,7 +1750,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -1794,7 +1794,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1843,7 +1843,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -1892,7 +1892,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -1938,7 +1938,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"binding": {
@@ -1992,7 +1992,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isModifier": true,
@@ -2052,7 +2052,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"binding": {
@@ -2126,7 +2126,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2175,7 +2175,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2223,7 +2223,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2271,7 +2271,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2320,7 +2320,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2365,7 +2365,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2412,14 +2412,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ref-1",
 						"severity": "error",
 						"human": "SHALL have a contained resource if a local reference is provided",
 						"expression": "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
-						"xpath": "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+						
 					}
 				],
 				"mapping": [
@@ -2469,14 +2469,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ref-1",
 						"severity": "error",
 						"human": "SHALL have a contained resource if a local reference is provided",
 						"expression": "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
-						"xpath": "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+						
 					}
 				],
 				"mapping": [
@@ -2525,14 +2525,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "cpt-2",
 						"severity": "error",
 						"human": "A system is required if a value is provided.",
 						"expression": "value.empty() or system.exists()",
-						"xpath": "not(exists(f:value)) or exists(f:system)"
+						
 					}
 				],
 				"mapping": [
@@ -2592,7 +2592,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -2643,14 +2643,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -2692,7 +2692,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -2756,7 +2756,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -2807,7 +2807,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isModifier": true,
@@ -2871,7 +2871,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -2913,14 +2913,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "per-1",
 						"severity": "error",
 						"human": "If present, start SHALL have a lower value than end",
 						"expression": "start.empty() or end.empty() or (start <= end)",
-						"xpath": "not(exists(f:start)) or not(exists(f:end)) or (f:start/@value <= f:end/@value)"
+						
 					}
 				],
 				"isSummary": true,
@@ -2980,14 +2980,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ref-1",
 						"severity": "error",
 						"human": "SHALL have a contained resource if a local reference is provided",
 						"expression": "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
-						"xpath": "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+						
 					}
 				],
 				"mapping": [
@@ -3036,7 +3036,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -3081,7 +3081,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -3133,7 +3133,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -3184,14 +3184,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ext-1",
 						"severity": "error",
 						"human": "Must have either extensions or value[x], not both",
 						"expression": "extension.exists() != value.exists()",
-						"xpath": "exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"
+						
 					}
 				],
 				"mapping": [
@@ -3244,14 +3244,14 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					},
 					{
 						"key": "ref-1",
 						"severity": "error",
 						"human": "SHALL have a contained resource if a local reference is provided",
 						"expression": "reference.startsWith('#').not() or (reference.substring(1).trace('url') in %resource.contained.id.trace('ids'))",
-						"xpath": "not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])"
+						
 					}
 				],
 				"isSummary": true,
@@ -3300,7 +3300,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,
@@ -3346,7 +3346,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"mapping": [
@@ -3391,7 +3391,7 @@
 						"severity": "error",
 						"human": "All FHIR elements must have a @value or children",
 						"expression": "hasValue() | (children().count() > id.count())",
-						"xpath": "@value|f:*|h:div"
+						
 					}
 				],
 				"isSummary": true,

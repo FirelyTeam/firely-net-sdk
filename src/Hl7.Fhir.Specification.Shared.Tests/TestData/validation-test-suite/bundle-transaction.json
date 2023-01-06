@@ -13,7 +13,7 @@
         "resourceType": "SearchParameter",
         "code": "url",
         "status": "active",
-        "xpath": "f:StructureDefinition/f:url",
+        
         "type": "uri",
         "expression": "StructureDefinition.url",
         "name": "url",

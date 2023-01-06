@@ -28,7 +28,7 @@
             "severity": "error",
             "human": "If there is no component or related element then either a value[x] or a data absent reason must be present",
             "expression": "(component.empty() and related.empty()) implies (dataAbsentReason or value)",
-            "xpath": "exists(f:component) or exists(f:related) or exists(f:*[starts-with(local-name(.), 'value')]) or exists(f:dataAbsentReason)"
+            
           }
         ]
       },
