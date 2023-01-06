@@ -740,10 +740,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return;
                 }
 
-                var profileRef = ProfileReference.Parse(diffProfile);
-                var result = profileRef.IsComplex
+                var profileRef = CanonicalUri.Parse(diffProfile);
+                var result = profileRef.HasAnchor
                     // Match on element name (for complex extension elements)
-                    ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.ElementName)
+                    ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.Anchor)
                     // Match on type profile(s)
                     : snapProfile.SequenceEqual(diffProfile);
 

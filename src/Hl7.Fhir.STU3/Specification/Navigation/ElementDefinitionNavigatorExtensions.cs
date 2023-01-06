@@ -9,6 +9,7 @@
 #nullable enable
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 using System;
 
 namespace Hl7.Fhir.Specification.Navigation
@@ -44,13 +45,13 @@ namespace Hl7.Fhir.Specification.Navigation
             var reference = sourceNavigator.Current.ContentReference;
             if (reference is null) return false;
 
-            var profileRef = ProfileReference.Parse(reference);
+            var profileRef = CanonicalUri.Parse(reference);
 
-            if (profileRef.IsAbsolute && profileRef.CanonicalUrl != sourceNavigator.StructureDefinition.Url)
+            if (profileRef.IsAbsolute && profileRef.Uri != sourceNavigator.StructureDefinition.Url)
             {
                 // an external reference (e.g. http://hl7.org/fhir/StructureDefinition/Questionnaire#Questionnaire.item)
 
-                var profile = resolver(profileRef.CanonicalUrl!);
+                var profile = resolver(profileRef.Uri!);
                 if (profile is null) return false;
                 targetNavigator = ElementDefinitionNavigator.ForSnapshot(profile);
             }
@@ -60,7 +61,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 targetNavigator = sourceNavigator.ShallowCopy();
             }
 
-            return targetNavigator.JumpToNameReference("#" + profileRef.ElementName);
+            return targetNavigator.JumpToNameReference("#" + profileRef.Anchor);
         }
 
     }

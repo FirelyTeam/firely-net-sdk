@@ -528,9 +528,9 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var sourceNav = ElementDefinitionNavigator.ForSnapshot(coreStructure);
 
-                var profileRef = ProfileReference.Parse(defn.ContentReference);
+                var profileRef = CanonicalUri.Parse(defn.ContentReference);
 
-                if (!sourceNav.JumpToNameReference("#" + profileRef.ElementName))
+                if (!sourceNav.JumpToNameReference("#" + profileRef.Anchor))
                 {
                     addIssueInvalidNameReference(defn);
                     return false;
@@ -1074,10 +1074,10 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // - First inherit child element constraints from extension definition, element with name "certainty"
                 // - Then override inherited constraints by explicit element constraints in profile differential
 
-                var profileRef = ProfileReference.Parse(primaryDiffTypeProfile);
-                if (profileRef.IsComplex)
+                var profileRef = CanonicalUri.Parse(primaryDiffTypeProfile);
+                if (profileRef.HasAnchor)
                 {
-                    primaryDiffTypeProfile = profileRef.CanonicalUrl;
+                    primaryDiffTypeProfile = profileRef.Uri;
                 }
 
                 typeStructure = await AsyncResolver.FindStructureDefinitionAsync(primaryDiffTypeProfile).ConfigureAwait(false);
@@ -1127,7 +1127,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             // Clone and rebase
                             var rebasePath = diff.Path;
 
-                            if (profileRef.IsComplex)
+                            if (profileRef.HasAnchor)
                             {
                                 rebasePath = ElementDefinitionNavigator.GetParentPath(rebasePath);
                             }
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                             rebasedTypeSnapshot.Rebase(rebasePath);
 
                             var typeNav = new ElementDefinitionNavigator(rebasedTypeSnapshot.Element, typeStructure);
-                            if (!profileRef.IsComplex)
+                            if (!profileRef.HasAnchor)
                             {
                                 typeNav.MoveToFirstChild();
 
@@ -1152,9 +1152,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                             }
                             else
                             {
-                                if (!typeNav.JumpToNameReference(profileRef.ElementName))
+                                if (!typeNav.JumpToNameReference(profileRef.Anchor))
                                 {
-                                    addIssueInvalidProfileNameReference(snap.Current, profileRef.ElementName, primaryDiffTypeProfile);
+                                    addIssueInvalidProfileNameReference(snap.Current, profileRef.Anchor, primaryDiffTypeProfile);
                                     return false;
                                 }
                             }
