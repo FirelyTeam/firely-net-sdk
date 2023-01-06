@@ -39,7 +39,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -71,7 +71,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -104,7 +104,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -141,7 +141,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -267,7 +267,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="required" />
@@ -303,7 +303,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -336,7 +336,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -370,7 +370,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="required" />

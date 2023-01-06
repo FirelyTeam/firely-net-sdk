@@ -81,19 +81,19 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="nl-core-humanname-1" />
         <severity value="error" />
         <human value="if you specify a prefix for an own name then an own name is also expected" />
-        <xpath value="not(f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-own-prefix']) or f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-own-name']" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="nl-core-humanname-2" />
         <severity value="error" />
         <human value="if you specify a voorvoegsel for a partner name then a partner name is also expected" />
-        <xpath value="not(f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-partners-prefix']) or f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-partners-name']" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -144,7 +144,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -183,7 +183,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -221,7 +221,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -256,7 +256,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -306,7 +306,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -346,7 +346,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -389,7 +389,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -428,7 +428,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -466,7 +466,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -504,7 +504,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -542,7 +542,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -580,7 +580,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -642,7 +642,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -693,7 +693,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -732,7 +732,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -770,7 +770,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -828,7 +828,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -871,7 +871,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -911,7 +911,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -920,7 +920,7 @@
         <key value="per-1" />
         <severity value="error" />
         <human value="If present, start SHALL have a lower value than end" />
-        <xpath value="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -971,7 +971,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1003,7 +1003,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1038,7 +1038,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -1079,7 +1079,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -1136,13 +1136,13 @@
         <key value="nl-core-humanname-1" />
         <severity value="error" />
         <human value="if you specify a prefix for an own name then an own name is also expected" />
-        <xpath value="not(f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-own-prefix']) or f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-own-name']" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="nl-core-humanname-2" />
         <severity value="error" />
         <human value="if you specify a voorvoegsel for a partner name then a partner name is also expected" />
-        <xpath value="not(f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-partners-prefix']) or f:extension[@url='http://hl7.org/fhir/StructureDefinition/humanname-partners-name']" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="zib-name" />

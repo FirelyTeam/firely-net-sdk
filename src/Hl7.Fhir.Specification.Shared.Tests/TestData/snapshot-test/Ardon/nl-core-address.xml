@@ -72,7 +72,7 @@
         <requirements value="This constraint checks conformance against the Dutch BRP constraints on address parts. However: when you only send postalCode + houseNumber which is enough for certain cases this may still be a valid address" />
         <severity value="error" />
         <human value="Address.streetName in an official address SHALL have a value if one of houseNumber|buildingNumberSuffix|additionalLocator has a value" />
-        <xpath value="not(.[f:extension[@url='http://fhir.nl/fhir/StructureDefinition/nl-core-address-official'][f:valueBoolean/@value='true']][f:line[empty(f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName'])][f:extension[@url=('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator')]]])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="zib-address" />
@@ -285,7 +285,7 @@
         <key value="nl-postal-code-pattern" />
         <severity value="error" />
         <human value="Dutch postal code pattern 'nnnnAA'" />
-        <xpath value="not(../f:country[lower-case(@value)=('nl','nld','nederland')]) or matches(@value,'^\d{4}[A-Z]{2}$')" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="zib-address" />

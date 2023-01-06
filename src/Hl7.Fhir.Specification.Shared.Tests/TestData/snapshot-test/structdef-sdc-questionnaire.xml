@@ -58,35 +58,35 @@
         <severity value="error" />
         <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources" />
         <expression value="contained.contained.empty()" />
-        <xpath value="not(parent::f:contained and f:contained)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="dom-1" />
         <severity value="error" />
         <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative" />
         <expression value="contained.text.empty()" />
-        <xpath value="not(parent::f:contained and f:text)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="dom-4" />
         <severity value="error" />
         <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated" />
         <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()" />
-        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="dom-3" />
         <severity value="error" />
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource" />
         <expression value="contained.where(('#'+id in %resource.descendants().reference).not()).empty()" />
-        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-2" />
         <severity value="error" />
         <human value="The link ids for groups and questions must be unique within the questionnaire" />
         <expression value="descendants().linkId.isDistinct()" />
-        <xpath value="count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isSummary value="false" />
@@ -277,14 +277,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -336,14 +336,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -375,14 +375,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -410,14 +410,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -780,14 +780,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -819,14 +819,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -924,56 +924,56 @@
         <severity value="error" />
         <human value="Read-only can't be specified for 'display' items" />
         <expression value="type!='display' or readOnly.empty()" />
-        <xpath value="not(f:type/@value='display' and f:readOnly)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-8" />
         <severity value="error" />
         <human value="Default values can't be specified for groups or display items" />
         <expression value="(type!='group' and type!='display') or initial.empty()" />
-        <xpath value="not(f:type/@value=('group', 'display') and f:*[starts-with(local-name(.), 'initial')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-6" />
         <severity value="error" />
         <human value="Required and repeat aren't permitted for display items" />
         <expression value="type!='display' or (required.empty() and repeats.empty())" />
-        <xpath value="not(f:type/@value='display' and (f:required or f:repeats))" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-5" />
         <severity value="error" />
         <human value="Only 'choice' items can have options" />
         <expression value="(type ='choice' or type = 'open-choice') or (options.empty() and option.empty())" />
-        <xpath value="f:type/@value=('choice','open-choice') or not(f:option or f:options)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-4" />
         <severity value="error" />
         <human value="A question cannot have both option and options" />
         <expression value="option.empty() or options.empty()" />
-        <xpath value="not(f:options and f:option)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-3" />
         <severity value="error" />
         <human value="Display items cannot have a 'concept' asserted" />
         <expression value="type!='display' or concept.empty()" />
-        <xpath value="not(f:type/@value='display' and f:concept)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-10" />
         <severity value="error" />
         <human value="Maximum length can only be declared for simple question types" />
         <expression value="(type in ('boolean' | 'decimal' | 'integer' | 'string' | 'text' | 'url')) or maxLength.empty()" />
-        <xpath value="f:type/@value=('boolean', 'decimal', 'integer', 'open-choice', 'string', 'text', 'url') or not(f:maxLength)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="que-1" />
         <severity value="error" />
         <human value="Group items must have nested items, display items cannot have nested items" />
         <expression value="(type='group' implies item.empty().not()) and (type.trace('type')='display' implies item.trace('item').empty())" />
-        <xpath value="not((f:type/@value='group' and not(f:item)) or (f:type/@value='display' and f:item))" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isSummary value="false" />
@@ -1051,28 +1051,28 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-3" />
         <severity value="error" />
         <human value="minOccurs can't exist for display items" />
         <expression value="$parent.type!='display'" />
-        <xpath value="not(parent::*/f:type/@value='display')" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-1" />
         <severity value="error" />
         <human value="minOccurs can't be more than one if required is false" />
         <expression value="valueInteger = 0 or $parent.required" />
-        <xpath value="f:valueInteger/@value=0 or parent::*/f:required/@value=true()" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1104,28 +1104,28 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-4" />
         <severity value="error" />
         <human value="maxOccurs can't exist for display items" />
         <expression value="$parent.type!='display'" />
-        <xpath value="not(parent::*/f:type/@value='display')" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-2" />
         <severity value="error" />
         <human value="maxOccurs can't be more than one if repeats is false" />
         <expression value="valueInteger &lt;= 1 or $parent.repeats" />
-        <xpath value="f:valueInteger/@value&lt;=1 or parent::*/f:repeats/@value=true()" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1157,14 +1157,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -1196,14 +1196,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1235,14 +1235,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1270,14 +1270,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1305,21 +1305,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-6" />
         <severity value="error" />
         <human value="choiceOrientation can only be present on elements of type 'choice' or 'open-choice'" />
         <expression value="$parent.type='choice' or $parent.type='open-choice'" />
-        <xpath value="parent::*/f:type/@value=('choice', 'open-choice')" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -1347,14 +1347,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1386,14 +1386,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1425,14 +1425,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1464,14 +1464,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1503,14 +1503,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1542,14 +1542,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1581,14 +1581,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1616,14 +1616,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -1651,21 +1651,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-16" />
         <severity value="error" />
         <human value="Lookup Questionnaire can only be specified for questions with a type of 'integer' or 'decimal'" />
         <expression value="$parent.type='integer' or $parent.type='decimal'" />
-        <xpath value="parent::*/f:type/@value=('integer', 'decimal')" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1693,21 +1693,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-9" />
         <severity value="error" />
         <human value="Data Element references can't be specified for 'display' items" />
         <expression value="$parent.type!='display'" />
-        <xpath value="not(parent::*/f:type/@value='display')" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1739,21 +1739,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-10" />
         <severity value="error" />
         <human value="Allowed resource can only be specified for items of type 'reference'" />
         <expression value="$parent.type='reference'" />
-        <xpath value="parent::*/f:type/@value='reference'" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1785,21 +1785,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-17" />
         <severity value="error" />
         <human value="Allowed profile can only be specified for items of type 'reference'" />
         <expression value="$parent.type='reference'" />
-        <xpath value="parent::*/f:type/@value='reference'" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -1827,21 +1827,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-13" />
         <severity value="error" />
         <human value="Allowed reference filter can only be specified for items of type 'reference'" />
         <expression value="$parent.type='reference'" />
-        <xpath value="parent::*/f:type/@value='reference'" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -1869,21 +1869,21 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="inv-11" />
         <severity value="error" />
         <human value="Display category can only be specified for items of type display" />
         <expression value="$parent.type='display'" />
-        <xpath value="parent::*/f:type/@value='display'" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />
@@ -1915,14 +1915,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -2098,14 +2098,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -2137,14 +2137,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -2254,14 +2254,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -2293,14 +2293,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="false" />
       <isModifier value="false" />
@@ -2377,7 +2377,7 @@
         <severity value="error" />
         <human value="enableWhen must contain either an 'answer' or an 'answered' element" />
         <expression value="hasAnswer.exists() xor answer.exists()" />
-        <xpath value="count(*[starts-with(local-name(.), 'answer')]|answered) = 1" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="true" />
@@ -2780,14 +2780,14 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mustSupport value="true" />
       <isModifier value="false" />

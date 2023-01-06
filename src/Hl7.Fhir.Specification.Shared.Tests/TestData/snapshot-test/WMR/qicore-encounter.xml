@@ -668,7 +668,7 @@
         <severity value="error" />
         <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources" />
         <expression value="contained.contained.empty()" />
-        <xpath value="not(parent::f:contained and f:contained)" />
+        <!-- removed xpath -->
         <source value="DomainResource" />
       </constraint>
       <constraint>
@@ -676,7 +676,7 @@
         <severity value="error" />
         <human value="If the resource is contained in another resource, it SHALL NOT contain any narrative" />
         <expression value="contained.text.empty()" />
-        <xpath value="not(parent::f:contained and f:text)" />
+        <!-- removed xpath -->
         <source value="DomainResource" />
       </constraint>
       <constraint>
@@ -684,7 +684,7 @@
         <severity value="error" />
         <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated" />
         <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()" />
-        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))" />
+        <!-- removed xpath -->
         <source value="DomainResource" />
       </constraint>
       <constraint>
@@ -692,7 +692,7 @@
         <severity value="error" />
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource" />
         <expression value="contained.where(('#'+id in %resource.descendants().reference).not()).empty()" />
-        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" />
+        <!-- removed xpath -->
         <source value="DomainResource" />
       </constraint>
       <mustSupport value="false" />
@@ -1435,7 +1435,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <constraint>
@@ -1443,7 +1443,7 @@
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
         <source value="Extension" />
       </constraint>
       <mustSupport value="false" />
@@ -1566,7 +1566,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <mapping>
@@ -1746,7 +1746,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <mapping>
@@ -2047,7 +2047,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <mustSupport value="false" />
@@ -2367,7 +2367,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <mustSupport value="true" />
@@ -2570,7 +2570,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <mustSupport value="false" />
@@ -2930,7 +2930,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="hasValue() | (children().count() &gt; id.count())" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <mustSupport value="false" />

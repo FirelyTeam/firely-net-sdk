@@ -64,7 +64,7 @@
         <human
                value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
-        <xpath value="not(parent::f:contained and f:contained)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -103,7 +103,7 @@
         <severity value="warning"/>
         <human value="A resource should have narrative for robust management"/>
         <expression value="text.div.exists()"/>
-        <xpath value="exists(f:text/h:div)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -112,7 +112,7 @@
         <human
                value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
         <expression value="contained.meta.security.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <isModifier value="false"/>
@@ -2536,7 +2536,7 @@ Work addresses are not typically entered in this property as they are usually ro
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2768,7 +2768,7 @@ Modifier extensions SHALL NOT change the meaning of any elements on Resource or 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>

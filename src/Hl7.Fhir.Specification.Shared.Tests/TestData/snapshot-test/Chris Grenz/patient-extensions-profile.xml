@@ -65,7 +65,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="contained.contained.empty()" />
         -->
-        <xpath value="not(parent::f:contained and f:contained)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="dom-1" />
@@ -74,7 +74,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="contained.text.empty()" />
         -->
-        <xpath value="not(parent::f:contained and f:text)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="dom-4" />
@@ -83,7 +83,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()" />
         -->
-        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="dom-3" />
@@ -92,7 +92,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="contained.where((&#39;#&#39;+id in %resource.descendents().reference).not()).empty()" />
         -->
-        <xpath value="not(exists(for $id in f:contained/*/@id return $id[not(ancestor::f:contained/parent::*/descendant::f:reference/@value=concat('#', $id))]))" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -158,7 +158,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -193,7 +193,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -251,7 +251,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -320,7 +320,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -329,7 +329,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -393,7 +393,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -402,7 +402,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -445,7 +445,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -589,7 +589,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -626,7 +626,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -635,7 +635,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -679,7 +679,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -688,7 +688,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -754,7 +754,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -763,7 +763,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -808,7 +808,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -842,7 +842,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -900,7 +900,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -909,7 +909,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -954,7 +954,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1016,7 +1016,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -1025,7 +1025,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1097,7 +1097,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -1106,7 +1106,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1153,7 +1153,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1301,7 +1301,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1340,7 +1340,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -1349,7 +1349,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1422,7 +1422,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -1431,7 +1431,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1474,7 +1474,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -1483,7 +1483,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -1527,7 +1527,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -1536,7 +1536,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <mapping>
@@ -1579,7 +1579,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -1644,7 +1644,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -1689,7 +1689,7 @@
         <!-- [WMR 20160810] Fixed
 				<expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -1749,7 +1749,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="value.empty() or system.exists()" />
         -->
-        <xpath value="not(exists(f:value)) or exists(f:system)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -1758,7 +1758,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -1818,7 +1818,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <binding>
@@ -1867,7 +1867,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -1918,7 +1918,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -1963,7 +1963,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -2023,7 +2023,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="required" />
@@ -2090,7 +2090,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -2133,7 +2133,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="data.empty() or contentType.exists()" />
         -->
-        <xpath value="not(exists(f:data)) or exists(f:contentType)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -2142,7 +2142,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -2200,7 +2200,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="name.exists() or telecom.exists() or address.exists() or organization.exists()" />
         -->
-        <xpath value="exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -2209,7 +2209,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -2275,7 +2275,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -2284,7 +2284,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -2329,7 +2329,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -2338,7 +2338,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -2383,7 +2383,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="extensible" />
@@ -2447,7 +2447,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -2506,7 +2506,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="value.empty() or system.exists()" />
         -->
-        <xpath value="not(exists(f:value)) or exists(f:system)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -2515,7 +2515,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -2574,7 +2574,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -2633,7 +2633,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="required" />
@@ -2685,7 +2685,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))" />
         -->
-        <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -2694,7 +2694,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -2744,7 +2744,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="start.empty() or end.empty() or (start &lt;= end)" />
         -->
-        <xpath value="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -2753,7 +2753,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -2807,7 +2807,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -2875,7 +2875,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -2884,7 +2884,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -2929,7 +2929,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -2938,7 +2938,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -2983,7 +2983,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <binding>
@@ -3048,7 +3048,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <binding>
@@ -3113,7 +3113,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <binding>
@@ -3178,7 +3178,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -3244,7 +3244,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -3253,7 +3253,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -3298,7 +3298,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -3307,7 +3307,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -3352,7 +3352,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="extensible" />
@@ -3416,7 +3416,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -3463,7 +3463,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))" />
         -->
-        <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -3472,7 +3472,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -3520,7 +3520,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -3588,7 +3588,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -3597,7 +3597,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -3642,7 +3642,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -3651,7 +3651,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -3706,7 +3706,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))" />
         -->
-        <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -3715,7 +3715,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -3767,7 +3767,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -3824,7 +3824,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="reference.startsWith(&#39;#&#39;).not() or (reference.substring(1).trace(&#39;url&#39;) in %resource.contained.id.trace(&#39;ids&#39;))" />
         -->
-        <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
@@ -3833,7 +3833,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />

@@ -328,7 +328,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -336,7 +336,7 @@
         <severity value="error"/>
         <human value="A parameter must have one and only one of (value, resource, part)"/>
         <expression value="(part.exists() and value.empty() and resource.empty()) or (part.empty() and (value.exists() xor resource.exists()))"/>
-        <xpath value="(exists(f:resource) or exists(f:part) or exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:resource))) and not(exists(f:*[starts-with(local-name(.), &#39;value&#39;)])) and exists(f:part))) and not(exists(f:part) and exists(f:resource))"/>
+        <!-- removed xpath -->
         <source value="Parameters.parameter"/>
       </constraint>
       <isModifier value="false"/>

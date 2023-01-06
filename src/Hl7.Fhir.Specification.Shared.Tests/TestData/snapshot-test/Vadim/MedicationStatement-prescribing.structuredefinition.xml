@@ -28,7 +28,7 @@
         <key value="ms-prescribing" />
         <severity value="error" />
         <human value="Reason not taken must be filled if wasNotTaken is true" />
-        <xpath value="f:wasNotTaken/@value=false() or exists(f:wasNotTaken)" />
+        <!-- removed xpath -->
       </constraint>
     </element>
     <element>
@@ -210,7 +210,7 @@
         <key value="ms-prescribing-1" />
         <severity value="error" />
         <human value="Dosage must include a freetext if no structured dosage is used" />
-        <xpath value="not(exists(f:text)) or not(exists(f:timing))" />
+        <!-- removed xpath -->
       </constraint>
     </element>
     <element>

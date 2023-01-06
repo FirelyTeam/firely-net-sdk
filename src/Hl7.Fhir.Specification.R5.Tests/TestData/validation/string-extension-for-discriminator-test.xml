@@ -27,7 +27,7 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])"/>
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim"/>

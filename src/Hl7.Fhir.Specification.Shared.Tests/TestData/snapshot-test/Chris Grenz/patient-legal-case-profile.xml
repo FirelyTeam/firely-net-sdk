@@ -46,7 +46,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -55,7 +55,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -115,7 +115,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ext-1" />
@@ -124,7 +124,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="extension.exists() != value.exists()" />
         -->
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -168,7 +168,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -201,7 +201,7 @@
         <!-- [WMR 20160810] Fixed
         <expression value="children().count() &gt; id.count()" />
         -->
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />

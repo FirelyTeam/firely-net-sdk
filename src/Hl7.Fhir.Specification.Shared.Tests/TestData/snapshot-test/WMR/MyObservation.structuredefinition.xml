@@ -39,7 +39,7 @@
         <key value="obs-6" />
         <severity value="error" />
         <human value="dataAbsentReason SHALL only be present if Observation.value[x] is not present" />
-        <xpath value="not(exists(f:dataAbsentReason)) or (not(exists(*[starts-with(local-name(.), 'value')])))" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-expression">
@@ -48,7 +48,7 @@
         <key value="obs-7" />
         <severity value="error" />
         <human value="Component code SHALL not be same as observation code" />
-        <xpath value="not(exists(f:component/f:code)) or count(for $coding in f:code/f:coding return parent::*/f:component/f:code/f:coding[f:code/@value=$coding/f:code/@value and f:system/@value=$coding/f:system/@value])=0" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />
@@ -842,7 +842,7 @@
         <key value="obs-3" />
         <severity value="error" />
         <human value="Must have at least a low or a high or text" />
-        <xpath value="(exists(f:low) or exists(f:high)or exists(f:text))" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="v2" />

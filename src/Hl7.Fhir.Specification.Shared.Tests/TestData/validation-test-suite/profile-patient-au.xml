@@ -70,7 +70,7 @@
         <human
                value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
-        <xpath value="not(parent::f:contained and f:contained)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -79,7 +79,7 @@
         <human
                value="If the resource is contained in another resource, it SHALL NOT contain any narrative"/>
         <expression value="contained.text.empty()"/>
-        <xpath value="not(parent::f:contained and f:text)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -319,7 +319,7 @@ This element is labelled as a modifier because the implicit rules may provide ad
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -356,7 +356,7 @@ This element is labelled as a modifier because the implicit rules may provide ad
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -393,7 +393,7 @@ This element is labelled as a modifier because the implicit rules may provide ad
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -430,7 +430,7 @@ This element is labelled as a modifier because the implicit rules may provide ad
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -6346,7 +6346,7 @@ This element is labeled as a modifier because when the patient record is marked 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -6383,7 +6383,7 @@ This element is labeled as a modifier because when the patient record is marked 
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -6611,7 +6611,7 @@ This element is labeled as a modifier because once a patient is marked as deceas
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -6830,7 +6830,7 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -7184,7 +7184,7 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="true"/>
@@ -7419,7 +7419,7 @@ If a bool value was provided for this tripplets examle, then all 3 patient recor
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <mapping>
@@ -7672,7 +7672,7 @@ This element is labelled as a modifier because it may not be the main Patient re
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() | (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="true"/>
