@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Tests
             this.selector = selector;
         }
 
-        public bool Equals(T? x, T? y)
+        public bool Equals(T x, T y)
         {
             if (x == null || y == null) return false;
 
@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Tests
 
         public int GetHashCode([DisallowNull] T obj)
         {
-            object? value = selector(obj);
+            object value = selector(obj);
 
             if (value == null) return obj.GetHashCode();
 
