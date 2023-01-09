@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,12 +12,12 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Called just before the Http call is done
         /// </summary>
-        public event EventHandler<BeforeHttpRequestEventArgs> OnBeforeRequest;
+        public event EventHandler<BeforeHttpRequestEventArgs>? OnBeforeRequest;
 
         /// <summary>
         /// Called just after the response was received
         /// </summary>
-        public event EventHandler<AfterHttpResponseEventArgs> OnAfterResponse;
+        public event EventHandler<AfterHttpResponseEventArgs>? OnAfterResponse;
 
         /// <summary>
         /// Inspect or modify the HttpRequestMessage just before the FhirClient issues a call to the server
@@ -42,12 +44,25 @@ namespace Hl7.Fhir.Rest
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage message, CancellationToken cancellationToken)
         {
-            var requestBody = message.Content != null ? await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false) : new byte[0];
+            var requestBody = message.Content is not null ?
+#if NET6_0_OR_GREATER
+                await message.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false)
+#else
+                await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false)
+#endif
+                : Array.Empty<byte>();
+
             BeforeRequest(message, requestBody);
 
             var response = await base.SendAsync(message, cancellationToken).ConfigureAwait(false);
 
-            AfterResponse(response, (await response.Content?.ReadAsByteArrayAsync() ?? new byte[0]));
+#if NET6_0_OR_GREATER
+            var body =  await response.Content.ReadAsByteArrayAsync(cancellationToken);
+#else
+            var body = await response.Content.ReadAsByteArrayAsync();
+#endif
+
+            AfterResponse(response, body);
 
             return response;
         }
@@ -77,3 +92,5 @@ namespace Hl7.Fhir.Rest
         public byte[] Body { get; internal set; }
     }
 }
+
+#nullable restore

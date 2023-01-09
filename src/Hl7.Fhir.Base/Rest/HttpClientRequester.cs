@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public class HttpClientRequester : IClientRequester, IDisposable
+    internal class HttpClientRequester : IDisposable
     {
         public FhirClientSettings Settings { get; set; }
         public Uri BaseUrl { get; private set; }
         public HttpClient Client { get; private set; }
-        private bool _disposeHttpClient = true;
+        private readonly bool _disposeHttpClient = true;
 
         public HttpClientRequester(Uri baseUrl, FhirClientSettings settings, HttpMessageHandler messageHandler, bool disposeHandler = true)
         {
@@ -40,18 +40,10 @@ namespace Hl7.Fhir.Rest
             _disposeHttpClient = false;
         }
 
-        public EntryResponse LastResult { get; private set; }
-
-        public EntryResponse Execute(EntryRequest interaction)
-        {
-            return ExecuteAsync(interaction).WaitResult();
-        }
-
         public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
-            bool compressRequestBody = Settings.CompressRequestBody;
-
+          
             using var requestMessage = interaction.ToHttpRequestMessage(BaseUrl, Settings);
             if (Settings.PreferCompressedResponses)
             {
@@ -70,8 +62,7 @@ namespace Hl7.Fhir.Rest
             {
                 var body = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
 
-                LastResult = response.ToEntryResponse(body);
-                return LastResult;
+                return response.ToEntryResponse(body);
             }
             catch (AggregateException ae)
             {
@@ -80,18 +71,18 @@ namespace Hl7.Fhir.Rest
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 if (disposing && _disposeHttpClient)
                 {
                     // Only dispose the httpclient if was created here
                     this.Client.Dispose();
                 }
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 

@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Serialization;
+﻿#nullable enable
+
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 
@@ -11,6 +13,12 @@ namespace Hl7.Fhir.Rest
         /// issuing requests to the server.
         /// </summary>
         public bool VerifyFhirVersion;
+
+        /// <summary>
+        /// Normally, the FhirClient will derive the FHIR version (e.g. 4.0.3) from the metadata of the assembly. Use this
+        /// member to override this version.
+        /// </summary>
+        public string? ExplicitFhirVersion;
 
         /// <summary>
         /// The preferred format of the content to be used when communicating with the FHIR server (XML or JSON)
@@ -59,9 +67,17 @@ namespace Hl7.Fhir.Rest
         /// Compress any Request bodies 
         /// (warning, if a server does not handle compressed requests you will get a 415 response)
         /// </summary>
+        [Obsolete("Compressing bodies is no longer supported, and this setting is ignored.")]
         public bool CompressRequestBody;
 
-        public ParserSettings ParserSettings = ParserSettings.CreateDefault();
+        /// <summary>
+        /// Can be used to specifically override the serialization behaviour of the FhirClient to turn
+        /// POCO's into FHIR xml/json data and vice versa. If not set, the FhirClient will use the default
+        /// behaviour which is  compatible with the pre-5.0 SDK.
+        /// </summary>
+        //public IFhirSerializationEngine? SerializationEngine;
+
+        public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
         public FhirClientSettings() { }
 
@@ -80,7 +96,9 @@ namespace Hl7.Fhir.Rest
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             other.CompressRequestBody = CompressRequestBody;
+#pragma warning restore CS0618 // Type or member is obsolete
             other.ParserSettings = ParserSettings;
             other.PreferCompressedResponses = PreferCompressedResponses;
             other.PreferredFormat = PreferredFormat;
@@ -90,13 +108,15 @@ namespace Hl7.Fhir.Rest
             other.UseFhirVersionInAcceptHeader = UseFhirVersionInAcceptHeader;
             other.VerifyFhirVersion = VerifyFhirVersion;
             other.PreferredParameterHandling = PreferredParameterHandling;
+            //other.SerializationEngine = SerializationEngine;
         }
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> object that is a copy of the current instance.</summary>
-        public FhirClientSettings Clone() => new FhirClientSettings(this);
+        public FhirClientSettings Clone() => new(this);
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> instance with default property values.</summary>
-        public static FhirClientSettings CreateDefault() => new FhirClientSettings();
+        public static FhirClientSettings CreateDefault() => new();
     }
 }
 
+#nullable restore

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class EntryToTypedEntryExtensions
+    internal static class EntryToTypedEntryExtensions
     {
         /// <inheritdoc cref="ToTypedEntryResponseAsync(EntryResponse, IStructureDefinitionSummaryProvider)" />
         public static TypedEntryResponse ToTypedEntryResponse(this EntryResponse response, IStructureDefinitionSummaryProvider provider)
@@ -112,18 +112,6 @@ namespace Hl7.Fhir.Rest
             {
                 return null;
             }
-        }
-    }
-
-    public class UnsupportedBodyTypeException : Exception
-    {
-        public string BodyType { get; set; }
-
-        public string Body { get; set; }
-        public UnsupportedBodyTypeException(string message, string mimeType, string body) : base(message)
-        {
-            BodyType = mimeType;
-            Body = body;
         }
     }
 }

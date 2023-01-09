@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Rest;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System.Diagnostics;
 using Hl7.Fhir.Specification;
+using FluentAssertions;
 
-namespace Hl7.Fhir.Tests.Rest
+namespace Hl7.Fhir.Tests.Introspection
 {
     [TestClass]
     public class FhirClassMappingTests
@@ -67,20 +64,29 @@ namespace Hl7.Fhir.Tests.Rest
                 foreach (var testee in typesToTest)
                     createMapping(testee);
             sw.Stop();
-            Console.WriteLine($"No props: {sw.ElapsedMilliseconds/(float)numRepeats}ms");
+            Console.WriteLine($"No props: {sw.ElapsedMilliseconds / (float)numRepeats}ms");
 
             sw.Restart();
             for (int i = 0; i < numRepeats; i++)
                 foreach (var testee in typesToTest)
                     createMapping(testee, touchProps: true);
             sw.Stop();
-            Console.WriteLine($"With props: {sw.ElapsedMilliseconds/(float)numRepeats}ms");
+            Console.WriteLine($"With props: {sw.ElapsedMilliseconds / (float)numRepeats}ms");
 
             int createMapping(Type t, bool touchProps = false)
             {
                 ClassMapping.TryCreate(t, out var mapping);
                 return touchProps ? mapping.PropertyMappings.Count : -1;
             }
+        }
+
+        [TestMethod]
+        public void FindsCorrectFhirVersion()
+        {
+            var satellite = typeof(ModelInfo).Assembly;
+            IModelInfo mi = ModelInspector.ForAssembly(satellite);  // R5 is arbitrary here
+
+            mi.FhirVersion.Should().Be(ModelInfo.Version);
         }
     }
 }

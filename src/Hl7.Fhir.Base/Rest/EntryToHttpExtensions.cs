@@ -21,9 +21,6 @@ namespace Hl7.Fhir.Rest
     {
         public static HttpRequestMessage ToHttpRequestMessage(this EntryRequest entry, Uri baseUrl, FhirClientSettings settings)
         {
-
-            System.Diagnostics.Debug.WriteLine("{0}: {1}", entry.Method, entry.Url);
-
             if (entry.RequestBodyContent != null && !(entry.Method == HTTPVerb.POST || entry.Method == HTTPVerb.PUT || entry.Method == HTTPVerb.PATCH))
                 throw Error.InvalidOperation("Cannot have a body on an Http " + entry.Method.ToString());
 
@@ -41,7 +38,7 @@ namespace Hl7.Fhir.Rest
 
             var request = new HttpRequestMessage(getMethod(entry.Method), location.Uri);
 
-            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + entry.Agent);
+            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + entry.FhirVersion);
 
             if (!settings.UseFormatParameter && !string.IsNullOrEmpty(entry.Headers.Accept))
                 request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(entry.Headers.Accept));

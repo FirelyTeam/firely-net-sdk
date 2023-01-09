@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = inspector;
         }
 
-        private PocoBuilderSettings buildPocoBuilderSettings(ParserSettings ps) =>
+        internal PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
             new PocoBuilderSettings
             {
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
@@ -35,13 +35,13 @@ namespace Hl7.Fhir.Serialization
 #pragma warning restore CS0618 // Type or member is obsolete
             };
 
-        public Base Parse(ITypedElement element) => element.ToPoco(_inspector, buildPocoBuilderSettings(Settings));
+        public Base Parse(ITypedElement element) => element.ToPoco(_inspector, BuildPocoBuilderSettings(Settings));
 
-        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(_inspector, buildPocoBuilderSettings(Settings));
+        public T Parse<T>(ITypedElement element) where T : Base => element.ToPoco<T>(_inspector, BuildPocoBuilderSettings(Settings));
 
-        public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(_inspector, type, buildPocoBuilderSettings(Settings));
+        public Base Parse(ISourceNode node, Type type = null) => node.ToPoco(_inspector, type, BuildPocoBuilderSettings(Settings));
 
-        public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(_inspector, buildPocoBuilderSettings(Settings));
+        public T Parse<T>(ISourceNode node) where T : Base => node.ToPoco<T>(_inspector, BuildPocoBuilderSettings(Settings));
     }
 
 }

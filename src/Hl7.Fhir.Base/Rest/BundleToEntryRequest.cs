@@ -17,13 +17,13 @@ using Task = System.Threading.Tasks.Task;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class BundleToEntryRequest
+    internal static class BundleToEntryRequest
     {
         public static EntryRequest ToEntryRequest(this Bundle.EntryComponent entry, FhirClientSettings settings, ModelInspector modelInspector, string fhirVersion)
         {
             var result = new EntryRequest
             {
-                Agent = fhirVersion,
+                FhirVersion = fhirVersion,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Rest
         {
             var result = new EntryRequest
             {
-                Agent = fhirVersion,
+                FhirVersion = fhirVersion,
                 Method = bundleHttpVerbToRestHttpVerb(entry.Request.Method, entry.Annotation<InteractionType>()),
                 Type = entry.Annotation<InteractionType>(),
                 Url = entry.Request.Url,
@@ -136,14 +136,14 @@ namespace Hl7.Fhir.Rest
             }
             else if (searchUsingPost)
             {
-                List<KeyValuePair<string, string>> bodyParameters = new List<KeyValuePair<string, string>>();
+                var bodyParameters = new List<KeyValuePair<string, string>>();
                 foreach (Parameters.ParameterComponent parameter in ((Parameters)data).Parameter)
                 {
                     bodyParameters.Add(new KeyValuePair<string, string>(parameter.Name, parameter.Value.ToString()));
                 }
                 if (bodyParameters.Count > 0)
                 {
-                    FormUrlEncodedContent content = new FormUrlEncodedContent(bodyParameters);
+                    var content = new FormUrlEncodedContent(bodyParameters);
                     request.RequestBodyContent = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
                 }
                 else

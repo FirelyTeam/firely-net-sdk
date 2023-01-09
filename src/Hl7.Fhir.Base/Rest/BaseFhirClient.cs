@@ -1,50 +1,132 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿#nullable enable
+
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
 {
-    public abstract partial class BaseFhirClient : IDisposable
+    public partial class BaseFhirClient : IDisposable
     {
         private readonly ModelInspector _inspector;
-        private readonly string _fhirVersion;
+        //private readonly IFhirSerializationEngine _serializationEngine;
 
-        protected BaseFhirClient(Uri endpoint, ModelInspector inspector, string fhirVersion, FhirClientSettings settings = null)
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
+        /// <remarks>
+        /// If the messageHandler is provided then it must be disposed by the caller
+        /// </remarks>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="messageHandler"></param>
+        /// <param name="inspector"></param>
+        /// <param name="settings"></param>
+        public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
         {
+            _inspector = inspector;
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _inspector = inspector;
-            _fhirVersion = fhirVersion;
+            //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+
+            HttpClientRequester requester = new(Endpoint, Settings, messageHandler ?? makeDefaultHandler(), messageHandler == null);
+            Requester = requester;
+
+            // Expose default request headers to user.
+            RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
-        protected IClientRequester Requester { get; set; }
+        /// <summary>
+        /// Creates a new client using a default endpoint
+        /// If the endpoint does not end with a slash (/), it will be added.
+        /// </summary>
+        /// <remarks>
+        /// The httpClient must be disposed by the caller
+        /// </remarks>
+        /// <param name="endpoint">
+        /// The URL of the server to connect to.<br/>
+        /// If the trailing '/' is not present, then it will be appended automatically
+        /// </param>
+        /// <param name="settings"></param>
+        /// <param name="httpClient"></param>
+        /// <param name="inspector"></param>
+        public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)
+        {
+            _inspector = inspector;
+            Settings = (settings ?? new FhirClientSettings());
+            Endpoint = getValidatedEndpoint(endpoint);
+            //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+
+            HttpClientRequester requester = new(Endpoint, Settings, httpClient);
+            Requester = requester;
+
+            // Expose default request headers to user.
+            RequestHeaders = requester.Client.DefaultRequestHeaders;
+        }
+
+        private string fhirVersion => Settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ??
+                throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
+                $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
+
+        public BaseFhirClient(Uri endpoint, ModelInspector inspector, FhirClientSettings? settings = null) :
+            this(endpoint, (HttpMessageHandler?)null, inspector, settings)
+        {
+            // nothing
+        }
+
+        // Create our own and add decompression strategy in default handler.
+        private static HttpClientHandler makeDefaultHandler() =>
+            new()
+            {
+                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+            };
+
+        //internal static IFhirSerializationEngine GetDefaultElementModelSerializers(ModelInspector inspector, ParserSettings? settings = null)
+        //    => new FhirClientElementModelSerializationEngine(inspector, () => settings);
+
+        //private IFhirSerializationEngine getDefaultElementModelSerializers()
+        //    => new FhirClientElementModelSerializationEngine(_inspector, () => Settings.ParserSettings);
+
+        internal HttpClientRequester Requester { get; init; }
+
+        /// <summary>
+        /// Default request headers that can be modified to persist default headers to internal client.
+        /// </summary>
+        public virtual HttpRequestHeaders? RequestHeaders { get; protected set; }
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints. This will always have a trailing "/"
         /// </summary>
-        public Uri Endpoint
+        public virtual Uri Endpoint
         {
             get;
             protected set;
         }
 
-        public FhirClientSettings Settings = new FhirClientSettings();
+        public virtual FhirClientSettings Settings { get; set; }
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public Bundle.ResponseComponent LastResult { get; private set; }
+        public virtual Bundle.ResponseComponent? LastResult { get; private set; }
 
-        public byte[] LastBody => LastResult?.GetBody();
-        public string LastBodyAsText => LastResult?.GetBodyAsText();
-        public Resource LastBodyAsResource { get; private set; }
+        public virtual byte[]? LastBody => LastResult?.GetBody();
+        public virtual string? LastBodyAsText => LastResult?.GetBodyAsText();
+        public virtual Resource? LastBodyAsResource { get; private set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
         {
@@ -52,7 +134,7 @@ namespace Hl7.Fhir.Rest
 
             endpoint = new Uri(endpoint.OriginalString.EnsureEndsWith("/"));
 
-            if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
+            if (!endpoint.IsAbsoluteUri) throw new ArgumentException("Endpoint must be absolute", nameof(endpoint));
 
             return endpoint;
         }
@@ -75,11 +157,11 @@ namespace Hl7.Fhir.Rest
         /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
         /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
-        public Task<TResource> ReadAsync<TResource>(Uri location, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
+        public virtual Task<TResource?> ReadAsync<TResource>(Uri location, string? ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
-            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+            var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
             Bundle tx;
 
             if (!id.HasVersion)
@@ -94,6 +176,7 @@ namespace Hl7.Fhir.Rest
 
             return executeAsync<TResource>(tx, HttpStatusCode.OK);
         }
+
         /// <summary>
         /// Fetches a typed resource from a FHIR resource endpoint.
         /// </summary>
@@ -110,7 +193,7 @@ namespace Hl7.Fhir.Rest
         /// </returns>
         /// <remarks>Since ResourceLocation is a subclass of Uri, you may pass in ResourceLocations too.</remarks>
         /// <exception cref="FhirOperationException">This will occur if conditional request returns a status 304 and optionally an OperationOutcome</exception>
-        public TResource Read<TResource>(Uri location, string ifNoneMatch = null,
+        public virtual TResource? Read<TResource>(Uri location, string? ifNoneMatch = null,
             DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
             return ReadAsync<TResource>(location, ifNoneMatch, ifModifiedSince).WaitResult();
@@ -128,7 +211,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an absolute
         /// url, it must reference an address within the endpoint.</remarks>
-        public Task<TResource> ReadAsync<TResource>(string location, string ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
+        public virtual Task<TResource?> ReadAsync<TResource>(string location, string? ifNoneMatch = null, DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
             return ReadAsync<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), ifNoneMatch, ifModifiedSince);
         }
@@ -144,7 +227,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation will throw an exception
         /// if the resource has been deleted or does not exist. The specified may be relative or absolute, if it is an absolute
         /// url, it must reference an address within the endpoint.</remarks>
-        public TResource Read<TResource>(string location, string ifNoneMatch = null,
+        public virtual TResource? Read<TResource>(string location, string? ifNoneMatch = null,
             DateTimeOffset? ifModifiedSince = null) where TResource : Resource
         {
             return ReadAsync<TResource>(location, ifNoneMatch, ifModifiedSince).WaitResult();
@@ -162,12 +245,13 @@ namespace Hl7.Fhir.Rest
         /// <returns>A new instance of the resource, containing the most up-to-date data</returns>
         /// <remarks>This function will not overwrite the argument with new data, rather it will return a new instance
         /// which will have the newest data, leaving the argument intact.</remarks>
-        public Task<TResource> RefreshAsync<TResource>(TResource current) where TResource : Resource
+        public virtual Task<TResource?> RefreshAsync<TResource>(TResource current) where TResource : Resource
         {
             if (current == null) throw Error.ArgumentNull(nameof(current));
 
             return ReadAsync<TResource>(ResourceIdentity.Build(current.TypeName, current.Id));
         }
+
         /// <summary>
         /// Refreshes the data in the resource passed as an argument by re-reading it from the server
         /// </summary>
@@ -176,7 +260,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A new instance of the resource, containing the most up-to-date data</returns>
         /// <remarks>This function will not overwrite the argument with new data, rather it will return a new instance
         /// which will have the newest data, leaving the argument intact.</remarks>
-        public TResource Refresh<TResource>(TResource current) where TResource : Resource
+        public virtual TResource? Refresh<TResource>(TResource current) where TResource : Resource
         {
             return RefreshAsync<TResource>(current).WaitResult();
         }
@@ -195,7 +279,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the resource does not yet exist - and the server allows client-assigned id's - a new resource with the given id will be
         /// created.</remarks>
-        public Task<TResource> UpdateAsync<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
+        public virtual Task<TResource?> UpdateAsync<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Resource needs a non-null Id to send the update to");
@@ -207,8 +291,9 @@ namespace Hl7.Fhir.Rest
             else
                 upd.Update(resource.Id, resource);
 
-            return internalUpdateAsync<TResource>(resource, upd.ToBundle());
+            return internalUpdateAsync(resource, upd.ToBundle());
         }
+
         /// <summary>
         /// Update (or create) a resource
         /// </summary>
@@ -219,9 +304,9 @@ namespace Hl7.Fhir.Rest
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the resource does not yet exist - and the server allows client-assigned id's - a new resource with the given id will be
         /// created.</remarks>
-        public TResource Update<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
+        public virtual TResource? Update<TResource>(TResource resource, bool versionAware = false) where TResource : Resource
         {
-            return UpdateAsync<TResource>(resource, versionAware).WaitResult();
+            return UpdateAsync(resource, versionAware).WaitResult();
         }
 
         /// <summary>
@@ -234,7 +319,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>The body of the updated resource, unless ReturnFullResource is set to "false"</returns>
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the criteria passed in condition do not match a resource a new resource with a server assigned id will be created.</remarks>
-        public Task<TResource> UpdateAsync<TResource>(TResource resource, SearchParams condition, bool versionAware = false) where TResource : Resource
+        public virtual Task<TResource?> UpdateAsync<TResource>(TResource resource, SearchParams condition, bool versionAware = false) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
@@ -248,6 +333,7 @@ namespace Hl7.Fhir.Rest
 
             return internalUpdateAsync(resource, upd.ToBundle());
         }
+
         /// <summary>
         /// Conditionally update (or create) a resource
         /// </summary>
@@ -258,19 +344,21 @@ namespace Hl7.Fhir.Rest
         /// <returns>The body of the updated resource, unless ReturnFullResource is set to "false"</returns>
         /// <remarks>Throws an exception when the update failed, in particular when an update conflict is detected and the server returns a HTTP 409.
         /// If the criteria passed in condition do not match a resource a new resource with a server assigned id will be created.</remarks>
-        public TResource Update<TResource>(TResource resource, SearchParams condition, bool versionAware = false)
+        public virtual TResource? Update<TResource>(TResource resource, SearchParams condition, bool versionAware = false)
             where TResource : Resource
         {
             return UpdateAsync(resource, condition, versionAware).WaitResult();
         }
-        private Task<TResource> internalUpdateAsync<TResource>(TResource resource, Bundle tx) where TResource : Resource
+
+        private Task<TResource?> internalUpdateAsync<TResource>(TResource resource, Bundle tx) where TResource : Resource
         {
             resource.ResourceBase = Endpoint;
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
-        private TResource internalUpdate<TResource>(TResource resource, Bundle tx) where TResource : Resource
+
+        private TResource? internalUpdate<TResource>(TResource resource, Bundle tx) where TResource : Resource
         {
             return internalUpdateAsync(resource, tx).WaitResult();
         }
@@ -285,15 +373,16 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public async System.Threading.Tasks.Task DeleteAsync(Uri location)
+        public virtual async System.Threading.Tasks.Task DeleteAsync(Uri location)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
-            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+            var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
             var tx = new TransactionBuilder(Endpoint).Delete(id.ResourceType, id.Id).ToBundle();
 
             await executeAsync<Model.Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Delete a resource at the given endpoint.
         /// </summary>
@@ -301,10 +390,11 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public void Delete(Uri location)
+        public virtual void Delete(Uri location)
         {
             DeleteAsync(location).WaitNoResult();
         }
+
         /// <summary>
         /// Delete a resource at the given endpoint.
         /// </summary>
@@ -312,10 +402,11 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public System.Threading.Tasks.Task DeleteAsync(string location)
+        public virtual Task DeleteAsync(string location)
         {
             return DeleteAsync(new Uri(location, UriKind.Relative));
         }
+
         /// <summary>
         /// Delete a resource at the given endpoint.
         /// </summary>
@@ -323,7 +414,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>Throws an exception when the delete failed, though this might
         /// just mean the server returned 404 (the resource didn't exist before) or 410 (the resource was
         /// already deleted).</returns>
-        public void Delete(string location)
+        public virtual void Delete(string location)
         {
             DeleteAsync(location).WaitNoResult();
         }
@@ -333,18 +424,19 @@ namespace Hl7.Fhir.Rest
         /// Delete a resource
         /// </summary>
         /// <param name="resource">The resource to delete</param>
-        public async System.Threading.Tasks.Task DeleteAsync(Resource resource)
+        public virtual async Task DeleteAsync(Resource resource)
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (resource.Id == null) throw Error.Argument(nameof(resource), "Entry must have an id");
 
             await DeleteAsync(resource.ResourceIdentity(Endpoint).WithoutVersion()).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Delete a resource
         /// </summary>
         /// <param name="resource">The resource to delete</param>
-        public void Delete(Resource resource)
+        public virtual void Delete(Resource resource)
         {
             DeleteAsync(resource).WaitNoResult();
         }
@@ -354,7 +446,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="resourceType">The type of resource to delete</param>
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
-        public async System.Threading.Tasks.Task DeleteAsync(string resourceType, SearchParams condition)
+        public virtual async Task DeleteAsync(string resourceType, SearchParams condition)
         {
             if (resourceType == null) throw Error.ArgumentNull(nameof(resourceType));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
@@ -362,12 +454,13 @@ namespace Hl7.Fhir.Rest
             var tx = new TransactionBuilder(Endpoint).Delete(resourceType, condition).ToBundle();
             await executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }).ConfigureAwait(false);
         }
+
         /// <summary>
         /// Conditionally delete a resource
         /// </summary>
         /// <param name="resourceType">The type of resource to delete</param>
         /// <param name="condition">Criteria to use to match the resource to delete.</param>
-        public void Delete(string resourceType, SearchParams condition)
+        public virtual void Delete(string resourceType, SearchParams condition)
         {
             DeleteAsync(resourceType, condition).WaitNoResult();
         }
@@ -382,7 +475,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="resource">The resource instance to create</param>
         /// <returns>The resource as created on the server, or an exception if the create failed.</returns>
         /// <typeparam name="TResource">The type of resource to create</typeparam>
-        public Task<TResource> CreateAsync<TResource>(TResource resource) where TResource : Resource
+        public virtual Task<TResource?> CreateAsync<TResource>(TResource resource) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
@@ -390,13 +483,14 @@ namespace Hl7.Fhir.Rest
 
             return executeAsync<TResource>(tx, new[] { HttpStatusCode.Created, HttpStatusCode.OK });
         }
+
         /// <summary>
         /// Create a resource on a FHIR endpoint
         /// </summary>
         /// <param name="resource">The resource instance to create</param>
         /// <returns>The resource as created on the server, or an exception if the create failed.</returns>
         /// <typeparam name="TResource">The type of resource to create</typeparam>
-        public TResource Create<TResource>(TResource resource) where TResource : Resource
+        public virtual TResource? Create<TResource>(TResource resource) where TResource : Resource
         {
             return CreateAsync(resource).WaitResult();
         }
@@ -408,7 +502,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">The criteria</param>
         /// <returns>The resource as created on the server, or an exception if the create failed.</returns>
         /// <typeparam name="TResource">The type of resource to create</typeparam>
-        public Task<TResource> CreateAsync<TResource>(TResource resource, SearchParams condition) where TResource : Resource
+        public virtual Task<TResource?> CreateAsync<TResource>(TResource resource, SearchParams condition) where TResource : Resource
         {
             if (resource == null) throw Error.ArgumentNull(nameof(resource));
             if (condition == null) throw Error.ArgumentNull(nameof(condition));
@@ -419,7 +513,7 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        public TResource Create<TResource>(TResource resource, SearchParams condition) where TResource : Resource
+        public virtual TResource? Create<TResource>(TResource resource, SearchParams condition) where TResource : Resource
         {
             return CreateAsync(resource, condition).WaitResult();
         }
@@ -434,11 +528,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="location">Location of the resource</param>
         /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
         /// <returns>The patched resource</returns>
-        public Task<Resource> PatchAsync(Uri location, Parameters patchParameters)
+        public virtual Task<Resource?> PatchAsync(Uri location, Parameters patchParameters)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
-            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+            var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
 
             var tx = new TransactionBuilder(Endpoint);
 
@@ -451,7 +545,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="PatchAsync(Uri, Parameters)"/>
-        public Resource Patch(Uri location, Parameters patchParameters)
+        public virtual Resource? Patch(Uri location, Parameters patchParameters)
         {
             return PatchAsync(location, patchParameters).WaitResult();
         }
@@ -464,7 +558,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
         /// <param name="versionId">version id of the resource to patch</param>
         /// <returns>The patched resource</returns>
-        public Task<TResource> PatchAsync<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource : Resource
+        public virtual Task<TResource?> PatchAsync<TResource>(string id, Parameters patchParameters, string? versionId = null) where TResource : Resource
         {
             if (id == null) throw Error.ArgumentNull(nameof(id));
 
@@ -481,7 +575,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="PatchAsync{TResource}(string, Parameters, string)"/>
-        public TResource Patch<TResource>(string id, Parameters patchParameters, string versionId = null) where TResource : Resource
+        public virtual TResource? Patch<TResource>(string id, Parameters patchParameters, string? versionId = null) where TResource : Resource
         {
             return PatchAsync<TResource>(id, patchParameters, versionId).WaitResult();
         }
@@ -494,7 +588,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="condition">Criteria used to locate the resource to update</param>
         /// <param name="patchParameters">A Parameters resource that includes the patch operation(s) to perform</param>
         /// <returns>The patched resource</returns>
-        public Task<TResource> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
+        public Task<TResource?> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
             var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
@@ -504,7 +598,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="PatchAsync{TResource}(SearchParams, Parameters)"/>
-        public TResource Patch<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
+        public virtual TResource? Patch<TResource>(SearchParams condition, Parameters patchParameters) where TResource : Resource
         {
             return PatchAsync<TResource>(condition, patchParameters).WaitResult();
         }
@@ -513,8 +607,6 @@ namespace Hl7.Fhir.Rest
 
 
         #endregion
-
-
 
         #region History
 
@@ -527,7 +619,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> TypeHistoryAsync(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Task<Bundle?> TypeHistoryAsync(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return internalHistoryAsync(resourceType, null, since, pageSize, summary);
         }
@@ -541,7 +633,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>        
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Bundle? TypeHistory(string resourceType, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return TypeHistoryAsync(resourceType, since, pageSize, summary).WaitResult();
         }
@@ -555,10 +647,9 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
+        public Task<Bundle?> TypeHistoryAsync<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
-            string collection = _inspector.GetFhirTypeNameForType(typeof(TResource));
-            return internalHistoryAsync(collection, null, since, pageSize, summary);
+            return internalHistoryAsync(typeNameOrDie<TResource>(), null, since, pageSize, summary);
         }
 
         /// <summary>
@@ -570,7 +661,7 @@ namespace Hl7.Fhir.Rest
         /// <typeparam name="TResource">The type of Resource to get the history for</typeparam>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
+        public Bundle? TypeHistory<TResource>(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null) where TResource : Resource, new()
         {
             return TypeHistoryAsync<TResource>(since, pageSize, summary).WaitResult();
         }
@@ -584,11 +675,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> HistoryAsync(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Task<Bundle?> HistoryAsync(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
 
-            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+            var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
             return internalHistoryAsync(id.ResourceType, id.Id, since, pageSize, summary);
         }
 
@@ -601,7 +692,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Bundle? History(Uri location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return HistoryAsync(location, since, pageSize, summary).WaitResult();
         }
@@ -615,7 +706,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> HistoryAsync(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Task<Bundle?> HistoryAsync(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return HistoryAsync(new Uri(location, UriKind.Relative), since, pageSize, summary);
         }
@@ -629,7 +720,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Asks the server to only provide the fields defined for the summary</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Bundle? History(string location, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return HistoryAsync(location, since, pageSize, summary).WaitResult();
         }
@@ -642,7 +733,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Task<Bundle> WholeSystemHistoryAsync(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Task<Bundle?> WholeSystemHistoryAsync(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return internalHistoryAsync(null, null, since, pageSize, summary);
         }
@@ -655,12 +746,12 @@ namespace Hl7.Fhir.Rest
         /// <param name="summary">Optional. Indicates whether the returned resources should just contain the minimal set of elements</param>
         /// <returns>A bundle with the history for the indicated instance, may contain both 
         /// ResourceEntries and DeletedEntries.</returns>
-        public Bundle WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        public Bundle? WholeSystemHistory(DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             return WholeSystemHistoryAsync(since, pageSize, summary).WaitResult();
         }
 
-        private Task<Bundle> internalHistoryAsync(string resourceType = null, string id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
+        private Task<Bundle?> internalHistoryAsync(string? resourceType = null, string? id = null, DateTimeOffset? since = null, int? pageSize = null, SummaryType? summary = null)
         {
             TransactionBuilder history;
 
@@ -684,7 +775,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="bundle">The bundled creates, updates and deleted</param>
         /// <returns>A bundle as returned by the server after it has processed the transaction, or 
         /// a FhirOperationException will be thrown if an error occurred.</returns>
-        public Task<Bundle> TransactionAsync(Bundle bundle)
+        public Task<Bundle?> TransactionAsync(Bundle bundle)
         {
             if (bundle == null) throw new ArgumentNullException(nameof(bundle));
 
@@ -697,7 +788,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="bundle">The bundled creates, updates and deleted</param>
         /// <returns>A bundle as returned by the server after it has processed the transaction, or 
         /// a FhirOperationException will be thrown if an error occurred.</returns>
-        public Bundle Transaction(Bundle bundle)
+        public Bundle? Transaction(Bundle bundle)
         {
             return TransactionAsync(bundle).WaitResult();
         }
@@ -706,30 +797,27 @@ namespace Hl7.Fhir.Rest
 
         #region Operation
 
-        public Task<Resource> WholeSystemOperationAsync(string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Task<Resource?> WholeSystemOperationAsync(string operationName, Parameters? parameters = null, bool useGet = false)
         {
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
             return internalOperationAsync(operationName, parameters: parameters, useGet: useGet);
         }
 
-        public Resource WholeSystemOperation(string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Resource? WholeSystemOperation(string operationName, Parameters? parameters = null, bool useGet = false)
         {
             return WholeSystemOperationAsync(operationName, parameters, useGet).WaitResult();
         }
 
 
-        public Task<Resource> TypeOperationAsync<TResource>(string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Task<Resource?> TypeOperationAsync<TResource>(string operationName, Parameters? parameters = null, bool useGet = false)
             where TResource : Resource
         {
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
-
-            // [WMR 20160421] GetResourceNameForType is obsolete
-            // var typeName = ModelInfo.GetResourceNameForType(typeof(TResource));
-            var typeName = _inspector.GetFhirTypeNameForType(typeof(TResource));
+            var typeName = typeNameOrDie<TResource>();
 
             return TypeOperationAsync(operationName, typeName, parameters, useGet: useGet);
         }
-        public Resource TypeOperation<TResource>(string operationName, Parameters parameters = null,
+        public virtual Resource? TypeOperation<TResource>(string operationName, Parameters? parameters = null,
             bool useGet = false) where TResource : Resource
         {
             return TypeOperationAsync<TResource>(operationName, parameters, useGet).WaitResult();
@@ -737,37 +825,37 @@ namespace Hl7.Fhir.Rest
 
 
 
-        public Task<Resource> TypeOperationAsync(string operationName, string typeName, Parameters parameters = null, bool useGet = false)
+        public virtual Task<Resource?> TypeOperationAsync(string operationName, string typeName, Parameters? parameters = null, bool useGet = false)
         {
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
             if (typeName == null) throw Error.ArgumentNull(nameof(typeName));
 
             return internalOperationAsync(operationName, typeName, parameters: parameters, useGet: useGet);
         }
-        public Resource TypeOperation(string operationName, string typeName, Parameters parameters = null, bool useGet = false)
+        public virtual Resource? TypeOperation(string operationName, string typeName, Parameters? parameters = null, bool useGet = false)
         {
             return TypeOperationAsync(operationName, typeName, parameters, useGet).WaitResult();
         }
 
 
 
-        public Task<Resource> InstanceOperationAsync(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Task<Resource?> InstanceOperationAsync(Uri location, string operationName, Parameters? parameters = null, bool useGet = false)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
 
-            var id = verifyResourceIdentity(location, needId: true, needVid: false);
+            var id = BaseFhirClient.verifyResourceIdentity(location, needId: true, needVid: false);
 
             return internalOperationAsync(operationName, id.ResourceType, id.Id, id.VersionId, parameters, useGet);
         }
-        public Resource InstanceOperation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Resource? InstanceOperation(Uri location, string operationName, Parameters? parameters = null, bool useGet = false)
         {
             return InstanceOperationAsync(location, operationName, parameters, useGet).WaitResult();
         }
 
 
 
-        public Task<Resource> OperationAsync(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Task<Resource?> OperationAsync(Uri location, string operationName, Parameters? parameters = null, bool useGet = false)
         {
             if (location == null) throw Error.ArgumentNull(nameof(location));
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
@@ -776,13 +864,13 @@ namespace Hl7.Fhir.Rest
 
             return executeAsync<Resource>(tx, HttpStatusCode.OK);
         }
-        public Resource Operation(Uri location, string operationName, Parameters parameters = null, bool useGet = false)
+        public virtual Resource? Operation(Uri location, string operationName, Parameters? parameters = null, bool useGet = false)
         {
             return OperationAsync(location, operationName, parameters, useGet).WaitResult();
         }
 
 
-        public Task<Resource> OperationAsync(Uri operation, Parameters parameters = null, bool useGet = false)
+        public virtual Task<Resource?> OperationAsync(Uri operation, Parameters? parameters = null, bool useGet = false)
         {
             if (operation == null) throw Error.ArgumentNull(nameof(operation));
 
@@ -790,15 +878,15 @@ namespace Hl7.Fhir.Rest
 
             return executeAsync<Resource>(tx, HttpStatusCode.OK);
         }
-        public Resource Operation(Uri operation, Parameters parameters = null, bool useGet = false)
+        public virtual Resource? Operation(Uri operation, Parameters? parameters = null, bool useGet = false)
         {
             return OperationAsync(operation, parameters, useGet).WaitResult();
         }
 
 
 
-        private Task<Resource> internalOperationAsync(string operationName, string type = null, string id = null, string vid = null,
-            Parameters parameters = null, bool useGet = false)
+        private Task<Resource?> internalOperationAsync(string operationName, string? type = null, string? id = null, string? vid = null,
+            Parameters? parameters = null, bool useGet = false)
         {
             // Brian: Not sure why we would create this parameters object as empty.
             //        I would imagine that a null parameters object is different to an empty one?
@@ -820,11 +908,9 @@ namespace Hl7.Fhir.Rest
             return executeAsync<Resource>(tx, new[] { HttpStatusCode.OK, HttpStatusCode.Accepted });
         }
 
-        private Resource internalOperation(string operationName, string type = null, string id = null,
-            string vid = null, Parameters parameters = null, bool useGet = false)
-        {
-            return internalOperationAsync(operationName, type, id, vid, parameters, useGet).WaitResult();
-        }
+        private Resource? internalOperation(string operationName, string? type = null, string? id = null,
+            string? vid = null, Parameters? parameters = null, bool useGet = false) =>
+            internalOperationAsync(operationName, type, id, vid, parameters, useGet).WaitResult();
 
         #endregion
 
@@ -836,7 +922,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
         /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the given url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
-        public Resource Get(Uri url)
+        public virtual Resource? Get(Uri url)
         {
             return GetAsync(url).WaitResult();
         }
@@ -846,7 +932,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
         /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the given url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
-        public async Task<Resource> GetAsync(Uri url)
+        public async Task<Resource?> GetAsync(Uri url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
 
@@ -859,7 +945,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
         /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the given url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
-        public Resource Get(string url)
+        public virtual Resource? Get(string url)
         {
             return GetAsync(url).WaitResult();
         }
@@ -869,7 +955,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="url">A relative or absolute url. If the url is absolute, it has to be located within the endpoint of the client.</param>
         /// <returns>A resource that is the outcome of the operation. The type depends on the definition of the operation at the given url</returns>
         /// <remarks>parameters to the method are simple, and are in the URL, and this is a GET operation</remarks>
-        public Task<Resource> GetAsync(string url)
+        public virtual Task<Resource?> GetAsync(string url)
         {
             if (url == null) throw Error.ArgumentNull(nameof(url));
 
@@ -878,7 +964,7 @@ namespace Hl7.Fhir.Rest
 
         #endregion
 
-        private ResourceIdentity verifyResourceIdentity(Uri location, bool needId, bool needVid)
+        private static ResourceIdentity verifyResourceIdentity(Uri location, bool needId, bool needVid)
         {
             var result = new ResourceIdentity(location);
 
@@ -890,60 +976,21 @@ namespace Hl7.Fhir.Rest
         }
 
 
-        // TODO: Depending on type of response, update identity & always update lastupdated?
-
-        private void updateIdentity(Resource resource, ResourceIdentity identity)
-        {
-            if (resource.Meta == null) resource.Meta = new Meta();
-
-            if (resource.Id == null)
-            {
-                resource.Id = identity.Id;
-                resource.VersionId = identity.VersionId;
-            }
-        }
-
-
-        private void setResourceBase(Resource resource, string baseUri)
-        {
-            resource.ResourceBase = new Uri(baseUri);
-
-            if (resource is Bundle)
-            {
-                var bundle = resource as Bundle;
-                foreach (var entry in bundle.Entry.Where(e => e.Resource != null))
-                    entry.Resource.ResourceBase = new Uri(baseUri, UriKind.RelativeOrAbsolute);
-            }
-        }
-
-
-        // Original
-        private TResource execute<TResource>(Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
-        {
-            return executeAsync<TResource>(tx, new[] { expect }).WaitResult();
-        }
-        public Task<TResource> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
+        public Task<TResource?> executeAsync<TResource>(Model.Bundle tx, HttpStatusCode expect) where TResource : Model.Resource
         {
             return executeAsync<TResource>(tx, new[] { expect });
         }
-        // Original
-        private TResource execute<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
-        {
-            return executeAsync<TResource>(tx, expect).WaitResult();
-        }
 
-        private async Task<TResource> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
+        private async Task<TResource?> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect) where TResource : Resource
         {
             await verifyServerVersion();
 
             var request = tx.Entry[0];
-            // tx (-> ITyped)? -> entryRequest 
-            // entry -> ITyped -> tx
-            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, _fhirVersion).ConfigureAwait(false);
-
+            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, fhirVersion).ConfigureAwait(false);
 
             EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
+
             try
             {
                 typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_inspector).ConfigureAwait(false);
@@ -968,12 +1015,11 @@ namespace Hl7.Fhir.Rest
                 throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
             }
 
+            Bundle.EntryComponent? response = null;
 
-
-            Bundle.EntryComponent response = null;
             try
             {
-                response = typedEntryResponse.ToBundleEntry(_inspector, Settings.ParserSettings);
+                response = typedEntryResponse.ToBundleEntry(_inspector, Settings.ParserSettings ?? ParserSettings.CreateDefault());
 
                 LastResult = response.Response;
                 LastBodyAsResource = response.Resource;
@@ -994,7 +1040,7 @@ namespace Hl7.Fhir.Rest
                 if (!Settings.VerifyFhirVersion)
                 {
                     throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {_fhirVersion}? " +
+                        $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
                         "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
                         ste.InnerException);
 
@@ -1009,7 +1055,7 @@ namespace Hl7.Fhir.Rest
                 throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
             }
 
-            Resource result;
+            Resource? result;
 
             // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
@@ -1059,7 +1105,7 @@ namespace Hl7.Fhir.Rest
             if (versionChecked) return;
             versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
-            string serverVersion;
+            string? serverVersion;
             var settings = Settings;
 
             try
@@ -1083,24 +1129,26 @@ namespace Hl7.Fhir.Rest
             {
                 throw Error.NotSupported($"This CapabilityStatement of the server doesn't state its FHIR version");
             }
-            else if (!SemVersion.CheckMinorVersionCompatibility(_fhirVersion, serverVersion))
+            else if (!SemVersion.CheckMinorVersionCompatibility(fhirVersion, serverVersion))
             {
-                throw Error.NotSupported($"This client supports FHIR version {_fhirVersion} but the server uses version {serverVersion}");
+                throw Error.NotSupported($"This client supports FHIR version {fhirVersion} but the server uses version {serverVersion}");
             }
 
         }
 
-        private async Task<string> getFhirVersionOfServer()
+        private async Task<string?> getFhirVersionOfServer()
         {
             var tx = new TransactionBuilder(Endpoint).CapabilityStatement(SummaryType.True).ToBundle();
             var capabilityStatement = await executeAsync<Resource>(tx, HttpStatusCode.OK);
+            if (capabilityStatement is null) return null;
 
             return capabilityStatement.AsReadOnlyDictionary().TryGetValue("fhirVersion", out var value) && value is PrimitiveType pt && pt.ObjectValue is string version
                 ? version
                 : null;
         }
 
-
+        private string typeNameOrDie<TResource>() => _inspector.GetFhirTypeNameForType(typeof(TResource)) ??
+               throw new ArgumentException($"Type parameter {nameof(TResource)} is not a known resource.");
 
         #region IDisposable Support
         protected bool disposedValue = false; // To detect redundant calls
@@ -1124,7 +1172,10 @@ namespace Hl7.Fhir.Rest
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
 }
+
+#nullable restore

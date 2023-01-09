@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -9,6 +11,7 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Specification;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
@@ -17,7 +20,7 @@ using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class TypedEntryResponseToBundle
+    internal static class TypedEntryResponseToBundle
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
@@ -42,7 +45,7 @@ namespace Hl7.Fhir.Rest
 
                 if (IsBinaryResponse(entry.ResponseUri.OriginalString, entry.ContentType))
                 {
-                    result.Resource = MakeBinaryResource(entry.Body, entry.ContentType);
+                    result.Resource = MakeBinaryResource(entry.Body, entry.ContentType, inspector.FhirRelease);
                     if (result.Response.Location != null)
                     {
                         var ri = new ResourceIdentity(result.Response.Location);
@@ -104,23 +107,32 @@ namespace Hl7.Fhir.Rest
             return false;
         }
 
-        internal static Binary MakeBinaryResource(byte[] data, string contentType) =>
-            new()
+        internal static Binary MakeBinaryResource(byte[] data, string contentType, FhirRelease release)
+        {
+            var bin = new Binary()
             {
-                //Content is for STU3, from R4 Content has changed into Data
-                Data = data,
                 ContentType = contentType
             };
 
-        private class Body
-        {
-            public byte[] Data;
+            //Content is for STU3, from R4 Content has changed into Data
+            if (release <= FhirRelease.STU3)
+            {
+                bin.Content = data;
+            }
+            else
+            {
+                bin.Data = data;
+            }
+
+            return bin;
         }
 
+        private record Body(byte[] Data);
 
-        public static byte[] GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
 
-        public static string GetBodyAsText(this Bundle.ResponseComponent interaction)
+        public static byte[]? GetBody(this Bundle.ResponseComponent interaction) => interaction.Annotation<Body>()?.Data;
+
+        public static string? GetBodyAsText(this Bundle.ResponseComponent interaction)
         {
             var body = interaction.GetBody();
             return body != null ? HttpUtil.DecodeBody(body, Encoding.UTF8) : null;
@@ -129,7 +141,7 @@ namespace Hl7.Fhir.Rest
         internal static void SetBody(this Bundle.ResponseComponent interaction, byte[] data)
         {
             interaction.RemoveAnnotations<Body>();
-            interaction.AddAnnotation(new Body { Data = data });
+            interaction.AddAnnotation(new Body(data));
         }
 
         internal static void SetHeaders(this Bundle.ResponseComponent interaction, IDictionary<string, string> headers)
@@ -141,3 +153,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore
