@@ -33,7 +33,7 @@ using System;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Canonical : IEquatable<Canonical>
+    public partial class Canonical
     {
         /// <summary>
         /// Constructs a Canonical based on a given <see cref="Uri"/>.
@@ -155,38 +155,6 @@ namespace Hl7.Fhir.Model
                     (url, null)
                     : (url.Substring(0, position), url.Substring(position + 1));
             }
-        }
-
-        public bool Equals(Canonical? other)
-        {
-            if (ReferenceEquals(other, null))
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            else
-                return Value.Equals(other.Value);
-        }
-        public static bool operator ==(Canonical obj1, Canonical obj2)
-        {
-            if (ReferenceEquals(obj1, obj2))
-                return true;
-            if (ReferenceEquals(obj1, null))
-                return false;
-            if (ReferenceEquals(obj2, null))
-                return false;
-            return obj1.Equals(obj2);
-        }
-        public static bool operator !=(Canonical obj1, Canonical obj2)
-        {
-            return !(obj1 == obj2);
-        }
-
-        public override bool Equals(object? obj) => Equals(obj as Canonical);
-
-
-        public override int GetHashCode()
-        {
-            return Value.GetHashCode();
         }
     }
 }

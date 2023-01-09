@@ -98,20 +98,5 @@ namespace Hl7.Fhir.ElementModel.Tests
             var uri = testee.ToUri();
             uri.OriginalString.Should().Be("http://example.org/test|3.4.5");
         }
-
-        [TestMethod]
-        public void TestEquivalence()
-        {
-            var t1 = new Canonical("http://example.org/test|3.4.5");
-            var t2 = new Canonical("http://example.org/test|3.4.5");
-            var t3 = new Canonical("http://example.org/test");
-
-            (t1 == t2).Should().BeTrue();
-            t1.Equals(t2).Should().BeTrue();
-            (t1 == t3).Should().BeFalse();
-            t1.Equals(t3).Should().BeFalse();
-        }
-
-
     }
 }
