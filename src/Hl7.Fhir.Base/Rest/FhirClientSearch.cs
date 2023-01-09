@@ -42,6 +42,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="q">The Query resource containing the search parameters</param>
         /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? Search(SearchParams q, string? resourceType = null)
         {
             return SearchAsync(q, resourceType).WaitResult();
@@ -65,6 +66,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="q">The Query resource containing the search parameters</param>
         /// <param name="resourceType">The type of resource to filter on (optional). If not specified, will search on all resource types.</param>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost(SearchParams q, string? resourceType = null)
         {
             return SearchUsingPostAsync(q, resourceType).WaitResult();
@@ -93,6 +95,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="q">The Query resource containing the search parameters</param>
         /// <typeparam name="TResource">The type of resource to filter on</typeparam>
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? Search<TResource>(SearchParams q) where TResource : Resource
         {
             return SearchAsync<TResource>(q).WaitResult();
@@ -103,6 +106,7 @@ namespace Hl7.Fhir.Rest
             return SearchUsingPostAsync(q, _inspector.GetFhirTypeNameForType(typeof(TResource)));
         }
 
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost<TResource>(SearchParams q) where TResource : Resource
         {
             return SearchUsingPostAsync(q, _inspector.GetFhirTypeNameForType(typeof(TResource))).WaitResult();
@@ -152,6 +156,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? Search<TResource>(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
             SummaryType? summary = null, string[]? revIncludes = null)
             where TResource : Resource, new()
@@ -200,6 +205,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost<TResource>(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
             SummaryType? summary = null, string[]? revIncludes = null)
             where TResource : Resource, new()
@@ -208,6 +214,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="SearchUsingPost{TResource}(string[], string[], int?, SummaryType?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost<TResource>(string[] criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes)
             where TResource : Resource, new()
@@ -246,6 +253,7 @@ namespace Hl7.Fhir.Rest
         {
             return SearchAsync(resource, criteria, BaseFhirClient.stringToIncludeTuple(includes), pageSize, summary, BaseFhirClient.stringToIncludeTuple(revIncludes));
         }
+
         /// <summary>
         /// Search for Resources of a certain type that match the given criteria
         /// </summary>
@@ -259,6 +267,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? Search(string resource, string[]? criteria = null, string[]? includes = null, int? pageSize = null,
             SummaryType? summary = null, string[]? revIncludes = null)
         {
@@ -266,6 +275,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="Search(string, string[], string[], int?, SummaryType?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? Search(string resource, string[] criteria, (string path, IncludeModifier modifier)[] includes, int? pageSize,
          SummaryType? summary, (string path, IncludeModifier modifier)[] revIncludes)
         {
@@ -313,6 +323,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost(string resource, string[]? criteria = null, string[]? includes = null, int? pageSize = null,
             SummaryType? summary = null, string[]? revIncludes = null)
         {
@@ -320,13 +331,12 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="SearchUsingPost(string, string[], string[], int?, SummaryType?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost(string resource, string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes)
         {
             return SearchUsingPostAsync(resource, criteria, includes, pageSize, summary, revIncludes).WaitResult();
         }
-
-
 
         #endregion
 
@@ -369,6 +379,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? WholeSystemSearch(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
             SummaryType? summary = null, string[]? revIncludes = null)
         {
@@ -376,6 +387,7 @@ namespace Hl7.Fhir.Rest
         }
 
         ///<inheritdoc cref="WholeSystemSearch(string[], string[], int?, SummaryType?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? WholeSystemSearch(string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes)
         {
@@ -421,13 +433,15 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? WholeSystemSearchUsingPost(string[]? criteria = null, string[]? includes = null, int? pageSize = null,
             SummaryType? summary = null, string[]? revIncludes = null)
         {
             return WholeSystemSearchUsingPostAsync(criteria, includes, pageSize, summary, revIncludes).WaitResult();
         }
 
-        ///<inheritdoc cref="WholeSystemSearchUsingPost(string[], string[], int?, SummaryType?, string[])"/>
+        ///<inheritdoc cref="WholeSystemSearchUsingPost(string[], string[], int?, SummaryType?, string[])"/>       
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? WholeSystemSearchUsingPost(string[]? criteria, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
            SummaryType? summary, (string path, IncludeModifier modifier)[]? revIncludes)
         {
@@ -479,6 +493,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchById<TResource>(string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null) where TResource : Resource, new()
         {
             return SearchByIdAsync<TResource>(id, includes, pageSize, revIncludes).WaitResult();
@@ -486,6 +501,7 @@ namespace Hl7.Fhir.Rest
 
 
         ///<inheritdoc cref="SearchById(string, string, string[], int?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchById<TResource>(string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             (string path, IncludeModifier modifier)[]? revIncludes) where TResource : Resource, new()
         {
@@ -533,12 +549,14 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchByIdUsingPost<TResource>(string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null) where TResource : Resource, new()
         {
             return SearchByIdUsingPostAsync<TResource>(id, includes, pageSize, revIncludes).WaitResult();
         }
 
         ///<inheritdoc cref="SearchByIdUsingPost{TResource}(string, string[], int?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchByIdUsingPost<TResource>(string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             (string path, IncludeModifier modifier)[] revIncludes) where TResource : Resource, new()
         {
@@ -591,12 +609,14 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchById(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null)
         {
             return SearchByIdAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
         }
 
         ///<inheritdoc cref="SearchByIdAsync(string, string, (string path, IncludeModifier modifier)[], int?, (string path, IncludeModifier modifier)[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchById(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             (string path, IncludeModifier modifier)[]? revIncludes)
         {
@@ -646,12 +666,14 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchByIdUsingPost(string resource, string id, string[]? includes = null, int? pageSize = null, string[]? revIncludes = null)
         {
             return SearchByIdUsingPostAsync(resource, id, includes, pageSize, revIncludes).WaitResult();
         }
 
         ///<inheritdoc cref="SearchByIdUsingPost(string, string, string[], int?, string[])"/>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchByIdUsingPost(string resource, string id, (string path, IncludeModifier modifier)[]? includes, int? pageSize,
             (string path, IncludeModifier modifier)[]? revIncludes)
         {
@@ -707,6 +729,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="direction">Optional. Direction to browse to, default is the next page of results.</param>
         /// <returns>A bundle containing a new page of results based on the browse direction, or null if
         /// the server did not have more results in that direction.</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? Continue(Bundle current, PageDirection direction = PageDirection.Next)
         {
             return ContinueAsync(current, direction).WaitResult();

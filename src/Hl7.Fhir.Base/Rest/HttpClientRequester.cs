@@ -10,6 +10,7 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -40,7 +41,7 @@ namespace Hl7.Fhir.Rest
             _disposeHttpClient = false;
         }
 
-        public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction)
+        public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction, CancellationToken ct)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
           
@@ -54,14 +55,26 @@ namespace Hl7.Fhir.Rest
             byte[] outgoingBody = null;
             if (requestMessage.Content is not null && (requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put))
             {
+#if NET6_0_OR_GREATER
+                outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
+#else
                 outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+#endif
             }
 
+#if NET6_0_OR_GREATER
+            using var response = await Client.SendAsync(requestMessage,ct).ConfigureAwait(false);
+#else
             using var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);
+#endif
+
             try
             {
+#if NET6_0_OR_GREATER
+                var body = await response.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
+#else
                 var body = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-
+#endif
                 return response.ToEntryResponse(body);
             }
             catch (AggregateException ae)
@@ -70,7 +83,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        #region IDisposable Support
+#region IDisposable Support
         private bool _disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
@@ -90,7 +103,7 @@ namespace Hl7.Fhir.Rest
         {
             Dispose(true);
         }
-        #endregion
+#endregion
     }
 
 }
