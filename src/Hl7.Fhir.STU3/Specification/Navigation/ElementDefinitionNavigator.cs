@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (Count == 0) return false;
 
-            var profileRef = CanonicalUri.Parse(nameReference);
+            var profileRef = new Canonical(nameReference);
 
             // Namereferences should normally look like '#Questionnaire.item', but in snapshots for profiles, these can also
             // be absolute urls pointing to an external (core) StructureDefinition, but we cannot handle those here as

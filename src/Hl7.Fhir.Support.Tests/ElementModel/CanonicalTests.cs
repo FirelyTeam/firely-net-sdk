@@ -1,39 +1,40 @@
 ﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Hl7.Fhir.Utility.Tests
+namespace Hl7.Fhir.ElementModel.Tests
 {
     [TestClass]
-    public class CanonicalUriTests
+    public class CanonicalTests
     {
         [TestMethod]
         public void SeesAnchorandVersion()
         {
-            var testee = new CanonicalUri("http://example.org/test");
-            testee.Original.Should().Be("http://example.org/test");
+            var testee = new Canonical("http://example.org/test");
+            testee.Value.Should().Be("http://example.org/test");
             testee.Uri.Should().Be("http://example.org/test");
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeFalse();
             testee.IsAbsolute.Should().BeTrue();
 
-            testee = new CanonicalUri("http://example.org/test|3.4.5");
-            testee.Original.Should().Be("http://example.org/test|3.4.5");
+            testee = new Canonical("http://example.org/test|3.4.5");
+            testee.Value.Should().Be("http://example.org/test|3.4.5");
             testee.Uri.Should().Be("http://example.org/test");
             testee.HasVersion.Should().BeTrue();
             testee.HasAnchor.Should().BeFalse();
             testee.Version.Should().Be("3.4.5");
             testee.IsAbsolute.Should().BeTrue();
 
-            testee = new CanonicalUri("http://example.org/test#anchor");
-            testee.Original.Should().Be("http://example.org/test#anchor");
+            testee = new Canonical("http://example.org/test#anchor");
+            testee.Value.Should().Be("http://example.org/test#anchor");
             testee.Uri.Should().Be("http://example.org/test");
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeTrue();
             testee.Anchor.Should().Be("anchor");
             testee.IsAbsolute.Should().BeTrue();
 
-            testee = new CanonicalUri("http://example.org/test|3.4.5#anchor");
-            testee.Original.Should().Be("http://example.org/test|3.4.5#anchor");
+            testee = new Canonical("http://example.org/test|3.4.5#anchor");
+            testee.Value.Should().Be("http://example.org/test|3.4.5#anchor");
             testee.Uri.Should().Be("http://example.org/test");
             testee.HasVersion.Should().BeTrue();
             testee.Version.Should().Be("3.4.5");
@@ -45,22 +46,22 @@ namespace Hl7.Fhir.Utility.Tests
         [TestMethod]
         public void RecognizesUriForm()
         {
-            var testee = new CanonicalUri("urn:a:b:c");
-            testee.Original.Should().Be("urn:a:b:c");
+            var testee = new Canonical("urn:a:b:c");
+            testee.Value.Should().Be("urn:a:b:c");
             testee.Uri.Should().Be("urn:a:b:c");
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeFalse();
             testee.IsAbsolute.Should().BeTrue();
 
-            testee = new CanonicalUri("local");
-            testee.Original.Should().Be("local");
+            testee = new Canonical("local");
+            testee.Value.Should().Be("local");
             testee.Uri.Should().Be("local");
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeFalse();
             testee.IsAbsolute.Should().BeFalse();
 
-            testee = new CanonicalUri("#anchor");
-            testee.Original.Should().Be("#anchor");
+            testee = new Canonical("#anchor");
+            testee.Value.Should().Be("#anchor");
             testee.Uri.Should().BeNull();
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeTrue();
@@ -71,12 +72,12 @@ namespace Hl7.Fhir.Utility.Tests
         [TestMethod]
         public void TestDeconstruction()
         {
-            var (uri, version, anchor) = new CanonicalUri("http://example.org/test|3.4.5#anchor");
+            var (uri, version, anchor) = new Canonical("http://example.org/test|3.4.5#anchor");
             uri.Should().Be("http://example.org/test");
             version.Should().Be("3.4.5");
             anchor.Should().Be("anchor");
 
-            (uri, version, anchor) = new CanonicalUri("http://example.org/test");
+            (uri, version, anchor) = new Canonical("http://example.org/test");
             uri.Should().Be("http://example.org/test");
             version.Should().BeNull();
             anchor.Should().BeNull();
@@ -85,8 +86,8 @@ namespace Hl7.Fhir.Utility.Tests
         [TestMethod]
         public void TestConversion()
         {
-            var testee = (CanonicalUri)"http://example.org/test|3.4.5";
-            testee.Original.Should().Be("http://example.org/test|3.4.5");
+            var testee = (Canonical)"http://example.org/test|3.4.5";
+            testee.Value.Should().Be("http://example.org/test|3.4.5");
 
             var asstring = (string)testee;
             asstring.Should().Be("http://example.org/test|3.4.5");
@@ -101,9 +102,9 @@ namespace Hl7.Fhir.Utility.Tests
         [TestMethod]
         public void TestEquivalence()
         {
-            var t1 = new CanonicalUri("http://example.org/test|3.4.5");
-            var t2 = new CanonicalUri("http://example.org/test|3.4.5");
-            var t3 = new CanonicalUri("http://example.org/test");
+            var t1 = new Canonical("http://example.org/test|3.4.5");
+            var t2 = new Canonical("http://example.org/test|3.4.5");
+            var t3 = new Canonical("http://example.org/test");
 
             (t1 == t2).Should().BeTrue();
             t1.Equals(t2).Should().BeTrue();

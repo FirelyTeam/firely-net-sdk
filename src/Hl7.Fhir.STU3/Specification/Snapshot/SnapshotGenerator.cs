@@ -528,7 +528,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var sourceNav = ElementDefinitionNavigator.ForSnapshot(coreStructure);
 
-                var profileRef = CanonicalUri.Parse(defn.ContentReference);
+                var profileRef = new Canonical(defn.ContentReference);
 
                 if (!sourceNav.JumpToNameReference("#" + profileRef.Anchor))
                 {
@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // - First inherit child element constraints from extension definition, element with name "certainty"
                 // - Then override inherited constraints by explicit element constraints in profile differential
 
-                var profileRef = CanonicalUri.Parse(primaryDiffTypeProfile);
+                var profileRef = new Canonical(primaryDiffTypeProfile);
                 if (profileRef.HasAnchor)
                 {
                     primaryDiffTypeProfile = profileRef.Uri;

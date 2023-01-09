@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     return;
                 }
 
-                var profileRef = CanonicalUri.Parse(diffProfile);
+                var profileRef = new Canonical(diffProfile);
                 var result = profileRef.HasAnchor
                     // Match on element name (for complex extension elements)
                     ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.Anchor)

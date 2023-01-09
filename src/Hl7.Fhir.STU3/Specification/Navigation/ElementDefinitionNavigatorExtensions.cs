@@ -9,7 +9,6 @@
 #nullable enable
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Utility;
 using System;
 
 namespace Hl7.Fhir.Specification.Navigation
@@ -45,7 +44,7 @@ namespace Hl7.Fhir.Specification.Navigation
             var reference = sourceNavigator.Current.ContentReference;
             if (reference is null) return false;
 
-            var profileRef = CanonicalUri.Parse(reference);
+            var profileRef = new Canonical(reference);
 
             if (profileRef.IsAbsolute && profileRef.Uri != sourceNavigator.StructureDefinition.Url)
             {
