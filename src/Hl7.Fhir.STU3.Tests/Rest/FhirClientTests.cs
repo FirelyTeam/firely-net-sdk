@@ -1,4 +1,6 @@
-﻿/*
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+
+/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -46,8 +48,8 @@ namespace Hl7.Fhir.Tests.Rest
         public static Uri TerminologyEndpoint = new Uri("https://stu3.ontoserver.csiro.au/fhir");
         // public static Uri TerminologyEndpoint = new Uri("http://test.fhir.org/r3");
 
-        private static string patientId = "pat1" + ModelInfo.Version;
-        private static string locationId = "loc1" + ModelInfo.Version;
+        private static readonly string patientId = "pat1" + ModelInfo.Version;
+        private static readonly string locationId = "loc1" + ModelInfo.Version;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
@@ -102,7 +104,7 @@ namespace Hl7.Fhir.Tests.Rest
             // Create the patient
             Console.WriteLine("Creating patient...");
             Patient p = client.Update(pat);
-            Location l = client.Update(loc);
+            _ = client.Update(loc);
             Assert.IsNotNull(p);
         }
 
@@ -246,7 +248,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testReadWrongResourceType(BaseFhirClient client)
         {
-            var loc = client.Read<Patient>("Location/" + locationId);
+            _ = client.Read<Patient>("Location/" + locationId);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -274,7 +276,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             try
             {
-                var random = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
+                _ = client.Read<Location>(new Uri("Location/45qq54", UriKind.Relative));
                 Assert.Fail();
             }
             catch (FhirOperationException ex)
@@ -359,7 +361,7 @@ namespace Hl7.Fhir.Tests.Rest
 
                 result = client.Search<DiagnosticReport>();
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
+                Assert.IsTrue(result.Entry.Count > 10, "Test should use testdata with more than 10 reports");
 
                 handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
@@ -394,7 +396,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testSearchInvalidCriteria(BaseFhirClient client)
         {
-            var result = client.Search<Patient>(new string[] { "test" });
+            _ = client.Search<Patient>(new string[] { "test" });
         }
 
 #if NO_ASYNC_ANYMORE
@@ -508,7 +510,9 @@ namespace Hl7.Fhir.Tests.Rest
             var firstId = result.Entry.First().Resource.Id;
 
             // Browse forward
+
             result = client.Continue(result);
+
             Assert.IsNotNull(result);
             var nextId = result.Entry.First().Resource.Id;
             Assert.AreNotEqual(firstId, nextId);
@@ -602,7 +606,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             // Now validate this resource
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;      // which is also the default
-            Parameters p = new Parameters();
+            var p = new Parameters();
             //  p.Add("mode", new FhirString("create"));
             p.Add("resource", pat);
             OperationOutcome ooI = (OperationOutcome)client.InstanceOperation(ri.WithoutVersion(), "validate", p);
@@ -622,8 +626,7 @@ namespace Hl7.Fhir.Tests.Rest
             }
         }
 
-
-        Uri createdTestPatientUrl = null;
+        private Uri createdTestPatientUrl = null;
         /// <summary>
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
@@ -799,7 +802,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
 
-            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(4, history.Entry.Count);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -811,7 +814,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5.
+            Assert.AreEqual(4, history.Entry.Count);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -820,7 +823,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(4, history.Entry.Count);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -830,7 +833,7 @@ namespace Hl7.Fhir.Tests.Rest
                 history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions.ToUniversalTime());
                 Assert.IsNotNull(history);
                 DebugDumpBundle(history);
-                Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
+                Assert.IsTrue(4 <= history.Entry.Count, "Whole System history should have at least 4 new events");
                 // Check that the number of patients that have been created is what we expected
                 Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
                 Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
@@ -1012,7 +1015,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             var pats =
             client.Search<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") });
-            var pat = (Patient)pats.Entry.First().Resource;
+            _ = (Patient)pats.Entry.First().Resource;
         }
 
         [TestMethod]
@@ -1028,7 +1031,7 @@ namespace Hl7.Fhir.Tests.Rest
         private static void searchByPersonaCodeUsingPost(BaseFhirClient client)
         {
             var pats = client.SearchUsingPost<Patient>(new[] { string.Format("identifier={0}|{1}", "urn:oid:1.2.36.146.595.217.0.1", "12345") }, new[] { "generalPractitioner" }, null, null, null);
-            var pat = (Patient)pats.Entry.First().Resource;
+            _ = (Patient)pats.Entry.First().Resource;
         }
 
         [TestMethod]
@@ -1288,7 +1291,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 try
                 {
-                    var pat = client.Read<Patient>("Patient/1");
+                    _ = client.Read<Patient>("Patient/1");
                 }
                 catch (FhirOperationException fe)
                 {
@@ -1324,7 +1327,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             try
             {
-                var pat = client.Read<Patient>("Patient/1");
+                _ = client.Read<Patient>("Patient/1");
                 Assert.Fail("Failed to throw an Exception on status 500");
             }
             catch (FhirOperationException fe)
@@ -1375,7 +1378,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             try
             {
-                var pat = client.Read<Patient>("Patient/doesnotexist");
+                _ = client.Read<Patient>("Patient/doesnotexist");
                 Assert.Fail("Failed to throw an Exception on status 404");
             }
             catch (FhirOperationException fe)
@@ -1420,7 +1423,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             try
             {
-                var output = validationFhirClient.ValidateResource(new Patient());
+                _ = validationFhirClient.ValidateResource(new Patient());
 
             }
             catch (FhirOperationException ex)
@@ -1465,8 +1468,7 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Name = new List<HumanName> { new HumanName().WithGiven("testy").AndFamily("McTestFace") }
             };
-
-            var oo = client.Create<Patient>(pat);
+            _ = client.Create<Patient>(pat);
             Assert.IsNotNull(client.LastResult.Outcome);
         }
 
@@ -1529,7 +1531,7 @@ namespace Hl7.Fhir.Tests.Rest
             };
 
             using var client = new FhirClient(testEndpoint, settings: FhirClientSettings.CreateDefault(), testDegatingHandler);
-            var loc = client.Read<Location>("Location/" + locationId);
+            _ = client.Read<Location>("Location/" + locationId);
             Assert.IsNotNull(testDegatingHandler.LastRequest);
             Assert.IsNotNull(testMessageHandler.LastResponse);
         }
@@ -1559,3 +1561,4 @@ namespace Hl7.Fhir.Tests.Rest
 
 
 }
+#pragma warning restore CS0618 // Type or member is obsolete

@@ -8,7 +8,9 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -17,10 +19,13 @@ namespace Hl7.Fhir.Rest
     {
         #region Meta
         //[base]/Resource/$meta
-        public static async Task<Meta> MetaAsync(this BaseFhirClient client, ResourceType type)
+        public static async Task<Meta> MetaAsync(this BaseFhirClient client, ResourceType type, CancellationToken? ct = null)
         {
-            return FhirClientOperations.ExtractMeta(FhirClientOperations.OperationResult<Parameters>(await client.TypeOperationAsync(RestOperation.META, type.GetLiteral(), useGet: true).ConfigureAwait(false)));
+            return FhirClientOperations.ExtractMeta(FhirClientOperations.OperationResult<Parameters>(
+                await client.TypeOperationAsync(RestOperation.META, type.GetLiteral(), useGet: true, ct:ct).ConfigureAwait(false)));
         }
+
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static Meta Meta(this BaseFhirClient client, ResourceType type)
         {
             return MetaAsync(client, type).WaitResult();
@@ -33,16 +38,17 @@ namespace Hl7.Fhir.Rest
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
-        public static Task<CapabilityStatement> CapabilityStatementAsync(this BaseFhirClient client, SummaryType? summary = null)
+        public static Task<CapabilityStatement> CapabilityStatementAsync(this BaseFhirClient client, SummaryType? summary = null, CancellationToken? ct = null)
         {
             var tx = new TransactionBuilder(client.Endpoint).CapabilityStatement(summary).ToBundle();
-            return client.executeAsync<CapabilityStatement>(tx, HttpStatusCode.OK);
+            return client.executeAsync<CapabilityStatement>(tx, HttpStatusCode.OK, ct);
         }
 
         /// <summary>
         /// Get a conformance statement for the system
         /// </summary>
         /// <returns>A Conformance resource. Throws an exception if the operation failed.</returns>
+        [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public static CapabilityStatement CapabilityStatement(this BaseFhirClient client, SummaryType? summary = null)
         {
             return client.CapabilityStatementAsync(summary).WaitResult();

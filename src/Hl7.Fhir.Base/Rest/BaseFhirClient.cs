@@ -864,7 +864,6 @@ namespace Hl7.Fhir.Rest
         }
 
 
-
         public virtual Task<Resource?> TypeOperationAsync(string operationName, string typeName, Parameters? parameters = null, bool useGet = false, CancellationToken? ct = null)
         {
             if (operationName == null) throw Error.ArgumentNull(nameof(operationName));
@@ -1057,7 +1056,7 @@ namespace Hl7.Fhir.Rest
                 LastResult = errorResult.Response;
                 LastBodyAsResource = errorResult.Resource;
 
-                Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                _ = Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                 throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
             }
 
@@ -1072,7 +1071,7 @@ namespace Hl7.Fhir.Rest
 
                 if (!typedEntryResponse.IsSuccessful())
                 {
-                    Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                    _ = Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                     throw FhirOperationException.BuildFhirOperationException(code, response.Resource, typedEntryResponse.GetBodyAsText());
                 }
 
@@ -1097,7 +1096,7 @@ namespace Hl7.Fhir.Rest
 
             if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
             {
-                Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
+                _ = Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
                 throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
             }
 
@@ -1119,7 +1118,7 @@ namespace Hl7.Fhir.Rest
             if (result == null) return null;
 
             // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
-            if (!(result is TResource))
+            if (result is not TResource)
             {
                 // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
                 // the LastResult, and return null as the result. Otherwise, throw.
@@ -1129,7 +1128,7 @@ namespace Hl7.Fhir.Rest
                 var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
                     request.Request.Url, typeof(TResource).Name, result.GetType().Name);
 
-                Enum.TryParse(response.Response.Status, out HttpStatusCode code);
+                _ = Enum.TryParse(response.Response.Status, out HttpStatusCode code);
                 throw new FhirOperationException(message, code);
             }
             else

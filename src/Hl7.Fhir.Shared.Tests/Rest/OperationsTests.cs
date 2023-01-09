@@ -1,4 +1,6 @@
-﻿/*
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+
+/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -17,7 +19,7 @@ namespace Hl7.Fhir.Tests.Rest
     [TestClass]
     public class OperationsTests
     {
-        string testEndpoint = FhirClientTests.TestEndpoint.OriginalString;
+        private readonly string testEndpoint = FhirClientTests.TestEndpoint.OriginalString;
 
         [TestMethod]
         [TestCategory("IntegrationTest")]
@@ -243,3 +245,5 @@ namespace Hl7.Fhir.Tests.Rest
         }
     }
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete
