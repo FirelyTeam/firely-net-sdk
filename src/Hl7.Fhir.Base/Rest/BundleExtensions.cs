@@ -6,14 +6,11 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Support;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -28,7 +25,7 @@ namespace Hl7.Fhir.Rest
                 throw Error.Argument("Refresh is only applicable to bundles of type 'searchset'");
 
             // Clone old bundle, without the entries (so, just the header)
-            Bundle result = (Bundle) bundle.DeepCopy();
+            Bundle result = (Bundle)bundle.DeepCopy();
 
             result.Id = "urn:uuid:" + Guid.NewGuid().ToString("n");
             result.Meta = new Meta();
@@ -51,3 +48,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore

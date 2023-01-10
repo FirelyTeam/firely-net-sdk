@@ -11,7 +11,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class FhirClientSearchAsyncTests
     {
-        private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
+        private static string _endpoint = FhirClientTests.TestEndpoint.OriginalString;
 
         public async Task Search_UsingSearchParams_SearchReturnedHttpClient()
         {

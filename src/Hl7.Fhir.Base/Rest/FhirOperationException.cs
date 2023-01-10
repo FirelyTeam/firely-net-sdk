@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -30,7 +32,7 @@ namespace Hl7.Fhir.Rest
     public class FhirOperationException : Exception
     {
         /// <summary>Gets or sets the outcome of the operation <see cref="OperationOutcome"/>.</summary>
-        public OperationOutcome Outcome { get; private set; }
+        public OperationOutcome? Outcome { get; private set; }
 
         /// <summary>The HTTP Status Code that resulted in this Exception.</summary>
         public HttpStatusCode Status { get; private set; }
@@ -68,14 +70,14 @@ namespace Hl7.Fhir.Rest
         /// <param name="status">The http status code associated with the message</param>
         /// <param name="outcome">The outcome of the operation <see cref="OperationOutcome"/>.</param>
         /// <param name="inner">The exception that is the cause of the current exception, or a <c>null</c> reference (Nothing in Visual Basic) if no inner exception is specified. </param>
-        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome outcome, Exception inner)
+        public FhirOperationException(string message, HttpStatusCode status, OperationOutcome? outcome, Exception? inner)
             : base(message, inner)
         {
             Outcome = outcome;
             Status = status;
         }
 
-        internal static Exception BuildFhirOperationException(HttpStatusCode status, Resource body, string bodyRaw = null)
+        internal static Exception BuildFhirOperationException(HttpStatusCode status, Resource? body, string? bodyRaw = null)
         {
             string message;
 
@@ -99,3 +101,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore

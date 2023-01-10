@@ -10,7 +10,7 @@ namespace Hl7.Fhir.Core.AsyncTests
 {
     public class UpdateRefreshDeleteAsyncTests
     {
-        private static string _endpoint = FhirClientTests.testEndpoint.OriginalString;
+        private static string _endpoint = FhirClientTests.TestEndpoint.OriginalString;
 
         [TestMethod]
         [TestCategory("IntegrationTest")]

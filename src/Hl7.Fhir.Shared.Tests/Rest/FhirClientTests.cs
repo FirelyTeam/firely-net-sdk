@@ -36,13 +36,13 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
-        public static Uri testEndpoint = new Uri("https://server.fire.ly/r4");
+        public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r4");
 
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
-        public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
+        public static readonly Uri EndpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
         //public static Uri _endpointSupportingSearchUsingPost = new Uri("https://vonk.fire.ly/r3");
 
-        public static Uri TerminologyEndpoint = new Uri("https://r4.ontoserver.csiro.au/fhir");
+        public static readonly Uri TerminologyEndpoint = new Uri("https://r4.ontoserver.csiro.au/fhir");
         // public static Uri TerminologyEndpoint = new Uri("http://test.fhir.org/r4");
 
         private static string patientId = "pat1" + ModelInfo.Version;
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Tests.Rest
 
         private static void CreateItems()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient(TestEndpoint);
 
             client.Settings.PreferredFormat = ResourceFormat.Json;
             client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestInitialize]
         public void TestInitialize()
         {
-            System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + testEndpoint);
+            System.Diagnostics.Trace.WriteLine("Testing against fhir server: " + TestEndpoint);
         }
 
         public static void DebugDumpBundle(Hl7.Fhir.Model.Bundle b)
@@ -139,10 +139,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void FetchConformanceHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
-            {
-                TestConformance(client);
-            }
+            using var client = new FhirClient(TestEndpoint);
+            TestConformance(client);
         }
 
         private void TestConformance(BaseFhirClient client)
@@ -172,7 +170,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void PatchHttpClient()
         {
-            using var client = new FhirClient(testEndpoint);
+            using var client = new FhirClient(TestEndpoint);
             Patch(client);
 
         }
@@ -184,10 +182,10 @@ namespace Hl7.Fhir.Tests.Rest
             client.Patch<Patient>("example", patchparams);
         }
 
-        [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        [TestMethod, Ignore("FS Endpoint does not support conditional PATCH"), TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CondionalPatchHttpClient()
         {
-            using var client = new FhirClient(testEndpoint);
+            using var client = new FhirClient(TestEndpoint);
             ConditionalPatch(client);
 
         }
@@ -221,10 +219,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadWithFormatHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
-            {
-                testReadWithFormat(client);
-            }
+            using var client = new FhirClient(TestEndpoint);
+            testReadWithFormat(client);
         }
 
         private void testReadWithFormat(BaseFhirClient client)
@@ -239,22 +235,20 @@ namespace Hl7.Fhir.Tests.Rest
         [ExpectedException(typeof(FhirOperationException))]
         public void ReadWrongResourceTypeHttpClient()
         {
-            FhirClient client = new FhirClient(testEndpoint);
+            FhirClient client = new FhirClient(TestEndpoint);
             testReadWrongResourceType(client);
         }
 
         private void testReadWrongResourceType(BaseFhirClient client)
         {
-            var loc = client.Read<Patient>("Location/" + locationId);
+            _ = client.Read<Patient>("Location/" + locationId);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async T.Task ReadHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
-            {
-                await testReadClientAsync(client);
-            }
+            using FhirClient client = new FhirClient(TestEndpoint);
+            await testReadClientAsync(client);
         }
 
         private async T.Task testReadClientAsync(BaseFhirClient client)
@@ -297,10 +291,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ReadRelativeHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
-            {
-                testReadRelative(client);
-            }
+            using FhirClient client = new FhirClient(TestEndpoint);
+            testReadRelative(client);
         }
 
         private void testReadRelative(BaseFhirClient client)
@@ -309,7 +301,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
 
-            var ri = ResourceIdentity.Build(testEndpoint, "Location", locationId);
+            var ri = ResourceIdentity.Build(TestEndpoint, "Location", locationId);
             loc = client.Read<Location>(ri);
             Assert.IsNotNull(loc);
             Assert.AreEqual("Den Burg", loc.Address.City);
@@ -349,46 +341,43 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void SearchHttpClient()
         {
-            using (var handler = new HttpClientHandler())
-            using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
-            {
-                Bundle result;
+            using var handler = new HttpClientHandler();
+            using FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler);
+            Bundle result;
 
-                client.Settings.CompressRequestBody = true;
-                handler.AutomaticDecompression = DecompressionMethods.GZip;
+            handler.AutomaticDecompression = DecompressionMethods.GZip;
 
-                result = client.Search<DiagnosticReport>();
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count() > 10, "Test should use testdata with more than 10 reports");
+            result = client.Search<DiagnosticReport>();
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count > 10, "Test should use testdata with more than 10 reports");
 
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
 
-                result = client.Search<DiagnosticReport>(pageSize: 10);
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count <= 10);
+            result = client.Search<DiagnosticReport>(pageSize: 10);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count <= 10);
 
-                handler.AutomaticDecompression = DecompressionMethods.GZip;
+            handler.AutomaticDecompression = DecompressionMethods.GZip;
 
-                var withSubject = result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
-                Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
+            var withSubject = result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
+            Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
 
-                ResourceIdentity ri = withSubject.ResourceIdentity();
+            ResourceIdentity ri = withSubject.ResourceIdentity();
 
-                handler.AutomaticDecompression = DecompressionMethods.Deflate;
+            handler.AutomaticDecompression = DecompressionMethods.Deflate;
 
-                result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
+            result = client.Search<Patient>(new string[] { "name=Chalmers", "name=Peter" });
 
-                Assert.IsNotNull(result);
-                Assert.IsTrue(result.Entry.Count > 0);
-            }
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Entry.Count > 0);
         }
 
         [TestMethod, TestCategory("FhirClient")]
         [ExpectedException(typeof(ArgumentException))]
         public void SearchInvalidCriteriaHttpClient()
         {
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient(TestEndpoint);
             testSearchInvalidCriteria(client);
         }
 
@@ -493,10 +482,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void PagingHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
-            {
-                testPaging(client);
-            }
+            using FhirClient client = new FhirClient(TestEndpoint);
+            testPaging(client);
         }
 
         private void testPaging(BaseFhirClient client)
@@ -531,10 +518,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void PagingInJsonHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
-            {
-                testPagingInJson(client);
-            }
+            using FhirClient client = new FhirClient(TestEndpoint);
+            testPagingInJson(client);
         }
 
         private static void testPagingInJson(BaseFhirClient client)
@@ -572,10 +557,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void CreateAndFullRepresentationHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
-            {
-                testCreateAndFullRepresentation(client);
-            }
+            using FhirClient client = new FhirClient(TestEndpoint);
+            testCreateAndFullRepresentation(client);
         }
 
         private static void testCreateAndFullRepresentation(BaseFhirClient client)
@@ -613,17 +596,15 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async T.Task CreateEditDeleteHttpClient()
         {
-            using (var handler = new HttpClientHandler())
-            using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
-            {
-                handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
-                // client.CompressRequestBody = true;
-                await testCreateEditDeleteAsync(client);
-            }
+            using var handler = new HttpClientHandler();
+            using FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler);
+            handler.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+            // client.CompressRequestBody = true;
+            await testCreateEditDeleteAsync(client);
         }
 
+        private Uri createdTestPatientUrl = null;
 
-        Uri createdTestPatientUrl = null;
         /// <summary>
         /// This test is also used as a "setup" test for the History test.
         /// If you change the number of operations in here, this will make the History test fail.
@@ -678,10 +659,8 @@ namespace Hl7.Fhir.Tests.Rest
         //Test for github issue https://github.com/FirelyTeam/firely-net-sdk/issues/145
         public void Create_ObservationWithValueAsSimpleQuantity_ReadReturnsValueAsQuantityHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
-            {
-                testCreateObservationWithQuantity(client);
-            }
+            using FhirClient client = new FhirClient(TestEndpoint);
+            testCreateObservationWithQuantity(client);
         }
 
         private static void testCreateObservationWithQuantity(BaseFhirClient client)
@@ -783,7 +762,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest"), Ignore]     // Keeps on failing periodically. Grahames server?
         public async T.Task HistoryHttpClient()
         {
-            FhirClient client = new FhirClient(testEndpoint);
+            FhirClient client = new FhirClient(TestEndpoint);
             await testHistoryAsync(client);
         }
 
@@ -799,7 +778,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
 
-            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(4, history.Entry.Count);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -811,7 +790,7 @@ namespace Hl7.Fhir.Tests.Rest
             history = client.TypeHistory("Patient", timestampBeforeCreationAndDeletions.ToUniversalTime());
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());   // there's a race condition here, sometimes this is 5.
+            Assert.AreEqual(4, history.Entry.Count);   // there's a race condition here, sometimes this is 5.
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
@@ -820,17 +799,17 @@ namespace Hl7.Fhir.Tests.Rest
             history = client.TypeHistory<Patient>(timestampBeforeCreationAndDeletions.ToUniversalTime(), summary: SummaryType.True);
             Assert.IsNotNull(history);
             DebugDumpBundle(history);
-            Assert.AreEqual(4, history.Entry.Count());
+            Assert.AreEqual(4, history.Entry.Count);
             Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null).Count());
             Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted()).Count());
 
-            if (!testEndpoint.OriginalString.Contains("sqlonfhir-stu3"))
+            if (!TestEndpoint.OriginalString.Contains("sqlonfhir-stu3"))
             {
                 System.Diagnostics.Trace.WriteLine("\r\nWhole system history since the start of this test");
                 history = client.WholeSystemHistory(timestampBeforeCreationAndDeletions.ToUniversalTime());
                 Assert.IsNotNull(history);
                 DebugDumpBundle(history);
-                Assert.IsTrue(4 <= history.Entry.Count(), "Whole System history should have at least 4 new events");
+                Assert.IsTrue(4 <= history.Entry.Count, "Whole System history should have at least 4 new events");
                 // Check that the number of patients that have been created is what we expected
                 Assert.AreEqual(3, history.Entry.Where(entry => entry.Resource != null && entry.Resource is Patient).Count());
                 Assert.AreEqual(1, history.Entry.Where(entry => entry.IsDeleted() && entry.Request.Url.Contains("Patient")).Count());
@@ -842,10 +821,8 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestWithParamHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
-            {
-                gettWithParam(client);
-            }
+            using var client = new FhirClient(TestEndpoint);
+            gettWithParam(client);
         }
 
         private static void gettWithParam(BaseFhirClient client)
@@ -857,7 +834,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void ManipulateMetaHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
+            using (FhirClient client = new FhirClient(TestEndpoint))
             {
                 testManipulateMeta(client);
             }
@@ -889,7 +866,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             // First, create a patient with the first set of meta
             var pat2 = client.Create(pat);
-            var loc = pat2.ResourceIdentity(testEndpoint);
+            var loc = pat2.ResourceIdentity(TestEndpoint);
 
             // Meta should be present on created patient
             verifyMeta(pat2.Meta, false, key);
@@ -984,7 +961,7 @@ namespace Hl7.Fhir.Tests.Rest
             // Previoulsly EntryToHttpExtensions.setBodyAndContentType used a Dictionary which required the
             // name part of the parameters to be unique.
             // Fixed by using IEnumerable<KeyValuePair<string, string>> instead of Dictionary<string, string>
-            var client = new FhirClient(testEndpoint);
+            var client = new FhirClient(TestEndpoint);
             searchUsingPostWithIncludes(client);
         }
 
@@ -1003,7 +980,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestSearchByPersonaCodeHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
+            using (var client = new FhirClient(TestEndpoint))
             {
                 searchByPersonaCode(client);
             }
@@ -1020,7 +997,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestSearchUsingPostByPersonaCodeHttpClient()
         {
-            using (var client = new FhirClient(_endpointSupportingSearchUsingPost))
+            using (var client = new FhirClient(EndpointSupportingSearchUsingPost))
             {
                 searchByPersonaCodeUsingPost(client);
             }
@@ -1036,7 +1013,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async T.Task CreateDynamicHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
+            using (FhirClient client = new FhirClient(TestEndpoint))
             {
                 await testCreateDynamicHttpClientAsync(client);
             }
@@ -1065,7 +1042,7 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using (var handler = new HttpClientEventHandler())
             {
-                using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
+                using (FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler))
                 {
                     client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
@@ -1105,7 +1082,7 @@ namespace Hl7.Fhir.Tests.Rest
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
-                using (FhirClient client = new FhirClient(testEndpoint, messageHandler: handler))
+                using (FhirClient client = new FhirClient(TestEndpoint, messageHandler: handler))
                 {
                     client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
@@ -1153,7 +1130,7 @@ namespace Hl7.Fhir.Tests.Rest
             using (var handler = new HttpClientEventHandler())
             using (var httpClient = new HttpClient(handler))
             {
-                using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
+                using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))
                 {
                     client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
@@ -1193,7 +1170,7 @@ namespace Hl7.Fhir.Tests.Rest
                 }
 
                 // And use another on the same handler to ensure that it wasn't disposed :O
-                using (FhirClient client = new FhirClient(testEndpoint, httpClient: httpClient))
+                using (FhirClient client = new FhirClient(TestEndpoint, httpClient: httpClient))
                 {
                     client.Settings.ParserSettings.AllowUnrecognizedEnums = true;
 
@@ -1256,7 +1233,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void RequestFullResourceHttpClient()
         {
 
-            using (var client = new FhirClient(testEndpoint))
+            using (var client = new FhirClient(TestEndpoint))
             {
                 testRequestFullResource(client);
             }
@@ -1285,7 +1262,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]   // Currently ignoring, as spark.furore.com returns Status 500.
         public void TestReceiveHtmlIsHandledHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))        // an address that returns html
+            using (var client = new FhirClient(TestEndpoint))        // an address that returns html
             {
                 try
                 {
@@ -1302,7 +1279,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestRefreshHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
+            using (var client = new FhirClient(TestEndpoint))
             {
                 clientReadRefresh(client);
             }
@@ -1376,7 +1353,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void TestReceiveErrorStatusWithOperationOutcomeIsHandledHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))// an address that returns Status 404 with an OperationOutcome
+            using (var client = new FhirClient(TestEndpoint))// an address that returns Status 404 with an OperationOutcome
             {
                 testHandlingErrorStatusAsOperationOutcome(client);
             }
@@ -1420,7 +1397,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestAuthenticationOnBeforeHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint))
+            using (FhirClient client = new FhirClient(TestEndpoint))
             {
                 client.RequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "bad-bearer");
                 testAuthentication(client);
@@ -1447,7 +1424,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void TestCreatingBinaryResourceHttpClient()
         {
             byte[] arr = File.ReadAllBytes(TestDataHelper.GetFullPathForExample(@"fhir-logo.png"));
-            using (var client = new FhirClient(testEndpoint))
+            using (var client = new FhirClient(TestEndpoint))
             {
                 var binary = new Binary() { Data = arr, ContentType = "image/png" };
                 var result = client.Create(binary);
@@ -1469,15 +1446,14 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestPreferOperationOutcome()
         {
-            FhirClient client = new FhirClient(testEndpoint);
+            FhirClient client = new FhirClient(TestEndpoint);
             client.Settings.PreferredReturn = Prefer.OperationOutcome;
 
             var pat = new Patient()
             {
                 Name = new List<HumanName> { new HumanName().WithGiven("testy").AndFamily("McTestFace") }
             };
-
-            var oo = client.Create<Patient>(pat);
+            _ = client.Create<Patient>(pat);
             Assert.IsNotNull(client.LastResult.Outcome);
         }
 
@@ -1485,7 +1461,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestOperationEverythingHttpClient()
         {
-            using (FhirClient client = new FhirClient(testEndpoint, new FhirClientSettings() { UseFormatParameter = true, PreferredFormat = ResourceFormat.Json }))
+            using (FhirClient client = new FhirClient(TestEndpoint, new FhirClientSettings() { UseFormatParameter = true, PreferredFormat = ResourceFormat.Json }))
             {
                 testOpEverything(client);
             }
@@ -1549,7 +1525,7 @@ namespace Hl7.Fhir.Tests.Rest
                 InnerHandler = testMessageHandler
             };
 
-            using var client = new FhirClient(testEndpoint, settings: FhirClientSettings.CreateDefault(), testDegatingHandler);
+            using var client = new FhirClient(TestEndpoint, settings: FhirClientSettings.CreateDefault(), testDegatingHandler);
             var loc = client.Read<Location>("Location/" + locationId);
             Assert.IsNotNull(testDegatingHandler.LastRequest);
             Assert.IsNotNull(testMessageHandler.LastResponse);

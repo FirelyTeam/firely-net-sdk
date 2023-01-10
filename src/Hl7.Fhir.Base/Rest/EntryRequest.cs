@@ -11,7 +11,7 @@ using System;
 
 namespace Hl7.Fhir.Rest
 {
-    public class EntryRequest
+    internal class EntryRequest
     {
         public HTTPVerb? Method { get; set; }
         public string Url { get; set; }
@@ -19,10 +19,10 @@ namespace Hl7.Fhir.Rest
         public byte[] RequestBodyContent { get; set; }
         public EntryRequestHeaders Headers { get; set; }
         public InteractionType Type { get; set; }
-        public string Agent { get; set; }
+        public string FhirVersion { get; set; }
     }
     
-    public class EntryRequestHeaders
+    internal class EntryRequestHeaders
     {
         public string IfMatch { get; set; }
         public string IfNoneMatch { get; set; }

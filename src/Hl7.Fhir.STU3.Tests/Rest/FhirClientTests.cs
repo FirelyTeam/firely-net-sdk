@@ -355,7 +355,6 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Bundle result;
 
-                client.Settings.CompressRequestBody = true;
                 handler.AutomaticDecompression = DecompressionMethods.GZip;
 
                 result = client.Search<DiagnosticReport>();

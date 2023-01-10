@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Test
         public void TestSetAgentHttpClient()
         {
             var entry = _Entry;
-            entry.Agent = "testAgent";
+            entry.FhirVersion = "testAgent";
             var settings = _Settings;
 
             var request = entry.ToHttpRequestMessage(_endpoint, settings);

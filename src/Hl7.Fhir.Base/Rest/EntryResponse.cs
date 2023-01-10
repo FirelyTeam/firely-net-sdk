@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Rest
 {
-    public class EntryResponse
+    internal class EntryResponse
     {
         public string Status { get; set; }
         public Dictionary<string, string> Headers { get; set; }
@@ -29,8 +29,7 @@ namespace Hl7.Fhir.Rest
         }
     }
 
-
-    public class TypedEntryResponse : EntryResponse
+    internal class TypedEntryResponse : EntryResponse
     {
         public ITypedElement TypedElement { get; set; }
     }

@@ -63,7 +63,11 @@ namespace Hl7.Fhir.Serialization
             writer.WriteEndDocument();
         }
 
-
+        /// <summary>
+        /// Serializes the given dictionary with FHIR data into UTF8 encoded Json.
+        /// </summary>
+        public string SerializeToString(IReadOnlyDictionary<string, object> members, SerializationFilter? summary = default) =>
+            SerializationUtil.WriteXmlToString(w => Serialize(members, w, summary));
 
         /// <summary>
         /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
@@ -104,7 +108,7 @@ namespace Hl7.Fhir.Serialization
                 var elementName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
                             addSuffixToElementName(member.Key, member.Value) : member.Key;
 
-                if (member.Value is ICollection coll && !(member.Value is byte[]))
+                if (member.Value is ICollection coll && member.Value is not byte[])
                 {
                     foreach (var value in coll)
                         serializeMemberValue(elementName, value, writer, filter);
@@ -174,7 +178,7 @@ namespace Hl7.Fhir.Serialization
                 bool b => XmlConvert.ToString(b),
                 DateTimeOffset dto => ElementModel.Types.DateTime.FormatDateTimeOffset(dto),
                 byte[] bytes => Convert.ToBase64String(bytes),
-                _ => throw new FormatException($"There is no know serialization for type {value.GetType()} into an Xml primitive property value.")
+                _ => throw new FormatException($"There is no known serialization for type {value.GetType()} into an Xml primitive property value.")
             };
 
             writer.WriteAttributeString(elementName, ns: null, value: literal);

@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Serialization
                 case byte[] bytes: writer.WriteStringValue(Convert.ToBase64String(bytes)); break;
                 case null: writer.WriteNullValue(); break;
                 default:
-                    throw new FormatException($"There is no know serialization for type {value.GetType()} into a Json primitive property value.");
+                    throw new FormatException($"There is no known serialization for type {value.GetType()} into a Json primitive property value.");
             }
         }
     }
