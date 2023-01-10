@@ -27,6 +27,7 @@
  
 */
 
+using Hl7.Fhir.Utility;
 using System;
 
 #nullable enable
@@ -42,6 +43,37 @@ namespace Hl7.Fhir.Model
         public Canonical(Uri uri) : this(uri?.OriginalString)
         {
             // nothing
+        }
+
+        /// <summary>
+        /// Constructs a canonical from its components.
+        /// </summary>
+        public Canonical(string? uri, string? version, string? fragment)
+        {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            if (uri.IndexOfAny(new[] { '|', '#' }) != -1)
+                throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
+
+            if (version != null && version.IndexOfAny(new[] { '|', '#' }) != -1)
+                throw Error.Argument(nameof(version), "cannot contain version/fragment data");
+
+            if (fragment != null && fragment.IndexOfAny(new[] { '|', '#' }) != -1)
+                throw Error.Argument(nameof(fragment), "already contains version/fragment data");
+
+
+            Value = uri +
+                (version is not null ? "|" + version : null) +
+                (fragment is not null ? "#" + fragment : null);
+        }
+
+        /// <summary>
+        /// Deconstructs the canonical into its uri and version.
+        /// </summary>
+        public void Deconstruct(out string? uri, out string? version, out string? fragment)
+        {
+            uri = Uri;
+            version = Version;
+            fragment = Fragment;
         }
 
         /// <summary>
@@ -63,6 +95,61 @@ namespace Hl7.Fhir.Model
 
         public static readonly Uri FHIR_CORE_PROFILE_BASE_URI = new(@"http://hl7.org/fhir/StructureDefinition/");
         public static Canonical CanonicalUriForFhirCoreType(string typename) => new(FHIR_CORE_PROFILE_BASE_URI + typename);
+
+
+        /// <summary>
+        /// The version string of the canonical (if present).
+        /// </summary>
+        public string? Version => splitCanonical(Value).version;
+
+        /// <summary>
+        /// Optional anchor at the end of the canonical, without the '#' prefix.
+        /// </summary>
+        public string? Fragment => splitCanonical(Value).fragment;
+
+        /// <summary>
+        /// The uri part of the canonical, which is the canonical without the version indication.
+        /// </summary>
+        public string? Uri => splitCanonical(Value).url;
+
+        /// <summary>
+        /// Converts the canonical to a <see cref="System.Uri" />.
+        /// </summary>
+        /// <returns></returns>
+        public Uri ToUri() => new(Value, UriKind.RelativeOrAbsolute);
+
+        /// <summary>
+        /// Whether the canonical is a relative or an absolute uri.
+        /// </summary>
+        public bool IsAbsolute => ToUri().IsAbsoluteUri;
+
+        /// <summary>
+        /// Whether the canonical has a version part.
+        /// </summary>
+        public bool HasVersion => Version is not null;
+
+        /// <summary>
+        /// Whether the canonical end with an anchor.
+        /// </summary>
+        public bool HasAnchor => Fragment is not null;
+
+        private static (string? url, string? version, string? fragment) splitCanonical(string canonical)
+        {
+            var (rest, a) = splitOff(canonical, '#');
+            var (u, v) = splitOff(rest, '|');
+
+            return (u == String.Empty ? null : u, v, a);
+
+            static (string, string?) splitOff(string url, char separator)
+            {
+                if (url.EndsWith(separator.ToString())) url = url.Substring(0, url.Length - 1);
+                var position = url.LastIndexOf(separator);
+
+                return position == -1 ?
+                    (url, null)
+                    : (url.Substring(0, position), url.Substring(position + 1));
+            }
+        }
     }
 }
 

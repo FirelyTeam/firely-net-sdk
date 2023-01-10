@@ -282,17 +282,17 @@ namespace Hl7.Fhir.Specification.Navigation
         {
             if (Count == 0) return false;
 
-            var profileRef = ProfileReference.Parse(nameReference);
+            var profileRef = new Canonical(nameReference);
 
             // Namereferences should normally look like '#Questionnaire.item', but in snapshots for profiles, these can also
             // be absolute urls pointing to an external (core) StructureDefinition, but we cannot handle those here as
             // that should be dealt with by the caller.
-            if (profileRef.IsAbsolute && profileRef.CanonicalUrl != StructureDefinition.Url)
+            if (profileRef.IsAbsolute && profileRef.Uri != StructureDefinition.Url)
                 throw new NotSupportedException("Can only jump to local nameReferences, not " + nameReference);
 
             for (int pos = 0; pos < Count; pos++)
             {
-                if (Elements[pos].ElementId == profileRef.ElementName)
+                if (Elements[pos].ElementId == profileRef.Fragment)
                 {
                     OrdinalPosition = pos;
                     return true;
