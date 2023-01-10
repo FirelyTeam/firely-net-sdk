@@ -14,7 +14,7 @@ namespace Hl7.Fhir.Specification.Tests
     /// (By just trying to de-serialize all the content)
     /// </summary>
     [TestClass]
-    public class SpecificationTestDataVersionCheck
+    public partial class SpecificationTestDataVersionCheck
     {
         [TestMethod]
         public async Tasks.Task VerifyAllTestDataSpecification()
@@ -29,35 +29,19 @@ namespace Hl7.Fhir.Specification.Tests
 
         private async Tasks.Task ValidateFolder(string basePath, string path, List<string> issues)
         {
-            if (path.Contains("grahame-validation-examples"))
-                return;
-            if (path.Contains("source-test"))
-                return;
-            if (path.Contains("summary-test"))
-                return;
-            // [WMR 20190822] Added
-            if (path.Contains("Type Slicing"))
-                return;
-            if (path.Contains("validation-test-suite"))
-                return;
+            if (skipFiles(path)) return;
 
             var xmlParser = new Hl7.Fhir.Serialization.FhirXmlParser();
             var jsonParser = new Serialization.FhirJsonParser();
             Console.WriteLine($"Validating test files in {path.Replace(basePath, "")}");
             foreach (var item in Directory.EnumerateFiles(path))
             {
+                if (skipFiles(item)) continue;
+
                 string content = File.ReadAllText(item);
-                Hl7.Fhir.Model.Resource resource = null;
+                Resource resource = null;
                 try
                 {
-                    if (item.EndsWith(".dll"))
-                        continue;
-                    if (item.EndsWith(".exe"))
-                        continue;
-                    if (item.EndsWith(".pdb"))
-                        continue;
-                    if (item.EndsWith("manifest.json"))
-                        continue;
                     if (new FileInfo(item).Extension == ".xml")
                     {
                         // Console.WriteLine($"    {item.Replace(path + "\\", "")}");

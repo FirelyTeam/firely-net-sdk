@@ -46,7 +46,13 @@ namespace Hl7.Fhir.Specification.Tests
             var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
             // [WMR 20181218] R4 OBSOLETE - ExpansionProfile resource no longer exists
             // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
-            var ns = source.ListSummaries(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
+            var ns = source.ListSummaries(ResourceType.NamingSystem);
+#if R5
+            // Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore. 
+            Assert.IsFalse(ns.Any());
+#else
+            Assert.IsTrue(ns.Any());
+#endif
         }
 
         [TestMethod]

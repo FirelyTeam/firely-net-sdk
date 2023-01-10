@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Debug.WriteLine($"Default snapshot: {snapElems.Count} elements");
                 dumpBaseElems(snapElems);
                 dumpIssues(_generator.Outcome?.Issue);
-                Assert.AreEqual(62, snapElems.Count);
+                Assert.AreEqual(57, snapElems.Count);
                 Assert.IsNull(_generator.Outcome);
 
                 var issues = new List<OperationOutcome.IssueComponent>();

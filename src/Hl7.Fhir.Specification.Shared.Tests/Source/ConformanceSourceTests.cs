@@ -39,14 +39,22 @@ namespace Hl7.Fhir.Specification.Tests
         public void FindConceptMaps()
         {
             var conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use").ToList();
+#if R5
+            Assert.AreEqual(5, conceptMaps.Count());
+#else
             Assert.AreEqual(3, conceptMaps.Count());
+#endif
             Assert.IsNotNull(conceptMaps.First().GetOrigin());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v2-0190").ToList();
             Assert.AreEqual(1, conceptMaps.Count());
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://terminology.hl7.org/ValueSet/v3-AddressUse").ToList();
+#if R5
+            Assert.AreEqual(4, conceptMaps.Count());
+#else
             Assert.AreEqual(2, conceptMaps.Count());
+#endif
 
             conceptMaps = source.FindConceptMaps("http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/ValueSet/somethingelse").ToList();
             Assert.AreEqual(0, conceptMaps.Count());
@@ -61,8 +69,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(vs.GetOrigin());
 
             // A non-HL7 valueset
-            vs = await source.FindCodeSystemAsync("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
-            Assert.IsNotNull(vs);
+            // No longer part of the spec
+            //vs = await source.FindCodeSystemAsync("http://dicom.nema.org/resources/ontology/DCM"); // http://nema.org/dicom/dicm");
+            //Assert.IsNotNull(vs);
 
             //MV: No longer part of the spec
             // One from v2-tables
@@ -109,6 +118,9 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [TestMethod]
+#if R5
+        [Ignore("Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore")]
+#endif
         public void FindNamingSystem()
         {
             var ns = source.FindNamingSystem("2.16.840.1.113883.4.1");
@@ -137,7 +149,13 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
             // var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
-            var ns = source.ListResourceUris(ResourceType.NamingSystem); Assert.IsTrue(ns.Any());
+            var ns = source.ListResourceUris(ResourceType.NamingSystem);
+#if R5
+            // Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore. 
+            Assert.IsFalse(ns.Any());
+#else
+            Assert.IsTrue(ns.Any());
+#endif
 
             var all = source.ListResourceUris();
 
@@ -152,7 +170,12 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(cs.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system"));
             Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
             Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
+#if R5
+            // Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore.
+            Assert.IsFalse(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
+#else
             Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
+#endif
         }
 
         [TestMethod]
