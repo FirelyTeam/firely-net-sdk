@@ -15,6 +15,7 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -243,7 +244,8 @@ namespace Hl7.Fhir.Tests.Rest
 
         private void testReadWrongResourceType(BaseFhirClient client)
         {
-            _ = client.Read<Patient>("Location/" + locationId);
+            var l = client.Read<Patient>("Location/" + locationId);
+            Trace.WriteLine(l);
         }
 
         [TestMethod, TestCategory("FhirClient"), TestCategory("IntegrationTest")]
@@ -1455,7 +1457,8 @@ namespace Hl7.Fhir.Tests.Rest
             {
                 Name = new List<HumanName> { new HumanName().WithGiven("testy").AndFamily("McTestFace") }
             };
-            _ = client.Create<Patient>(pat);
+            var p = client.Create(pat);
+            Trace.WriteLine(p);
             Assert.IsNotNull(client.LastResult.Outcome);
         }
 

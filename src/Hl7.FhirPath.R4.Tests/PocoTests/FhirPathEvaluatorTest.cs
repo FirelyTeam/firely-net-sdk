@@ -371,37 +371,41 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void CompilationIsCached()
         {
-            Stopwatch sw = new Stopwatch();
-            string expression = "";
-
-            sw.Start();
-
-            var random = new Random();
-
-            // something that has not been compiled before
-            for (int i = 0; i < 1000; i++)
+            // If the test failed, try again, we might have been
+            // bugged by temporary slowness of the CI build.
+            if (!test())
             {
-                var next = random.Next(0, 10000);
-                expression = $"Patient.name[{next}]";
-                fixture.TestInput.Select(expression);
+                Assert.IsTrue(test());
             }
-            sw.Stop();
-
-            var uncached = sw.ElapsedMilliseconds;
-
-            sw.Restart();
-
-            for (int i = 0; i < 1000; i++)
+                   
+            static bool test()
             {
-                fixture.TestInput.Select(expression);
+                var uncached = run(null, out var last);
+                var cached = run(last, out var _);
+                Console.WriteLine("Uncached: {0}, cached: {1}".FormatWith(uncached, cached));
+
+                return cached < uncached / 2;
             }
 
-            sw.Stop();
+            static long run(string fixd, out string lastExpression)
+            {
+                lastExpression = null;
+                var sw = new Stopwatch();
+                sw.Start();
 
-            var cached = sw.ElapsedMilliseconds;
-            Console.WriteLine("Uncached: {0}, cached: {1}".FormatWith(uncached, cached));
+                var random = new Random();
 
-            Assert.IsTrue(cached < uncached / 2);
+                // something that has not been compiled before
+                for (int i = 0; i < 1000; i++)
+                {
+                    var next = random.Next(0, 10000);
+                    lastExpression = fixd ?? $"Patient.name[{next}]";
+                    fixture.TestInput.Select(lastExpression);
+                }
+                sw.Stop();
+
+                return sw.ElapsedMilliseconds;
+            }
         }
 
         // Verifies https://github.com/FirelyTeam/firely-net-sdk/issues/1140

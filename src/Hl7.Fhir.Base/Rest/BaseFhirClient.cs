@@ -1028,12 +1028,16 @@ namespace Hl7.Fhir.Rest
 
         private async Task<TResource?> executeAsync<TResource>(Bundle tx, IEnumerable<HttpStatusCode> expect, CancellationToken? ct) where TResource : Resource
         {
-            await verifyServerVersion(ct ?? CancellationToken.None);
+            var cancellation = ct ?? CancellationToken.None;
 
+            cancellation.ThrowIfCancellationRequested();
+
+            await verifyServerVersion(cancellation);
+            
             var request = tx.Entry[0];
             var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, fhirVersion).ConfigureAwait(false);
 
-            EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest, ct ?? CancellationToken.None).ConfigureAwait(false);
+            EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest, cancellation).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
 
             try
