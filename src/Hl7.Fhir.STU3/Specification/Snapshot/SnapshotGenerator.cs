@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Specification.Snapshot
 
                 var profileRef = new Canonical(defn.ContentReference);
 
-                if (!sourceNav.JumpToNameReference("#" + profileRef.Anchor))
+                if (!sourceNav.JumpToNameReference("#" + profileRef.Fragment))
                 {
                     addIssueInvalidNameReference(defn);
                     return false;
@@ -1152,9 +1152,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                             }
                             else
                             {
-                                if (!typeNav.JumpToNameReference(profileRef.Anchor))
+                                if (!typeNav.JumpToNameReference(profileRef.Fragment))
                                 {
-                                    addIssueInvalidProfileNameReference(snap.Current, profileRef.Anchor, primaryDiffTypeProfile);
+                                    addIssueInvalidProfileNameReference(snap.Current, profileRef.Fragment, primaryDiffTypeProfile);
                                     return false;
                                 }
                             }

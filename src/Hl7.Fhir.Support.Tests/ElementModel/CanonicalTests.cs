@@ -30,7 +30,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             testee.Uri.Should().Be("http://example.org/test");
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeTrue();
-            testee.Anchor.Should().Be("anchor");
+            testee.Fragment.Should().Be("anchor");
             testee.IsAbsolute.Should().BeTrue();
 
             testee = new Canonical("http://example.org/test|3.4.5#anchor");
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             testee.HasVersion.Should().BeTrue();
             testee.Version.Should().Be("3.4.5");
             testee.HasAnchor.Should().BeTrue();
-            testee.Anchor.Should().Be("anchor");
+            testee.Fragment.Should().Be("anchor");
             testee.IsAbsolute.Should().BeTrue();
         }
 
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             testee.Uri.Should().BeNull();
             testee.HasVersion.Should().BeFalse();
             testee.HasAnchor.Should().BeTrue();
-            testee.Anchor.Should().Be("anchor");
+            testee.Fragment.Should().Be("anchor");
             testee.IsAbsolute.Should().BeFalse();
         }
 

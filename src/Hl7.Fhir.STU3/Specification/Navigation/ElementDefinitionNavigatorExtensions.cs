@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Specification.Navigation
                 targetNavigator = sourceNavigator.ShallowCopy();
             }
 
-            return targetNavigator.JumpToNameReference("#" + profileRef.Anchor);
+            return targetNavigator.JumpToNameReference("#" + profileRef.Fragment);
         }
 
     }

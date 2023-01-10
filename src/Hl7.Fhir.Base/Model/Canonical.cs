@@ -27,6 +27,7 @@
  
 */
 
+using Hl7.Fhir.Utility;
 using System;
 
 #nullable enable
@@ -47,21 +48,32 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Constructs a canonical from its components.
         /// </summary>
-        public Canonical(string? uri, string? version, string? anchor)
+        public Canonical(string? uri, string? version, string? fragment)
         {
+            if (uri == null) throw Error.ArgumentNull(nameof(uri));
+            if (uri.IndexOfAny(new[] { '|', '#' }) != -1)
+                throw Error.Argument(nameof(uri), "cannot contain version/fragment data");
+
+            if (version != null && version.IndexOfAny(new[] { '|', '#' }) != -1)
+                throw Error.Argument(nameof(version), "cannot contain version/fragment data");
+
+            if (fragment != null && fragment.IndexOfAny(new[] { '|', '#' }) != -1)
+                throw Error.Argument(nameof(fragment), "already contains version/fragment data");
+
+
             Value = uri +
                 (version is not null ? "|" + version : null) +
-                (anchor is not null ? "#" + anchor : null);
+                (fragment is not null ? "#" + fragment : null);
         }
 
         /// <summary>
         /// Deconstructs the canonical into its uri and version.
         /// </summary>
-        public void Deconstruct(out string? uri, out string? version, out string? anchor)
+        public void Deconstruct(out string? uri, out string? version, out string? fragment)
         {
             uri = Uri;
             version = Version;
-            anchor = Anchor;
+            fragment = Fragment;
         }
 
         /// <summary>
@@ -88,35 +100,17 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// The version string of the canonical (if present).
         /// </summary>
-        public string? Version
-        {
-            get
-            {
-                return splitCanonical(Value).version;
-            }
-        }
+        public string? Version => splitCanonical(Value).version;
 
         /// <summary>
         /// Optional anchor at the end of the canonical, without the '#' prefix.
         /// </summary>
-        public string? Anchor
-        {
-            get
-            {
-                return splitCanonical(Value).anchor;
-            }
-        }
+        public string? Fragment => splitCanonical(Value).fragment;
 
         /// <summary>
         /// The uri part of the canonical, which is the canonical without the version indication.
         /// </summary>
-        public string? Uri
-        {
-            get
-            {
-                return splitCanonical(Value).url;
-            }
-        }
+        public string? Uri => splitCanonical(Value).url;
 
         /// <summary>
         /// Converts the canonical to a <see cref="System.Uri" />.
@@ -137,9 +131,9 @@ namespace Hl7.Fhir.Model
         /// <summary>
         /// Whether the canonical end with an anchor.
         /// </summary>
-        public bool HasAnchor => Anchor is not null;
+        public bool HasAnchor => Fragment is not null;
 
-        private static (string? url, string? version, string? anchor) splitCanonical(string canonical)
+        private static (string? url, string? version, string? fragment) splitCanonical(string canonical)
         {
             var (rest, a) = splitOff(canonical, '#');
             var (u, v) = splitOff(rest, '|');

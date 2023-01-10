@@ -743,7 +743,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 var profileRef = new Canonical(diffProfile);
                 var result = profileRef.HasAnchor
                     // Match on element name (for complex extension elements)
-                    ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.Anchor)
+                    ? StringComparer.Ordinal.Equals(snapNav.Current.SliceName, profileRef.Fragment)
                     // Match on type profile(s)
                     : snapProfile.SequenceEqual(diffProfile);
 
