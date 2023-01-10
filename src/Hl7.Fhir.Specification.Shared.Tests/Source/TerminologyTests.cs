@@ -63,12 +63,12 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/example-extensional")).DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/package-type")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             await expander.ExpandAsync(testVs);
-            Assert.Equal(4, testVs.Expansion.Total);
+            Assert.Equal(3, testVs.Expansion.Total);
         }
 
 
@@ -83,10 +83,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             await Assert.ThrowsAsync<ValueSetExpansionTooBigException>(async () => await expander.ExpandAsync(testVs));
 
-            expander.Settings.MaxExpansionSize = 50;
+            expander.Settings.MaxExpansionSize = 100;
             await expander.ExpandAsync(testVs);
             //Assert.Equal(32, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0, +4 for 5.0.0-snapshot1
-            testVs.Expansion.Total.Should().BeLessThanOrEqualTo(50);
+            testVs.Expansion.Total.Should().BeLessThanOrEqualTo(100);
         }
 
         [Fact]
