@@ -209,9 +209,10 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Where the artifact can be accessed
+    /// Where the artifact can be accessed. Note: Element is deprecated since R5, do not use with R5 and newer releases.
     /// </summary>
     [FhirElement("url", InSummary=true, Order=60)]
+    [NotMapped(Since=FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
