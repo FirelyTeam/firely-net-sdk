@@ -56,7 +56,7 @@
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
         <expression value="children().count() &gt; id.count()" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
         <source value="Element" />
       </constraint>
       <constraint>
@@ -64,7 +64,7 @@
         <severity value="error" />
         <human value="Must have either extensions or value[x], not both" />
         <expression value="extension.exists() != value.exists()" />
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), 'value')])" />
+        <!-- removed xpath -->
         <source value="Extension" />
       </constraint>
       <mapping>

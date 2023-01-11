@@ -172,7 +172,7 @@
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
-        <xpath value="not(parent::f:contained and f:contained)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -180,7 +180,7 @@
         <severity value="error"/>
         <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
         <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -188,7 +188,7 @@
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
         <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath value="not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -202,7 +202,7 @@
         <severity value="warning"/>
         <human value="A resource should have narrative for robust management"/>
         <expression value="text.div.exists()"/>
-        <xpath value="exists(f:text/h:div)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -210,7 +210,7 @@
         <severity value="error"/>
         <human value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
         <expression value="contained.meta.security.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -218,7 +218,7 @@
         <severity value="error"/>
         <human value="The link ids for groups and questions must be unique within the questionnaire"/>
         <expression value="descendants().linkId.isDistinct()"/>
-        <xpath value="count(descendant::f:linkId/@value)=count(distinct-values(descendant::f:linkId/@value))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire"/>
       </constraint>
       <constraint>
@@ -226,7 +226,7 @@
         <severity value="warning"/>
         <human value="Name should be usable as an identifier for the module by machine processing applications such as code generation"/>
         <expression value="name.matches(&#39;[A-Z]([A-Za-z0-9_]){0,254}&#39;)"/>
-        <xpath value="not(exists(f:name/@value)) or matches(f:name/@value, &#39;[A-Z]([A-Za-z0-9_]){0,254}&#39;)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire"/>
       </constraint>
       <isModifier value="false"/>
@@ -1108,7 +1108,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -1116,7 +1116,7 @@
         <severity value="error"/>
         <human value="Read-only can&#39;t be specified for &quot;display&quot; items"/>
         <expression value="type!=&#39;display&#39; or readOnly.empty()"/>
-        <xpath value="not(f:type/@value=(&#39;group&#39;, &#39;display&#39;) and f:*[starts-with(local-name(.), &#39;initial&#39;)])"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1124,7 +1124,7 @@
         <severity value="error"/>
         <human value="Initial values can&#39;t be specified for groups or display items"/>
         <expression value="(type!=&#39;group&#39; and type!=&#39;display&#39;) or initial.empty()"/>
-        <xpath value="not(f:type/@value=(&#39;group&#39;, &#39;display&#39;) and f:*[starts-with(local-name(.), &#39;initial&#39;)])"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1132,7 +1132,7 @@
         <severity value="error"/>
         <human value="Required and repeat aren&#39;t permitted for display items"/>
         <expression value="type!=&#39;display&#39; or (required.empty() and repeats.empty())"/>
-        <xpath value="not(f:type/@value=&#39;display&#39; and (f:required or f:repeats))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1140,7 +1140,7 @@
         <severity value="error"/>
         <human value="Only &#39;choice&#39; and &#39;open-choice&#39; items can have answerValueSet"/>
         <expression value="(type =&#39;choice&#39; or type = &#39;open-choice&#39; or type = &#39;decimal&#39; or type = &#39;integer&#39; or type = &#39;date&#39; or type = &#39;dateTime&#39; or type = &#39;time&#39; or type = &#39;string&#39; or type = &#39;quantity&#39;) or (answerValueSet.empty() and answerOption.empty())"/>
-        <xpath value="f:type/@value=(&#39;choice&#39;,&#39;open-choice&#39;,&#39;decimal&#39;,&#39;integer&#39;,&#39;date&#39;,&#39;dateTime&#39;,&#39;time&#39;,&#39;string&#39;,&#39;quantity&#39;,&#39;) or not(f:answerOption or f:answerValueSet)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1148,7 +1148,7 @@
         <severity value="error"/>
         <human value="A question cannot have both answerOption and answerValueSet"/>
         <expression value="answerOption.empty() or answerValueSet.empty()"/>
-        <xpath value="not(f:answerValueSet and f:answerOption)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1156,7 +1156,7 @@
         <severity value="error"/>
         <human value="Display items cannot have a &quot;code&quot; asserted"/>
         <expression value="type!=&#39;display&#39; or code.empty()"/>
-        <xpath value="not(f:type/@value=&#39;display&#39; and f:code)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1164,7 +1164,7 @@
         <severity value="error"/>
         <human value="Maximum length can only be declared for simple question types"/>
         <expression value="(type in (&#39;boolean&#39; | &#39;decimal&#39; | &#39;integer&#39; | &#39;string&#39; | &#39;text&#39; | &#39;url&#39; | &#39;open-choice&#39;)) or maxLength.empty()"/>
-        <xpath value="f:type/@value=(&#39;boolean&#39;, &#39;decimal&#39;, &#39;integer&#39;, &#39;open-choice&#39;, &#39;string&#39;, &#39;text&#39;, &#39;url&#39;) or not(f:maxLength)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1172,7 +1172,7 @@
         <severity value="error"/>
         <human value="Group items must have nested items, display items cannot have nested items"/>
         <expression value="(type=&#39;group&#39; implies item.empty().not()) and (type.trace(&#39;type&#39;)=&#39;display&#39; implies item.trace(&#39;item&#39;).empty())"/>
-        <xpath value="not((f:type/@value=&#39;group&#39; and not(f:item)) or (f:type/@value=&#39;display&#39; and f:item))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1180,7 +1180,7 @@
         <severity value="error"/>
         <human value="Can only have multiple initial values for repeating items"/>
         <expression value="repeats=true or initial.count() &lt;= 1"/>
-        <xpath value="f:repeats/@value=&#39;true&#39; or count(f:initial)&lt;=1"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1188,7 +1188,7 @@
         <severity value="error"/>
         <human value="If one or more answerOption is present, initial[x] must be missing"/>
         <expression value="answerOption.empty() or initial.empty()"/>
-        <xpath value="not(f:answerOption) or not(count(f:*[starts-with(local-name(.), &#39;initial&#39;)]))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -1196,7 +1196,7 @@
         <severity value="error"/>
         <human value="If there are more than one enableWhen, enableBehavior must be specified"/>
         <expression value="enableWhen.count() &gt; 2 implies enableBehavior.exists()"/>
-        <xpath value="not(f:answerOption) or not(count(f:*[starts-with(local-name(.), &#39;initial&#39;)]))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <isModifier value="false"/>
@@ -1456,7 +1456,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -1464,7 +1464,7 @@
         <severity value="error"/>
         <human value="If the operator is &#39;exists&#39;, the value must be a boolean"/>
         <expression value="operator = &#39;exists&#39; implies (answer is Boolean)"/>
-        <xpath value="f:operator/@value != &#39;exists&#39; or exists(f:answerBoolean)"/>
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true"/>
       <isModifierReason value="If enableWhen is present and the condition evaluates to false, then the Questionnaire behaves as though the elements weren&#39;t actually present"/>
@@ -1834,7 +1834,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2009,7 +2009,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -2200,7 +2200,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -2208,7 +2208,7 @@
         <severity value="error"/>
         <human value="Read-only can&#39;t be specified for &quot;display&quot; items"/>
         <expression value="type!=&#39;display&#39; or readOnly.empty()"/>
-        <xpath value="not(f:type/@value=(&#39;group&#39;, &#39;display&#39;) and f:*[starts-with(local-name(.), &#39;initial&#39;)])"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2216,7 +2216,7 @@
         <severity value="error"/>
         <human value="Initial values can&#39;t be specified for groups or display items"/>
         <expression value="(type!=&#39;group&#39; and type!=&#39;display&#39;) or initial.empty()"/>
-        <xpath value="not(f:type/@value=(&#39;group&#39;, &#39;display&#39;) and f:*[starts-with(local-name(.), &#39;initial&#39;)])"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2224,7 +2224,7 @@
         <severity value="error"/>
         <human value="Required and repeat aren&#39;t permitted for display items"/>
         <expression value="type!=&#39;display&#39; or (required.empty() and repeats.empty())"/>
-        <xpath value="not(f:type/@value=&#39;display&#39; and (f:required or f:repeats))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2232,7 +2232,7 @@
         <severity value="error"/>
         <human value="Only &#39;choice&#39; and &#39;open-choice&#39; items can have answerValueSet"/>
         <expression value="(type =&#39;choice&#39; or type = &#39;open-choice&#39; or type = &#39;decimal&#39; or type = &#39;integer&#39; or type = &#39;date&#39; or type = &#39;dateTime&#39; or type = &#39;time&#39; or type = &#39;string&#39; or type = &#39;quantity&#39;) or (answerValueSet.empty() and answerOption.empty())"/>
-        <xpath value="f:type/@value=(&#39;choice&#39;,&#39;open-choice&#39;,&#39;decimal&#39;,&#39;integer&#39;,&#39;date&#39;,&#39;dateTime&#39;,&#39;time&#39;,&#39;string&#39;,&#39;quantity&#39;,&#39;) or not(f:answerOption or f:answerValueSet)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2240,7 +2240,7 @@
         <severity value="error"/>
         <human value="A question cannot have both answerOption and answerValueSet"/>
         <expression value="answerOption.empty() or answerValueSet.empty()"/>
-        <xpath value="not(f:answerValueSet and f:answerOption)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2248,7 +2248,7 @@
         <severity value="error"/>
         <human value="Display items cannot have a &quot;code&quot; asserted"/>
         <expression value="type!=&#39;display&#39; or code.empty()"/>
-        <xpath value="not(f:type/@value=&#39;display&#39; and f:code)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2256,7 +2256,7 @@
         <severity value="error"/>
         <human value="Maximum length can only be declared for simple question types"/>
         <expression value="(type in (&#39;boolean&#39; | &#39;decimal&#39; | &#39;integer&#39; | &#39;string&#39; | &#39;text&#39; | &#39;url&#39; | &#39;open-choice&#39;)) or maxLength.empty()"/>
-        <xpath value="f:type/@value=(&#39;boolean&#39;, &#39;decimal&#39;, &#39;integer&#39;, &#39;open-choice&#39;, &#39;string&#39;, &#39;text&#39;, &#39;url&#39;) or not(f:maxLength)"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2264,7 +2264,7 @@
         <severity value="error"/>
         <human value="Group items must have nested items, display items cannot have nested items"/>
         <expression value="(type=&#39;group&#39; implies item.empty().not()) and (type.trace(&#39;type&#39;)=&#39;display&#39; implies item.trace(&#39;item&#39;).empty())"/>
-        <xpath value="not((f:type/@value=&#39;group&#39; and not(f:item)) or (f:type/@value=&#39;display&#39; and f:item))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2272,7 +2272,7 @@
         <severity value="error"/>
         <human value="Can only have multiple initial values for repeating items"/>
         <expression value="repeats=true or initial.count() &lt;= 1"/>
-        <xpath value="f:repeats/@value=&#39;true&#39; or count(f:initial)&lt;=1"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2280,7 +2280,7 @@
         <severity value="error"/>
         <human value="If one or more answerOption is present, initial[x] must be missing"/>
         <expression value="answerOption.empty() or initial.empty()"/>
-        <xpath value="not(f:answerOption) or not(count(f:*[starts-with(local-name(.), &#39;initial&#39;)]))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <constraint>
@@ -2288,7 +2288,7 @@
         <severity value="error"/>
         <human value="If there are more than one enableWhen, enableBehavior must be specified"/>
         <expression value="enableWhen.count() &gt; 2 implies enableBehavior.exists()"/>
-        <xpath value="not(f:answerOption) or not(count(f:*[starts-with(local-name(.), &#39;initial&#39;)]))"/>
+        <!-- removed xpath -->
         <source value="Questionnaire.item"/>
       </constraint>
       <isModifier value="false"/>
@@ -2548,7 +2548,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -2556,7 +2556,7 @@
         <severity value="error"/>
         <human value="If the operator is &#39;exists&#39;, the value must be a boolean"/>
         <expression value="operator = &#39;exists&#39; implies (answer is Boolean)"/>
-        <xpath value="f:operator/@value != &#39;exists&#39; or exists(f:answerBoolean)"/>
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true"/>
       <isModifierReason value="If enableWhen is present and the condition evaluates to false, then the Questionnaire behaves as though the elements weren&#39;t actually present"/>
@@ -2926,7 +2926,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -3101,7 +3101,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>

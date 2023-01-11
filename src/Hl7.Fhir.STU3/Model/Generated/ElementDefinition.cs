@@ -1471,9 +1471,10 @@ namespace Hl7.Fhir.Model
       }
 
       /// <summary>
-      /// XPath expression of constraint
+      /// XPath expression of constraint. Note: Element is deprecated since R5, do not use with R5 and newer releases.
       /// </summary>
       [FhirElement("xpath", InSummary=true, Order=80)]
+      [NotMapped(Since=FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString XpathElement
       {

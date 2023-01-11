@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
-using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -21,109 +20,8 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
-    [TestClass]
-    public class RoundtripTest
+    public partial class RoundtripTest
     {
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlPoco()
-        {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
-                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public async Tasks.Task FullRoundtripOfAllExamplesXmlPocoAsync()
-        {
-            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
-                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonPoco()
-        {
-            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
-                "Roundtripping json->xml->json", usingPoco: true, provider: null);
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public async Tasks.Task FullRoundtripOfAllExamplesJsonPocoAsync()
-        {
-            await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
-                "Roundtripping json->xml->json", usingPoco: true, provider: null);
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNavPocoProvider()
-        {
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
-                "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public async Tasks.Task FullRoundtripOfAllExamplesXmlNavPocoProviderAsync()
-        {
-            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
-                "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNavPocoProvider()
-        {
-            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
-                "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public async Tasks.Task FullRoundtripOfAllExamplesJsonNavPocoProviderAsync()
-        {
-            await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
-                "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNavSdProvider()
-        {
-            var source = new CachedResolver(ZipSource.CreateValidationSource());
-            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
-                "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public async Tasks.Task FullRoundtripOfAllExamplesXmlNavSdProviderAsync()
-        {
-            var source = new CachedResolver(ZipSource.CreateValidationSource());
-            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
-                "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNavSdProvider()
-        {
-            var source = new CachedResolver(ZipSource.CreateValidationSource());
-            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
-                "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
-        }
-
-        [TestMethod]
-        [TestCategory("LongRunner")]
-        public async Tasks.Task FullRoundtripOfAllExamplesJsonNavSdProviderAsync()
-        {
-            var source = new CachedResolver(ZipSource.CreateValidationSource());
-            await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
-                "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
-        }
-
         private static string GetFullPathForExample(string filename) => Path.Combine("TestData", filename);
 
         public static ZipArchive ReadTestZip(string filename)

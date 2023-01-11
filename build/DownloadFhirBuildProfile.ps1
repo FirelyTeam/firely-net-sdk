@@ -371,6 +371,7 @@ PowerCurl "$srcdir\Hl7.Fhir.$fhirRelease.Tests\TestData\json-edge-cases.json" "$
 
 PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\careplan-example-integrated.xml" "$server/careplan-example-integrated.xml"
 PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\profiles-types.json" "$server/profiles-types.json"
+PowerCurl "$srcdir\Hl7.Fhir.Specification.$fhirRelease.Tests\TestData\snapshot-test\profiles-resources.xml" "$server/profiles-resources.xml"
 
 # extract schemas and xsd from fhir-all.zip -> temp specification directory
 ExtractXsdZipFile $specificationDir

@@ -302,7 +302,6 @@
 // Address.cs
 // Age.cs
 // Annotation.cs
-// Attachment.cs
 // CodeableReference.cs
 // Contributor.cs
 // Count.cs
@@ -320,7 +319,6 @@
 // ProductShelfLife.cs
 // Ratio.cs
 // RatioRange.cs
-// RelatedArtifact.cs
 // SampledData.cs
 // Timing.cs
 // TriggerDefinition.cs

@@ -63,12 +63,12 @@ namespace Hl7.Fhir.Specification.Tests
         [Fact]
         public async T.Task ExpansionOfComposeInclude()
         {
-            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/example-extensional")).DeepCopy() as ValueSet;
+            var testVs = (await _resolver.ResolveByCanonicalUriAsync("http://hl7.org/fhir/ValueSet/resource-security-category")).DeepCopy() as ValueSet;
             Assert.False(testVs.HasExpansion);
 
             var expander = new ValueSetExpander(new ValueSetExpanderSettings { ValueSetSource = _resolver });
             await expander.ExpandAsync(testVs);
-            Assert.Equal(4, testVs.Expansion.Total);
+            Assert.Equal(5, testVs.Expansion.Total);
         }
 
 
@@ -83,10 +83,10 @@ namespace Hl7.Fhir.Specification.Tests
 
             await Assert.ThrowsAsync<ValueSetExpansionTooBigException>(async () => await expander.ExpandAsync(testVs));
 
-            expander.Settings.MaxExpansionSize = 50;
+            expander.Settings.MaxExpansionSize = 100;
             await expander.ExpandAsync(testVs);
             //Assert.Equal(32, testVs.Expansion.Total); // since R5 +5 Fhir-versions introduced, +1 for 4.6.0, +4 for 5.0.0-snapshot1
-            testVs.Expansion.Total.Should().BeLessThanOrEqualTo(50);
+            testVs.Expansion.Total.Should().BeLessThanOrEqualTo(100);
         }
 
         [Fact]
@@ -163,15 +163,15 @@ namespace Hl7.Fhir.Specification.Tests
 
         private async T.Task testServiceAsync(ITerminologyService svc)
         {
-            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-            var result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason");
+            var vsUrl = "http://hl7.org/fhir/ValueSet/administrative-gender";
+            var result = await validateCodedValue(svc, vsUrl, code: "female", system: "http://hl7.org/fhir/administrative-gender");
             isSuccess(result).Should().BeTrue();
 
-            result = await validateCodedValue(svc, vsUrl, code: "NaNX", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason");
+            result = await validateCodedValue(svc, vsUrl, code: "not-human", system: "http://hl7.org/fhir/administrative-gender");
             isSuccess(result).Should().BeFalse();
 
-            result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
-                display: "Not a Number");
+            result = await validateCodedValue(svc, vsUrl, code: "male", system: "http://hl7.org/fhir/administrative-gender",
+                display: "Another display value");
             isSuccess(result).Should().BeTrue();
 
             // The spec is not clear on the behaviour of incorrect displays - so don't test it here
@@ -179,32 +179,31 @@ namespace Hl7.Fhir.Specification.Tests
             //    display: "Not any Number");
             //Assert.True(result.Success);
 
+#if !R5
             result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
                 system: "http://hl7.org/fhir/hacked");
             isSuccess(result).Should().BeTrue();
-
+#endif
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/crappy", code: "4322002", system: "http://snomed.info/sct"));
 
-            var coding = new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "not-a-number");
+            var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
             result = await validateCodedValue(svc, vsUrl, coding: coding);
             isSuccess(result).Should().BeTrue();
 
-            coding.Display = "Not a Number (NaN)";
+            coding.Display = "Male)";
             result = await validateCodedValue(svc, vsUrl, coding: coding);
             isSuccess(result).Should().BeTrue();
 
-            coding.Code = "NaNX";
+            coding.Code = "not-human";
             result = await validateCodedValue(svc, vsUrl, coding: coding);
             isSuccess(result).Should().BeFalse();
-            coding.Code = "NaN";
 
-            var cc = new CodeableConcept("http://terminology.hl7.org/CodeSystem/data-absent-reason", "NaNX", "Not a Number");
+            var cc = new CodeableConcept("http://hl7.org/fhir/administrative-gender", "not-human", "Not a human");
             result = await validateCodedValue(svc, vsUrl, codeableConcept: cc);
             isSuccess(result).Should().BeFalse();
 
-            cc.Coding.Add(new Coding("http://terminology.hl7.org/CodeSystem/data-absent-reason", "asked-unknown"));
+            cc.Coding.Add(new Coding("http://hl7.org/fhir/administrative-gender", "unknown"));
             result = await validateCodedValue(svc, vsUrl, codeableConcept: cc);
-
             isSuccess(result).Should().BeTrue();
         }
 
@@ -213,14 +212,14 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
 
-            var vsUrl = "http://hl7.org/fhir/ValueSet/data-absent-reason";
-            var result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
-                display: "Not a Number (NaN)");
+            var vsUrl = "http://hl7.org/fhir/ValueSet/administrative-gender";
+            var result = await validateCodedValue(svc, vsUrl, code: "female", system: "http://hl7.org/fhir/administrative-gender",
+                display: "Female");
             isSuccess(result).Should().BeTrue();
             hasWarnings(result).Should().BeFalse();
 
-            result = await validateCodedValue(svc, vsUrl, code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason",
-                        display: "Certainly Not a Number");
+            result = await validateCodedValue(svc, vsUrl, code: "female", system: "http://hl7.org/fhir/administrative-gender",
+                        display: "Not a female");
             isSuccess(result).Should().BeTrue();
             hasWarnings(result).Should().BeTrue();
         }
@@ -230,8 +229,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             var svc = new LocalTerminologyService(_resolver);
             var inParams = new ValidateCodeParameters()
-                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
-                .WithCode(code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason", display: "Not a Number (NaN)");
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/administrative-gender")
+                .WithCode(code: "female", system: "http://hl7.org/fhir/administrative-gender", display: "Female");
 
             var result = await svc.ValueSetValidateCode(inParams);
 
@@ -239,8 +238,8 @@ namespace Hl7.Fhir.Specification.Tests
             hasWarnings(result).Should().BeFalse();
 
             inParams = new ValidateCodeParameters()
-                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/data-absent-reason")
-                .WithCode(code: "not-a-number", system: "http://terminology.hl7.org/CodeSystem/data-absent-reason", display: "Certainly Not a Number");
+                .WithValueSet(url: "http://hl7.org/fhir/ValueSet/administrative-gender")
+                .WithCode(code: "female", system: "http://hl7.org/fhir/administrative-gender", display: "Not a female");
 
             result = await svc.ValueSetValidateCode(inParams);
 
@@ -257,14 +256,15 @@ namespace Hl7.Fhir.Specification.Tests
             await testServiceAsync(svc);
 
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
-            var result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/yesnodontknow", code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0136");
+            var result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/administrative-gender", code: "female", system: "http://hl7.org/fhir/administrative-gender");
             isSuccess(result).Should().BeTrue();
 
+#if !R5
             // This test is not always correctly done by the external services, so copied here instead
             result = await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/example-hierarchical", code: "invalid",
                    system: "http://hl7.org/fhir/hacked");
             isSuccess(result).Should().BeTrue();
-
+#endif
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             await Assert.ThrowsAsync<FhirOperationException>(async () => await validateCodedValue(svc, url: "http://hl7.org/fhir/ValueSet/substance-code", code: "1166006", system: "http://snomed.info/sct"));
         }
@@ -278,20 +278,25 @@ namespace Hl7.Fhir.Specification.Tests
             // This is a valueset with a compose - not supported locally normally, but it has been expanded in the zip, so this will work
             var inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/yesnodontknow")
+#if R5
+                .WithCode(code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0532");
+#else
                 .WithCode(code: "Y", system: "http://terminology.hl7.org/CodeSystem/v2-0136");
+#endif
 
             var result = await svc.ValueSetValidateCode(inParams);
             isSuccess(result).Should().BeTrue();
 
+#if !R5
             // This test is not always correctly done by the external services, so copied here instead
             inParams = new ValidateCodeParameters()
                 .WithValueSet(url: "http://hl7.org/fhir/ValueSet/example-hierarchical")
                 .WithCode(code: "invalid", system: "http://hl7.org/fhir/hacked")
                 .WithAbstract(false);
-
             result = await svc.ValueSetValidateCode(inParams);
-
             isSuccess(result).Should().BeFalse();
+#endif
+
 
             // And one that will specifically fail on the local service, since it's too complex too expand - the local term server won't help you here
             inParams = new ValidateCodeParameters()
@@ -740,7 +745,7 @@ namespace Hl7.Fhir.Specification.Tests
                 {
                     Url = csUrl,
                     Status = PublicationStatus.Unknown,
-                    Content = CodeSystem.CodeSystemContentMode.Example,
+                    Content = CodeSystemContentMode.Example,
                     Concept = new()
                     {
                         new()

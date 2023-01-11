@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Specification.Tests
                                 target =>
                                 {
                                     Assert.Equal("128599005", target.Code);
-                                    Assert.Equal(ConceptMapRelationship.Equivalent, target.Relationship);
+                                    Assert.Equal(ConceptMap.ConceptMapRelationship.Equivalent, target.Relationship);
                                 });
                         });
                 });

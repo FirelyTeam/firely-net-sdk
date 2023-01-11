@@ -629,7 +629,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -637,7 +637,7 @@
         <severity value="error"/>
         <human value="If there&#39;s an offset, there must be a when (and not C, CM, CD, CV)"/>
         <expression value="offset.empty() or (when.exists() and ((when in (&#39;C&#39; | &#39;CM&#39; | &#39;CD&#39; | &#39;CV&#39;)).not()))"/>
-        <xpath value="not(exists(f:offset)) or exists(f:when)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -645,7 +645,7 @@
         <severity value="error"/>
         <human value="period SHALL be a non-negative value"/>
         <expression value="period.exists() implies period &gt;= 0"/>
-        <xpath value="f:period/@value &gt;= 0 or not(f:period/@value)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -653,7 +653,7 @@
         <severity value="error"/>
         <human value="If there&#39;s a periodMax, there must be a period"/>
         <expression value="periodMax.empty() or period.exists()"/>
-        <xpath value="not(exists(f:periodMax)) or exists(f:period)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -661,7 +661,7 @@
         <severity value="error"/>
         <human value="If there&#39;s a durationMax, there must be a duration"/>
         <expression value="durationMax.empty() or duration.exists()"/>
-        <xpath value="not(exists(f:durationMax)) or exists(f:duration)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -669,7 +669,7 @@
         <severity value="error"/>
         <human value="If there&#39;s a countMax, there must be a count"/>
         <expression value="countMax.empty() or count.exists()"/>
-        <xpath value="not(exists(f:countMax)) or exists(f:count)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -677,7 +677,7 @@
         <severity value="error"/>
         <human value="if there&#39;s a duration, there needs to be duration units"/>
         <expression value="duration.empty() or durationUnit.exists()"/>
-        <xpath value="not(exists(f:duration)) or exists(f:durationUnit)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -685,7 +685,7 @@
         <severity value="error"/>
         <human value="If there&#39;s a timeOfDay, there cannot be a when, or vice versa"/>
         <expression value="timeOfDay.empty() or when.empty()"/>
-        <xpath value="not(exists(f:timeOfDay)) or not(exists(f:when))"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -693,7 +693,7 @@
         <severity value="error"/>
         <human value="if there&#39;s a period, there needs to be period units"/>
         <expression value="period.empty() or periodUnit.exists()"/>
-        <xpath value="not(exists(f:period)) or exists(f:periodUnit)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <constraint>
@@ -701,7 +701,7 @@
         <severity value="error"/>
         <human value="duration SHALL be a non-negative value"/>
         <expression value="duration.exists() implies duration &gt;= 0"/>
-        <xpath value="f:duration/@value &gt;= 0 or not(f:duration/@value)"/>
+        <!-- removed xpath -->
         <source value="Timing.repeat"/>
       </constraint>
       <mustSupport value="true"/>

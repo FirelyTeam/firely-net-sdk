@@ -43,7 +43,7 @@
         <key value="grp-1" />
         <severity value="error" />
         <human value="Can only have members if group is &quot;actual&quot;" />
-        <xpath value="f:actual/@value=true() or not(exists(f:member))" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />

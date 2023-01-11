@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Tests.Rest
 
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
             entry = client.CapabilityStatement(SummaryType.True);
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNull(entry.Text); // DSTU2 has this property as not include as part of the summary (that would be with SummaryType.Text)
             Assert.IsNotNull(entry);
             Assert.IsNotNull(entry.FhirVersion);
-            Assert.AreEqual(RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
+            Assert.AreEqual(CapabilityStatement.RestfulCapabilityMode.Server, entry.Rest[0].Mode.Value);
             Assert.AreEqual("200", client.LastResult.Status);
 
             Assert.IsNotNull(entry.Rest[0].Resource, "The resource property should be in the summary");
@@ -1028,11 +1028,7 @@ namespace Hl7.Fhir.Tests.Rest
             Resource furore = new Organization
             {
                 Name = "Furore",
-                Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
-                Telecom = new List<ContactPoint> {
-                    new ContactPoint { System = ContactPoint.ContactPointSystem.Phone, Value = "+31-20-3467171", Use = ContactPoint.ContactPointUse.Work },
-                    new ContactPoint { System = ContactPoint.ContactPointSystem.Fax, Value = "+31-20-3467172" }
-                }
+                Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") }
             };
 
             System.Diagnostics.Trace.WriteLine(await new FhirXmlSerializer().SerializeToStringAsync(furore));

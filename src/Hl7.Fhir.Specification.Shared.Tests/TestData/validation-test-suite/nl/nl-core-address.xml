@@ -116,7 +116,7 @@
         <severity value="error" />
         <human value="Address.streetName in an official address SHALL have a value if one of houseNumber|buildingNumberSuffix|additionalLocator has a value" />
         <expression value="(extension.where(url = 'http://fhir.nl/fhir/StructureDefinition/nl-core-address-official').where(value = true)).empty() or (line.extension.where(url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName').empty().not() and (line.extension.where(url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber').empty().not() or line.extension.where(url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix').empty().not() or line.extension.where(url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator').empty().not()))" />
-        <xpath value="not(.[f:extension[@url='http://fhir.nl/fhir/StructureDefinition/nl-core-address-official'][f:valueBoolean/@value='true']][f:line[empty(f:extension[@url='http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName'])][f:extension[@url=('http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-buildingNumberSuffix','http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator')]]])" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="hcim-address-v2.0.1-2015EN" />
@@ -517,7 +517,7 @@
         <severity value="error" />
         <human value="Dutch postal code pattern 'nnnnAA'" />
         <expression value="(country in 'nl' | 'nld' | 'nederland').not() or matches('^\\d{4}[A-Z]{2}$')" />
-        <xpath value="not(../f:country[lower-case(@value)=('nl','nld','nederland')]) or matches(@value,'^\d{4}[A-Z]{2}$')" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="hcim-address-v2.0.1-2015EN" />

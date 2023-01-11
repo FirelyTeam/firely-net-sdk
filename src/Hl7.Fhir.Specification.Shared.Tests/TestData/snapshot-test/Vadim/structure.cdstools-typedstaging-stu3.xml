@@ -34,7 +34,7 @@
         <severity value="error" />
         <human value="Stage SHALL have summary or assessment" />
         <expression value="summary.exists() or assessment.exists()" />
-        <xpath value="exists(f:summary) or exists(f:assessment)" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />

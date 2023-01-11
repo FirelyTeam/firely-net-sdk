@@ -613,7 +613,7 @@
         <key value="pat-1" />
         <severity value="error" />
         <human value="SHALL at least contain a contact's details or a reference to an organization" />
-        <xpath value="f:name or f:telecom or f:address or f:organization" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />

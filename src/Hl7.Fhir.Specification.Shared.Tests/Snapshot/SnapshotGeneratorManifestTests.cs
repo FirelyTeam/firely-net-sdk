@@ -391,7 +391,13 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod] public async T.Task Test_t12() => await ExecuteTest("t12");
         [TestMethod] public async T.Task Test_t12a() => await ExecuteTest("t12a");
         [TestMethod] public async T.Task Test_t13() => await ExecuteTest("t13");
-        [TestMethod] public async T.Task Test_t14() => await ExecuteTest("t14");
+
+        [TestMethod]
+#if R5
+        [Ignore("manifest.xml is not representing R5 5.0.0-snapshot3")]
+#endif
+        public async T.Task Test_t14() => await ExecuteTest("t14");
+
 
         // FAILS - FIXED
         // Input specifies:

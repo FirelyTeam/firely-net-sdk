@@ -485,9 +485,13 @@ namespace Hl7.Fhir.Specification.Source
     public static class ConceptMapSummaryProperties
     {
         static readonly string ConceptMapTypeName = FhirTypeNames.CONCEPTMAP_NAME;
-
+        /*
         public static readonly string SourceKey = "ConceptMap.source";
         public static readonly string TargetKey = "ConceptMap.target";
+        */
+
+        private static readonly string[] sourceKeys = new[] { "ConceptMap.source", "ConceptMap.sourceScope" };
+        private static readonly string[] targetKeys = new[] { "ConceptMap.target", "ConceptMap.targetScope" };
 
         /// <summary>Determines if the specified instance represents summary information about a <c>ConceptMap</c> resource.</summary>
         public static bool IsConceptMapSummary(this IArtifactSummaryPropertyBag properties)
@@ -503,14 +507,12 @@ namespace Hl7.Fhir.Specification.Source
                 // Explicit harvester chaining
                 if (ConformanceSummaryProperties.Harvest(nav, properties, modelInfo))
                 {
-                    if (!nav.HarvestValue(properties, SourceKey, "sourceUri"))
+                    foreach (var item in sourceKeys.Concat(targetKeys))
                     {
-                        nav.HarvestValue(properties, SourceKey, "sourceCanonical");
-                    }
-
-                    if (!nav.HarvestValue(properties, TargetKey, "targetUri"))
-                    {
-                        nav.HarvestValue(properties, TargetKey, "targetCanonical");
+                        if (!nav.HarvestValue(properties, item, item.Split('.')[1] + "Uri"))
+                        {
+                            nav.HarvestValue(properties, item, item.Split('.')[1] + "Canonical");
+                        }
                     }
                 }
                 return true;
@@ -521,12 +523,12 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Get the <c>ConceptMap.source[x]</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <c>ConceptMap</c> resources.</remarks>
         public static string? GetConceptMapSource(this IArtifactSummaryPropertyBag properties)
-            => properties.GetValueOrDefault<string>(SourceKey);
+            => properties.GetValueOrDefault<string>(sourceKeys[0]) ?? properties.GetValueOrDefault<string>(sourceKeys[1]);
 
         /// <summary>Get the <c>ConceptMap.target[x]</c> property value from the specified artifact summary property bag, if available.</summary>
         /// <remarks>Only applies to summaries of <c>ConceptMap</c> resources.</remarks>
         public static string? GetConceptMapTarget(this IArtifactSummaryPropertyBag properties)
-            => properties.GetValueOrDefault<string>(TargetKey);
+            => properties.GetValueOrDefault<string>(targetKeys[0]) ?? properties.GetValueOrDefault<string>(targetKeys[1]);
     }
 }
 #nullable restore

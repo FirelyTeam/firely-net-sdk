@@ -16,7 +16,21 @@ namespace Hl7.Fhir.Test.Validation
             // this file has a Literal with value '-1.000000000000000000e245', which does not fit into a c# datatype
             "observation-decimal(decimal).xml",
             // resource Citation is not generated because of generator errors
-            "citation-example(example).xml"
+            "citation-example(example).xml",
+            // operation-resource.*.xml cannot be parsed because of `resource` is not a valid enum of ResourceType
+            "operation-resource-convert.xml",
+            "operation-resource-add.xml",
+            "operation-resource-meta-delete.xml",
+            "operation-resource-filter.xml",
+            "operation-resource-meta-add.xml",
+            "operation-resource-remove.xml",
+            "operation-canonicalresource-current-canonical.xml",
+            "operation-resource-graph.xml",
+            "operation-resource-graphql.xml",
+            "operation-resource-meta.xml",
+            "operation-resource-validate.xml"
+
+
         };
 
     }

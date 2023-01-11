@@ -109,7 +109,7 @@
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL NOT contain nested Resources"/>
         <expression value="contained.contained.empty()"/>
-        <xpath value="not(parent::f:contained and f:contained)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -117,7 +117,7 @@
         <severity value="error"/>
         <human value="If a resource is contained in another resource, it SHALL NOT have a meta.versionId or a meta.lastUpdated"/>
         <expression value="contained.meta.versionId.empty() and contained.meta.lastUpdated.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:versionId)) and not(exists(f:contained/*/f:meta/f:lastUpdated))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -125,7 +125,7 @@
         <severity value="error"/>
         <human value="If the resource is contained in another resource, it SHALL be referred to from elsewhere in the resource or SHALL refer to the containing resource"/>
         <expression value="contained.where(((&#39;#&#39;+id in (%resource.descendants().reference | %resource.descendants().as(canonical) | %resource.descendants().as(uri) | %resource.descendants().as(url))) or descendants().where(reference = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists() or descendants().where(as(canonical) = &#39;#&#39;).exists()).not()).trace(&#39;unmatched&#39;, id).empty()"/>
-        <xpath value="not(exists(for $contained in f:contained return $contained[not(parent::*/descendant::f:reference/@value=concat(&#39;#&#39;, $contained/*/id/@value) or descendant::f:reference[@value=&#39;#&#39;])]))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -139,7 +139,7 @@
         <severity value="warning"/>
         <human value="A resource should have narrative for robust management"/>
         <expression value="text.div.exists()"/>
-        <xpath value="exists(f:text/h:div)"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <constraint>
@@ -147,7 +147,7 @@
         <severity value="error"/>
         <human value="If a resource is contained in another resource, it SHALL NOT have a security label"/>
         <expression value="contained.meta.security.empty()"/>
-        <xpath value="not(exists(f:contained/*/f:meta/f:security))"/>
+        <!-- removed xpath -->
         <source value="DomainResource"/>
       </constraint>
       <isModifier value="false"/>
@@ -349,7 +349,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -357,7 +357,7 @@
         <severity value="error"/>
         <human value="Must have either extensions or value[x], not both"/>
         <expression value="extension.exists() != value.exists()"/>
-        <xpath value="exists(f:extension)!=exists(f:*[starts-with(local-name(.), &#39;value&#39;)])"/>
+        <!-- removed xpath -->
         <source value="Extension"/>
       </constraint>
       <isModifier value="false"/>
@@ -790,7 +790,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <constraint>
@@ -798,7 +798,7 @@
         <severity value="error"/>
         <human value="SHALL at least contain a contact&#39;s details or a reference to an organization"/>
         <expression value="name.exists() or telecom.exists() or address.exists() or organization.exists()"/>
-        <xpath value="exists(f:name) or exists(f:telecom) or exists(f:address) or exists(f:organization)"/>
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="false"/>
       <isSummary value="false"/>
@@ -1132,7 +1132,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="false"/>
@@ -1378,7 +1378,7 @@
         <severity value="error"/>
         <human value="All FHIR elements must have a @value or children"/>
         <expression value="hasValue() or (children().count() &gt; id.count())"/>
-        <xpath value="@value|f:*|h:div"/>
+        <!-- removed xpath -->
         <source value="Element"/>
       </constraint>
       <isModifier value="true"/>

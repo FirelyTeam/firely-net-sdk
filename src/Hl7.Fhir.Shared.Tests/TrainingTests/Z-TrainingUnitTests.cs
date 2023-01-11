@@ -137,7 +137,6 @@ namespace FHIR.Server.Tests
                     Key = key,
                     Severity = severity == "Error" ? ConstraintSeverity.Error : ConstraintSeverity.Warning,
                     Human = human,
-                    Xpath = xpath
                 };
             }
         }

@@ -583,6 +583,9 @@ namespace Hl7.Fhir.Specification.Tests
         // Note: result is different from TestCoreOrganizationNL, contains more elements - correct!
         // Older approach was flawed, e.g. see exclusion for Organization.type
         [TestMethod]
+#if R5
+        [Ignore("Resource Organization has changed in number of elements")]
+#endif
         public async T.Task TestFullyExpandNLCoreOrganization()
         {
             // core-organization-nl references extension core-address-nl
@@ -4017,15 +4020,15 @@ namespace Hl7.Fhir.Specification.Tests
             _generator = new SnapshotGenerator(multiResolver, _settings);
 
             var (_, expanded) = await generateSnapshotAndCompare(sd);
-            Assert.IsNotNull(expanded);
-            Assert.IsTrue(expanded.HasSnapshot);
+            expanded.Should().NotBeNull();
+            expanded.HasSnapshot.Should().BeTrue();
 
             var profileElem = expanded.Snapshot.Element.FirstOrDefault(e => e.Path == "Encounter.type");
-            Assert.IsNotNull(profileElem);
+            profileElem.Should().NotBeNull();
             var profileBinding = profileElem.Binding;
-            Assert.IsNotNull(profileBinding);
+            profileBinding.Should().NotBeNull();
 
-            Assert.AreEqual(BindingStrength.Preferred, profileBinding.Strength);
+            profileBinding.Strength.Should().Be(BindingStrength.Preferred);
 
             var sdEncounter = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.Encounter);
             Assert.IsNotNull(sdEncounter);
@@ -4038,8 +4041,8 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.AreEqual(BindingStrength.Example, baseBinding.Strength);
 
-            Assert.AreEqual(baseBinding.Description, profileBinding.Description);
-            Assert.AreEqual(baseBinding.ValueSet, profileBinding.ValueSet);
+            baseBinding.Description.Should().BeEquivalentTo(profileBinding.Description);
+            baseBinding.ValueSet.Should().BeEquivalentTo(profileBinding.ValueSet);
         }
 
         // [WMR 2017024] NEW: Snapshot generator should reject profile extensions mapped to a StructureDefinition that is not an Extension definition.
@@ -4983,10 +4986,8 @@ namespace Hl7.Fhir.Specification.Tests
                             new ElementDefinition.TypeRefComponent()
                             {
                                 // Constrain Quantity to SimpleQuantity
-                                // Code = FHIRDefinedType.Quantity,
-                                // Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType(FHIRDefinedType.SimpleQuantity) }
-
-                                Code = FHIRAllTypes.SimpleQuantity.GetLiteral()
+                                Code = FHIRAllTypes.Quantity.GetLiteral(),
+                                Profile = new string[] { ModelInfo.CanonicalUriForFhirCoreType("SimpleQuantity") }
                             },
                         }
                     }
@@ -5045,7 +5046,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
-            Assert.AreEqual(FHIRAllTypes.SimpleQuantity.GetLiteral(), nav.Current.Type[0].Code);
+            Assert.AreEqual(FHIRAllTypes.Quantity.GetLiteral(), nav.Current.Type[0].Code);
 
             var type = nav.Current.Type.First();
             Debug.Print($"{nav.Path} : {type.Code} - '{type.Profile}'");
@@ -5055,7 +5056,7 @@ namespace Hl7.Fhir.Specification.Tests
         [TestMethod]
         public async T.Task TestSimpleQuantity()
         {
-            var resource = await _testResolver.FindStructureDefinitionAsync(ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.SimpleQuantity));
+            var resource = await _testResolver.FindStructureDefinitionAsync(ModelInfo.CanonicalUriForFhirCoreType("SimpleQuantity"));
             _generator = new SnapshotGenerator(_testResolver);
             var snapshot = await _generator.GenerateAsync(resource);
             Assert.IsNotNull(snapshot);
@@ -6255,7 +6256,7 @@ namespace Hl7.Fhir.Specification.Tests
             }
 
             // Also verify the expanded snapshot of the referenced SimpleQuantity profile
-            sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync(FHIRAllTypes.SimpleQuantity);
+            sd = await _testResolver.FindStructureDefinitionForCoreTypeAsync("SimpleQuantity");
             Assert.IsNotNull(sd);
             Assert.IsTrue(sd.HasSnapshot);
             Assert.IsNull(sd.Differential.GetRootElement()?.SliceName);

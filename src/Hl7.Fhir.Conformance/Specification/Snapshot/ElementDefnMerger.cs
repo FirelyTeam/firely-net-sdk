@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         snap.StrengthElement = mergePrimitiveElement(snap.StrengthElement, diff.StrengthElement);
-                        snap.DescriptionElement = mergePrimitiveElement(snap.DescriptionElement, diff.DescriptionElement);
+                        snap.Description = mergePrimitiveElement(snap.Description, diff.Description);
                         snap.ValueSetElement = mergeComplexAttribute(snap.ValueSetElement, diff.ValueSetElement);
                         snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);

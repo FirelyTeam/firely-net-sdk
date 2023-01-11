@@ -46,7 +46,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -87,7 +87,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -120,7 +120,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -156,7 +156,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -193,7 +193,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -227,7 +227,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -265,7 +265,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -392,7 +392,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="required" />
@@ -429,7 +429,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -463,7 +463,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <mapping>
         <identity value="rim" />
@@ -498,7 +498,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <binding>
         <strength value="required" />
@@ -534,7 +534,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isModifier value="true" />
       <isSummary value="true" />
@@ -577,7 +577,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <binding>
@@ -635,7 +635,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -678,7 +678,7 @@
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -718,13 +718,13 @@
         <key value="per-1" />
         <severity value="error" />
         <human value="If present, start SHALL have a lower value than end" />
-        <xpath value="not(exists(f:start)) or not(exists(f:end)) or (f:start/@value &lt;= f:end/@value)" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
@@ -773,13 +773,13 @@
         <key value="ref-1" />
         <severity value="error" />
         <human value="SHALL have a local reference if the resource is provided inline" />
-        <xpath value="not(starts-with(f:reference/@value, '#')) or exists(ancestor::*[self::f:entry or self::f:parameter]/f:resource/f:*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')]|/*/f:contained/f:*[f:id/@value=substring-after(current()/f:reference/@value, '#')])" />
+        <!-- removed xpath -->
       </constraint>
       <constraint>
         <key value="ele-1" />
         <severity value="error" />
         <human value="All FHIR elements must have a @value or children" />
-        <xpath value="@value|f:*|h:div" />
+        <!-- removed xpath -->
       </constraint>
       <isSummary value="true" />
       <mapping>
