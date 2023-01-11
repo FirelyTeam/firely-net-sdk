@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Introspection
     /// <summary>
     /// A cache of FHIR type mappings found on .NET classes.
     /// </summary>
-    /// <remarks>POCO's in the "common" assemblies
+    /// <remarks>POCO's in the "base" assembly
     /// can reflect the definition of multiple releases of FHIR using <see cref="IFhirVersionDependent"/>
     /// attributes. A <see cref="ModelInspector"/> will always capture the metadata for one such
     /// <see cref="Specification.FhirRelease" /> which is passed to it in the constructor.
@@ -41,8 +41,8 @@ namespace Hl7.Fhir.Introspection
         /// Calling this function repeatedly for the same type will return the same ClassMapping.
         /// </summary>
         /// <remarks>If the type given is FHIR Release specific, the returned mapping will contain
-        /// metadata for that release only. If the type is from the common assembly, it will contain
-        /// metadata for that type from the most recent release of the common assembly.</remarks>
+        /// metadata for that release only. If the type is from the base assembly, it will contain
+        /// metadata for that type from the most recent release of the base assembly.</remarks>
         public static ClassMapping? GetClassMappingForType(Type t) =>
             ForAssembly(t.GetTypeInfo().Assembly).FindOrImportClassMapping(t);
 
@@ -52,8 +52,8 @@ namespace Hl7.Fhir.Introspection
         /// the same assembly will return the same inspector.
         /// </summary>
         /// <remarks>If the assembly given is FHIR Release specific, the returned inspector will contain
-        /// metadata for that release only. If the assembly is the common assembly, it will contain
-        /// metadata for the most recent release for those common classes.</remarks>
+        /// metadata for that release only. If the assembly is the base assembly, it will contain
+        /// metadata for the most recent release for those base classes.</remarks>
         public static ModelInspector ForAssembly(Assembly a)
         {
             return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)), _ => configureInspector(a));
@@ -67,10 +67,10 @@ namespace Hl7.Fhir.Introspection
                 var newInspector = new ModelInspector(modelAssemblyAttr.Since);
                 newInspector.Import(a);
 
-                // Make sure we always include the common types too. 
-                var commonAssembly = typeof(Resource).GetTypeInfo().Assembly;
-                if (a.FullName != commonAssembly.FullName)
-                    newInspector.Import(commonAssembly);
+                // Make sure we always include the types from the base assembly too. 
+                var baseAssembly = typeof(Resource).GetTypeInfo().Assembly;
+                if (a.FullName != baseAssembly.FullName)
+                    newInspector.Import(baseAssembly);
 
                 // And finally, the System/CQL primitive types
                 foreach (var cqlType in getCqlTypes())
@@ -104,9 +104,9 @@ namespace Hl7.Fhir.Introspection
 
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
-        /// FHIR metadata contents of the common assembly
+        /// FHIR metadata contents of the base assembly
         /// </summary>
-        public static ModelInspector Common => ForType(typeof(ModelInspector));
+        public static ModelInspector Base => ForType(typeof(ModelInspector));
 
         /// <summary>
         /// Constructs a ModelInspector that will reflect the FHIR metadata for the given FHIR release

@@ -2,7 +2,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-[assembly: FhirModelAssembly]
+[assembly: FhirModelAssembly(Since = Hl7.Fhir.Specification.FhirRelease.STU3)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 

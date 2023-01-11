@@ -20,10 +20,10 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void CanConvertPocoToTypedElement()
         {
             Coding c = new Coding("http://nu.nl", "bla");
-            var te = c.ToTypedElement(ModelInspector.Common);
+            var te = c.ToTypedElement(ModelInspector.Base);
             Assert.AreEqual("Coding", te.InstanceType);
 
-            Coding c2 = te.ToPoco<Coding>(ModelInspector.Common);
+            Coding c2 = te.ToPoco<Coding>(ModelInspector.Base);
 
             Assert.AreEqual(c.Code, c2.Code);
             Assert.AreEqual(c.System, c2.System);
@@ -33,10 +33,10 @@ namespace Hl7.Fhir.Support.Tests.Serialization
         public void CanConvertPocoToSourceNode()
         {
             Coding c = new Coding("http://nu.nl", "bla");
-            var sn = c.ToSourceNode(ModelInspector.Common, "kode");
+            var sn = c.ToSourceNode(ModelInspector.Base, "kode");
             Assert.AreEqual("kode", sn.Name);
 
-            Coding c2 = sn.ToPoco<Coding>(ModelInspector.Common);
+            Coding c2 = sn.ToPoco<Coding>(ModelInspector.Base);
 
             Assert.AreEqual(c.Code, c2.Code);
             Assert.AreEqual(c.System, c2.System);

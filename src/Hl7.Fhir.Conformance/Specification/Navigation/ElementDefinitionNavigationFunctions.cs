@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Specification.Navigation
 
                 // Primitive types start with a lower-case character
                 var altTypeName = Utility.StringExtensions.Uncapitalize(typeName);
-                if (ModelInspector.Common.IsPrimitive(altTypeName)) { return altTypeName; }
+                if (ModelInspector.Base.IsPrimitive(altTypeName)) { return altTypeName; }
                 return typeName;
 
             }
