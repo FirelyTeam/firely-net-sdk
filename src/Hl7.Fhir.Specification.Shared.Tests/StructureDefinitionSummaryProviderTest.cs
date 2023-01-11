@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Specification.Tests
                 //   StructureDefinitions, while they are in the Poco's (=> seem to make sense).
                 // * The poco generator generates "in summary" for id, but this is not reflected in the
                 //   structuredefinition either.
+#if !R5
                 if (!context.EndsWith(".modifierExtension"))
                 {
                     // From 5.0.0-snapshot3 DomainResource.modifierExtension is a summary element. This means
@@ -125,6 +126,9 @@ namespace Hl7.Fhir.Specification.Tests
                     // this correction has not been backported.
                     left.InSummary.Should().Be(right.InSummary, context + ": InSummary differs");
                 }
+#else
+                left.InSummary.Should().Be(right.InSummary, context + ": InSummary differs");
+#endif
                 left.IsModifier.Should().Be(right.IsModifier, context + ": IsModifier differs");
                 left.IsChoiceElement.Should().Be(right.IsChoiceElement, context + ": IsChoiceElement differs");
                 left.IsCollection.Should().Be(right.IsCollection, context + ": IsCollection differs");
