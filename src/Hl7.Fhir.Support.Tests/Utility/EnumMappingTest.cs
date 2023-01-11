@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
@@ -136,6 +137,13 @@ namespace Hl7.Fhir.Support.Tests.Utils
         {
             a,
             b
+        }
+
+        [TestMethod]
+        public void NullLiteralHandling()
+        {
+            EnumUtility.ParseLiteral<TestAdministrativeGender>(null).Should().BeNull();
+            EnumUtility.ParseLiteral<TestAdministrativeGender>(null, ignoreCase: true).Should().BeNull();
         }
     }
 }
