@@ -125,9 +125,9 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public Bundle.ResponseComponent? LastResult { get; private set; }
 
-        public byte[]? LastBody => LastResult?.GetBody();
-        public string? LastBodyAsText => LastResult?.GetBodyAsText();
-        public Resource? LastBodyAsResource { get; private set; }
+        public virtual byte[]? LastBody => LastResult?.GetBody();
+        public virtual string? LastBodyAsText => LastResult?.GetBodyAsText();
+        public virtual Resource? LastBodyAsResource { get; private set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
         {
