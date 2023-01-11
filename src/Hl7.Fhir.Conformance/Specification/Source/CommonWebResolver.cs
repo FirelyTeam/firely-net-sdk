@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Specification.Source
 
             try
             {
-                var resultResource = client.Read<Resource>(id);
+                var resultResource = TaskHelper.Await( () => client.ReadAsync<Resource>(id));
                 resultResource.SetOrigin(uri);
                 LastError = null;
                 return resultResource;

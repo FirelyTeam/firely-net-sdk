@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using T=System.Threading.Tasks;
 
 namespace Hl7.Fhir.Core.Tests.Rest
 {
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
     public class FhirClientMockTest
     {
 
-        private static async System.Threading.Tasks.Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)
+        private static async T.Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)
         {
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
@@ -62,7 +63,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task VerifyFhirVersionTest()
+        public async T.Task VerifyFhirVersionTest()
         {
             // the usual use case
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
@@ -74,7 +75,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task VerifyFhirVersionTestUnknownVersion()
+        public async T.Task VerifyFhirVersionTestUnknownVersion()
         {
             // Verify server version with an unknow version
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": ""0.0.0""}";
@@ -86,7 +87,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task VerifyFhirVersionTestNoVersion()
+        public async T.Task VerifyFhirVersionTestNoVersion()
         {
             // Verify server version with no version returned
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:""}";
@@ -98,7 +99,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task NoVerifyFhirVersionWithIncorrectPatient()
+        public async T.Task NoVerifyFhirVersionWithIncorrectPatient()
         {
             // No server version check, but incorrect patient. This could be a wrong FHIR version. So we check the extra appended message
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
@@ -110,7 +111,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task VerifyFhirVersionWithIncorrectPatient()
+        public async T.Task VerifyFhirVersionWithIncorrectPatient()
         {
             // Server version check with an incorrect patient. So the error is legit
             var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
@@ -123,7 +124,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
 
         [TestMethod]
-        public async System.Threading.Tasks.Task LocationHeaderTest()
+        public async T.Task LocationHeaderTest()
         {
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
@@ -154,7 +155,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         [DataTestMethod]
         [DataRow(true, DisplayName = "Use FhirVersion in Accept header")]
         [DataRow(false, DisplayName = "Don't use FhirVersion in Accept header")]
-        public async System.Threading.Tasks.Task AcceptHeaderTest(bool useFhirVersionHeader)
+        public async T.Task AcceptHeaderTest(bool useFhirVersionHeader)
         {
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
@@ -258,7 +259,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
         [TestMethod]
         [ExpectedException(typeof(FhirOperationException))]
-        public async System.Threading.Tasks.Task TestUnauthorizedWithANonFhirJsonBody()
+        public async T.Task TestUnauthorizedWithANonFhirJsonBody()
         {
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
@@ -286,7 +287,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         }
 
         [TestMethod]
-        public async System.Threading.Tasks.Task TestOperationWithEmptyBody()
+        public async T.Task TestOperationWithEmptyBody()
         {
             var mock = new Mock<HttpMessageHandler>();
             var response = new HttpResponseMessage
@@ -311,6 +312,60 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             parameters.Parameter.FirstOrDefault().Value.Should().BeOfType<FhirString>().Which.Value.Should().Be("connected");
 
+        }
+
+        [TestMethod]
+        public async T.Task TestCanMockFhirClient()
+        {
+            var mock = new Mock<BaseFhirClient>(new object[] { new Uri("http://example.org"), ModelInfo.ModelInspector, FhirClientSettings.CreateDefault() });
+            var _ = await mock.Object.ReadAsync<Patient>("http://example.org/fhir");
+            mock.Verify(c => c.ReadAsync<Patient>(It.IsAny<string>(), null, null, null), Times.Once);
+        }
+
+        [TestMethod]
+        public async T.Task TestCanCancelInteraction()
+        {
+            var mock = new Mock<HttpMessageHandler>();
+            mock.Protected()
+                     .Setup<T.Task<HttpResponseMessage>>(
+                        "SendAsync",
+                        ItExpr.IsAny<HttpRequestMessage>(), ItExpr.IsAny<CancellationToken>())
+                     .Returns<HttpRequestMessage,CancellationToken>((_,ct) => blocker(ct));
+
+            bool isBlocking = false;
+
+            async Task<HttpResponseMessage> blocker(CancellationToken ct)
+            {
+                isBlocking = true;
+                await T.Task.Delay(2000,ct);
+
+                Assert.Fail("Operation was not cancelled - it should never have gotten here.");
+
+                // Unreachable code
+                return new HttpResponseMessage();
+            }
+
+            using var client = new FhirClient("http://example.com/fhir/", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+
+            var cts = new CancellationTokenSource();
+
+            // Start the task and wait until it is "blocking"
+            var blockingTask = client.OperationAsync(new Uri("http://example.com/fhir/$ping"), ct: cts.Token);
+            while (!isBlocking) ;
+
+            // now cancel it.
+            cts.Cancel();
+
+            try
+            {
+                // trying to await it should now throw cancelled exception
+                var result = await blockingTask;
+                Assert.Fail("Should have been cancelled.");
+            }
+            catch(OperationCanceledException)
+            {
+                // correct!
+            }
         }
     }
 }

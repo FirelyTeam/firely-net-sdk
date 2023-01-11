@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Model;
+﻿#pragma warning disable CS0618 // Type or member is obsolete
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -344,5 +346,6 @@ namespace Hl7.Fhir.Core.AsyncTests
             Console.WriteLine("Test Completed");
         }
     }
-#pragma warning restore CS0618 // Type or member is obsolete
 }
+
+#pragma warning restore CS0618 // Type or member is obsolete
