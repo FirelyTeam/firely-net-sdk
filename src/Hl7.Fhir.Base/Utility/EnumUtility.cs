@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -9,10 +11,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.ComponentModel;
 using System.Collections.Concurrent;
-
-#nullable enable
 
 namespace Hl7.Fhir.Utility
 {
@@ -43,13 +42,13 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// Finds an enumeration value from <paramref name="enumType"/> where the literal is the same as <paramref name="rawValue"/>.
         /// </summary>
-        public static Enum? ParseLiteral(string rawValue, Type enumType, bool ignoreCase = false) 
+        public static Enum? ParseLiteral(string? rawValue, Type enumType, bool ignoreCase = false) 
             => getEnumMapping(enumType).ParseLiteral(rawValue, ignoreCase);
 
         /// <summary>
         /// Finds an enumeration value from enum <typeparamref name="T"/> where the literal is the same as <paramref name="rawValue"/>.
         /// </summary>
-        public static T? ParseLiteral<T>(string rawValue, bool ignoreCase = false) where T : struct 
+        public static T? ParseLiteral<T>(string? rawValue, bool ignoreCase = false) where T : struct 
             => (T?)(object?)ParseLiteral(rawValue, typeof(T), ignoreCase);
 
         /// <summary>
@@ -88,20 +87,15 @@ namespace Hl7.Fhir.Utility
                     ? throw new InvalidOperationException($"Should only pass enum values that are member of the given enum: {value} is not a member of {Name}.")
                     : result;
 
-            public Enum? ParseLiteral(string literal, bool ignoreCase)
+            public Enum? ParseLiteral(string? literal, bool ignoreCase)
             {
-                Enum? result;
+                if (literal is null) return null;
 
-                if (ignoreCase)
-                {
-                    _lowercaseLiteralToEnum.TryGetValue(literal.ToLowerInvariant(), out result);
-                }
-                else
-                {
-                    _literalToEnum.TryGetValue(literal, out result);
-                }
+                var success = ignoreCase
+                    ? _lowercaseLiteralToEnum.TryGetValue(literal.ToLowerInvariant(), out Enum? result)
+                    : _literalToEnum.TryGetValue(literal, out result);
 
-                return result;
+                return success ? result : null;
             }
 
             public static EnumMapping Create(Type enumType)
@@ -134,4 +128,4 @@ namespace Hl7.Fhir.Utility
     }
 }
 
-#nullable restore
+#nullable restore   
