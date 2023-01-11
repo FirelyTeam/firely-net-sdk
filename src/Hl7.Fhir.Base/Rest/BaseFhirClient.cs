@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Rest
         public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
         {
             _inspector = inspector;
-            Settings = (settings ?? new FhirClientSettings());
+            Settings = settings ?? new FhirClientSettings();
             Endpoint = getValidatedEndpoint(endpoint);
             //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
 
@@ -106,28 +106,28 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Default request headers that can be modified to persist default headers to internal client.
         /// </summary>
-        public virtual HttpRequestHeaders? RequestHeaders { get; protected set; }
+        public HttpRequestHeaders? RequestHeaders { get; protected set; }
 
         /// <summary>
         /// The default endpoint for use with operations that use discrete id/version parameters
         /// instead of explicit uri endpoints. This will always have a trailing "/"
         /// </summary>
-        public virtual Uri Endpoint
+        public Uri Endpoint
         {
             get;
             protected set;
         }
 
-        public virtual FhirClientSettings Settings { get; set; }
+        public FhirClientSettings Settings { get; set; }
 
         /// <summary>
         /// The last transaction result that was executed on this connection to the FHIR server
         /// </summary>
-        public virtual Bundle.ResponseComponent? LastResult { get; private set; }
+        public Bundle.ResponseComponent? LastResult { get; private set; }
 
-        public virtual byte[]? LastBody => LastResult?.GetBody();
-        public virtual string? LastBodyAsText => LastResult?.GetBodyAsText();
-        public virtual Resource? LastBodyAsResource { get; private set; }
+        public byte[]? LastBody => LastResult?.GetBody();
+        public string? LastBodyAsText => LastResult?.GetBodyAsText();
+        public Resource? LastBodyAsResource { get; private set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
         {
