@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.Model;
+﻿using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -63,8 +64,6 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             if (file.Contains("notification-") || file.Contains("subscriptionstatus-"))
                 return true; // These are Subscription resources that have invalid data in R5.
-            if (file.Contains("integer64.profile.json") || file.Contains("documentreference-example.json") || file.Contains("documentmanifest-fm-attachment.json") || file.Contains("communication-example-fm-solicited-attachment.json") || file.Contains("communication-example-fm-attachment.json"))
-                return true; // Are examples that have quotes around integers in R5
             if (file.Contains("examplescenario-example"))
                 return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("json-edge-cases"))
@@ -222,6 +221,16 @@ namespace Hl7.Fhir.Serialization.Tests
                 JsonAssert.AreSame(new FileInfo(expectedFile).Name, File.ReadAllText(expectedFile),
                                     File.ReadAllText(actualFile), errors);
             }
+        }
+
+        [TestMethod]
+        public void RoundTripAttachmentWithSize()
+        {
+            var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
+            var attachment = JsonSerializer.Deserialize<Attachment>(_attachmentJson, options);
+            attachment.Size.Should().Be(12L);
+            var json = JsonSerializer.Serialize(attachment, options);
+            json.Should().Be(_attachmentJson);
         }
     }
 }

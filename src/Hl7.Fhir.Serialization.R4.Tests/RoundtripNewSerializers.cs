@@ -6,6 +6,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public partial class RoundTripNewSerializers
     {
+        private readonly string _attachmentJson = "{\"size\":12}";
+
         [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
         [TestCategory("LongRunner")]

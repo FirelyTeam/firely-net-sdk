@@ -675,6 +675,7 @@ namespace Hl7.Fhir.Serialization
                                 !Settings.DisableBase64Decoding ? readBase64(ref reader) : new(reader.GetString(), null),
                 JsonTokenType.String when requiredType == typeof(DateTimeOffset) => readDateTimeOffset(ref reader),
                 JsonTokenType.String when requiredType.IsEnum => new(reader.GetString(), null),
+                JsonTokenType.String when requiredType == typeof(long) => readLong(ref reader),
                 //JsonTokenType.String when requiredType.IsEnum => readEnum(ref reader, requiredType),
                 JsonTokenType.String => unexpectedToken(ref reader, reader.GetString(), requiredType.Name, "string"),
                 JsonTokenType.Number => tryGetMatchingNumber(ref reader, requiredType),
@@ -710,6 +711,16 @@ namespace Hl7.Fhir.Serialization
 
                 return ElementModel.Types.DateTime.TryParse(contents, out var parsed) ?
                     new(parsed.ToDateTimeOffset(TimeSpan.Zero), null) :
+                    new(contents, ERR.STRING_ISNOTAN_INSTANT.With(ref reader, contents));
+            }
+
+            static (object?, FhirJsonException?) readLong(ref Utf8JsonReader reader)
+            {
+                // convert string in json to a long.
+                var contents = reader.GetString()!;
+
+                return long.TryParse(contents, out var parsed) ?
+                    new(parsed, null) :
                     new(contents, ERR.STRING_ISNOTAN_INSTANT.With(ref reader, contents));
             }
 

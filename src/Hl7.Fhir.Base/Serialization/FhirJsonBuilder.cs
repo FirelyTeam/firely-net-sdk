@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Serialization
         {
             bool or decimal or Int32 or Int16 or ulong or double or BigInteger or float => new JValue(value),
             string s => new JValue(s.Trim()),
-            long l when requiredType is "integer" or "unsignedInt" or "positiveInt" => new JValue((int)l),
+            long l when requiredType is "integer" or "unsignedInt" or "positiveInt" => new JValue(l),
             _ => new JValue(PrimitiveTypeConverter.ConvertTo<string>(value)),
         };
     }

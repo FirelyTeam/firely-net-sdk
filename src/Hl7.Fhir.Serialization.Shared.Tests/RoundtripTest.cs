@@ -62,6 +62,7 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var parser = new FhirJsonParser(new ParserSettings() { PermissiveParsing = false });
             var attachment = parser.Parse<Attachment>(_attachmentJson);
+            attachment.Size.Should().Be(12L);
             var serializer = new FhirJsonSerializer();
             var result = serializer.SerializeToString(attachment);
             result.Should().Be(_attachmentJson);
