@@ -16,6 +16,8 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public partial class RoundtripTest
     {
+        private readonly string _attachmentJson = "{\"size\":12}";
+
         [TestMethod]
         [TestCategory("LongRunner")]
         public void FullRoundtripOfAllExamplesXmlPoco()

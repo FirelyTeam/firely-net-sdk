@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Serialization
             object value = node.Definition != null ? node.Value : details?.OriginalValue ?? node.Value;
             var objectInShadow = node.InstanceType != null ? primitiveTypes.Contains(node.InstanceType) : details?.UsesShadow ?? false;
 
-            JToken first = value != null ? buildValue(value) : null;
+            JToken first = value != null ? buildValue(value, node.InstanceType) : null;
             JObject second = buildChildren(node);
 
             // If this is a complex type with a value (should not occur)
@@ -200,25 +200,12 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private JValue buildValue(object value)
+        private JValue buildValue(object value, string requiredType = null) => value switch
         {
-            switch (value)
-            {
-                case bool b:
-                case decimal d:
-                case Int32 i32:
-                case Int16 i16:
-                case ulong ul:
-                case double db:
-                case BigInteger bi:
-                case float f:
-                    return new JValue(value);
-                case string s:
-                    return new JValue(s.Trim());
-                case long l:
-                default:
-                    return new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
-            }
-        }
+            bool or decimal or Int32 or Int16 or ulong or double or BigInteger or float => new JValue(value),
+            string s => new JValue(s.Trim()),
+            long l when requiredType is "integer" or "unsignedInt" or "positiveInt" => new JValue((int)l),
+            _ => new JValue(PrimitiveTypeConverter.ConvertTo<string>(value)),
+        };
     }
 }
