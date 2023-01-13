@@ -787,6 +787,20 @@ namespace Hl7.Fhir.Support.Poco.Tests
             mc2.HandledByTextJson.Should().Be("Hi!");
             mc2.FhirPatient?.Active.Should().Be(true);
         }
+
+        [TestMethod]
+        public void ReportsMissingMandatoryElements()
+        {
+            var (codesystem, errors) = deserializeComplex(typeof(TestCodeSystem), new
+            {
+                resourceType = "CodeSystem",
+                content = "example"
+            }, out _, new());
+
+
+            // should contain error that mandatory item "status" is missing.
+            errors.Should().HaveCount(1);
+        }
     }
 }
 #nullable restore
