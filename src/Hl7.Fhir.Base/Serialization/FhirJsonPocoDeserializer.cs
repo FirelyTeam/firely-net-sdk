@@ -678,6 +678,7 @@ namespace Hl7.Fhir.Serialization
                 JsonTokenType.String when requiredType == typeof(long) => readLong(ref reader),
                 //JsonTokenType.String when requiredType.IsEnum => readEnum(ref reader, requiredType),
                 JsonTokenType.String => unexpectedToken(ref reader, reader.GetString(), requiredType.Name, "string"),
+                JsonTokenType.Number when requiredType == typeof(long) => new(null, ERR.LONG_CANNOT_BE_PARSED.With(ref reader, reader.GetRawText(), requiredType.Name)),
                 JsonTokenType.Number => tryGetMatchingNumber(ref reader, requiredType),
                 JsonTokenType.True or JsonTokenType.False when requiredType == typeof(bool) => new(reader.GetBoolean(), null),
                 JsonTokenType.True or JsonTokenType.False => unexpectedToken(ref reader, reader.GetRawText(), requiredType.Name, "boolean"),
@@ -721,7 +722,7 @@ namespace Hl7.Fhir.Serialization
 
                 return long.TryParse(contents, out var parsed) ?
                     new(parsed, null) :
-                    new(contents, ERR.STRING_ISNOTAN_INSTANT.With(ref reader, contents));
+                    new(contents, ERR.NUMBER_CANNOT_BE_PARSED.With(ref reader, contents));
             }
 
             // Validation is now done using POCO validation, so have removed it here.
