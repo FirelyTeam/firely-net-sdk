@@ -8,6 +8,7 @@ using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,66 +27,63 @@ namespace Hl7.Fhir.Support.Poco.Tests
         private const string NUMBER_CANNOT_BE_PARSED = "JSON108";
 
         [DataTestMethod]
-        [DataRow(null, typeof(decimal), "JSON109")]
-        [DataRow(new[] { 1, 2 }, typeof(decimal), "JSON105")]
+        [DataRow(null, null, typeof(decimal), null, "JSON109")]
+        [DataRow(new[] { 1, 2 }, null, typeof(decimal), null, "JSON105")]
 
-        [DataRow("hi!", typeof(string), null)]
-        [DataRow("SGkh", typeof(byte[]), null)]
-        [DataRow("hi!", typeof(byte[]), "JSON106")]
-        [DataRow("hi!", typeof(DateTimeOffset), "JSON107")]
-        [DataRow("2007-02-03", typeof(DateTimeOffset), null)]
-        [DataRow("enumvalue", typeof(UriFormat), COVE.INVALID_CODED_VALUE_CODE)]
-        [DataRow(true, typeof(Enum), "JSON110")]
-        [DataRow("hi!", typeof(int), "JSON110")]
+        [DataRow("hi!", "hi!", typeof(string), null, null)]
+        [DataRow("SGkh", null, typeof(byte[]), null, null)]
+        [DataRow("hi!", null, typeof(byte[]), null, "JSON106")]
+        [DataRow("hi!", null, typeof(DateTimeOffset), null, "JSON107")]
+        [DataRow("2007-02-03", null, typeof(DateTimeOffset), null, null)]
+        [DataRow("enumvalue", null, typeof(UriFormat), null, COVE.INVALID_CODED_VALUE_CODE)]
+        [DataRow(true, "true", typeof(Enum), null, "JSON110")]
+        [DataRow("hi!", "hi!", typeof(int), null, "JSON110")]
 
-        [DataRow(3, typeof(decimal), null)]
-        [DataRow(3, typeof(uint), null)]
-        [DataRow(3, typeof(long), null)]
-        [DataRow(3, typeof(ulong), null)]
-        [DataRow(3.14, typeof(decimal), null)]
-        [DataRow(double.MaxValue, typeof(decimal), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(3.14, typeof(int), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(3.14, typeof(uint), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(3.14, typeof(long), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(-3, typeof(ulong), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(long.MaxValue, typeof(uint), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(long.MaxValue, typeof(int), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(long.MaxValue, typeof(decimal), null)]
-        [DataRow(5, typeof(float), null)]
-        [DataRow(double.MaxValue, typeof(float), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(6.14, typeof(double), null)]
-        [DataRow(314, typeof(int), null)]
-        [DataRow(314, typeof(decimal), null)]
-        [DataRow(3.14, typeof(bool), "JSON110")]
+        [DataRow(3, 3, typeof(decimal), null, null)]
+        [DataRow(3, 3, typeof(uint), null, null)]
+        [DataRow(3L, 3L, typeof(long), typeof(Integer64), "JSON122")]
+        [DataRow(3L, 3L, typeof(long), typeof(UnsignedInt), null)]
+        [DataRow(3, 3, typeof(ulong), null, null)]
+        [DataRow(3.14, 3.14, typeof(decimal), null, null)]
+        [DataRow(3.14, "3.14", typeof(int), null, NUMBER_CANNOT_BE_PARSED)]
+        [DataRow(3.14, "3.14", typeof(uint), null, NUMBER_CANNOT_BE_PARSED)]
+        [DataRow(3.14, "3.14", typeof(long), null, NUMBER_CANNOT_BE_PARSED)]
+        [DataRow(-3, "-3", typeof(ulong), null, NUMBER_CANNOT_BE_PARSED)]
+        [DataRow(long.MaxValue, long.MaxValue, typeof(decimal), null, null)]
+        [DataRow(5, 5, typeof(float), null, null)]
+        [DataRow(6.14, 6.14, typeof(double), null, null)]
+        [DataRow(314, 314, typeof(int), null, null)]
+        [DataRow(314, 314, typeof(decimal), null, null)]
+        [DataRow(3.14, "3.14", typeof(bool), null, "JSON110")]
 
-        [DataRow(true, typeof(bool), null)]
-        [DataRow(true, typeof(string), "JSON110")]
-        public void TryDeserializePrimitiveValue(object data, Type expected, string code)
+        [DataRow(true, true, typeof(bool), null, null)]
+        [DataRow(true, "true", typeof(string), null, "JSON110")]
+        public void TryDeserializePrimitiveValue(object input, object expectedResult, Type expectedImplementingType, Type? fhirType, string code)
         {
-            var reader = constructReader(data);
+            var reader = constructReader(input);
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expected);
+            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType);
 
             if (code is not null)
                 error?.ErrorCode.Should().Be(code);
             else
                 error.Should().BeNull();
 
-            if (expected == typeof(byte[]))
+            if (expectedImplementingType == typeof(byte[]))
             {
                 if (error is null)
-                    Convert.ToBase64String((byte[])result!).Should().Be((string)data);
+                    Convert.ToBase64String((byte[])result!).Should().Be((string)input);
                 else
-                    result.Should().Be(data);
+                    result.Should().Be(input);
             }
-            else if (expected == typeof(DateTimeOffset))
+            else if (expectedImplementingType == typeof(DateTimeOffset))
             {
                 if (error is null)
-                    result.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)data);
+                    result.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)input);
                 else
-                    result.Should().Be(data);
+                    result.Should().Be(input);
             }
             else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY.ErrorCode ||
                 code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode)
@@ -95,9 +93,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             else
             {
                 if (error is null)
-                    result.Should().Be(data);
+                    result.Should().Be(input);
                 else
-                    result.Should().Be(data is not null ? PrimitiveTypeConverter.ConvertTo<string>(data) : null);
+                    result.Should().Be(expectedResult);
             }
         }
 
@@ -149,14 +147,18 @@ namespace Hl7.Fhir.Support.Poco.Tests
             {
                 var reader = constructReader(number); reader.Read();
                 var deserializer = getTestDeserializer(new() { OnPrimitiveParseFailed = correctIntToBool });
-                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool));
+                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null);
             }
         }
 
         [TestMethod]
         public void PrimitiveValueCannotBeComplex()
         {
-            TryDeserializePrimitiveValue(new { bla = 4 }, typeof(int), ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode);
+            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode);
+            TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture), typeof(decimal), null, NUMBER_CANNOT_BE_PARSED);
+            TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(uint), null, NUMBER_CANNOT_BE_PARSED);
+            TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(int), null, NUMBER_CANNOT_BE_PARSED);
+            TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture), typeof(float), null, NUMBER_CANNOT_BE_PARSED);
         }
 
         [DataTestMethod]
@@ -224,7 +226,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var reader = constructReader(value);
                 reader.Read();
 
-                return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, null, state);
+                return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, null!, ref reader, null, state);
             }
 
             var result = test();
