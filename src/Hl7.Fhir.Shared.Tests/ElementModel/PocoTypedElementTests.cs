@@ -1,4 +1,5 @@
-﻿using Hl7.Fhir.ElementModel;
+﻿using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -191,5 +192,41 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             Assert.AreEqual(poco.Subject, subjectProp);
         }
+
+
+        [TestMethod]
+        public void CheckTypeOfElementDefinitionMembers()
+        {
+#if !R5
+            var resultType = "string";
+#else
+            var resultType = "markdown";
+#endif
+            var ed = new ElementDefinition()
+            {
+                Mapping = new System.Collections.Generic.List<ElementDefinition.MappingComponent>() {
+                            new ElementDefinition.MappingComponent() {
+                                Comment = "comment"
+                                }
+                            },
+                Binding = new ElementDefinition.ElementDefinitionBindingComponent()
+                {
+                    Description = "description",
+
+                },
+                Constraint = new System.Collections.Generic.List<ElementDefinition.ConstraintComponent>()
+                {
+                    new ElementDefinition.ConstraintComponent()
+                    {
+                        Requirements = "requirements"
+                    }
+                }
+            };
+            var element = ed.ToTypedElement();
+            element.Select("mapping.comment").First().InstanceType.Should().Be(resultType);
+            element.Select("binding.description").First().InstanceType.Should().Be(resultType);
+            element.Select("constraint.requirements").First().InstanceType.Should().Be(resultType);
+        }
+
     }
 }
