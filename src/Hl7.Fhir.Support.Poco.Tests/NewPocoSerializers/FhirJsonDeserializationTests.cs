@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.RESOURCETYPE_UNEXPECTED, ERR.UNKNOWN_PROPERTY_FOUND);
             yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_NO_TYPE);
             yield return data<Extension>(new { valueUnknown = "incorrect type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE);
-            yield return data<Extension>(new { valueBoolean = true }, JsonTokenType.EndObject);
+            yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" }, JsonTokenType.EndObject);
             yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
                     ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE, ERR.UNKNOWN_PROPERTY_FOUND);
         }
@@ -442,7 +442,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         public static IEnumerable<object?[]> TestValidatePrimitiveData()
         {
-            yield return data<Narrative>(new { div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>" });
+            yield return data<Narrative>(new { div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>", status = "additional" });
             yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED);
             yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID);
 
@@ -797,9 +797,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 content = "example"
             }, out _, new());
 
-
             // should contain error that mandatory item "status" is missing.
-            errors.Should().HaveCount(1);
+            errors.Should().ContainSingle(ce => ce.ErrorCode == "PVAL105");
         }
     }
 }

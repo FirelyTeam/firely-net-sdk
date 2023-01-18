@@ -62,7 +62,33 @@ namespace Hl7.Fhir.Serialization
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
                 .SetLocation(context.Path);
 
-            reportedErrors = runAttributeValidation(instance, context.InstanceMapping.ValidationAttributes, validationContext);
+            if (instance is null)
+            {
+                reportedErrors = null;
+                return;
+            }
+
+            IEnumerable<CodedValidationException>? errors = null;
+
+            // Make sure we detect missing values - go over all members that have cardinality constraints
+            // and invoke those if there is no value (if there was a value, ValidateProperty will have been
+            // called on it while deserializing the member).
+            foreach (var propMapping in context.InstanceMapping.PropertyMappings)
+            {
+                var cardinality = propMapping.ValidationAttributes.OfType<CardinalityAttribute>().SingleOrDefault();
+                if (cardinality is not null && cardinality.Min > 0)
+                {
+                    // Note that some Value accessors (for Code<T>.Value for example) can throw, but there are
+                    // no Cardinality constraints on those, so we don't have to worry about that now.
+                    var propValue = propMapping.GetValue(instance);
+
+                    if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
+                        errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, validationContext));
+                }
+            }
+
+            // Validate the attributes on this instance itself
+            errors = add(errors, runAttributeValidation(instance, context.InstanceMapping.ValidationAttributes, validationContext));
 
             // Now, just like Validator.Validate, run the IValidatableObject if applicable
             if (instance is IValidatableObject ivo)
@@ -72,11 +98,21 @@ namespace Hl7.Fhir.Serialization
                 {
                     var codedErrors = extraErrors.OfType<CodedValidationResult>().Select(cvr => cvr.ValidationException);
                     if (codedErrors.Count() != extraErrors.Count)
-                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
+                        throw new InvalidOperationException($"IValidatableObject.Validates should return one or more {nameof(CodedValidationResult)}.");
 
-                    reportedErrors = (reportedErrors is not null ? reportedErrors.Concat(codedErrors) : codedErrors).ToArray();
+                    errors = add(errors, codedErrors);
                 }
             }
+
+            reportedErrors = errors?.ToArray();
+            return;           
+        }
+
+        private IEnumerable<CodedValidationException>? add(IEnumerable<CodedValidationException>? errors, IEnumerable<CodedValidationException>? moreErrors)
+        {
+            return moreErrors is null ?
+                errors
+                : errors is not null ? errors.Concat(moreErrors) : moreErrors;
         }
 
         private CodedValidationException[]? runAttributeValidation(
@@ -86,22 +122,16 @@ namespace Hl7.Fhir.Serialization
         {
 
             // Avoid allocation of a list for every validation until we really have something to report.
-            List<CodedValidationException>? errors = null;
+            IEnumerable<CodedValidationException>? errors = null;
 
             foreach (var va in attributes)
             {
                 if (va.GetValidationResult(candidateValue, validationContext) is object vr)
                 {
                     if (vr is CodedValidationResult cvr)
-                        addError(cvr.ValidationException);
+                        errors = add(errors, new[] { cvr.ValidationException });
                     else
-                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
-
-                    void addError(CodedValidationException e)
-                    {
-                        if (errors is null) errors = new();
-                        errors.Add(e);
-                    }
+                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");                  
                 }
             }
 
