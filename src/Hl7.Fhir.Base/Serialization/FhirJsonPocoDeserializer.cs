@@ -728,9 +728,9 @@ namespace Hl7.Fhir.Serialization
                 return long.TryParse(contents, out var parsed) switch
                 {
                     true when isInteger64() => new(parsed, null),
-                    true => new(parsed, ERR.LONG_CANNOT_BE_PARSED.With(ref reader, contents, typeName())),
-                    false when isInteger64() => new(contents, ERR.NUMBER_CANNOT_BE_PARSED.With(ref reader, contents, nameof(Integer64))),
-                    false => new(contents, ERR.LONG_CANNOT_BE_PARSED.With(ref reader, contents, typeName()))
+                    true => new(parsed, ERR.LONG_INCORRECT_FORMAT.With(ref reader, "Json string", contents, typeName(), "Json number")),
+                    false when isInteger64() => new(contents, ERR.LONG_CANNOT_BE_PARSED.With(ref reader, contents, nameof(Integer64))),
+                    false => new(contents, ERR.LONG_INCORRECT_FORMAT.With(ref reader, "Json string", contents, typeName(), "Json number"))
                 };
 
                 string typeName()
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Serialization
             if (success)
             {
                 return implementingType == typeof(long) && fhirType == typeof(Integer64)
-                    ? new(value, ERR.LONG_CANNOT_BE_PARSED.With(ref reader, reader.GetRawText(), nameof(Integer64)))
+                    ? new(value, ERR.LONG_INCORRECT_FORMAT.With(ref reader, "Json number", reader.GetRawText(), nameof(Integer64), "Json string"))
                     : new(value, null);
             }
             else

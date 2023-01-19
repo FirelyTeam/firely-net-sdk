@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿#nullable enable
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 catch (DeserializationFailedException e)
                 {
-                    resource = (Resource)e.PartialResult;
+                    resource = (Resource)e.PartialResult!;
                 }
 
                 var r2 = resource.DeepCopy();
@@ -180,21 +181,21 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = File.ReadAllText(inputFile);
-                Resource resource;
+                Resource? resource;
                 try
                 {
                     resource = JsonSerializer.Deserialize<Resource>(json, options);
                 }
                 catch (DeserializationFailedException e)
                 {
-                    resource = (Resource)e.PartialResult;
+                    resource = (Resource)e.PartialResult!;
                 }
 
                 var sb = new StringBuilder();
                 using (var w = XmlWriter.Create(sb))
                 {
 
-                    xmlSerializer.Serialize(resource, w);
+                    xmlSerializer.Serialize(resource!, w);
                 }
 
                 File.WriteAllText(outputFile, sb.ToString());
@@ -228,9 +229,29 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
             var attachment = JsonSerializer.Deserialize<Attachment>(_attachmentJson, options);
-            attachment.Size.Should().Be(12L);
+            attachment.Should().BeOfType<Attachment>().Subject.Size.Should().Be(12L);
             var json = JsonSerializer.Serialize(attachment, options);
             json.Should().Be(_attachmentJson);
         }
+
+        [DataTestMethod]
+        [DynamicData(nameof(attachmentSource), DynamicDataSourceType.Method)]
+        public void ParseAttachment(string input, long? expectedAttachmentSize, string? errorCode)
+        {
+            var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
+            if (errorCode is not null)
+            {
+                Action action = () => JsonSerializer.Deserialize<Attachment>(input, options);
+
+                action.Should().Throw<DeserializationFailedException>().Which.Exceptions.Should().OnlyContain(e => e.ErrorCode == errorCode);
+            }
+            else
+            {
+                var attachment = JsonSerializer.Deserialize<Attachment>(input, options);
+                attachment.Should().NotBeNull();
+                attachment!.Size.Should().Be(expectedAttachmentSize!.Value);
+            }
+        }
     }
 }
+#nullable restore
