@@ -40,8 +40,8 @@ namespace Hl7.Fhir.Model
         /// </summary>
         public static bool IsValidValue(string value) => FhirString.IsValidValue(value);
 
-        public static implicit operator string(Markdown md) => md.Value;
-        public static implicit operator Markdown(string s) => new(s);
+        public static implicit operator string?(Markdown? md) => md?.Value;
+        public static implicit operator Markdown?(string? s) => s is not null ? new(s) : null;
 
     }
 

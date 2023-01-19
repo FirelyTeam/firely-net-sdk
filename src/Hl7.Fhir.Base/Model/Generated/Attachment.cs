@@ -183,6 +183,8 @@ namespace Hl7.Fhir.Model
     /// Number of bytes of content (if url provided)
     /// </summary>
     [FhirElement("size", InSummary=true, Order=70)]
+    [DeclaredType(Type = typeof(UnsignedInt), Since = FhirRelease.STU3)]
+    [DeclaredType(Type = typeof(Integer64), Since = FhirRelease.R5)]
     [DataMember]
     public Hl7.Fhir.Model.Integer64 SizeElement
     {

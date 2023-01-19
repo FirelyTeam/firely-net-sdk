@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Introspection
     /// in the constructor to this attribute.
     /// </summary>
     [CLSCompliant(false)]
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
     public class DeclaredTypeAttribute : VersionedAttribute
     {
         public DeclaredTypeAttribute()

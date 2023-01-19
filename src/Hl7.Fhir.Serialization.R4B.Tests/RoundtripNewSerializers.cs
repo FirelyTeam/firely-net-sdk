@@ -1,11 +1,15 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Text.Json;
+using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
     [TestClass]
     public partial class RoundTripNewSerializers
     {
+        private readonly string _attachmentJson = "{\"size\":12}";
+
         [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
         [TestCategory("LongRunner")]
@@ -21,5 +25,14 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
+
+        private static IEnumerable<object[]> attachmentSource()
+        {
+            yield return new object[] { "{\"size\":12, \"title\": \"Correct Attachment\"}", 12L, null! };
+            yield return new object[] { "{\"size\":12.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE };
+            yield return new object[] { "{\"size\":\"12\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE };
+            yield return new object[] { "{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE };
+        }
+
     }
 }

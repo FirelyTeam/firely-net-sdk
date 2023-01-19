@@ -8,6 +8,7 @@ using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,70 +23,64 @@ namespace Hl7.Fhir.Support.Poco.Tests
     [TestClass]
     public class FhirJsonDeserializationTests
     {
-        //TODO: Now that we have constants for all of these errors, we could replace the string here.
-        private const string NUMBER_CANNOT_BE_PARSED = "JSON108";
-
         [DataTestMethod]
-        [DataRow(null, typeof(decimal), "JSON109")]
-        [DataRow(new[] { 1, 2 }, typeof(decimal), "JSON105")]
+        [DataRow(null, null, typeof(decimal), null, ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
+        [DataRow(new[] { 1, 2 }, null, typeof(decimal), null, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
 
-        [DataRow("hi!", typeof(string), null)]
-        [DataRow("SGkh", typeof(byte[]), null)]
-        [DataRow("hi!", typeof(byte[]), "JSON106")]
-        [DataRow("hi!", typeof(DateTimeOffset), "JSON107")]
-        [DataRow("2007-02-03", typeof(DateTimeOffset), null)]
-        [DataRow("enumvalue", typeof(UriFormat), COVE.INVALID_CODED_VALUE_CODE)]
-        [DataRow(true, typeof(Enum), "JSON110")]
-        [DataRow("hi!", typeof(int), "JSON110")]
+        [DataRow("hi!", "hi!", typeof(string), null, null)]
+        [DataRow("SGkh", null, typeof(byte[]), null, null)]
+        [DataRow("hi!", null, typeof(byte[]), null, ERR.INCORRECT_BASE64_DATA_CODE)]
+        [DataRow("hi!", null, typeof(DateTimeOffset), null, ERR.STRING_ISNOTAN_INSTANT_CODE)]
+        [DataRow("2007-02-03", null, typeof(DateTimeOffset), null, null)]
+        [DataRow("enumvalue", null, typeof(UriFormat), null, COVE.INVALID_CODED_VALUE_CODE)]
+        [DataRow(true, "true", typeof(Enum), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
+        [DataRow("hi!", "hi!", typeof(int), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
 
-        [DataRow(3, typeof(decimal), null)]
-        [DataRow(3, typeof(uint), null)]
-        [DataRow(3, typeof(long), null)]
-        [DataRow(3, typeof(ulong), null)]
-        [DataRow(3.14, typeof(decimal), null)]
-        [DataRow(double.MaxValue, typeof(decimal), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(3.14, typeof(int), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(3.14, typeof(uint), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(3.14, typeof(long), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(-3, typeof(ulong), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(long.MaxValue, typeof(uint), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(long.MaxValue, typeof(int), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(long.MaxValue, typeof(decimal), null)]
-        [DataRow(5, typeof(float), null)]
-        [DataRow(double.MaxValue, typeof(float), NUMBER_CANNOT_BE_PARSED)]
-        [DataRow(6.14, typeof(double), null)]
-        [DataRow(314, typeof(int), null)]
-        [DataRow(314, typeof(decimal), null)]
-        [DataRow(3.14, typeof(bool), "JSON110")]
+        [DataRow(3, 3, typeof(decimal), null, null)]
+        [DataRow(3, 3, typeof(uint), null, null)]
+        [DataRow(3L, 3L, typeof(long), typeof(Integer64), ERR.LONG_INCORRECT_FORMAT_CODE)]
+        [DataRow(3L, 3L, typeof(long), typeof(UnsignedInt), null)]
+        [DataRow(3, 3, typeof(ulong), null, null)]
+        [DataRow(3.14, 3.14, typeof(decimal), null, null)]
+        [DataRow(3.14, "3.14", typeof(int), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
+        [DataRow(3.14, "3.14", typeof(uint), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
+        [DataRow(3.14, "3.14", typeof(long), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
+        [DataRow(-3, "-3", typeof(ulong), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE)]
+        [DataRow(long.MaxValue, long.MaxValue, typeof(decimal), null, null)]
+        [DataRow(5, 5, typeof(float), null, null)]
+        [DataRow(6.14, 6.14, typeof(double), null, null)]
+        [DataRow(314, 314, typeof(int), null, null)]
+        [DataRow(314, 314, typeof(decimal), null, null)]
+        [DataRow(3.14, "3.14", typeof(bool), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
 
-        [DataRow(true, typeof(bool), null)]
-        [DataRow(true, typeof(string), "JSON110")]
-        public void TryDeserializePrimitiveValue(object data, Type expected, string code)
+        [DataRow(true, true, typeof(bool), null, null)]
+        [DataRow(true, "true", typeof(string), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
+        public void TryDeserializePrimitiveValue(object input, object expectedResult, Type expectedImplementingType, Type? fhirType, string code)
         {
-            var reader = constructReader(data);
+            var reader = constructReader(input);
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expected);
+            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType);
 
             if (code is not null)
                 error?.ErrorCode.Should().Be(code);
             else
                 error.Should().BeNull();
 
-            if (expected == typeof(byte[]))
+            if (expectedImplementingType == typeof(byte[]))
             {
                 if (error is null)
-                    Convert.ToBase64String((byte[])result!).Should().Be((string)data);
+                    Convert.ToBase64String((byte[])result!).Should().Be((string)input);
                 else
-                    result.Should().Be(data);
+                    result.Should().Be(input);
             }
-            else if (expected == typeof(DateTimeOffset))
+            else if (expectedImplementingType == typeof(DateTimeOffset))
             {
                 if (error is null)
-                    result.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)data);
+                    result.Should().BeOfType<DateTimeOffset>().Which.ToFhirDate().Should().Be((string)input);
                 else
-                    result.Should().Be(data);
+                    result.Should().Be(input);
             }
             else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY.ErrorCode ||
                 code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode)
@@ -95,9 +90,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             else
             {
                 if (error is null)
-                    result.Should().Be(data);
+                    result.Should().Be(input);
                 else
-                    result.Should().Be(data is not null ? PrimitiveTypeConverter.ConvertTo<string>(data) : null);
+                    result.Should().Be(expectedResult);
             }
         }
 
@@ -115,11 +110,11 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             (result, error) = test(21);
             result.Should().Be("21");
-            error?.ErrorCode.Should().Be(FhirJsonException.ARRAYS_CANNOT_BE_EMPTY_CODE);
+            error?.ErrorCode.Should().Be(ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
 
             (result, error) = test(31);
             result.Should().BeNull();
-            error?.ErrorCode.Should().Be(FhirJsonException.UNEXPECTED_JSON_TOKEN_CODE);
+            error?.ErrorCode.Should().Be(ERR.UNEXPECTED_JSON_TOKEN_CODE);
 
             try
             {
@@ -149,22 +144,26 @@ namespace Hl7.Fhir.Support.Poco.Tests
             {
                 var reader = constructReader(number); reader.Read();
                 var deserializer = getTestDeserializer(new() { OnPrimitiveParseFailed = correctIntToBool });
-                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool));
+                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null);
             }
         }
 
         [TestMethod]
         public void PrimitiveValueCannotBeComplex()
         {
-            TryDeserializePrimitiveValue(new { bla = 4 }, typeof(int), ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode);
+            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode);
+            TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture), typeof(decimal), null, FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE);
+            TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(uint), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE);
+            TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(int), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE);
+            TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture), typeof(float), null, FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE);
         }
 
         [DataTestMethod]
         [DataRow("OperationOutcome", null)]
-        [DataRow("OperationOutcomeX", "JSON116")]
+        [DataRow("OperationOutcomeX", ERR.UNKNOWN_RESOURCE_TYPE_CODE)]
         [DataRow("Meta", null)]
-        [DataRow(4, "JSON102")]
-        [DataRow(null, "JSON103")]
+        [DataRow(4, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE)]
+        [DataRow(null, ERR.NO_RESOURCETYPE_PROPERTY_CODE)]
         public void DeriveClassMapping(object typename, string errorcode)
         {
             var (result, error) = test(typename);
@@ -191,24 +190,24 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [DataTestMethod]
-        [DataRow(null, typeof(FhirString), "JSON109")]
-        [DataRow(new[] { 1, 2 }, typeof(FhirString), "JSON105")]
+        [DataRow(null, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE)]
+        [DataRow(new[] { 1, 2 }, typeof(FhirString), ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE)]
         [DataRow("SGkh", typeof(FhirString), null, "SGkh")]
 
         [DataRow("SGkh", typeof(Base64Binary), null, new byte[] { 72, 105, 33 })]
-        [DataRow("hi!", typeof(Base64Binary), "JSON106", "hi!")]
-        [DataRow(4, typeof(Base64Binary), "JSON110", "4")]
+        [DataRow("hi!", typeof(Base64Binary), ERR.INCORRECT_BASE64_DATA_CODE, "hi!")]
+        [DataRow(4, typeof(Base64Binary), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4")]
 
         [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
         [DataRow("2007-", typeof(FhirDateTime), COVE.DATETIME_LITERAL_INVALID_CODE, "2007-")]
-        [DataRow(4.45, typeof(FhirDateTime), "JSON110", "4.45")]
+        [DataRow(4.45, typeof(FhirDateTime), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4.45")]
 
         [DataRow("female", typeof(Code), null, "female")]
         [DataRow("is-a", typeof(Code<FilterOperator>), null, "is-a")]
         [DataRow("wrong", typeof(Code<FilterOperator>), COVE.INVALID_CODED_VALUE_CODE, "wrong")]   // just sets ObjectValue, POCO validation handles enum checks
         [DataRow(true, typeof(Code), ERR.UNEXPECTED_JSON_TOKEN_CODE, "true")]
 
-        [DataRow("hi!", typeof(Instant), "JSON107")]
+        [DataRow("hi!", typeof(Instant), ERR.STRING_ISNOTAN_INSTANT_CODE)]
         [DataRow("2007-02-03", typeof(Instant), null, 2007)]
 
         public void ParsePrimitiveValue(object value, Type targetType, string errorcode, object? expectedObjectValue = null)
@@ -224,7 +223,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var reader = constructReader(value);
                 reader.Read();
 
-                return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, ref reader, null, state);
+                return deserializer.DeserializeFhirPrimitive(null, "dummy", mapping, null!, ref reader, null, state);
             }
 
             var result = test();

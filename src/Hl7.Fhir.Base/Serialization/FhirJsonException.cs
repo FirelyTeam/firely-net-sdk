@@ -11,7 +11,6 @@
 using Hl7.Fhir.Utility;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Text.Json;
 
 #nullable enable
@@ -46,6 +45,8 @@ namespace Hl7.Fhir.Serialization
         public const string RESOURCETYPE_UNEXPECTED_CODE = "JSON119";
         public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
         public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
+        public const string LONG_CANNOT_BE_PARSED_CODE = "JSON122";
+        public const string LONG_INCORRECT_FORMAT_CODE = "JSON123";
 
         [Obsolete("According to the latest updates of the Json format, primitive arrays of different sizes are no longer considered an error.")]
         public const string PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE = "JSON122";
@@ -80,6 +81,10 @@ namespace Hl7.Fhir.Serialization
         internal static readonly FhirJsonException STRING_ISNOTAN_INSTANT = new(STRING_ISNOTAN_INSTANT_CODE, "Literal string '{0}' cannot be parsed as an instant.");
         internal static readonly FhirJsonException NUMBER_CANNOT_BE_PARSED = new(NUMBER_CANNOT_BE_PARSED_CODE, "Json number '{0}' cannot be parsed as a {1}.");
         internal static readonly FhirJsonException UNEXPECTED_JSON_TOKEN = new(UNEXPECTED_JSON_TOKEN_CODE, "Expecting a {0}, but found a json {1} with value '{2}'.");
+
+        // In R5 Integer64 (long) are serialized as string. So we would expect a string during parsing.
+        internal static readonly FhirJsonException LONG_CANNOT_BE_PARSED = new(LONG_CANNOT_BE_PARSED_CODE, "Json string '{0}' cannot be parsed as a {1}.");
+        internal static readonly FhirJsonException LONG_INCORRECT_FORMAT = new(LONG_INCORRECT_FORMAT_CODE, "{0} '{1}' cannot be parsed as a {2}, because it should be a {3}.");
 
         // The parser will turn a non-array value into an array with a single element, so no data is lost.
         internal static readonly FhirJsonException EXPECTED_START_OF_ARRAY = new(EXPECTED_START_OF_ARRAY_CODE, "Expected start of array.");

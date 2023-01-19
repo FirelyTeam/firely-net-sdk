@@ -558,7 +558,7 @@ namespace HL7.FhirPath.Tests
         public void ContextNestingLevelTest()
         {
             Coding c = new("http://nu.nl", "nl");
-            var te = c.ToTypedElement(ModelInspector.Common);
+            var te = c.ToTypedElement(ModelInspector.Base);
             Assert.IsTrue(te.IsBoolean($"system.endsWith(code)", true));
             Assert.IsTrue(te.IsBoolean($"system.endsWith(%context.code)", true));
             Assert.IsTrue(te.IsBoolean($"system.endsWith('nl')", true));

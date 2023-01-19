@@ -77,8 +77,8 @@ namespace Hl7.Fhir.Support.Tests
 
             yield return new object[] { sourceNode.ToTypedElement(ModelInspector.ForAssembly(typeof(Resource).Assembly)), "sourceNode to TypedElement" };
 
-            var poco = sourceNode.ToPoco<Parameters>(ModelInspector.Common);
-            yield return new object[] { poco.ToTypedElement(ModelInspector.Common), "poco to TypedElement" };
+            var poco = sourceNode.ToPoco<Parameters>(ModelInspector.Base);
+            yield return new object[] { poco.ToTypedElement(ModelInspector.Base), "poco to TypedElement" };
 
         }
     }

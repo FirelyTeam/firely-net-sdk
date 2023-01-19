@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Model;
+﻿#nullable enable
+using FluentAssertions;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Tests;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -63,8 +65,6 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             if (file.Contains("notification-") || file.Contains("subscriptionstatus-"))
                 return true; // These are Subscription resources that have invalid data in R5.
-            if (file.Contains("integer64.profile.json") || file.Contains("documentreference-example.json") || file.Contains("documentmanifest-fm-attachment.json") || file.Contains("communication-example-fm-solicited-attachment.json") || file.Contains("communication-example-fm-attachment.json"))
-                return true; // Are examples that have quotes around integers in R5
             if (file.Contains("examplescenario-example"))
                 return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("json-edge-cases"))
@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 }
                 catch (DeserializationFailedException e)
                 {
-                    resource = (Resource)e.PartialResult;
+                    resource = (Resource)e.PartialResult!;
                 }
 
                 var r2 = resource.DeepCopy();
@@ -181,21 +181,21 @@ namespace Hl7.Fhir.Serialization.Tests
             else
             {
                 var json = File.ReadAllText(inputFile);
-                Resource resource;
+                Resource? resource;
                 try
                 {
                     resource = JsonSerializer.Deserialize<Resource>(json, options);
                 }
                 catch (DeserializationFailedException e)
                 {
-                    resource = (Resource)e.PartialResult;
+                    resource = (Resource)e.PartialResult!;
                 }
 
                 var sb = new StringBuilder();
                 using (var w = XmlWriter.Create(sb))
                 {
 
-                    xmlSerializer.Serialize(resource, w);
+                    xmlSerializer.Serialize(resource!, w);
                 }
 
                 File.WriteAllText(outputFile, sb.ToString());
@@ -223,5 +223,35 @@ namespace Hl7.Fhir.Serialization.Tests
                                     File.ReadAllText(actualFile), errors);
             }
         }
+
+        [TestMethod]
+        public void RoundTripAttachmentWithSize()
+        {
+            var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
+            var attachment = JsonSerializer.Deserialize<Attachment>(_attachmentJson, options);
+            attachment.Should().BeOfType<Attachment>().Subject.Size.Should().Be(12L);
+            var json = JsonSerializer.Serialize(attachment, options);
+            json.Should().Be(_attachmentJson);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(attachmentSource), DynamicDataSourceType.Method)]
+        public void ParseAttachment(string input, long? expectedAttachmentSize, string? errorCode)
+        {
+            var options = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector);
+            if (errorCode is not null)
+            {
+                Action action = () => JsonSerializer.Deserialize<Attachment>(input, options);
+
+                action.Should().Throw<DeserializationFailedException>().Which.Exceptions.Should().OnlyContain(e => e.ErrorCode == errorCode);
+            }
+            else
+            {
+                var attachment = JsonSerializer.Deserialize<Attachment>(input, options);
+                attachment.Should().NotBeNull();
+                attachment!.Size.Should().Be(expectedAttachmentSize!.Value);
+            }
+        }
     }
 }
+#nullable restore

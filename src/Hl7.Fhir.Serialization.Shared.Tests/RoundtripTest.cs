@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
 using Hl7.Fhir.Tests;
@@ -56,7 +57,16 @@ namespace Hl7.Fhir.Serialization.Tests
             await doRoundTripAsync(examples, baseTestPath, usingPoco, provider);
         }
 
-
+        [TestMethod]
+        public void RoundTripAttachmentWithSize()
+        {
+            var parser = new FhirJsonParser(new ParserSettings() { PermissiveParsing = false });
+            var attachment = parser.Parse<Attachment>(_attachmentJson);
+            attachment.Size.Should().Be(12L);
+            var serializer = new FhirJsonSerializer();
+            var result = serializer.SerializeToString(attachment);
+            result.Should().Be(_attachmentJson);
+        }
 
         //[TestMethod]
         //public void CompareIntermediate2Xml()
