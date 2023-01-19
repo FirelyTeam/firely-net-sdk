@@ -1401,6 +1401,8 @@ namespace Hl7.Fhir.Model
       /// Why this constraint is necessary or appropriate
       /// </summary>
       [FhirElement("requirements", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(FhirString))]
+      [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Requirements
       {
@@ -2113,6 +2115,8 @@ namespace Hl7.Fhir.Model
       /// Intended use of codes in the bound value set
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(FhirString))]
+      [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Description
       {
@@ -2684,6 +2688,8 @@ namespace Hl7.Fhir.Model
       /// Comments about the mapping or its use
       /// </summary>
       [FhirElement("comment", InSummary=true, Order=60)]
+      [DeclaredType(Type = typeof(FhirString))]
+      [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown Comment
       {
