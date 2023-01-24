@@ -14,7 +14,7 @@ namespace Firely.Sdk.Benchmarks
     {
         internal TestPatient Patient;
         JsonSerializerOptions Options;
-        FhirXmlPocoSerializer XmlSerializer;
+        BaseFhirXmlPocoSerializer XmlSerializer;
 
 
         [GlobalSetup]
@@ -26,7 +26,7 @@ namespace Firely.Sdk.Benchmarks
             // the dynamicserializer too.
             Patient = FhirJsonNode.Parse(data).ToPoco<TestPatient>(ModelInspector.ForType<TestPatient>());
             Options = new JsonSerializerOptions().ForFhir(typeof(TestPatient).Assembly);
-            XmlSerializer = new FhirXmlPocoSerializer(Hl7.Fhir.Specification.FhirRelease.STU3);
+            XmlSerializer = new BaseFhirXmlPocoSerializer(Hl7.Fhir.Specification.FhirRelease.STU3);
         }
 
         [Benchmark]
