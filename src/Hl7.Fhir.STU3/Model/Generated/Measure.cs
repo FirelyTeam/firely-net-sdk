@@ -1213,26 +1213,62 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Natural language description of the measure
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// Why this measure is defined
     /// </summary>
     [FhirElement("purpose", Order=190)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Purpose
+    public Hl7.Fhir.Model.Markdown PurposeElement
     {
-      get { return _Purpose; }
-      set { _Purpose = value; OnPropertyChanged("Purpose"); }
+      get { return _PurposeElement; }
+      set { _PurposeElement = value; OnPropertyChanged("PurposeElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Purpose;
+    private Hl7.Fhir.Model.Markdown _PurposeElement;
+
+    /// <summary>
+    /// Why this measure is defined
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Purpose
+    {
+      get { return PurposeElement != null ? PurposeElement.Value : null; }
+      set
+      {
+        if (value == null)
+          PurposeElement = null;
+        else
+          PurposeElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Purpose");
+      }
+    }
 
     /// <summary>
     /// Describes the clinical usage of the measure
@@ -1415,13 +1451,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("copyright", Order=290)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Copyright
+    public Hl7.Fhir.Model.Markdown CopyrightElement
     {
-      get { return _Copyright; }
-      set { _Copyright = value; OnPropertyChanged("Copyright"); }
+      get { return _CopyrightElement; }
+      set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Copyright;
+    private Hl7.Fhir.Model.Markdown _CopyrightElement;
+
+    /// <summary>
+    /// Use and/or publishing restrictions
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Copyright
+    {
+      get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+      set
+      {
+        if (value == null)
+          CopyrightElement = null;
+        else
+          CopyrightElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Copyright");
+      }
+    }
 
     /// <summary>
     /// Additional documentation, citations, etc
@@ -1458,13 +1512,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("disclaimer", InSummary=true, Order=320)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Disclaimer
+    public Hl7.Fhir.Model.Markdown DisclaimerElement
     {
-      get { return _Disclaimer; }
-      set { _Disclaimer = value; OnPropertyChanged("Disclaimer"); }
+      get { return _DisclaimerElement; }
+      set { _DisclaimerElement = value; OnPropertyChanged("DisclaimerElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Disclaimer;
+    private Hl7.Fhir.Model.Markdown _DisclaimerElement;
+
+    /// <summary>
+    /// Disclaimer for use of the measure or its referenced content
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Disclaimer
+    {
+      get { return DisclaimerElement != null ? DisclaimerElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DisclaimerElement = null;
+        else
+          DisclaimerElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Disclaimer");
+      }
+    }
 
     /// <summary>
     /// proportion | ratio | continuous-variable | cohort
@@ -1573,26 +1645,62 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("rationale", InSummary=true, Order=380)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Rationale
+    public Hl7.Fhir.Model.Markdown RationaleElement
     {
-      get { return _Rationale; }
-      set { _Rationale = value; OnPropertyChanged("Rationale"); }
+      get { return _RationaleElement; }
+      set { _RationaleElement = value; OnPropertyChanged("RationaleElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Rationale;
+    private Hl7.Fhir.Model.Markdown _RationaleElement;
+
+    /// <summary>
+    /// Why does this measure exist
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Rationale
+    {
+      get { return RationaleElement != null ? RationaleElement.Value : null; }
+      set
+      {
+        if (value == null)
+          RationaleElement = null;
+        else
+          RationaleElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Rationale");
+      }
+    }
 
     /// <summary>
     /// Summary of clinical guidelines
     /// </summary>
     [FhirElement("clinicalRecommendationStatement", InSummary=true, Order=390)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown ClinicalRecommendationStatement
+    public Hl7.Fhir.Model.Markdown ClinicalRecommendationStatementElement
     {
-      get { return _ClinicalRecommendationStatement; }
-      set { _ClinicalRecommendationStatement = value; OnPropertyChanged("ClinicalRecommendationStatement"); }
+      get { return _ClinicalRecommendationStatementElement; }
+      set { _ClinicalRecommendationStatementElement = value; OnPropertyChanged("ClinicalRecommendationStatementElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _ClinicalRecommendationStatement;
+    private Hl7.Fhir.Model.Markdown _ClinicalRecommendationStatementElement;
+
+    /// <summary>
+    /// Summary of clinical guidelines
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string ClinicalRecommendationStatement
+    {
+      get { return ClinicalRecommendationStatementElement != null ? ClinicalRecommendationStatementElement.Value : null; }
+      set
+      {
+        if (value == null)
+          ClinicalRecommendationStatementElement = null;
+        else
+          ClinicalRecommendationStatementElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("ClinicalRecommendationStatement");
+      }
+    }
 
     /// <summary>
     /// Improvement notation for the measure, e.g. higher score indicates better quality
@@ -1631,26 +1739,62 @@ namespace Hl7.Fhir.Model
     [FhirElement("definition", InSummary=true, Order=410)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
-    public List<Hl7.Fhir.Model.Markdown> Definition
+    public List<Hl7.Fhir.Model.Markdown> DefinitionElement
     {
-      get { if(_Definition==null) _Definition = new List<Hl7.Fhir.Model.Markdown>(); return _Definition; }
-      set { _Definition = value; OnPropertyChanged("Definition"); }
+      get { if(_DefinitionElement==null) _DefinitionElement = new List<Hl7.Fhir.Model.Markdown>(); return _DefinitionElement; }
+      set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
     }
 
-    private List<Hl7.Fhir.Model.Markdown> _Definition;
+    private List<Hl7.Fhir.Model.Markdown> _DefinitionElement;
+
+    /// <summary>
+    /// Defined terms used in the measure documentation
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public IEnumerable<string> Definition
+    {
+      get { return DefinitionElement != null ? DefinitionElement.Select(elem => elem.Value) : null; }
+      set
+      {
+        if (value == null)
+          DefinitionElement = null;
+        else
+          DefinitionElement = new List<Hl7.Fhir.Model.Markdown>(value.Select(elem=>new Hl7.Fhir.Model.Markdown(elem)));
+        OnPropertyChanged("Definition");
+      }
+    }
 
     /// <summary>
     /// Additional guidance for implementers
     /// </summary>
     [FhirElement("guidance", InSummary=true, Order=420)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Guidance
+    public Hl7.Fhir.Model.Markdown GuidanceElement
     {
-      get { return _Guidance; }
-      set { _Guidance = value; OnPropertyChanged("Guidance"); }
+      get { return _GuidanceElement; }
+      set { _GuidanceElement = value; OnPropertyChanged("GuidanceElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Guidance;
+    private Hl7.Fhir.Model.Markdown _GuidanceElement;
+
+    /// <summary>
+    /// Additional guidance for implementers
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Guidance
+    {
+      get { return GuidanceElement != null ? GuidanceElement.Value : null; }
+      set
+      {
+        if (value == null)
+          GuidanceElement = null;
+        else
+          GuidanceElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Guidance");
+      }
+    }
 
     /// <summary>
     /// The measure set, e.g. Preventive Care and Screening
@@ -1730,8 +1874,8 @@ namespace Hl7.Fhir.Model
       if(ExperimentalElement != null) dest.ExperimentalElement = (Hl7.Fhir.Model.FhirBoolean)ExperimentalElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
-      if(Purpose != null) dest.Purpose = (Hl7.Fhir.Model.Markdown)Purpose.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+      if(PurposeElement != null) dest.PurposeElement = (Hl7.Fhir.Model.Markdown)PurposeElement.DeepCopy();
       if(UsageElement != null) dest.UsageElement = (Hl7.Fhir.Model.FhirString)UsageElement.DeepCopy();
       if(ApprovalDateElement != null) dest.ApprovalDateElement = (Hl7.Fhir.Model.Date)ApprovalDateElement.DeepCopy();
       if(LastReviewDateElement != null) dest.LastReviewDateElement = (Hl7.Fhir.Model.Date)LastReviewDateElement.DeepCopy();
@@ -1741,20 +1885,20 @@ namespace Hl7.Fhir.Model
       if(Topic != null) dest.Topic = new List<Hl7.Fhir.Model.CodeableConcept>(Topic.DeepCopy());
       if(Contributor != null) dest.Contributor = new List<Hl7.Fhir.Model.Contributor>(Contributor.DeepCopy());
       if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
-      if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
+      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
       if(Library != null) dest.Library = new List<Hl7.Fhir.Model.ResourceReference>(Library.DeepCopy());
-      if(Disclaimer != null) dest.Disclaimer = (Hl7.Fhir.Model.Markdown)Disclaimer.DeepCopy();
+      if(DisclaimerElement != null) dest.DisclaimerElement = (Hl7.Fhir.Model.Markdown)DisclaimerElement.DeepCopy();
       if(Scoring != null) dest.Scoring = (Hl7.Fhir.Model.CodeableConcept)Scoring.DeepCopy();
       if(CompositeScoring != null) dest.CompositeScoring = (Hl7.Fhir.Model.CodeableConcept)CompositeScoring.DeepCopy();
       if(Type != null) dest.Type = new List<Hl7.Fhir.Model.CodeableConcept>(Type.DeepCopy());
       if(RiskAdjustmentElement != null) dest.RiskAdjustmentElement = (Hl7.Fhir.Model.FhirString)RiskAdjustmentElement.DeepCopy();
       if(RateAggregationElement != null) dest.RateAggregationElement = (Hl7.Fhir.Model.FhirString)RateAggregationElement.DeepCopy();
-      if(Rationale != null) dest.Rationale = (Hl7.Fhir.Model.Markdown)Rationale.DeepCopy();
-      if(ClinicalRecommendationStatement != null) dest.ClinicalRecommendationStatement = (Hl7.Fhir.Model.Markdown)ClinicalRecommendationStatement.DeepCopy();
+      if(RationaleElement != null) dest.RationaleElement = (Hl7.Fhir.Model.Markdown)RationaleElement.DeepCopy();
+      if(ClinicalRecommendationStatementElement != null) dest.ClinicalRecommendationStatementElement = (Hl7.Fhir.Model.Markdown)ClinicalRecommendationStatementElement.DeepCopy();
       if(ImprovementNotationElement != null) dest.ImprovementNotationElement = (Hl7.Fhir.Model.FhirString)ImprovementNotationElement.DeepCopy();
-      if(Definition != null) dest.Definition = new List<Hl7.Fhir.Model.Markdown>(Definition.DeepCopy());
-      if(Guidance != null) dest.Guidance = (Hl7.Fhir.Model.Markdown)Guidance.DeepCopy();
+      if(DefinitionElement != null) dest.DefinitionElement = new List<Hl7.Fhir.Model.Markdown>(DefinitionElement.DeepCopy());
+      if(GuidanceElement != null) dest.GuidanceElement = (Hl7.Fhir.Model.Markdown)GuidanceElement.DeepCopy();
       if(SetElement != null) dest.SetElement = (Hl7.Fhir.Model.FhirString)SetElement.DeepCopy();
       if(Group != null) dest.Group = new List<Hl7.Fhir.Model.Measure.GroupComponent>(Group.DeepCopy());
       if(SupplementalData != null) dest.SupplementalData = new List<Hl7.Fhir.Model.Measure.SupplementalDataComponent>(SupplementalData.DeepCopy());
@@ -1782,8 +1926,8 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(ExperimentalElement, otherT.ExperimentalElement)) return false;
       if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
       if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
-      if( !DeepComparable.Matches(Purpose, otherT.Purpose)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.Matches(PurposeElement, otherT.PurposeElement)) return false;
       if( !DeepComparable.Matches(UsageElement, otherT.UsageElement)) return false;
       if( !DeepComparable.Matches(ApprovalDateElement, otherT.ApprovalDateElement)) return false;
       if( !DeepComparable.Matches(LastReviewDateElement, otherT.LastReviewDateElement)) return false;
@@ -1793,20 +1937,20 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Topic, otherT.Topic)) return false;
       if( !DeepComparable.Matches(Contributor, otherT.Contributor)) return false;
       if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
+      if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
       if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
       if( !DeepComparable.Matches(Library, otherT.Library)) return false;
-      if( !DeepComparable.Matches(Disclaimer, otherT.Disclaimer)) return false;
+      if( !DeepComparable.Matches(DisclaimerElement, otherT.DisclaimerElement)) return false;
       if( !DeepComparable.Matches(Scoring, otherT.Scoring)) return false;
       if( !DeepComparable.Matches(CompositeScoring, otherT.CompositeScoring)) return false;
       if( !DeepComparable.Matches(Type, otherT.Type)) return false;
       if( !DeepComparable.Matches(RiskAdjustmentElement, otherT.RiskAdjustmentElement)) return false;
       if( !DeepComparable.Matches(RateAggregationElement, otherT.RateAggregationElement)) return false;
-      if( !DeepComparable.Matches(Rationale, otherT.Rationale)) return false;
-      if( !DeepComparable.Matches(ClinicalRecommendationStatement, otherT.ClinicalRecommendationStatement)) return false;
+      if( !DeepComparable.Matches(RationaleElement, otherT.RationaleElement)) return false;
+      if( !DeepComparable.Matches(ClinicalRecommendationStatementElement, otherT.ClinicalRecommendationStatementElement)) return false;
       if( !DeepComparable.Matches(ImprovementNotationElement, otherT.ImprovementNotationElement)) return false;
-      if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
-      if( !DeepComparable.Matches(Guidance, otherT.Guidance)) return false;
+      if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+      if( !DeepComparable.Matches(GuidanceElement, otherT.GuidanceElement)) return false;
       if( !DeepComparable.Matches(SetElement, otherT.SetElement)) return false;
       if( !DeepComparable.Matches(Group, otherT.Group)) return false;
       if( !DeepComparable.Matches(SupplementalData, otherT.SupplementalData)) return false;
@@ -1829,8 +1973,8 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(ExperimentalElement, otherT.ExperimentalElement)) return false;
       if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
       if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-      if( !DeepComparable.IsExactly(Purpose, otherT.Purpose)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.IsExactly(PurposeElement, otherT.PurposeElement)) return false;
       if( !DeepComparable.IsExactly(UsageElement, otherT.UsageElement)) return false;
       if( !DeepComparable.IsExactly(ApprovalDateElement, otherT.ApprovalDateElement)) return false;
       if( !DeepComparable.IsExactly(LastReviewDateElement, otherT.LastReviewDateElement)) return false;
@@ -1840,20 +1984,20 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Topic, otherT.Topic)) return false;
       if( !DeepComparable.IsExactly(Contributor, otherT.Contributor)) return false;
       if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
-      if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
+      if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
       if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
       if( !DeepComparable.IsExactly(Library, otherT.Library)) return false;
-      if( !DeepComparable.IsExactly(Disclaimer, otherT.Disclaimer)) return false;
+      if( !DeepComparable.IsExactly(DisclaimerElement, otherT.DisclaimerElement)) return false;
       if( !DeepComparable.IsExactly(Scoring, otherT.Scoring)) return false;
       if( !DeepComparable.IsExactly(CompositeScoring, otherT.CompositeScoring)) return false;
       if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
       if( !DeepComparable.IsExactly(RiskAdjustmentElement, otherT.RiskAdjustmentElement)) return false;
       if( !DeepComparable.IsExactly(RateAggregationElement, otherT.RateAggregationElement)) return false;
-      if( !DeepComparable.IsExactly(Rationale, otherT.Rationale)) return false;
-      if( !DeepComparable.IsExactly(ClinicalRecommendationStatement, otherT.ClinicalRecommendationStatement)) return false;
+      if( !DeepComparable.IsExactly(RationaleElement, otherT.RationaleElement)) return false;
+      if( !DeepComparable.IsExactly(ClinicalRecommendationStatementElement, otherT.ClinicalRecommendationStatementElement)) return false;
       if( !DeepComparable.IsExactly(ImprovementNotationElement, otherT.ImprovementNotationElement)) return false;
-      if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
-      if( !DeepComparable.IsExactly(Guidance, otherT.Guidance)) return false;
+      if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
+      if( !DeepComparable.IsExactly(GuidanceElement, otherT.GuidanceElement)) return false;
       if( !DeepComparable.IsExactly(SetElement, otherT.SetElement)) return false;
       if( !DeepComparable.IsExactly(Group, otherT.Group)) return false;
       if( !DeepComparable.IsExactly(SupplementalData, otherT.SupplementalData)) return false;
@@ -1876,8 +2020,8 @@ namespace Hl7.Fhir.Model
         if (ExperimentalElement != null) yield return ExperimentalElement;
         if (DateElement != null) yield return DateElement;
         if (PublisherElement != null) yield return PublisherElement;
-        if (Description != null) yield return Description;
-        if (Purpose != null) yield return Purpose;
+        if (DescriptionElement != null) yield return DescriptionElement;
+        if (PurposeElement != null) yield return PurposeElement;
         if (UsageElement != null) yield return UsageElement;
         if (ApprovalDateElement != null) yield return ApprovalDateElement;
         if (LastReviewDateElement != null) yield return LastReviewDateElement;
@@ -1887,20 +2031,20 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Topic) { if (elem != null) yield return elem; }
         foreach (var elem in Contributor) { if (elem != null) yield return elem; }
         foreach (var elem in Contact) { if (elem != null) yield return elem; }
-        if (Copyright != null) yield return Copyright;
+        if (CopyrightElement != null) yield return CopyrightElement;
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
         foreach (var elem in Library) { if (elem != null) yield return elem; }
-        if (Disclaimer != null) yield return Disclaimer;
+        if (DisclaimerElement != null) yield return DisclaimerElement;
         if (Scoring != null) yield return Scoring;
         if (CompositeScoring != null) yield return CompositeScoring;
         foreach (var elem in Type) { if (elem != null) yield return elem; }
         if (RiskAdjustmentElement != null) yield return RiskAdjustmentElement;
         if (RateAggregationElement != null) yield return RateAggregationElement;
-        if (Rationale != null) yield return Rationale;
-        if (ClinicalRecommendationStatement != null) yield return ClinicalRecommendationStatement;
+        if (RationaleElement != null) yield return RationaleElement;
+        if (ClinicalRecommendationStatementElement != null) yield return ClinicalRecommendationStatementElement;
         if (ImprovementNotationElement != null) yield return ImprovementNotationElement;
-        foreach (var elem in Definition) { if (elem != null) yield return elem; }
-        if (Guidance != null) yield return Guidance;
+        foreach (var elem in DefinitionElement) { if (elem != null) yield return elem; }
+        if (GuidanceElement != null) yield return GuidanceElement;
         if (SetElement != null) yield return SetElement;
         foreach (var elem in Group) { if (elem != null) yield return elem; }
         foreach (var elem in SupplementalData) { if (elem != null) yield return elem; }
@@ -1922,8 +2066,8 @@ namespace Hl7.Fhir.Model
         if (ExperimentalElement != null) yield return new ElementValue("experimental", ExperimentalElement);
         if (DateElement != null) yield return new ElementValue("date", DateElement);
         if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
-        if (Description != null) yield return new ElementValue("description", Description);
-        if (Purpose != null) yield return new ElementValue("purpose", Purpose);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+        if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
         if (UsageElement != null) yield return new ElementValue("usage", UsageElement);
         if (ApprovalDateElement != null) yield return new ElementValue("approvalDate", ApprovalDateElement);
         if (LastReviewDateElement != null) yield return new ElementValue("lastReviewDate", LastReviewDateElement);
@@ -1933,20 +2077,20 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Topic) { if (elem != null) yield return new ElementValue("topic", elem); }
         foreach (var elem in Contributor) { if (elem != null) yield return new ElementValue("contributor", elem); }
         foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
-        if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+        if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
         foreach (var elem in Library) { if (elem != null) yield return new ElementValue("library", elem); }
-        if (Disclaimer != null) yield return new ElementValue("disclaimer", Disclaimer);
+        if (DisclaimerElement != null) yield return new ElementValue("disclaimer", DisclaimerElement);
         if (Scoring != null) yield return new ElementValue("scoring", Scoring);
         if (CompositeScoring != null) yield return new ElementValue("compositeScoring", CompositeScoring);
         foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
         if (RiskAdjustmentElement != null) yield return new ElementValue("riskAdjustment", RiskAdjustmentElement);
         if (RateAggregationElement != null) yield return new ElementValue("rateAggregation", RateAggregationElement);
-        if (Rationale != null) yield return new ElementValue("rationale", Rationale);
-        if (ClinicalRecommendationStatement != null) yield return new ElementValue("clinicalRecommendationStatement", ClinicalRecommendationStatement);
+        if (RationaleElement != null) yield return new ElementValue("rationale", RationaleElement);
+        if (ClinicalRecommendationStatementElement != null) yield return new ElementValue("clinicalRecommendationStatement", ClinicalRecommendationStatementElement);
         if (ImprovementNotationElement != null) yield return new ElementValue("improvementNotation", ImprovementNotationElement);
-        foreach (var elem in Definition) { if (elem != null) yield return new ElementValue("definition", elem); }
-        if (Guidance != null) yield return new ElementValue("guidance", Guidance);
+        foreach (var elem in DefinitionElement) { if (elem != null) yield return new ElementValue("definition", elem); }
+        if (GuidanceElement != null) yield return new ElementValue("guidance", GuidanceElement);
         if (SetElement != null) yield return new ElementValue("set", SetElement);
         foreach (var elem in Group) { if (elem != null) yield return new ElementValue("group", elem); }
         foreach (var elem in SupplementalData) { if (elem != null) yield return new ElementValue("supplementalData", elem); }
@@ -1985,11 +2129,11 @@ namespace Hl7.Fhir.Model
           value = PublisherElement;
           return PublisherElement is not null;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "purpose":
-          value = Purpose;
-          return Purpose is not null;
+          value = PurposeElement;
+          return PurposeElement is not null;
         case "usage":
           value = UsageElement;
           return UsageElement is not null;
@@ -2018,8 +2162,8 @@ namespace Hl7.Fhir.Model
           value = Contact;
           return Contact?.Any() == true;
         case "copyright":
-          value = Copyright;
-          return Copyright is not null;
+          value = CopyrightElement;
+          return CopyrightElement is not null;
         case "relatedArtifact":
           value = RelatedArtifact;
           return RelatedArtifact?.Any() == true;
@@ -2027,8 +2171,8 @@ namespace Hl7.Fhir.Model
           value = Library;
           return Library?.Any() == true;
         case "disclaimer":
-          value = Disclaimer;
-          return Disclaimer is not null;
+          value = DisclaimerElement;
+          return DisclaimerElement is not null;
         case "scoring":
           value = Scoring;
           return Scoring is not null;
@@ -2045,20 +2189,20 @@ namespace Hl7.Fhir.Model
           value = RateAggregationElement;
           return RateAggregationElement is not null;
         case "rationale":
-          value = Rationale;
-          return Rationale is not null;
+          value = RationaleElement;
+          return RationaleElement is not null;
         case "clinicalRecommendationStatement":
-          value = ClinicalRecommendationStatement;
-          return ClinicalRecommendationStatement is not null;
+          value = ClinicalRecommendationStatementElement;
+          return ClinicalRecommendationStatementElement is not null;
         case "improvementNotation":
           value = ImprovementNotationElement;
           return ImprovementNotationElement is not null;
         case "definition":
-          value = Definition;
-          return Definition?.Any() == true;
+          value = DefinitionElement;
+          return DefinitionElement?.Any() == true;
         case "guidance":
-          value = Guidance;
-          return Guidance is not null;
+          value = GuidanceElement;
+          return GuidanceElement is not null;
         case "set":
           value = SetElement;
           return SetElement is not null;
@@ -2086,8 +2230,8 @@ namespace Hl7.Fhir.Model
       if (ExperimentalElement is not null) yield return new KeyValuePair<string,object>("experimental",ExperimentalElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (Purpose is not null) yield return new KeyValuePair<string,object>("purpose",Purpose);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
       if (UsageElement is not null) yield return new KeyValuePair<string,object>("usage",UsageElement);
       if (ApprovalDateElement is not null) yield return new KeyValuePair<string,object>("approvalDate",ApprovalDateElement);
       if (LastReviewDateElement is not null) yield return new KeyValuePair<string,object>("lastReviewDate",LastReviewDateElement);
@@ -2097,20 +2241,20 @@ namespace Hl7.Fhir.Model
       if (Topic?.Any() == true) yield return new KeyValuePair<string,object>("topic",Topic);
       if (Contributor?.Any() == true) yield return new KeyValuePair<string,object>("contributor",Contributor);
       if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
-      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",CopyrightElement);
       if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
       if (Library?.Any() == true) yield return new KeyValuePair<string,object>("library",Library);
-      if (Disclaimer is not null) yield return new KeyValuePair<string,object>("disclaimer",Disclaimer);
+      if (DisclaimerElement is not null) yield return new KeyValuePair<string,object>("disclaimer",DisclaimerElement);
       if (Scoring is not null) yield return new KeyValuePair<string,object>("scoring",Scoring);
       if (CompositeScoring is not null) yield return new KeyValuePair<string,object>("compositeScoring",CompositeScoring);
       if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (RiskAdjustmentElement is not null) yield return new KeyValuePair<string,object>("riskAdjustment",RiskAdjustmentElement);
       if (RateAggregationElement is not null) yield return new KeyValuePair<string,object>("rateAggregation",RateAggregationElement);
-      if (Rationale is not null) yield return new KeyValuePair<string,object>("rationale",Rationale);
-      if (ClinicalRecommendationStatement is not null) yield return new KeyValuePair<string,object>("clinicalRecommendationStatement",ClinicalRecommendationStatement);
+      if (RationaleElement is not null) yield return new KeyValuePair<string,object>("rationale",RationaleElement);
+      if (ClinicalRecommendationStatementElement is not null) yield return new KeyValuePair<string,object>("clinicalRecommendationStatement",ClinicalRecommendationStatementElement);
       if (ImprovementNotationElement is not null) yield return new KeyValuePair<string,object>("improvementNotation",ImprovementNotationElement);
-      if (Definition?.Any() == true) yield return new KeyValuePair<string,object>("definition",Definition);
-      if (Guidance is not null) yield return new KeyValuePair<string,object>("guidance",Guidance);
+      if (DefinitionElement?.Any() == true) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
+      if (GuidanceElement is not null) yield return new KeyValuePair<string,object>("guidance",GuidanceElement);
       if (SetElement is not null) yield return new KeyValuePair<string,object>("set",SetElement);
       if (Group?.Any() == true) yield return new KeyValuePair<string,object>("group",Group);
       if (SupplementalData?.Any() == true) yield return new KeyValuePair<string,object>("supplementalData",SupplementalData);

@@ -910,13 +910,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=260)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Human-readable description
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// Document security-tags
@@ -973,7 +991,7 @@ namespace Hl7.Fhir.Model
       if(Attester != null) dest.Attester = new List<Hl7.Fhir.Model.DocumentReference.AttesterComponent>(Attester.DeepCopy());
       if(Custodian != null) dest.Custodian = (Hl7.Fhir.Model.ResourceReference)Custodian.DeepCopy();
       if(RelatesTo != null) dest.RelatesTo = new List<Hl7.Fhir.Model.DocumentReference.RelatesToComponent>(RelatesTo.DeepCopy());
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(SecurityLabel != null) dest.SecurityLabel = new List<Hl7.Fhir.Model.CodeableConcept>(SecurityLabel.DeepCopy());
       if(Content != null) dest.Content = new List<Hl7.Fhir.Model.DocumentReference.ContentComponent>(Content.DeepCopy());
       return dest;
@@ -1008,7 +1026,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Attester, otherT.Attester)) return false;
       if( !DeepComparable.Matches(Custodian, otherT.Custodian)) return false;
       if( !DeepComparable.Matches(RelatesTo, otherT.RelatesTo)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(SecurityLabel, otherT.SecurityLabel)) return false;
       if( !DeepComparable.Matches(Content, otherT.Content)) return false;
 
@@ -1038,7 +1056,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Attester, otherT.Attester)) return false;
       if( !DeepComparable.IsExactly(Custodian, otherT.Custodian)) return false;
       if( !DeepComparable.IsExactly(RelatesTo, otherT.RelatesTo)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(SecurityLabel, otherT.SecurityLabel)) return false;
       if( !DeepComparable.IsExactly(Content, otherT.Content)) return false;
 
@@ -1068,7 +1086,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Attester) { if (elem != null) yield return elem; }
         if (Custodian != null) yield return Custodian;
         foreach (var elem in RelatesTo) { if (elem != null) yield return elem; }
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         foreach (var elem in SecurityLabel) { if (elem != null) yield return elem; }
         foreach (var elem in Content) { if (elem != null) yield return elem; }
       }
@@ -1097,7 +1115,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Attester) { if (elem != null) yield return new ElementValue("attester", elem); }
         if (Custodian != null) yield return new ElementValue("custodian", Custodian);
         foreach (var elem in RelatesTo) { if (elem != null) yield return new ElementValue("relatesTo", elem); }
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in SecurityLabel) { if (elem != null) yield return new ElementValue("securityLabel", elem); }
         foreach (var elem in Content) { if (elem != null) yield return new ElementValue("content", elem); }
       }
@@ -1159,8 +1177,8 @@ namespace Hl7.Fhir.Model
           value = RelatesTo;
           return RelatesTo?.Any() == true;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "securityLabel":
           value = SecurityLabel;
           return SecurityLabel?.Any() == true;
@@ -1193,7 +1211,7 @@ namespace Hl7.Fhir.Model
       if (Attester?.Any() == true) yield return new KeyValuePair<string,object>("attester",Attester);
       if (Custodian is not null) yield return new KeyValuePair<string,object>("custodian",Custodian);
       if (RelatesTo?.Any() == true) yield return new KeyValuePair<string,object>("relatesTo",RelatesTo);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (SecurityLabel?.Any() == true) yield return new KeyValuePair<string,object>("securityLabel",SecurityLabel);
       if (Content?.Any() == true) yield return new KeyValuePair<string,object>("content",Content);
     }

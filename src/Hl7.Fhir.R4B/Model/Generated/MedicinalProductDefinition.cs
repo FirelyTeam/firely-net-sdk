@@ -1255,13 +1255,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// General description of this product
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// The dose form for a single part product, or combined form of a multiple part product
@@ -1295,13 +1313,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("indication", InSummary=true, Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Indication
+    public Hl7.Fhir.Model.Markdown IndicationElement
     {
-      get { return _Indication; }
-      set { _Indication = value; OnPropertyChanged("Indication"); }
+      get { return _IndicationElement; }
+      set { _IndicationElement = value; OnPropertyChanged("IndicationElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Indication;
+    private Hl7.Fhir.Model.Markdown _IndicationElement;
+
+    /// <summary>
+    /// Description of indication(s) for this product, used when structured indications are not required
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Indication
+    {
+      get { return IndicationElement != null ? IndicationElement.Value : null; }
+      set
+      {
+        if (value == null)
+          IndicationElement = null;
+        else
+          IndicationElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Indication");
+      }
+    }
 
     /// <summary>
     /// The legal status of supply of the medicinal product as classified by the regulator
@@ -1574,10 +1610,10 @@ namespace Hl7.Fhir.Model
       if(VersionElement != null) dest.VersionElement = (Hl7.Fhir.Model.FhirString)VersionElement.DeepCopy();
       if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
       if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(CombinedPharmaceuticalDoseForm != null) dest.CombinedPharmaceuticalDoseForm = (Hl7.Fhir.Model.CodeableConcept)CombinedPharmaceuticalDoseForm.DeepCopy();
       if(Route != null) dest.Route = new List<Hl7.Fhir.Model.CodeableConcept>(Route.DeepCopy());
-      if(Indication != null) dest.Indication = (Hl7.Fhir.Model.Markdown)Indication.DeepCopy();
+      if(IndicationElement != null) dest.IndicationElement = (Hl7.Fhir.Model.Markdown)IndicationElement.DeepCopy();
       if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = (Hl7.Fhir.Model.CodeableConcept)LegalStatusOfSupply.DeepCopy();
       if(AdditionalMonitoringIndicator != null) dest.AdditionalMonitoringIndicator = (Hl7.Fhir.Model.CodeableConcept)AdditionalMonitoringIndicator.DeepCopy();
       if(SpecialMeasures != null) dest.SpecialMeasures = new List<Hl7.Fhir.Model.CodeableConcept>(SpecialMeasures.DeepCopy());
@@ -1617,10 +1653,10 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(VersionElement, otherT.VersionElement)) return false;
       if( !DeepComparable.Matches(Status, otherT.Status)) return false;
       if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(CombinedPharmaceuticalDoseForm, otherT.CombinedPharmaceuticalDoseForm)) return false;
       if( !DeepComparable.Matches(Route, otherT.Route)) return false;
-      if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
+      if( !DeepComparable.Matches(IndicationElement, otherT.IndicationElement)) return false;
       if( !DeepComparable.Matches(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
       if( !DeepComparable.Matches(AdditionalMonitoringIndicator, otherT.AdditionalMonitoringIndicator)) return false;
       if( !DeepComparable.Matches(SpecialMeasures, otherT.SpecialMeasures)) return false;
@@ -1655,10 +1691,10 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(VersionElement, otherT.VersionElement)) return false;
       if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
       if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(CombinedPharmaceuticalDoseForm, otherT.CombinedPharmaceuticalDoseForm)) return false;
       if( !DeepComparable.IsExactly(Route, otherT.Route)) return false;
-      if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
+      if( !DeepComparable.IsExactly(IndicationElement, otherT.IndicationElement)) return false;
       if( !DeepComparable.IsExactly(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
       if( !DeepComparable.IsExactly(AdditionalMonitoringIndicator, otherT.AdditionalMonitoringIndicator)) return false;
       if( !DeepComparable.IsExactly(SpecialMeasures, otherT.SpecialMeasures)) return false;
@@ -1693,10 +1729,10 @@ namespace Hl7.Fhir.Model
         if (VersionElement != null) yield return VersionElement;
         if (Status != null) yield return Status;
         if (StatusDateElement != null) yield return StatusDateElement;
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         if (CombinedPharmaceuticalDoseForm != null) yield return CombinedPharmaceuticalDoseForm;
         foreach (var elem in Route) { if (elem != null) yield return elem; }
-        if (Indication != null) yield return Indication;
+        if (IndicationElement != null) yield return IndicationElement;
         if (LegalStatusOfSupply != null) yield return LegalStatusOfSupply;
         if (AdditionalMonitoringIndicator != null) yield return AdditionalMonitoringIndicator;
         foreach (var elem in SpecialMeasures) { if (elem != null) yield return elem; }
@@ -1730,10 +1766,10 @@ namespace Hl7.Fhir.Model
         if (VersionElement != null) yield return new ElementValue("version", VersionElement);
         if (Status != null) yield return new ElementValue("status", Status);
         if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         if (CombinedPharmaceuticalDoseForm != null) yield return new ElementValue("combinedPharmaceuticalDoseForm", CombinedPharmaceuticalDoseForm);
         foreach (var elem in Route) { if (elem != null) yield return new ElementValue("route", elem); }
-        if (Indication != null) yield return new ElementValue("indication", Indication);
+        if (IndicationElement != null) yield return new ElementValue("indication", IndicationElement);
         if (LegalStatusOfSupply != null) yield return new ElementValue("legalStatusOfSupply", LegalStatusOfSupply);
         if (AdditionalMonitoringIndicator != null) yield return new ElementValue("additionalMonitoringIndicator", AdditionalMonitoringIndicator);
         foreach (var elem in SpecialMeasures) { if (elem != null) yield return new ElementValue("specialMeasures", elem); }
@@ -1778,8 +1814,8 @@ namespace Hl7.Fhir.Model
           value = StatusDateElement;
           return StatusDateElement is not null;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "combinedPharmaceuticalDoseForm":
           value = CombinedPharmaceuticalDoseForm;
           return CombinedPharmaceuticalDoseForm is not null;
@@ -1787,8 +1823,8 @@ namespace Hl7.Fhir.Model
           value = Route;
           return Route?.Any() == true;
         case "indication":
-          value = Indication;
-          return Indication is not null;
+          value = IndicationElement;
+          return IndicationElement is not null;
         case "legalStatusOfSupply":
           value = LegalStatusOfSupply;
           return LegalStatusOfSupply is not null;
@@ -1858,10 +1894,10 @@ namespace Hl7.Fhir.Model
       if (VersionElement is not null) yield return new KeyValuePair<string,object>("version",VersionElement);
       if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (CombinedPharmaceuticalDoseForm is not null) yield return new KeyValuePair<string,object>("combinedPharmaceuticalDoseForm",CombinedPharmaceuticalDoseForm);
       if (Route?.Any() == true) yield return new KeyValuePair<string,object>("route",Route);
-      if (Indication is not null) yield return new KeyValuePair<string,object>("indication",Indication);
+      if (IndicationElement is not null) yield return new KeyValuePair<string,object>("indication",IndicationElement);
       if (LegalStatusOfSupply is not null) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
       if (AdditionalMonitoringIndicator is not null) yield return new KeyValuePair<string,object>("additionalMonitoringIndicator",AdditionalMonitoringIndicator);
       if (SpecialMeasures?.Any() == true) yield return new KeyValuePair<string,object>("specialMeasures",SpecialMeasures);

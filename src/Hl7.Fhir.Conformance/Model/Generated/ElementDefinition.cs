@@ -1404,13 +1404,31 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(FhirString))]
       [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Requirements
+      public Hl7.Fhir.Model.Markdown RequirementsElement
       {
-        get { return _Requirements; }
-        set { _Requirements = value; OnPropertyChanged("Requirements"); }
+        get { return _RequirementsElement; }
+        set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Requirements;
+      private Hl7.Fhir.Model.Markdown _RequirementsElement;
+
+      /// <summary>
+      /// Why this constraint is necessary or appropriate
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Requirements
+      {
+        get { return RequirementsElement != null ? RequirementsElement.Value : null; }
+        set
+        {
+          if (value == null)
+            RequirementsElement = null;
+          else
+            RequirementsElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Requirements");
+        }
+      }
 
       /// <summary>
       /// error | warning
@@ -1613,7 +1631,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
-        if(Requirements != null) dest.Requirements = (Hl7.Fhir.Model.Markdown)Requirements.DeepCopy();
+        if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.Markdown)RequirementsElement.DeepCopy();
         if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.ConstraintSeverity>)SeverityElement.DeepCopy();
         if(SuppressElement != null) dest.SuppressElement = (Hl7.Fhir.Model.FhirBoolean)SuppressElement.DeepCopy();
         if(HumanElement != null) dest.HumanElement = (Hl7.Fhir.Model.FhirString)HumanElement.DeepCopy();
@@ -1636,7 +1654,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
-        if( !DeepComparable.Matches(Requirements, otherT.Requirements)) return false;
+        if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
         if( !DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
         if( !DeepComparable.Matches(SuppressElement, otherT.SuppressElement)) return false;
         if( !DeepComparable.Matches(HumanElement, otherT.HumanElement)) return false;
@@ -1654,7 +1672,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
-        if( !DeepComparable.IsExactly(Requirements, otherT.Requirements)) return false;
+        if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
         if( !DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
         if( !DeepComparable.IsExactly(SuppressElement, otherT.SuppressElement)) return false;
         if( !DeepComparable.IsExactly(HumanElement, otherT.HumanElement)) return false;
@@ -1672,7 +1690,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (KeyElement != null) yield return KeyElement;
-          if (Requirements != null) yield return Requirements;
+          if (RequirementsElement != null) yield return RequirementsElement;
           if (SeverityElement != null) yield return SeverityElement;
           if (SuppressElement != null) yield return SuppressElement;
           if (HumanElement != null) yield return HumanElement;
@@ -1689,7 +1707,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (KeyElement != null) yield return new ElementValue("key", KeyElement);
-          if (Requirements != null) yield return new ElementValue("requirements", Requirements);
+          if (RequirementsElement != null) yield return new ElementValue("requirements", RequirementsElement);
           if (SeverityElement != null) yield return new ElementValue("severity", SeverityElement);
           if (SuppressElement != null) yield return new ElementValue("suppress", SuppressElement);
           if (HumanElement != null) yield return new ElementValue("human", HumanElement);
@@ -1707,8 +1725,8 @@ namespace Hl7.Fhir.Model
             value = KeyElement;
             return KeyElement is not null;
           case "requirements":
-            value = Requirements;
-            return Requirements is not null;
+            value = RequirementsElement;
+            return RequirementsElement is not null;
           case "severity":
             value = SeverityElement;
             return SeverityElement is not null;
@@ -1737,7 +1755,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (KeyElement is not null) yield return new KeyValuePair<string,object>("key",KeyElement);
-        if (Requirements is not null) yield return new KeyValuePair<string,object>("requirements",Requirements);
+        if (RequirementsElement is not null) yield return new KeyValuePair<string,object>("requirements",RequirementsElement);
         if (SeverityElement is not null) yield return new KeyValuePair<string,object>("severity",SeverityElement);
         if (SuppressElement is not null) yield return new KeyValuePair<string,object>("suppress",SuppressElement);
         if (HumanElement is not null) yield return new KeyValuePair<string,object>("human",HumanElement);
@@ -1812,13 +1830,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("documentation", InSummary=true, Order=50, Since=FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Documentation
+      public Hl7.Fhir.Model.Markdown DocumentationElement
       {
-        get { return _Documentation; }
-        set { _Documentation = value; OnPropertyChanged("Documentation"); }
+        get { return _DocumentationElement; }
+        set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Documentation;
+      private Hl7.Fhir.Model.Markdown _DocumentationElement;
+
+      /// <summary>
+      /// Documentation of the purpose or application of the obligation
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Documentation
+      {
+        get { return DocumentationElement != null ? DocumentationElement.Value : null; }
+        set
+        {
+          if (value == null)
+            DocumentationElement = null;
+          else
+            DocumentationElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Documentation");
+        }
+      }
 
       /// <summary>
       /// Qualifies the usage - jurisdiction, gender, workflow status etc. Note: Element was introduced in R5, do not use when working with older releases.
@@ -1940,7 +1976,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.Coding)Code.DeepCopy();
         if(ActorElement != null) dest.ActorElement = new List<Hl7.Fhir.Model.Canonical>(ActorElement.DeepCopy());
-        if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();
+        if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.Markdown)DocumentationElement.DeepCopy();
         if(Usage != null) dest.Usage = new List<Hl7.Fhir.Model.UsageContext>(Usage.DeepCopy());
         if(FilterElement != null) dest.FilterElement = (Hl7.Fhir.Model.FhirString)FilterElement.DeepCopy();
         if(FilterDocumentationElement != null) dest.FilterDocumentationElement = (Hl7.Fhir.Model.FhirString)FilterDocumentationElement.DeepCopy();
@@ -1962,7 +1998,7 @@ namespace Hl7.Fhir.Model
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(Code, otherT.Code)) return false;
         if( !DeepComparable.Matches(ActorElement, otherT.ActorElement)) return false;
-        if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
+        if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
         if( !DeepComparable.Matches(Usage, otherT.Usage)) return false;
         if( !DeepComparable.Matches(FilterElement, otherT.FilterElement)) return false;
         if( !DeepComparable.Matches(FilterDocumentationElement, otherT.FilterDocumentationElement)) return false;
@@ -1979,7 +2015,7 @@ namespace Hl7.Fhir.Model
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
         if( !DeepComparable.IsExactly(ActorElement, otherT.ActorElement)) return false;
-        if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
+        if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
         if( !DeepComparable.IsExactly(Usage, otherT.Usage)) return false;
         if( !DeepComparable.IsExactly(FilterElement, otherT.FilterElement)) return false;
         if( !DeepComparable.IsExactly(FilterDocumentationElement, otherT.FilterDocumentationElement)) return false;
@@ -1996,7 +2032,7 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.Children) yield return item;
           if (Code != null) yield return Code;
           foreach (var elem in ActorElement) { if (elem != null) yield return elem; }
-          if (Documentation != null) yield return Documentation;
+          if (DocumentationElement != null) yield return DocumentationElement;
           foreach (var elem in Usage) { if (elem != null) yield return elem; }
           if (FilterElement != null) yield return FilterElement;
           if (FilterDocumentationElement != null) yield return FilterDocumentationElement;
@@ -2012,7 +2048,7 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (Code != null) yield return new ElementValue("code", Code);
           foreach (var elem in ActorElement) { if (elem != null) yield return new ElementValue("actor", elem); }
-          if (Documentation != null) yield return new ElementValue("documentation", Documentation);
+          if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
           foreach (var elem in Usage) { if (elem != null) yield return new ElementValue("usage", elem); }
           if (FilterElement != null) yield return new ElementValue("filter", FilterElement);
           if (FilterDocumentationElement != null) yield return new ElementValue("filterDocumentation", FilterDocumentationElement);
@@ -2031,8 +2067,8 @@ namespace Hl7.Fhir.Model
             value = ActorElement;
             return ActorElement?.Any() == true;
           case "documentation":
-            value = Documentation;
-            return Documentation is not null;
+            value = DocumentationElement;
+            return DocumentationElement is not null;
           case "usage":
             value = Usage;
             return Usage?.Any() == true;
@@ -2056,7 +2092,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
         if (ActorElement?.Any() == true) yield return new KeyValuePair<string,object>("actor",ActorElement);
-        if (Documentation is not null) yield return new KeyValuePair<string,object>("documentation",Documentation);
+        if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
         if (Usage?.Any() == true) yield return new KeyValuePair<string,object>("usage",Usage);
         if (FilterElement is not null) yield return new KeyValuePair<string,object>("filter",FilterElement);
         if (FilterDocumentationElement is not null) yield return new KeyValuePair<string,object>("filterDocumentation",FilterDocumentationElement);
@@ -2118,13 +2154,31 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(FhirString))]
       [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Description
+      public Hl7.Fhir.Model.Markdown DescriptionElement
       {
-        get { return _Description; }
-        set { _Description = value; OnPropertyChanged("Description"); }
+        get { return _DescriptionElement; }
+        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Description;
+      private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+      /// <summary>
+      /// Intended use of codes in the bound value set
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Description
+      {
+        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        set
+        {
+          if (value == null)
+            DescriptionElement = null;
+          else
+            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Description");
+        }
+      }
 
       /// <summary>
       /// Source of value set
@@ -2182,7 +2236,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(StrengthElement != null) dest.StrengthElement = (Code<Hl7.Fhir.Model.BindingStrength>)StrengthElement.DeepCopy();
-        if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopy();
         if(Additional != null) dest.Additional = new List<Hl7.Fhir.Model.ElementDefinition.AdditionalComponent>(Additional.DeepCopy());
         return dest;
@@ -2201,7 +2255,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(StrengthElement, otherT.StrengthElement)) return false;
-        if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.Matches(ValueSetElement, otherT.ValueSetElement)) return false;
         if( !DeepComparable.Matches(Additional, otherT.Additional)) return false;
 
@@ -2215,7 +2269,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(StrengthElement, otherT.StrengthElement)) return false;
-        if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.IsExactly(ValueSetElement, otherT.ValueSetElement)) return false;
         if( !DeepComparable.IsExactly(Additional, otherT.Additional)) return false;
 
@@ -2229,7 +2283,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (StrengthElement != null) yield return StrengthElement;
-          if (Description != null) yield return Description;
+          if (DescriptionElement != null) yield return DescriptionElement;
           if (ValueSetElement != null) yield return ValueSetElement;
           foreach (var elem in Additional) { if (elem != null) yield return elem; }
         }
@@ -2242,7 +2296,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (StrengthElement != null) yield return new ElementValue("strength", StrengthElement);
-          if (Description != null) yield return new ElementValue("description", Description);
+          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
           if (ValueSetElement != null) yield return new ElementValue("valueSet", ValueSetElement);
           foreach (var elem in Additional) { if (elem != null) yield return new ElementValue("additional", elem); }
         }
@@ -2256,8 +2310,8 @@ namespace Hl7.Fhir.Model
             value = StrengthElement;
             return StrengthElement is not null;
           case "description":
-            value = Description;
-            return Description is not null;
+            value = DescriptionElement;
+            return DescriptionElement is not null;
           case "valueSet":
             value = ValueSetElement;
             return ValueSetElement is not null;
@@ -2274,7 +2328,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (StrengthElement is not null) yield return new KeyValuePair<string,object>("strength",StrengthElement);
-        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
         if (Additional?.Any() == true) yield return new KeyValuePair<string,object>("additional",Additional);
       }
@@ -2364,13 +2418,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("documentation", InSummary=true, Order=50, Since=FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Documentation
+      public Hl7.Fhir.Model.Markdown DocumentationElement
       {
-        get { return _Documentation; }
-        set { _Documentation = value; OnPropertyChanged("Documentation"); }
+        get { return _DocumentationElement; }
+        set { _DocumentationElement = value; OnPropertyChanged("DocumentationElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Documentation;
+      private Hl7.Fhir.Model.Markdown _DocumentationElement;
+
+      /// <summary>
+      /// Documentation of the purpose of use of the binding
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Documentation
+      {
+        get { return DocumentationElement != null ? DocumentationElement.Value : null; }
+        set
+        {
+          if (value == null)
+            DocumentationElement = null;
+          else
+            DocumentationElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Documentation");
+        }
+      }
 
       /// <summary>
       /// Concise documentation - for summary tables. Note: Element was introduced in R5, do not use when working with older releases.
@@ -2460,7 +2532,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(PurposeElement != null) dest.PurposeElement = (Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS>)PurposeElement.DeepCopy();
         if(ValueSetElement != null) dest.ValueSetElement = (Hl7.Fhir.Model.Canonical)ValueSetElement.DeepCopy();
-        if(Documentation != null) dest.Documentation = (Hl7.Fhir.Model.Markdown)Documentation.DeepCopy();
+        if(DocumentationElement != null) dest.DocumentationElement = (Hl7.Fhir.Model.Markdown)DocumentationElement.DeepCopy();
         if(ShortDocoElement != null) dest.ShortDocoElement = (Hl7.Fhir.Model.FhirString)ShortDocoElement.DeepCopy();
         if(Usage != null) dest.Usage = new List<Hl7.Fhir.Model.UsageContext>(Usage.DeepCopy());
         if(AnyElement != null) dest.AnyElement = (Hl7.Fhir.Model.FhirBoolean)AnyElement.DeepCopy();
@@ -2481,7 +2553,7 @@ namespace Hl7.Fhir.Model
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(PurposeElement, otherT.PurposeElement)) return false;
         if( !DeepComparable.Matches(ValueSetElement, otherT.ValueSetElement)) return false;
-        if( !DeepComparable.Matches(Documentation, otherT.Documentation)) return false;
+        if( !DeepComparable.Matches(DocumentationElement, otherT.DocumentationElement)) return false;
         if( !DeepComparable.Matches(ShortDocoElement, otherT.ShortDocoElement)) return false;
         if( !DeepComparable.Matches(Usage, otherT.Usage)) return false;
         if( !DeepComparable.Matches(AnyElement, otherT.AnyElement)) return false;
@@ -2497,7 +2569,7 @@ namespace Hl7.Fhir.Model
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(PurposeElement, otherT.PurposeElement)) return false;
         if( !DeepComparable.IsExactly(ValueSetElement, otherT.ValueSetElement)) return false;
-        if( !DeepComparable.IsExactly(Documentation, otherT.Documentation)) return false;
+        if( !DeepComparable.IsExactly(DocumentationElement, otherT.DocumentationElement)) return false;
         if( !DeepComparable.IsExactly(ShortDocoElement, otherT.ShortDocoElement)) return false;
         if( !DeepComparable.IsExactly(Usage, otherT.Usage)) return false;
         if( !DeepComparable.IsExactly(AnyElement, otherT.AnyElement)) return false;
@@ -2513,7 +2585,7 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.Children) yield return item;
           if (PurposeElement != null) yield return PurposeElement;
           if (ValueSetElement != null) yield return ValueSetElement;
-          if (Documentation != null) yield return Documentation;
+          if (DocumentationElement != null) yield return DocumentationElement;
           if (ShortDocoElement != null) yield return ShortDocoElement;
           foreach (var elem in Usage) { if (elem != null) yield return elem; }
           if (AnyElement != null) yield return AnyElement;
@@ -2528,7 +2600,7 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (PurposeElement != null) yield return new ElementValue("purpose", PurposeElement);
           if (ValueSetElement != null) yield return new ElementValue("valueSet", ValueSetElement);
-          if (Documentation != null) yield return new ElementValue("documentation", Documentation);
+          if (DocumentationElement != null) yield return new ElementValue("documentation", DocumentationElement);
           if (ShortDocoElement != null) yield return new ElementValue("shortDoco", ShortDocoElement);
           foreach (var elem in Usage) { if (elem != null) yield return new ElementValue("usage", elem); }
           if (AnyElement != null) yield return new ElementValue("any", AnyElement);
@@ -2546,8 +2618,8 @@ namespace Hl7.Fhir.Model
             value = ValueSetElement;
             return ValueSetElement is not null;
           case "documentation":
-            value = Documentation;
-            return Documentation is not null;
+            value = DocumentationElement;
+            return DocumentationElement is not null;
           case "shortDoco":
             value = ShortDocoElement;
             return ShortDocoElement is not null;
@@ -2568,7 +2640,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (PurposeElement is not null) yield return new KeyValuePair<string,object>("purpose",PurposeElement);
         if (ValueSetElement is not null) yield return new KeyValuePair<string,object>("valueSet",ValueSetElement);
-        if (Documentation is not null) yield return new KeyValuePair<string,object>("documentation",Documentation);
+        if (DocumentationElement is not null) yield return new KeyValuePair<string,object>("documentation",DocumentationElement);
         if (ShortDocoElement is not null) yield return new KeyValuePair<string,object>("shortDoco",ShortDocoElement);
         if (Usage?.Any() == true) yield return new KeyValuePair<string,object>("usage",Usage);
         if (AnyElement is not null) yield return new KeyValuePair<string,object>("any",AnyElement);
@@ -2691,13 +2763,31 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(FhirString))]
       [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Comment
+      public Hl7.Fhir.Model.Markdown CommentElement
       {
-        get { return _Comment; }
-        set { _Comment = value; OnPropertyChanged("Comment"); }
+        get { return _CommentElement; }
+        set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Comment;
+      private Hl7.Fhir.Model.Markdown _CommentElement;
+
+      /// <summary>
+      /// Comments about the mapping or its use
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Comment
+      {
+        get { return CommentElement != null ? CommentElement.Value : null; }
+        set
+        {
+          if (value == null)
+            CommentElement = null;
+          else
+            CommentElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Comment");
+        }
+      }
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -2712,7 +2802,7 @@ namespace Hl7.Fhir.Model
         if(IdentityElement != null) dest.IdentityElement = (Hl7.Fhir.Model.Id)IdentityElement.DeepCopy();
         if(LanguageElement != null) dest.LanguageElement = (Hl7.Fhir.Model.Code)LanguageElement.DeepCopy();
         if(MapElement != null) dest.MapElement = (Hl7.Fhir.Model.FhirString)MapElement.DeepCopy();
-        if(Comment != null) dest.Comment = (Hl7.Fhir.Model.Markdown)Comment.DeepCopy();
+        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
         return dest;
       }
 
@@ -2731,7 +2821,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
         if( !DeepComparable.Matches(LanguageElement, otherT.LanguageElement)) return false;
         if( !DeepComparable.Matches(MapElement, otherT.MapElement)) return false;
-        if( !DeepComparable.Matches(Comment, otherT.Comment)) return false;
+        if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
 
         return true;
       }
@@ -2745,7 +2835,7 @@ namespace Hl7.Fhir.Model
         if( !DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
         if( !DeepComparable.IsExactly(LanguageElement, otherT.LanguageElement)) return false;
         if( !DeepComparable.IsExactly(MapElement, otherT.MapElement)) return false;
-        if( !DeepComparable.IsExactly(Comment, otherT.Comment)) return false;
+        if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
 
         return true;
       }
@@ -2759,7 +2849,7 @@ namespace Hl7.Fhir.Model
           if (IdentityElement != null) yield return IdentityElement;
           if (LanguageElement != null) yield return LanguageElement;
           if (MapElement != null) yield return MapElement;
-          if (Comment != null) yield return Comment;
+          if (CommentElement != null) yield return CommentElement;
         }
       }
 
@@ -2772,7 +2862,7 @@ namespace Hl7.Fhir.Model
           if (IdentityElement != null) yield return new ElementValue("identity", IdentityElement);
           if (LanguageElement != null) yield return new ElementValue("language", LanguageElement);
           if (MapElement != null) yield return new ElementValue("map", MapElement);
-          if (Comment != null) yield return new ElementValue("comment", Comment);
+          if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
         }
       }
 
@@ -2790,8 +2880,8 @@ namespace Hl7.Fhir.Model
             value = MapElement;
             return MapElement is not null;
           case "comment":
-            value = Comment;
-            return Comment is not null;
+            value = CommentElement;
+            return CommentElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -2804,7 +2894,7 @@ namespace Hl7.Fhir.Model
         if (IdentityElement is not null) yield return new KeyValuePair<string,object>("identity",IdentityElement);
         if (LanguageElement is not null) yield return new KeyValuePair<string,object>("language",LanguageElement);
         if (MapElement is not null) yield return new KeyValuePair<string,object>("map",MapElement);
-        if (Comment is not null) yield return new KeyValuePair<string,object>("comment",Comment);
+        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
       }
 
     }
@@ -3030,39 +3120,93 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("definition", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Definition
+    public Hl7.Fhir.Model.Markdown DefinitionElement
     {
-      get { return _Definition; }
-      set { _Definition = value; OnPropertyChanged("Definition"); }
+      get { return _DefinitionElement; }
+      set { _DefinitionElement = value; OnPropertyChanged("DefinitionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Definition;
+    private Hl7.Fhir.Model.Markdown _DefinitionElement;
+
+    /// <summary>
+    /// Full formal definition as narrative text
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Definition
+    {
+      get { return DefinitionElement != null ? DefinitionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DefinitionElement = null;
+        else
+          DefinitionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Definition");
+      }
+    }
 
     /// <summary>
     /// Comments about the use of this element
     /// </summary>
     [FhirElement("comment", InSummary=true, Order=130)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Comment
+    public Hl7.Fhir.Model.Markdown CommentElement
     {
-      get { return _Comment; }
-      set { _Comment = value; OnPropertyChanged("Comment"); }
+      get { return _CommentElement; }
+      set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Comment;
+    private Hl7.Fhir.Model.Markdown _CommentElement;
+
+    /// <summary>
+    /// Comments about the use of this element
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Comment
+    {
+      get { return CommentElement != null ? CommentElement.Value : null; }
+      set
+      {
+        if (value == null)
+          CommentElement = null;
+        else
+          CommentElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Comment");
+      }
+    }
 
     /// <summary>
     /// Why this resource has been created
     /// </summary>
     [FhirElement("requirements", InSummary=true, Order=140)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Requirements
+    public Hl7.Fhir.Model.Markdown RequirementsElement
     {
-      get { return _Requirements; }
-      set { _Requirements = value; OnPropertyChanged("Requirements"); }
+      get { return _RequirementsElement; }
+      set { _RequirementsElement = value; OnPropertyChanged("RequirementsElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Requirements;
+    private Hl7.Fhir.Model.Markdown _RequirementsElement;
+
+    /// <summary>
+    /// Why this resource has been created
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Requirements
+    {
+      get { return RequirementsElement != null ? RequirementsElement.Value : null; }
+      set
+      {
+        if (value == null)
+          RequirementsElement = null;
+        else
+          RequirementsElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Requirements");
+      }
+    }
 
     /// <summary>
     /// Other names
@@ -3234,13 +3378,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("meaningWhenMissing", InSummary=true, Order=220)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown MeaningWhenMissing
+    public Hl7.Fhir.Model.Markdown MeaningWhenMissingElement
     {
-      get { return _MeaningWhenMissing; }
-      set { _MeaningWhenMissing = value; OnPropertyChanged("MeaningWhenMissing"); }
+      get { return _MeaningWhenMissingElement; }
+      set { _MeaningWhenMissingElement = value; OnPropertyChanged("MeaningWhenMissingElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _MeaningWhenMissing;
+    private Hl7.Fhir.Model.Markdown _MeaningWhenMissingElement;
+
+    /// <summary>
+    /// Implicit meaning when this element is missing
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string MeaningWhenMissing
+    {
+      get { return MeaningWhenMissingElement != null ? MeaningWhenMissingElement.Value : null; }
+      set
+      {
+        if (value == null)
+          MeaningWhenMissingElement = null;
+        else
+          MeaningWhenMissingElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("MeaningWhenMissing");
+      }
+    }
 
     /// <summary>
     /// What the order of the elements means
@@ -3666,9 +3828,9 @@ namespace Hl7.Fhir.Model
       if(Code != null) dest.Code = new List<Hl7.Fhir.Model.Coding>(Code.DeepCopy());
       if(Slicing != null) dest.Slicing = (Hl7.Fhir.Model.ElementDefinition.SlicingComponent)Slicing.DeepCopy();
       if(ShortElement != null) dest.ShortElement = (Hl7.Fhir.Model.FhirString)ShortElement.DeepCopy();
-      if(Definition != null) dest.Definition = (Hl7.Fhir.Model.Markdown)Definition.DeepCopy();
-      if(Comment != null) dest.Comment = (Hl7.Fhir.Model.Markdown)Comment.DeepCopy();
-      if(Requirements != null) dest.Requirements = (Hl7.Fhir.Model.Markdown)Requirements.DeepCopy();
+      if(DefinitionElement != null) dest.DefinitionElement = (Hl7.Fhir.Model.Markdown)DefinitionElement.DeepCopy();
+      if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
+      if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.Markdown)RequirementsElement.DeepCopy();
       if(AliasElement != null) dest.AliasElement = new List<Hl7.Fhir.Model.FhirString>(AliasElement.DeepCopy());
       if(MinElement != null) dest.MinElement = (Hl7.Fhir.Model.UnsignedInt)MinElement.DeepCopy();
       if(MaxElement != null) dest.MaxElement = (Hl7.Fhir.Model.FhirString)MaxElement.DeepCopy();
@@ -3676,7 +3838,7 @@ namespace Hl7.Fhir.Model
       if(ContentReferenceElement != null) dest.ContentReferenceElement = (Hl7.Fhir.Model.FhirUri)ContentReferenceElement.DeepCopy();
       if(Type != null) dest.Type = new List<Hl7.Fhir.Model.ElementDefinition.TypeRefComponent>(Type.DeepCopy());
       if(DefaultValue != null) dest.DefaultValue = (Hl7.Fhir.Model.DataType)DefaultValue.DeepCopy();
-      if(MeaningWhenMissing != null) dest.MeaningWhenMissing = (Hl7.Fhir.Model.Markdown)MeaningWhenMissing.DeepCopy();
+      if(MeaningWhenMissingElement != null) dest.MeaningWhenMissingElement = (Hl7.Fhir.Model.Markdown)MeaningWhenMissingElement.DeepCopy();
       if(OrderMeaningElement != null) dest.OrderMeaningElement = (Hl7.Fhir.Model.FhirString)OrderMeaningElement.DeepCopy();
       if(Fixed != null) dest.Fixed = (Hl7.Fhir.Model.DataType)Fixed.DeepCopy();
       if(Pattern != null) dest.Pattern = (Hl7.Fhir.Model.DataType)Pattern.DeepCopy();
@@ -3718,9 +3880,9 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Code, otherT.Code)) return false;
       if( !DeepComparable.Matches(Slicing, otherT.Slicing)) return false;
       if( !DeepComparable.Matches(ShortElement, otherT.ShortElement)) return false;
-      if( !DeepComparable.Matches(Definition, otherT.Definition)) return false;
-      if( !DeepComparable.Matches(Comment, otherT.Comment)) return false;
-      if( !DeepComparable.Matches(Requirements, otherT.Requirements)) return false;
+      if( !DeepComparable.Matches(DefinitionElement, otherT.DefinitionElement)) return false;
+      if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
+      if( !DeepComparable.Matches(RequirementsElement, otherT.RequirementsElement)) return false;
       if( !DeepComparable.Matches(AliasElement, otherT.AliasElement)) return false;
       if( !DeepComparable.Matches(MinElement, otherT.MinElement)) return false;
       if( !DeepComparable.Matches(MaxElement, otherT.MaxElement)) return false;
@@ -3728,7 +3890,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(ContentReferenceElement, otherT.ContentReferenceElement)) return false;
       if( !DeepComparable.Matches(Type, otherT.Type)) return false;
       if( !DeepComparable.Matches(DefaultValue, otherT.DefaultValue)) return false;
-      if( !DeepComparable.Matches(MeaningWhenMissing, otherT.MeaningWhenMissing)) return false;
+      if( !DeepComparable.Matches(MeaningWhenMissingElement, otherT.MeaningWhenMissingElement)) return false;
       if( !DeepComparable.Matches(OrderMeaningElement, otherT.OrderMeaningElement)) return false;
       if( !DeepComparable.Matches(Fixed, otherT.Fixed)) return false;
       if( !DeepComparable.Matches(Pattern, otherT.Pattern)) return false;
@@ -3765,9 +3927,9 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
       if( !DeepComparable.IsExactly(Slicing, otherT.Slicing)) return false;
       if( !DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
-      if( !DeepComparable.IsExactly(Definition, otherT.Definition)) return false;
-      if( !DeepComparable.IsExactly(Comment, otherT.Comment)) return false;
-      if( !DeepComparable.IsExactly(Requirements, otherT.Requirements)) return false;
+      if( !DeepComparable.IsExactly(DefinitionElement, otherT.DefinitionElement)) return false;
+      if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
+      if( !DeepComparable.IsExactly(RequirementsElement, otherT.RequirementsElement)) return false;
       if( !DeepComparable.IsExactly(AliasElement, otherT.AliasElement)) return false;
       if( !DeepComparable.IsExactly(MinElement, otherT.MinElement)) return false;
       if( !DeepComparable.IsExactly(MaxElement, otherT.MaxElement)) return false;
@@ -3775,7 +3937,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(ContentReferenceElement, otherT.ContentReferenceElement)) return false;
       if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
       if( !DeepComparable.IsExactly(DefaultValue, otherT.DefaultValue)) return false;
-      if( !DeepComparable.IsExactly(MeaningWhenMissing, otherT.MeaningWhenMissing)) return false;
+      if( !DeepComparable.IsExactly(MeaningWhenMissingElement, otherT.MeaningWhenMissingElement)) return false;
       if( !DeepComparable.IsExactly(OrderMeaningElement, otherT.OrderMeaningElement)) return false;
       if( !DeepComparable.IsExactly(Fixed, otherT.Fixed)) return false;
       if( !DeepComparable.IsExactly(Pattern, otherT.Pattern)) return false;
@@ -3812,9 +3974,9 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Code) { if (elem != null) yield return elem; }
         if (Slicing != null) yield return Slicing;
         if (ShortElement != null) yield return ShortElement;
-        if (Definition != null) yield return Definition;
-        if (Comment != null) yield return Comment;
-        if (Requirements != null) yield return Requirements;
+        if (DefinitionElement != null) yield return DefinitionElement;
+        if (CommentElement != null) yield return CommentElement;
+        if (RequirementsElement != null) yield return RequirementsElement;
         foreach (var elem in AliasElement) { if (elem != null) yield return elem; }
         if (MinElement != null) yield return MinElement;
         if (MaxElement != null) yield return MaxElement;
@@ -3822,7 +3984,7 @@ namespace Hl7.Fhir.Model
         if (ContentReferenceElement != null) yield return ContentReferenceElement;
         foreach (var elem in Type) { if (elem != null) yield return elem; }
         if (DefaultValue != null) yield return DefaultValue;
-        if (MeaningWhenMissing != null) yield return MeaningWhenMissing;
+        if (MeaningWhenMissingElement != null) yield return MeaningWhenMissingElement;
         if (OrderMeaningElement != null) yield return OrderMeaningElement;
         if (Fixed != null) yield return Fixed;
         if (Pattern != null) yield return Pattern;
@@ -3858,9 +4020,9 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Code) { if (elem != null) yield return new ElementValue("code", elem); }
         if (Slicing != null) yield return new ElementValue("slicing", Slicing);
         if (ShortElement != null) yield return new ElementValue("short", ShortElement);
-        if (Definition != null) yield return new ElementValue("definition", Definition);
-        if (Comment != null) yield return new ElementValue("comment", Comment);
-        if (Requirements != null) yield return new ElementValue("requirements", Requirements);
+        if (DefinitionElement != null) yield return new ElementValue("definition", DefinitionElement);
+        if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
+        if (RequirementsElement != null) yield return new ElementValue("requirements", RequirementsElement);
         foreach (var elem in AliasElement) { if (elem != null) yield return new ElementValue("alias", elem); }
         if (MinElement != null) yield return new ElementValue("min", MinElement);
         if (MaxElement != null) yield return new ElementValue("max", MaxElement);
@@ -3868,7 +4030,7 @@ namespace Hl7.Fhir.Model
         if (ContentReferenceElement != null) yield return new ElementValue("contentReference", ContentReferenceElement);
         foreach (var elem in Type) { if (elem != null) yield return new ElementValue("type", elem); }
         if (DefaultValue != null) yield return new ElementValue("defaultValue", DefaultValue);
-        if (MeaningWhenMissing != null) yield return new ElementValue("meaningWhenMissing", MeaningWhenMissing);
+        if (MeaningWhenMissingElement != null) yield return new ElementValue("meaningWhenMissing", MeaningWhenMissingElement);
         if (OrderMeaningElement != null) yield return new ElementValue("orderMeaning", OrderMeaningElement);
         if (Fixed != null) yield return new ElementValue("fixed", Fixed);
         if (Pattern != null) yield return new ElementValue("pattern", Pattern);
@@ -3919,14 +4081,14 @@ namespace Hl7.Fhir.Model
           value = ShortElement;
           return ShortElement is not null;
         case "definition":
-          value = Definition;
-          return Definition is not null;
+          value = DefinitionElement;
+          return DefinitionElement is not null;
         case "comment":
-          value = Comment;
-          return Comment is not null;
+          value = CommentElement;
+          return CommentElement is not null;
         case "requirements":
-          value = Requirements;
-          return Requirements is not null;
+          value = RequirementsElement;
+          return RequirementsElement is not null;
         case "alias":
           value = AliasElement;
           return AliasElement?.Any() == true;
@@ -3949,8 +4111,8 @@ namespace Hl7.Fhir.Model
           value = DefaultValue;
           return DefaultValue is not null;
         case "meaningWhenMissing":
-          value = MeaningWhenMissing;
-          return MeaningWhenMissing is not null;
+          value = MeaningWhenMissingElement;
+          return MeaningWhenMissingElement is not null;
         case "orderMeaning":
           value = OrderMeaningElement;
           return OrderMeaningElement is not null;
@@ -4022,9 +4184,9 @@ namespace Hl7.Fhir.Model
       if (Code?.Any() == true) yield return new KeyValuePair<string,object>("code",Code);
       if (Slicing is not null) yield return new KeyValuePair<string,object>("slicing",Slicing);
       if (ShortElement is not null) yield return new KeyValuePair<string,object>("short",ShortElement);
-      if (Definition is not null) yield return new KeyValuePair<string,object>("definition",Definition);
-      if (Comment is not null) yield return new KeyValuePair<string,object>("comment",Comment);
-      if (Requirements is not null) yield return new KeyValuePair<string,object>("requirements",Requirements);
+      if (DefinitionElement is not null) yield return new KeyValuePair<string,object>("definition",DefinitionElement);
+      if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
+      if (RequirementsElement is not null) yield return new KeyValuePair<string,object>("requirements",RequirementsElement);
       if (AliasElement?.Any() == true) yield return new KeyValuePair<string,object>("alias",AliasElement);
       if (MinElement is not null) yield return new KeyValuePair<string,object>("min",MinElement);
       if (MaxElement is not null) yield return new KeyValuePair<string,object>("max",MaxElement);
@@ -4032,7 +4194,7 @@ namespace Hl7.Fhir.Model
       if (ContentReferenceElement is not null) yield return new KeyValuePair<string,object>("contentReference",ContentReferenceElement);
       if (Type?.Any() == true) yield return new KeyValuePair<string,object>("type",Type);
       if (DefaultValue is not null) yield return new KeyValuePair<string,object>("defaultValue",DefaultValue);
-      if (MeaningWhenMissing is not null) yield return new KeyValuePair<string,object>("meaningWhenMissing",MeaningWhenMissing);
+      if (MeaningWhenMissingElement is not null) yield return new KeyValuePair<string,object>("meaningWhenMissing",MeaningWhenMissingElement);
       if (OrderMeaningElement is not null) yield return new KeyValuePair<string,object>("orderMeaning",OrderMeaningElement);
       if (Fixed is not null) yield return new KeyValuePair<string,object>("fixed",Fixed);
       if (Pattern is not null) yield return new KeyValuePair<string,object>("pattern",Pattern);

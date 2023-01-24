@@ -303,13 +303,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=120)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// General textual supporting information
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// The territory in which the authorization has been granted
@@ -478,7 +496,7 @@ namespace Hl7.Fhir.Model
       if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(Subject != null) dest.Subject = new List<Hl7.Fhir.Model.ResourceReference>(Subject.DeepCopy());
       if(Type != null) dest.Type = (Hl7.Fhir.Model.CodeableConcept)Type.DeepCopy();
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(Region != null) dest.Region = new List<Hl7.Fhir.Model.CodeableConcept>(Region.DeepCopy());
       if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
       if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
@@ -507,7 +525,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
       if( !DeepComparable.Matches(Subject, otherT.Subject)) return false;
       if( !DeepComparable.Matches(Type, otherT.Type)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(Region, otherT.Region)) return false;
       if( !DeepComparable.Matches(Status, otherT.Status)) return false;
       if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
@@ -531,7 +549,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
       if( !DeepComparable.IsExactly(Subject, otherT.Subject)) return false;
       if( !DeepComparable.IsExactly(Type, otherT.Type)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(Region, otherT.Region)) return false;
       if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
       if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
@@ -555,7 +573,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Identifier) { if (elem != null) yield return elem; }
         foreach (var elem in Subject) { if (elem != null) yield return elem; }
         if (Type != null) yield return Type;
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         foreach (var elem in Region) { if (elem != null) yield return elem; }
         if (Status != null) yield return Status;
         if (StatusDateElement != null) yield return StatusDateElement;
@@ -578,7 +596,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
         foreach (var elem in Subject) { if (elem != null) yield return new ElementValue("subject", elem); }
         if (Type != null) yield return new ElementValue("type", Type);
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in Region) { if (elem != null) yield return new ElementValue("region", elem); }
         if (Status != null) yield return new ElementValue("status", Status);
         if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
@@ -606,8 +624,8 @@ namespace Hl7.Fhir.Model
           value = Type;
           return Type is not null;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "region":
           value = Region;
           return Region?.Any() == true;
@@ -650,7 +668,7 @@ namespace Hl7.Fhir.Model
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (Subject?.Any() == true) yield return new KeyValuePair<string,object>("subject",Subject);
       if (Type is not null) yield return new KeyValuePair<string,object>("type",Type);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Region?.Any() == true) yield return new KeyValuePair<string,object>("region",Region);
       if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
