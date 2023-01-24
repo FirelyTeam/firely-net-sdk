@@ -22,9 +22,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlPocoDeserializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\JsonSerializationOptionsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\PocoSerializationExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlPocoSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Specification\PocoStructureDefinitionSummaryProvider.cs" />
   </ItemGroup>
 </Project>

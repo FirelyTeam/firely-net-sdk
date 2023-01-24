@@ -11,13 +11,13 @@ using ERR = Hl7.Fhir.Serialization.FhirXmlException;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlPocoDeserializer
+    public class BaseFhirXmlPocoDeserializer
     {
         /// <summary>
         /// Initializes an instance of the deserializer.
         /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-        public FhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new())
+        public BaseFhirXmlPocoDeserializer(Assembly assembly) : this(assembly, new())
         {
             // nothing
         }
@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
         /// Initializes an instance of the deserializer.
         /// </summary>
         /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-        public FhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+        public BaseFhirXmlPocoDeserializer(ModelInspector inspector) : this(inspector, new())
         {
             // nothing
         }
@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
-        public FhirXmlPocoDeserializer(Assembly assembly, FhirXmlPocoDeserializerSettings settings)
+        public BaseFhirXmlPocoDeserializer(Assembly assembly, FhirXmlPocoDeserializerSettings settings)
         {
             Settings = settings;
             _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
-        public FhirXmlPocoDeserializer(ModelInspector inspector, FhirXmlPocoDeserializerSettings settings)
+        public BaseFhirXmlPocoDeserializer(ModelInspector inspector, FhirXmlPocoDeserializerSettings settings)
         {
             Settings = settings;
             _inspector = inspector;

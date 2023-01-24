@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var (poco, expected) = getEdgecases();
 
-            var serializer = new FhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
             var actual = SerializationUtil.WriteXmlToString(poco, (o, w) => serializer.Serialize(o, w));
 
             XmlAssert.AreSame("edgecases", expected, actual, ignoreSchemaLocation: true);
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void SerializesInvalidData()
         {
-            var serializer = new FhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
             FhirBoolean b = new() { ObjectValue = "treu" };
             var xdoc = XDocument.Parse(SerializationUtil.WriteXmlToString(b, (o, w) => serializer.Serialize(o, w)));
             Assert.AreEqual("treu", xdoc.Root.Attribute(XName.Get("value")).Value);

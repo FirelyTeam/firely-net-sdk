@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [DataTestMethod]
         [TestCategory("LongRunner")]
         [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
-        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [DataTestMethod]
         [TestCategory("LongRunner")]
         [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
-        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
