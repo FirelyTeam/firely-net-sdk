@@ -20,6 +20,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClientOperationsExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonParser.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonPocoDeserializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonPocoSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirJsonSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlParser.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Serialization\FhirXmlPocoDeserializer.cs" />

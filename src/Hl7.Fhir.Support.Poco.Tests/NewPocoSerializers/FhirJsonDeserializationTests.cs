@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             }
         }
 
-        private static FhirJsonPocoDeserializer getTestDeserializer(FhirJsonPocoDeserializerSettings settings) =>
+        private static BaseFhirJsonPocoDeserializer getTestDeserializer(FhirJsonPocoDeserializerSettings settings) =>
             new(typeof(TestPatient).Assembly, settings);
 
         [TestMethod]
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var reader = new Utf8JsonReader(jsonBytes);
                 reader.Read();
 
-                return FhirJsonPocoDeserializer.DetermineClassMappingFromInstance(ref reader, inspector);
+                return BaseFhirJsonPocoDeserializer.DetermineClassMappingFromInstance(ref reader, inspector);
             }
         }
 
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             PrimitiveType test()
             {
                 var inspector = ModelInspector.ForAssembly(typeof(TestPatient).Assembly);
-                var deserializer = new FhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
+                var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
                 var mapping = inspector.ImportType(targetType)!;
 
                 var reader = constructReader(value);
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             FhirJsonPocoDeserializerSettings settings)
         {
             // For the tests, enable full XHML validation so we can test it when necessary.
-            var deserializer = new FhirJsonPocoDeserializer(typeof(TestPatient).Assembly, settings);
+            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly, settings);
             Utf8JsonReader reader = constructReader(testObject);
             reader.Read();
 
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var reader = constructReader(testObject);
             reader.Read();
 
-            var deserializer = new FhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
+            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
             var state = new FhirJsonPocoDeserializerState();
             _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
             assertErrors(state.Errors, errors.Select(e => e.ErrorCode).ToArray());
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void TestParseResourcePublicMethod()
         {
-            var deserializer = new FhirJsonPocoDeserializer(typeof(Resource).Assembly);
+            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Resource).Assembly);
             var reader = constructReader(
                     new
                     {
@@ -523,7 +523,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void TestParseObjectPublicMethod()
         {
-            var deserializer = new FhirJsonPocoDeserializer(typeof(Resource).Assembly);
+            var deserializer = new BaseFhirJsonPocoDeserializer(typeof(Resource).Assembly);
             var reader = constructReader(
                     new
                     {
