@@ -26,13 +26,13 @@ namespace Hl7.Fhir.Serialization
     /// Deserializes a byte stream into FHIR POCO objects.
     /// </summary>
     /// <remarks>The serializer uses the format documented in https://www.hl7.org/fhir/json.html. </remarks>
-    public class FhirJsonPocoDeserializer
+    public class BaseFhirJsonPocoDeserializer
     {
         /// <summary>
         /// Initializes an instance of the deserializer.
         /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
-        public FhirJsonPocoDeserializer(Assembly assembly) : this(assembly, new())
+        public BaseFhirJsonPocoDeserializer(Assembly assembly) : this(assembly, new())
         {
             // nothing
         }
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Serialization
         /// Initializes an instance of the deserializer.
         /// </summary>
         /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
-        public FhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new())
+        public BaseFhirJsonPocoDeserializer(ModelInspector inspector) : this(inspector, new())
         {
             // nothing
         }
@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="assembly">Assembly containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
-        public FhirJsonPocoDeserializer(Assembly assembly, FhirJsonPocoDeserializerSettings settings)
+        public BaseFhirJsonPocoDeserializer(Assembly assembly, FhirJsonPocoDeserializerSettings settings)
         {
             Settings = settings;
             _inspector = ModelInspector.ForAssembly(assembly ?? throw new ArgumentNullException(nameof(assembly)));
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="inspector">The <see cref="ModelInspector"/> containing the POCO classes to be used for deserialization.</param>
         /// <param name="settings">A settings object to be used by this instance.</param>
-        public FhirJsonPocoDeserializer(ModelInspector inspector, FhirJsonPocoDeserializerSettings settings)
+        public BaseFhirJsonPocoDeserializer(ModelInspector inspector, FhirJsonPocoDeserializerSettings settings)
         {
             Settings = settings;
             _inspector = inspector;

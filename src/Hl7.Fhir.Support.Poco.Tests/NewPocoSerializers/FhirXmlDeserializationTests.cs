@@ -474,7 +474,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             var patient = new TestPatient { Id = "example" };
             patient.Text = new Narrative() { Status = Narrative.NarrativeStatus.Generated, Div = "<div xmlns=\"http://www.w3.org/1999/xhtml\">some test data</div>" };
-            var serializer = new FhirXmlPocoSerializer(Specification.FhirRelease.STU3);
+            var serializer = new BaseFhirXmlPocoSerializer(Specification.FhirRelease.STU3);
             var actual = SerializationUtil.WriteXmlToString(patient, (o, w) => serializer.Serialize(o, w));
 
             //// now parse this back out with the old parser
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             //Assert.AreEqual(patient.Text.Div, op.Text.Div, "Old narrative should be the same");
 
             // now parse this back out with the new parser
-            FhirXmlPocoDeserializer ds = getTestDeserializer(new());
+            BaseFhirXmlPocoDeserializer ds = getTestDeserializer(new());
             using (var reader = SerializationUtil.XmlReaderFromXmlText(actual))
             {
                 var np = ds.DeserializeResource(reader) as TestPatient;
@@ -518,7 +518,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             return reader;
         }
 
-        private static FhirXmlPocoDeserializer getTestDeserializer(FhirXmlPocoDeserializerSettings settings) =>
+        private static BaseFhirXmlPocoDeserializer getTestDeserializer(FhirXmlPocoDeserializerSettings settings) =>
                 new(typeof(TestPatient).Assembly, settings);
 
     }

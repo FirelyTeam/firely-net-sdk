@@ -76,8 +76,8 @@ namespace Hl7.Fhir.Serialization
         {
             var inspector = ModelInspector.ForAssembly(assembly);
 
-            _deserializer = new FhirJsonPocoDeserializer(assembly, deserializerSettings);
-            _serializer = new FhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
+            _deserializer = new BaseFhirJsonPocoDeserializer(assembly, deserializerSettings);
+            _serializer = new BaseFhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
         }
 
         /// <summary>
@@ -92,8 +92,8 @@ namespace Hl7.Fhir.Serialization
             FhirJsonPocoSerializerSettings serializerSettings,
             FhirJsonPocoDeserializerSettings deserializerSettings)
         {
-            _deserializer = new FhirJsonPocoDeserializer(inspector, deserializerSettings);
-            _serializer = new FhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
+            _deserializer = new BaseFhirJsonPocoDeserializer(inspector, deserializerSettings);
+            _serializer = new BaseFhirJsonPocoSerializer(inspector.FhirRelease, serializerSettings);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>Since the standard serializer/deserializer will allow you to override its behaviour to produce
         /// custom behaviour, this constructor will allow the developer to use such custom serializers/deserializers instead
         /// of the defaults.</remarks>
-        public FhirJsonConverter(FhirJsonPocoDeserializer deserializer, FhirJsonPocoSerializer serializer)
+        public FhirJsonConverter(BaseFhirJsonPocoDeserializer deserializer, BaseFhirJsonPocoSerializer serializer)
         {
             _deserializer = deserializer;
             _serializer = serializer;
@@ -116,8 +116,8 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public override bool CanConvert(Type objectType) => typeof(F) == objectType;
 
-        private readonly FhirJsonPocoDeserializer _deserializer;
-        private readonly FhirJsonPocoSerializer _serializer;
+        private readonly BaseFhirJsonPocoDeserializer _deserializer;
+        private readonly BaseFhirJsonPocoSerializer _serializer;
 
         /// <summary>
         /// The filter used to serialize a summary of the resource.

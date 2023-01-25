@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
@@ -34,7 +34,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [DynamicData(nameof(prepareExampleZipFilesJson), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
         [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
             doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
         }
@@ -68,8 +68,8 @@ namespace Hl7.Fhir.Serialization.Tests
             var intermediate2Path = Path.Combine(targetDir, intermediate2Folder);
             createEmptyDir(intermediate2Path);
 
-            var xmlSerializer = new FhirXmlPocoSerializer(ModelInfo.ModelInspector.FhirRelease);
-            var xmlDeserializer = new FhirXmlPocoDeserializer(ModelInfo.ModelInspector);
+            var xmlSerializer = new FhirXmlPocoSerializer();
+            var xmlDeserializer = new FhirXmlPocoDeserializer();
             var jsonOptions = new JsonSerializerOptions().ForFhir(ModelInfo.ModelInspector).Pretty();
 
             files.ForEach(f => objects.Add(new object[] { f, targetDir, xmlSerializer, xmlDeserializer, jsonOptions }));
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Serialization.Tests
             return Path.GetFileName((string)values[0]);
         }
 
-        private static void doRoundTrip(string baseTestPath, string file, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        private static void doRoundTrip(string baseTestPath, string file, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
         {
             var errors = new List<string>();
 
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Directory.CreateDirectory(baseTestPath);
         }
 
-        private static void convertFile(string file, string outputPath, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions, List<string> errors)
+        private static void convertFile(string file, string outputPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions, List<string> errors)
         {
             string exampleWithOppositeExtension = changeFileExtension(file);
             string outputFile = Path.Combine(outputPath, exampleWithOppositeExtension);
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Serialization.Tests
             }
         }
 
-        private static void convertResource(string inputFile, string outputFile, FhirXmlPocoSerializer xmlSerializer, FhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions options)
+        private static void convertResource(string inputFile, string outputFile, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions options)
         {
             if (inputFile.EndsWith(".xml"))
             {
