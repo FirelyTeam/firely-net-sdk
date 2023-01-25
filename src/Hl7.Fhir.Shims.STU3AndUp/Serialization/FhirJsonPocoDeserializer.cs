@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Introspection;
+﻿#nullable enable
+
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using System;
 using System.Reflection;
@@ -43,3 +45,5 @@ namespace Hl7.Fhir.Serialization
         }
     }
 }
+
+#nullable restore
