@@ -964,13 +964,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=160)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Textual description. Note that this is not the name of the package or product
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// The legal status of supply of the packaged item as classified by the regulator
@@ -1107,7 +1125,7 @@ namespace Hl7.Fhir.Model
       if(Status != null) dest.Status = (Hl7.Fhir.Model.CodeableConcept)Status.DeepCopy();
       if(StatusDateElement != null) dest.StatusDateElement = (Hl7.Fhir.Model.FhirDateTime)StatusDateElement.DeepCopy();
       if(ContainedItemQuantity != null) dest.ContainedItemQuantity = new List<Hl7.Fhir.Model.Quantity>(ContainedItemQuantity.DeepCopy());
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(LegalStatusOfSupply != null) dest.LegalStatusOfSupply = new List<Hl7.Fhir.Model.PackagedProductDefinition.LegalStatusOfSupplyComponent>(LegalStatusOfSupply.DeepCopy());
       if(MarketingStatus != null) dest.MarketingStatus = new List<Hl7.Fhir.Model.MarketingStatus>(MarketingStatus.DeepCopy());
       if(CopackagedIndicatorElement != null) dest.CopackagedIndicatorElement = (Hl7.Fhir.Model.FhirBoolean)CopackagedIndicatorElement.DeepCopy();
@@ -1137,7 +1155,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Status, otherT.Status)) return false;
       if( !DeepComparable.Matches(StatusDateElement, otherT.StatusDateElement)) return false;
       if( !DeepComparable.Matches(ContainedItemQuantity, otherT.ContainedItemQuantity)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
       if( !DeepComparable.Matches(MarketingStatus, otherT.MarketingStatus)) return false;
       if( !DeepComparable.Matches(CopackagedIndicatorElement, otherT.CopackagedIndicatorElement)) return false;
@@ -1162,7 +1180,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Status, otherT.Status)) return false;
       if( !DeepComparable.IsExactly(StatusDateElement, otherT.StatusDateElement)) return false;
       if( !DeepComparable.IsExactly(ContainedItemQuantity, otherT.ContainedItemQuantity)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(LegalStatusOfSupply, otherT.LegalStatusOfSupply)) return false;
       if( !DeepComparable.IsExactly(MarketingStatus, otherT.MarketingStatus)) return false;
       if( !DeepComparable.IsExactly(CopackagedIndicatorElement, otherT.CopackagedIndicatorElement)) return false;
@@ -1187,7 +1205,7 @@ namespace Hl7.Fhir.Model
         if (Status != null) yield return Status;
         if (StatusDateElement != null) yield return StatusDateElement;
         foreach (var elem in ContainedItemQuantity) { if (elem != null) yield return elem; }
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         foreach (var elem in LegalStatusOfSupply) { if (elem != null) yield return elem; }
         foreach (var elem in MarketingStatus) { if (elem != null) yield return elem; }
         if (CopackagedIndicatorElement != null) yield return CopackagedIndicatorElement;
@@ -1211,7 +1229,7 @@ namespace Hl7.Fhir.Model
         if (Status != null) yield return new ElementValue("status", Status);
         if (StatusDateElement != null) yield return new ElementValue("statusDate", StatusDateElement);
         foreach (var elem in ContainedItemQuantity) { if (elem != null) yield return new ElementValue("containedItemQuantity", elem); }
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in LegalStatusOfSupply) { if (elem != null) yield return new ElementValue("legalStatusOfSupply", elem); }
         foreach (var elem in MarketingStatus) { if (elem != null) yield return new ElementValue("marketingStatus", elem); }
         if (CopackagedIndicatorElement != null) yield return new ElementValue("copackagedIndicator", CopackagedIndicatorElement);
@@ -1248,8 +1266,8 @@ namespace Hl7.Fhir.Model
           value = ContainedItemQuantity;
           return ContainedItemQuantity?.Any() == true;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "legalStatusOfSupply":
           value = LegalStatusOfSupply;
           return LegalStatusOfSupply?.Any() == true;
@@ -1287,7 +1305,7 @@ namespace Hl7.Fhir.Model
       if (Status is not null) yield return new KeyValuePair<string,object>("status",Status);
       if (StatusDateElement is not null) yield return new KeyValuePair<string,object>("statusDate",StatusDateElement);
       if (ContainedItemQuantity?.Any() == true) yield return new KeyValuePair<string,object>("containedItemQuantity",ContainedItemQuantity);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (LegalStatusOfSupply?.Any() == true) yield return new KeyValuePair<string,object>("legalStatusOfSupply",LegalStatusOfSupply);
       if (MarketingStatus?.Any() == true) yield return new KeyValuePair<string,object>("marketingStatus",MarketingStatus);
       if (CopackagedIndicatorElement is not null) yield return new KeyValuePair<string,object>("copackagedIndicator",CopackagedIndicatorElement);

@@ -395,13 +395,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("citation", InSummary=true, Order=70)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Citation
+    public Hl7.Fhir.Model.Markdown CitationElement
     {
-      get { return _Citation; }
-      set { _Citation = value; OnPropertyChanged("Citation"); }
+      get { return _CitationElement; }
+      set { _CitationElement = value; OnPropertyChanged("CitationElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Citation;
+    private Hl7.Fhir.Model.Markdown _CitationElement;
+
+    /// <summary>
+    /// Bibliographic citation for the artifact
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Citation
+    {
+      get { return CitationElement != null ? CitationElement.Value : null; }
+      set
+      {
+        if (value == null)
+          CitationElement = null;
+        else
+          CitationElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Citation");
+      }
+    }
 
     /// <summary>
     /// Where the artifact can be accessed. Note: Element is deprecated since R5, do not use with R5 and newer releases.
@@ -571,7 +589,7 @@ namespace Hl7.Fhir.Model
       if(Classifier != null) dest.Classifier = new List<Hl7.Fhir.Model.CodeableConcept>(Classifier.DeepCopy());
       if(LabelElement != null) dest.LabelElement = (Hl7.Fhir.Model.FhirString)LabelElement.DeepCopy();
       if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-      if(Citation != null) dest.Citation = (Hl7.Fhir.Model.Markdown)Citation.DeepCopy();
+      if(CitationElement != null) dest.CitationElement = (Hl7.Fhir.Model.Markdown)CitationElement.DeepCopy();
       if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUrl)UrlElement.DeepCopy();
       if(Document != null) dest.Document = (Hl7.Fhir.Model.Attachment)Document.DeepCopy();
       if(ResourceElement != null) dest.ResourceElement = (Hl7.Fhir.Model.Canonical)ResourceElement.DeepCopy();
@@ -597,7 +615,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Classifier, otherT.Classifier)) return false;
       if( !DeepComparable.Matches(LabelElement, otherT.LabelElement)) return false;
       if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
-      if( !DeepComparable.Matches(Citation, otherT.Citation)) return false;
+      if( !DeepComparable.Matches(CitationElement, otherT.CitationElement)) return false;
       if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.Matches(Document, otherT.Document)) return false;
       if( !DeepComparable.Matches(ResourceElement, otherT.ResourceElement)) return false;
@@ -618,7 +636,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Classifier, otherT.Classifier)) return false;
       if( !DeepComparable.IsExactly(LabelElement, otherT.LabelElement)) return false;
       if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
-      if( !DeepComparable.IsExactly(Citation, otherT.Citation)) return false;
+      if( !DeepComparable.IsExactly(CitationElement, otherT.CitationElement)) return false;
       if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
       if( !DeepComparable.IsExactly(Document, otherT.Document)) return false;
       if( !DeepComparable.IsExactly(ResourceElement, otherT.ResourceElement)) return false;
@@ -639,7 +657,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Classifier) { if (elem != null) yield return elem; }
         if (LabelElement != null) yield return LabelElement;
         if (DisplayElement != null) yield return DisplayElement;
-        if (Citation != null) yield return Citation;
+        if (CitationElement != null) yield return CitationElement;
         if (UrlElement != null) yield return UrlElement;
         if (Document != null) yield return Document;
         if (ResourceElement != null) yield return ResourceElement;
@@ -659,7 +677,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Classifier) { if (elem != null) yield return new ElementValue("classifier", elem); }
         if (LabelElement != null) yield return new ElementValue("label", LabelElement);
         if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
-        if (Citation != null) yield return new ElementValue("citation", Citation);
+        if (CitationElement != null) yield return new ElementValue("citation", CitationElement);
         if (UrlElement != null) yield return new ElementValue("url", UrlElement);
         if (Document != null) yield return new ElementValue("document", Document);
         if (ResourceElement != null) yield return new ElementValue("resource", ResourceElement);
@@ -686,8 +704,8 @@ namespace Hl7.Fhir.Model
           value = DisplayElement;
           return DisplayElement is not null;
         case "citation":
-          value = Citation;
-          return Citation is not null;
+          value = CitationElement;
+          return CitationElement is not null;
         case "url":
           value = UrlElement;
           return UrlElement is not null;
@@ -719,7 +737,7 @@ namespace Hl7.Fhir.Model
       if (Classifier?.Any() == true) yield return new KeyValuePair<string,object>("classifier",Classifier);
       if (LabelElement is not null) yield return new KeyValuePair<string,object>("label",LabelElement);
       if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
-      if (Citation is not null) yield return new KeyValuePair<string,object>("citation",Citation);
+      if (CitationElement is not null) yield return new KeyValuePair<string,object>("citation",CitationElement);
       if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
       if (Document is not null) yield return new KeyValuePair<string,object>("document",Document);
       if (ResourceElement is not null) yield return new KeyValuePair<string,object>("resource",ResourceElement);

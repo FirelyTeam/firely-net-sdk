@@ -993,13 +993,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", InSummary=true, Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Natural language description of the evidence variable
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// Used for footnotes or explanatory notes
@@ -1286,7 +1304,7 @@ namespace Hl7.Fhir.Model
       if(SubtitleElement != null) dest.SubtitleElement = (Hl7.Fhir.Model.FhirString)SubtitleElement.DeepCopy();
       if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.PublicationStatus>)StatusElement.DeepCopy();
       if(DateElement != null) dest.DateElement = (Hl7.Fhir.Model.FhirDateTime)DateElement.DeepCopy();
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
       if(PublisherElement != null) dest.PublisherElement = (Hl7.Fhir.Model.FhirString)PublisherElement.DeepCopy();
@@ -1325,7 +1343,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(SubtitleElement, otherT.SubtitleElement)) return false;
       if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(Note, otherT.Note)) return false;
       if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
       if( !DeepComparable.Matches(PublisherElement, otherT.PublisherElement)) return false;
@@ -1359,7 +1377,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(SubtitleElement, otherT.SubtitleElement)) return false;
       if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
       if( !DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
       if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
       if( !DeepComparable.IsExactly(PublisherElement, otherT.PublisherElement)) return false;
@@ -1393,7 +1411,7 @@ namespace Hl7.Fhir.Model
         if (SubtitleElement != null) yield return SubtitleElement;
         if (StatusElement != null) yield return StatusElement;
         if (DateElement != null) yield return DateElement;
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         foreach (var elem in Note) { if (elem != null) yield return elem; }
         foreach (var elem in UseContext) { if (elem != null) yield return elem; }
         if (PublisherElement != null) yield return PublisherElement;
@@ -1426,7 +1444,7 @@ namespace Hl7.Fhir.Model
         if (SubtitleElement != null) yield return new ElementValue("subtitle", SubtitleElement);
         if (StatusElement != null) yield return new ElementValue("status", StatusElement);
         if (DateElement != null) yield return new ElementValue("date", DateElement);
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
         if (PublisherElement != null) yield return new ElementValue("publisher", PublisherElement);
@@ -1476,8 +1494,8 @@ namespace Hl7.Fhir.Model
           value = DateElement;
           return DateElement is not null;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "note":
           value = Note;
           return Note?.Any() == true;
@@ -1538,7 +1556,7 @@ namespace Hl7.Fhir.Model
       if (SubtitleElement is not null) yield return new KeyValuePair<string,object>("subtitle",SubtitleElement);
       if (StatusElement is not null) yield return new KeyValuePair<string,object>("status",StatusElement);
       if (DateElement is not null) yield return new KeyValuePair<string,object>("date",DateElement);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
       if (PublisherElement is not null) yield return new KeyValuePair<string,object>("publisher",PublisherElement);

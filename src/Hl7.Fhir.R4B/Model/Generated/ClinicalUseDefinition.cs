@@ -1161,13 +1161,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Description
+      public Hl7.Fhir.Model.Markdown DescriptionElement
       {
-        get { return _Description; }
-        set { _Description = value; OnPropertyChanged("Description"); }
+        get { return _DescriptionElement; }
+        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Description;
+      private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+      /// <summary>
+      /// A textual definition of this warning, with formatting
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Description
+      {
+        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        set
+        {
+          if (value == null)
+            DescriptionElement = null;
+          else
+            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Description");
+        }
+      }
 
       /// <summary>
       /// A coded or unformatted textual definition of this warning
@@ -1192,7 +1210,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
         return dest;
       }
@@ -1209,7 +1227,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.Matches(Code, otherT.Code)) return false;
 
         return true;
@@ -1221,7 +1239,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
 
         return true;
@@ -1233,7 +1251,7 @@ namespace Hl7.Fhir.Model
         get
         {
           foreach (var item in base.Children) yield return item;
-          if (Description != null) yield return Description;
+          if (DescriptionElement != null) yield return DescriptionElement;
           if (Code != null) yield return Code;
         }
       }
@@ -1244,7 +1262,7 @@ namespace Hl7.Fhir.Model
         get
         {
           foreach (var item in base.NamedChildren) yield return item;
-          if (Description != null) yield return new ElementValue("description", Description);
+          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
           if (Code != null) yield return new ElementValue("code", Code);
         }
       }
@@ -1254,8 +1272,8 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = Description;
-            return Description is not null;
+            value = DescriptionElement;
+            return DescriptionElement is not null;
           case "code":
             value = Code;
             return Code is not null;
@@ -1268,7 +1286,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       }
 

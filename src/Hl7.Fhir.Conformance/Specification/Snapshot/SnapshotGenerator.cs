@@ -1433,8 +1433,8 @@ namespace Hl7.Fhir.Specification.Snapshot
             if (IsEqualPath(elem.Base?.Path, DOMAINRESOURCE_EXTENSION_PATH))
             {
                 elem.ShortElement?.RemoveConstrainedByDiffAnnotation();
-                elem.Comment?.RemoveConstrainedByDiffAnnotation();
-                elem.Definition?.RemoveConstrainedByDiffAnnotation();
+                elem.CommentElement?.RemoveConstrainedByDiffAnnotation();
+                elem.DefinitionElement?.RemoveConstrainedByDiffAnnotation();
             }
         }
 

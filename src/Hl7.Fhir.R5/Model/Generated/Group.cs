@@ -679,13 +679,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", Order=150)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Natural language description of the group
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// Number of members
@@ -777,7 +795,7 @@ namespace Hl7.Fhir.Model
       if(MembershipElement != null) dest.MembershipElement = (Code<Hl7.Fhir.Model.Group.GroupMembershipBasis>)MembershipElement.DeepCopy();
       if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(QuantityElement != null) dest.QuantityElement = (Hl7.Fhir.Model.UnsignedInt)QuantityElement.DeepCopy();
       if(ManagingEntity != null) dest.ManagingEntity = (Hl7.Fhir.Model.ResourceReference)ManagingEntity.DeepCopy();
       if(Characteristic != null) dest.Characteristic = new List<Hl7.Fhir.Model.Group.CharacteristicComponent>(Characteristic.DeepCopy());
@@ -803,7 +821,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(MembershipElement, otherT.MembershipElement)) return false;
       if( !DeepComparable.Matches(Code, otherT.Code)) return false;
       if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(QuantityElement, otherT.QuantityElement)) return false;
       if( !DeepComparable.Matches(ManagingEntity, otherT.ManagingEntity)) return false;
       if( !DeepComparable.Matches(Characteristic, otherT.Characteristic)) return false;
@@ -824,7 +842,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(MembershipElement, otherT.MembershipElement)) return false;
       if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
       if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(QuantityElement, otherT.QuantityElement)) return false;
       if( !DeepComparable.IsExactly(ManagingEntity, otherT.ManagingEntity)) return false;
       if( !DeepComparable.IsExactly(Characteristic, otherT.Characteristic)) return false;
@@ -845,7 +863,7 @@ namespace Hl7.Fhir.Model
         if (MembershipElement != null) yield return MembershipElement;
         if (Code != null) yield return Code;
         if (NameElement != null) yield return NameElement;
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         if (QuantityElement != null) yield return QuantityElement;
         if (ManagingEntity != null) yield return ManagingEntity;
         foreach (var elem in Characteristic) { if (elem != null) yield return elem; }
@@ -865,7 +883,7 @@ namespace Hl7.Fhir.Model
         if (MembershipElement != null) yield return new ElementValue("membership", MembershipElement);
         if (Code != null) yield return new ElementValue("code", Code);
         if (NameElement != null) yield return new ElementValue("name", NameElement);
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         if (QuantityElement != null) yield return new ElementValue("quantity", QuantityElement);
         if (ManagingEntity != null) yield return new ElementValue("managingEntity", ManagingEntity);
         foreach (var elem in Characteristic) { if (elem != null) yield return new ElementValue("characteristic", elem); }
@@ -896,8 +914,8 @@ namespace Hl7.Fhir.Model
           value = NameElement;
           return NameElement is not null;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "quantity":
           value = QuantityElement;
           return QuantityElement is not null;
@@ -925,7 +943,7 @@ namespace Hl7.Fhir.Model
       if (MembershipElement is not null) yield return new KeyValuePair<string,object>("membership",MembershipElement);
       if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (QuantityElement is not null) yield return new KeyValuePair<string,object>("quantity",QuantityElement);
       if (ManagingEntity is not null) yield return new KeyValuePair<string,object>("managingEntity",ManagingEntity);
       if (Characteristic?.Any() == true) yield return new KeyValuePair<string,object>("characteristic",Characteristic);

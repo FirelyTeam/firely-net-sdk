@@ -658,13 +658,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("display", Order=60)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Display
+      public Hl7.Fhir.Model.Markdown DisplayElement
       {
-        get { return _Display; }
-        set { _Display = value; OnPropertyChanged("Display"); }
+        get { return _DisplayElement; }
+        set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Display;
+      private Hl7.Fhir.Model.Markdown _DisplayElement;
+
+      /// <summary>
+      /// Target of the relationship Display
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Display
+      {
+        get { return DisplayElement != null ? DisplayElement.Value : null; }
+        set
+        {
+          if (value == null)
+            DisplayElement = null;
+          else
+            DisplayElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Display");
+        }
+      }
 
       /// <summary>
       /// Target of the relationship Resource reference
@@ -693,7 +711,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(UrlElement != null) dest.UrlElement = (Hl7.Fhir.Model.FhirUri)UrlElement.DeepCopy();
         if(Identifier != null) dest.Identifier = (Hl7.Fhir.Model.Identifier)Identifier.DeepCopy();
-        if(Display != null) dest.Display = (Hl7.Fhir.Model.Markdown)Display.DeepCopy();
+        if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.Markdown)DisplayElement.DeepCopy();
         if(Resource != null) dest.Resource = (Hl7.Fhir.Model.ResourceReference)Resource.DeepCopy();
         return dest;
       }
@@ -712,7 +730,7 @@ namespace Hl7.Fhir.Model
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(UrlElement, otherT.UrlElement)) return false;
         if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
-        if( !DeepComparable.Matches(Display, otherT.Display)) return false;
+        if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
         if( !DeepComparable.Matches(Resource, otherT.Resource)) return false;
 
         return true;
@@ -726,7 +744,7 @@ namespace Hl7.Fhir.Model
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(UrlElement, otherT.UrlElement)) return false;
         if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
-        if( !DeepComparable.IsExactly(Display, otherT.Display)) return false;
+        if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
         if( !DeepComparable.IsExactly(Resource, otherT.Resource)) return false;
 
         return true;
@@ -740,7 +758,7 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.Children) yield return item;
           if (UrlElement != null) yield return UrlElement;
           if (Identifier != null) yield return Identifier;
-          if (Display != null) yield return Display;
+          if (DisplayElement != null) yield return DisplayElement;
           if (Resource != null) yield return Resource;
         }
       }
@@ -753,7 +771,7 @@ namespace Hl7.Fhir.Model
           foreach (var item in base.NamedChildren) yield return item;
           if (UrlElement != null) yield return new ElementValue("url", UrlElement);
           if (Identifier != null) yield return new ElementValue("identifier", Identifier);
-          if (Display != null) yield return new ElementValue("display", Display);
+          if (DisplayElement != null) yield return new ElementValue("display", DisplayElement);
           if (Resource != null) yield return new ElementValue("resource", Resource);
         }
       }
@@ -769,8 +787,8 @@ namespace Hl7.Fhir.Model
             value = Identifier;
             return Identifier is not null;
           case "display":
-            value = Display;
-            return Display is not null;
+            value = DisplayElement;
+            return DisplayElement is not null;
           case "resource":
             value = Resource;
             return Resource is not null;
@@ -785,7 +803,7 @@ namespace Hl7.Fhir.Model
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (UrlElement is not null) yield return new KeyValuePair<string,object>("url",UrlElement);
         if (Identifier is not null) yield return new KeyValuePair<string,object>("identifier",Identifier);
-        if (Display is not null) yield return new KeyValuePair<string,object>("display",Display);
+        if (DisplayElement is not null) yield return new KeyValuePair<string,object>("display",DisplayElement);
         if (Resource is not null) yield return new KeyValuePair<string,object>("resource",Resource);
       }
 

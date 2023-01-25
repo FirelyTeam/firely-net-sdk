@@ -108,13 +108,31 @@ namespace Hl7.Fhir.Model
     [FhirElement("text", InSummary=true, Order=50)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Text
+    public Hl7.Fhir.Model.Markdown TextElement
     {
-      get { return _Text; }
-      set { _Text = value; OnPropertyChanged("Text"); }
+      get { return _TextElement; }
+      set { _TextElement = value; OnPropertyChanged("TextElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Text;
+    private Hl7.Fhir.Model.Markdown _TextElement;
+
+    /// <summary>
+    /// The annotation  - text content (as markdown)
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Text
+    {
+      get { return TextElement != null ? TextElement.Value : null; }
+      set
+      {
+        if (value == null)
+          TextElement = null;
+        else
+          TextElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Text");
+      }
+    }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
@@ -128,7 +146,7 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(Author != null) dest.Author = (Hl7.Fhir.Model.DataType)Author.DeepCopy();
       if(TimeElement != null) dest.TimeElement = (Hl7.Fhir.Model.FhirDateTime)TimeElement.DeepCopy();
-      if(Text != null) dest.Text = (Hl7.Fhir.Model.Markdown)Text.DeepCopy();
+      if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.Markdown)TextElement.DeepCopy();
       return dest;
     }
 
@@ -146,7 +164,7 @@ namespace Hl7.Fhir.Model
       if(!base.Matches(otherT)) return false;
       if( !DeepComparable.Matches(Author, otherT.Author)) return false;
       if( !DeepComparable.Matches(TimeElement, otherT.TimeElement)) return false;
-      if( !DeepComparable.Matches(Text, otherT.Text)) return false;
+      if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
 
       return true;
     }
@@ -159,7 +177,7 @@ namespace Hl7.Fhir.Model
       if(!base.IsExactly(otherT)) return false;
       if( !DeepComparable.IsExactly(Author, otherT.Author)) return false;
       if( !DeepComparable.IsExactly(TimeElement, otherT.TimeElement)) return false;
-      if( !DeepComparable.IsExactly(Text, otherT.Text)) return false;
+      if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
 
       return true;
     }
@@ -172,7 +190,7 @@ namespace Hl7.Fhir.Model
         foreach (var item in base.Children) yield return item;
         if (Author != null) yield return Author;
         if (TimeElement != null) yield return TimeElement;
-        if (Text != null) yield return Text;
+        if (TextElement != null) yield return TextElement;
       }
     }
 
@@ -184,7 +202,7 @@ namespace Hl7.Fhir.Model
         foreach (var item in base.NamedChildren) yield return item;
         if (Author != null) yield return new ElementValue("author", Author);
         if (TimeElement != null) yield return new ElementValue("time", TimeElement);
-        if (Text != null) yield return new ElementValue("text", Text);
+        if (TextElement != null) yield return new ElementValue("text", TextElement);
       }
     }
 
@@ -199,8 +217,8 @@ namespace Hl7.Fhir.Model
           value = TimeElement;
           return TimeElement is not null;
         case "text":
-          value = Text;
-          return Text is not null;
+          value = TextElement;
+          return TextElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -212,7 +230,7 @@ namespace Hl7.Fhir.Model
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
       if (Author is not null) yield return new KeyValuePair<string,object>("author",Author);
       if (TimeElement is not null) yield return new KeyValuePair<string,object>("time",TimeElement);
-      if (Text is not null) yield return new KeyValuePair<string,object>("text",Text);
+      if (TextElement is not null) yield return new KeyValuePair<string,object>("text",TextElement);
     }
 
   }

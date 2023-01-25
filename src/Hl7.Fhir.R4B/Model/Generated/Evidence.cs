@@ -73,13 +73,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("description", Order=40)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Description
+      public Hl7.Fhir.Model.Markdown DescriptionElement
       {
-        get { return _Description; }
-        set { _Description = value; OnPropertyChanged("Description"); }
+        get { return _DescriptionElement; }
+        set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Description;
+      private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+      /// <summary>
+      /// A text description or summary of the variable
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Description
+      {
+        get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+        set
+        {
+          if (value == null)
+            DescriptionElement = null;
+          else
+            DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Description");
+        }
+      }
 
       /// <summary>
       /// Footnotes and/or explanatory notes
@@ -162,7 +180,7 @@ namespace Hl7.Fhir.Model
         }
 
         base.CopyTo(dest);
-        if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+        if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
         if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
         if(VariableRole != null) dest.VariableRole = (Hl7.Fhir.Model.CodeableConcept)VariableRole.DeepCopy();
         if(Observed != null) dest.Observed = (Hl7.Fhir.Model.ResourceReference)Observed.DeepCopy();
@@ -183,7 +201,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
-        if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+        if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.Matches(Note, otherT.Note)) return false;
         if( !DeepComparable.Matches(VariableRole, otherT.VariableRole)) return false;
         if( !DeepComparable.Matches(Observed, otherT.Observed)) return false;
@@ -199,7 +217,7 @@ namespace Hl7.Fhir.Model
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
-        if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+        if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
         if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
         if( !DeepComparable.IsExactly(VariableRole, otherT.VariableRole)) return false;
         if( !DeepComparable.IsExactly(Observed, otherT.Observed)) return false;
@@ -215,7 +233,7 @@ namespace Hl7.Fhir.Model
         get
         {
           foreach (var item in base.Children) yield return item;
-          if (Description != null) yield return Description;
+          if (DescriptionElement != null) yield return DescriptionElement;
           foreach (var elem in Note) { if (elem != null) yield return elem; }
           if (VariableRole != null) yield return VariableRole;
           if (Observed != null) yield return Observed;
@@ -230,7 +248,7 @@ namespace Hl7.Fhir.Model
         get
         {
           foreach (var item in base.NamedChildren) yield return item;
-          if (Description != null) yield return new ElementValue("description", Description);
+          if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
           foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
           if (VariableRole != null) yield return new ElementValue("variableRole", VariableRole);
           if (Observed != null) yield return new ElementValue("observed", Observed);
@@ -244,8 +262,8 @@ namespace Hl7.Fhir.Model
         switch (key)
         {
           case "description":
-            value = Description;
-            return Description is not null;
+            value = DescriptionElement;
+            return DescriptionElement is not null;
           case "note":
             value = Note;
             return Note?.Any() == true;
@@ -270,7 +288,7 @@ namespace Hl7.Fhir.Model
       protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
-        if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+        if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
         if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
         if (VariableRole is not null) yield return new KeyValuePair<string,object>("variableRole",VariableRole);
         if (Observed is not null) yield return new KeyValuePair<string,object>("observed",Observed);
@@ -2233,26 +2251,62 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", Order=260)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Description of the particular summary
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// Declarative description of the Evidence
     /// </summary>
     [FhirElement("assertion", Order=270)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Assertion
+    public Hl7.Fhir.Model.Markdown AssertionElement
     {
-      get { return _Assertion; }
-      set { _Assertion = value; OnPropertyChanged("Assertion"); }
+      get { return _AssertionElement; }
+      set { _AssertionElement = value; OnPropertyChanged("AssertionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Assertion;
+    private Hl7.Fhir.Model.Markdown _AssertionElement;
+
+    /// <summary>
+    /// Declarative description of the Evidence
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Assertion
+    {
+      get { return AssertionElement != null ? AssertionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          AssertionElement = null;
+        else
+          AssertionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Assertion");
+      }
+    }
 
     /// <summary>
     /// Footnotes and/or explanatory notes
@@ -2363,8 +2417,8 @@ namespace Hl7.Fhir.Model
       if(Reviewer != null) dest.Reviewer = new List<Hl7.Fhir.Model.ContactDetail>(Reviewer.DeepCopy());
       if(Endorser != null) dest.Endorser = new List<Hl7.Fhir.Model.ContactDetail>(Endorser.DeepCopy());
       if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
-      if(Assertion != null) dest.Assertion = (Hl7.Fhir.Model.Markdown)Assertion.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
+      if(AssertionElement != null) dest.AssertionElement = (Hl7.Fhir.Model.Markdown)AssertionElement.DeepCopy();
       if(Note != null) dest.Note = new List<Hl7.Fhir.Model.Annotation>(Note.DeepCopy());
       if(VariableDefinition != null) dest.VariableDefinition = new List<Hl7.Fhir.Model.Evidence.VariableDefinitionComponent>(VariableDefinition.DeepCopy());
       if(SynthesisType != null) dest.SynthesisType = (Hl7.Fhir.Model.CodeableConcept)SynthesisType.DeepCopy();
@@ -2403,8 +2457,8 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Reviewer, otherT.Reviewer)) return false;
       if( !DeepComparable.Matches(Endorser, otherT.Endorser)) return false;
       if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
-      if( !DeepComparable.Matches(Assertion, otherT.Assertion)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.Matches(AssertionElement, otherT.AssertionElement)) return false;
       if( !DeepComparable.Matches(Note, otherT.Note)) return false;
       if( !DeepComparable.Matches(VariableDefinition, otherT.VariableDefinition)) return false;
       if( !DeepComparable.Matches(SynthesisType, otherT.SynthesisType)) return false;
@@ -2438,8 +2492,8 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Reviewer, otherT.Reviewer)) return false;
       if( !DeepComparable.IsExactly(Endorser, otherT.Endorser)) return false;
       if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
-      if( !DeepComparable.IsExactly(Assertion, otherT.Assertion)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
+      if( !DeepComparable.IsExactly(AssertionElement, otherT.AssertionElement)) return false;
       if( !DeepComparable.IsExactly(Note, otherT.Note)) return false;
       if( !DeepComparable.IsExactly(VariableDefinition, otherT.VariableDefinition)) return false;
       if( !DeepComparable.IsExactly(SynthesisType, otherT.SynthesisType)) return false;
@@ -2473,8 +2527,8 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Reviewer) { if (elem != null) yield return elem; }
         foreach (var elem in Endorser) { if (elem != null) yield return elem; }
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
-        if (Description != null) yield return Description;
-        if (Assertion != null) yield return Assertion;
+        if (DescriptionElement != null) yield return DescriptionElement;
+        if (AssertionElement != null) yield return AssertionElement;
         foreach (var elem in Note) { if (elem != null) yield return elem; }
         foreach (var elem in VariableDefinition) { if (elem != null) yield return elem; }
         if (SynthesisType != null) yield return SynthesisType;
@@ -2507,8 +2561,8 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Reviewer) { if (elem != null) yield return new ElementValue("reviewer", elem); }
         foreach (var elem in Endorser) { if (elem != null) yield return new ElementValue("endorser", elem); }
         foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
-        if (Description != null) yield return new ElementValue("description", Description);
-        if (Assertion != null) yield return new ElementValue("assertion", Assertion);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
+        if (AssertionElement != null) yield return new ElementValue("assertion", AssertionElement);
         foreach (var elem in Note) { if (elem != null) yield return new ElementValue("note", elem); }
         foreach (var elem in VariableDefinition) { if (elem != null) yield return new ElementValue("variableDefinition", elem); }
         if (SynthesisType != null) yield return new ElementValue("synthesisType", SynthesisType);
@@ -2574,11 +2628,11 @@ namespace Hl7.Fhir.Model
           value = RelatedArtifact;
           return RelatedArtifact?.Any() == true;
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "assertion":
-          value = Assertion;
-          return Assertion is not null;
+          value = AssertionElement;
+          return AssertionElement is not null;
         case "note":
           value = Note;
           return Note?.Any() == true;
@@ -2623,8 +2677,8 @@ namespace Hl7.Fhir.Model
       if (Reviewer?.Any() == true) yield return new KeyValuePair<string,object>("reviewer",Reviewer);
       if (Endorser?.Any() == true) yield return new KeyValuePair<string,object>("endorser",Endorser);
       if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
-      if (Assertion is not null) yield return new KeyValuePair<string,object>("assertion",Assertion);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
+      if (AssertionElement is not null) yield return new KeyValuePair<string,object>("assertion",AssertionElement);
       if (Note?.Any() == true) yield return new KeyValuePair<string,object>("note",Note);
       if (VariableDefinition?.Any() == true) yield return new KeyValuePair<string,object>("variableDefinition",VariableDefinition);
       if (SynthesisType is not null) yield return new KeyValuePair<string,object>("synthesisType",SynthesisType);

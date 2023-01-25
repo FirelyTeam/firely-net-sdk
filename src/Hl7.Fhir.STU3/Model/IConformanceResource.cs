@@ -67,11 +67,13 @@ namespace Hl7.Fhir.Model
     {
         //I think ImplementationGuide should have a purpose element.
         [NotMapped]
-        public Markdown Purpose
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
     public partial class CompartmentDefinition : IConformanceResource
@@ -104,11 +106,13 @@ namespace Hl7.Fhir.Model
 
     public partial class ExpansionProfile : IVersionableConformanceResource
     {
-        public Markdown Purpose
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
     public partial class Questionnaire : IVersionableConformanceResource
@@ -120,18 +124,21 @@ namespace Hl7.Fhir.Model
     {
         // I think DataElement should have Description too
         [NotMapped]
-        public Markdown Description
+        public Markdown DescriptionElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
 
         [NotMapped]
-        public Markdown Purpose
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public string Description { get => null; set => throw new NotImplementedException(); }
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
 
@@ -139,7 +146,7 @@ namespace Hl7.Fhir.Model
     {
         // I think NamingSystem should have Experimental too
         [NotMapped]
-        public Markdown Purpose
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
@@ -185,5 +192,7 @@ namespace Hl7.Fhir.Model
             }
             set { throw new NotImplementedException(); }
         }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 }

@@ -110,9 +110,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                 correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
-                snap.Definition = mergePrimitiveElement(snap.Definition, diff.Definition, true);
-                snap.Comment = mergePrimitiveElement(snap.Comment, diff.Comment, true);
-                snap.Requirements = mergePrimitiveElement(snap.Requirements, diff.Requirements, true);
+                snap.DefinitionElement = mergePrimitiveElement(snap.DefinitionElement, diff.DefinitionElement, true);
+                snap.CommentElement = mergePrimitiveElement(snap.CommentElement, diff.CommentElement, true);
+                snap.RequirementsElement = mergePrimitiveElement(snap.RequirementsElement, diff.RequirementsElement, true);
 
                 // Aliases are cumulative based on the string value
                 snap.AliasElement = mergePrimitiveCollection(snap.AliasElement, diff.AliasElement, matchStringValues);
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Type = mergeElementTypes(snap.Type, diff.Type);
 
                 snap.DefaultValue = mergeComplexAttribute(snap.DefaultValue, diff.DefaultValue);
-                snap.MeaningWhenMissing = mergePrimitiveElement(snap.MeaningWhenMissing, diff.MeaningWhenMissing);
+                snap.MeaningWhenMissingElement = mergePrimitiveElement(snap.MeaningWhenMissingElement, diff.MeaningWhenMissingElement);
                 // [EK 20170301] Added this new STU3 element
                 snap.OrderMeaningElement = mergePrimitiveElement(snap.OrderMeaningElement, diff.OrderMeaningElement);
 
@@ -357,7 +357,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                     else if (!diff.IsExactly(snap))
                     {
                         snap.StrengthElement = mergePrimitiveElement(snap.StrengthElement, diff.StrengthElement);
-                        snap.Description = mergePrimitiveElement(snap.Description, diff.Description);
+                        snap.DescriptionElement = mergePrimitiveElement(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSetElement = mergeComplexAttribute(snap.ValueSetElement, diff.ValueSetElement);
                         snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
                         onConstraint(result);

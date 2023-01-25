@@ -86,13 +86,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comment", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Comment
+      public Hl7.Fhir.Model.Markdown CommentElement
       {
-        get { return _Comment; }
-        set { _Comment = value; OnPropertyChanged("Comment"); }
+        get { return _CommentElement; }
+        set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Comment;
+      private Hl7.Fhir.Model.Markdown _CommentElement;
+
+      /// <summary>
+      /// Describes the eligibility conditions for the service
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Comment
+      {
+        get { return CommentElement != null ? CommentElement.Value : null; }
+        set
+        {
+          if (value == null)
+            CommentElement = null;
+          else
+            CommentElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Comment");
+        }
+      }
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
@@ -105,7 +123,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(Code != null) dest.Code = (Hl7.Fhir.Model.CodeableConcept)Code.DeepCopy();
-        if(Comment != null) dest.Comment = (Hl7.Fhir.Model.Markdown)Comment.DeepCopy();
+        if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.Markdown)CommentElement.DeepCopy();
         return dest;
       }
 
@@ -122,7 +140,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(Code, otherT.Code)) return false;
-        if( !DeepComparable.Matches(Comment, otherT.Comment)) return false;
+        if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
 
         return true;
       }
@@ -134,7 +152,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(Code, otherT.Code)) return false;
-        if( !DeepComparable.IsExactly(Comment, otherT.Comment)) return false;
+        if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
 
         return true;
       }
@@ -146,7 +164,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (Code != null) yield return Code;
-          if (Comment != null) yield return Comment;
+          if (CommentElement != null) yield return CommentElement;
         }
       }
 
@@ -157,7 +175,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (Code != null) yield return new ElementValue("code", Code);
-          if (Comment != null) yield return new ElementValue("comment", Comment);
+          if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
         }
       }
 
@@ -169,8 +187,8 @@ namespace Hl7.Fhir.Model
             value = Code;
             return Code is not null;
           case "comment":
-            value = Comment;
-            return Comment is not null;
+            value = CommentElement;
+            return CommentElement is not null;
           default:
             return base.TryGetValue(key, out value);
         }
@@ -181,7 +199,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (Code is not null) yield return new KeyValuePair<string,object>("code",Code);
-        if (Comment is not null) yield return new KeyValuePair<string,object>("comment",Comment);
+        if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
       }
 
     }
@@ -770,13 +788,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("extraDetails", Order=180)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown ExtraDetails
+    public Hl7.Fhir.Model.Markdown ExtraDetailsElement
     {
-      get { return _ExtraDetails; }
-      set { _ExtraDetails = value; OnPropertyChanged("ExtraDetails"); }
+      get { return _ExtraDetailsElement; }
+      set { _ExtraDetailsElement = value; OnPropertyChanged("ExtraDetailsElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _ExtraDetails;
+    private Hl7.Fhir.Model.Markdown _ExtraDetailsElement;
+
+    /// <summary>
+    /// Extra details about the service that can't be placed in the other fields
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string ExtraDetails
+    {
+      get { return ExtraDetailsElement != null ? ExtraDetailsElement.Value : null; }
+      set
+      {
+        if (value == null)
+          ExtraDetailsElement = null;
+        else
+          ExtraDetailsElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("ExtraDetails");
+      }
+    }
 
     /// <summary>
     /// Facilitates quick identification of the service
@@ -1030,7 +1066,7 @@ namespace Hl7.Fhir.Model
       if(Location != null) dest.Location = new List<Hl7.Fhir.Model.ResourceReference>(Location.DeepCopy());
       if(NameElement != null) dest.NameElement = (Hl7.Fhir.Model.FhirString)NameElement.DeepCopy();
       if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
-      if(ExtraDetails != null) dest.ExtraDetails = (Hl7.Fhir.Model.Markdown)ExtraDetails.DeepCopy();
+      if(ExtraDetailsElement != null) dest.ExtraDetailsElement = (Hl7.Fhir.Model.Markdown)ExtraDetailsElement.DeepCopy();
       if(Photo != null) dest.Photo = (Hl7.Fhir.Model.Attachment)Photo.DeepCopy();
       if(Telecom != null) dest.Telecom = new List<Hl7.Fhir.Model.ContactPoint>(Telecom.DeepCopy());
       if(CoverageArea != null) dest.CoverageArea = new List<Hl7.Fhir.Model.ResourceReference>(CoverageArea.DeepCopy());
@@ -1069,7 +1105,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Location, otherT.Location)) return false;
       if( !DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
       if( !DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
-      if( !DeepComparable.Matches(ExtraDetails, otherT.ExtraDetails)) return false;
+      if( !DeepComparable.Matches(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
       if( !DeepComparable.Matches(Photo, otherT.Photo)) return false;
       if( !DeepComparable.Matches(Telecom, otherT.Telecom)) return false;
       if( !DeepComparable.Matches(CoverageArea, otherT.CoverageArea)) return false;
@@ -1103,7 +1139,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Location, otherT.Location)) return false;
       if( !DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
       if( !DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
-      if( !DeepComparable.IsExactly(ExtraDetails, otherT.ExtraDetails)) return false;
+      if( !DeepComparable.IsExactly(ExtraDetailsElement, otherT.ExtraDetailsElement)) return false;
       if( !DeepComparable.IsExactly(Photo, otherT.Photo)) return false;
       if( !DeepComparable.IsExactly(Telecom, otherT.Telecom)) return false;
       if( !DeepComparable.IsExactly(CoverageArea, otherT.CoverageArea)) return false;
@@ -1137,7 +1173,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Location) { if (elem != null) yield return elem; }
         if (NameElement != null) yield return NameElement;
         if (CommentElement != null) yield return CommentElement;
-        if (ExtraDetails != null) yield return ExtraDetails;
+        if (ExtraDetailsElement != null) yield return ExtraDetailsElement;
         if (Photo != null) yield return Photo;
         foreach (var elem in Telecom) { if (elem != null) yield return elem; }
         foreach (var elem in CoverageArea) { if (elem != null) yield return elem; }
@@ -1170,7 +1206,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Location) { if (elem != null) yield return new ElementValue("location", elem); }
         if (NameElement != null) yield return new ElementValue("name", NameElement);
         if (CommentElement != null) yield return new ElementValue("comment", CommentElement);
-        if (ExtraDetails != null) yield return new ElementValue("extraDetails", ExtraDetails);
+        if (ExtraDetailsElement != null) yield return new ElementValue("extraDetails", ExtraDetailsElement);
         if (Photo != null) yield return new ElementValue("photo", Photo);
         foreach (var elem in Telecom) { if (elem != null) yield return new ElementValue("telecom", elem); }
         foreach (var elem in CoverageArea) { if (elem != null) yield return new ElementValue("coverageArea", elem); }
@@ -1220,8 +1256,8 @@ namespace Hl7.Fhir.Model
           value = CommentElement;
           return CommentElement is not null;
         case "extraDetails":
-          value = ExtraDetails;
-          return ExtraDetails is not null;
+          value = ExtraDetailsElement;
+          return ExtraDetailsElement is not null;
         case "photo":
           value = Photo;
           return Photo is not null;
@@ -1282,7 +1318,7 @@ namespace Hl7.Fhir.Model
       if (Location?.Any() == true) yield return new KeyValuePair<string,object>("location",Location);
       if (NameElement is not null) yield return new KeyValuePair<string,object>("name",NameElement);
       if (CommentElement is not null) yield return new KeyValuePair<string,object>("comment",CommentElement);
-      if (ExtraDetails is not null) yield return new KeyValuePair<string,object>("extraDetails",ExtraDetails);
+      if (ExtraDetailsElement is not null) yield return new KeyValuePair<string,object>("extraDetails",ExtraDetailsElement);
       if (Photo is not null) yield return new KeyValuePair<string,object>("photo",Photo);
       if (Telecom?.Any() == true) yield return new KeyValuePair<string,object>("telecom",Telecom);
       if (CoverageArea?.Any() == true) yield return new KeyValuePair<string,object>("coverageArea",CoverageArea);

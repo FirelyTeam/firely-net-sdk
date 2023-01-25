@@ -660,13 +660,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("copyright", Order=210)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Copyright
+    public Hl7.Fhir.Model.Markdown CopyrightElement
     {
-      get { return _Copyright; }
-      set { _Copyright = value; OnPropertyChanged("Copyright"); }
+      get { return _CopyrightElement; }
+      set { _CopyrightElement = value; OnPropertyChanged("CopyrightElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Copyright;
+    private Hl7.Fhir.Model.Markdown _CopyrightElement;
+
+    /// <summary>
+    /// Use and/or publishing restrictions
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Copyright
+    {
+      get { return CopyrightElement != null ? CopyrightElement.Value : null; }
+      set
+      {
+        if (value == null)
+          CopyrightElement = null;
+        else
+          CopyrightElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Copyright");
+      }
+    }
 
     /// <summary>
     /// comparable | fully-specified | equivalent | convertable | scaleable | flexible
@@ -750,7 +768,7 @@ namespace Hl7.Fhir.Model
       if(Contact != null) dest.Contact = new List<Hl7.Fhir.Model.ContactDetail>(Contact.DeepCopy());
       if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
       if(Jurisdiction != null) dest.Jurisdiction = new List<Hl7.Fhir.Model.CodeableConcept>(Jurisdiction.DeepCopy());
-      if(Copyright != null) dest.Copyright = (Hl7.Fhir.Model.Markdown)Copyright.DeepCopy();
+      if(CopyrightElement != null) dest.CopyrightElement = (Hl7.Fhir.Model.Markdown)CopyrightElement.DeepCopy();
       if(StringencyElement != null) dest.StringencyElement = (Code<Hl7.Fhir.Model.DataElement.DataElementStringency>)StringencyElement.DeepCopy();
       if(Mapping != null) dest.Mapping = new List<Hl7.Fhir.Model.DataElement.MappingComponent>(Mapping.DeepCopy());
       if(Element != null) dest.Element = new List<Hl7.Fhir.Model.ElementDefinition>(Element.DeepCopy());
@@ -781,7 +799,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Contact, otherT.Contact)) return false;
       if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
       if( !DeepComparable.Matches(Jurisdiction, otherT.Jurisdiction)) return false;
-      if( !DeepComparable.Matches(Copyright, otherT.Copyright)) return false;
+      if( !DeepComparable.Matches(CopyrightElement, otherT.CopyrightElement)) return false;
       if( !DeepComparable.Matches(StringencyElement, otherT.StringencyElement)) return false;
       if( !DeepComparable.Matches(Mapping, otherT.Mapping)) return false;
       if( !DeepComparable.Matches(Element, otherT.Element)) return false;
@@ -807,7 +825,7 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Contact, otherT.Contact)) return false;
       if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
       if( !DeepComparable.IsExactly(Jurisdiction, otherT.Jurisdiction)) return false;
-      if( !DeepComparable.IsExactly(Copyright, otherT.Copyright)) return false;
+      if( !DeepComparable.IsExactly(CopyrightElement, otherT.CopyrightElement)) return false;
       if( !DeepComparable.IsExactly(StringencyElement, otherT.StringencyElement)) return false;
       if( !DeepComparable.IsExactly(Mapping, otherT.Mapping)) return false;
       if( !DeepComparable.IsExactly(Element, otherT.Element)) return false;
@@ -833,7 +851,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Contact) { if (elem != null) yield return elem; }
         foreach (var elem in UseContext) { if (elem != null) yield return elem; }
         foreach (var elem in Jurisdiction) { if (elem != null) yield return elem; }
-        if (Copyright != null) yield return Copyright;
+        if (CopyrightElement != null) yield return CopyrightElement;
         if (StringencyElement != null) yield return StringencyElement;
         foreach (var elem in Mapping) { if (elem != null) yield return elem; }
         foreach (var elem in Element) { if (elem != null) yield return elem; }
@@ -858,7 +876,7 @@ namespace Hl7.Fhir.Model
         foreach (var elem in Contact) { if (elem != null) yield return new ElementValue("contact", elem); }
         foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
         foreach (var elem in Jurisdiction) { if (elem != null) yield return new ElementValue("jurisdiction", elem); }
-        if (Copyright != null) yield return new ElementValue("copyright", Copyright);
+        if (CopyrightElement != null) yield return new ElementValue("copyright", CopyrightElement);
         if (StringencyElement != null) yield return new ElementValue("stringency", StringencyElement);
         foreach (var elem in Mapping) { if (elem != null) yield return new ElementValue("mapping", elem); }
         foreach (var elem in Element) { if (elem != null) yield return new ElementValue("element", elem); }
@@ -906,8 +924,8 @@ namespace Hl7.Fhir.Model
           value = Jurisdiction;
           return Jurisdiction?.Any() == true;
         case "copyright":
-          value = Copyright;
-          return Copyright is not null;
+          value = CopyrightElement;
+          return CopyrightElement is not null;
         case "stringency":
           value = StringencyElement;
           return StringencyElement is not null;
@@ -938,7 +956,7 @@ namespace Hl7.Fhir.Model
       if (Contact?.Any() == true) yield return new KeyValuePair<string,object>("contact",Contact);
       if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
       if (Jurisdiction?.Any() == true) yield return new KeyValuePair<string,object>("jurisdiction",Jurisdiction);
-      if (Copyright is not null) yield return new KeyValuePair<string,object>("copyright",Copyright);
+      if (CopyrightElement is not null) yield return new KeyValuePair<string,object>("copyright",CopyrightElement);
       if (StringencyElement is not null) yield return new KeyValuePair<string,object>("stringency",StringencyElement);
       if (Mapping?.Any() == true) yield return new KeyValuePair<string,object>("mapping",Mapping);
       if (Element?.Any() == true) yield return new KeyValuePair<string,object>("element",Element);

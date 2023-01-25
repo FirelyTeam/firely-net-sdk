@@ -693,13 +693,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("message", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Message
+      public Hl7.Fhir.Model.Markdown MessageElement
       {
-        get { return _Message; }
-        set { _Message = value; OnPropertyChanged("Message"); }
+        get { return _MessageElement; }
+        set { _MessageElement = value; OnPropertyChanged("MessageElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Message;
+      private Hl7.Fhir.Model.Markdown _MessageElement;
+
+      /// <summary>
+      /// A message associated with the result
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Message
+      {
+        get { return MessageElement != null ? MessageElement.Value : null; }
+        set
+        {
+          if (value == null)
+            MessageElement = null;
+          else
+            MessageElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Message");
+        }
+      }
 
       /// <summary>
       /// A link to further details on the result
@@ -743,7 +761,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
-        if(Message != null) dest.Message = (Hl7.Fhir.Model.Markdown)Message.DeepCopy();
+        if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
         if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirUri)DetailElement.DeepCopy();
         return dest;
       }
@@ -761,7 +779,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(ResultElement, otherT.ResultElement)) return false;
-        if( !DeepComparable.Matches(Message, otherT.Message)) return false;
+        if( !DeepComparable.Matches(MessageElement, otherT.MessageElement)) return false;
         if( !DeepComparable.Matches(DetailElement, otherT.DetailElement)) return false;
 
         return true;
@@ -774,7 +792,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(ResultElement, otherT.ResultElement)) return false;
-        if( !DeepComparable.IsExactly(Message, otherT.Message)) return false;
+        if( !DeepComparable.IsExactly(MessageElement, otherT.MessageElement)) return false;
         if( !DeepComparable.IsExactly(DetailElement, otherT.DetailElement)) return false;
 
         return true;
@@ -787,7 +805,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (ResultElement != null) yield return ResultElement;
-          if (Message != null) yield return Message;
+          if (MessageElement != null) yield return MessageElement;
           if (DetailElement != null) yield return DetailElement;
         }
       }
@@ -799,7 +817,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (ResultElement != null) yield return new ElementValue("result", ResultElement);
-          if (Message != null) yield return new ElementValue("message", Message);
+          if (MessageElement != null) yield return new ElementValue("message", MessageElement);
           if (DetailElement != null) yield return new ElementValue("detail", DetailElement);
         }
       }
@@ -812,8 +830,8 @@ namespace Hl7.Fhir.Model
             value = ResultElement;
             return ResultElement is not null;
           case "message":
-            value = Message;
-            return Message is not null;
+            value = MessageElement;
+            return MessageElement is not null;
           case "detail":
             value = DetailElement;
             return DetailElement is not null;
@@ -827,7 +845,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ResultElement is not null) yield return new KeyValuePair<string,object>("result",ResultElement);
-        if (Message is not null) yield return new KeyValuePair<string,object>("message",Message);
+        if (MessageElement is not null) yield return new KeyValuePair<string,object>("message",MessageElement);
         if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
       }
 
@@ -884,13 +902,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("message", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown Message
+      public Hl7.Fhir.Model.Markdown MessageElement
       {
-        get { return _Message; }
-        set { _Message = value; OnPropertyChanged("Message"); }
+        get { return _MessageElement; }
+        set { _MessageElement = value; OnPropertyChanged("MessageElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _Message;
+      private Hl7.Fhir.Model.Markdown _MessageElement;
+
+      /// <summary>
+      /// A message associated with the result
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string Message
+      {
+        get { return MessageElement != null ? MessageElement.Value : null; }
+        set
+        {
+          if (value == null)
+            MessageElement = null;
+          else
+            MessageElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("Message");
+        }
+      }
 
       /// <summary>
       /// A link to further details on the result
@@ -934,7 +970,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(ResultElement != null) dest.ResultElement = (Code<Hl7.Fhir.Model.TestReport.TestReportActionResult>)ResultElement.DeepCopy();
-        if(Message != null) dest.Message = (Hl7.Fhir.Model.Markdown)Message.DeepCopy();
+        if(MessageElement != null) dest.MessageElement = (Hl7.Fhir.Model.Markdown)MessageElement.DeepCopy();
         if(DetailElement != null) dest.DetailElement = (Hl7.Fhir.Model.FhirString)DetailElement.DeepCopy();
         return dest;
       }
@@ -952,7 +988,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(ResultElement, otherT.ResultElement)) return false;
-        if( !DeepComparable.Matches(Message, otherT.Message)) return false;
+        if( !DeepComparable.Matches(MessageElement, otherT.MessageElement)) return false;
         if( !DeepComparable.Matches(DetailElement, otherT.DetailElement)) return false;
 
         return true;
@@ -965,7 +1001,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(ResultElement, otherT.ResultElement)) return false;
-        if( !DeepComparable.IsExactly(Message, otherT.Message)) return false;
+        if( !DeepComparable.IsExactly(MessageElement, otherT.MessageElement)) return false;
         if( !DeepComparable.IsExactly(DetailElement, otherT.DetailElement)) return false;
 
         return true;
@@ -978,7 +1014,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           if (ResultElement != null) yield return ResultElement;
-          if (Message != null) yield return Message;
+          if (MessageElement != null) yield return MessageElement;
           if (DetailElement != null) yield return DetailElement;
         }
       }
@@ -990,7 +1026,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           if (ResultElement != null) yield return new ElementValue("result", ResultElement);
-          if (Message != null) yield return new ElementValue("message", Message);
+          if (MessageElement != null) yield return new ElementValue("message", MessageElement);
           if (DetailElement != null) yield return new ElementValue("detail", DetailElement);
         }
       }
@@ -1003,8 +1039,8 @@ namespace Hl7.Fhir.Model
             value = ResultElement;
             return ResultElement is not null;
           case "message":
-            value = Message;
-            return Message is not null;
+            value = MessageElement;
+            return MessageElement is not null;
           case "detail":
             value = DetailElement;
             return DetailElement is not null;
@@ -1018,7 +1054,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (ResultElement is not null) yield return new KeyValuePair<string,object>("result",ResultElement);
-        if (Message is not null) yield return new KeyValuePair<string,object>("message",Message);
+        if (MessageElement is not null) yield return new KeyValuePair<string,object>("message",MessageElement);
         if (DetailElement is not null) yield return new KeyValuePair<string,object>("detail",DetailElement);
       }
 

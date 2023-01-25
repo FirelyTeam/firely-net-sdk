@@ -2120,7 +2120,7 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
                 // Profile overrides the definition property of the extension definition root element 
                 Assert.AreNotEqual(baseElem.Definition, elem.Definition);
-                Assert.IsTrue(elem.Definition.IsConstrainedByDiff());
+                Assert.IsTrue(elem.DefinitionElement.IsConstrainedByDiff());
 
                 Assert.IsTrue(nav.MoveToFirstChild());
 
@@ -2149,8 +2149,8 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
                 // Verify that definition property is inherited
                 // [WMR 20181212] R4 - Definition type changed from string to markdown
-                Assert.IsTrue(elem.Definition.IsExactly(baseElem.Definition));
-                Assert.IsFalse(elem.Definition.IsConstrainedByDiff());
+                Assert.IsTrue(elem.DefinitionElement.IsExactly(baseElem.DefinitionElement));
+                Assert.IsFalse(elem.DefinitionElement.IsConstrainedByDiff());
             }
             finally
             {
@@ -2497,11 +2497,11 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.Base)
                 || isChanged(elem.Binding)
                 || hasChanges(elem.Code)
-                || isChanged(elem.Comment)
+                || isChanged(elem.CommentElement)
                 || hasChanges(elem.ConditionElement)
                 || hasChanges(elem.Constraint)
                 || isChanged(elem.DefaultValue)
-                || isChanged(elem.Definition)
+                || isChanged(elem.DefinitionElement)
                 || hasChanges(elem.Example)
                 || hasChanges(elem.Extension)
                 //   || hasChanges(elem.FhirCommentsElement)
@@ -2513,7 +2513,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.MaxElement)
                 || isChanged(elem.MaxLengthElement)
                 || isChanged(elem.MaxValue)
-                || isChanged(elem.MeaningWhenMissing)
+                || isChanged(elem.MeaningWhenMissingElement)
                 || isChanged(elem.MinElement)
                 || isChanged(elem.MinValue)
                 || isChanged(elem.MustSupportElement)
@@ -2522,7 +2522,7 @@ namespace Hl7.Fhir.Specification.Tests
                 || isChanged(elem.PathElement)
                 || isChanged(elem.Pattern)
                 || hasChanges(elem.RepresentationElement)
-                || isChanged(elem.Requirements)
+                || isChanged(elem.RequirementsElement)
                 || isChanged(elem.ShortElement)
                 || isChanged(elem.Slicing)
                 || hasChanges(elem.Type);
@@ -2538,11 +2538,11 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.Base)) { return "Base"; }
             if (isChanged(element.Binding)) { return "Binding"; }
             if (hasChanges(element.Code)) { return "Code"; }
-            if (isChanged(element.Comment)) { return "Comment"; }
+            if (isChanged(element.CommentElement)) { return "Comment"; }
             if (hasChanges(element.ConditionElement)) { return "Condition"; }
             if (hasChanges(element.Constraint)) { return "Constraint"; }
             if (isChanged(element.DefaultValue)) { return "DefaultValue"; }
-            if (isChanged(element.Definition)) { return "Definition"; }
+            if (isChanged(element.DefinitionElement)) { return "Definition"; }
             if (hasChanges(element.Example)) { return "Example"; }
             if (hasChanges(element.Extension)) { return "Extension"; }
             //if (hasChanges(element.FhirCommentsElement)) { return "FhirComments"; }
@@ -2554,7 +2554,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.MaxElement)) { return "Max"; }
             if (isChanged(element.MaxLengthElement)) { return "MaxLength"; }
             if (isChanged(element.MaxValue)) { return "MaxValue"; }
-            if (isChanged(element.MeaningWhenMissing)) { return "MeaningWhenMissing"; }
+            if (isChanged(element.MeaningWhenMissingElement)) { return "MeaningWhenMissing"; }
             if (isChanged(element.MinElement)) { return "Min"; }
             if (isChanged(element.MinValue)) { return "MinValue"; }
             if (isChanged(element.MustSupportElement)) { return "MustSupport"; }
@@ -2563,7 +2563,7 @@ namespace Hl7.Fhir.Specification.Tests
             if (isChanged(element.PathElement)) { return "Path"; }
             if (isChanged(element.Pattern)) { return "Pattern"; }
             if (hasChanges(element.RepresentationElement)) { return "Representation"; }
-            if (isChanged(element.Requirements)) { return "Requirements"; }
+            if (isChanged(element.RequirementsElement)) { return "Requirements"; }
             //if (IsChanged(element.ShortElement)) { return "Short"; }
             //if (IsChanged(element.Slicing)) { return "Slicing"; }
             //if (HasChanges(element.Type)) { return "Type"; }
@@ -3900,18 +3900,18 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, labelExtElem.Min);                                           // Explicit Observation profile constraint
             Assert.AreEqual(labelExtRootElem.Max, labelExtElem.Max);                        // Inherited from external ObservationLabelExtension root element
             // [WMR 20181212] R4 - Definition type changed from string to markdown
-            Assert.IsTrue(labelExtElem.Definition.IsExactly(coreExtensionRootElem.Definition)); // Inherited from Observation.extension base element
+            Assert.IsTrue(labelExtElem.DefinitionElement.IsExactly(coreExtensionRootElem.DefinitionElement)); // Inherited from Observation.extension base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.IsTrue(labelExtElem.Comment.IsExactly(labelExtRootElem.Comment));            // Inherited from external ObservationLabelExtension root element
+            Assert.IsTrue(labelExtElem.CommentElement.IsExactly(labelExtRootElem.CommentElement));            // Inherited from external ObservationLabelExtension root element
             verifyProfileExtensionBaseElement(labelExtElem);
 
             var locationExtRootElem = locationExt.Differential.Element[0];
             Assert.AreEqual(0, locationExtElem.Min);                                        // Inherited from external ObservationLabelExtension root element
             Assert.AreEqual("1", locationExtElem.Max);                                      // Explicit Observation profile constraint
             // [WMR 20181212] R4 - Definition type changed from string to markdown
-            Assert.IsTrue(locationExtElem.Definition.IsExactly(coreExtensionRootElem.Definition));  // Inherited from Observation.extension base element
+            Assert.IsTrue(locationExtElem.DefinitionElement.IsExactly(coreExtensionRootElem.DefinitionElement));  // Inherited from Observation.extension base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.IsTrue(locationExtElem.Comment.IsExactly(locationExtRootElem.Comment));          // Inherited from external ObservationLocationExtension root element
+            Assert.IsTrue(locationExtElem.CommentElement.IsExactly(locationExtRootElem.CommentElement));          // Inherited from external ObservationLocationExtension root element
             verifyProfileExtensionBaseElement(locationExtElem);
 
             // Last (unresolved) extension element should have been merged with Observation.extension
@@ -3923,9 +3923,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual(1, otherExtElem.Min);                                           // Explicit Observation profile constraint
             Assert.AreEqual(coreObsExtensionElem.Max, otherExtElem.Max);                    // Inherited from Observation.extension base element
             // [WMR 20181212] R4 - Definition type changed from string to markdown
-            Assert.IsTrue(otherExtElem.Definition.IsExactly(coreObsExtensionElem.Definition));  // Inherited from Observation.extension base element
+            Assert.IsTrue(otherExtElem.DefinitionElement.IsExactly(coreObsExtensionElem.DefinitionElement));  // Inherited from Observation.extension base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.IsTrue(otherExtElem.Comment.IsExactly(coreObsExtensionElem.Comment));    // Inherited from Observation.extension base element
+            Assert.IsTrue(otherExtElem.CommentElement.IsExactly(coreObsExtensionElem.CommentElement));    // Inherited from Observation.extension base element
             verifyProfileExtensionBaseElement(coreObsExtensionElem);
         }
 
@@ -3935,9 +3935,9 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(baseElem);
             Assert.AreEqual(baseElem.Short, extElem.Short);
             // [WMR 20181212] R4 - Definition type changed from string to markdown
-            Assert.IsTrue(extElem.Definition.IsExactly(baseElem.Definition));
+            Assert.IsTrue(extElem.DefinitionElement.IsExactly(baseElem.DefinitionElement));
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.IsTrue(extElem.Comment.IsExactly(baseElem.Comment));
+            Assert.IsTrue(extElem.CommentElement.IsExactly(baseElem.CommentElement));
             Assert.IsTrue(baseElem.Alias.SequenceEqual(extElem.Alias));
         }
 
@@ -4437,7 +4437,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("*", nav.Current.Max);
             // Slice entry should inherit Comments from base element, merged with diff constraints
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile\r\nSlicedNationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile\r\nSlicedNationalPatientProfile", nav.Current.Comment);
             // Slice entry should also inherit constraints on child elements from base element
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4457,7 +4457,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("1", nav.Current.Max);
             // Named slices should inherit Comments from base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment);
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4479,7 +4479,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("2", nav.Current.Max);
             // Named slices should inherit Comments from base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment);
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4633,7 +4633,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("*", nav.Current.Max);
             // Slice entry should inherit Comments from base element, merged with diff constraints
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile\r\nReslicedNationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile\r\nReslicedNationalPatientProfile", nav.Current.Comment);
             // Slice entry should also inherit constraints on child elements from base element
             var bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4653,7 +4653,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("1", nav.Current.Max);
             // Named slices should inherit Comments from base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment);
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4675,7 +4675,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("2", nav.Current.Max);
             // Named slices should inherit Comments from base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment);
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -4695,7 +4695,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.AreEqual("1", nav.Current.Max);
             // Named slices should inherit Comments from base element
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment?.Value);
+            Assert.AreEqual("NationalPatientProfile", nav.Current.Comment);
             // Named slices should also inherit constraints on child elements from base element
             bm = nav.Bookmark();
             Assert.IsTrue(nav.MoveToChild("system"));
@@ -6041,10 +6041,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(coreObs.HasSnapshot);
             var coreMethodElem = coreObs.Snapshot.Element.FirstOrDefault(e => e.Path == "Observation.method");
             Assert.IsNotNull(coreMethodElem);
-            Assert.IsNotNull(coreMethodElem.Comment);
+            Assert.IsNotNull(coreMethodElem.CommentElement);
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.IsTrue(coreMethodElem.Comment.IsExactly(baseElem.Comment));
-            Assert.IsTrue(baseElem.Comment.IsExactly(coreMethodElem.Comment));
+            Assert.IsTrue(coreMethodElem.CommentElement.IsExactly(baseElem.CommentElement));
+            Assert.IsTrue(baseElem.CommentElement.IsExactly(coreMethodElem.CommentElement));
         }
 
         // [WMR 20170718] Test for slicing issue
@@ -7340,7 +7340,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("level 2", nav.Current.Comment?.Value);
+            Assert.AreEqual("level 2", nav.Current.Comment);
             // Level 2 should NOT inherit constraints from level 1
             Assert.AreNotEqual("level 1", nav.Current.Short);
         }
@@ -7389,11 +7389,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.type"));
             Assert.AreEqual("level 1", nav.Current.Short);
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("level 1 *", nav.Current.Comment?.Value);
+            Assert.AreEqual("level 1 *", nav.Current.Comment);
 
             Assert.IsTrue(nav.JumpToFirst("Questionnaire.item.item.type"));
             // [WMR 20181212] R4 - Comment type changed from string to markdown
-            Assert.AreEqual("level 2", nav.Current.Comment?.Value);
+            Assert.AreEqual("level 2", nav.Current.Comment);
             Assert.AreEqual("level 2 *", nav.Current.Short);
         }
 
@@ -7716,7 +7716,7 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(nav.Current);
             // Verify that snapshot generator merges constraints from external ReferenceProfile
             // [WMR 20181212] R4 Fixed markdown
-            Assert.AreEqual("CustomReference", nav.Current.Comment?.Value);
+            Assert.AreEqual("CustomReference", nav.Current.Comment);
             Assert.IsNotNull(nav.Current.Type);
             Assert.AreEqual(1, nav.Current.Type.Count);
             Assert.AreEqual(FHIRAllTypes.Reference.GetLiteral(), nav.Current.Type[0].Code);

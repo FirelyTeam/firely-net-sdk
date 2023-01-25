@@ -51,11 +51,13 @@ namespace Hl7.Fhir.Model
     {
         //I think ImplementationGuide should have a purpose element.
         [Obsolete("This property is not a part of the official FHIR specification", true)]
-        public Markdown Purpose
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
         }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
     public partial class CompartmentDefinition : IVersionableConformanceResource
@@ -94,7 +96,7 @@ namespace Hl7.Fhir.Model
     {
         // I think NamingSystem should have Experimental too
         [Obsolete("This property is not a part of the official FHIR specification", true)]
-        public Markdown Purpose
+        public Markdown PurposeElement
         {
             get { return null; }
             set { throw new NotImplementedException(); }
@@ -136,5 +138,7 @@ namespace Hl7.Fhir.Model
             }
             set { throw new NotImplementedException(); }
         }
+
+        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 }

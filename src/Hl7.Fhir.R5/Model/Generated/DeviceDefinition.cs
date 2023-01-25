@@ -2302,13 +2302,31 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("usageInstruction", Order=50)]
       [DataMember]
-      public Hl7.Fhir.Model.Markdown UsageInstruction
+      public Hl7.Fhir.Model.Markdown UsageInstructionElement
       {
-        get { return _UsageInstruction; }
-        set { _UsageInstruction = value; OnPropertyChanged("UsageInstruction"); }
+        get { return _UsageInstructionElement; }
+        set { _UsageInstructionElement = value; OnPropertyChanged("UsageInstructionElement"); }
       }
 
-      private Hl7.Fhir.Model.Markdown _UsageInstruction;
+      private Hl7.Fhir.Model.Markdown _UsageInstructionElement;
+
+      /// <summary>
+      /// Detailed written and visual directions for the user on how to use the device
+      /// </summary>
+      /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+      [IgnoreDataMember]
+      public string UsageInstruction
+      {
+        get { return UsageInstructionElement != null ? UsageInstructionElement.Value : null; }
+        set
+        {
+          if (value == null)
+            UsageInstructionElement = null;
+          else
+            UsageInstructionElement = new Hl7.Fhir.Model.Markdown(value);
+          OnPropertyChanged("UsageInstruction");
+        }
+      }
 
       /// <summary>
       /// A source of information or reference for this guideline
@@ -2408,7 +2426,7 @@ namespace Hl7.Fhir.Model
 
         base.CopyTo(dest);
         if(UseContext != null) dest.UseContext = new List<Hl7.Fhir.Model.UsageContext>(UseContext.DeepCopy());
-        if(UsageInstruction != null) dest.UsageInstruction = (Hl7.Fhir.Model.Markdown)UsageInstruction.DeepCopy();
+        if(UsageInstructionElement != null) dest.UsageInstructionElement = (Hl7.Fhir.Model.Markdown)UsageInstructionElement.DeepCopy();
         if(RelatedArtifact != null) dest.RelatedArtifact = new List<Hl7.Fhir.Model.RelatedArtifact>(RelatedArtifact.DeepCopy());
         if(Indication != null) dest.Indication = new List<Hl7.Fhir.Model.CodeableReference>(Indication.DeepCopy());
         if(Contraindication != null) dest.Contraindication = new List<Hl7.Fhir.Model.CodeableReference>(Contraindication.DeepCopy());
@@ -2430,7 +2448,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.Matches(otherT)) return false;
         if( !DeepComparable.Matches(UseContext, otherT.UseContext)) return false;
-        if( !DeepComparable.Matches(UsageInstruction, otherT.UsageInstruction)) return false;
+        if( !DeepComparable.Matches(UsageInstructionElement, otherT.UsageInstructionElement)) return false;
         if( !DeepComparable.Matches(RelatedArtifact, otherT.RelatedArtifact)) return false;
         if( !DeepComparable.Matches(Indication, otherT.Indication)) return false;
         if( !DeepComparable.Matches(Contraindication, otherT.Contraindication)) return false;
@@ -2447,7 +2465,7 @@ namespace Hl7.Fhir.Model
 
         if(!base.IsExactly(otherT)) return false;
         if( !DeepComparable.IsExactly(UseContext, otherT.UseContext)) return false;
-        if( !DeepComparable.IsExactly(UsageInstruction, otherT.UsageInstruction)) return false;
+        if( !DeepComparable.IsExactly(UsageInstructionElement, otherT.UsageInstructionElement)) return false;
         if( !DeepComparable.IsExactly(RelatedArtifact, otherT.RelatedArtifact)) return false;
         if( !DeepComparable.IsExactly(Indication, otherT.Indication)) return false;
         if( !DeepComparable.IsExactly(Contraindication, otherT.Contraindication)) return false;
@@ -2464,7 +2482,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.Children) yield return item;
           foreach (var elem in UseContext) { if (elem != null) yield return elem; }
-          if (UsageInstruction != null) yield return UsageInstruction;
+          if (UsageInstructionElement != null) yield return UsageInstructionElement;
           foreach (var elem in RelatedArtifact) { if (elem != null) yield return elem; }
           foreach (var elem in Indication) { if (elem != null) yield return elem; }
           foreach (var elem in Contraindication) { if (elem != null) yield return elem; }
@@ -2480,7 +2498,7 @@ namespace Hl7.Fhir.Model
         {
           foreach (var item in base.NamedChildren) yield return item;
           foreach (var elem in UseContext) { if (elem != null) yield return new ElementValue("useContext", elem); }
-          if (UsageInstruction != null) yield return new ElementValue("usageInstruction", UsageInstruction);
+          if (UsageInstructionElement != null) yield return new ElementValue("usageInstruction", UsageInstructionElement);
           foreach (var elem in RelatedArtifact) { if (elem != null) yield return new ElementValue("relatedArtifact", elem); }
           foreach (var elem in Indication) { if (elem != null) yield return new ElementValue("indication", elem); }
           foreach (var elem in Contraindication) { if (elem != null) yield return new ElementValue("contraindication", elem); }
@@ -2497,8 +2515,8 @@ namespace Hl7.Fhir.Model
             value = UseContext;
             return UseContext?.Any() == true;
           case "usageInstruction":
-            value = UsageInstruction;
-            return UsageInstruction is not null;
+            value = UsageInstructionElement;
+            return UsageInstructionElement is not null;
           case "relatedArtifact":
             value = RelatedArtifact;
             return RelatedArtifact?.Any() == true;
@@ -2524,7 +2542,7 @@ namespace Hl7.Fhir.Model
       {
         foreach (var kvp in base.GetElementPairs()) yield return kvp;
         if (UseContext?.Any() == true) yield return new KeyValuePair<string,object>("useContext",UseContext);
-        if (UsageInstruction is not null) yield return new KeyValuePair<string,object>("usageInstruction",UsageInstruction);
+        if (UsageInstructionElement is not null) yield return new KeyValuePair<string,object>("usageInstruction",UsageInstructionElement);
         if (RelatedArtifact?.Any() == true) yield return new KeyValuePair<string,object>("relatedArtifact",RelatedArtifact);
         if (Indication?.Any() == true) yield return new KeyValuePair<string,object>("indication",Indication);
         if (Contraindication?.Any() == true) yield return new KeyValuePair<string,object>("contraindication",Contraindication);
@@ -2909,13 +2927,31 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("description", Order=90)]
     [DataMember]
-    public Hl7.Fhir.Model.Markdown Description
+    public Hl7.Fhir.Model.Markdown DescriptionElement
     {
-      get { return _Description; }
-      set { _Description = value; OnPropertyChanged("Description"); }
+      get { return _DescriptionElement; }
+      set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
     }
 
-    private Hl7.Fhir.Model.Markdown _Description;
+    private Hl7.Fhir.Model.Markdown _DescriptionElement;
+
+    /// <summary>
+    /// Additional information to describe the device
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string Description
+    {
+      get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+      set
+      {
+        if (value == null)
+          DescriptionElement = null;
+        else
+          DescriptionElement = new Hl7.Fhir.Model.Markdown(value);
+        OnPropertyChanged("Description");
+      }
+    }
 
     /// <summary>
     /// Instance identifier
@@ -3345,7 +3381,7 @@ namespace Hl7.Fhir.Model
       }
 
       base.CopyTo(dest);
-      if(Description != null) dest.Description = (Hl7.Fhir.Model.Markdown)Description.DeepCopy();
+      if(DescriptionElement != null) dest.DescriptionElement = (Hl7.Fhir.Model.Markdown)DescriptionElement.DeepCopy();
       if(Identifier != null) dest.Identifier = new List<Hl7.Fhir.Model.Identifier>(Identifier.DeepCopy());
       if(UdiDeviceIdentifier != null) dest.UdiDeviceIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.UdiDeviceIdentifierComponent>(UdiDeviceIdentifier.DeepCopy());
       if(RegulatoryIdentifier != null) dest.RegulatoryIdentifier = new List<Hl7.Fhir.Model.DeviceDefinition.RegulatoryIdentifierComponent>(RegulatoryIdentifier.DeepCopy());
@@ -3387,7 +3423,7 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.Matches(otherT)) return false;
-      if( !DeepComparable.Matches(Description, otherT.Description)) return false;
+      if( !DeepComparable.Matches(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
       if( !DeepComparable.Matches(UdiDeviceIdentifier, otherT.UdiDeviceIdentifier)) return false;
       if( !DeepComparable.Matches(RegulatoryIdentifier, otherT.RegulatoryIdentifier)) return false;
@@ -3424,7 +3460,7 @@ namespace Hl7.Fhir.Model
       if(otherT == null) return false;
 
       if(!base.IsExactly(otherT)) return false;
-      if( !DeepComparable.IsExactly(Description, otherT.Description)) return false;
+      if( !DeepComparable.IsExactly(DescriptionElement, otherT.DescriptionElement)) return false;
       if( !DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
       if( !DeepComparable.IsExactly(UdiDeviceIdentifier, otherT.UdiDeviceIdentifier)) return false;
       if( !DeepComparable.IsExactly(RegulatoryIdentifier, otherT.RegulatoryIdentifier)) return false;
@@ -3461,7 +3497,7 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.Children) yield return item;
-        if (Description != null) yield return Description;
+        if (DescriptionElement != null) yield return DescriptionElement;
         foreach (var elem in Identifier) { if (elem != null) yield return elem; }
         foreach (var elem in UdiDeviceIdentifier) { if (elem != null) yield return elem; }
         foreach (var elem in RegulatoryIdentifier) { if (elem != null) yield return elem; }
@@ -3497,7 +3533,7 @@ namespace Hl7.Fhir.Model
       get
       {
         foreach (var item in base.NamedChildren) yield return item;
-        if (Description != null) yield return new ElementValue("description", Description);
+        if (DescriptionElement != null) yield return new ElementValue("description", DescriptionElement);
         foreach (var elem in Identifier) { if (elem != null) yield return new ElementValue("identifier", elem); }
         foreach (var elem in UdiDeviceIdentifier) { if (elem != null) yield return new ElementValue("udiDeviceIdentifier", elem); }
         foreach (var elem in RegulatoryIdentifier) { if (elem != null) yield return new ElementValue("regulatoryIdentifier", elem); }
@@ -3532,8 +3568,8 @@ namespace Hl7.Fhir.Model
       switch (key)
       {
         case "description":
-          value = Description;
-          return Description is not null;
+          value = DescriptionElement;
+          return DescriptionElement is not null;
         case "identifier":
           value = Identifier;
           return Identifier?.Any() == true;
@@ -3621,7 +3657,7 @@ namespace Hl7.Fhir.Model
     protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
     {
       foreach (var kvp in base.GetElementPairs()) yield return kvp;
-      if (Description is not null) yield return new KeyValuePair<string,object>("description",Description);
+      if (DescriptionElement is not null) yield return new KeyValuePair<string,object>("description",DescriptionElement);
       if (Identifier?.Any() == true) yield return new KeyValuePair<string,object>("identifier",Identifier);
       if (UdiDeviceIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("udiDeviceIdentifier",UdiDeviceIdentifier);
       if (RegulatoryIdentifier?.Any() == true) yield return new KeyValuePair<string,object>("regulatoryIdentifier",RegulatoryIdentifier);
