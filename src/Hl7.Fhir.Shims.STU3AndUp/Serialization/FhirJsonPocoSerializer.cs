@@ -14,6 +14,7 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
+        /// <inheritdoc/>
         [Obsolete("Please use FhirJsonPocoSerializer() if you are using a single version of FHIR or BaseFhirJsonPocoSerializer if you want to use multiple versions of FHIR")]
         public FhirJsonPocoSerializer(FhirRelease release, FhirJsonPocoSerializerSettings settings) : base(release, settings)
         {
