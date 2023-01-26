@@ -243,18 +243,21 @@ namespace Hl7.Fhir.Introspection
             return true;
         }
 
+        /// <summary>
+        /// This function tried to figure out a concrete type for the element represented by this property.
+        /// If it cannot derive a concrete type, it will just return <see cref="ImplementingType"/>.
+        /// </summary>
         internal Type GetInstantiableType()
         {
-            if (Choice != ChoiceType.None)
-                throw new InvalidOperationException("This internal function can only be used on non-choice properties.");
-
             if (!ImplementingType.IsAbstract)
                 return ImplementingType;
 
-            if (FhirType.Length != 1)
-                throw new InvalidOperationException("Property is not a choice, so FhirType.Length should be 1");
+            // Ok, so we're in abstract type land, maybe FhirType can help us
+            if (FhirType.Length == 1)
+                return FhirType[0];
 
-            return FhirType.Single();
+            // No, just return ImplementingType then.
+            return ImplementingType;
         }
 
         private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)
