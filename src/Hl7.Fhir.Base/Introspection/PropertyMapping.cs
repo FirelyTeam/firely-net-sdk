@@ -215,10 +215,10 @@ namespace Hl7.Fhir.Introspection
                 throw new InvalidOperationException($"Property {prop.Name} in class {prop.DeclaringType!.Name} is of type " +
                     $"{fhirType}, for which a classmapping cannot be found.");
 
-            // The [AllowedElements] attribute can specify a set of allowed types
-            // for this element. Take this list as the declared list of FHIR types.
-            // If not present assume this is the implementing FHIR type above
-            var allowedTypes = ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release);
+            // The [AllowedElements] attribute can specify a set of allowed types for this element.
+            // If this is a choice element, then take this list as the declared list of FHIR types,
+            // otherwise assume this is the implementing FHIR type above
+            var allowedTypes = elementAttr.Choice != ChoiceType.None ? ClassMapping.GetAttribute<AllowedTypesAttribute>(prop, release) : null;
 
             var fhirTypes = allowedTypes?.Types?.Any() == true ?
                 allowedTypes.Types : new[] { fhirType };
@@ -241,6 +241,20 @@ namespace Hl7.Fhir.Introspection
             };
 
             return true;
+        }
+
+        internal Type GetInstantiableType()
+        {
+            if (Choice != ChoiceType.None)
+                throw new InvalidOperationException("This internal function can only be used on non-choice properties.");
+
+            if (!ImplementingType.IsAbstract)
+                return ImplementingType;
+
+            if (FhirType.Length != 1)
+                throw new InvalidOperationException("Property is not a choice, so FhirType.Length should be 1");
+
+            return FhirType.Single();
         }
 
         private static bool isPrimitiveValueElement(FhirElementAttribute valueElementAttr, PropertyInfo prop)

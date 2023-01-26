@@ -33,7 +33,7 @@ using System;
 namespace Hl7.Fhir.Introspection
 {
     [CLSCompliant(false)]
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
     public class ReferencesAttribute : VersionedAttribute
     {
         public ReferencesAttribute(params string[] resources)

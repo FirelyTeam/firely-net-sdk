@@ -103,32 +103,40 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who signed. Note: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1)
     /// </summary>
-    [FhirElement("who", InSummary=true, Order=50)]
+    [FhirElement("who", InSummary = true, Order = 50, Choice = ChoiceType.DatatypeChoice)]
+    [FhirElement("who", InSummary = true, Order = 50, Since = FhirRelease.R4)]
     [CLSCompliant(false)]
-    [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
-    [DataMember]
-    public Hl7.Fhir.Model.ResourceReference Who
+    [References("Practitioner", "RelatedPerson", "Patient", "Device", "Organization")]
+    [References("Practitioner", "PractitionerRole", "RelatedPerson", "Patient", "Device", "Organization",Since=FhirRelease.R4)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.ResourceReference))]
+    [DeclaredType(Type = typeof(ResourceReference), Since=FhirRelease.R4)]
+    [DataMember]      
+    public Hl7.Fhir.Model.DataType Who
     {
       get { return _Who; }
       set { _Who = value; OnPropertyChanged("Who"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _Who;
+    private Hl7.Fhir.Model.DataType _Who;
 
     /// <summary>
     /// The party represented
     /// </summary>
-    [FhirElement("onBehalfOf", InSummary=true, Order=60)]
+    [FhirElement("onBehalfOf", InSummary = true, Order = 60, Choice = ChoiceType.DatatypeChoice)]
+    [FhirElement("onBehalfOf", InSummary=true, Order=60, Since = FhirRelease.R4)]        
     [CLSCompliant(false)]
-    [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization")]
+    [References("Practitioner", "RelatedPerson", "Patient", "Device", "Organization")]
+    [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization",Since=FhirRelease.R4)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.ResourceReference))]
+    [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
     [DataMember]
-    public Hl7.Fhir.Model.ResourceReference OnBehalfOf
+    public Hl7.Fhir.Model.DataType OnBehalfOf
     {
       get { return _OnBehalfOf; }
       set { _OnBehalfOf = value; OnPropertyChanged("OnBehalfOf"); }
     }
 
-    private Hl7.Fhir.Model.ResourceReference _OnBehalfOf;
+    private Hl7.Fhir.Model.DataType _OnBehalfOf;
 
     /// <summary>
     /// The technical format of the signed resources
