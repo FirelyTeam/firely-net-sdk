@@ -10,7 +10,9 @@ using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using System;
 using System.Collections;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -70,7 +72,7 @@ namespace Hl7.Fhir.Serialization
 
             ClassMapping mapping = prop.Choice == ChoiceType.DatatypeChoice
                 ? getMappingForType(memberName, _current.InstanceType)
-                : _inspector.FindOrImportClassMapping(prop.ImplementingType);
+                : _inspector.FindOrImportClassMapping(prop.GetInstantiableType());
 
             // Handle other Choices having any datatype or a list of datatypes
 

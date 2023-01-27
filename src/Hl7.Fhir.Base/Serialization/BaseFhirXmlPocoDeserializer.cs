@@ -650,7 +650,7 @@ namespace Hl7.Fhir.Serialization
             (ClassMapping? propertyValueMapping, FhirXmlException? error) = propertyMapping.Choice switch
             {
                 ChoiceType.None or ChoiceType.ResourceChoice =>
-                    inspector.FindOrImportClassMapping(propertyMapping.ImplementingType) is ClassMapping m
+                    inspector.FindOrImportClassMapping(propertyMapping.GetInstantiableType()) is ClassMapping m
                         ? (m, null)
                         : throw new InvalidOperationException($"Encountered property type {propertyMapping.ImplementingType} for which no mapping was found in the model assemblies. " + reader.GenerateLocationMessage()),
                 ChoiceType.DatatypeChoice => getChoiceClassMapping(reader),

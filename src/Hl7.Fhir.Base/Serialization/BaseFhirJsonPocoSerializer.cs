@@ -17,7 +17,10 @@ using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 using System.Text.Json;
 
 namespace Hl7.Fhir.Serialization
@@ -62,6 +65,18 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public void Serialize(IReadOnlyDictionary<string, object> members, Utf8JsonWriter writer) =>
             serializeInternal(members, writer, skipValue: false);
+
+        /// <summary>
+        /// Serializes the given dictionary with FHIR data into a Json string.
+        /// </summary>
+        public string SerializeToString(IReadOnlyDictionary<string, object> members)
+        {
+            var stream = new MemoryStream();
+            var writer = new Utf8JsonWriter(stream);
+            serializeInternal(members, writer, skipValue: false);
+            writer.Flush();
+            return Encoding.UTF8.GetString(stream.ToArray());
+        }
 
         /// <summary>
         /// Serializes the given dictionary with FHIR data into Json, optionally skipping the "value" element.
