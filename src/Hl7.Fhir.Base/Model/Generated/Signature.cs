@@ -103,14 +103,14 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who signed. Note: Since R5 the cardinality is expanded to 0..1 (previous it was 1..1)
     /// </summary>
-    [FhirElement("who", InSummary = true, Order = 50, Choice = ChoiceType.DatatypeChoice)]
-    [FhirElement("who", InSummary = true, Order = 50, Since = FhirRelease.R4)]
-    [CLSCompliant(false)]
-    [References("Practitioner", "RelatedPerson", "Patient", "Device", "Organization")]
-    [References("Practitioner", "PractitionerRole", "RelatedPerson", "Patient", "Device", "Organization",Since=FhirRelease.R4)]
+    [FhirElement("who", InSummary=true, Order=50, Choice = ChoiceType.DatatypeChoice)]
+    [FhirElement("who", InSummary=true, Order=50, Since=FhirRelease.R4)]
+    [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.ResourceReference))]
-    [DeclaredType(Type = typeof(ResourceReference), Since=FhirRelease.R4)]
-    [DataMember]      
+    [CLSCompliant(false)]
+    [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
+    [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
+    [DataMember]
     public Hl7.Fhir.Model.DataType Who
     {
       get { return _Who; }
@@ -122,13 +122,13 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The party represented
     /// </summary>
-    [FhirElement("onBehalfOf", InSummary = true, Order = 60, Choice = ChoiceType.DatatypeChoice)]
-    [FhirElement("onBehalfOf", InSummary=true, Order=60, Since = FhirRelease.R4)]        
-    [CLSCompliant(false)]
-    [References("Practitioner", "RelatedPerson", "Patient", "Device", "Organization")]
-    [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization",Since=FhirRelease.R4)]
-    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.ResourceReference))]
+    [FhirElement("onBehalfOf", InSummary=true, Order=60, Choice = ChoiceType.DatatypeChoice)]
+    [FhirElement("onBehalfOf", InSummary=true, Order=60, Since=FhirRelease.R4)]
     [DeclaredType(Type = typeof(ResourceReference), Since = FhirRelease.R4)]
+    [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri), typeof(Hl7.Fhir.Model.ResourceReference))]
+    [CLSCompliant(false)]
+    [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
+    [References("Practitioner","PractitionerRole","RelatedPerson","Patient","Device","Organization", Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.DataType OnBehalfOf
     {
@@ -139,9 +139,9 @@ namespace Hl7.Fhir.Model
     private Hl7.Fhir.Model.DataType _OnBehalfOf;
 
     /// <summary>
-    /// The technical format of the signed resources
+    /// The technical format of the signed resources. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
-    [FhirElement("targetFormat", Order=70)]
+    [FhirElement("targetFormat", Order=70, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Code TargetFormatElement
     {
@@ -170,9 +170,41 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// The technical format of the signature. Note: Element is deprecated since R4, do not use with R4 and newer releases.
+    /// </summary>
+    [FhirElement("contentType", InSummary=true, Order=70)]
+    [NotMapped(Since=FhirRelease.R4)]
+    [DataMember]
+    public Hl7.Fhir.Model.Code ContentTypeElement
+    {
+      get { return _ContentTypeElement; }
+      set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
+    }
+
+    private Hl7.Fhir.Model.Code _ContentTypeElement;
+
+    /// <summary>
     /// The technical format of the signature
     /// </summary>
-    [FhirElement("sigFormat", Order=80)]
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public string ContentType
+    {
+      get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+      set
+      {
+        if (value == null)
+          ContentTypeElement = null;
+        else
+          ContentTypeElement = new Hl7.Fhir.Model.Code(value);
+        OnPropertyChanged("ContentType");
+      }
+    }
+
+    /// <summary>
+    /// The technical format of the signature. Note: Element was introduced in R4, do not use when working with older releases.
+    /// </summary>
+    [FhirElement("sigFormat", Order=80, Since=FhirRelease.R4)]
     [DataMember]
     public Hl7.Fhir.Model.Code SigFormatElement
     {
@@ -231,6 +263,38 @@ namespace Hl7.Fhir.Model
       }
     }
 
+    /// <summary>
+    /// The actual signature content (XML DigSig. JWS, picture, etc.). Note: Element is deprecated since R4, do not use with R4 and newer releases.
+    /// </summary>
+    [FhirElement("blob", Order=90)]
+    [NotMapped(Since=FhirRelease.R4)]
+    [DataMember]
+    public Hl7.Fhir.Model.Base64Binary BlobElement
+    {
+      get { return _BlobElement; }
+      set { _BlobElement = value; OnPropertyChanged("BlobElement"); }
+    }
+
+    private Hl7.Fhir.Model.Base64Binary _BlobElement;
+
+    /// <summary>
+    /// The actual signature content (XML DigSig. JWS, picture, etc.)
+    /// </summary>
+    /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+    [IgnoreDataMember]
+    public byte[] Blob
+    {
+      get { return BlobElement != null ? BlobElement.Value : null; }
+      set
+      {
+        if (value == null)
+          BlobElement = null;
+        else
+          BlobElement = new Hl7.Fhir.Model.Base64Binary(value);
+        OnPropertyChanged("Blob");
+      }
+    }
+
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
       var dest = other as Signature;
@@ -243,11 +307,13 @@ namespace Hl7.Fhir.Model
       base.CopyTo(dest);
       if(Type != null) dest.Type = new List<Hl7.Fhir.Model.Coding>(Type.DeepCopy());
       if(WhenElement != null) dest.WhenElement = (Hl7.Fhir.Model.Instant)WhenElement.DeepCopy();
-      if(Who != null) dest.Who = (Hl7.Fhir.Model.ResourceReference)Who.DeepCopy();
-      if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.ResourceReference)OnBehalfOf.DeepCopy();
+      if(Who != null) dest.Who = (Hl7.Fhir.Model.DataType)Who.DeepCopy();
+      if(OnBehalfOf != null) dest.OnBehalfOf = (Hl7.Fhir.Model.DataType)OnBehalfOf.DeepCopy();
       if(TargetFormatElement != null) dest.TargetFormatElement = (Hl7.Fhir.Model.Code)TargetFormatElement.DeepCopy();
+      if(ContentTypeElement != null) dest.ContentTypeElement = (Hl7.Fhir.Model.Code)ContentTypeElement.DeepCopy();
       if(SigFormatElement != null) dest.SigFormatElement = (Hl7.Fhir.Model.Code)SigFormatElement.DeepCopy();
       if(DataElement != null) dest.DataElement = (Hl7.Fhir.Model.Base64Binary)DataElement.DeepCopy();
+      if(BlobElement != null) dest.BlobElement = (Hl7.Fhir.Model.Base64Binary)BlobElement.DeepCopy();
       return dest;
     }
 
@@ -268,8 +334,10 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.Matches(Who, otherT.Who)) return false;
       if( !DeepComparable.Matches(OnBehalfOf, otherT.OnBehalfOf)) return false;
       if( !DeepComparable.Matches(TargetFormatElement, otherT.TargetFormatElement)) return false;
+      if( !DeepComparable.Matches(ContentTypeElement, otherT.ContentTypeElement)) return false;
       if( !DeepComparable.Matches(SigFormatElement, otherT.SigFormatElement)) return false;
       if( !DeepComparable.Matches(DataElement, otherT.DataElement)) return false;
+      if( !DeepComparable.Matches(BlobElement, otherT.BlobElement)) return false;
 
       return true;
     }
@@ -285,8 +353,10 @@ namespace Hl7.Fhir.Model
       if( !DeepComparable.IsExactly(Who, otherT.Who)) return false;
       if( !DeepComparable.IsExactly(OnBehalfOf, otherT.OnBehalfOf)) return false;
       if( !DeepComparable.IsExactly(TargetFormatElement, otherT.TargetFormatElement)) return false;
+      if( !DeepComparable.IsExactly(ContentTypeElement, otherT.ContentTypeElement)) return false;
       if( !DeepComparable.IsExactly(SigFormatElement, otherT.SigFormatElement)) return false;
       if( !DeepComparable.IsExactly(DataElement, otherT.DataElement)) return false;
+      if( !DeepComparable.IsExactly(BlobElement, otherT.BlobElement)) return false;
 
       return true;
     }
@@ -302,8 +372,10 @@ namespace Hl7.Fhir.Model
         if (Who != null) yield return Who;
         if (OnBehalfOf != null) yield return OnBehalfOf;
         if (TargetFormatElement != null) yield return TargetFormatElement;
+        if (ContentTypeElement != null) yield return ContentTypeElement;
         if (SigFormatElement != null) yield return SigFormatElement;
         if (DataElement != null) yield return DataElement;
+        if (BlobElement != null) yield return BlobElement;
       }
     }
 
@@ -318,8 +390,10 @@ namespace Hl7.Fhir.Model
         if (Who != null) yield return new ElementValue("who", Who);
         if (OnBehalfOf != null) yield return new ElementValue("onBehalfOf", OnBehalfOf);
         if (TargetFormatElement != null) yield return new ElementValue("targetFormat", TargetFormatElement);
+        if (ContentTypeElement != null) yield return new ElementValue("contentType", ContentTypeElement);
         if (SigFormatElement != null) yield return new ElementValue("sigFormat", SigFormatElement);
         if (DataElement != null) yield return new ElementValue("data", DataElement);
+        if (BlobElement != null) yield return new ElementValue("blob", BlobElement);
       }
     }
 
@@ -342,12 +416,18 @@ namespace Hl7.Fhir.Model
         case "targetFormat":
           value = TargetFormatElement;
           return TargetFormatElement is not null;
+        case "contentType":
+          value = ContentTypeElement;
+          return ContentTypeElement is not null;
         case "sigFormat":
           value = SigFormatElement;
           return SigFormatElement is not null;
         case "data":
           value = DataElement;
           return DataElement is not null;
+        case "blob":
+          value = BlobElement;
+          return BlobElement is not null;
         default:
           return base.TryGetValue(key, out value);
       }
@@ -362,8 +442,10 @@ namespace Hl7.Fhir.Model
       if (Who is not null) yield return new KeyValuePair<string,object>("who",Who);
       if (OnBehalfOf is not null) yield return new KeyValuePair<string,object>("onBehalfOf",OnBehalfOf);
       if (TargetFormatElement is not null) yield return new KeyValuePair<string,object>("targetFormat",TargetFormatElement);
+      if (ContentTypeElement is not null) yield return new KeyValuePair<string,object>("contentType",ContentTypeElement);
       if (SigFormatElement is not null) yield return new KeyValuePair<string,object>("sigFormat",SigFormatElement);
       if (DataElement is not null) yield return new KeyValuePair<string,object>("data",DataElement);
+      if (BlobElement is not null) yield return new KeyValuePair<string,object>("blob",BlobElement);
     }
 
   }
