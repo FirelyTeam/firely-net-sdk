@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization.Tests
         [TestMethod]
         public void SDSHasCorrectInfo()
         {
-            var cls = new PocoStructureDefinitionSummaryProvider().Provide("http://hl7.org/fhir/StructureDefinition/Signature");
+            var cls = new PocoStructureDefinitionSummaryProvider().Provide(ModelInfo.CanonicalUriForFhirCoreType("Signature"));
             var elem = cls.GetElements().Single(e => e.ElementName == "who");
             cls.GetElements().Where(e => e.ElementName == "whoReference").Should().BeEmpty();
             validateEDS(elem);
