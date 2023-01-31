@@ -290,7 +290,7 @@ stages:
               displayName: 'NuGet Push packages'
               inputs:
                   command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.*nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
                   verbosityPush: normal    
