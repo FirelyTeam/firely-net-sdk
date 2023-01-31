@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// The actual content. Note: Element is deprecated since R4, do not use with R4 and newer releases.
+    /// The actual content. Note: Element is replaced by 'Binary.data' since R4. Do not use this element 'content' with R4 and newer releases.
     /// </summary>
     [FhirElement("content", Order=70)]
     [NotMapped(Since=FhirRelease.R4)]
