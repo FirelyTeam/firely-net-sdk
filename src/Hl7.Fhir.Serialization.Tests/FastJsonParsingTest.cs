@@ -2318,6 +2318,21 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.IsTrue(patient.IsExactly(parsedPatient));
         }
 
+        [TestMethod]
+        public void SerializeAndParseBigDecimal()
+        {
+            var observation = new Model.R4.Observation
+            {
+                Value = new Quantity
+                {
+                    Value = 195014620349
+                }
+            };
+            var observationJson = new FhirJsonFastSerializer(Model.Version.R4).SerializeToString(observation);
+            var parsedObservation = JsonSerializer.Deserialize<Model.R4.Observation>(observationJson, new JsonSerializerOptions().ForFhir(Model.Version.R4));
+            Assert.IsTrue(observation.IsExactly(parsedObservation));
+        }
+
         private void RoundTripOneExample(Model.Version version, string filename)
         {
             var original = File.ReadAllText(GetFullPathForExample(filename));
