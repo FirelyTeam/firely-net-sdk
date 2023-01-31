@@ -112,27 +112,13 @@ stages:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         ArtifactName: NuGetPackages
     - bash: |
-        echo $(Build.SourceBranchName)
+        version=$(Build.SourceBranchName)
+        title_release="${version:1}"
 
-        IFS='-'
-        read -a version <<<"$(Build.SourceBranchName)"
-
-        release=${version[1]}
-        echo $release
-
-        currenttag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -1)
-        previoustag=$(git tag --sort=v:refname | grep -E "^v.*-$release$" | tail -2 | head -n 1)
-        title_release="${version[0]:1} for ${version[1]^^} (release $(date '+%Y%m%d'))"
-
-        echo $currenttag
-        echo $previoustag
         echo $title_release
-
-        echo "##vso[task.setvariable variable=current_tag;isOutput=true]$currenttag"
-        echo "##vso[task.setvariable variable=previous_tag;isOutput=true]$previoustag"
         echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
       name: tagnames
-      displayName: Determine tagnames
+      displayName: Determine release title
 
 - stage: test
   displayName: Test
@@ -290,7 +276,7 @@ stages:
               displayName: 'NuGet Push packages'
               inputs:
                   command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.nupkg'
+                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.*nupkg'
                   nuGetFeedType: external
                   publishFeedCredentials: NuGet
                   verbosityPush: normal    
@@ -300,10 +286,6 @@ stages:
     displayName: Release Notes
     environment: NuGet
     variables:
-      - name: curTag
-        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.current_tag'] ]
-      - name: prevTag
-        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.previous_tag'] ]
       - name: releaseTitle
         value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.release_title'] ]
     strategy:
@@ -314,16 +296,15 @@ stages:
             - task: GitHubRelease@1
               displayName: 'GitHub release notes (create)'  
               inputs:
-                gitHubConnection: 'GitHub Fhir-net-api'
+                gitHubConnection: 'GitHub Firely-net-sdk'
                 repositoryName: '$(Build.Repository.Name)'
                 action: 'create'
                 target: '$(Build.SourceVersion)'
-                tagSource: userSpecifiedTag
-                tag: '$(curTag)'
+                tagSource: gitTag
+                tagPattern: 'v.*'
                 title: '$(releaseTitle)'
                 isDraft: true
-                changeLogCompareToRelease: lastNonDraftReleaseByTag
-                changeLogCompareToReleaseTag: '$(prevTag)'
+                changeLogCompareToRelease: lastNonDraftRelease
                 changeLogType: issueBased
                 changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
     
