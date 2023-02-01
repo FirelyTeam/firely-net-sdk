@@ -243,8 +243,6 @@ stages:
   - deployment: gitHub
     displayName: GitHub Packages
     environment: GitHub
-    variables:
-      GITHUB_PACKAGES_APIKEY: $(GitHubPushPackagesAPIKey)  # key is set in UI of Azure Devops
     strategy:
       runOnce:
         deploy:
@@ -269,19 +267,11 @@ stages:
       runOnce:
         deploy:
             steps:
-            - download: current
-              artifact: NuGetPackages
-              displayName: Download artifact NuGetPackages
-            - task: NuGetCommand@2
-              displayName: 'NuGet Push packages'
-              inputs:
-                  command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.*nupkg'
-                  nuGetFeedType: external
-                  publishFeedCredentials: NuGet
-                  verbosityPush: normal    
-                  includeSymbols: true
-            
+            - template: push-nuget-package.yml@templates
+              parameters:
+                artifact: 'NuGetPackages'
+                source: https://api.nuget.org/v3/index.json
+                apiKey: $(NUGET_APIKEY)
   - deployment: relNotes
     displayName: Release Notes
     environment: NuGet
