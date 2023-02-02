@@ -102,10 +102,10 @@ stages:
         nobuild: true
         verbosityPack: Normal
     - powershell: |
-        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$CurrentVersion-$CurrentSuffix`;fhirrelease=STU3 -OutputDirectory $(Build.ArtifactStagingDirectory)
-        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$CurrentVersion-$CurrentSuffix`;fhirrelease=R4 -OutputDirectory $(Build.ArtifactStagingDirectory)
-        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$CurrentVersion-$CurrentSuffix`;fhirrelease=R4B -OutputDirectory $(Build.ArtifactStagingDirectory)
-        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$CurrentVersion-$CurrentSuffix`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$Env:CurrentVersion-$Env:CurrentSuffix`;fhirrelease=STU3 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$Env:CurrentVersion-$Env:CurrentSuffix`;fhirrelease=R4 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$Env:CurrentVersion-$Env:CurrentSuffix`;fhirrelease=R4B -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$Env:CurrentVersion-$Env:CurrentSuffix`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
       name: packMetapackages
       displayName: 'Pack NuGet Metapackages'    
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
