@@ -108,7 +108,7 @@ stages:
         }
         else
         {
-          $version = $Env:CurrentVersion-$Env:CurrentSuffix
+          $version = "$Env:CurrentVersion-$Env:CurrentSuffix"
         }
 
         Write-Host "Pack Hl7.Fhir.Specification.* with version $version" 
