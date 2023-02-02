@@ -49,6 +49,9 @@ stages:
       displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
       inputs:
         version: $(NET_CORE_SDK)
+    - task: NuGetToolInstaller@1
+      inputs:
+        versionSpec: '6.4.0' 
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
@@ -98,7 +101,10 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
-    
+    - powershell: |
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=5.0.0-beta1`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
+      name: packMetapackages
+      displayName: 'Pack NuGet Metapackages'    
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - template: codesign-nuget-packages.yml@templates
         parameters:
