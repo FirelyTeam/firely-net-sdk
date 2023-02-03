@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Rest
         private readonly Uri _baseUrl;
 
         /// <summary>
-        /// Create a builder to describe  a FHIR transaction Bundle
+        /// Create a builder to describe a FHIR transaction Bundle
         /// </summary>
         /// <param name="baseUrl">URL of the FHIR server that is going to execute the transaction/batch</param>
         /// <param name="type">Specify is the server is suppose to perform a "batch" or a "transaction"</param>
