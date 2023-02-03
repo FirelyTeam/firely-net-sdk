@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Rest
         /// Add a "conditional delete" entry to the transaction/batch
         /// </summary>
         /// <param name="resourceType">type of the resource to be deleted</param>
-        /// <param name="condition">conditions on which the resource us supposed to be deleted</param>
+        /// <param name="condition">conditions on which the resource should be deleted</param>
         /// <returns></returns>
         public TransactionBuilder Delete(string resourceType, SearchParams condition)
         {
