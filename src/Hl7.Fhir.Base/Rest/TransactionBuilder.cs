@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Rest
         /// Add a "conditional update" entry to the transaction/batch
         /// </summary>
         /// <param name="condition">conditions on which a resource is supposed to be updated or not</param>
-        /// <param name="body">he newer version of the resource to be updated</param>
+        /// <param name="body">the new version of the resource to be updated</param>
         /// <param name="versionId">optional version id of the resource</param>
         /// <returns></returns>
         public TransactionBuilder Update(SearchParams condition, Resource body, string versionId = null)
