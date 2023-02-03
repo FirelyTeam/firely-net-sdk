@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Rest
         /// Create a builder to describe a FHIR transaction Bundle
         /// </summary>
         /// <param name="baseUri">URL of the FHIR server that is going to execute the transaction/batch</param>
-        /// <param name="type">Specify is the server is suppose to perform a "batch" or a "transaction"</param>
+        /// <param name="type">Specify that the server should perform a "batch" or a "transaction"</param>
         public TransactionBuilder(Uri baseUri, Bundle.BundleType type = Bundle.BundleType.Batch)
             : this(baseUri.OriginalString, type)
         {
