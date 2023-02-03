@@ -14,6 +14,9 @@ using System;
 
 namespace Hl7.Fhir.Rest
 {
+    /// <summary>
+    /// Builder to describe a FHIR transaction Bundle
+    /// </summary>
     public class TransactionBuilder
     {
         public const string HISTORY = ResourceIdentity.HISTORY;
@@ -23,6 +26,11 @@ namespace Hl7.Fhir.Rest
         private readonly Bundle _result;
         private readonly Uri _baseUrl;
 
+        /// <summary>
+        /// Create a builder to describe a FHIR transaction Bundle
+        /// </summary>
+        /// <param name="baseUrl">URL of the FHIR server that is going to execute the transaction/batch</param>
+        /// <param name="type">Specify that the server should perform a "batch" or a "transaction"</param>
         public TransactionBuilder(string baseUrl, Bundle.BundleType type = Bundle.BundleType.Batch)
         {
             _result = new Bundle()
@@ -33,6 +41,11 @@ namespace Hl7.Fhir.Rest
             _baseUrl = new Uri(baseUrl);
         }
 
+        /// <summary>
+        /// Create a builder to describe a FHIR transaction Bundle
+        /// </summary>
+        /// <param name="baseUri">URL of the FHIR server that is going to execute the transaction/batch</param>
+        /// <param name="type">Specify that the server should perform a "batch" or a "transaction"</param>
         public TransactionBuilder(Uri baseUri, Bundle.BundleType type = Bundle.BundleType.Batch)
             : this(baseUri.OriginalString, type)
         {
@@ -65,6 +78,11 @@ namespace Hl7.Fhir.Rest
             return _result;
         }
 
+        /// <summary>
+        /// Add a "GET" entry to the transaction/batch
+        /// </summary>
+        /// <param name="url">relative or absolute url the transaction is supposed to "get"</param>
+        /// <returns></returns>
         public TransactionBuilder Get(string url)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified);
@@ -80,11 +98,24 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "GET" entry to the transaction/batch
+        /// </summary>
+        /// <param name="uri">relative or absolute uri of the resource the transaction is supposed to return</param>
+        /// <returns></returns>
         public TransactionBuilder Get(Uri uri)
         {
             return Get(uri.OriginalString);
         }
 
+        /// <summary>
+        /// Add a "read" entry to the transaction/batch that returns a specific resource
+        /// </summary>
+        /// <param name="resourceType">type of the resource</param>
+        /// <param name="id">id of the resource</param>
+        /// <param name="versionId">optional version id of the resource</param>
+        /// <param name="ifModifiedSince">optional date that specifies the resource is only to be returned if it has been modified after that date</param>
+        /// <returns></returns>
         public TransactionBuilder Read(string resourceType, string id, string versionId = null, DateTimeOffset? ifModifiedSince = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read);
@@ -96,6 +127,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "version read" entry to that transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource</param>
+        /// <param name="id">id of the resource</param>
+        /// <param name="vid">version id of the resource</param>
+        /// <returns></returns>
         public TransactionBuilder VRead(string resourceType, string id, string vid)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead);
@@ -105,7 +143,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-
+        /// <summary>
+        /// Add an "update" entry to the transaction/batch
+        /// </summary>
+        /// <param name="id">id of the resource</param>
+        /// <param name="body">The newer version of the resource to be updated</param>
+        /// <param name="versionId">optional version id of the resource</param>
+        /// <returns></returns>
         public TransactionBuilder Update(string id, Resource body, string versionId = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
@@ -117,6 +161,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "conditional update" entry to the transaction/batch
+        /// </summary>
+        /// <param name="condition">conditions on which a resource is supposed to be updated or not</param>
+        /// <param name="body">the new version of the resource to be updated</param>
+        /// <param name="versionId">optional version id of the resource</param>
+        /// <returns></returns>
         public TransactionBuilder Update(SearchParams condition, Resource body, string versionId = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
@@ -129,6 +180,14 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "patch" entry to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource to be patched</param>
+        /// <param name="id">id of the resource to be patched</param>
+        /// <param name="body">parameters resource that describes the patch operation</param>
+        /// <param name="versionId">optional version id of the resource</param>
+        /// <returns></returns>
         public TransactionBuilder Patch(string resourceType, string id, Parameters body, string versionId = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch);
@@ -140,6 +199,14 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "patch" entry to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource to be patched</param>
+        /// <param name="condition">conditions on which the a resource is supposed to be patched</param>
+        /// <param name="body">parameters resource that describes the patch operation</param>
+        /// <param name="versionId">optional version id of the resource</param>
+        /// <returns></returns>
         public TransactionBuilder Patch(string resourceType, SearchParams condition, Parameters body, string versionId = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.PATCH, InteractionType.Patch);
@@ -163,6 +230,12 @@ namespace Hl7.Fhir.Rest
             return $"W/\"{versionId}\"";
         }
 
+        /// <summary>
+        /// Add a "delete" entry to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource to be deleted</param>
+        /// <param name="id">id of the resource to be deleted</param>
+        /// <returns></returns>
         public TransactionBuilder Delete(string resourceType, string id)
         {
             var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
@@ -172,6 +245,12 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "conditional delete" entry to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource to be deleted</param>
+        /// <param name="condition">conditions on which the resource should be deleted</param>
+        /// <returns></returns>
         public TransactionBuilder Delete(string resourceType, SearchParams condition)
         {
             var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
@@ -182,6 +261,11 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "create" entry to the transaction/batch
+        /// </summary>
+        /// <param name="body">the resource that is to be created</param>
+        /// <returns></returns>
         public TransactionBuilder Create(Resource body)
         {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
@@ -192,6 +276,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+
+        /// <summary>
+        /// Add a "create" entry to the transaction/batch
+        /// </summary>
+        /// <param name="body">the resource that is to be created</param>
+        /// <param name="condition">conditions on which the resource is supposed to be created</param>
+        /// <returns></returns>
         public TransactionBuilder Create(Resource body, SearchParams condition)
         {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Create);
@@ -204,7 +295,11 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-
+        /// <summary>
+        /// Add an entry to the transaction/batch that reads the CapabilityStatement of the server 
+        /// </summary>
+        /// <param name="summary">optional parameter that describes what kind of summary of the capability statement is to be returned</param>
+        /// <returns></returns>
         public TransactionBuilder CapabilityStatement(SummaryType? summary)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Capabilities);
@@ -228,6 +323,15 @@ namespace Hl7.Fhir.Rest
             addEntry(entry, path);
         }
 
+        /// <summary>
+        /// Add an entry to request the history of a single resource to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource</param>
+        /// <param name="id">id of the resource</param>
+        /// <param name="summaryOnly">whether to return just a summary of all historical entries</param>
+        /// <param name="pageSize">page size of the response bundle</param>
+        /// <param name="since">date/time of the earliest historical entry</param>
+        /// <returns></returns>
         public TransactionBuilder ResourceHistory(string resourceType, string id, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(resourceType, id, HISTORY);
@@ -236,7 +340,14 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-
+        /// <summary>
+        /// Add an entry to request the history of all resources of a certain type to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">type of the resource</param>
+        /// <param name="summaryOnly">whether to return just a summary of all historical entries</param>
+        /// <param name="pageSize">page size of the response bundle</param>
+        /// <param name="since">date/time of the earliest historical entry</param>
+        /// <returns></returns>
         public TransactionBuilder CollectionHistory(string resourceType, SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(resourceType, HISTORY);
@@ -246,6 +357,13 @@ namespace Hl7.Fhir.Rest
         }
 
 
+        /// <summary>
+        /// Add an entry to request the history of all resources of the server to the transaction/batch
+        /// </summary>
+        /// <param name="summaryOnly">whether to return just a summary of all historical entries</param>
+        /// <param name="pageSize">page size of the response bundle</param>
+        /// <param name="since">date/time of the earliest historical entry</param>
+        /// <returns></returns>
         public TransactionBuilder ServerHistory(SummaryType? summaryOnly = null, int? pageSize = null, DateTimeOffset? since = null)
         {
             var path = newRestUrl().AddPath(HISTORY);
@@ -279,6 +397,14 @@ namespace Hl7.Fhir.Rest
             throw Error.InvalidOperation($"Parameter '{parameter.Name}' has a non-primitive type, which is not allowed.");
         }
 
+
+        /// <summary>
+        /// Add an entry to perform a FHIR operation on a certain endpoint of the server to the transaction/batch
+        /// </summary>
+        /// <param name="endpoint">The endpoint to perform the FHIR operation on</param>
+        /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
+        /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <returns></returns>
         public TransactionBuilder EndpointOperation(RestUrl endpoint, Parameters parameters, bool useGet = false)
         {
             var entry = newEntry(useGet ? Bundle.HTTPVerb.GET : Bundle.HTTPVerb.POST, InteractionType.Operation);
@@ -302,6 +428,14 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add an entry to perform a FHIR operation on a certain endpoint of the server to the transaction/batch
+        /// </summary>
+        /// <param name="endpoint">The endpoint to perform the FHIR operation on</param>
+        /// <param name="name">name of the operation to be performed</param>
+        /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
+        /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <returns></returns>
         public TransactionBuilder EndpointOperation(RestUrl endpoint, string name, Parameters parameters, bool useGet = false)
         {
             var path = new RestUrl(endpoint).AddPath(OPERATIONPREFIX + name);
@@ -309,18 +443,43 @@ namespace Hl7.Fhir.Rest
             return EndpointOperation(path, parameters, useGet);
         }
 
+        /// <summary>
+        /// Add an entry to perform a FHIR operation on the root of the server to the transaction/batch
+        /// </summary>
+        /// <param name="name">name of the operation to be performed</param>
+        /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
+        /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <returns></returns>
         public TransactionBuilder ServerOperation(string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(OPERATIONPREFIX + name);
             return EndpointOperation(path, parameters, useGet);
         }
 
+        /// <summary>
+        /// Add an entry to perform a FHIR operation on a certain resource type to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">resource type on which the operation is to be performed</param>
+        /// <param name="name">name of the operation to be performed</param>
+        /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
+        /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <returns></returns>
         public TransactionBuilder TypeOperation(string resourceType, string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(resourceType, OPERATIONPREFIX + name);
             return EndpointOperation(path, parameters, useGet);
         }
 
+        /// <summary>
+        /// Add an entry to perform a FHIR operation on a certain resource to the transaction/batch
+        /// </summary>
+        /// <param name="resourceType">resource type of the resource on which the operation is to be performed</param>
+        /// <param name="id">id of the resource</param>
+        /// <param name="vid">version id of the resource</param>
+        /// <param name="name">name of the operation to be performed</param>
+        /// <param name="parameters">Parameters resource that describes the parameters of the operation</param>
+        /// <param name="useGet">Whether to use a GET instead of POST to perform the operation</param>
+        /// <returns></returns>
         public TransactionBuilder ResourceOperation(string resourceType, string id, string vid, string name, Parameters parameters, bool useGet = false)
         {
             var path = newRestUrl().AddPath(resourceType, id);
@@ -330,7 +489,12 @@ namespace Hl7.Fhir.Rest
             return EndpointOperation(path, parameters, useGet);
         }
 
-
+        /// <summary>
+        /// Add a "search" entry to the transaction/batch
+        /// </summary>
+        /// <param name="q">search parameters that describe the query to use</param>
+        /// <param name="resourceType">resource type to be searched on</param>       
+        /// <returns></returns>
         public TransactionBuilder Search(SearchParams q = null, string resourceType = null)
         {
             var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Search);
@@ -342,6 +506,12 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a "search" entry to the transaction/batch that uses POST instead of GET to search.
+        /// </summary>
+        /// <param name="q">search parameters that describe the query to use</param>
+        /// <param name="resourceType">resource type to be searched on</param>       
+        /// <returns></returns>
         public TransactionBuilder SearchUsingPost(SearchParams q, string resourceType = null)
         {
             if (q == null) throw new ArgumentNullException(nameof(q));
@@ -356,6 +526,11 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
+        /// <summary>
+        /// Add a sub-transaction to the transaction/batch
+        /// </summary>
+        /// <param name="transaction">Bundle that describes the sub-transaction</param>
+        /// <returns></returns>
         public TransactionBuilder Transaction(Bundle transaction)
         {
             var entry = newEntry(Bundle.HTTPVerb.POST, InteractionType.Transaction);
