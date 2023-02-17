@@ -1,0 +1,14 @@
+{
+  "resourceType" : "Immunization",
+  "status" : "completed",
+  "patient" : { "reference" : "Patient/example" },
+  "occurrenceDateTime" : "2018-02-26",
+  "vaccineCode" : {
+    "coding": [{
+      "system": "http://snomed.info/sct",
+      "version": "http://snomed.info/sct/20611000087101/version/20161031",
+      "code": "36989005",
+      "display": "Mumps"
+    }]
+  }
+}

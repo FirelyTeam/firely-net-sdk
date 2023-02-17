@@ -1,0 +1,1325 @@
+{
+  "resourceType": "Bundle",
+  "id": "FHIR-2",
+  "identifier": {
+    "system": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/",
+    "value": "FHIR-2"
+  },
+  "type": "collection",
+  "timestamp": "2020-04-03T11:50:44.0187497-05:00",
+  "entry": [
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numTotBeds",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numTotBeds",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numTotBeds",
+        "version": "20200401.06",
+        "name": "numTotBeds",
+        "title": "All Hospital Beds",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Total number of all Inpatient and outpatient beds, including all staffed, ICU, licensed, and overflow(surge) beds used for inpatients or outpatients.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numTotBeds",
+                  "language": "text/plain",
+                  "expression": "Total number of all Inpatient and outpatient beds, including all staffed, ICU, licensed, and overflow(surge) beds used for inpatients or outpatients."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numbeds",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numbeds",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numbeds",
+        "version": "20200401.06",
+        "name": "numbeds",
+        "title": "Hospital Inpatient Beds",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Inpatient beds, including all staffed, licensed, and overflow(surge) beds used for inpatients.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numbeds",
+                  "language": "text/plain",
+                  "expression": "Inpatient beds, including all staffed, licensed, and overflow(surge) beds used for inpatients."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numBedsOcc",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numBedsOcc",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numBedsOcc",
+        "version": "20200401.06",
+        "name": "numBedsOcc",
+        "title": "Hospital Inpatient Bed Occupancy",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Total number of staffed inpatient beds that are occupied.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numBedsOcc",
+                  "language": "text/plain",
+                  "expression": "Total number of staffed inpatient beds that are occupied."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numICUBeds",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numICUBeds",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numICUBeds",
+        "version": "20200401.06",
+        "name": "numICUBeds",
+        "title": "Hospital ICU Beds",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Total number of staffed inpatient intensive care unit (ICU) beds.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numICUBeds",
+                  "language": "text/plain",
+                  "expression": "Total number of staffed inpatient intensive care unit (ICU) beds."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numICUBedsOcc",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numICUBedsOcc",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numICUBedsOcc",
+        "version": "20200401.06",
+        "name": "numICUBedsOcc",
+        "title": "Hospital ICU Bed Occupancy",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Total number of staffed inpatient ICU beds that are occupied.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numICUBedsOcc",
+                  "language": "text/plain",
+                  "expression": "Total number of staffed inpatient ICU beds that are occupied."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numVent",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numVent",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numVent",
+        "version": "20200401.06",
+        "name": "numVent",
+        "title": "Mechanical Ventilators",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Total number of ventilators available.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numVent",
+                  "language": "text/plain",
+                  "expression": "Total number of ventilators available."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numVentUse",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numVentUse",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numVentUse",
+        "version": "20200401.06",
+        "name": "numVentUse",
+        "title": "Mechanical Ventilators In Use",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Total number of ventilators in use.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numVentUse",
+                  "language": "text/plain",
+                  "expression": "Total number of ventilators in use."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numC19HospPats",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numC19HospPats",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numC19HospPats",
+        "version": "20200401.06",
+        "name": "numC19HospPats",
+        "title": "COVID-19 Patients Hospitalized",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Patients currently hospitalized in an inpatient care location who have suspected or confirmed COVID-19.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numC19HospPats",
+                  "language": "text/plain",
+                  "expression": "Patients currently hospitalized in an inpatient care location who have suspected or confirmed COVID-19."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numC19MechVentPats",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numC19MechVentPats",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numC19MechVentPats",
+        "version": "20200401.06",
+        "name": "numC19MechVentPats",
+        "title": "COVID-19 Patients Hospitalized and Ventilated",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Patients hospitalized in an NHSN inpatient care location who have suspected or confirmed COVID - 19 and are on a mechanical ventilator.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numC19MechVentPats",
+                  "language": "text/plain",
+                  "expression": "Patients hospitalized in an NHSN inpatient care location who have suspected or confirmed COVID - 19 and are on a mechanical ventilator."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numC19HOPats",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numC19HOPats",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numC19HOPats",
+        "version": "20200401.06",
+        "name": "numC19HOPats",
+        "title": "COVID-19 Hospital Onset",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Patients hospitalized in an NHSN inpatient care location with onset of suspected or confirmed COVID - 19 14 or more days after hospitalization.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numC19HOPats",
+                  "language": "text/plain",
+                  "expression": "Patients hospitalized in an NHSN inpatient care location with onset of suspected or confirmed COVID - 19 14 or more days after hospitalization."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numC19OverflowPats",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numC19OverflowPats",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numC19OverflowPats",
+        "version": "20200401.06",
+        "name": "numC19OverflowPats",
+        "title": "ED/Overflow",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Patients with suspected or confirmed COVID-19 who are in the ED or any overflow location awaiting an inpatient bed.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numC19OverflowPats",
+                  "language": "text/plain",
+                  "expression": "Patients with suspected or confirmed COVID-19 who are in the ED or any overflow location awaiting an inpatient bed."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numC19OFMechVentPats",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numC19OFMechVentPats",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numC19OFMechVentPats",
+        "version": "20200401.06",
+        "name": "numC19OFMechVentPats",
+        "title": "ED/Overflow and Ventilated",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Patients with suspected or confirmed COVID - 19 who are in the ED or any overflow location awaiting an inpatient bed and on a mechanical ventilator.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numC19OFMechVentPats",
+                  "language": "text/plain",
+                  "expression": "Patients with suspected or confirmed COVID - 19 who are in the ED or any overflow location awaiting an inpatient bed and on a mechanical ventilator."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "https://github.com/microsoft-healthcare-madison/learning-spike-erp/Measure/numC19Died",
+      "resource": {
+        "resourceType": "Measure",
+        "id": "numC19Died",
+        "url": "http://build.fhir.org/ig/AudaciousInquiry/saner-ig/numC19Died",
+        "version": "20200401.06",
+        "name": "numC19Died",
+        "title": "COVID-19 Patients Died",
+        "status": "draft",
+        "subjectCodeableConcept": {
+          "coding": [
+            {
+              "system": "Location",
+              "code": "Location"
+            }
+          ]
+        },
+        "date": "2020-03-31T00:00:00Z",
+        "publisher": "SANER-IG",
+        "description": "Patients with suspected or confirmed COVID-19 who died in the hospital, ED, or any overflow location.",
+        "useContext": [
+          {
+            "code": {
+              "system": "http://terminology.hl7.org/CodeSystem/usage-context-type",
+              "code": "focus"
+            },
+            "valueCodeableConcept": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "840539006",
+                  "display": "COVID-19"
+                }
+              ]
+            }
+          }
+        ],
+        "jurisdiction": [
+          {
+            "coding": [
+              {
+                "system": "urn:iso:std:iso:3166",
+                "code": "US",
+                "display": "United States of America"
+              }
+            ]
+          }
+        ],
+        "relatedArtifact": [
+          {
+            "type": "documentation",
+            "label": "Importing COVID-19 Patient Module Denominator data for Patient Safety Component",
+            "display": "NHSN COVID-19 Patient Module Denominator Import File Format",
+            "url": "https://www.cdc.gov/nhsn/pdfs/covid19/57.130-toi-508.pdf"
+          }
+        ],
+        "scoring": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/measure-scoring",
+              "code": "cohort",
+              "display": "Cohort"
+            }
+          ]
+        },
+        "type": [
+          {
+            "coding": [
+              {
+                "system": "http://hl7.org/fhir/ValueSet/measure-type",
+                "code": "structure",
+                "display": "Structure"
+              }
+            ]
+          }
+        ],
+        "group": [
+          {
+            "population": [
+              {
+                "code": {
+                  "coding": [
+                    {
+                      "system": "http://terminology.hl7.org/CodeSystem/measure-population",
+                      "code": "measure-population",
+                      "display": "Measure Population"
+                    }
+                  ]
+                },
+                "criteria": {
+                  "description": "CDC defined field: numC19Died",
+                  "language": "text/plain",
+                  "expression": "Patients with suspected or confirmed COVID-19 who died in the hospital, ED, or any overflow location."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

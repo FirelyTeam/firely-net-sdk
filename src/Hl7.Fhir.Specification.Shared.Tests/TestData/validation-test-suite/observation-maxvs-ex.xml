@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Observation xmlns="http://hl7.org/fhir">
+  <status value="final"/>
+	<code>
+		<coding>
+			<system value="http://snomed.info/sct"/>
+			<code value="106004"/> 
+			<display value="Posterior carpal region"/>
+		</coding>
+	</code>
+	<subject>
+		<reference value="Patient/example"/>
+	</subject>
+</Observation>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="obs-1"/>
+  <url value="urn:uuid:65cd0191-695b-4f9c-97ae-33814b5f3d37"/>
+  <name value="Obs1"/>
+  <status value="draft"/>
+  <description value="fixture for #1: closed slicing on polymorphic"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="urn:uuid:861adb34-166f-4c2d-9bef-c8a5c6d9c58c"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Observation.value[x]"/>
+      <slicing>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Observation.value[x]"/>
+      <sliceName value="valueQuantity"/>
+      <type>  
+        <code value="Quantity"/>
+      </type>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://somewhere/something-else"/>
+      </binding>
+    </element>
+  </differential>
+</StructureDefinition>

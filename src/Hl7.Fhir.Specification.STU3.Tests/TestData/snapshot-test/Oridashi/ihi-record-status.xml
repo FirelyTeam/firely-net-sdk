@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="ihi-record-status"/>
+	<meta>
+		<lastUpdated value="2017-10-02T21:16:38.674+11:00"/>
+	</meta>
+	<text>
+		<status value="generated"/>
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			<p>IHI Record Status</p>
+		</div>
+	</text>
+	<url value="http://hl7.org.au/fhir/StructureDefinition/ihi-record-status"/>
+	<name value="IHI Record Status Extension"/>
+	<status value="draft"/>
+	<date value="2017-03-11T06:30:54+00:00"/>
+	<publisher value="Health Level Seven Australia (Patient Administration)"/>
+	<contact>
+		<telecom>
+			<system value="url"/>
+			<value value="http://hl7.org.au"/>
+		</telecom>
+	</contact>
+	<description value="IHI number record status extension"/>
+	<purpose value="Coded record status associated with an IHI number instance"/>
+	<fhirVersion value="3.0.1"/>
+	<kind value="complex-type"/>
+	<abstract value="false"/>
+	<contextType value="datatype"/>
+	<context value="Identifier"/>
+	<type value="Extension"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Extension">
+			<path value="Extension"/>
+			<short value="IHI Record Status"/>
+			<definition value="Known IHI value record status associated with an IHI identifier"/>
+			<max value="1"/>
+			<isModifier value="false"/>
+		</element>
+		<element id="Extension.value[x]">
+			<path value="Extension.valueCoding"/>
+			<short value="IHI Record Status Code"/>
+			<definition value="Coded IHI Record Status"/>
+			<min value="1"/>
+			<type>
+				<code value="Coding"/>
+			</type>
+			<binding>
+				<strength value="required"/>
+				<description value="IHI Record Status"/>
+				<valueSetUri value="http://hl7.org.au/fhir/ValueSet/valueset-au-ihi-record-status"/>
+			</binding>
+		</element>
+	</differential>
+</StructureDefinition>

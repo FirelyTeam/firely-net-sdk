@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t24a"/>
+  <url value="urn:uuid:5eac3230-a289-4662-a296-2b673d6d3293"/>
+  <name value="t24a"/>
+  <status value="draft"/>
+  <description value="fixture for #24a: Constrain base element before slicing when slices were already defined - backbone"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient"/>
+    </element>
+    <element>
+      <path value="Patient.contact"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="gender"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element>
+      <path value="Patient.contact"/>
+      <sliceName value="males"/>
+    </element>
+    <element>
+      <path value="Patient.contact.telecom"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Patient.contact.gender"/>
+      <fixedCode value="male"/>
+    </element>
+    <element>
+      <path value="Patient.contact"/>
+      <sliceName value="females"/>
+    </element>
+    <element>
+      <path value="Patient.contact.telecom"/>
+      <max value="0"/>
+    </element>
+    <element>
+      <path value="Patient.contact.gender"/>
+      <fixedCode value="female"/>
+    </element>
+  </differential>
+</StructureDefinition>

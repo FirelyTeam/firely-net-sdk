@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="au1"/>
+  <url value="http://ns.electronichealth.net.au/ci/fhir/4.0/StructureDefinition/practitioner-dh-base-1"/>
+  <version value="1.0.0"/>
+  <name value="PractitionerBase"/>
+  <title value="Base Practitioner"/>
+  <status value="draft"/>
+  <experimental value="true"/>
+  <date value="2019-07-29T13:05:59+10:00"/>
+  <publisher value="Australian Digital Health Agency"/>
+  <contact>
+    <telecom>
+      <system value="email"/>
+      <value value="help@digitalhealth.gov.au"/>
+    </telecom>
+  </contact>
+  <description value="The purpose of this profile is to provide a base model for the concept of a practitioner, defining fundamental concepts that form a conforming representation of a practitioner. It is used as a base model from which to further derive models for specific usage scenarios in an Australian context and where it is desirable to provide some constraint to support unique identification of the practitioner.&#xD;&#xA;&#xD;&#xA;#### Must Support&#xA;&#xA;In the context of this profile [Must Support](http://hl7.org/fhir/R4/conformance-rules.html#mustSupport) SHALL be interpreted as follows:&#xA;&#xA;* The system SHALL be able to include the element when authoring a resource where data is available&#xA;&#xA;* The system SHALL be able to store and retrieve the element&#xA;&#xA;* The system SHALL be able to process resources containing the element"/>
+  <copyright value="Copyright &#xA9; 2019 Australian Digital Health Agency - All rights reserved. This content is licensed under a Creative Commons Attribution 4.0 International License. See https://creativecommons.org/licenses/by/4.0/."/>
+  <fhirVersion value="4.0.0"/>
+  <mapping>
+    <identity value="v2"/>
+    <uri value="http://hl7.org/v2"/>
+    <name value="HL7 v2 Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="rim"/>
+    <uri value="http://hl7.org/v3"/>
+    <name value="RIM Mapping"/>
+  </mapping>
+  <mapping>
+    <identity value="servd"/>
+    <uri value="http://www.omg.org/spec/ServD/1.0/"/>
+    <name value="ServD"/>
+  </mapping>
+  <mapping>
+    <identity value="w5"/>
+    <uri value="http://hl7.org/fhir/fivews"/>
+    <name value="FiveWs Pattern Mapping"/>
+  </mapping>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Practitioner"/>
+  <baseDefinition value="http://hl7.org.au/fhir/StructureDefinition/au-practitioner"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Practitioner">
+      <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-standards-status">
+        <valueCode value="trial-use"/>
+      </extension>
+      <path value="Practitioner"/>
+      <constraint>
+        <key value="inv-dh-prac-01"/>
+        <severity value="error"/>
+        <human value="The practitioner shall at least have an identifier or a name"/>
+        <expression value="Practitioner.identifier.exists() or Practitioner.name.exists()"/>
+      </constraint>
+    </element>
+    <element id="Practitioner.identifier">
+      <path value="Practitioner.identifier"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.identifier:employeeNumber">
+      <path value="Practitioner.identifier"/>
+      <sliceName value="employeeNumber"/>
+      <short value="Employee Number"/>
+    </element>
+    <element id="Practitioner.identifier:employeeNumber.type">
+      <path value="Practitioner.identifier.type"/>
+      <short value="Employee number type"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+          <code value="EI"/>
+        </coding>
+      </patternCodeableConcept>
+      <binding>
+        <strength value="required"/>
+        <valueSet value="http://terminology.hl7.org/ValueSet/v2-0203"/>
+      </binding>
+    </element>
+    <element id="Practitioner.identifier:employeeNumber.system">
+      <path value="Practitioner.identifier.system"/>
+      <short value="Namespace for employee number"/>
+      <min value="1"/>
+      <example>
+        <label value="Example 1"/>
+        <valueUri value="https://territorymedicalcentre.example.com/provider"/>
+      </example>
+      <example>
+        <label value="Example 2"/>
+        <valueUri value="http://ns.electronichealth.net.au/id/abn-scoped/service-provider-individual/1.0/51824753556"/>
+      </example>
+    </element>
+    <element id="Practitioner.identifier:employeeNumber.value">
+      <path value="Practitioner.identifier.value"/>
+      <short value="Employee number"/>
+      <min value="1"/>
+      <example>
+        <label value="Example 1"/>
+        <valueString value="frankburns27"/>
+      </example>
+    </element>
+    <element id="Practitioner.active">
+      <path value="Practitioner.active"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.name">
+      <path value="Practitioner.name"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.telecom">
+      <path value="Practitioner.telecom"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.address">
+      <path value="Practitioner.address"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.gender">
+      <path value="Practitioner.gender"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.birthDate">
+      <path value="Practitioner.birthDate"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.photo">
+      <path value="Practitioner.photo"/>
+      <max value="0"/>
+    </element>
+    <element id="Practitioner.qualification">
+      <path value="Practitioner.qualification"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.qualification.identifier">
+      <path value="Practitioner.qualification.identifier"/>
+      <min value="0"/>
+      <max value="*"/>
+      <type>
+        <code value="Identifier"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.qualification.code">
+      <path value="Practitioner.qualification.code"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.qualification.period">
+      <path value="Practitioner.qualification.period"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Period"/>
+      </type>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.qualification.issuer">
+      <path value="Practitioner.qualification.issuer"/>
+      <min value="0"/>
+      <max value="1"/>
+      <type>
+        <code value="Reference"/>
+        <targetProfile value="http://ns.electronichealth.net.au/ci/fhir/4.0/StructureDefinition/organization-dh-base-1"/>
+      </type>
+      <constraint>
+        <key value="inv-dh-prac-02"/>
+        <severity value="error"/>
+        <human value="This reference shall at least have a reference, an identifier or a display"/>
+        <expression value="reference.exists() or identifier.exists() or display.exists()"/>
+      </constraint>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Practitioner.communication">
+      <path value="Practitioner.communication"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+	
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\platforms.props" /> 
+	<Import Project="..\specification.data.props" />
+	
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.Specification.Data.R4B</PackageId>
+		<AssemblyName>Hl7.Fhir.Specification.Data.R4B</AssemblyName>
+		<Title>A packaged HL7 FHIR R4B (4.3.0) specification.zip</Title>
+		<Description>The HL7 FHIR R4B specification.zip file, for use with the ZipSource.</Description>
+		<PackageTags>HL7;FHIR;Firely;SDK;Specification</PackageTags>
+	</PropertyGroup>
+
+</Project>

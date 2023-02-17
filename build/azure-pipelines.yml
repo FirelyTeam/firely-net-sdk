@@ -1,0 +1,320 @@
+# Repo: FirelyTeam/firely-net-sdk
+# File: build/azure-pipelines.yml
+
+trigger:
+  branches:
+    include:
+    - develop
+    - develop-*
+    - release/*
+    - release-*
+    - hotfix/*
+    - hotfix-*
+    - refs/tags/v*
+  batch: True
+
+name: $(date:yyyyMMdd)$(rev:.r)
+
+variables:
+- group: CodeSigning
+- template: build-variables.yml
+- template: pipeline-variables.yml
+  
+pool:
+  vmImage: windows-latest
+
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: develop-stu3
+  - repository: templates
+    type: github
+    name: FirelyTeam/azure-pipeline-templates
+    endpoint: FirelyTeam 
+
+stages:
+- stage: build
+  displayName: Build
+  jobs:
+  - job: restoreAndBuild
+    displayName: 'Build Artifacts'
+    steps:
+    - checkout: self
+      clean: true
+      fetchDepth: 1
+    - template: templates/apply-versioning-steps-template.yml
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
+      inputs:
+        version: $(NET_CORE_SDK)
+    - task: NuGetToolInstaller@1
+      inputs:
+        versionSpec: '6.4.0' 
+    - task: DotNetCoreCLI@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: ./Hl7.Fhir.sln
+        verbosityRestore: Minimal
+        arguments: --configuration $(buildConfiguration)
+    - task: DotNetCoreCLI@2
+      displayName: Build
+      inputs:
+        command: build
+        projects: ./Hl7.Fhir.sln
+        arguments: --configuration $(buildConfiguration) --no-restore /p:ContinuousIntegrationBuild=true 
+
+    - task: DotNetCoreCLI@2
+      displayName: Create Test artifacts
+      inputs:
+        command: publish
+        projects: |
+         **/Hl7.*Tests/*.csproj
+         **/Hl7.FhirPath.R4.Tests/*.csproj
+        publishWebProjects: false
+        zipAfterPublish: false
+        arguments: --configuration $(buildConfiguration) --no-build -f $(TEST_TARGETFRAMEWORK)
+
+    - task: CopyFiles@2
+      displayName: 'Copy Test artifacts to $(System.DefaultWorkingDirectory)/bin'
+      inputs:
+        sourceFolder: $(System.DefaultWorkingDirectory)
+        Contents: '**/bin/$(buildConfiguration)/*/publish/**'
+        flattenFolders: false
+        TargetFolder: '$(System.DefaultWorkingDirectory)/bin'   
+
+    - task: PublishPipelineArtifact@1
+      displayName: Publish Test artifacts
+      inputs:
+        targetPath: $(System.DefaultWorkingDirectory)/bin
+        artifactName: TestBuild
+    
+    - template: templates/sign-dlls-template.yml
+    
+    - task: DotNetCoreCLI@2
+      displayName: Pack
+      inputs:
+        command: pack
+        searchPatternPack: '**/Hl7.*.csproj;!**/*Tests.csproj'
+        configurationToPack: $(buildConfiguration)
+        nobuild: true
+        verbosityPack: Normal
+    - powershell: |
+        if ([string]::IsNullOrEmpty($Env:CurrentSuffix))
+        {
+          $version = $Env:CurrentVersion
+        }
+        else
+        {
+          $version = "$Env:CurrentVersion-$Env:CurrentSuffix"
+        }
+
+        Write-Host "Pack Hl7.Fhir.Specification.* with version $version" 
+
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=STU3 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4B -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
+      name: packMetapackages
+      displayName: 'Pack NuGet Metapackages'    
+    - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+      - template: codesign-nuget-packages.yml@templates
+        parameters:
+          certificateValue: $(FirelyCodeSignerCertificate)
+          certificatePasswordValue: $(CodeSigningPassword)
+          packagePaths: $(Build.ArtifactStagingDirectory)\*.nupkg
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+        pathToPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: NuGetPackages
+    - bash: |
+        version=$(Build.SourceBranchName)
+        title_release="${version:1}"
+
+        echo $title_release
+        echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
+      name: tagnames
+      displayName: Determine release title
+
+- stage: test
+  displayName: Test
+  dependsOn: build
+  jobs:
+  - job:
+    displayName: Tests common test projects
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests common test projects
+          projects: |
+            **/Hl7.Fhir.Support.Tests/**/publish/Hl7.Fhir.Support.Tests.dll
+            **/Hl7.FhirPath.Tests/**/publish/HL7.FhirPath.Tests.dll
+            **/Hl7.Fhir.Support.Poco.Tests/**/publish/Hl7.Fhir.Support.Poco.Tests.dll
+  - job:
+    displayName: Tests FhirPath Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests FhirPath Core test project
+          projects: '**/publish/Hl7.FhirPath.R4.Tests.dll'
+  - job:
+    displayName: Tests Serialization STU3 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization STU3 test project
+          projects: |
+            **/publish/Hl7.Fhir.Serialization.STU3.Tests.dll
+  - job:
+    displayName: Tests Serialization R4 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization R4 test project
+          projects: |
+            **/publish/Hl7.Fhir.Serialization.R4.Tests.dll
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+    
+  - job:
+    displayName: Tests Serialization R4B test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization R4B test project
+          projects: |
+            **/publish/Hl7.Fhir.Serialization.R4B.Tests.dll
+  - job:
+    displayName: Tests Serialization R5 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Serialization R5 test project
+          projects: |
+            **/publish/Hl7.Fhir.Serialization.R5.Tests.dll
+
+  - job:
+    displayName: Tests Specification STU3 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification STU3 test project
+          projects: '**/publish/Hl7.Fhir.Specification.STU3.Tests.dll' 
+
+  - job:
+    displayName: Tests Specification R4 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification R4 test project
+          projects: '**/publish/Hl7.Fhir.Specification.R4.Tests.dll' 
+
+  - job:
+    displayName: Tests Specification R4B test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification R4B test project
+          projects: '**/publish/Hl7.Fhir.Specification.R4B.Tests.dll' 
+  - job:
+    displayName: Tests Specification R5 test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Specification R5 test project
+          projects: '**/publish/Hl7.Fhir.Specification.R5.Tests.dll' 
+  - job:
+    displayName: Tests Core test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests Core test project
+          projects: |
+            **/publish/Hl7.Fhir.R*.Tests.dll
+            **/publish/Hl7.Fhir.STU3.Tests.dll
+  - job:
+    displayName: Tests ElementModel test project
+    steps:
+      - checkout: none
+      - template: templates/test-job-template.yml
+        parameters:
+          testRunTitle: Tests ElementModel test project
+          projects: '**/publish/Hl7.Fhir.ElementModel.*.Tests.dll'
+
+- stage: deploy_git
+  displayName: Deploy to GitHub
+  dependsOn: test
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) # not a PR
+  jobs:
+  - deployment: gitHub
+    displayName: GitHub Packages
+    environment: GitHub
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - template: push-nuget-package.yml@templates  # Template reference
+              parameters:
+                artifact: NuGetPackages
+                source: https://nuget.pkg.github.com/FirelyTeam/index.json
+                apiKey: $(GITHUB_PACKAGES_APIKEY)    
+                
+- stage: deploy_nuget 
+  displayName: Deploy to NuGet
+  dependsOn:
+    - deploy_git
+    - build
+  condition: and(succeeded(), eq(variables.isTagBranch, true)) 
+  jobs:
+  - deployment: nuget
+    displayName: NuGet
+    environment: NuGet
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - template: push-nuget-package.yml@templates
+              parameters:
+                artifact: 'NuGetPackages'
+                source: https://api.nuget.org/v3/index.json
+                apiKey: $(NUGET_APIKEY)
+  - deployment: relNotes
+    displayName: Release Notes
+    environment: NuGet
+    variables:
+      - name: releaseTitle
+        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.release_title'] ]
+    strategy:
+      runOnce:
+        deploy:
+            steps:
+            - download: none
+            - task: GitHubRelease@1
+              displayName: 'GitHub release notes (create)'  
+              inputs:
+                gitHubConnection: 'GitHub Firely-net-sdk'
+                repositoryName: '$(Build.Repository.Name)'
+                action: 'create'
+                target: '$(Build.SourceVersion)'
+                tagSource: gitTag
+                tagPattern: 'v.*'
+                title: '$(releaseTitle)'
+                isDraft: true
+                changeLogCompareToRelease: lastNonDraftRelease
+                changeLogType: issueBased
+                changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
+    

@@ -1,0 +1,12 @@
+{
+  "resourceType" : "Parameters",
+  "parameter" : [
+    {
+      "name" : "one",
+      "resource" : {
+        "resourceType" : "Patient",
+        "id" : "1"
+      }
+    }
+  ]
+}

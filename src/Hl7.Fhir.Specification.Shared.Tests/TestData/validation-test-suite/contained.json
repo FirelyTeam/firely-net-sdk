@@ -1,0 +1,21 @@
+{
+"resourceType": "Questionnaire",
+"id": "questionnaire-test-frag",
+"url": "http://example.com/fhir/Questionnaire/test-1",
+"status": "draft",
+"item": [
+{
+"linkId": "q1",
+"type": "choice",
+"answerValueSet": "#options-1"
+}
+],
+"contained": [
+{
+"resourceType": "ValueSet",
+"id": "options-1",
+"url": "http://example.com/fhir/ValueSet/options-1",
+"status": "draft"
+}
+]
+}

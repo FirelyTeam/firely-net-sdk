@@ -1,0 +1,29 @@
+<?xml-model href="http://hl7.org/fhir/STU3/practitionerrole.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<PractitionerRole xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir http://hl7.org/fhir/STU3/practitionerrole.xsd" xmlns="http://hl7.org/fhir">
+    <id value="medmij-bgz-practitionerrole-ts-01"/>
+    <meta>
+        <profile value="http://fhir.nl/fhir/StructureDefinition/nl-core-practitionerrole"/>
+    </meta>
+    <practitioner>
+        <reference value="Practitioner/medmij-bgz-practitioner-ts-02"/>
+        <display value="Vaste Huisarts 1"/>
+    </practitioner>
+    <organization>
+        <reference value="Organization/medmij-bgz-healthcareprovider-ts-03"/>
+        <display value="Maatschap Vaste Huisarts"/>
+    </organization>
+    <code>
+        <coding>
+            <system value="http://hl7.org/fhir/v3/ParticipationType"/>
+            <code value="PRF"/>
+            <display value="Performer"/>
+        </coding>
+    </code>
+    <specialty>
+        <coding>
+            <system value="urn:oid:2.16.840.1.113883.2.4.6.7"/>
+            <code value="0100"/>
+            <display value="Huisartsen, niet nader gespecificeerd"/>
+        </coding>
+    </specialty>
+</PractitionerRole>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="uuid"/>
+  <text>
+    <status value="generated"/>
+    <div xmlns="http://www.w3.org/1999/xhtml">to do</div>
+  </text>
+  <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-ballot-status">
+    <valueString value="Normative"/>
+  </extension>
+  <url value="http://hl7.org/fhir/StructureDefinition/uuid"/>
+  <name value="uuid"/>
+  <status value="draft"/>
+  <date value="2018-04-03T12:05:46+10:00"/>
+  <publisher value="HL7 FHIR Standard"/>
+  <contact>
+    <telecom>
+      <system value="url"/>
+      <value value="http://hl7.org/fhir"/>
+    </telecom>
+  </contact>
+  <description value="Base StructureDefinition for uuid type: A UUID, represented as a URI"/>
+  <fhirVersion value="3.3.0"/>
+  <kind value="primitive-type"/>
+  <abstract value="false"/>
+  <type value="uuid"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/uri"/>
+  <derivation value="specialization"/>
+  <snapshot>
+    <element id="uuid">
+      <path value="uuid"/>
+      <short value="Primitive Type uuid"/>
+      <definition value="A UUID, represented as a URI"/>
+      <comment value="See The Open Group, CDE 1.1 Remote Procedure Call specification, Appendix A."/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="uuid"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <constraint>
+        <key value="ele-1"/>
+        <severity value="error"/>
+        <human value="All FHIR elements must have a @value or children"/>
+        <expression value="hasValue() | (children().count() &gt; id.count())"/>
+        <xpath value="@value|f:*|h:div"/>
+        <source value="Element"/>
+      </constraint>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="uuid.id">
+      <path value="uuid.id"/>
+      <representation value="xmlAttr"/>
+      <short value="xml:id (or equivalent in JSON)"/>
+      <definition value="unique id for the element within a resource (for internal references)"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="Element.id"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <type>
+        <code value="string"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="uuid.extension">
+      <path value="uuid.extension"/>
+      <short value="Additional Content defined by implementations"/>
+      <definition value="May be used to represent additional information that is not part of the basic definition of the resource. To make the use of extensions safe and manageable, there is a strict set of governance  applied to the definition and use of extensions. Though any implementer can define an extension, there is a set of requirements that SHALL be met as part of the definition of the extension."/>
+      <comment value="There can be no stigma associated with the use of extensions by any application, project, or standard - regardless of the institution or jurisdiction that uses or defines the extensions.  The use of extensions is what allows the FHIR specification to retain a core level of simplicity for everyone."/>
+      <alias value="extensions"/>
+      <alias value="user content"/>
+      <min value="0"/>
+      <max value="*"/>
+      <base>
+        <path value="Element.extension"/>
+        <min value="0"/>
+        <max value="*"/>
+      </base>
+      <type>
+        <code value="Extension"/>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+    <element id="uuid.value">
+      <path value="uuid.value"/>
+      <representation value="xmlAttr"/>
+      <short value="Primitive value for uuid"/>
+      <definition value="Primitive value for uuid"/>
+      <min value="0"/>
+      <max value="1"/>
+      <base>
+        <path value="uri.value"/>
+        <min value="0"/>
+        <max value="1"/>
+      </base>
+      <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+      <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/regex">
+          <valueString value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/>
+        </extension>
+        <code>
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
+            <valueString value="string"/>
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
+            <valueString value="xsd:anyURI"/>
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
+            <valueString value="xsd:string"/>
+          </extension>
+        </code>
+      </type>
+      <isModifier value="false"/>
+      <isSummary value="false"/>
+    </element>
+  </snapshot>
+  <differential>
+    <element id="uuid">
+      <path value="uuid"/>
+      <short value="Primitive Type uuid"/>
+      <definition value="A UUID, represented as a URI"/>
+      <comment value="See The Open Group, CDE 1.1 Remote Procedure Call specification, Appendix A."/>
+      <min value="0"/>
+      <max value="*"/>
+    </element>
+    <element id="uuid.value">
+      <path value="uuid.value"/>
+      <representation value="xmlAttr"/>
+      <short value="Primitive value for uuid"/>
+      <definition value="Primitive value for uuid"/>
+      <min value="0"/>
+      <max value="1"/>
+      <!-- Note: primitive values do not have an assigned type. e.g. this is compiler magic. XML, JSON and RDF types provided by extension -->
+      <type>
+        <extension url="http://hl7.org/fhir/StructureDefinition/regex">
+          <valueString value="urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/>
+        </extension>
+        <code>
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-json-type">
+            <valueString value="string"/>
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-xml-type">
+            <valueString value="xsd:anyURI"/>
+          </extension>
+          <extension url="http://hl7.org/fhir/StructureDefinition/structuredefinition-rdf-type">
+            <valueString value="xsd:string"/>
+          </extension>
+        </code>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

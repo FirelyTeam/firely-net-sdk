@@ -2,16 +2,21 @@
 
 This library was a collective effort by the following developers:
 
-Brian Postlethwaite (HealthConnex)
-Ewout Kramer (Furore)
-Marten Smits (Furore)
-Christiaan Knaap (Furore)
-Martijn Harthoorn (Furore)
-Michel Rutten (Furore)
-Tilo Christ (Siemens)
-Henley Devereux (Artisan Technology Group)
-Kenneth Myhra (Kufu)
+* Ewout Kramer (Firely)
+* Brian Postlethwaite (Telstra Health)
+* Marten Smits (Firely)
+* Christiaan Knaap (Firely)
+* Martijn Harthoorn (Firely)
+* Michel Rutten (Firely)
+* Marco Visser (Firely)
+* George Stoain (Endava)
+* Tilo Christ (Siemens)
+* Henley Devereux (Artisan Technology Group)
+* Kenneth Myhra (Kufu)
+* Gino Canessa (Microsoft)
 
-
-HSCIC (NHS Digital) for their financial support
-
+Thanks to:
+* The Azure API for FHIR team at Microsoft for their PRs
+* HSCIC (NHS Digital) for their financial support
+* Max Hauser (https://github.com/maxhauser/semver) for the Semver parsing library
+* Nicholas Blumhardt (https://github.com/sprache/Sprache) for the Sprache general parsing library

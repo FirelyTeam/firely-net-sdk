@@ -1,0 +1,35 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="extb-ctxt-defn"/> 
+  <url value="http://hl7.org/fhir/test/StructureDefinition/extb-ctxt-defn"/> 
+  <status value="draft"/> 
+  <date value="2020-01-17"/> 
+  <description value="define to test different extension contexts"/> 
+  <fhirVersion value="4.0.1"/> 
+  <kind value="complex-type"/> 
+  <abstract value="false"/> 
+  <context> 
+    <type value="element"/> 
+    <expression value="Patient"/> 
+  </context> 
+  <contextInvariant value="Patient.active.not()"/>
+  <type value="Extension"/> 
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension"/> 
+  <derivation value="constraint"/> 
+  <differential> 
+    <element id="Extension.extension">
+      <path value="Extension.extension"/> 
+      <max value="0"/> 
+    </element> 
+    <element id="Extension.url">
+      <path value="Extension.url"/> 
+      <fixedUri value="http://hl7.org/fhir/test/StructureDefinition/extb-ctxt-defn"/> 
+    </element> 
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]"/> 
+      <min value="1"/> 
+      <type> 
+        <code value="boolean"/> 
+      </type> 
+    </element> 
+  </differential> 
+</StructureDefinition> 

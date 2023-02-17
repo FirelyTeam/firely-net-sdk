@@ -1,6 +1,8 @@
-Push-Location $PsScriptRoot\..\src
+Param(
+  [Parameter(Mandatory=$true)] [string]$propFile
+)
 
-$xml = [xml](get-content ..\src\fhir-net-api.props)
+$xml = [xml](get-content $propFile)
 
 #Get the version 
 [string]$version = $xml.Project.PropertyGroup.VersionPrefix
@@ -15,6 +17,3 @@ Write-Host "##vso[task.setvariable variable=CurrentVersion]$version"
 
 #Setting task variable $CurrentVersion (used for VSTS) 
 Write-Host "##vso[task.setvariable variable=CurrentSuffix]$suffix"
-
-#go back to the original directory
-Pop-Location

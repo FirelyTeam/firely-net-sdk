@@ -1,0 +1,67 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Solution-wide properties for NuGet packaging -->
+	<PropertyGroup>
+		<VersionPrefix>5.0.0</VersionPrefix>
+		<VersionSuffix></VersionSuffix>
+		<Authors>Firely (info@fire.ly) and contributors</Authors>
+		<Company>Firely (https://fire.ly)</Company>
+		<Copyright>Copyright 2013-2023 Firely.  Contains materials (C) HL7 International</Copyright>
+		<PackageProjectUrl>https://github.com/FirelyTeam/firely-net-sdk</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/FirelyTeam/firely-net-sdk</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageIcon>icon-firely-sdk-128.png</PackageIcon>
+		<PackageReleaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</PackageReleaseNotes>
+		<PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- Error	CS4014	Because this call is not awaited, execution of the current method continues before the call is completed. 
+		Consider applying the 'await' operator to the result of the call.	-->
+		<WarningsAsErrors>CS4014</WarningsAsErrors>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\icon-firely-sdk-128.png" Pack="true" PackagePath=""/>
+		<None Include="..\..\README.md" Pack="true" PackagePath=""/>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+	</ItemGroup>
+
+	<!-- Compiler settings -->
+	<PropertyGroup>
+		<LangVersion>9.0</LangVersion>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Configurations>Debug;Release;FullDebug</Configurations>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' Or '$(Configuration)' == 'FullDebug' ">
+		<DebugType>portable</DebugType>
+		<DebugSymbols>True</DebugSymbols>
+		<NoWarn>1591</NoWarn>
+		<Optimize>false</Optimize>
+		<DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+		<SignAssembly>True</SignAssembly>
+		<DelaySign>true</DelaySign>
+		<AssemblyOriginatorKeyFile>..\FhirNetApi.publickey</AssemblyOriginatorKeyFile>
+		<IncludeSymbols>True</IncludeSymbols>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<NoWarn>1591</NoWarn> <!-- Missing XML comments -->
+	</PropertyGroup>
+
+</Project>
+

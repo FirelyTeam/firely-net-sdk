@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\platforms.props" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.Conformance</PackageId>
+		<AssemblyName>Hl7.Fhir.Conformance</AssemblyName>
+		<Title>Firely's HL7 FHIR SDK Conformance functionality</Title>
+		<Description>Conformance POCOs and related functionality for Firely's HL7 FHIR SDK. Is a dependency for the FHIR release-specific NuGet packages, but could be used separately in conformance-only scenario's for release R4 and up.</Description>
+		<PackageTags>HL7;FHIR;Firely;SDK;Conformance</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t2"/>
+  <url value="urn:uuid:4b8c9c27-9d93-4f66-84f1-c7ca98687792"/>
+  <name value="t2"/>
+  <status value="draft"/>
+  <description value="fixture for #2: no change in the differential, but a value set"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="ValueSet"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
+  <derivation value="constraint"/>
+</StructureDefinition>

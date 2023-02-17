@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Sample male patient. This includes optional elements in addition to the minimum dataset for the patient.-->
+<Patient xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../Schemas/Patient.xsd">
+	<id value="bc3027a7-924c-44b5-8f1b-bfd5266c6905"/>
+				<!--Identifies the profile being used-->
+				<meta>
+					<profile value="https://fhir.hl7.org.uk/StructureDefinition/CareConnect-Patient-1"/>
+				</meta>
+				<!--nhsCommunication complex extension start-->
+<extension url="Extension-CareConnect-NHSCommunication-1" >
+	<extension url="language" >
+		<valueCodeableConcept>
+						<coding>
+				<system value="https://fhir.hl7.org.uk/ValueSet/CareConnect-HumanLanguage-1"/>
+				<code value="ga"/>
+				<display value="Irish"/>
+			</coding>
+		</valueCodeableConcept>
+	</extension>
+	<extension url="preferred">
+		<valueBoolean value="true"/>
+	</extension>
+	<extension url="interpreterRequired">
+		<valueBoolean value="false"/>
+	</extension>
+</extension>
+				<!--Primary patient identifier i.e. NHS number and code to indicate it's been verified-->
+				
+				<identifier>
+					<extension url="https://fhir.hl7.org.uk/StructureDefinition/Extension-CareConnect-NHSNumberVerificationStatus-1">
+						<valueCodeableConcept>
+							<coding>
+								<system value="https://fhir.hl7.org.uk/ValueSet/CareConnect-NHSNumberVerificationStatus-1"/>
+								<code value="01"/>
+								<display value="Number present and verified"/>
+							</coding>
+						</valueCodeableConcept>
+					</extension>
+					<system value="https://fhir.nhs.uk/Id/nhs-number"/>
+					<value value="9413946000"/>
+				</identifier>
+				<identifier>
+					<system value="https://fhir.nhs.uk/Id/local-patient-identifier"/>
+					<value value="A1234521"/>
+					<assigner>
+						<!-- This can be a reference to the profile elsewhere in the message or just text -->
+						<reference value="Organization/1ebc76fd-9612-4c72-81dd-de294a0e7287"/>
+					</assigner>
+				</identifier>
+				<name>
+					<use value="usual"/>
+					<family value="Jones"/>
+					<given value="Barry"/>
+				</name>
+				<telecom>
+					<system value="email"/>
+					<value value="barryJ@googlemail.com"/>
+				</telecom>
+				<telecom>
+					<system value="phone"/>
+					<value value="0113554466"/>
+				</telecom>
+				<gender value="male"/>
+				<birthDate value="1941-11-01"/>
+				<address>
+					<!-- Structured address-->
+					<line value="The Old Lodge"/>
+					<line value="1 Little Street"/>
+					<line value="Chapeltown"/>
+					<city value="Leeds"/>
+					<district value="West Yorkshire"/>
+					<postalCode value="LS6 1UR"/>
+				</address>
+				<!-- Patient's Carer contact -->
+				<contact>
+					<relationship>
+						<coding>
+							<system value="https://fhir.hl7.org.uk/CareConnect-PersonRelationshipType-1"/>
+							<code value="20"/>
+							<display value="Carer"/>
+						</coding>
+					</relationship>
+					<name>
+						<use value="usual"/>
+						<family value="Bloom"/>
+						<given value="Sandra"/>
+					</name>
+					<telecom>
+						<system value="email"/>
+						<value value="Sbloom123@yahoo.com"/>
+					</telecom>
+					<telecom>
+						<system value="phone"/>
+						<value value="0113237656"/>
+					</telecom>
+				</contact>
+</Patient>
