@@ -49,6 +49,9 @@ stages:
       displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
       inputs:
         version: $(NET_CORE_SDK)
+    - task: NuGetToolInstaller@1
+      inputs:
+        versionSpec: '6.4.0' 
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
@@ -98,7 +101,24 @@ stages:
         configurationToPack: $(buildConfiguration)
         nobuild: true
         verbosityPack: Normal
-    
+    - powershell: |
+        if ([string]::IsNullOrEmpty($Env:CurrentSuffix))
+        {
+          $version = $Env:CurrentVersion
+        }
+        else
+        {
+          $version = "$Env:CurrentVersion-$Env:CurrentSuffix"
+        }
+
+        Write-Host "Pack Hl7.Fhir.Specification.* with version $version" 
+
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=STU3 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4 -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R4B -OutputDirectory $(Build.ArtifactStagingDirectory)
+        nuget pack ./src/hl7.fhir.specification.nuspec -properties sdkversion=$version`;fhirrelease=R5 -OutputDirectory $(Build.ArtifactStagingDirectory)
+      name: packMetapackages
+      displayName: 'Pack NuGet Metapackages'    
     - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
       - template: codesign-nuget-packages.yml@templates
         parameters:
@@ -243,8 +263,6 @@ stages:
   - deployment: gitHub
     displayName: GitHub Packages
     environment: GitHub
-    variables:
-      GITHUB_PACKAGES_APIKEY: $(GitHubPushPackagesAPIKey)  # key is set in UI of Azure Devops
     strategy:
       runOnce:
         deploy:
@@ -269,19 +287,11 @@ stages:
       runOnce:
         deploy:
             steps:
-            - download: current
-              artifact: NuGetPackages
-              displayName: Download artifact NuGetPackages
-            - task: NuGetCommand@2
-              displayName: 'NuGet Push packages'
-              inputs:
-                  command: push
-                  packagesToPush: '$(Agent.BuildDirectory)/NuGetPackages/*.*nupkg'
-                  nuGetFeedType: external
-                  publishFeedCredentials: NuGet
-                  verbosityPush: normal    
-                  includeSymbols: true
-            
+            - template: push-nuget-package.yml@templates
+              parameters:
+                artifact: 'NuGetPackages'
+                source: https://api.nuget.org/v3/index.json
+                apiKey: $(NUGET_APIKEY)
   - deployment: relNotes
     displayName: Release Notes
     environment: NuGet
