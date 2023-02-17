@@ -12,7 +12,16 @@ steps:
      if ($Env:isTagBranch -eq $false)
      {  
         # append a build number when we are not releasing
-        Write-Host "##vso[task.setvariable variable=CurrentSuffix]$Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER"
+        if ([string]::IsNullOrEmpty($Env:CurrentSuffix))
+        {
+          $suffix = $Env:BUILD_BUILDNUMBER
+        }
+        else
+        {
+          $suffix = $Env:CurrentSuffix-$Env:BUILD_BUILDNUMBER
+        }
+        
+        Write-Host "##vso[task.setvariable variable=CurrentSuffix]$suffix"
      }
   displayName: 'Setting suffix'
 - task: PowerShell@2
