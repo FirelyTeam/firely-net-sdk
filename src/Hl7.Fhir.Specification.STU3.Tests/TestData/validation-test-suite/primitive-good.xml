@@ -1,0 +1,248 @@
+<Parameters xmlns="http://hl7.org/fhir">
+  <parameter>
+    <name value="paramBoolean"/>
+    <valueBoolean value="true"/>
+  </parameter>
+  <parameter>
+    <name value="paramInteger1"/>
+    <valueInteger value="0"/>
+  </parameter>
+  <parameter>
+    <name value="paramInteger2"/>
+    <valueInteger value="-1"/>
+  </parameter>
+  <parameter>
+    <name value="paramInteger3"/>
+    <valueInteger value="-1"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal0"/>
+    <valueDecimal value="0"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal1"/>
+    <valueDecimal value="1.09"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal2"/>
+    <valueDecimal value="-0.00000000000000000000000023"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal3"/>
+    <valueDecimal value="121233786234234234234234.12323"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal4"/>
+    <valueDecimal value="1e1"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal5"/>
+    <valueDecimal value="1.0e-1"/>
+  </parameter>
+  <parameter>
+    <name value="paramDecimal6"/>
+    <valueDecimal value="0.1e11"/>
+  </parameter>
+  <parameter> 
+    <name value="paramDecimal7"/>
+    <valueDecimal value="1e09"/>
+  </parameter>
+  <parameter> 
+    <name value="paramDecimal8"/>
+    <valueDecimal value="0.12e3"/>
+  </parameter>
+  <parameter>
+    <name value="paramBase64Binary"/>
+    <valueBase64Binary value="YXNhc2Rhc2Q="/>
+  </parameter>
+  <parameter>
+    <name value="paramInstant"/>
+    <valueInstant value="2013-01-01T12:32:45Z"/>
+  </parameter>
+  <parameter>
+    <name value="paramString"/>
+    <valueString value="asdasd"/>
+  </parameter>
+  <parameter>
+    <name value="paramUri"/>
+    <valueUri value="http://any.uri/somewhere"/>
+  </parameter>
+  <parameter>
+    <name value="paramDate"/>
+    <valueDate value="2000-02-29"/>
+  </parameter>
+  <parameter>
+    <name value="paramDateTime1"/>
+    <valueDateTime value="2013-01-01T12:32:45+10:00"/>
+  </parameter>
+  <parameter>
+    <name value="paramDateTime2"/>
+    <valueDateTime value="2013-01-01"/>
+  </parameter>
+  <parameter>
+    <name value="paramDateTime3"/>
+    <valueDateTime value="2013-01-01T12:59:60+10:00"/>
+  </parameter>
+  <parameter>
+    <name value="paramTime"/>
+    <valueTime value="11:59:59"/>
+  </parameter>
+  <parameter>
+    <name value="paramCode1"/>
+    <valueCode value="asdasd"/>
+  </parameter>
+  <parameter>
+    <name value="paramCode2"/>
+    <valueCode value="asd asd"/>
+  </parameter>
+  <parameter>
+    <name value="paramOid"/>
+    <valueOid value="urn:oid:0.1.2.3"/>
+  </parameter>
+  <parameter>
+    <name value="paramId"/>
+    <valueId value="12123-23"/>
+  </parameter>
+  <parameter>
+    <name value="paramUnsignedInt"/>
+    <valueUnsignedInt value="0"/>
+  </parameter>
+  <parameter>
+    <name value="paramPositiveInt"/>
+    <valuePositiveInt value="1"/>
+  </parameter>
+  <parameter>
+    <name value="paramMarkdown"/>
+    <valueMarkdown value="# This is an H1 #&#13;&#10;&#13;&#10;## This is an H2 ##&#13;&#10;&#13;&#10;### This is an H3 ######&#13;&#10;"/>
+  </parameter>
+  
+  <parameter>
+    <name value="paramBooleanMissing"/>
+    <valueBoolean>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueBoolean>
+  </parameter>
+  <parameter>
+    <name value="paramIntegerMissing"/>
+    <valueInteger>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueInteger>
+  </parameter>
+  <parameter>
+    <name value="paramDecimalMissing"/>
+    <valueDecimal>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueDecimal>
+  </parameter>
+  <parameter>
+    <name value="paramBase64BinaryMissing"/>
+    <valueBase64Binary>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueBase64Binary>
+  </parameter>
+  <parameter>
+    <name value="paramInstantMissing"/>
+    <valueInstant>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueInstant>
+  </parameter>
+  <parameter>
+    <name value="paramStringMissing"/>
+    <valueString>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueString>
+  </parameter>
+  <parameter>
+    <name value="paramUriMissing"/>
+    <valueUri>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueUri>
+  </parameter>
+  <parameter>
+    <name value="paramDateMissing"/>
+    <valueDate>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueDate>
+  </parameter>
+  <parameter>
+    <name value="paramDateTimeMissing"/>
+    <valueDateTime>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueDateTime>
+  </parameter>
+  <parameter>
+    <name value="paramTimeMissing"/>
+    <valueTime>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueTime>
+  </parameter>
+  <parameter>
+    <name value="paramCodeMissing"/>
+    <valueCode>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueCode>
+  </parameter>
+  <parameter>
+    <name value="paramOidMissing"/>
+    <valueOid>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueOid>
+  </parameter>
+  <parameter>
+    <name value="paramIdMissing"/>
+    <valueId>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueId>
+  </parameter>
+  <parameter>
+    <name value="paramUnsignedIntMissing"/>
+    <valueUnsignedInt>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueUnsignedInt>
+  </parameter>
+  <parameter>
+    <name value="paramPositiveIntMissing"/>
+    <valuePositiveInt>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valuePositiveInt>
+  </parameter>
+  <parameter>
+    <name value="paramMarkdownMissing"/>
+    <valueMarkdown>
+      <extension url="http://hl7.org/fhir/StructureDefinition/data-absent-reason">
+        <valueCode value="unknown"/>
+      </extension>
+    </valueMarkdown>
+  </parameter>  
+</Parameters>
+

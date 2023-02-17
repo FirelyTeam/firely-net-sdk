@@ -1,0 +1,13 @@
+{
+  "resourceType": "DocumentReference",
+  "status": "current",
+  "content": [{
+    "attachment": {
+      "contentType": "text/plain",
+      "language": "en-US",
+      "url": "http://repository.example.org/fhir/DocumentReference/example",
+      "title": "Physical",
+      "creation": "2005-12-24"
+     }
+  }]
+}

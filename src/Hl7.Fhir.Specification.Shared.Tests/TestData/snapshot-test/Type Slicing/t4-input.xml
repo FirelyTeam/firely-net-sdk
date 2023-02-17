@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t4"/>
+  <url value="urn:uuid:71e0a5a6-95bf-4e04-aa6a-4af0ebef3f29"/>
+  <name value="t4"/>
+  <status value="draft"/>
+  <description value="fixture for #4: test appending documentation"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.identifier"/>
+      <definition value="... some more doco"/>
+    </element>
+  </differential>
+</StructureDefinition>

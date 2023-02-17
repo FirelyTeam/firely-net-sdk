@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk-tests.props" />
+
+	<PropertyGroup>
+		<AssemblyName>Hl7.Fhir.Support.Tests</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />
+	</ItemGroup>
+
+</Project>

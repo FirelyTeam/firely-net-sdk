@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Observation xmlns="http://hl7.org/fhir">
+  <language value="nl-NL"/>
+  <status value="final"/>
+  <code>
+    <coding>
+      <system value="http://loinc.org" />
+      <code value="3151-8"/>
+      <display value="ingeademde O2" />
+    </coding>
+  </code>
+  <subject>
+      <reference value="Patient/example" />
+      <display value="Example Patient" />
+  </subject>
+  <effectiveDateTime value="2016-12-19T09:00:00Z" />
+  <valueQuantity>
+      <value value="8"/>
+  </valueQuantity>
+</Observation>

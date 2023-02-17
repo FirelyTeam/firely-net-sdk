@@ -1,0 +1,31 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="member-of-CC-defn"/> 
+  <url value="http://hl7.org/fhir/test/StructureDefinition/member-of-CC-defn"/> 
+  <status value="draft"/> 
+  <date value="2020-01-17"/> 
+  <description value="test out memberOf"/> 
+  <fhirVersion value="4.0.1"/> 
+  <kind value="resource"/> 
+  <abstract value="false"/> 
+  <context> 
+    <type value="element"/> 
+    <expression value="Patient"/> 
+  </context> 
+  <contextInvariant value="Patient.active.not()"/>
+  <type value="Basic"/> 
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Basic"/> 
+  <derivation value="constraint"/> 
+  <differential> 
+    <element>
+      <path value="Basic.code"/> 
+      <min value="1"/> 
+      <constraint>
+        <key value="bc-mm-1"/>
+        <requirements value="test memberOf function"/>
+        <severity value="error"/>
+        <human value="must be in a value set"/>
+        <expression value="memberOf('http://hl7.org/fhir/test/StructureDefinition/member-of-VS')"/>
+      </constraint>
+    </element> 
+  </differential> 
+</StructureDefinition> 

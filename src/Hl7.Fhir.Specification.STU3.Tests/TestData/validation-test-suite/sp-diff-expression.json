@@ -1,0 +1,34 @@
+{
+  "resourceType": "SearchParameter",
+  "id": "organization-name",
+  "url": "http://hl7.org/fhir/us/davinci-pdex-plan-net/SearchParameter/organization-name",
+  "version": "0.2.0",
+  "name": "Plannet_sp_organization_name",
+  "derivedFrom": "http://hl7.org/fhir/SearchParameter/Organization-name",
+  "status": "active",
+  "date": "2018-05-23T00:00:00+00:00",
+  "publisher": "HL7 Patient Administration Committee",
+  "contact": [
+    {
+      "telecom": [
+        {
+          "system": "url",
+          "value": "http://www.hl7.org/Special/committees/pafm/index.cfm"
+        }
+      ]
+    }
+  ],
+  "description": "Select Organizations with the specified name",
+  "code": "name",
+  "base": [
+    "Organization"
+  ],
+  "type": "string",
+  "expression": "Organization.name",
+  "multipleOr": true,
+  "multipleAnd": true,
+  "modifier": [
+    "exact",
+    "contains"
+  ]
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t36"/>
+  <url value="urn:uuid:428d7c25-e55f-42b4-a93e-83cef54421d7"/>
+  <name value="t36"/>
+  <status value="draft"/>
+  <description value="fixture for #36: Deep Recursion"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="PlanDefinition"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="PlanDefinition">
+      <path value="PlanDefinition"/>
+    </element>
+    <element id="PlanDefinition.action">
+      <path value="PlanDefinition.action"/>
+    </element>
+    <element id="PlanDefinition.action.action">
+      <path value="PlanDefinition.action.action"/>
+    </element>
+    <element id="PlanDefinition.action.action.action">
+      <path value="PlanDefinition.action.action.action"/>
+    </element>
+    <element id="PlanDefinition.action.action.action.action">
+      <path value="PlanDefinition.action.action.action.action"/>
+    </element>
+    <element id="PlanDefinition.action.action.action.action.condition">
+      <path value="PlanDefinition.action.action.action.action.condition"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="kind"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="PlanDefinition.action.action.action.action.condition:stopConditions">
+      <path value="PlanDefinition.action.action.action.action.condition"/>
+      <sliceName value="stopConditions"/>
+    </element>
+    <element id="PlanDefinition.action.action.action.action.condition:stopConditions:kind">
+      <path value="PlanDefinition.action.action.action.action.condition.kind"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="stop"/>
+    </element>
+  </differential>
+</StructureDefinition>

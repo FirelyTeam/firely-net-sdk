@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<PlanDefinition xmlns="http://hl7.org/fhir" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://hl7.org/fhir ../../../../../../FHIR/schema/fhir-single.xsd">-->
+<PlanDefinition xmlns="http://hl7.org/fhir">
+	<id value="slice-by-polymorphic-type2"/>
+	<status value="active"/>
+	<goal>
+    <description>
+      <text value="Some goal"/>
+    </description>
+		<target>
+			<detailCodeableConcept>
+				<text value="Some Text"/>
+			</detailCodeableConcept>
+		</target>
+	</goal>
+</PlanDefinition>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t12a"/>
+  <url value="urn:uuid:37c463da-eac0-4b17-b15d-a3e524d9ebdf"/>
+  <name value="t12a"/>
+  <status value="draft"/>
+  <description value="fixture for #12a: slicing on extensions, no set up of slicing, single slice"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.extension"/>
+      <sliceName value="name1"/>
+      <min value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/patient-birthTime"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

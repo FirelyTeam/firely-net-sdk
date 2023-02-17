@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+	<id value="admit-notification-message-bundle-01"/>
+
+	<type value="message"/>
+	<timestamp value="2019-11-14T08:08:47Z"/>
+
+	<entry>
+		<fullUrl value="urn:uuid:267b18ce-3d37-4581-9baa-6fada338038b"/>
+		<resource>
+
+			<MessageHeader>
+
+				<text>
+			    <status value="generated"/>
+			    <div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: admit-notification-messageheader-01</p><p><b>meta</b>: </p><p><b>event</b>: Notification admit (Details: http://hl7.org/fhir/us/davinci-notifications/CodeSystem/notification-event code notification-admit = 'Notification admit', stated as 'Notification admit')</p><h3>Destinations</h3><table class="grid"><tr><td>-</td><td><b>Name</b></td><td><b>Endpoint</b></td></tr><tr><td>*</td><td>Acme Message Gateway</td><td><a href="https://example.org/Endpoints/P123">https://example.org/Endpoints/P123</a></td></tr></table><p><b>sender</b>: <a href="urn:uuid:7221aa91-d9e1-44fa-8b90-c5a8c7caeade">Saint Luke W Endpoint</a></p><p><b>author</b>: <a href="urn:uuid:e4b71aed-1c54-4f85-bea0-48444aa31f59">Ronald Bone</a></p><h3>Sources</h3><table class="grid"><tr><td>-</td><td><b>Name</b></td><td><b>Software</b></td><td><b>Version</b></td><td><b>Contact</b></td><td><b>Endpoint</b></td></tr><tr><td>*</td><td>Acme Central Patient Registry</td><td>FooBar Patient Manager</td><td>3.1.45.AABB</td><td>ph: +1 (555) 123 4567</td><td><a href="https://example.org/Endpoints/P456">https://example.org/Endpoints/P456</a></td></tr></table><p><b>responsible</b>: <a href="urn:uuid:7221aa91-d9e1-44fa-8b90-c5a8c7caeade">Saint Luke W Endpoint</a></p><p><b>focus</b>: <a href="urn:uuid:a33d1eed-c4ad-4def-8087-042b7ac0f2b7">Inpatient Encounter</a></p></div>
+			  </text>
+
+				<eventCoding>
+					<system value="http://someorg/uri"/>
+					<code value="notification-discharge"/>
+					<display value="Notification discharge"/>
+				</eventCoding>
+				<destination>
+					<name value="Acme Message Gateway"/>
+					<!-- this is to indicate to the Acme Message Gateway that this particular message is intended for Practitioner "xcda" -->
+					<endpoint value="https://example.org/Endpoints/P123"/>
+				</destination>
+				<sender>
+					<reference value="urn:uuid:7221aa91-d9e1-44fa-8b90-c5a8c7caeade"/>
+					<display value="Saint Luke W Endpoint"/>
+				</sender>
+				<!--
+				<enterer>
+					<reference value="http://acme.com/ehr/fhir/Practitioner/example-1"/>
+					<display value="Dr Smith"/>
+				</enterer>
+			-->
+				<author>
+					<reference value="urn:uuid:e4b71aed-1c54-4f85-bea0-48444aa31f59"/>
+					<display value="Ronald Bone"/>
+				</author>
+				<source>
+					<name value="Acme Central Patient Registry"/>
+					<software value="FooBar Patient Manager"/>
+					<version value="3.1.45.AABB"/>
+					<contact>
+						<system value="phone"/>
+						<value value="+1 (555) 123 4567"/>
+					</contact>
+					<endpoint value="https://example.org/Endpoints/P456"/>
+				</source>
+				<responsible>
+					<reference value="urn:uuid:7221aa91-d9e1-44fa-8b90-c5a8c7caeade"/>
+					<display value="Saint Luke W Endpoint"/>
+				</responsible>
+				<!-- Here's the payload, the resource that this notification concerns -->
+				<focus>
+					<reference value="urn:uuid:a33d1eed-c4ad-4def-8087-042b7ac0f2b7"/>
+					<display value="Inpatient Encounter"/>
+				</focus>
+				<!--
+				<definition value="http://hl7.org/fhir/us/davinci-notifications/MessageDefinition/notification-admit"/>
+			-->
+			</MessageHeader>
+				</resource>
+	</entry>
+
+	<entry>
+		<fullUrl value="urn:uuid:a33d1eed-c4ad-4def-8087-042b7ac0f2b7"/>
+		<resource>
+<Encounter>
+
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: admit-discharge-notification-encounter-01</p><p><b>meta</b>: </p><p><b>status</b>: finished</p><p><b>class</b>: inpatient encounter (Details: http://terminology.hl7.org/CodeSystem/v3-ActCode code IMP = 'inpatient encounter', stated as 'inpatient encounter')</p><p><b>type</b>: Inpatient hospital care <span style="background: LightGoldenRodYellow">(Details : {http://www.ama-assn.org/go/cpt code '99234' = '99234)</span></p><p><b>subject</b>: <a href="urn:uuid:e442c924-df77-47fa-838f-24a8253bbdd4">Amy V. Shaw</a></p><h3>Participants</h3><table class="grid"><tr><td>-</td><td><b>Type</b></td><td><b>Period</b></td><td><b>Individual</b></td></tr><tr><td>*</td><td>primary performer <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/v3-ParticipationType code 'PPRF' = 'primary performer)</span></td><td>Nov 1, 2015, 2:00:14 PM --&gt; Nov 1, 2015, 3:00:14 PM</td><td><a href="urn:uuid:e4b71aed-1c54-4f85-bea0-48444aa31f59">Ronald Bone</a></td></tr></table><p><b>period</b>: Nov 1, 2015, 2:00:14 PM --&gt; Nov 1, 2015, 3:00:14 PM</p><h3>Locations</h3><table class="grid"><tr><td>-</td><td><b>Location</b></td></tr><tr><td>*</td><td><a href="urn:uuid:75ea28b5-74b8-4d9c-9eb5-cfdc10b48fa">Health Level Seven International - Amherst</a></td></tr></table></div>
+  </text>
+  <status value="finished"/>
+  <class>
+    <system value="http://terminology.hl7.org/CodeSystem/v3-ActCode"/>
+    <code value="IMP"/>
+    <display value="inpatient encounter"/>
+  </class>
+  <type>
+    <coding>
+      <system value="http://www.ama-assn.org/go/cpt"/>
+      <code value="99234"/>
+    </coding>
+    <text value="Inpatient hospital care"/>
+  </type>
+  <subject>
+    <reference value="urn:uuid:e442c924-df77-47fa-838f-24a8253bbdd4"/>
+    <display value="Amy V. Shaw"/>
+  </subject>
+  <participant>
+    <type>
+      <coding>
+        <system value="http://terminology.hl7.org/CodeSystem/v3-ParticipationType"/>
+        <code value="PPRF"/>
+      </coding>
+      <text value="primary performer"/>
+    </type>
+    <period>
+      <start value="2015-11-01T17:00:14-05:00"/>
+      <end value="2015-11-01T18:00:14-05:00"/>
+    </period>
+    <individual>
+      <reference value="urn:uuid:e4b71aed-1c54-4f85-bea0-48444aa31f59"/>
+      <display value="Ronald Bone"/>
+    </individual>
+  </participant>
+  <period>
+    <start value="2015-11-01T17:00:14-05:00"/>
+    <end value="2015-11-01T18:00:14-05:00"/>
+  </period>
+  <location>
+    <location>
+      <reference value="urn:uuid:75ea28b5-74b8-4d9c-9eb5-cfdc10b48fa"/>
+      <display value="Health Level Seven International - Amherst"/>
+    </location>
+  </location>
+</Encounter>
+		</resource>
+	</entry>
+  <entry>
+		<fullUrl value="urn:uuid:75ea28b5-74b8-4d9c-9eb5-cfdc10b48fa"/>
+		<resource>
+<Location>
+
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: hl7east</p><p><b>meta</b>: </p><p><b>identifier</b>: 29</p><p><b>status</b>: active</p><p><b>name</b>: Health Level Seven International - Amherst</p><p><b>description</b>: HL7 Headquarters - East</p><p><b>telecom</b>: ph: (+1) 734-677-7777</p><p><b>address</b>: 3300 Washtenaw Avenue, Suite 227 Amherst MA 01002 USA </p><h3>Positions</h3><table class="grid"><tr><td>-</td><td><b>Longitude</b></td><td><b>Latitude</b></td></tr><tr><td>*</td><td>-72.519854</td><td>42.373222</td></tr></table><p><b>managingOrganization</b>: Health Level Seven International</p></div>
+  </text>
+<!--    HL7 East    -->
+  <identifier>
+    <system value="http://www.acme.org/location"/>
+    <value value="29"/>
+  </identifier>
+  <status value="active"/>
+  <name value="Health Level Seven International - Amherst"/>
+  <description value="HL7 Headquarters - East"/>
+  <telecom>
+    <system value="phone"/>
+    <value value="(+1) 734-677-7777"/>
+  </telecom>
+  <address>
+    <line value="3300 Washtenaw Avenue, Suite 227"/>
+    <city value="Amherst"/>
+    <state value="MA"/>
+    <postalCode value="01002"/>
+    <country value="USA"/>
+  </address>
+  <position>
+    <longitude value="-72.519854"/>
+    <latitude value="42.373222"/>
+  </position>
+  <managingOrganization>
+    <display value="Health Level Seven International"/>
+  </managingOrganization>
+</Location>
+		</resource>
+	</entry>
+	<entry>
+		<fullUrl value="urn:uuid:e4b71aed-1c54-4f85-bea0-48444aa31f59"/>
+		<resource>
+<Practitioner>
+
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: practitioner-1</p><p><b>meta</b>: </p><p><b>identifier</b>: 9941339108, 25456</p><p><b>name</b>: Ronald Bone </p><p><b>address</b>: 1003 Healthcare Drive Amherst MA 01002 (HOME)</p></div>
+  </text>
+  <identifier>
+    <system value="http://hl7.org.fhir/sid/us-npi"/>
+    <value value="9941339108"/>
+  </identifier>
+  <identifier>
+    <system value="http://www.acme.org/practitioners"/>
+    <value value="25456"/>
+  </identifier>
+  <name>
+    <family value="Bone"/>
+    <given value="Ronald"/>
+    <prefix value="Dr"/>
+  </name>
+  <address>
+    <use value="home"/>
+    <line value="1003 Healthcare Drive"/>
+    <city value="Amherst"/>
+    <state value="MA"/>
+    <postalCode value="01002"/>
+  </address>
+</Practitioner>
+		</resource>
+	</entry>
+	<entry>
+		<fullUrl value="urn:uuid:e442c924-df77-47fa-838f-24a8253bbdd4"/>
+		<resource>
+			<Patient>
+
+				<text>
+					<status value="generated"/>
+					<div xmlns="http://www.w3.org/1999/xhtml">
+						<p>
+							<b>Generated Narrative with Details</b>
+						</p>
+						<p>
+							<b>id</b>: example</p>
+						<p>
+							<b>identifier</b>: Medical Record Number = 1032702 (USUAL)</p>
+						<p>
+							<b>active</b>: true</p>
+						<p>
+							<b>name</b>: Amy V. Shaw </p>
+						<p>
+							<b>telecom</b>: ph: 555-555-5555(HOME), amy.shaw@example.com</p>
+						<p>
+							<b>gender</b>: </p>
+						<p>
+							<b>birthsex</b>: Female</p>
+						<p>
+							<b>birthDate</b>: Feb 20, 2007</p>
+						<p>
+							<b>address</b>: 49 Meadow St Mounds OK 74047 US </p>
+						<p>
+							<b>race</b>: White, American Indian or Alaska Native, Asian, Shoshone, Filipino</p>
+						<p>
+							<b>ethnicity</b>: Hispanic or Latino, Dominican, Mexican</p>
+					</div>
+				</text>
+				<identifier>
+					<use value="usual"/>
+					<type>
+						<coding>
+							<system value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+							<code value="MR"/>
+							<display value="Medical Record Number"/>
+						</coding>
+						<text value="Medical Record Number"/>
+					</type>
+					<system value="http://hospital.smarthealthit.org"/>
+					<value value="1032702"/>
+				</identifier>
+				<active value="true"/>
+				<name>
+					<family value="Shaw"/>
+					<given value="Amy"/>
+					<given value="V."/>
+				</name>
+				<telecom>
+					<system value="phone"/>
+					<value value="555-555-5555"/>
+					<use value="home"/>
+				</telecom>
+				<telecom>
+					<system value="email"/>
+					<value value="amy.shaw@example.com"/>
+				</telecom>
+				<gender value="female"/>
+				<birthDate value="2007-02-20"/>
+				<address>
+					<line value="49 Meadow St"/>
+					<city value="Mounds"/>
+					<state value="OK"/>
+					<postalCode value="74047"/>
+					<country value="US"/>
+				</address>
+			</Patient>
+		</resource>
+	</entry>
+	<entry>
+		<fullUrl value="urn:uuid:c470de5b-345c-4945-bc4a-cbdec7d86f54"/>
+	</entry>
+	<entry>
+		<fullUrl value="urn:uuid:54f0ea3f-dc89-4e71-8d98-8774a5add41e"/>
+		<resource>
+<Condition>
+
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: admit-discharge-notification-condition-01</p><p><b>meta</b>: </p><p><b>clinicalStatus</b>: Active <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-clinical code 'active' = 'Active', given as 'Active'})</span></p><p><b>verificationStatus</b>: Confirmed <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-ver-status code 'confirmed' = 'Confirmed', given as 'Confirmed'})</span></p><p><b>category</b>: Problem <span style="background: LightGoldenRodYellow">(Details : {http://terminology.hl7.org/CodeSystem/condition-category code 'problem-list-item' = 'Problem List Item', given as 'Problem List Item'})</span></p><p><b>code</b>: Single liveborn, born in hospital <span style="background: LightGoldenRodYellow">(Details : {SNOMED CT code '442311008' = 'Liveborn born in hospital', given as 'Liveborn born in hospital'})</span></p><p><b>subject</b>: <a href="urn:uuid:e442c924-df77-47fa-838f-24a8253bbdd4">Amy V. Shaw</a></p><p><b>encounter</b>: <a href="urn:uuid:a33d1eed-c4ad-4def-8087-042b7ac0f2b7">urn:uuid:a33d1eed-c4ad-4def-8087-042b7ac0f2b7</a></p><p><b>onset</b>: Aug 10, 2016, 12:00:00 AM</p></div>
+  </text>
+  <clinicalStatus>
+    <coding>
+      <system value="http://terminology.hl7.org/CodeSystem/condition-clinical"/>
+      <code value="active"/>
+      <display value="Active"/>
+    </coding>
+    <text value="Active"/>
+  </clinicalStatus>
+  <verificationStatus>
+    <coding>
+      <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+      <code value="confirmed"/>
+      <display value="Confirmed"/>
+    </coding>
+    <text value="Confirmed"/>
+  </verificationStatus>
+  <category>
+    <coding>
+      <system value="http://terminology.hl7.org/CodeSystem/condition-category"/>
+      <code value="problem-list-item"/>
+      <display value="Problem List Item"/>
+    </coding>
+    <text value="Problem"/>
+  </category>
+  <code>
+    <coding>
+      <system value="http://snomed.info/sct"/>
+      <code value="442311008"/>
+      <display value="Liveborn born in hospital"/>
+    </coding>
+    <text value="Single liveborn, born in hospital"/>
+  </code>
+  <subject>
+    <reference value="urn:uuid:e442c924-df77-47fa-838f-24a8253bbdd4"/>
+    <display value="Amy V. Shaw"/>
+  </subject>
+  <encounter>
+    <reference value="urn:uuid:a33d1eed-c4ad-4def-8087-042b7ac0f2b7"/>
+  </encounter>
+  <onsetDateTime value="2016-08-10"/>
+</Condition>
+		</resource>
+	</entry>
+	<entry>
+		<fullUrl value="urn:uuid:7221aa91-d9e1-44fa-8b90-c5a8c7caeade"/>
+		<resource>
+<Organization>
+
+  <text>
+    <status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml">
+            <h1>Organization</h1>
+            <div>
+                <p>ID: 393872</p>
+                <p>Name: Saint Luke's Hospital of Kansas City </p>
+                <p>NPI: 1063494177</p>
+                <p>Phone:(816)932-2000</p>
+                <p>Address:4401 Wornall Rd,, MO, 64111</p>
+            </div>
+        </div>
+  </text>
+  <contained>
+    <Endpoint>
+      <id value="direct"/>
+      <status value="active"/>
+      <connectionType>
+        <system value="http://terminology.hl7.org/CodeSystem/endpoint-connection-type"/>
+        <code value="direct-project"/>
+      </connectionType>
+      <name value="Dr. Ronald Bone Direct Address"/>
+      <managingOrganization>
+        <reference value="urn:uuid:7221aa91-d9e1-44fa-8b90-c5a8c7caeade"/>
+      </managingOrganization>
+      <payloadType>
+        <coding>
+          <system value="urn:oid:1.3.6.1.4.1.19376.1.2.3"/>
+          <code value="urn:hl7-org:sdwg:ccda-structuredBody:1.1"/>
+        </coding>
+      </payloadType>
+      <payloadMimeType value="text/xml"/>
+      <address value="mailto:Interoperability@DirectAddress.com"/>
+    </Endpoint>
+  </contained>
+  <identifier>
+    <system value="http://example.org/fhir/sid/us-npi"/>
+    <value value="1063494177"/>
+  </identifier>
+  <identifier>
+    <system value="http://example.org/fhir/us/argo/sid/us-ein"/>
+    <value value="00-0000000"/>
+  </identifier>
+  <active value="true"/>
+  <name value="Saint Luke&#39;s Hospital of Kansas City"/>
+  <telecom>
+    <system value="phone"/>
+    <value value="(816)932-2000"/>
+    <use value="work"/>
+  </telecom>
+  <telecom>
+    <system value="other"/>
+    <value value="http://www.saintlukeshealthsystem.org/locations/saint-lukes-hospital-kansas-city"/>
+    <use value="work"/>
+  </telecom>
+  <address>
+    <text value="3300 Washtenaw Avenue, Suite 227 Amherst MA 01002"/>
+    <line value="4401 Wornall Rd,"/>
+    <city value="Amherst"/>
+    <state value="MA"/>
+    <postalCode value="64111"/>
+  </address>
+  <endpoint>
+    <reference value="#direct"/>
+  </endpoint>
+</Organization>
+		</resource>
+	</entry>
+</Bundle>

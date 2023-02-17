@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t5"/>
+  <url value="urn:uuid:5dfe34b3-58ed-43bd-a677-1612246a8f1b"/>
+  <name value="t5"/>
+  <status value="draft"/>
+  <description value="fixture for #5: type narrowing #1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient.deceased[x]"/>
+      <type>
+        <code value="dateTime"/>
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

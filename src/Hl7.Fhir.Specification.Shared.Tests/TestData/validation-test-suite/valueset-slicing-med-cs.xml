@@ -1,0 +1,40 @@
+<CodeSystem xmlns="http://hl7.org/fhir"> 
+ <url value="http://tst.org/fhir/CodeSystem/test-meds"/>
+ <status value="draft"/>
+ <content value="complete"/>
+ <concept>  
+  <code value="s1"/>
+  <display value="Slice 1"/>
+ </concept>
+ <concept>  
+  <code value="s1a"/>
+  <display value="Slice 1(a)"/>
+ </concept>
+
+ <concept>  
+  <code value="s2"/>
+  <display value="Slice 2"/>
+ </concept>
+ <concept>  
+  <code value="s2a"/>
+  <display value="Slice 2(a)"/>
+ </concept>
+
+ <concept>  
+  <code value="s3"/>
+  <display value="Slice 3"/>
+ </concept>
+ <concept>  
+  <code value="s3a"/>
+  <display value="Slice 3(a)"/>
+ </concept>
+
+ <concept>  
+  <code value="s4"/>
+  <display value="Slice 4"/>
+ </concept>
+ <concept>  
+  <code value="s4a"/>
+  <display value="Slice 4(a)"/>
+ </concept>
+</CodeSystem>

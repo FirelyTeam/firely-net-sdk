@@ -1,0 +1,103 @@
+<Observation xmlns="http://hl7.org/fhir">
+	<!-- extract from http://hl7.org/fhir/triglyceride-examples.html, changed 
+		id from triglyceride and added explicit profile reference to http://hl7.org/fhir/StructureDefinition/triglyceride 
+		and added snomed ct code for triglyceride -->
+	<id value="observation-triglyceride-good" />
+	<meta>
+		<profile
+			value="http://hl7.org/fhir/StructureDefinition/triglyceride" />
+	</meta>
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">
+			<p>
+				<b> Generated Narrative with Details</b>
+			</p>
+			<p>
+				<b> id</b>
+				: triglyceride
+			</p>
+			<p>
+				<b> status</b>
+				: final
+			</p>
+			<p>
+				<b> code</b>
+				: Triglyceride
+				<span> (Details : {LOINC code '35217-9' = 'Triglyceride [Mass or
+					Moles/volume] in Serum or Plasma',
+					given as 'Triglyceride
+					[Moles/Ã¢â‚¬â€¹volume] in Serum or Plasma'})
+				</span>
+			</p>
+			<p>
+				<b> subject</b>
+				:
+				<a> Patient/pat2</a>
+			</p>
+			<p>
+				<b> performer</b>
+				:
+				<a> Acme Laboratory, Inc</a>
+			</p>
+			<p>
+				<b> value</b>
+				: 1.3 mmol/L
+				<span> (Details: UCUM code mmol/L = 'mmol/L')</span>
+			</p>
+			<h3> ReferenceRanges</h3>
+			<table>
+				<tr>
+					<td> -</td>
+					<td>
+						<b> High</b>
+					</td>
+				</tr>
+				<tr>
+					<td> *</td>
+					<td>
+						2.0 mmol/L
+						<span> (Details: UCUM code mmol/L = 'mmol/L')</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</text>
+	<status value="final" />
+	<code>
+		<coding>
+			<system value="http://loinc.org" />
+			<code value="35217-9" />
+			<display
+				value="Triglyceride [Moles/&#x200B;volume] in Serum or Plasma" />
+		</coding>
+		<coding>
+			<system value="http://snomed.info/sct" />
+			<code value="85600001" />
+			<display value="Triacylglycerol" />
+		</coding>
+		<text value="Triglyceride" />
+	</code>
+	<subject>
+		<reference value="Patient/pat2" />
+	</subject>
+	<performer>
+		<reference
+			value="Organization/1832473e-2fe0-452d-abe9-3cdb9879522f" />
+		<display value="Acme Laboratory, Inc" />
+	</performer>
+	<valueQuantity>
+		<value value="1.3" />
+		<unit value="mmol/L" />
+		<system value="http://unitsofmeasure.org" />
+		<code value="mmol/L" />
+	</valueQuantity>
+	<referenceRange>
+		<high>
+			<value value="2.0" />
+			<unit value="mmol/L" />
+			<system value="http://unitsofmeasure.org" />
+			<code value="mmol/L" />
+		</high>
+	</referenceRange>
+</Observation>

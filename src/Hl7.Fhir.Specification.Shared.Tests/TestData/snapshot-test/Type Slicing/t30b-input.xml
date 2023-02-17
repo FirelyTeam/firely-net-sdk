@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t30b"/>
+  <url value="urn:uuid:d144e878-9445-42cd-9e5c-28e4d8072a20"/>
+  <name value="t30b"/>
+  <status value="draft"/>
+  <description value="Profile and derived profile both slice a backbone element; derived profile"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Observation"/>
+  <baseDefinition value="urn:uuid:149505c1-a51b-4378-9d31-d14dd62f18e6"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Observation">
+      <path value="Observation"/>
+    </element>
+    <element id="Observation.component:allelic-frequency">
+      <path value="Observation.component"/>
+      <sliceName value="allelic-frequency"/>
+      <max value="1"/>
+    </element>
+    <element id="Observation.component:allelic-frequency.code">
+      <path value="Observation.component.code"/>
+      <min value="1"/>
+      <type>
+        <code value="CodeableConcept"/>
+      </type>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org"/>
+          <code value="81258-6"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+  </differential>
+</StructureDefinition>

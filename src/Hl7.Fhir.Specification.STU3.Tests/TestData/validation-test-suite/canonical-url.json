@@ -1,0 +1,7 @@
+{
+  "resourceType" : "CodeSystem",
+  "url" : "http://hl7.org/fhir/invalid/CodeSystem/nothing",
+  "status" : "draft",
+  "content" : "complete",
+  "name" : "TestInvalid"
+}

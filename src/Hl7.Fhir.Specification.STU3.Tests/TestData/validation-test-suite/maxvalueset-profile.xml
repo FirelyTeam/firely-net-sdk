@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<url value="http://hl7.org/fhir/StructureDefinition/multi-profile-same-resource-profile"/>
+	<name value="MaxValueSetProfile"/>
+	<status value="draft"/>
+	<description value="Profile with max value Set"/>
+	<kind value="resource"/>
+	<abstract value="false"/>
+	<type value="Observation"/>
+	<baseDefinition value="http://hl7.org/fhir/StructureDefinition/Observation"/>
+	<derivation value="constraint"/>
+	<differential>
+		<element id="Observation.code">
+			<path value="Observation.code"/>
+			<min value="1"/>
+			<max value="1"/>
+      <binding>
+        <strength value="extensible"/>
+        <valueSet value="http://hl7.org/fhir/ValueSet/clinical-findings"/>
+        <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-maxValueSet">
+          <valueCanonical value="http://snomed.info/sct?fhir_vs"/>
+        </extension>
+      </binding>
+		</element>
+	</differential>
+</StructureDefinition>

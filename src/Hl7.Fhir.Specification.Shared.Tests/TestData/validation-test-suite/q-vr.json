@@ -1,0 +1,1543 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "1167196",
+  "meta": {
+    "versionId": "1",
+    "lastUpdated": "2020-05-15T04:39:08.037+00:00",
+    "source": "#Zh0l2GFGcSXJXDJs"
+  },
+  "url": "http://hl7.org/fhir/us/sirb/Questionnaire/sirb-recruitment-questionnaire",
+  "version": "0.1.0",
+  "name": "Recruitment_materials",
+  "title": "Recruitment Materials",
+  "status": "draft",
+  "experimental": false,
+  "item": [ {
+    "linkId": "study",
+    "text": "Research Study",
+    "type": "group",
+    "required": false,
+    "item": [ {
+      "linkId": "study/name",
+      "text": "Name",
+      "type": "string",
+      "required": false
+    }, {
+      "linkId": "study/irbnum",
+      "text": "IRB Number",
+      "type": "string",
+      "required": false
+    } ]
+  }, {
+    "linkId": "institution",
+    "text": "Institution",
+    "type": "group",
+    "required": false,
+    "item": [ {
+      "linkId": "institution/name",
+      "text": "Name",
+      "type": "string",
+      "required": true
+    } ]
+  }, {
+    "linkId": "principal",
+    "text": "Principal Investigator",
+    "type": "group",
+    "required": false,
+    "item": [ {
+      "linkId": "principal/fname",
+      "text": "First Name",
+      "type": "string",
+      "required": true
+    }, {
+      "linkId": "principal/mname",
+      "text": "Middle Name",
+      "type": "string",
+      "required": false
+    }, {
+      "linkId": "principal/lname",
+      "text": "Last Name",
+      "type": "string",
+      "required": true
+    } ]
+  }, {
+    "linkId": "materials",
+    "text": "Recruitment Materials",
+    "type": "group",
+    "required": false,
+    "item": [ {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/usematerials",
+      "text": "Will Recruitment Materials be Utilized?",
+      "type": "choice",
+      "required": true,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ]
+    }, {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/usebroadcast",
+      "text": "Will Broadcast Materials be Utilized?",
+      "type": "choice",
+      "enableWhen": [ {
+        "question": "materials/usematerials",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ],
+      "item": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [ {
+              "system": "http://hl7.org/fhir/questionnaire-item-control",
+              "code": "help",
+              "display": "Help-Button"
+            } ],
+            "text": "Help-Button"
+          }
+        } ],
+        "linkId": "materials/usebroadcast-help",
+        "text": "The distribution of audio or video content to a dispersed audience via any electronic mass communications medium.",
+        "type": "display"
+      } ]
+    }, {
+      "linkId": "materials/broadcast",
+      "text": "Broadcast Communication",
+      "type": "group",
+      "enableWhen": [ {
+        "question": "materials/usebroadcast",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "item": [ {
+        "linkId": "materials/broadcast/audio",
+        "text": "Audio Clip",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/broadcast/audio-help",
+          "text": "A contiguous sound recording used to relay audible information.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/broadcast/audiodesc",
+        "text": "Audio Clip Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/broadcast/audio",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/broadcast/video",
+        "text": "Video Clip",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/broadcast/video-help",
+          "text": "Short clips of video, usually part of a longer recording. Sometimes used to mean any short video.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/broadcast/videodesc",
+        "text": "Video Clip Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/broadcast/video",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/broadcast/radio",
+        "text": "Radio Spot",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/broadcast/radio-help",
+          "text": "A contiguous segment of audio broadcasting airtime.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/broadcast/radiodesc",
+        "text": "Radio Spot Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/broadcast/radio",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/broadcast/tv",
+        "text": "TV Spot",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/broadcast/tv-help",
+          "text": "A contiguous segment of video broadcasting airtime.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/broadcast/tvdesc",
+        "text": "TV Spot Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/broadcast/tv",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      } ]
+    }, {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/useprinted",
+      "text": "Will Printed Materials be Utilized?",
+      "type": "choice",
+      "enableWhen": [ {
+        "question": "materials/usematerials",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ],
+      "item": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [ {
+              "system": "http://hl7.org/fhir/questionnaire-item-control",
+              "code": "help",
+              "display": "Help-Button"
+            } ],
+            "text": "Help-Button"
+          }
+        } ],
+        "linkId": "materials/useprinted-help",
+        "text": "Materials produced by printers or publishers, such as books, magazines, booklets, brochures, newspaper.",
+        "type": "display"
+      } ]
+    }, {
+      "linkId": "materials/printed",
+      "text": "Printed Communication",
+      "type": "group",
+      "enableWhen": [ {
+        "question": "materials/useprinted",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "item": [ {
+        "linkId": "materials/printed/billboard",
+        "text": "Billboard/Bus Ad",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/billboard-help",
+          "text": "A large outdoor advertising space designed to capture the attention of motorists and pedestrians.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/billboarddesc",
+        "text": "Billboard/Bus Ad Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/billboard",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/brochure",
+        "text": "Brochure/Pamphlet",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/brochure-help",
+          "text": "A small book or magazine that contains images and information about a company or organization's products and/or services.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/brochuredesc",
+        "text": "Brochure/Pamphlet Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/brochure",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/flyers",
+        "text": "Flyer/Notice",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/flyers-help",
+          "text": "A small piece of paper with information on it about a product or event",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/flyersdesc",
+        "text": "Flyer/Notice Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/flyers",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/magazine",
+        "text": "Magazine",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/magazine-help",
+          "text": "A periodical publication containing articles and illustrations.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/magazinedesc",
+        "text": "Magazine Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/magazine",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/mail",
+        "text": "Mail",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/mail-help",
+          "text": "Letters and packages conveyed by the postal system.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/maildesc",
+        "text": "Mail Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/mail",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/newspaper",
+        "text": "Newspaper",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/newspaper-help",
+          "text": "A printed publication (usually issued daily or weekly) consisting of folded unstapled sheets and containing news, feature articles and advertisements.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/newspaperdesc",
+        "text": "Newspaper Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/newspaper",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/postcard",
+        "text": "Postcard",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/postcard-help",
+          "text": "A message by mail without an envelope.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/postcarddesc",
+        "text": "Postcard Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/postcard",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/poster",
+        "text": "Poster/Sign",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/poster-help",
+          "text": "A large printed picture, photograph, or notice that you stick or pin to a wall or board, usually for decoration or to advertise something.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/posterdesc",
+        "text": "Poster/Sign Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/poster",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/printed/tent",
+        "text": "Table Tent",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/printed/tent-help",
+          "text": "A self-standing promotional unit created from printed and folded card stock for table tops.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/printed/tentdesc",
+        "text": "Table Tent Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/printed/tent",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      } ]
+    }, {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/useelectronic",
+      "text": "Will Electronic Materials be Utilized?",
+      "type": "choice",
+      "enableWhen": [ {
+        "question": "materials/usematerials",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ],
+      "item": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [ {
+              "system": "http://hl7.org/fhir/questionnaire-item-control",
+              "code": "help",
+              "display": "Help-Button"
+            } ],
+            "text": "Help-Button"
+          }
+        } ],
+        "linkId": "materials/useelectronic-help",
+        "text": "Computer-based technology that facilitates the sharing of ideas and information and the building of virtual networks and communities.",
+        "type": "display"
+      } ]
+    }, {
+      "linkId": "materials/electronic",
+      "text": "Electronic Communication",
+      "type": "group",
+      "enableWhen": [ {
+        "question": "materials/useelectronic",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "item": [ {
+        "linkId": "materials/electronic/email",
+        "text": "Email",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/email-help",
+          "text": "Messages distributed by electronic means from one computer user to one or more recipients via a network.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/emaildesc",
+        "text": "Email Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/email",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/networking",
+        "text": "Networking Site",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/networking-help",
+          "text": "An online platform that allows users to create a public profile and interact with other users on the website.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/networkingdesc",
+        "text": "Networking Site Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/networking",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/podcast",
+        "text": "Podcast",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/podcast-help",
+          "text": "A digital audio file made available on the internet for download to a computer or mobile device. Typically available as a series.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/podcastdesc",
+        "text": "Podcast Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/podcast",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/social",
+        "text": "Social Media",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/social-help",
+          "text": "A computer-based technology that facilitates the sharing of ideas and information and the building of virtual networks and communities.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/socialdesc",
+        "text": "Social Media Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/social",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/banner",
+        "text": "Web Banner",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/banner-help",
+          "text": "A form of advertising on the World Wide Web embedded in a web page.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/bannerdesc",
+        "text": "Web Banner Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/banner",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/webad",
+        "text": "Web Page Ad",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/webad-help",
+          "text": "A form of advertising on the Word Wide Web delivered by an ad server.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/webaddesc",
+        "text": "Web Page Ad Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/webad",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/posting",
+        "text": "Web/Internet Posting",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/posting-help",
+          "text": "Communication posted for public viewing or an electronic message sent to & displayed on an online forum.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/postingdesc",
+        "text": "Web/Internet Posting Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/posting",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/electronic/website",
+        "text": "Website",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/electronic/website-help",
+          "text": "A page or collection of pages on the World Wide Web that contains specific information which was all provided by one person, group or an organization",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/electronic/websitedesc",
+        "text": "Website Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/electronic/website",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      } ]
+    }, {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/usedirect",
+      "text": "Will Direct Communication Materials be Utilized?",
+      "type": "choice",
+      "enableWhen": [ {
+        "question": "materials/usematerials",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ],
+      "item": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [ {
+              "system": "http://hl7.org/fhir/questionnaire-item-control",
+              "code": "help",
+              "display": "Help-Button"
+            } ],
+            "text": "Help-Button"
+          }
+        } ],
+        "linkId": "materials/usedirect-help",
+        "text": "Communication addressed to a specific person.",
+        "type": "display"
+      } ]
+    }, {
+      "linkId": "materials/direct",
+      "text": "Direct Communication",
+      "type": "group",
+      "enableWhen": [ {
+        "question": "materials/usedirect",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "item": [ {
+        "linkId": "materials/direct/discussion",
+        "text": "In-Person Discussion",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/direct/discussion-help",
+          "text": "Involves a person's physical presence rather than communication by phone, email, etc.,",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/direct/discussiondesc",
+        "text": "In-Person Discussion Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/direct/discussion",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/direct/invitation",
+        "text": "Letter/Invitation",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/direct/invitation-help",
+          "text": "A written, typed, or printed communication, especially one sent in an envelope by mail or messenger:",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/direct/invitationdesc",
+        "text": "Letter/Invitation Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/direct/invitation",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/direct/phone",
+        "text": "Telephone Call",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/direct/phone-help",
+          "text": "A communication or conversation by telephone.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/direct/phonedesc",
+        "text": "Telephone Call Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/direct/phone",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      } ]
+    }, {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/usegroup",
+      "text": "Will Group Communication Materials be Utilized?",
+      "type": "choice",
+      "enableWhen": [ {
+        "question": "materials/usematerials",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ],
+      "item": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [ {
+              "system": "http://hl7.org/fhir/questionnaire-item-control",
+              "code": "help",
+              "display": "Help-Button"
+            } ],
+            "text": "Help-Button"
+          }
+        } ],
+        "linkId": "materials/usegroup-help",
+        "text": "Communication addressed to a defined group of people.",
+        "type": "display"
+      } ]
+    }, {
+      "linkId": "materials/group",
+      "text": "Group Communication",
+      "type": "group",
+      "enableWhen": [ {
+        "question": "materials/usegroup",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "item": [ {
+        "linkId": "materials/group/advertisement",
+        "text": "Advertisement",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/group/advertisement-help",
+          "text": "An ad that may take many different forms. It could be a banner, a graphic image or an animated GIF of a designated pixel size and byte size.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/group/advertisementdesc",
+        "text": "Advertisement Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/group/advertisement",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/group/bulletin",
+        "text": "Bulletin Board",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/group/bulletin-help",
+          "text": "A website or web page where users can post comments about a particular issue or topic and reply to other users' postings.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/group/bulletindesc",
+        "text": "Bulletin Board Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/group/bulletin",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/group/newsletter",
+        "text": "Newsletter",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/group/newsletter-help",
+          "text": "Communication issued periodically to the members of a society, business, or organization.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/group/newsletterdesc",
+        "text": "Newsletter Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/group/newsletter",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/group/journal",
+        "text": "Professional Journal",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/group/journal-help",
+          "text": "A scholarly journal addressed to a particular professional audience such as doctors, teachers or engineers and published by a professional organization.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/group/journaldesc",
+        "text": "Professional Journal Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/group/journal",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/group/tip",
+        "text": "Tip Sheet",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/group/tip-help",
+          "text": "A publication that containing the latest information/tips/predictions for a particular business or stock market information or horse racing results, etc.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/group/tipdesc",
+        "text": "Tip Sheet Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/group/tip",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      } ]
+    }, {
+      "extension": [ {
+        "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+        "valueCodeableConcept": {
+          "coding": [ {
+            "system": "http://hl7.org/fhir/questionnaire-item-control",
+            "code": "drop-down",
+            "display": "Drop down"
+          } ],
+          "text": "Drop down"
+        }
+      } ],
+      "linkId": "materials/usepublic",
+      "text": "Will Public Communication Materials be Utilized?",
+      "type": "choice",
+      "enableWhen": [ {
+        "question": "materials/usematerials",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "answerOption": [ {
+        "valueCoding": {
+          "code": "yes",
+          "display": "Yes"
+        }
+      }, {
+        "valueCoding": {
+          "code": "no",
+          "display": "No"
+        }
+      } ],
+      "item": [ {
+        "extension": [ {
+          "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+          "valueCodeableConcept": {
+            "coding": [ {
+              "system": "http://hl7.org/fhir/questionnaire-item-control",
+              "code": "help",
+              "display": "Help-Button"
+            } ],
+            "text": "Help-Button"
+          }
+        } ],
+        "linkId": "materials/usepublic-help",
+        "text": "Communication addressed to the public.",
+        "type": "display"
+      } ]
+    }, {
+      "linkId": "materials/public",
+      "text": "Public Communication",
+      "type": "group",
+      "enableWhen": [ {
+        "question": "materials/usepublic",
+        "operator": "=",
+        "answerCoding": {
+          "code": "yes"
+        }
+      } ],
+      "enableBehavior": "all",
+      "required": false,
+      "item": [ {
+        "linkId": "materials/public/announcement",
+        "text": "Announcement",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/public/announcement-help",
+          "text": "A public and typically formal statement about a fact, occurrence, or intention.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/public/announcementdesc",
+        "text": "Announcement Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/public/announcement",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/public/press",
+        "text": "Press Release",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/public/press-help",
+          "text": "A written statement about a matter of public interest which is given to the press by an organization concerned with the matter.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/public/pressdesc",
+        "text": "Press Release Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/public/press",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/public/solicitation",
+        "text": "Public Solicitation",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/public/solicitation-help",
+          "text": "A method of communication involving asking for or trying to obtain something from someone in public.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/public/solicitationdesc",
+        "text": "Public Solicitation Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/public/solicitation",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      }, {
+        "linkId": "materials/public/snowball",
+        "text": "Snowball Sampling",
+        "type": "boolean",
+        "required": false,
+        "item": [ {
+          "extension": [ {
+            "url": "http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl",
+            "valueCodeableConcept": {
+              "coding": [ {
+                "system": "http://hl7.org/fhir/questionnaire-item-control",
+                "code": "help",
+                "display": "Help-Button"
+              } ],
+              "text": "Help-Button"
+            }
+          } ],
+          "linkId": "materials/public/snowball-help",
+          "text": "A popular technique among social scientists who wish to work with a population that is difficult to identify or locate.",
+          "type": "display"
+        } ]
+      }, {
+        "linkId": "materials/public/snowballdesc",
+        "text": "Snowball Sampling Description",
+        "type": "text",
+        "enableWhen": [ {
+          "question": "materials/public/snowball",
+          "operator": "=",
+          "answerBoolean": true
+        } ],
+        "enableBehavior": "all",
+        "required": false
+      } ]
+    } ]
+  } ]
+}

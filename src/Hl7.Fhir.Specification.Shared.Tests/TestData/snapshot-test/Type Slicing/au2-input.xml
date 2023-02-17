@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="au-receivingfacility" />
+  <url value="http://hl7.org.au/fhir/StructureDefinition/au-receivingfacility" />
+  <version value="2.0.0" />
+  <name value="HL7V2ReceivingFacility" />
+  <title value="HL7 V2 Receiving Facility" />
+  <status value="active" />
+  <date value="2019-07-24" />
+  <publisher value="Health Level Seven Australia (Patient Administration WG)" />
+  <contact>
+    <telecom>
+      <system value="url" />
+      <value value="http://hl7.org.au" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="This extension defines a HL7v2 receiving facility value for HL7v2 routing purposes associated with an endpoint." />
+  <fhirVersion value="4.0.0" />
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <context>
+    <type value="element" />
+    <expression value="Endpoint" />
+  </context>
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Extension"> <!-- 0 -->
+      <path value="Extension" />
+      <short value="HL7 V2 receiving facility" />
+      <definition value="Values for routing HLV2 message payloads associated with an endpoint, suitable for MSH-6" />
+    </element>
+    <element id="Extension.extension"> <!-- 1 -->
+      <path value="Extension.extension" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="url" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Extension.extension:namespace-id"> <!-- 2 -->
+      <path value="Extension.extension" />
+      <sliceName value="namespace-id" />
+      <short value="Application Identifier" />
+      <max value="1" />
+    </element>
+   <element id="Extension.extension:namespace-id.url"> <!-- 3 -->
+      <path value="Extension.extension.url"/> 
+      <type> 
+        <code value="uri"/> 
+      </type> 
+      <fixedUri value="namespace-id"/> 
+    </element> 
+    <element id="Extension.extension:namespace-id.value[x]:valueString"> <!-- 4 -->
+      <path value="Extension.extension.valueString" />
+      <sliceName value="valueString" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Extension.extension:universal-id"> <!-- 5 -->
+      <path value="Extension.extension" />
+      <sliceName value="universal-id" />
+      <short value="Universal Identifier Value" />
+      <definition value="Identifier values follwing the universal-id-type defined scheme." />
+      <max value="1" />
+    </element>
+     <element id="Extension.extension:universal-id.url"> <!-- 6 -->
+      <path value="Extension.extension.url"/> 
+      <type> 
+        <code value="uri"/> 
+      </type> 
+      <fixedUri value="universal-id"/> 
+    </element> 
+    <element id="Extension.extension:universal-id.value[x]:valueString"> <!-- 7 -->
+      <path value="Extension.extension.valueString" />
+      <sliceName value="valueString" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Extension.extension:universal-id-type"> <!-- 8 -->
+      <path value="Extension.extension" />
+      <sliceName value="universal-id-type" />
+      <short value="Type Scheme of universal-id" />
+      <definition value="Provides scheme to use to interpret the universal-id value .e.g. GUID, ISO etc. see HL7 V2 Table 0301 - Universal ID type." />
+      <max value="1" />
+    </element>
+    <element id="Extension.extension:universal-id-type.url"> <!-- 9 -->
+      <path value="Extension.extension.url"/> 
+      <type> 
+        <code value="uri"/> 
+      </type> 
+      <fixedUri value="universal-id-type"/> 
+    </element> 
+    <element id="Extension.extension:universal-id-type.value[x]:valueString"> <!-- 10 -->
+      <path value="Extension.extension.valueString" />
+      <sliceName value="valueString" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+    <element id="Extension.value[x]"> <!-- 11 -->
+      <path value="Extension.value[x]" />
+      <min value="0" />
+      <max value="0" />
+    </element>
+  </differential>
+</StructureDefinition>

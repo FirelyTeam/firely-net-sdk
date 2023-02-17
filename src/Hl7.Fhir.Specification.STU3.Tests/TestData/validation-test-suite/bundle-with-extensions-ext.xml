@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <url value="http://telus.com/fhir/StructureDefinition/ext-messageheader-application-id" />
+  <name value="ExtensionMessageHeaderApplicationID" />
+  <status value="draft" />
+  <fhirVersion value="4.0.1" />
+  <kind value="complex-type" />
+  <abstract value="false" />
+  <context>
+    <!-- Yes, this simple context could be handled with a type of 'element' rather than 'fhirpath', however 'fhirpath' should be legal, and it's what Forge spits out -->
+    <type value="fhirpath" />
+    <expression value="MessageHeader.source" />
+  </context>
+  <type value="Extension" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Extension" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Extension.url">
+      <path value="Extension.url" />
+      <fixedUri value="http://telus.com/fhir/StructureDefinition/ext-messageheader-application-id" />
+    </element>
+    <element id="Extension.value[x]">
+      <path value="Extension.value[x]" />
+      <min value="1" />
+      <type>
+        <code value="string" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

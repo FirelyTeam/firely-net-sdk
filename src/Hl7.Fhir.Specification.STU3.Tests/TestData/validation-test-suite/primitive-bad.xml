@@ -1,0 +1,147 @@
+<Parameters xmlns="http://hl7.org/fhir">
+  <parameter> <!-- 1 -->
+    <name value="paramBoolean1"/>
+    <valueBoolean value="TRUE"/>
+  </parameter>
+  <parameter> <!-- 2 -->
+    <name value="paramBoolean2"/>
+    <valueBoolean value="1"/>
+  </parameter>
+  <parameter> <!-- 3 -->
+    <name value="paramBoolean3"/>
+    <valueBoolean value="yes"/>
+  </parameter>
+  <parameter> <!-- 4 -->
+    <name value="paramInteger1"/>
+    <valueInteger value="34534536346345345345"/>
+  </parameter>
+  <parameter> <!-- 5 -->
+    <name value="paramInteger2"/>
+    <valueInteger value="$0"/>
+  </parameter>
+  <parameter> <!-- 6 -->
+    <name value="paramInteger3"/>
+    <valueInteger value="1e4"/>
+  </parameter>
+  <parameter> <!-- 7 -->
+    <name value="paramDecimal0"/>
+    <valueDecimal value="00.1"/>
+  </parameter>
+  <parameter> <!-- 10 -->
+    <name value="paramBase64Binary"/>
+    <valueBase64Binary value="YXNhcs2Rhc2Q="/>
+  </parameter>
+  <parameter> <!-- 11 -->
+    <name value="paramInstant1"/>
+    <valueInstant value="0000-01-01T12:32:45Z"/>
+  </parameter>
+  <parameter> <!-- 12 -->
+    <name value="paramInstant2"/>
+    <valueInstant value="1983-00-01T12:32:45Z"/>
+  </parameter>
+  <parameter> <!-- 13 -->
+    <name value="paramInstant3"/>
+    <valueInstant value="1983-01-00T12:32:45Z"/>
+  </parameter>
+  <parameter> <!-- 14 -->
+    <name value="paramInstant4"/>
+    <valueInstant value="1983-01-01T12:32"/>
+  </parameter>
+  <parameter> <!-- 15 -->
+    <name value="paramInstant5"/>
+    <valueInstant value="1983-01-01T12:32:45"/>
+  </parameter>
+  <parameter> <!-- 16 -->
+    <name value="paramInstant6"/>
+    <valueInstant value="1983-01-01T12:32:45-15:00"/>
+  </parameter>
+  <parameter> <!-- 17 -->
+    <name value="paramString"/>
+    <valueString value=""/>
+  </parameter>
+  <parameter> <!-- 18 -->
+    <name value="paramUri"/>
+    <valueUri value="not a valid uri"/>
+  </parameter>
+  <parameter> <!-- 19 -->
+    <name value="paramDate"/>
+    <valueDate value="1900-02-29"/>
+  </parameter>
+  <parameter> <!-- 20 -->
+    <name value="paramDate"/>
+    <valueDate value="1900-13-01"/>
+  </parameter>
+  <parameter> <!-- 21 -->
+    <name value="paramDate"/>
+    <valueDate value="2013-04-31"/>
+  </parameter>
+  <parameter> <!-- 22 -->
+    <name value="paramDateTime1"/>
+    <valueDateTime value="2013-01-01T12:32:45+13:33.00"/>
+  </parameter>
+  <parameter> <!-- 23 -->
+    <name value="paramDateTime2"/>
+    <valueDateTime value="-0001-01-01"/>
+  </parameter>
+  <parameter> <!-- 24 -->
+    <name value="paramTime"/>
+    <valueTime value="11:60:59"/>
+  </parameter>
+  <parameter> <!-- 25 -->
+    <name value="paramTime"/>
+    <valueTime value="24:00:00"/>
+  </parameter>
+  <parameter> <!-- 26 -->
+    <name value="paramCode1"/>
+    <valueCode value=" asdasd"/>
+  </parameter>
+  <parameter> <!-- 27 -->
+    <name value="paramCode2"/>
+    <valueCode value="asd  asd"/>
+  </parameter>
+  <parameter> <!-- 28 -->
+    <name value="paramCode3"/>
+    <valueCode value="asdasd "/>
+  </parameter>
+  <parameter> <!-- 29 -->
+    <name value="paramOid1"/>
+    <valueOid value="oid:0.1.2.3"/>
+  </parameter>
+  <parameter> <!-- 30 -->
+    <name value="paramOid2"/>
+    <valueOid value="urn:oid: 0.1.2.3"/>
+  </parameter>
+  <parameter> <!-- 31 -->
+    <name value="paramOid3"/>
+    <valueOid value="urn:oid:a0.1.2.3"/>
+  </parameter>
+  <parameter> <!-- 32 -->
+    <name value="paramOid4"/>
+    <valueOid value="0.1.2.3"/>
+  </parameter>
+  <parameter> <!-- 33 -->
+    <name value="paramId"/>
+    <valueId value=":12123-23"/>
+  </parameter>
+  <parameter> <!-- 34 -->
+    <name value="paramId"/>
+    <valueId value="12123/23"/>
+  </parameter>
+  <parameter> <!-- 35 -->
+    <name value="paramId"/>
+    <valueId value="asdasdasdasdasddgjhasdkjfgasdfasdfgsadfgsdfaskdfjhasdfjgsdfjhgsdfjhgsadfskadjfhg"/>
+  </parameter>
+  <parameter> <!-- 36 -->
+    <name value="paramUnsignedInt"/>
+    <valueUnsignedInt value="-1"/>
+  </parameter>
+  <parameter> <!-- 37 -->
+    <name value="paramPositiveInt"/>
+    <valuePositiveInt value="0"/>
+  </parameter>
+  <parameter> <!-- 38 -->
+    <name value="paramMarkdown"/>
+    <valueMarkdown value=""/>
+  </parameter>
+</Parameters>
+

@@ -1,0 +1,760 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="zib-ApgarScore" />
+  <url value="http://nictiz.nl/fhir/StructureDefinition/zib-ApgarScore" />
+  <version value="1.0.0" />
+  <name value="Zib ApgarScore" />
+  <title value="HCIM ApgarScore" />
+  <status value="draft" />
+  <publisher value="Nictiz" />
+  <contact>
+    <name value="Nictiz" />
+    <telecom>
+      <system value="email" />
+      <value value="info@nictiz.nl" />
+      <use value="work" />
+    </telecom>
+  </contact>
+  <description value="An Obervation resource as defined by the Dutch Health and Care Information models (Dutch: Zorginformatiebouwsteen or ZIB) ApgarScore v1.0(2017EN).&#xD;&#xA;&#xD;&#xA;The Apgar score represents the overall clinical status of a newborn child. This is evaluated one, five and ten minutes after birth based on 5 parameters: Appearance, Pulse, Grimace, Activity, Respiration. If the score measured at 5 minutes is &lt; 8, the Apgar score is measured again at 10, 15, 20 minutes etc. until the score = 8." />
+  <purpose value="# Purpose of HCIM&#xD;&#xA;The Apgar score is primarily meant to rapidly determine the clinical condition of the newborn child and whether extra care is required. A low Apgar score can be caused by developmental disorders, prenatal accidents or negative influences during birth. The Apgar score remains a snapshot in time and cannot be used to predict the locomotive or mental development of a child." />
+  <copyright value="CC0" />
+  <fhirVersion value="3.0.1" />
+  <mapping>
+    <identity value="hcim-apgarscore-v1.0-2017EN" />
+    <uri value="https://zibs.nl/wiki/ApgarScore-v1.0(2017EN)" />
+    <name value="HCIM ApgarScore-v1.0(2017EN)" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Observation" />
+  <baseDefinition value="http://fhir.nl/fhir/StructureDefinition/nl-core-observation" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Observation">
+      <path value="Observation" />
+      <short value="ApgarScore" />
+      <definition value="Root concept of the ApgarScore information model. This root concept contains all data elements of the ApgarScore information model." />
+      <constraint>
+        <key value="zib-apgarscore-1" />
+        <severity value="error" />
+        <human value="Exactly one of the time code slices SHALL be used for Observation.code" />
+        <expression value="code.coding.where(system='http://loinc.org').where(code='9272-6' or code='9274-2' or code='9271-8').count()=1" />
+      </constraint>
+      <constraint>
+        <key value="zib-apgarscore-2" />
+        <severity value="error" />
+        <human value="Components for 1 minute Apgar score are only allowed when Observation.code indicates 1 minute Apgar score" />
+        <expression value="component.code.coding.where(system='http://loinc.org').where(code='32410-3' or code='32406-1' or code='32407-9' or code='32409-5' or code='32408-7').exists() implies code.coding.where(system='http://loinc.org').where(code='9272-6').exists()" />
+      </constraint>
+      <constraint>
+        <key value="zib-apgarscore-3" />
+        <severity value="error" />
+        <human value="Components for 5 minute Apgar score are only allowed when Observation.code indicates 5 minute Apgar score" />
+        <expression value="component.code.coding.where(system='http://loinc.org').where(code='32415-2' or code='32411-1' or code='32412-9' or code='32414-5' or code='32413-7').exists() implies code.coding.where(system='http://loinc.org').where(code='9274-2').exists()" />
+      </constraint>
+      <constraint>
+        <key value="zib-apgarscore-4" />
+        <severity value="error" />
+        <human value="Components for 10 minute Apgar score are only allowed when Observation.code indicates 10 minute Apgar score" />
+        <expression value="component.code.coding.where(system='http://loinc.org').where(code='32405-3' or code='32401-2' or code='32402-0' or code='32404-6' or code='32403-8').exists() implies code.coding.where(system='http://loinc.org').where(code='9271-8').exists()" />
+      </constraint>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.1" />
+        <comment value="ApgarScore" />
+      </mapping>
+    </element>
+    <element id="Observation.code">
+      <path value="Observation.code" />
+      <example>
+        <label value="Example of 1 Minute ApgarScore" />
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://loinc.org" />
+            <code value="9272-6" />
+            <display value="1 minute Apgar Score" />
+          </coding>
+        </valueCodeableConcept>
+      </example>
+    </element>
+    <element id="Observation.code.coding">
+      <path value="Observation.code.coding" />
+      <slicing>
+        <discriminator>
+          <type value="value" />
+          <path value="system" />
+        </discriminator>
+        <discriminator>
+          <type value="value" />
+          <path value="code" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+      <min value="1" />
+    </element>
+    <element id="Observation.code.coding:1MinuteApgarScore">
+      <path value="Observation.code.coding" />
+      <sliceName value="1MinuteApgarScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.code.coding:1MinuteApgarScore.system">
+      <path value="Observation.code.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://loinc.org" />
+    </element>
+    <element id="Observation.code.coding:1MinuteApgarScore.code">
+      <path value="Observation.code.coding.code" />
+      <min value="1" />
+      <fixedCode value="9272-6" />
+    </element>
+    <element id="Observation.code.coding:1MinuteApgarScore.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true" />
+      </extension>
+      <path value="Observation.code.coding.display" />
+      <defaultValueString value="1 minute Apgar Score" />
+    </element>
+    <element id="Observation.code.coding:5MinuteApgarScore">
+      <path value="Observation.code.coding" />
+      <sliceName value="5MinuteApgarScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.code.coding:5MinuteApgarScore.system">
+      <path value="Observation.code.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://loinc.org" />
+    </element>
+    <element id="Observation.code.coding:5MinuteApgarScore.code">
+      <path value="Observation.code.coding.code" />
+      <min value="1" />
+      <fixedCode value="9274-2" />
+    </element>
+    <element id="Observation.code.coding:5MinuteApgarScore.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true" />
+      </extension>
+      <path value="Observation.code.coding.display" />
+      <defaultValueString value="5 minute Apgar Score" />
+    </element>
+    <element id="Observation.code.coding:10MinuteApgarScore">
+      <path value="Observation.code.coding" />
+      <sliceName value="10MinuteApgarScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.code.coding:10MinuteApgarScore.system">
+      <path value="Observation.code.coding.system" />
+      <min value="1" />
+      <fixedUri value="http://loinc.org" />
+    </element>
+    <element id="Observation.code.coding:10MinuteApgarScore.code">
+      <path value="Observation.code.coding.code" />
+      <min value="1" />
+      <fixedCode value="9271-8" />
+    </element>
+    <element id="Observation.code.coding:10MinuteApgarScore.display">
+      <extension url="http://hl7.org/fhir/StructureDefinition/elementdefinition-translatable">
+        <valueBoolean value="true" />
+      </extension>
+      <path value="Observation.code.coding.display" />
+      <defaultValueString value="10 minute Apgar Score" />
+    </element>
+    <element id="Observation.effective[x]:effectiveDateTime">
+      <path value="Observation.effectiveDateTime" />
+      <sliceName value="effectiveDateTime" />
+      <short value="ApgarScoreDateTime" />
+      <definition value="The day and time at which the Apgar score is registered." />
+      <alias value="ApgarScoreDatumTijd" />
+      <min value="1" />
+      <type>
+        <code value="dateTime" />
+      </type>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.3" />
+        <comment value="ApgarScoreDateTime" />
+      </mapping>
+    </element>
+    <element id="Observation.value[x]:valueQuantity">
+      <path value="Observation.valueQuantity" />
+      <sliceName value="valueQuantity" />
+      <short value="ApgarScoreTotal" />
+      <definition value="Total of the Apgar score." />
+      <alias value="ApgarScoreTotaal" />
+      <min value="1" />
+      <type>
+        <code value="Quantity" />
+      </type>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.2" />
+        <comment value="ApgarScoreTotal" />
+      </mapping>
+    </element>
+    <element id="Observation.value[x]:valueQuantity.value">
+      <path value="Observation.valueQuantity.value" />
+      <minValueDecimal value="0" />
+      <maxValueDecimal value="10" />
+    </element>
+    <element id="Observation.comment">
+      <path value="Observation.comment" />
+      <short value="Comment" />
+      <definition value="Comment on the Apgar score." />
+      <alias value="Toelichting" />
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.9" />
+        <comment value="Comment" />
+      </mapping>
+    </element>
+    <element id="Observation.component">
+      <path value="Observation.component" />
+      <slicing>
+        <discriminator>
+          <type value="pattern" />
+          <path value="code" />
+        </discriminator>
+        <rules value="open" />
+      </slicing>
+    </element>
+    <element id="Observation.component:1MinuteRespiratoryScore">
+      <path value="Observation.component" />
+      <sliceName value="1MinuteRespiratoryScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:1MinuteRespiratoryScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32410-3" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:1MinuteRespiratoryScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="RespiratoryScore" />
+      <definition value="The Apgar subscore for respiration." />
+      <alias value="AdemhalingScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="AdemhalingScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.1--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.4" />
+        <comment value="RespiratoryScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:5MinuteRespiratoryScore">
+      <path value="Observation.component" />
+      <sliceName value="5MinuteRespiratoryScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:5MinuteRespiratoryScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32415-2" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:5MinuteRespiratoryScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="RespiratoryScore" />
+      <definition value="The Apgar subscore for respiration." />
+      <alias value="AdemhalingScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="AdemhalingScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.1--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.4" />
+        <comment value="RespiratoryScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:10MinuteRespiratoryScore">
+      <path value="Observation.component" />
+      <sliceName value="10MinuteRespiratoryScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:10MinuteRespiratoryScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32405-3" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:10MinuteRespiratoryScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="RespiratoryScore" />
+      <definition value="The Apgar subscore for respiration." />
+      <alias value="AdemhalingScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="AdemhalingScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.1--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.4" />
+        <comment value="RespiratoryScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:1MinuteAppearanceScore">
+      <path value="Observation.component" />
+      <sliceName value="1MinuteAppearanceScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:1MinuteAppearanceScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32406-1" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:1MinuteAppearanceScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="AppearanceScore" />
+      <definition value="The Apgar subscore for skin color/appearance." />
+      <alias value="HuidskleurScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="HuidskleurScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.4--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.7" />
+        <comment value="AppearanceScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:5MinuteAppearanceScore">
+      <path value="Observation.component" />
+      <sliceName value="5MinuteAppearanceScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:5MinuteAppearanceScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32411-1" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:5MinuteAppearanceScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="AppearanceScore" />
+      <definition value="The Apgar subscore for skin color/appearance." />
+      <alias value="HuidskleurScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="HuidskleurScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.4--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.7" />
+        <comment value="AppearanceScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:10MinuteAppearanceScore">
+      <path value="Observation.component" />
+      <sliceName value="10MinuteAppearanceScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:10MinuteAppearanceScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32401-2" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:10MinuteAppearanceScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="AppearanceScore" />
+      <definition value="The Apgar subscore for skin color/appearance." />
+      <alias value="HuidskleurScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="HuidskleurScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.4--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.7" />
+        <comment value="AppearanceScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:1MinutePulseScore">
+      <path value="Observation.component" />
+      <sliceName value="1MinutePulseScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:1MinutePulseScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32407-9" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:1MinutePulseScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="PulseScore" />
+      <definition value="The Apgar subscore for pulse." />
+      <alias value="HartslagScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="HartslagScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.2--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.5" />
+        <comment value="PulseScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:5MinutePulseScore">
+      <path value="Observation.component" />
+      <sliceName value="5MinutePulseScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:5MinutePulseScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32412-9" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:5MinutePulseScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="PulseScore" />
+      <definition value="The Apgar subscore for pulse." />
+      <alias value="HartslagScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="HartslagScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.2--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.5" />
+        <comment value="PulseScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:10MinutePulseScore">
+      <path value="Observation.component" />
+      <sliceName value="10MinutePulseScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:10MinutePulseScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32402-0" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:10MinutePulseScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="PulseScore" />
+      <definition value="The Apgar subscore for pulse." />
+      <alias value="HartslagScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="HartslagScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.2--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.5" />
+        <comment value="PulseScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:1MinuteGrimaceScore">
+      <path value="Observation.component" />
+      <sliceName value="1MinuteGrimaceScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:1MinuteGrimaceScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32409-5" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:1MinuteGrimaceScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="GrimaceScore" />
+      <definition value="The Apgar subscore for grimace." />
+      <alias value="ReflexenScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="ReflexenScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.5--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.8" />
+        <comment value="GrimaceScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:5MinuteGrimaceScore">
+      <path value="Observation.component" />
+      <sliceName value="5MinuteGrimaceScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:5MinuteGrimaceScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32414-5" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:5MinuteGrimaceScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="GrimaceScore" />
+      <definition value="The Apgar subscore for grimace." />
+      <alias value="ReflexenScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="ReflexenScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.5--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.8" />
+        <comment value="GrimaceScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:10MinuteGrimaceScore">
+      <path value="Observation.component" />
+      <sliceName value="10MinuteGrimaceScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:10MinuteGrimaceScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32404-6" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:10MinuteGrimaceScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="GrimaceScore" />
+      <definition value="The Apgar subscore for grimace." />
+      <alias value="ReflexenScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="ReflexenScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.5--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.8" />
+        <comment value="GrimaceScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:1MinuteMuscleToneScore">
+      <path value="Observation.component" />
+      <sliceName value="1MinuteMuscleToneScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:1MinuteMuscleToneScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32408-7" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:1MinuteMuscleToneScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="MusleToneScore" />
+      <definition value="The Apgar subscore for activity/muscle tone." />
+      <alias value="SpierspanningScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="SpierspanningScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.3--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.6" />
+        <comment value="MusleToneScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:5MinuteMuscleToneScore">
+      <path value="Observation.component" />
+      <sliceName value="5MinuteMuscleToneScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:5MinuteMuscleToneScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32413-7" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:5MinuteMuscleToneScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="MusleToneScore" />
+      <definition value="The Apgar subscore for activity/muscle tone." />
+      <alias value="SpierspanningScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="SpierspanningScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.3--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.6" />
+        <comment value="MusleToneScore" />
+      </mapping>
+    </element>
+    <element id="Observation.component:10MinuteMuscleToneScore">
+      <path value="Observation.component" />
+      <sliceName value="10MinuteMuscleToneScore" />
+      <max value="1" />
+    </element>
+    <element id="Observation.component:10MinuteMuscleToneScore.code">
+      <path value="Observation.component.code" />
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://loinc.org" />
+          <code value="32403-8" />
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element id="Observation.component:10MinuteMuscleToneScore.value[x]:valueCodeableConcept">
+      <path value="Observation.component.valueCodeableConcept" />
+      <sliceName value="valueCodeableConcept" />
+      <short value="MusleToneScore" />
+      <definition value="The Apgar subscore for activity/muscle tone." />
+      <alias value="SpierspanningScore" />
+      <type>
+        <code value="CodeableConcept" />
+      </type>
+      <binding>
+        <strength value="extensible" />
+        <description value="SpierspanningScoreCodelijst" />
+        <valueSetReference>
+          <reference value="http://decor.nictiz.nl/fhir/ValueSet/2.16.840.1.113883.2.4.3.11.60.40.2.12.16.3--20171231000000" />
+        </valueSetReference>
+      </binding>
+      <mapping>
+        <identity value="hcim-apgarscore-v1.0-2017EN" />
+        <map value="NL-CM:12.16.6" />
+        <comment value="MusleToneScore" />
+      </mapping>
+    </element>
+  </differential>
+</StructureDefinition>

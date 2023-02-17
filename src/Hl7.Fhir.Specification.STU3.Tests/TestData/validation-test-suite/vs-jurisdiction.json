@@ -1,0 +1,25 @@
+{
+  "resourceType": "ValueSet",
+  "id": "vs-jurisdiction",
+  "url": "http://hl7.org/fhir/test/ValueSet/vs-jurisdiction",
+  "name" : "Test",
+  "version": "20150622",
+  "status": "draft",
+  "jurisdiction": [
+    {
+      "coding": [
+        {
+          "system": "urn:iso:std:iso:3166",
+          "code": "US"
+        }
+      ]
+    }
+  ],
+  "compose": {
+    "include": [
+      {
+        "system": "http://loinc.org"
+      }
+    ]
+  }
+}

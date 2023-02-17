@@ -1,0 +1,38 @@
+<StructureDefinition xmlns="http://hl7.org/fhir"> 
+ <contained>
+   <ValueSet>
+     <id value="vs"/>
+     <url value="http://hl7.org/fhir/test/ValueSet/tx-extensible-suppression#vs"/>
+     <name value="SomeName"/>
+     <status value="active"/>
+     <compose>
+       <include>
+         <system value="http://hl7.org/fhir/test/CodeSystem/something"/>
+         <concept>
+           <code value="something"/>
+         </concept>
+       </include>
+       <include>
+         <valueSet value="http://hl7.org/fhir/ValueSet/designation-use"/>
+       </include>
+     </compose>
+   </ValueSet>
+ </contained>
+ <url value="http://hl7.org/fhir/test/ValueSet/tx-extensible-suppression"/>
+ <name value="SomeName"/>
+ <status value="active"/>
+ <kind value="resource"/>
+ <abstract value="false"/>
+ <type value="ValueSet"/>
+ <baseDefinition value="http://hl7.org/fhir/StructureDefinition/ValueSet"/>
+ <derivation value="constraint"/>
+ <differential>  
+   <element>
+     <path value="ValueSet.compose.include.concept.designation.use"/>
+     <binding>
+       <strength value="required"/>
+       <valueSet value="#vs"/>
+     </binding>
+   </element>
+ </differential>
+</StructureDefinition>
