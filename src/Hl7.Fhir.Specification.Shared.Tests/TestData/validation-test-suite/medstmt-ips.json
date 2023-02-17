@@ -1,0 +1,42 @@
+{
+  "resourceType" : "MedicationStatement",
+  "id" : "eumfh-39-07-1",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: eumfh-39-07-1</p><p><b>status</b>: active</p><p><b>medication</b>: <a href=\"Medication-eumfh-39-07-1.html\">simvastatin. Generated Summary: id: eumfh-39-07-1; <span title=\"Codes: {http://www.nlm.nih.gov/research/umls/rxnorm 757704}, {http://www.whocc.no/atc C10AA01}\">Fluspiral 50 mcg</span>; <span title=\"Codes: {http://www.nlm.nih.gov/research/umls/rxnorm 1294713}, {http://standardterms.edqm.eu 10219000}\">Disintegrating Oral Product</span></a></p><p><b>subject</b>: <a href=\"Patient-eumfh-39-07.html\">Alexander Heig (inject 39-07). Generated Summary: id: eumfh-39-07; 39-07, EUR01P0001; active; Alexander Heig ; gender: male; birthDate: 1957-01-01</a></p><p><b>effective</b>: 01/01/2014 12:00:00 AM --&gt; (ongoing)</p><p><b>dosage</b>: </p></div>"
+  },
+  "status" : "active",
+  "medicationReference" : {
+    "reference" : "Medication/eumfh-39-07-1",
+    "display" : "simvastatin"
+  },
+  "subject" : {
+    "reference" : "Patient/eumfh-39-07",
+    "display" : "Alexander Heig (inject 39-07)"
+  },
+  "effectivePeriod" : {
+    "start" : "2014"
+  },
+  "dosage" : [
+    {
+      "text" : "40 mg/day",
+      "timing" : {
+        "repeat" : {
+          "frequency" : 1,
+          "period" : 1,
+          "periodUnit" : "d"
+        }
+      },
+      "doseAndRate" : [
+        {
+          "doseQuantity" : {
+            "value" : 40,
+            "unit" : "mg",
+            "system" : "http://unitsofmeasure.org",
+            "code" : "mg"
+          }
+        }
+      ]
+    }
+  ]
+}

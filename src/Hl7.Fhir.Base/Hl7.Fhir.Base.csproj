@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk.props" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.Base</PackageId>
+		<AssemblyName>Hl7.Fhir.Base</AssemblyName>
+		<Title>Firely's HL7 FHIR SDK Base Class Library</Title>
+		<Description>Firely's HL7 FHIR SDK Base Class Library. Is a dependency for the FHIR release-specific NuGet packages and is usually not directly referenced.</Description>
+		<PackageTags>HL7;FHIR;Firely;SDK;BCL</PackageTags>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="System.Buffers" Version="4.5.1" />
+		<PackageReference Include="System.Text.Json" Version="7.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.Reflection.Emit.Lightweight" Version="4.7.0" />
+		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Serialization\xhtml\fhir-xhtml.xsd" LogicalName="fhir-xhtml.xsd">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Serialization\xhtml\xml.xsd" LogicalName="xml.xsd">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Serialization\xhtml\xmldsig-core-schema.xsd" LogicalName="xmldsig-core-schema.xsd">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+</Project>

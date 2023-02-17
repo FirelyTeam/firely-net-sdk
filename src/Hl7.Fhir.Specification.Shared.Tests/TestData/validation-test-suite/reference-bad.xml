@@ -1,0 +1,9 @@
+<Observation xmlns="http://hl7.org/fhir">
+  <status value="final"/>
+  <code>
+    <text value="test"/>
+  </code>
+  <subject>
+    <reference value="Patient/test-fail"/>
+  </subject>
+</Observation>

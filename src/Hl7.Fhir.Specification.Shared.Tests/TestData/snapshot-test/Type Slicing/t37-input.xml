@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t37"/>
+  <url value="urn:uuid:44a92f3e-3681-4dbc-baa2-48a07e2765ca"/>
+  <name value="t37"/>
+  <status value="draft"/>
+  <description value="fixture for #37: Test bad Path"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="MedicationRequest"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/MedicationRequest"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="MedicationRequest"/>
+    </element>
+    <element>
+      <path value="MedicationRequest.dosageInstruction"/>
+    </element>
+    <element>
+      <path value="MedicationRequest.dosageInstruction.timing"/>
+    </element>
+    <element>
+      <path value="MedicationRequiest.dosageInstruction.timing.event"/>
+      <mustSupport value="true"/>
+    </element>
+    <element>
+      <path value="MedicationRequest.dosageInstruction.timing.repeat"/>
+      <mustSupport value="true"/>
+    </element>
+  </differential>
+</StructureDefinition>

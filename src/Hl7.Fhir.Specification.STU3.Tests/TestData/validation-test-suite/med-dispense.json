@@ -1,0 +1,15 @@
+{
+  "resourceType" : "MedicationDispense",
+  "status" : "completed",
+  "medicationCodeableConcept": {
+    "text" : "something"
+  },
+  "whenHandedOver": null,
+   "_whenHandedOver": {
+      "extension": [{
+        "url": "http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor",
+        "valueCode": "NI"
+      }]
+    }
+  }
+}

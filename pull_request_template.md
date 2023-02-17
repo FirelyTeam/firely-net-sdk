@@ -1,5 +1,12 @@
-Please make sure you always reference the issue number this PR is related to.
+## Description
+Describe the changes in this PR.
 
-If not related to an existing issue, include a description of the bug or feature this PRs is about.
+## Related issues
+Closes|Fixes|Resolves [issue #].
 
-Make sure you include unit tests for the code you are requesting us to pull.
+## Testing
+Describe how this change was tested.
+
+## FirelyTeam Checklist
+- [ ] **Update the title** of the PR to be succinct and less than 50 characters
+- [ ] Mark the PR with the label **breaking change** when this PR introduces breaking changes

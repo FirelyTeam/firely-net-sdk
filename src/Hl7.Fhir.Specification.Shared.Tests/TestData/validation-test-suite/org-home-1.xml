@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Organization xmlns="http://hl7.org/fhir">
+    <id value="organization.org-2.fail-1"/>
+    <name value="Test organization"/>
+    <address>
+        <use value="home"/>
+        <text value="Org address"/>
+    </address>
+</Organization>

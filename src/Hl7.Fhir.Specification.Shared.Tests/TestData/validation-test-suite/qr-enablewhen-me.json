@@ -1,0 +1,19 @@
+{
+    "resourceType": "QuestionnaireResponse",
+	"id" : "qr-enablewhen-me",
+    "questionnaire": "http://hl7.org/fhir/test/Questionnaire/q-enablewhen-me",
+    "status": "completed",
+    "item": [{
+            "linkId": "N0",
+            "answer": [{
+                "valueInteger": 1
+            }]
+        },
+        {
+            "linkId": "N1",
+            "answer": [{
+                "valueInteger": 0
+            }]
+        }
+    ]
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="bundle-local-refs"/>
+  <meta>
+    <lastUpdated value="2019-07-21T11:01:00+05:00"/>
+  </meta>
+  <identifier>
+    <system value="http://example.org/documentIDs"/>
+    <value value="A12345"/>
+  </identifier>
+  <type value="document"/>
+  <timestamp value="2019-07-21T11:01:00+05:00"/>
+  <entry>
+    <fullUrl value="http://example.org/fhir/Composition/1"/>
+    <resource>
+      <Composition>
+        <id value="1"/>
+        <status value="final"/>
+        <type>
+          <text value="foo"/>
+        </type>
+        <subject>
+          <reference value="Patient/1"/>
+        </subject>
+        <date value="2019-07-21T23:09:00+07:00"/>
+        <author>
+          <display value="foo"/>
+        </author>
+        <title value="Example with local references"/>
+      </Composition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="http://example.org/fhir/Patient/1"/>
+    <resource>
+      <Patient>
+        <id value="1"/>
+        <name>
+          <family value="SMITH"/>
+          <given value="JOE"/>
+        </name>
+      </Patient>
+    </resource>
+  </entry>
+</Bundle>

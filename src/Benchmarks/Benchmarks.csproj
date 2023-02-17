@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<AssemblyName>Benchmarks</AssemblyName>
+		<AssemblyName>Firely.Sdk.Benchmarks</AssemblyName>
+		<RootNamespace>Firely.Sdk.Benchmarks</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="BenchmarkDotNet" Version="0.13.4" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.R5\Hl7.Fhir.R5.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Support.Poco.Tests\Hl7.Fhir.Support.Poco.Tests.csproj" />
+		<ProjectReference Include="..\Hl7.Fhir.Specification.Data.R5\Hl7.Fhir.Specification.Data.R5.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="TestData\**\*.json;TestData\**\*.xml">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+</Project>

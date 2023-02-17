@@ -1,0 +1,112 @@
+<MeasureReport xmlns="http://hl7.org/fhir">
+  <status value="complete"/> 
+  <type value="summary"/> 
+  <measure value="http://hl7.org/fhir/test/Measure/mr-m-simple"/> 
+  <period> 
+      <start value="2014-01-01"/> 
+      <end value="2014-03-31"/> 
+  </period> 
+  <group id="CMS146-group-1">
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/> 
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+      <count value="500"/> 
+    </population> 
+    <population> 
+      <code> 
+        <coding> 
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/> 
+          <code value="numerator"/> 
+        </coding> 
+      </code> 
+      <count value="200"/> 
+    </population> 
+    <stratifier> 
+      <code> 
+        <text value="stratifier-ages-up-to-9"/> 
+      </code> 
+      <stratum> 
+        <value> <text value="true"/> </value> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+          <count value="250"/> 
+        </population> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="numerator"/> 
+        </coding> 
+      </code> 
+          <count value="100"/> 
+        </population> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="denominator"/> 
+        </coding> 
+      </code> 
+          <count value="250"/> 
+        </population> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="denominator-exclusion"/> 
+        </coding> 
+      </code> 
+          <count value="50"/> 
+        </population> 
+      </stratum> 
+      <stratum> 
+        <value> <text value="false"/> </value> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="initial-population"/> 
+        </coding> 
+      </code> 
+          <count value="250"/> 
+        </population> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="numerator"/> 
+        </coding> 
+      </code> 
+          <count value="100"/> 
+        </population> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="denominator"/> 
+        </coding> 
+      </code> 
+          <count value="250"/> 
+        </population> 
+        <population> 
+          <code>
+        <coding>
+          <system value="http://terminology.hl7.org/CodeSystem/measure-population"/>
+          <code value="denominator-exclusion"/> 
+        </coding> 
+      </code> 
+          <count value="50"/> 
+        </population> 
+      </stratum> 
+    </stratifier> 
+  </group> 
+</MeasureReport> 

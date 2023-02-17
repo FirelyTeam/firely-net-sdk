@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><CarePlan xmlns="http://hl7.org/fhir">
+  <id value="f201"/>
+    <text><status value="generated"/><div xmlns="http://www.w3.org/1999/xhtml"><p><b>Generated Narrative with Details</b></p><p><b>id</b>: f201</p><p><b>contained</b>: , </p><p><b>status</b>: draft</p><p><b>intent</b>: proposal</p><p><b>subject</b>: <a>Roel</a></p><p><b>period</b>: 11/03/2013 --&gt; 13/03/2013</p><p><b>careTeam</b>: id: careteam</p><p><b>addresses</b>: <a>Roel&#39;s renal insufficiency</a></p><p><b>goal</b>: id: goal; status: achieved; Re-established renal function with at least healthy nutrients. <span>(Details )</span>; Roel</p><blockquote><p><b>activity</b></p><h3>Details</h3><table><tr><td>-</td><td><b>Category</b></td><td><b>Code</b></td><td><b>Status</b></td><td><b>Prohibited</b></td><td><b>Scheduled[x]</b></td><td><b>Product[x]</b></td><td><b>DailyAmount</b></td></tr><tr><td>*</td><td>Diet <span>(Details : {http://hl7.org/fhir/care-plan-activity-category code &#39;diet&#39; = &#39;Diet)</span></td><td>Potassium supplementation <span>(Details : {SNOMED CT code &#39;284093001&#39; = &#39;Potassium supplementation&#39;, given as &#39;Potassium supplementation&#39;})</span></td><td>completed</td><td>false</td><td>daily</td><td><a>Potassium</a></td><td>80 mmol<span> (Details: SNOMED CT code 258718000 = &#39;millimole&#39;)</span></td></tr></table></blockquote><blockquote><p><b>activity</b></p><h3>Details</h3><table><tr><td>-</td><td><b>Category</b></td><td><b>Code</b></td><td><b>Status</b></td><td><b>Prohibited</b></td></tr><tr><td>*</td><td>Observation <span>(Details : {http://hl7.org/fhir/care-plan-activity-category code &#39;observation&#39; = &#39;Observation)</span></td><td>Echography of kidney <span>(Details : {SNOMED CT code &#39;306005&#39; = &#39;Echography of kidney&#39;, given as &#39;Echography of kidney&#39;})</span></td><td>completed</td><td>false</td></tr></table></blockquote></div></text><contained>
+    <CareTeam>
+        <id value="careteam"/>
+        <participant>
+    	    <role>
+      		<coding>
+        	    <system value="http://snomed.info/sct"/>
+	            <code value="425268008"/>
+        	    <display value="Review of care plan"/>
+      		</coding>
+    	    </role>
+    	    <member>
+      	    	<reference value="Practitioner/f201"/>
+      	    	<display value="Dokter Bronsig"/>
+    	    </member>
+      	</participant>
+  	<participant>
+    	    <role>
+      		<coding>
+        	    <system value="http://snomed.info/sct"/>
+        	    <code value="229774002"/>
+        	    <display value="Carer"/>
+      		</coding>
+    	    </role>
+    	    <member>
+      		<reference value="Practitioner/f204"/>
+      		<display value="Nurse Carla Espinosa"/>
+    	    </member>
+  	</participant>
+    </CareTeam>
+  </contained>
+  <contained>
+    <Goal>
+      <id value="goal"/>
+      <status value="achieved"/>
+      <description>
+        <text value="Re-established renal function with at least healthy nutrients."/>
+      </description>
+      <subject>
+        <reference value="Patient/f201"/>
+        <display value="Roel"/>
+      </subject>      
+    </Goal>
+  </contained>
+  <status value="draft"/>
+  <intent value="proposal"/>
+  <!--  This careplan is "ended", but was never closed in the EHR, wherefore the status is "planned"  -->
+  <subject>
+    <!--  It entails Roel's careplan  -->
+    <reference value="Patient/f201"/>
+    <display value="Roel"/>
+  </subject>
+  <period>
+    <start value="2013-03-11"/>
+    <end value="2013-03-13"/>
+    <!--  Period is less than nine days because the careplan requires adjustments after evaluation  -->
+  </period>
+  <careTeam>
+    <reference value="#careteam"/>
+  </careTeam>
+  <addresses>
+    <reference value="Condition/f204"/>
+    <display value="Roel&#39;s renal insufficiency"/>
+  </addresses>
+  <goal>
+    <reference value="#goal"/>
+  </goal>
+  <activity>
+    <!--  Potassium supplement  -->
+    <detail>
+      <category><coding><system value="http://hl7.org/fhir/care-plan-activity-category"/><code value="diet"/></coding></category>
+      <code>
+        <coding>
+          <system value="http://snomed.info/sct"/>
+          <code value="284093001"/>
+          <display value="Potassium supplementation"/>
+        </coding>
+      </code>
+      <status value="completed"/>
+      <prohibited value="false"/>
+      <scheduledString value="daily"/>
+      <!--  TODO Isn't <performer> redundant when considering <participant> that was defined before?  -->
+      <productReference>
+        <reference value="Substance/f203"/>
+        <display value="Potassium"/>
+      </productReference>
+      <dailyAmount>
+        <value value="80"/>
+        <unit value="mmol"/>
+        <system value="http://snomed.info/sct"/>
+        <code value="258718000"/>
+      </dailyAmount>
+    </detail>
+  </activity>
+  <activity>
+    <!--  Echo of the kidney  -->
+    <detail>
+      <category><coding><system value="http://hl7.org/fhir/care-plan-activity-category"/><code value="observation"/></coding></category>
+      <code>
+        <coding>
+          <system value="http://snomed.info/sct"/>
+          <code value="306005"/>
+          <display value="Echography of kidney"/>
+        </coding>
+      </code>
+      <status value="completed"/>
+      <prohibited value="false"/>
+    </detail>
+  </activity>
+</CarePlan>

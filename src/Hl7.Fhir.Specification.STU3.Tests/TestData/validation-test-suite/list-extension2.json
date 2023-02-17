@@ -1,0 +1,22 @@
+{
+  "resourceType": "List",
+  "fhir_comments": [
+    " this is all valid "
+  ],
+  "id": "val1",
+  "_id": {
+    "fhir_comments": [
+      " another comment "
+    ]
+  },
+  "status": "current",
+  "_status": {
+    "extension": [
+      {
+        "url": "http://acme.com/some_url",
+        "valueCodeX": "code"
+      }
+    ]
+  },
+  "mode": "changes"
+}

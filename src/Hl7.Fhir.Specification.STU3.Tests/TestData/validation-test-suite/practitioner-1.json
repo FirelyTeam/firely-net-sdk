@@ -1,0 +1,33 @@
+{
+  "resourceType": "Practitioner",
+  "id": "1",
+  "identifier": [
+    {
+      "system": "http://www.acme.org/practitioners",
+      "value": "23"
+    }
+  ],
+  "active": true,
+  "name": [
+    {
+      "family": "Careful",
+      "given": [
+        "Adam"
+      ],
+      "prefix": [
+        "Dr"
+      ]
+    }
+  ],
+  "address": [
+    {
+      "use": "home",
+      "line": [
+        "534 Erewhon St"
+      ],
+      "city": "PleasantVille",
+      "state": "Vic",
+      "postalCode": "3999"
+    }
+  ]
+}

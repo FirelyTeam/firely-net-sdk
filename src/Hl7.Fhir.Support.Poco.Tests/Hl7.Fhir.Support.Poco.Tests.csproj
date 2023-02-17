@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+	<Import Project="..\firely-net-sdk-tests.props" />
+
+	<PropertyGroup>
+		<AssemblyName>Hl7.Fhir.Support.Poco.Tests</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="TestData\**\*.xml;TestData\**\*.json;TestData\testPackage.tgz">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>		
+		<ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />		
+		<ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
+	</ItemGroup>
+	
+</Project>

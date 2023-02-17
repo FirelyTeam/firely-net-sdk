@@ -1,0 +1,104 @@
+<!-- 
+Document section library - a set of section structure definitions that are intended to be re-used elsewhere
+
+Defines 3 sections:
+- codeA
+- codeB
+- codeC
+
+These should be sliced by pattern on Section.code
+ -->
+<StructureDefinition xmlns="http://hl7.org/fhir"> 
+  <id value="document-section-library"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/document-section-library"/>
+  <name value="DocumentSectionLibrary"/>
+  <title value="Document Section Library (For testing section templates)"/>
+  <status value="active"/>
+  <experimental value="false"/>
+  <date value="2018-11-05T17:57:00+11:00"/>
+  <kind value="complex-type"/>
+  <abstract value="true"/>
+  <type value="Composition"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Composition"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <!-- this is present to work around a bug in the snapshot generator -->
+      <path value="Composition"/>
+    </element>
+    <element>
+      <!-- set up slicing on Composition.section - by the code. Actually, this slicing is never used anywhere since this library is abstract -->  
+      <path value="Composition.section"/>
+      <slicing>  
+        <discriminator> 
+          <type value="pattern"/>
+          <path value="code"/>
+        </discriminator>
+        <description value="Slice by .section.code when using this library of sections"/>
+        <ordered value="true"/>
+        <rules value="closed"/>
+       </slicing>
+    </element>
+    
+    <!-- code B -->  
+    <element>
+      <path value="Composition.section"/>
+      <sliceName value="codeB"/>
+    </element>
+    <element>
+      <path value="Composition.section.title"/>
+      <min value="1"/>
+    </element>
+    <element>
+      <path value="Composition.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/test/CodeSystem/imaginary"/>
+          <code value="code-b"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    
+    <!-- code A -->  
+    <element>
+      <path value="Composition.section"/>
+      <sliceName value="codeA"/>
+    </element>
+    <element>
+      <path value="Composition.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/test/CodeSystem/imaginary"/>
+          <code value="code-a"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element>
+      <path value="Composition.section.focus"/>
+      <min value="1"/>
+    </element>
+    
+    <!-- code C -->  
+    <element>
+      <path value="Composition.section"/>
+      <sliceName value="codeC"/>
+    </element>
+    <element>
+      <path value="Composition.section.code"/>
+      <min value="1"/>
+      <patternCodeableConcept>
+        <coding>
+          <system value="http://hl7.org/fhir/test/CodeSystem/imaginary"/>
+          <code value="code-c"/>
+        </coding>
+      </patternCodeableConcept>
+    </element>
+    <element>
+      <path value="Composition.section.mode"/>
+      <min value="1"/>
+    </element>
+
+  </differential>
+</StructureDefinition>

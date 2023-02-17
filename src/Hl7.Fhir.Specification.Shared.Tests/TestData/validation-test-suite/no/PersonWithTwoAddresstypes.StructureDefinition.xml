@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="PersonWithTwoAddresstypes" />
+  <url value="http://example.org/fhir/StructureDefinition/PersonWithTwoAddresstypes" />
+  <name value="PersonWithTwoAddresstypes" />
+  <status value="draft" />
+  <fhirVersion value="4.0.0" />
+  <mapping>
+    <identity value="rim" />
+    <uri value="http://hl7.org/v3" />
+    <name value="RIM Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="w5" />
+    <uri value="http://hl7.org/fhir/fivews" />
+    <name value="FiveWs Pattern Mapping" />
+  </mapping>
+  <mapping>
+    <identity value="v2" />
+    <uri value="http://hl7.org/v2" />
+    <name value="HL7 v2 Mapping" />
+  </mapping>
+  <kind value="resource" />
+  <abstract value="false" />
+  <type value="Person" />
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Person" />
+  <derivation value="constraint" />
+  <differential>
+    <element id="Person.address">
+      <path value="Person.address" />
+      <type>
+        <code value="Address" />
+        <profile value="http://example.org/fhir/StructureDefinition/AddressWithExtension" />
+        <profile value="http://example.org/fhir/StructureDefinition/AddressWithTwoExtensions" />
+      </type>
+    </element>
+  </differential>
+</StructureDefinition>

@@ -1,0 +1,23 @@
+{
+  "resourceType": "Observation",
+  "status": "final",
+  "code": {
+    "coding": [
+      {
+        "system": "http://build.fhir.org/assert-response-code-types",
+        "version": "4.4.0",
+        "code": "population",
+        "display": "Population"
+      }
+    ]
+  },
+  "valueCodeableConcept": {
+    "coding": [
+      {
+        "system": "http://hl7.org/fhir/R4/codesystem-assert-response-code-types.html",
+        "code": "notModified",
+        "display": "notModified"
+      }
+    ]
+  }
+}

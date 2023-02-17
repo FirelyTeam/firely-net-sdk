@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t26"/>
+  <url value="urn:uuid:ab833682-88b9-4e7a-8e08-eb82f39f7beb"/>
+  <name value="t26"/>
+  <status value="draft"/>
+  <description value="fixture for #26: Test differential sorting for polymorphic references"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Patient"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Patient"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element>
+      <path value="Patient"/>
+    </element>
+    <element>
+      <path value="Patient.generalPractitioner"/>
+      <slicing>
+        <discriminator>
+          <type value="exists"/>
+          <path value="display"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <type>
+        <code value="Reference"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/Practitioner"/>
+      </type>
+      <type>
+        <code value="Reference"/>
+        <profile value="http://hl7.org/fhir/StructureDefinition/Organization"/>
+      </type>
+    </element>
+    <element>
+      <path value="Patient.generalPractitioner"/>
+      <sliceName value="sliceA"/>
+    </element>
+    <element>
+      <path value="Patient.generalPractitioner.display"/>
+      <min value="1"/>
+    </element>
+  </differential>
+</StructureDefinition>

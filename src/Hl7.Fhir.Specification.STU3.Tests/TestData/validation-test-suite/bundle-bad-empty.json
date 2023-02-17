@@ -1,0 +1,27 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle",
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "",
+      "resource": {
+          "resourceType": "Patient",
+          "id" : "pat1",
+          "link" : [{
+            "type" : "refer",
+            "other" : {
+              "reference" : "Patient/pat2"
+            }
+          }]
+        }
+    },
+    {
+      "fullUrl": "http://acme.com/Patient/pat2",
+      "resource": {
+        "resourceType": "Patient",
+        "id" : "pat2"
+      }
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "resourceType": "Practitioner",
+  "active": true,
+  "name": [ {
+    "family": "Careful",
+    "given": [ "Adam" ],
+    "prefix": [ "Dr" ]
+  } ],
+  "telecom": [ {
+    "system": "phone",
+    "value": "555-101-0987",
+    "use": "home"
+  } ],
+  "address": [ {
+    "use": "home",
+    "line": [ "534 Erewhon St" ],
+    "city": "PleasantVille",
+    "state": "Vic",
+    "postalCode": "3999"
+  } ]
+}

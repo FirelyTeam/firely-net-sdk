@@ -1,0 +1,256 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+	<id value="observation-bp-profile-twocodesrequired" />
+	<text>
+		<status value="generated" />
+		<div xmlns="http://www.w3.org/1999/xhtml">reworked official bp profile to use
+			patternCodeableConcept and require a local code system in addition
+			(http://fhir.ch/ig/local)
+		</div>
+	</text>
+	<url
+		value="http://hl7.org/fhir/StructureDefinition/observation-bp-profile" />
+	<version value="4.0.0" />
+	<name value="observation-bp" />
+	<title value="Observation Blood Pressure Profile" />
+	<status value="draft" />
+	<experimental value="false" />
+	<date value="2019-05-06" />
+	<publisher
+		value="Health Level Seven International (Orders and Observations Workgroup)" />
+	<contact>
+		<telecom>
+			<system value="url" />
+			<value
+				value="http://www.hl7.org/Special/committees/orders/index.cfm Orders and Observations" />
+		</telecom>
+	</contact>
+	<description value="FHIR Blood Pressure Profile" />
+	<fhirVersion value="4.0.0" />
+	<mapping>
+		<identity value="workflow" />
+		<uri value="http://hl7.org/fhir/workflow" />
+		<name value="Workflow Pattern" />
+	</mapping>
+	<mapping>
+		<identity value="sct-concept" />
+		<uri value="http://snomed.info/conceptdomain" />
+		<name value="SNOMED CT Concept Domain Binding" />
+	</mapping>
+	<mapping>
+		<identity value="v2" />
+		<uri value="http://hl7.org/v2" />
+		<name value="HL7 v2 Mapping" />
+	</mapping>
+	<mapping>
+		<identity value="rim" />
+		<uri value="http://hl7.org/v3" />
+		<name value="RIM Mapping" />
+	</mapping>
+	<mapping>
+		<identity value="w5" />
+		<uri value="http://hl7.org/fhir/fivews" />
+		<name value="FiveWs Pattern Mapping" />
+	</mapping>
+	<mapping>
+		<identity value="sct-attr" />
+		<uri value="http://snomed.org/attributebinding" />
+		<name value="SNOMED CT Attribute Binding" />
+	</mapping>
+	<kind value="resource" />
+	<abstract value="false" />
+	<type value="Observation" />
+	<baseDefinition
+		value="http://hl7.org/fhir/StructureDefinition/vitalsigns" />
+	<derivation value="constraint" />
+	<differential>
+		<element id="Observation">
+			<path value="Observation" />
+			<short value="FHIR Blood Pressure Profile" />
+			<definition
+				value="This profile defines  how to represent Blood Pressure observations in FHIR using a standard LOINC code and UCUM units of measure.  This is a grouping structure. It has no value in Observation.valueQuantity but contains at least one component (systolic and/or diastolic)." />
+			<min value="0" />
+			<max value="*" />
+		</element>
+		<element id="Observation.code">
+			<path value="Observation.code" />
+			<short value="Blood Pressure" />
+			<definition value="Blood Pressure" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="CodeableConcept" />
+			</type>
+			<patternCodeableConcept>
+				<coding>
+					<system value="http://loinc.org" />
+					<code value="85354-9" />
+				</coding>
+				<coding>
+					<system value="http://fhir.ch/ig/local" />
+				</coding>
+			</patternCodeableConcept>
+			<mustSupport value="true" />
+		</element>
+		<element id="Observation.valueQuantity">
+			<path value="Observation.valueQuantity" />
+			<min value="0" />
+			<max value="0" />
+		</element>
+		<element id="Observation.component">
+			<path value="Observation.component" />
+			<slicing>
+				<discriminator>
+					<type value="pattern" />
+					<path value="code" />
+				</discriminator>
+				<rules value="open" />
+			</slicing>
+			<min value="2" />
+			<max value="*" />
+		</element>
+		<element id="Observation.component:SystolicBP">
+			<path value="Observation.component" />
+			<sliceName value="SystolicBP" />
+			<short value="SystolicBP" />
+			<min value="1" />
+			<max value="1" />
+		</element>
+		<element id="Observation.component:SystolicBP.code">
+			<path value="Observation.component.code" />
+			<min value="1" />
+			<patternCodeableConcept>
+				<coding>
+					<system value="http://loinc.org" />
+					<code value="8480-6" />
+				</coding>
+				<coding>
+					<system value="http://fhir.ch/ig/local" />
+				</coding>
+			</patternCodeableConcept>
+		</element>
+		<element id="Observation.component:SystolicBP.valueQuantity">
+			<path value="Observation.component.valueQuantity" />
+			<type>
+				<code value="Quantity" />
+			</type>
+		</element>
+		<element
+			id="Observation.component:SystolicBP.valueQuantity.value">
+			<path value="Observation.component.valueQuantity.value" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="decimal" />
+			</type>
+			<mustSupport value="true" />
+		</element>
+		<element
+			id="Observation.component:SystolicBP.valueQuantity.unit">
+			<path value="Observation.component.valueQuantity.unit" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="string" />
+			</type>
+			<mustSupport value="true" />
+		</element>
+		<element
+			id="Observation.component:SystolicBP.valueQuantity.system">
+			<path value="Observation.component.valueQuantity.system" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="uri" />
+			</type>
+			<fixedUri value="http://unitsofmeasure.org" />
+			<mustSupport value="true" />
+		</element>
+		<element
+			id="Observation.component:SystolicBP.valueQuantity.code">
+			<path value="Observation.component.valueQuantity.code" />
+			<short
+				value="Coded responses from the common UCUM units for vital signs value set." />
+			<definition
+				value="Coded responses from the common UCUM units for vital signs value set." />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="code" />
+			</type>
+			<fixedCode value="mm[Hg]" />
+			<mustSupport value="true" />
+		</element>
+		<element id="Observation.component:DiastolicBP">
+			<path value="Observation.component" />
+			<sliceName value="DiastolicBP" />
+			<short value="DiastolicBP" />
+			<min value="1" />
+			<max value="1" />
+		</element>
+		<element id="Observation.component:DiastolicBP">
+			<path value="Observation.component.code" />
+			<min value="1" />
+			<patternCodeableConcept>
+				<coding>
+					<system value="http://loinc.org" />
+					<code value="8462-4" />
+				</coding>
+				<coding>
+					<system value="http://fhir.ch/ig/local" />
+				</coding>
+			</patternCodeableConcept>
+		</element>
+		<element id="Observation.component:DiastolicBP.valueQuantity">
+			<path value="Observation.component.valueQuantity" />
+			<type>
+				<code value="Quantity" />
+			</type>
+		</element>
+		<element
+			id="Observation.component:DiastolicBP.valueQuantity.value">
+			<path value="Observation.component.valueQuantity.value" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="decimal" />
+			</type>
+			<mustSupport value="true" />
+		</element>
+		<element
+			id="Observation.component:DiastolicBP.valueQuantity.unit">
+			<path value="Observation.component.valueQuantity.unit" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="string" />
+			</type>
+			<mustSupport value="true" />
+		</element>
+		<element
+			id="Observation.component:DiastolicBP.valueQuantity.system">
+			<path value="Observation.component.valueQuantity.system" />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="uri" />
+			</type>
+			<fixedUri value="http://unitsofmeasure.org" />
+			<mustSupport value="true" />
+		</element>
+		<element
+			id="Observation.component:DiastolicBP.valueQuantity.code">
+			<path value="Observation.component.valueQuantity.code" />
+			<short
+				value="Coded responses from the common UCUM units for vital signs value set." />
+			<definition
+				value="Coded responses from the common UCUM units for vital signs value set." />
+			<min value="1" />
+			<max value="1" />
+			<type>
+				<code value="code" />
+			</type>
+			<fixedCode value="mm[Hg]" />
+			<mustSupport value="true" />
+		</element>
+	</differential>
+</StructureDefinition>

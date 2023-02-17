@@ -1,0 +1,28 @@
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="profile-repeated-type"/>
+  <url value="http://hl7.org/fhir/test/StructureDefinition/profile-repeated-type"/>
+  <name value="RepeatedTypeChoice"/>
+  <status value="draft"/>
+  <date value="3017-09-06T06:30:54+00:00"/>
+  <fhirVersion value="4.0.0"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="HealthcareService"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/HealthcareService"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="HealthcareService.endpoint">
+      <path value="HealthcareService.endpoint" />
+      <short value="Technical endpoints for this healthcare service, including secure messaging endpoints" />
+      <type>
+          <code value="Reference" />
+          <targetProfile value="http://hl7.org.au/fhir/pd/StructureDefinition/au-pd-sm-endpoint" />
+      </type>
+      <type>
+          <code value="Reference" />
+          <targetProfile value="http://hl7.org/fhir/StructureDefinition/Endpoint" />
+      </type>
+      <mustSupport value="true" />
+    </element>
+  </differential>
+</StructureDefinition>

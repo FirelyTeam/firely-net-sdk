@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="pharmqualityspecification"/>
+  <url value="http://hl7.org/fhir/pq-cmc/StructureDefinition/pharmqualityspecification"/>
+  <version value="0.0.5"/>
+  <name value="PharmQualitySpecification"/>
+  <status value="draft"/>
+  <fhirVersion value="4.0.1"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="PlanDefinition"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/PlanDefinition"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="PlanDefinition">
+      <path value="PlanDefinition"/>
+    </element>
+    <element id="PlanDefinition.action">
+      <path value="PlanDefinition.action"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="extension(&#39;http://hl7.org/fhir/pq-cmc/StructureDefinition/extActionType&#39;).value"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PlanDefinition.action.extension:actionType">
+      <path value="PlanDefinition.action.extension"/>
+      <sliceName value="actionType"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/pq-cmc/StructureDefinition/extActionType"/>
+      </type>
+    </element>
+    <element id="PlanDefinition.action:actionSingle">
+      <path value="PlanDefinition.action"/>
+      <sliceName value="actionSingle"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PlanDefinition.action:actionSingle.extension:actionTypeSingle">
+      <path value="PlanDefinition.action.extension"/>
+      <sliceName value="actionTypeSingle"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/pq-cmc/StructureDefinition/extActionType"/>
+      </type>
+    </element>
+    <element id="PlanDefinition.action:actionSingle.extension:actionTypeSingle.valueCode">
+      <path value="PlanDefinition.action.extension.valueCode"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="Single"/>
+    </element>
+    <element id="PlanDefinition.action:actionSingle.title">
+      <path value="PlanDefinition.action.title"/>
+      <min value="1"/>
+      <max value="1"/>
+    </element>
+    <element id="PlanDefinition.action:actionAlternate">
+      <path value="PlanDefinition.action"/>
+      <sliceName value="actionAlternate"/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+    <element id="PlanDefinition.action:actionAlternate.extension:actionTypeAlternate">
+      <path value="PlanDefinition.action.extension"/>
+      <sliceName value="actionTypeAlternate"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="Extension"/>
+        <profile value="http://hl7.org/fhir/pq-cmc/StructureDefinition/extActionType"/>
+      </type>
+    </element>
+    <element id="PlanDefinition.action:actionAlternate.extension:actionTypeAlternate.valueCode">
+      <path value="PlanDefinition.action.extension.valueCode"/>
+      <min value="1"/>
+      <max value="1"/>
+      <type>
+        <code value="code"/>
+      </type>
+      <fixedCode value="Alternate"/>
+    </element>
+    <element id="PlanDefinition.action:actionAlternate.selectionBehavior">
+      <path value="PlanDefinition.action.selectionBehavior"/>
+      <definition value="Use in conjuction with relatedAction.relaionship for alternates for the same test.  Enter &#39;exactly-one&#39; for alternate tests."/>
+      <min value="1"/>
+      <max value="*"/>
+    </element>
+  </differential>
+</StructureDefinition>

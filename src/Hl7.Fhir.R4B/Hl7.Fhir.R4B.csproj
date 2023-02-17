@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<Import Project="..\firely-net-sdk.props" />
+	<Import Project="..\platforms.props" />
+	<Import Project="..\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems" Label="Shared" />
+	<Import Project="..\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems" Label="Shared" />
+
+	<PropertyGroup>
+		<PackageId>Hl7.Fhir.R4B</PackageId>
+		<AssemblyName>Hl7.Fhir.R4B</AssemblyName>
+		<Title>Firely's SDK for working with HL7 FHIR R4B (4.3.0)</Title>
+		<Description>Firely's SDK for working with HL7 FHIR R4B. This is the root package for the SDK includes core functionality to working with RESTful FHIR servers, POCO classes for FHIR, parsing/serialization of FHIR data and working with conformance data and terminologies.</Description>
+		<PackageTags>HL7;FHIR;Firely;SDK;POCO;Fhir client;Terminology;StructureDefinition;parsing;serialization;FHIR server</PackageTags>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Hl7.Fhir.Conformance\Hl7.Fhir.Conformance.csproj" />
+	</ItemGroup>
+
+</Project>

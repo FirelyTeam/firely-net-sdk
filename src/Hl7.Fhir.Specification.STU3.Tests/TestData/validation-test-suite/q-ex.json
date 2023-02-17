@@ -1,0 +1,55 @@
+{
+  "resourceType": "Questionnaire",
+  "id": "Questionnaire-openChoice",
+  "meta": {
+    "profile": [
+      "http://phr.kanta.fi/StructureDefinition/fiphr-sd-questionnaire-stu3-Annantesti2"
+    ]
+  },
+  "language": "fi",
+  "url": "http://phr.kanta.fi/Questionnaire/Questionnaire-openChoice",
+  "identifier": [
+    {
+      "system": "urn:ietf:rfc:3986",
+      "value": "daa60638-251b-4d53-9ee9-6f16c0e6074b"
+    }
+  ],
+  "version": "0.1",
+  "name": "Questionnaire-openChoice",
+  "title": "Questionnaire-openChoice",
+  "status": "draft",
+  "experimental": true,
+  "date": "2018-07-25T14:00:00Z",
+  "description": "Questionnaire-openChoice",
+  "code": [
+    {
+      "system": "http://phr.kanta.fi/CodeSystem/fiphr-cs-questionnairecode",
+      "code": "DAN-PSS-1"
+    }
+  ],
+  "item": [
+    {
+      "linkId": "1",
+      "text": "Question1",
+      "type": "boolean",
+      "required": true,
+      "repeats": false
+    },
+    {
+      "linkId": "2",
+      "text": "Question2",
+      "type": "open-choice",
+      "required": true,
+      "repeats": true,
+      "option": [
+        {
+          "valueCoding": {
+            "id": "1",
+            "code": "B",
+            "display": "B"
+          }
+        }
+      ]
+    }
+  ]
+}

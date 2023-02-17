@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureDefinition xmlns="http://hl7.org/fhir">
+  <id value="t32"/>
+  <url value="urn:uuid:d4cbb68a-8c76-43a8-b0f1-854d24f881dc"/>
+  <name value="t32"/>
+  <status value="draft"/>
+  <description value="fixture for #32: Test disappearing slice definition"/>
+  <kind value="resource"/>
+  <abstract value="false"/>
+  <type value="Questionnaire"/>
+  <baseDefinition value="http://hl7.org/fhir/StructureDefinition/Questionnaire"/>
+  <derivation value="constraint"/>
+  <differential>
+    <element id="Questionnaire">
+      <path value="Questionnaire"/>
+    </element>
+    <element id="Questionnaire.item">
+      <path value="Questionnaire.item"/>
+      <slicing>
+        <discriminator>
+          <type value="value"/>
+          <path value="linkId"/>
+        </discriminator>
+        <rules value="open"/>
+      </slicing>
+    </element>
+    <element id="Questionnaire.item.linkId">
+      <path value="Questionnaire.item.linkId"/>
+      <mustSupport value="true"/>
+    </element>
+    <element id="Questionnaire.item">
+      <path value="Questionnaire.item"/>
+      <sliceName value="record-type"/>
+    </element>
+    <element id="Questionnaire.item:record-type.linkId">
+      <path value="Questionnaire.item.linkId"/>
+      <fixedString value="record-type"/>
+    </element>
+  </differential>
+</StructureDefinition>

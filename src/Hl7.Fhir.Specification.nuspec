@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+
+Pack this metapackage using nuget pack, passing the correct sdk version and fhir release to produce
+as properties to the command.
+
+Example: nuget pack hl7.fhir.specification.nuspec -properties sdkversion=5.0.0-beta1`;fhirrelease=R5
+
+-->
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Hl7.Fhir.Specification.$fhirrelease$</id>
+    <version>$sdkversion$</version>
+    <title>Backwards-compatibility metapackage for Firely's SDK for HL7 FHIR $fhirrelease$</title>
+    <authors>Firely (info@fire.ly) and contributors</authors>
+    <license type="expression">BSD-3-Clause</license>
+    <licenseUrl>https://licenses.nuget.org/BSD-3-Clause</licenseUrl>
+    <icon>icon-firely-sdk-128.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/FirelyTeam/firely-net-sdk</projectUrl>
+    <description>Metapackage including Firely's SDK Base Class Library and specification conformance data for HL7 FHIR $fhirrelease$. Its sole purpose is to provide a backwards-compatible package reference for projects that used pre-5.0 versions of the SDK.</description>
+    <releaseNotes>See https://github.com/FirelyTeam/firely-net-sdk/releases</releaseNotes>
+    <copyright>Copyright 2013-2022 Firely.  Contains materials (C) HL7 International</copyright>
+    <tags>HL7 FHIR Firely SDK BCL Specification</tags>
+    <repository type="git" url="https://github.com/FirelyTeam/firely-net-sdk" />
+    <dependencies>
+      <dependency id="Hl7.Fhir.$fhirrelease$" version="$sdkversion$" exclude="Build,Analyzers" />
+      <dependency id="Hl7.Fhir.Specification.Data.$fhirrelease$" version="$sdkversion$" exclude="Build,Analyzers" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="../icon-firely-sdk-128.png" />
+    <file src="../README.md" />
+  </files>
+</package>
