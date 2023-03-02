@@ -39,7 +39,7 @@
 
 	<!-- Compiler settings -->
 	<PropertyGroup>
-		<LangVersion>9.0</LangVersion>
+		<LangVersion>11.0</LangVersion>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<Configurations>Debug;Release;FullDebug</Configurations>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
