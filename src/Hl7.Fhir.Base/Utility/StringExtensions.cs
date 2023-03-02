@@ -9,7 +9,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Utility
@@ -139,14 +138,30 @@ namespace Hl7.Fhir.Utility
         /// <param name="text"></param>
         /// <param name="prefix"></param>
         /// <returns></returns>
+        public static bool MatchesPrefix(this ReadOnlySpan<char> text, ReadOnlySpan<char> prefix)
+        {
+            bool wildcard = prefix.EndsWith("*".AsSpan()); //used for value[x] elements
+            if (wildcard) prefix = prefix.TrimEnd('*');
+
+            bool found = text.StartsWith(prefix);
+            if (!found) return false;
+
+            bool full = text.Length == prefix.Length;
+
+            return (prefix == null) || full || (wildcard && found);
+        }
+
+        /// <summary>
+        /// See if text matches prefix, where the prefix can be either a
+        /// string, or string ending in '*'. In the latter case a prefix match
+        /// is done, otherwise the full strings are compared.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
         public static bool MatchesPrefix(this string text, string prefix)
         {
-            var prefixMatch = prefix?.EndsWith("*") ?? false;
-
-            return prefix == null ||
-                text == prefix ||
-                (prefixMatch && text.StartsWith(prefix.TrimEnd('*')));     // prefix scan (choice types)
-
+            return text.AsSpan().MatchesPrefix(prefix.AsSpan());
         }
 
         public static string EnsureEndsWith(this string original, string toEndWith)
