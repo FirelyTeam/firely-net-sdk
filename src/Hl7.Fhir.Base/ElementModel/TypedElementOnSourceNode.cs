@@ -284,7 +284,7 @@ namespace Hl7.Fhir.ElementModel
                     // primitives - luckily then, there's just a single list of primitives,
                     // so we can "correct" them
                     return _suffixMap.TryGetValue(s, out var corrected) ? corrected : s;
-                };
+                }
             }
             else if (info.Representation == XmlRepresentation.TypeAttr) // May be used by models other then FHIR, e.g. CCDA represented by a StructureDefinition
             {

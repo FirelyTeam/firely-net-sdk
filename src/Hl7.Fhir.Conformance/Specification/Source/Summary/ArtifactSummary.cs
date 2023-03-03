@@ -16,6 +16,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Errors = Hl7.Fhir.Utility.Error;
 
 namespace Hl7.Fhir.Specification.Source
@@ -165,11 +166,13 @@ namespace Hl7.Fhir.Specification.Source
         /// <summary>Gets a collection of property values.</summary>
         public IEnumerable<object> Values => properties.Values;
 
-        /// <summary>Determines wether the summary contains a property value for the specified property key.</summary>
+        /// <summary>Determines whether the summary contains a property value for the specified property key.</summary>
         public bool ContainsKey(string key) => properties.ContainsKey(key);
 
         /// <summary>Gets the property value associated with the specified property key.</summary>
+#pragma warning disable CS8767
         public bool TryGetValue(string key, out object? value) => properties.TryGetValue(key, out value);
+#pragma warning restore CS8767
 
         #endregion
 

@@ -15,8 +15,8 @@ namespace Hl7.Fhir.Rest
         public bool VerifyFhirVersion;
 
         /// <summary>
-        /// Normally, the FhirClient will derive the FHIR version (e.g. 4.0.3) from the metadata of the assembly. Use this
-        /// member to override this version.
+        /// Normally, the FhirClient will derive the FHIR version (e.g. 4.0.3) the client is communicating with
+        /// from the metadata of the assembly containing the resource POCOs. Use this member to override this version.
         /// </summary>
         public string? ExplicitFhirVersion;
 

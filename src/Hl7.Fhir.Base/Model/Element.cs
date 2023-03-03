@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
                     return Extension?.Any() == true;
                 default:
                     return base.TryGetValue(key, out value);
-            };
+            }
         }
 
         protected override IEnumerable<KeyValuePair<string, object>> GetElementPairs()
