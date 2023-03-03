@@ -10,7 +10,7 @@ namespace Hl7.Fhir.Specification.Source
 {
     public class ZipSource : CommonZipSource, IConformanceSource
     {
-        /// <inheritdoc cref="ZipSource.ZipSource(string, DirectorySourceSettings)"/>
+        /// <inheritdoc cref="ZipSource(string, DirectorySourceSettings)"/>
         public ZipSource(string zipPath) : this(zipPath, DirectorySourceSettings.CreateDefault())
         {
             // Nothing
@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Specification.Source
             // Nothing
         }
 
-        /// <inheritdoc cref="ZipSource.ZipSource(string, string, DirectorySourceSettings)"/>
+        /// <inheritdoc cref="ZipSource(string, string, DirectorySourceSettings)"/>
         public ZipSource(string zipPath, string extractionDirectory) :
             base(ModelInfo.ModelInspector, zipPath, extractionDirectory, DirectorySourceSettings.CreateDefault())
         {
