@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Specification.Source
             _mask = settings.Mask;
         }
 
-        /// <inheritdoc cref="CommonZipSource.CommonZipSource(ModelInspector, string, string, DirectorySourceSettings)"/>
+        /// <inheritdoc cref="CommonZipSource(ModelInspector, string, string, DirectorySourceSettings)"/>
         public CommonZipSource(ModelInspector inspector, string zipPath, string cacheDirectory)
             : this(inspector, zipPath, cacheDirectory, DirectorySourceSettings.CreateDefault()) { }
 

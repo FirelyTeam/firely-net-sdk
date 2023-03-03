@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Specification.Source
             // Exact match on absolute path, or partial match on relative path
             bool isMatch(ArtifactSummary summary)
                 => PathComparer.Equals(summary.Origin, filePath)
-                || summary.Origin.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison);
+                || summary.Origin?.EndsWith(Path.DirectorySeparatorChar + filePath, PathComparison) == true;
 
             // Only consider valid summaries for recognized artifacts
             bool isCandidateArtifact(ArtifactSummary summary)
