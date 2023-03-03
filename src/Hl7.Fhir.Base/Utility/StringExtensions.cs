@@ -140,8 +140,9 @@ namespace Hl7.Fhir.Utility
         /// <returns></returns>
         public static bool MatchesPrefix(this ReadOnlySpan<char> text, ReadOnlySpan<char> prefix)
         {
-            bool wildcard = prefix.EndsWith("*".AsSpan()); //used for value[x] elements
-            if (wildcard) prefix = prefix.TrimEnd('*');
+            ReadOnlySpan<char> asterix = "*".AsSpan();
+            bool wildcard = prefix.EndsWith(asterix); //used for value[x] elements
+            if (wildcard) prefix = prefix.TrimEnd(asterix);
 
             bool found = text.StartsWith(prefix);
             if (!found) return false;
