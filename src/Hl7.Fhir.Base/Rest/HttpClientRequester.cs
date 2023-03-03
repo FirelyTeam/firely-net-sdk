@@ -6,6 +6,10 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Net.Http;
@@ -41,26 +45,25 @@ namespace Hl7.Fhir.Rest
             _disposeHttpClient = false;
         }
 
-        public async Task<EntryResponse> ExecuteAsync(EntryRequest interaction, CancellationToken ct)
+        public async Task<EntryResponse> ExecuteAsync(Bundle.EntryComponent interaction, IFhirSerializationEngine ser, string? mediaTypeFhirVersion, CancellationToken ct)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
           
-            using var requestMessage = interaction.ToHttpRequestMessage(BaseUrl, Settings);
+            using var requestMessage = interaction.ToHttpRequestMessage(
+                BaseUrl, 
+                Settings.PreferredFormat, 
+                ser,
+                Settings.UseFhirVersionInAcceptHeader ? mediaTypeFhirVersion : null, 
+                Settings.UseFormatParameter,
+                Settings.PreferredReturn,
+                Settings.PreferredParameterHandling);
+
             if (Settings.PreferCompressedResponses)
             {
                 requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
                 requestMessage.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
             }
 
-            byte[] outgoingBody = null;
-            if (requestMessage.Content is not null && (requestMessage.Method == HttpMethod.Post || requestMessage.Method == HttpMethod.Put))
-            {
-#if NET6_0_OR_GREATER
-                outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
-#else
-                outgoingBody = await requestMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-#endif
-            }
 
 #if NET6_0_OR_GREATER
             using var response = await Client.SendAsync(requestMessage,ct).ConfigureAwait(false);
@@ -107,3 +110,5 @@ namespace Hl7.Fhir.Rest
     }
 
 }
+
+#nullable restore

@@ -218,5 +218,13 @@ namespace Hl7.Fhir.Utility
                 string.Join(", ", t.GetTypeInfo().GenericTypeParameters.ToList().Select(PrettyTypeName)))
             : t.Name;
         }
+
+        public static string GetProductVersion(Assembly a)
+        {
+            var versionInfo = a.GetCustomAttribute<AssemblyInformationalVersionAttribute>();
+            var cleanedInformationalVersion = new string(versionInfo!.InformationalVersion.TakeWhile(c => c != '+').ToArray());
+
+            return cleanedInformationalVersion;
+        }
     }
 }

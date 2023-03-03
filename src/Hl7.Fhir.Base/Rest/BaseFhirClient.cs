@@ -1035,9 +1035,9 @@ namespace Hl7.Fhir.Rest
             await verifyServerVersion(cancellation);
             
             var request = tx.Entry[0];
-            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, fhirVersion).ConfigureAwait(false);
 
-            EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest, cancellation).ConfigureAwait(false);
+            // TODO: pass in the serializer where it says "null"
+            EntryResponse entryResponse = await Requester.ExecuteAsync(request, null, fhirVersion, cancellation).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
 
             try
@@ -1110,7 +1110,7 @@ namespace Hl7.Fhir.Rest
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
             var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
-            if (noRealBody && isPostOrPut(request)
+            if (noRealBody && BaseFhirClient.isPostOrPut(request)
                 && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Rest
                 return result as TResource;
         }
 
-        private bool isPostOrPut(Bundle.EntryComponent interaction)
+        private static bool isPostOrPut(Bundle.EntryComponent interaction)
         {
             var method = interaction.Request.Method;
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
