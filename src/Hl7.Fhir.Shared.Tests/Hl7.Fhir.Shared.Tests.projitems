@@ -29,7 +29,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Rest\PatchExtensionsTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\ReadAsyncTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\ReferenceExtensionsTest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Rest\RequesterTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SearchAsyncTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\SearchParamsTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\TestRestUrl.cs" />

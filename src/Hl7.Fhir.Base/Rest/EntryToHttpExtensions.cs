@@ -13,17 +13,16 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime;
 
 namespace Hl7.Fhir.Rest
 {
-
-    internal static class EntryToHttpExtensions
+    public static class EntryToHttpExtensions
     {     
         public static HttpRequestMessage ToHttpRequestMessage(
-            this Bundle.EntryComponent entry,
+            this Bundle.RequestComponent entry,
             Uri baseUrl,
+            Resource resource,
+            InteractionType? interaction,
             ResourceFormat serialization,
             IFhirSerializationEngine ser,
             string? fhirVersion,
@@ -33,16 +32,15 @@ namespace Hl7.Fhir.Rest
             SearchParameterHandling? searchParameterHandling,
             bool requestCompressedResponse)
         {
-            var interaction = entry.Annotation<InteractionType>();
-            var method = entry.Request.Method?.toHttpMethod(interaction)
+            var method = entry.Method?.toHttpMethod(interaction)
                         ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(entry));
 
-            var uri = entry.getRequestUrl(baseUrl);
+            var uri = getRequestUrl(entry.Url, baseUrl);
             var request = new HttpRequestMessage(method, uri);
 
             request = setBody(request)
                 .WithDefaultAgent()
-                .WithPreconditions(entry.Request.IfMatch, entry.Request.IfNoneMatch, entry.Request.IfModifiedSince, entry.Request.IfNoneExist);
+                .WithPreconditions(entry.IfMatch, entry.IfNoneMatch, entry.IfModifiedSince, entry.IfNoneExist);
 
             if (!useFormatParameter)
                 request = request.WithAccept(serialization, fhirVersion, requestCompressedResponse);
@@ -66,7 +64,7 @@ namespace Hl7.Fhir.Rest
             {
                 bool isSearchUsingPost = method == HttpMethod.Post && interaction == InteractionType.Search;
 
-                return entry.Resource switch
+                return resource switch
                 {
                     Binary bin => message.WithBinaryContent(bin),
                     Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
@@ -76,11 +74,11 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static Uri getRequestUrl(this Bundle.EntryComponent entry, Uri baseUrl)
+        private static Uri getRequestUrl(string requestUrl, Uri baseUrl)
         {
             // Create an absolute uri when the interaction.Url is relative.
             var uri = new Uri(
-                entry.Request.Url ?? throw new ArgumentException("EntryComponent should specify a Request.Url.", nameof(entry)),
+                requestUrl ?? throw new ArgumentException("EntryComponent should specify a Request.Url.", nameof(requestUrl)),
                 UriKind.RelativeOrAbsolute);
 
             if (!uri.IsAbsoluteUri)

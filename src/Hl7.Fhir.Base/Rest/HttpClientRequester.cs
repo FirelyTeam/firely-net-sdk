@@ -74,8 +74,10 @@ namespace Hl7.Fhir.Rest
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
           
-            using var requestMessage = interaction.ToHttpRequestMessage(
-                BaseUrl, 
+            using var requestMessage = interaction.Request.ToHttpRequestMessage(
+                BaseUrl,
+                interaction.Resource,
+                interaction.Annotation<InteractionType>(),
                 Settings.PreferredFormat, 
                 ser,
                 Settings.UseFhirVersionInAcceptHeader ? mediaTypeFhirVersion : null, 

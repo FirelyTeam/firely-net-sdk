@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Rest
             get => UseAsync ? Prefer.RespondAsync : (Prefer?)ReturnPreference;
             set
             {
-                switch(value)
+                switch (value)
                 {
                     case Prefer.RespondAsync:
                         UseAsync = true;

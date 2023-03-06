@@ -11,25 +11,7 @@ using System;
 
 namespace Hl7.Fhir.Rest
 {
-    internal class EntryRequest
-    {
-        public HTTPVerb? Method { get; set; }
-        public string Url { get; set; }
-        public string ContentType { get; set; }
-        public byte[] RequestBodyContent { get; set; }
-        public EntryRequestHeaders Headers { get; set; }
-        public InteractionType Type { get; set; }
-        public string FhirVersion { get; set; }
-    }
-    
-    internal class EntryRequestHeaders
-    {
-        public string IfMatch { get; set; }
-        public string IfNoneMatch { get; set; }
-        public string IfNoneExist { get; set; }
-        public DateTimeOffset? IfModifiedSince { get; set; }
-        public string Accept { get; set; }
-    }
+   
 
     //Needs to be in sync with Bundle.HTTPVerbs
    
