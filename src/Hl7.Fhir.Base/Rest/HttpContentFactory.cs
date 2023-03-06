@@ -95,36 +95,6 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-#if NETSTANDARD
-        public readonly static HttpMethod HTTP_PATCH = new("PATCH");
-#else
-        public readonly static HttpMethod HTTP_PATCH = HttpMethod.Patch;
-#endif
-
-        /// <summary>
-        /// Converts the <see cref="Bundle.HTTPVerb" /> (e.g. from a <see cref="Bundle.RequestComponent.Method"/>) to a <see cref="HttpMethod"/>. />
-        /// </summary>
-        /// <param name="bundleVerb">The FHIR HTTPVerb.</param>
-        /// <param name="interaction">The kind of FHIR interaction, if known.</param>
-        /// <exception cref="ArgumentException">The given HTTPVerb cannot be translated to a .NET HttpMethod.</exception>
-        public static HttpMethod ToHttpMethod(this Bundle.HTTPVerb bundleVerb, InteractionType? interaction = default)
-        {
-            return bundleVerb switch
-            {
-                Bundle.HTTPVerb.POST => HttpMethod.Post,
-                Bundle.HTTPVerb.GET => HttpMethod.Get,
-                Bundle.HTTPVerb.DELETE => HttpMethod.Delete,
-
-                //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
-                Bundle.HTTPVerb.PUT when interaction == InteractionType.Patch => HTTP_PATCH,
-                Bundle.HTTPVerb.PUT => HttpMethod.Put,
-                Bundle.HTTPVerb.PATCH => HTTP_PATCH,
-                Bundle.HTTPVerb.HEAD => HttpMethod.Head,
-
-                _ => throw new ArgumentException($"There is no known mapping from HTTPVerb {bundleVerb} to a HttpMethod.", nameof(bundleVerb))
-            };
-        }
-
         public static HttpRequestMessage WithAgent(this HttpRequestMessage message, string product, string version)
         {
             message.Headers.UserAgent.Add(new ProductInfoHeaderValue(product, version));
@@ -145,17 +115,24 @@ namespace Hl7.Fhir.Rest
 
         public static HttpRequestMessage WithAccept(this HttpRequestMessage message,
             ResourceFormat serialization,
-            string? contentTypeFhirVersion)
+            string? contentTypeFhirVersion,
+            bool requestCompressedResponse)
         {
             message.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(
                     ContentType.BuildContentType(serialization, contentTypeFhirVersion)));
+
+            if (requestCompressedResponse)
+            {
+                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+            }
+
             return message;
         }
 
 
         public static HttpRequestMessage WithFormatParameter(this HttpRequestMessage message,
-            ResourceFormat serialization,
-            string? contentTypeFhirVersion)
+            ResourceFormat serialization)
         {
             if (message.RequestUri is null)
                 throw new ArgumentException("The request message should have its RequestUri set to add the format parameter.");
@@ -190,18 +167,15 @@ namespace Hl7.Fhir.Rest
             return message;
         }
 
-        public static HttpRequestMessage WithReturnPreference(this HttpRequestMessage message, Prefer preference)
+        public static HttpRequestMessage WithReturnPreference(this HttpRequestMessage message, ReturnPreference? preference)
         {
-            if (preference == Prefer.RespondAsync)
-                throw new ArgumentException($"Async is not a return preference, call {nameof(WithPreferAsync)} instead.");
-
-            message.Headers.Add("Prefer", $"return={preference.GetLiteral()}");
+            if (preference is not null) message.Headers.Add("Prefer", $"return={preference.GetLiteral()}");
             return message;
         }
 
-        public static HttpRequestMessage WithSearchParamHandling(this HttpRequestMessage message, SearchParameterHandling handling)
+        public static HttpRequestMessage WithSearchParamHandling(this HttpRequestMessage message, SearchParameterHandling? handling)
         {
-            message.Headers.Add("Prefer", $"handling={handling.GetLiteral()}");
+            if (handling is not null) message.Headers.Add("Prefer", $"handling={handling.GetLiteral()}");
             return message;
         }
 

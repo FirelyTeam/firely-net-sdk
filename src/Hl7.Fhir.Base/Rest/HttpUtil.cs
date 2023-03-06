@@ -254,6 +254,28 @@ namespace Hl7.Fhir.Rest
         RespondAsync
     }
 
+    public enum ReturnPreference
+    {
+        /// <summary>
+        /// Prefer to receive the full resource in the body after completion of the interaction
+        /// </summary>
+        [EnumLiteral("representation")]
+        Representation,
+
+        /// <summary>
+        /// Prefer to not a receive a body after completion of the interaction
+        /// </summary>
+        [EnumLiteral("minimal")]
+        Minimal,
+
+        /// <summary>
+        /// Prefer to receive an OperationOutcome resource containing hints and warnings about the 
+        /// operation rather than the full resource
+        /// </summary>
+        [EnumLiteral("OperationOutcome")]
+        OperationOutcome
+    }
+
     public enum HTTPVerb
     {
         [EnumLiteral("GET", "http://hl7.org/fhir/http-verb"), Description("GET")]

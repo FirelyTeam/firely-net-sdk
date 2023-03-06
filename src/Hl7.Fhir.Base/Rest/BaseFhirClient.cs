@@ -1104,7 +1104,7 @@ namespace Hl7.Fhir.Rest
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
             var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
             if (noRealBody && BaseFhirClient.isPostOrPut(request)
-                && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
+                && Settings.ReturnPreference == ReturnPreference.Representation && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
                 result = await GetAsync(response.Response.Location).ConfigureAwait(false);

@@ -41,19 +41,45 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public int Timeout = 100 * 1000;
 
+        /// <inheritdoc cref="ReturnPreference"/>
+        [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
+        public Prefer? PreferredReturn
+        {
+            get => UseAsync ? Prefer.RespondAsync : (Prefer?)ReturnPreference;
+            set
+            {
+                switch(value)
+                {
+                    case Prefer.RespondAsync:
+                        UseAsync = true;
+                        break;
+                    case null:
+                        UseAsync = false;
+                        ReturnPreference = null;
+                        break;
+                    default:
+                        ReturnPreference = (ReturnPreference)value;
+                        break;
+                }
+            }
+        }
+
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content, 
-        /// or an OperationOutcome?
+        /// minimal content or an OperationOutcome (see https://hl7.org/fhir/http.html#return).
         /// </summary>
-        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
-        /// <remarks>Setting this to null, will ensure the client does not send a Preferred header</remarks>
-        public Prefer? PreferredReturn = null;
+        /// <remarks>When null, no Prefer header with a "return=" prefix will be sent.</remarks>
+        public ReturnPreference? ReturnPreference = null;
+
+        /// <summary>
+        /// Request the server to use the asynchronous request pattern (https://hl7.org/fhir/async.html).
+        /// </summary>
+        public bool UseAsync = false;
 
         /// <summary>
         /// Should server return which search parameters were supported after executing a search?
-        /// If true, the server should return an error for any unknown or unsupported parameter, otherwise
-        /// the server may ignore any unknown or unsupported parameter.
         /// </summary>
+        /// <remarks>If set to null, no Prefer header with a "handling=" prefix will be sent.</remarks>
         public SearchParameterHandling? PreferredParameterHandling = null;
 
         /// <summary>
@@ -102,13 +128,15 @@ namespace Hl7.Fhir.Rest
             other.ParserSettings = ParserSettings;
             other.PreferCompressedResponses = PreferCompressedResponses;
             other.PreferredFormat = PreferredFormat;
-            other.PreferredReturn = PreferredReturn;
+            other.ReturnPreference = ReturnPreference;
+            other.UseAsync = UseAsync;
             other.Timeout = Timeout;
             other.UseFormatParameter = UseFormatParameter;
             other.UseFhirVersionInAcceptHeader = UseFhirVersionInAcceptHeader;
             other.VerifyFhirVersion = VerifyFhirVersion;
+            other.ExplicitFhirVersion = ExplicitFhirVersion;
             other.PreferredParameterHandling = PreferredParameterHandling;
-            //other.SerializationEngine = SerializationEngine;
+            other.SerializationEngine = SerializationEngine;
         }
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> object that is a copy of the current instance.</summary>
