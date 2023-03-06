@@ -21,36 +21,6 @@ namespace Hl7.Fhir.Rest
 
     internal static class EntryToHttpExtensions
     {
-#if NETSTANDARD
-        public readonly static HttpMethod HTTP_PATCH = new("PATCH");
-#else
-        public readonly static HttpMethod HTTP_PATCH = HttpMethod.Patch;
-#endif
-
-        /// <summary>
-        /// Converts the <see cref="Bundle.HTTPVerb" /> (e.g. from a <see cref="Bundle.RequestComponent.Method"/>) to a <see cref="HttpMethod"/>. />
-        /// </summary>
-        /// <param name="bundleVerb">The FHIR HTTPVerb.</param>
-        /// <param name="interaction">The kind of FHIR interaction, if known.</param>
-        /// <exception cref="ArgumentException">The given HTTPVerb cannot be translated to a .NET HttpMethod.</exception>
-        public static HttpMethod ToHttpMethod(this Bundle.HTTPVerb bundleVerb, InteractionType? interaction = default)
-        {
-            return bundleVerb switch
-            {
-                Bundle.HTTPVerb.POST => HttpMethod.Post,
-                Bundle.HTTPVerb.GET => HttpMethod.Get,
-                Bundle.HTTPVerb.DELETE => HttpMethod.Delete,
-
-                //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
-                Bundle.HTTPVerb.PUT when interaction == InteractionType.Patch => HTTP_PATCH,
-                Bundle.HTTPVerb.PUT => HttpMethod.Put,
-                Bundle.HTTPVerb.PATCH => HTTP_PATCH,
-                Bundle.HTTPVerb.HEAD => HttpMethod.Head,
-
-                _ => throw new ArgumentException($"There is no known mapping from HTTPVerb {bundleVerb} to a HttpMethod.", nameof(bundleVerb))
-            };
-        }
-
         public static Uri GetRequestUrl(this Bundle.EntryComponent entry, Uri baseUrl)
         {
             // Create an absolute uri when the interaction.Url is relative.
@@ -74,62 +44,49 @@ namespace Hl7.Fhir.Rest
             string? fhirVersion, 
             bool useFormatParameter,
             Prefer? preferredReturn,
-            SearchParameterHandling? searchParameterHandling
-            )
+            SearchParameterHandling? searchParameterHandling)
         {
             var interaction = entry.Annotation<InteractionType>();
             var method = entry.Request.Method?.ToHttpMethod(interaction) 
                         ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(entry));
 
             var uri = entry.GetRequestUrl(baseUrl);
-            var location = new RestUrl(uri);
+            var request = new HttpRequestMessage(method, uri);
 
-            if (useFormatParameter)
-                location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(serialization));
-
-            var request = new HttpRequestMessage(method, location.Uri);
-
-            bool isSearchUsingPost = method == HttpMethod.Post && interaction == InteractionType.Search;
-
-            var body = entry.Resource switch
-            {
-                Binary bin => HttpContentFactory.CreateContentFromBinary(bin),
-                Parameters pars when isSearchUsingPost => HttpContentFactory.CreateContentFromParams(pars),
-                Resource resource => HttpContentFactory.CreateFromResource(resource, serialization, ser, fhirVersion),
-                null => null
-            };
-
-            if (body is not null)
-                request.Content = body;
-
-            // Never knew there was an official format for the UserAgent, which we have always ignored.
-            // Ever since we have used the newer .NET HttpRequestMessage, we've been sending incorrect headers instead...
-            // Corrected since 2023-03-03 (5.1?)
-            var productVersion = ReflectionHelper.GetProductVersion(typeof(BaseFhirClient).Assembly);
-            request.Headers.UserAgent.Add(new ProductInfoHeaderValue("firely-sdk-client", productVersion));
+            request = setBody(request)
+                .WithDefaultAgent()
+                .WithPreconditions(entry.Request.IfMatch, entry.Request.IfNoneMatch, entry.Request.IfModifiedSince, entry.Request.IfNoneExist);
 
             if (!useFormatParameter)
-                request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(ContentType.BuildContentType(serialization, fhirVersion)));
-
-            if (entry.Request.IfMatch is not null) request.Headers.IfMatch.Add(EntityTagHeaderValue.Parse(entry.Request.IfMatch));
-            if (entry.Request.IfNoneMatch is not null) request.Headers.IfNoneMatch.Add(EntityTagHeaderValue.Parse(entry.Request.IfNoneMatch));
-            request.Headers.IfModifiedSince = entry.Request.IfModifiedSince?.UtcDateTime;
-            
-            // Add the HL7 defined extension header If-None-Exist
-            if (entry.Request.IfNoneExist != null) request.Headers.Add("If-None-Exist", entry.Request.IfNoneExist);
+                request.WithAccept(serialization, fhirVersion);
+            else
+                request.WithFormatParameter(serialization, fhirVersion);
 
             bool canHaveReturnPreference = interaction is InteractionType.Create or InteractionType.Update or InteractionType.Patch or InteractionType.Transaction;
 
             if (canHaveReturnPreference && preferredReturn is not null && preferredReturn != Prefer.RespondAsync)
-                request.Headers.Add("Prefer", $"return={preferredReturn.GetLiteral()}");
-           
-            if (interaction == InteractionType.Search && searchParameterHandling is not null)
-                request.Headers.Add("Prefer", $"handling={searchParameterHandling.GetLiteral()}");
+                request.WithReturnPreference(preferredReturn.Value);
 
-            if(preferredReturn == Prefer.RespondAsync)
-                    request.Headers.Add("Prefer", preferredReturn.GetLiteral());
+            if (interaction == InteractionType.Search && searchParameterHandling is not null)
+                request.WithSearchParamHandling(searchParameterHandling.Value);
+
+            if (preferredReturn == Prefer.RespondAsync)
+                request.WithPreferAsync();
 
             return request;
+
+            HttpRequestMessage setBody(HttpRequestMessage message)
+            {
+                bool isSearchUsingPost = method == HttpMethod.Post && interaction == InteractionType.Search;
+
+                return entry.Resource switch
+                {
+                    Binary bin => message.WithBinaryContent(bin),
+                    Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
+                    Resource resource => message.WithResourceContent(resource, serialization, ser, fhirVersion),
+                    null => message
+                };
+            }
         }
     }  
 }
