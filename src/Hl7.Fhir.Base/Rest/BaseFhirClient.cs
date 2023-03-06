@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Rest
     public partial class BaseFhirClient : IDisposable
     {
         private readonly ModelInspector _inspector;
-        //private readonly IFhirSerializationEngine _serializationEngine;
+        private readonly IFhirSerializationEngine _serializationEngine;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Rest
             _inspector = inspector;
             Settings = settings ?? new FhirClientSettings();
             Endpoint = getValidatedEndpoint(endpoint);
-            //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, Settings, messageHandler ?? makeDefaultHandler(), messageHandler == null);
             Requester = requester;
@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Rest
             _inspector = inspector;
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, Settings, httpClient);
             Requester = requester;
@@ -94,12 +94,6 @@ namespace Hl7.Fhir.Rest
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
-
-        //internal static IFhirSerializationEngine GetDefaultElementModelSerializers(ModelInspector inspector, ParserSettings? settings = null)
-        //    => new FhirClientElementModelSerializationEngine(inspector, () => settings);
-
-        //private IFhirSerializationEngine getDefaultElementModelSerializers()
-        //    => new FhirClientElementModelSerializationEngine(_inspector, () => Settings.ParserSettings);
 
         internal HttpClientRequester Requester { get; init; }
 
@@ -1036,8 +1030,7 @@ namespace Hl7.Fhir.Rest
             
             var request = tx.Entry[0];
 
-            // TODO: pass in the serializer where it says "null"
-            EntryResponse entryResponse = await Requester.ExecuteAsync(request, null, fhirVersion, cancellation).ConfigureAwait(false);
+            EntryResponse entryResponse = await Requester.ExecuteAsync(request, _serializationEngine, fhirVersion, cancellation).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
 
             try

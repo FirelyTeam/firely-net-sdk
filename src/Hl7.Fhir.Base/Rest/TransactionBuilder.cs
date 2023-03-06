@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder Get(string url)
         {
-            var entry = TransactionBuilder.newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Unspecified);
             var uri = new Uri(url, UriKind.RelativeOrAbsolute);
 
             if (uri.IsAbsoluteUri)
@@ -120,8 +120,8 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder Read(string resourceType, string id, string versionId = null, DateTimeOffset? ifModifiedSince = null)
         {
-            var entry = TransactionBuilder.newEntry(Bundle.HTTPVerb.GET, InteractionType.Read);
-            entry.Request.IfNoneMatch = TransactionBuilder.createIfMatchETag(versionId);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.Read);
+            entry.Request.IfNoneMatch = createIfMatchETag(versionId);
             entry.Request.IfModifiedSince = ifModifiedSince;
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder VRead(string resourceType, string id, string vid)
         {
-            var entry = TransactionBuilder.newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead);
+            var entry = newEntry(Bundle.HTTPVerb.GET, InteractionType.VRead);
             var path = newRestUrl().AddPath(resourceType, id, HISTORY, vid);
             addEntry(entry, path);
 
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder Update(SearchParams condition, Resource body, string versionId = null)
         {
-            var entry = TransactionBuilder.newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
+            var entry = newEntry(Bundle.HTTPVerb.PUT, InteractionType.Update);
             entry.Resource = body;
             entry.Request.IfMatch = TransactionBuilder.createIfMatchETag(versionId);
             var path = newRestUrl().AddPath(body.TypeName);
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public TransactionBuilder Delete(string resourceType, string id)
         {
-            var entry = TransactionBuilder.newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
+            var entry = newEntry(Bundle.HTTPVerb.DELETE, InteractionType.Delete);
             var path = newRestUrl().AddPath(resourceType, id);
             addEntry(entry, path);
 
