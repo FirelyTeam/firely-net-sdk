@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Diagnostics;
 using System.Xml;
+using static Hl7.Fhir.Model.ElementDefinition;
 
 namespace FHIR.Server.Tests
 {

@@ -16,8 +16,8 @@ namespace Hl7.Fhir.Specification.Tests
     {
         internal static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
         {
-            Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
+            Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
             Name = "MedicationUsageWithSimpleQuantitySlice",
             Url = @"http://example.org/fhir/StructureDefinition/MedicationUsageWithSimpleQuantitySlice",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
@@ -26,14 +26,14 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
                             Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
                         }
                     },
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
                     {
                         SliceName = "doseSimpleQuantity",
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     },
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
                     {
                         SliceName = "dosePeriod",
                         Type = new List<ElementDefinition.TypeRefComponent>()

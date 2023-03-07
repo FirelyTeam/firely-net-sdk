@@ -268,13 +268,13 @@ namespace Hl7.Fhir.Model
       [FhirElement("dependencies", InSummary=true, Order=60)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
-      public List<Hl7.Fhir.Model.TestPlan.DependenciesComponent> Dependencies
+      public List<Hl7.Fhir.Model.TestPlan.TestCaseDependenciesComponent> Dependencies
       {
-        get { if(_Dependencies==null) _Dependencies = new List<Hl7.Fhir.Model.TestPlan.DependenciesComponent>(); return _Dependencies; }
+        get { if(_Dependencies==null) _Dependencies = new List<Hl7.Fhir.Model.TestPlan.TestCaseDependenciesComponent>(); return _Dependencies; }
         set { _Dependencies = value; OnPropertyChanged("Dependencies"); }
       }
 
-      private List<Hl7.Fhir.Model.TestPlan.DependenciesComponent> _Dependencies;
+      private List<Hl7.Fhir.Model.TestPlan.TestCaseDependenciesComponent> _Dependencies;
 
       /// <summary>
       /// The actual test to be executed
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(SequenceElement != null) dest.SequenceElement = (Hl7.Fhir.Model.Integer)SequenceElement.DeepCopy();
         if(Scope != null) dest.Scope = new List<Hl7.Fhir.Model.ResourceReference>(Scope.DeepCopy());
-        if(Dependencies != null) dest.Dependencies = new List<Hl7.Fhir.Model.TestPlan.DependenciesComponent>(Dependencies.DeepCopy());
+        if(Dependencies != null) dest.Dependencies = new List<Hl7.Fhir.Model.TestPlan.TestCaseDependenciesComponent>(Dependencies.DeepCopy());
         if(TestRun != null) dest.TestRun = new List<Hl7.Fhir.Model.TestPlan.TestRunComponent>(TestRun.DeepCopy());
         if(TestData != null) dest.TestData = new List<Hl7.Fhir.Model.TestPlan.TestDataComponent>(TestData.DeepCopy());
         if(Assertions != null) dest.Assertions = new List<Hl7.Fhir.Model.TestPlan.AssertionsComponent>(Assertions.DeepCopy());
@@ -451,13 +451,13 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [Serializable]
     [DataContract]
-    [FhirType("TestPlan#Dependencies", IsNestedType=true)]
-    public partial class DependenciesComponent : Hl7.Fhir.Model.BackboneElement
+    [FhirType("TestPlan#TestCaseDependencies", IsNestedType=true)]
+    public partial class TestCaseDependenciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
       /// </summary>
-      public override string TypeName { get { return "TestPlan#Dependencies"; } }
+      public override string TypeName { get { return "TestPlan#TestCaseDependencies"; } }
 
       /// <summary>
       /// Description of the criteria
@@ -505,7 +505,7 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable CopyTo(IDeepCopyable other)
       {
-        var dest = other as DependenciesComponent;
+        var dest = other as TestCaseDependenciesComponent;
 
         if (dest == null)
         {
@@ -520,13 +520,13 @@ namespace Hl7.Fhir.Model
 
       public override IDeepCopyable DeepCopy()
       {
-        return CopyTo(new DependenciesComponent());
+        return CopyTo(new TestCaseDependenciesComponent());
       }
 
       ///<inheritdoc />
       public override bool Matches(IDeepComparable other)
       {
-        var otherT = other as DependenciesComponent;
+        var otherT = other as TestCaseDependenciesComponent;
         if(otherT == null) return false;
 
         if(!base.Matches(otherT)) return false;
@@ -538,7 +538,7 @@ namespace Hl7.Fhir.Model
 
       public override bool IsExactly(IDeepComparable other)
       {
-        var otherT = other as DependenciesComponent;
+        var otherT = other as TestCaseDependenciesComponent;
         if(otherT == null) return false;
 
         if(!base.IsExactly(otherT)) return false;
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#TestRun", IsNestedType=true)]
-    public partial class TestRunComponent : Hl7.Fhir.Model.Reference
+    public partial class TestRunComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
       /// FHIR Type Name
