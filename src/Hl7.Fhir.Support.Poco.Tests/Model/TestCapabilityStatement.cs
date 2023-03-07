@@ -1541,7 +1541,6 @@ namespace Hl7.Fhir.Model
       /// Base System profile for all uses of resource
       /// </summary>
       [FhirElement("profile", InSummary=true, Order=50)]
-      [CLSCompliant(false)]
       [References("StructureDefinition")]
       [DataMember]
       public Hl7.Fhir.Model.ResourceReference Profile
@@ -2774,7 +2773,6 @@ namespace Hl7.Fhir.Model
       /// The defined operation/query
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=50)]
-      [CLSCompliant(false)]
       [References("OperationDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3315,7 +3313,6 @@ namespace Hl7.Fhir.Model
       /// Message supported by this system
       /// </summary>
       [FhirElement("definition", InSummary=true, Order=50)]
-      [CLSCompliant(false)]
       [References("MessageDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3548,7 +3545,6 @@ namespace Hl7.Fhir.Model
       /// Profile that describes the request
       /// </summary>
       [FhirElement("request", InSummary=true, Order=80)]
-      [CLSCompliant(false)]
       [References("StructureDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3564,7 +3560,6 @@ namespace Hl7.Fhir.Model
       /// Profile that describes the response
       /// </summary>
       [FhirElement("response", InSummary=true, Order=90)]
-      [CLSCompliant(false)]
       [References("StructureDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -3825,7 +3820,6 @@ namespace Hl7.Fhir.Model
       /// Constraint on a resource used in the document
       /// </summary>
       [FhirElement("profile", InSummary=true, Order=60)]
-      [CLSCompliant(false)]
       [References("StructureDefinition")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -4580,7 +4574,6 @@ namespace Hl7.Fhir.Model
     /// Profiles for use cases supported
     /// </summary>
     [FhirElement("profile", InSummary=true, Order=320)]
-    [CLSCompliant(false)]
     [References("StructureDefinition")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]

@@ -169,7 +169,7 @@ namespace Hl7.Fhir.ElementModel
 
         private class NoTypeProvider : IStructureDefinitionSummaryProvider
         {
-            public IStructureDefinitionSummary? Provide(string canonical) => null;
+            public IStructureDefinitionSummary Provide(string canonical) => null;
         }
 
     }
