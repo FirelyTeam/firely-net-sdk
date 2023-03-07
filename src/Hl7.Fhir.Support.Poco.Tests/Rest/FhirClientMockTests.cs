@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -22,6 +23,8 @@ namespace Hl7.Fhir.Core.Tests.Rest
     [TestClass]
     public class FhirClientMockTest
     {
+        private static readonly ModelInspector _testInspector = ModelInspector.ForType(typeof(TestPatient));
+        private static readonly string _testVersion = "3.0.1";
 
         private static async T.Task mockVersionResponse(string capabilityStatementResponseJson, string patientResponseJson, bool verifyFhirVersion = true)
         {
@@ -58,15 +61,15 @@ namespace Hl7.Fhir.Core.Tests.Rest
                           It.IsAny<CancellationToken>()))
                        .ReturnsAsync(patientResponse);
 
-            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = verifyFhirVersion }, mock.Object);
-            await client.ReadAsync<Patient>("Patient/1");
+            using var client = new BaseFhirClient(new Uri("http://example.com"), mock.Object, _testInspector, new FhirClientSettings { ExplicitFhirVersion = _testVersion, VerifyFhirVersion = verifyFhirVersion });
+            await client.ReadAsync<TestPatient>("Patient/1");
         }
 
         [TestMethod]
         public async T.Task VerifyFhirVersionTest()
         {
             // the usual use case
-            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + _testVersion + @"""}";
             var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:""}";
             Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson);
 
@@ -83,7 +86,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
             Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson);
             await act
                 .Should().ThrowAsync<NotSupportedException>()
-                .WithMessage($"This client supports FHIR version {ModelInfo.Version} but the server uses version 0.0.0");
+                .WithMessage($"This client supports FHIR version {_testVersion} but the server uses version 0.0.0");
         }
 
         [TestMethod]
@@ -102,7 +105,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         public async T.Task NoVerifyFhirVersionWithIncorrectPatient()
         {
             // No server version check, but incorrect patient. This could be a wrong FHIR version. So we check the extra appended message
-            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + _testVersion + @"""}";
             var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:"", ""unknownMember"": ""value""}";
             Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson, false);
             await act
@@ -114,7 +117,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
         public async T.Task VerifyFhirVersionWithIncorrectPatient()
         {
             // Server version check with an incorrect patient. So the error is legit
-            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + ModelInfo.Version + @"""}";
+            var capabilityStatementJson = @"{""resourceType"": ""CapabilityStatement"",  ""id"": ""example:"", ""fhirVersion"": """ + _testVersion + @"""}";
             var patientResponseJson = @"{""resourceType"": ""Patient"",  ""id"": ""example:"", ""unknownMember"": ""value""}";
             Func<System.Threading.Tasks.Task> act = () => mockVersionResponse(capabilityStatementJson, patientResponseJson, true);
             await act
@@ -144,9 +147,9 @@ namespace Hl7.Fhir.Core.Tests.Rest
                         It.IsAny<CancellationToken>()))
                      .ReturnsAsync(response);
 
-            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+            using var client = new BaseFhirClient(new("http://example.com"), mock.Object, _testInspector, new FhirClientSettings { ExplicitFhirVersion = _testVersion, VerifyFhirVersion = false });
 
-            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+            var patient = await client.SearchAsync<TestPatient>(new string[] { "name=henry" });
 
             Assert.AreEqual("/fhir/*/Bundle/example", client.LastResult.Location);
         }
@@ -173,13 +176,14 @@ namespace Hl7.Fhir.Core.Tests.Rest
                             It.IsAny<CancellationToken>()))
                          .ReturnsAsync(response);
 
-            using var client = new FhirClient("http://example.com", new FhirClientSettings
+            using var client = new BaseFhirClient(new("http://example.com"), mock.Object, _testInspector, new FhirClientSettings
             {
+                ExplicitFhirVersion = _testVersion,
                 VerifyFhirVersion = false,
                 UseFhirVersionInAcceptHeader = useFhirVersionHeader
-            }, mock.Object);
+            });
 
-            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+            var patient = await client.SearchAsync<TestPatient>(new string[] { "name=henry" });
 
             mock
                 .Protected()
@@ -213,7 +217,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             var client = setupClient();
 
-            var methods = typeof(FhirClient).GetMethods(BindingFlags.Instance | BindingFlags.Public);
+            var methods = typeof(BaseFhirClient).GetMethods(BindingFlags.Instance | BindingFlags.Public);
             var method = parameter is null
                 ? methods.SingleOrDefault(m => m.Name == methodName)
                 : methods.SingleOrDefault(m => m.Name == methodName && m.GetParameters().First().ParameterType == parameter.GetType());
@@ -227,7 +231,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
 
             requests.Should().OnlyContain(req => req.RequestUri == expectedRequestUri);
 
-            FhirClient setupClient()
+            BaseFhirClient setupClient()
             {
                 var mock = new Mock<HttpMessageHandler>();
 
@@ -245,7 +249,11 @@ namespace Hl7.Fhir.Core.Tests.Rest
                          .Callback<HttpRequestMessage, CancellationToken>((request, token) => requests.Add(request))
                          .ReturnsAsync(response);
 
-                return new FhirClient(expectedRequestUri.GetLeftPart(UriPartial.Authority), new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+                return new BaseFhirClient(
+                    new(expectedRequestUri.GetLeftPart(UriPartial.Authority)), 
+                    mock.Object,
+                    _testInspector,
+                    new FhirClientSettings {ExplicitFhirVersion = _testVersion, VerifyFhirVersion = false });
             }
         }
 
@@ -280,10 +288,10 @@ namespace Hl7.Fhir.Core.Tests.Rest
                         ItExpr.IsAny<CancellationToken>())
                      .ReturnsAsync(response);
 
-            using var client = new FhirClient("http://example.com", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+            using var client = new BaseFhirClient(new("http://example.com"), mock.Object, _testInspector, new FhirClientSettings {ExplicitFhirVersion = _testVersion, VerifyFhirVersion = false });
             client.RequestHeaders.Authorization = authValue;
 
-            var patient = await client.SearchAsync<Patient>(new string[] { "name=henry" });
+            var patient = await client.SearchAsync<TestPatient>(new string[] { "name=henry" });
         }
 
         [TestMethod]
@@ -306,7 +314,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                         ItExpr.IsAny<CancellationToken>())
                      .ReturnsAsync(response);
 
-            using var client = new FhirClient("http://example.com/fhir/", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+            using var client = new BaseFhirClient(new("http://example.com/fhir/"), mock.Object, _testInspector, new FhirClientSettings {ExplicitFhirVersion = _testVersion, VerifyFhirVersion = false });
 
             var parameters = await client.OperationAsync(new Uri("http://example.com/fhir/$ping")) as Parameters;
 
@@ -317,9 +325,9 @@ namespace Hl7.Fhir.Core.Tests.Rest
         [TestMethod]
         public async T.Task TestCanMockFhirClient()
         {
-            var mock = new Mock<BaseFhirClient>(new object[] { new Uri("http://example.org"), ModelInfo.ModelInspector, FhirClientSettings.CreateDefault() });
-            var _ = await mock.Object.ReadAsync<Patient>("http://example.org/fhir");
-            mock.Verify(c => c.ReadAsync<Patient>(It.IsAny<string>(), null, null, null), Times.Once);
+            var mock = new Mock<BaseFhirClient>(new object[] { new Uri("http://example.org"), _testInspector, FhirClientSettings.CreateDefault() });
+            var _ = await mock.Object.ReadAsync<TestPatient>("http://example.org/fhir");
+            mock.Verify(c => c.ReadAsync<TestPatient>(It.IsAny<string>(), null, null, null), Times.Once);
         }
 
         [TestMethod]
@@ -345,7 +353,7 @@ namespace Hl7.Fhir.Core.Tests.Rest
                 return new HttpResponseMessage();
             }
 
-            using var client = new FhirClient("http://example.com/fhir/", new FhirClientSettings { VerifyFhirVersion = false }, mock.Object);
+            using var client = new BaseFhirClient(new("http://example.com/fhir/"), mock.Object, _testInspector, new FhirClientSettings {ExplicitFhirVersion = _testVersion, VerifyFhirVersion = false });
 
             var cts = new CancellationTokenSource();
 

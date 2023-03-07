@@ -1156,10 +1156,10 @@ namespace Hl7.Fhir.Rest
                 Settings.ParserSettings = new Serialization.ParserSettings() { AllowUnrecognizedEnums = true };
                 serverVersion = await getFhirVersionOfServer(ct);
             }
-            catch (FormatException)
+            catch (FormatException fe)
             {
                 // Mmmm...cannot even read the body. Probably not so good.
-                throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
+                throw Error.NotSupported($"Cannot read the conformance statement of the server to verify FHIR version compatibility: {fe.Message}");
             }
             finally
             {

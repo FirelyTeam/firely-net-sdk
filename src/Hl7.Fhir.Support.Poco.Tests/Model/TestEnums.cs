@@ -793,6 +793,95 @@ namespace Hl7.Fhir.Model
         Unknown,
     }
 
+
+
+    /// <summary>
+    /// Data types allowed to be used for search parameters.
+    /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
+    /// (system: http://hl7.org/fhir/search-param-type)
+    /// </summary>
+    [FhirEnumeration("SearchParamType")]
+    public enum TestSearchParamType
+    {
+        /// <summary>
+        /// Search parameter SHALL be a number (a whole number, or a decimal).
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("number", "http://hl7.org/fhir/search-param-type"), Description("Number")]
+        Number,
+        /// <summary>
+        /// Search parameter is on a date/time. The date format is the standard XML format, though other formats may be supported.
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("date", "http://hl7.org/fhir/search-param-type"), Description("Date/DateTime")]
+        Date,
+        /// <summary>
+        /// Search parameter is a simple string, like a name part. Search is case-insensitive and accent-insensitive. May match just the start of a string. String parameters may contain spaces.
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("string", "http://hl7.org/fhir/search-param-type"), Description("String")]
+        String,
+        /// <summary>
+        /// Search parameter on a coded element or identifier. May be used to search through the text, displayname, code and code/codesystem (for codes) and label, system and key (for identifier). Its value is either a string or a pair of namespace and value, separated by a "|", depending on the modifier used.
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("token", "http://hl7.org/fhir/search-param-type"), Description("Token")]
+        Token,
+        /// <summary>
+        /// A reference to another resource.
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("reference", "http://hl7.org/fhir/search-param-type"), Description("Reference")]
+        Reference,
+        /// <summary>
+        /// A composite search parameter that combines a search on two values together.
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("composite", "http://hl7.org/fhir/search-param-type"), Description("Composite")]
+        Composite,
+        /// <summary>
+        /// A search parameter that searches on a quantity.
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("quantity", "http://hl7.org/fhir/search-param-type"), Description("Quantity")]
+        Quantity,
+        /// <summary>
+        /// A search parameter that searches on a URI (RFC 3986).
+        /// (system: http://hl7.org/fhir/search-param-type)
+        /// </summary>
+        [EnumLiteral("uri", "http://hl7.org/fhir/search-param-type"), Description("URI")]
+        Uri,
+    }
+
+    /// <summary>
+    /// The impact of the content of a message.
+    /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
+    /// (system: http://hl7.org/fhir/message-significance-category)
+    /// </summary>
+    [FhirEnumeration("MessageSignificanceCategory")]
+    public enum TestMessageSignificanceCategory
+    {
+        /// <summary>
+        /// The message represents/requests a change that should not be processed more than once; e.g., making a booking for an appointment.
+        /// (system: http://hl7.org/fhir/message-significance-category)
+        /// </summary>
+        [EnumLiteral("Consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+        Consequence,
+        /// <summary>
+        /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
+        /// (system: http://hl7.org/fhir/message-significance-category)
+        /// </summary>
+        [EnumLiteral("Currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+        Currency,
+        /// <summary>
+        /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
+        /// (system: http://hl7.org/fhir/message-significance-category)
+        /// </summary>
+        [EnumLiteral("Notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+        Notification,
+    }
+
+
 }
 
 // end of file
