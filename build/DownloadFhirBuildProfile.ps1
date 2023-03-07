@@ -19,8 +19,8 @@ $srcdir = "$baseDir\src";
 
 # These are all files from the spec that we need. Narratives are stripped after download
 $allFiles = @("conceptmaps.xml",
-                "extension-definitions.xml", 
-				"namingsystem-registry.xml",
+                #"extension-definitions.xml", 
+				#"namingsystem-registry.xml",
 				"profiles-others.xml", 
 				"profiles-resources.xml", 
 				"profiles-types.xml" 
@@ -347,14 +347,14 @@ $specificationDir = New-TemporaryDirectory
 Write-Host -ForegroundColor White "Copy files to project..."
 
 # Copy the files necessary for the specification library (specification.zip / data)
-CopySpecFile "conceptmaps.xml" $specificationDir
-CopySpecFile "extension-definitions.xml" $specificationDir
-CopySpecFile "namingsystem-registry.xml" $specificationDir
-CopySpecFile "profiles-others.xml" $specificationDir
-CopySpecFile "profiles-resources.xml" $specificationDir
-CopySpecFile "profiles-types.xml" $specificationDir
-CopySpecFile "search-parameters.xml" $specificationDir
-CopySpecFile "valuesets.xml" $specificationDir
+foreach($specFile in $allFiles)			
+{
+	if ($specFile.EndsWith(".xml")) 
+	{
+		Write-Host "Copy $specFile to $specificationDir"
+		CopySpecFile $specFile $specificationDir
+	}
+}
 
 # Add example files used for testing
 
