@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Specification.Source
             // Nothing
         }
 
-        /// <inheritdoc cref="ZipSource.ZipSource(string, string, DirectorySourceSettings)"/>
+        /// <inheritdoc cref="ZipSource(string, string, DirectorySourceSettings)"/>
         public ZipSource(string zipPath, string extractionDirectory) :
             this(zipPath, extractionDirectory, DirectorySourceSettings.CreateDefault())
         {
