@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Rest
 
         internal static HttpContent CreateContentFromResource(Resource resource, ResourceFormat serialization, IFhirSerializationEngine ser, string? mimeTypeFhirVersion)
         {
-            var lastUpdated = resource.Meta.LastUpdated;
+            var lastUpdated = resource.Meta?.LastUpdated;
 
             switch (serialization)
             {
@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Rest
             else
                 baseUri.Query = queryToAppend;
 
+            message.RequestUri = baseUri.Uri;
             return message;
         }
 

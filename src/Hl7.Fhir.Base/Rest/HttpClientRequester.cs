@@ -74,18 +74,12 @@ namespace Hl7.Fhir.Rest
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
           
-            using var requestMessage = interaction.Request.ToHttpRequestMessage(
+            using var requestMessage = interaction.ToHttpRequestMessage(
                 BaseUrl,
-                interaction.Resource,
-                interaction.Annotation<InteractionType>(),
-                Settings.PreferredFormat, 
                 ser,
-                Settings.UseFhirVersionInAcceptHeader ? mediaTypeFhirVersion : null, 
-                Settings.UseFormatParameter,
-                Settings.ReturnPreference,
-                Settings.UseAsync,
-                Settings.PreferredParameterHandling,
-                Settings.PreferCompressedResponses);
+                Settings.UseFhirVersionInAcceptHeader ? mediaTypeFhirVersion : null,
+                Settings
+                );
 
 #if NET6_0_OR_GREATER
             using var response = await Client.SendAsync(requestMessage,ct).ConfigureAwait(false);

@@ -19,52 +19,47 @@ namespace Hl7.Fhir.Rest
     public static class EntryToHttpExtensions
     {     
         public static HttpRequestMessage ToHttpRequestMessage(
-            this Bundle.RequestComponent entry,
+            this Bundle.EntryComponent entry,
             Uri baseUrl,
-            Resource resource,
-            InteractionType? interaction,
-            ResourceFormat serialization,
             IFhirSerializationEngine ser,
             string? fhirVersion,
-            bool useFormatParameter,
-            ReturnPreference? returnPreference,
-            bool useAsync,
-            SearchParameterHandling? searchParameterHandling,
-            bool requestCompressedResponse)
+            FhirClientSettings settings)
         {
-            var method = entry.Method?.toHttpMethod(interaction)
-                        ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(entry));
+            var request = entry.Request;
+            var interaction = entry.Annotation<InteractionType>();
+            var method = request.Method?.toHttpMethod(interaction)
+                        ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(request));
+            var serialization = settings.PreferredFormat;
 
-            var uri = getRequestUrl(entry.Url, baseUrl);
-            var request = new HttpRequestMessage(method, uri);
+            var uri = getRequestUrl(request.Url, baseUrl);
+            var message = new HttpRequestMessage(method, uri);
 
-            request = setBody(request)
+            message = setBody(message)
                 .WithDefaultAgent()
-                .WithPreconditions(entry.IfMatch, entry.IfNoneMatch, entry.IfModifiedSince, entry.IfNoneExist);
+                .WithPreconditions(request.IfMatch, request.IfNoneMatch, request.IfModifiedSince, request.IfNoneExist);
 
-            if (!useFormatParameter)
-                request = request.WithAccept(serialization, fhirVersion, requestCompressedResponse);
-            else
-                request = request.WithFormatParameter(serialization);
+            message = settings.UseFormatParameter
+                ? message.WithFormatParameter(serialization)
+                : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
 
             bool canHaveReturnPreference = interaction is InteractionType.Create or InteractionType.Update or InteractionType.Patch or InteractionType.Transaction;
 
             if (canHaveReturnPreference)
-                request = request.WithReturnPreference(returnPreference);
+                message = message.WithReturnPreference(settings.ReturnPreference);
 
             if (interaction == InteractionType.Search)
-                request = request.WithSearchParamHandling(searchParameterHandling);
+                message = message.WithSearchParamHandling(settings.PreferredParameterHandling);
 
-            if (useAsync)
-                request = request.WithPreferAsync();
+            if (settings.UseAsync)
+                message = message.WithPreferAsync();
 
-            return request;
+            return message;
 
             HttpRequestMessage setBody(HttpRequestMessage message)
             {
                 bool isSearchUsingPost = method == HttpMethod.Post && interaction == InteractionType.Search;
 
-                return resource switch
+                return entry.Resource switch
                 {
                     Binary bin => message.WithBinaryContent(bin),
                     Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
