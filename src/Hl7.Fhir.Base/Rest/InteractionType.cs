@@ -6,16 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Utility;
-using System;
-
 namespace Hl7.Fhir.Rest
 {
-   
-
     //Needs to be in sync with Bundle.HTTPVerbs
-   
-    
     public enum InteractionType
     {
         Search,
