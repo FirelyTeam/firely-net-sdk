@@ -12,6 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Net;
 using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
@@ -59,13 +60,15 @@ namespace Hl7.Fhir.Rest
             {
                 bool isSearchUsingPost = method == HttpMethod.Post && interaction == InteractionType.Search;
 
-                return entry.Resource switch
+                message = entry.Resource switch
                 {
                     Binary bin => message.WithBinaryContent(bin),
                     Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
                     Resource resource => message.WithResourceContent(resource, serialization, ser, fhirVersion),
                     null => message
                 };
+
+                return message.WithRequestCompression(settings.RequestBodyCompressionMethod);
             }
         }
 

@@ -11,6 +11,7 @@
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
@@ -53,6 +54,9 @@ namespace Hl7.Fhir.Rest
 
         [Obsolete("Use VERSION_CONTENT_HEADER_NAME instead.")]
         public const string VERSION_CONTENT_HEADER = "fhirVersion=";
+
+        public static string DecompressionMethodHeaderValue(DecompressionMethods method) =>
+            method.ToString().ToLowerInvariant();
 
         /// <summary>
         /// Converts a format string to a ResourceFormat

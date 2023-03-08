@@ -17,7 +17,10 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -114,6 +117,29 @@ namespace Hl7.Fhir.Test
         }
 
         [TestMethod]
+        [DataRow(false, DecompressionMethods.None)]
+        [DataRow(true, DecompressionMethods.GZip)]
+        public void ConvertCompressionRequestBody(bool compress, DecompressionMethods method)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var settings = new FhirClientSettings { CompressRequestBody = compress };
+#pragma warning restore CS0618 // Type or member is obsolete
+            settings.RequestBodyCompressionMethod.Should().Be(method);
+        }
+
+        [TestMethod]
+        [DataRow(DecompressionMethods.None, false)]
+        [DataRow(DecompressionMethods.GZip, true)]
+        [DataRow(DecompressionMethods.Deflate, true)]
+        public void ConvertRequestBodyCompression(DecompressionMethods method, bool compress)
+        {
+            var settings = new FhirClientSettings { RequestBodyCompressionMethod = method };
+#pragma warning disable CS0618 // Type or member is obsolete
+            settings.CompressRequestBody.Should().Be(compress);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        [TestMethod]
         public void TestRequestUrl()
         {
             var url = new Uri(ENDPOINT, "test");
@@ -180,6 +206,12 @@ namespace Hl7.Fhir.Test
             var settings = new FhirClientSettings { PreferredFormat = fmt };
             var request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
             request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
+            request.Headers.AcceptEncoding.Should().BeEmpty();
+
+            settings.PreferCompressedResponses = true;
+            request = makeMessage(settings: settings, method: Bundle.HTTPVerb.POST);
+            request.Headers.Accept.Single().ToString().Should().Be(ContentType.BuildContentType(fmt, TESTVERSION));
+            request.Headers.AcceptEncoding.Select(h => h.Value).Should().BeEquivalentTo("gzip", "deflate");
         }
 
         [TestMethod]
@@ -201,6 +233,7 @@ namespace Hl7.Fhir.Test
             Assert.AreEqual("test body", await entryRequest.Content.ReadAsStringAsync());
         }
 
+
         [TestMethod]
         [DataRow(false)]
         [DataRow(true)]
@@ -211,17 +244,41 @@ namespace Hl7.Fhir.Test
                 Active = true,
             };
 
-            if (hasLu) pat.Meta = new Meta { LastUpdated = DateTimeOffset.Now };
+            var now = DateTimeOffset.Now;
+
+            if (hasLu) pat.Meta = new Meta { LastUpdated = now };
 
             var entryRequest = makeMessage(resource: pat, method: Bundle.HTTPVerb.POST);
             entryRequest.Content!.Headers.ContentType!.ToString().Should().Be(ContentType.BuildContentType(ResourceFormat.Xml, TESTVERSION));
             var xml = await entryRequest.Content.ReadAsStringAsync();
 
             xml.Should().StartWith("<Patient");
+            
             if (!hasLu)
-                xml.Should().NotContain("<lastUpdated>");
+                entryRequest.Content!.Headers.LastModified.Should().Be(null);
             else
-                xml.Should().Contain("<lastUpdated");
+                entryRequest.Content!.Headers.LastModified.Should().Be(now);
+        }
+
+        [TestMethod]
+        public async Task TestBodyCompression()
+        {
+            var pat = new TestPatient
+            {
+                Active = true,
+            };
+
+            var settings = new FhirClientSettings {  RequestBodyCompressionMethod = DecompressionMethods.GZip };
+            var entryRequest = makeMessage(settings: settings, resource: pat, method: Bundle.HTTPVerb.POST);
+
+            entryRequest.Content!.Headers.ContentType!.ToString().Should().Be(ContentType.BuildContentType(ResourceFormat.Xml, TESTVERSION));
+            entryRequest.Content!.Headers.ContentEncoding.Single().Should().Be("gzip");
+
+            using var compressed = await entryRequest.Content.ReadAsStreamAsync();
+            using var uncompressed = new GZipStream(compressed, CompressionMode.Decompress, false);
+            using var stream = new StreamReader(uncompressed);
+            var xml = stream.ReadToEnd();
+            xml.Should().StartWith("<Patient");
         }
 
         [TestMethod]

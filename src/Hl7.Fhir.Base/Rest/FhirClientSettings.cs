@@ -3,6 +3,7 @@
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
@@ -90,11 +91,22 @@ namespace Hl7.Fhir.Rest
         public bool PreferCompressedResponses;
 
         /// <summary>
-        /// Compress any Request bodies 
-        /// (warning, if a server does not handle compressed requests you will get a 415 response)
+        /// Compress any Request bodies using GZip.
         /// </summary>
-        [Obsolete("Compressing bodies is no longer supported, and this setting is ignored.")]
-        public bool CompressRequestBody;
+        /// <remarks>If a server does not handle compressed requests using GZip, it will return a 415 response.</remarks>
+        [Obsolete("Use RequestBodyCompressionMethod instead.")]
+        public bool CompressRequestBody
+        {
+            get => RequestBodyCompressionMethod is not DecompressionMethods.None;
+            set => RequestBodyCompressionMethod = value ? DecompressionMethods.GZip : DecompressionMethods.None;
+        }
+
+        /// <summary>
+        /// Compress request bodies using the selected method. Note: only <see cref="DecompressionMethods.Deflate"/> and
+        /// <see cref="DecompressionMethods.GZip"/> are currently supported.
+        /// </summary>
+        /// <remarks>If a server does not handle compressed requests using this method, it will return a 415 response.</remarks>
+        public DecompressionMethods RequestBodyCompressionMethod = DecompressionMethods.None;
 
         /// <summary>
         /// Can be used to specifically override the serialization behaviour of the FhirClient to turn

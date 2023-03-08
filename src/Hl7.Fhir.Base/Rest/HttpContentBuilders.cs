@@ -18,6 +18,7 @@ using Hl7.Fhir.Serialization;
 using System;
 using System.Text.Unicode;
 using System.Text;
+using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
@@ -77,6 +78,13 @@ namespace Hl7.Fhir.Rest
             return message;
         }
 
+        public static HttpRequestMessage WithRequestCompression(this HttpRequestMessage message, DecompressionMethods method)
+        {
+            if (method is not DecompressionMethods.None)
+                message.Content = new CompressedContent(message.Content, method);
+
+            return message;
+        }
 
         internal static HttpContent CreateContentFromResource(Resource resource, ResourceFormat serialization, IFhirSerializationEngine ser, string? mimeTypeFhirVersion)
         {
@@ -112,7 +120,6 @@ namespace Hl7.Fhir.Rest
             return message.WithAgent(FIRELY_SDK_CLIENT_AGENT, productVersion);
         }
 
-
         public static HttpRequestMessage WithAccept(this HttpRequestMessage message,
             ResourceFormat serialization,
             string? contentTypeFhirVersion,
@@ -123,8 +130,8 @@ namespace Hl7.Fhir.Rest
 
             if (requestCompressedResponse)
             {
-                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue("deflate"));
+                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue(ContentType.DecompressionMethodHeaderValue(DecompressionMethods.GZip)));
+                message.Headers.AcceptEncoding.Add(new StringWithQualityHeaderValue(ContentType.DecompressionMethodHeaderValue(DecompressionMethods.Deflate)));
             }
 
             return message;
