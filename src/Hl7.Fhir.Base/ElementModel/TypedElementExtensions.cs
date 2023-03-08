@@ -58,7 +58,7 @@ namespace Hl7.Fhir.ElementModel
             }
 
             return childrenL.Zip(childrenR,
-                        (childL, childR) => childL.Name == childR.Name && childL.IsExactlyEqualTo(childR)).All(t => t);
+                        (childL, childR) => childL.Name == childR.Name && childL.IsExactlyEqualTo(childR, ignoreOrder)).All(t => t);
         }
 
         /// <summary>
