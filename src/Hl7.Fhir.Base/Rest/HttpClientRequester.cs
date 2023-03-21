@@ -45,31 +45,6 @@ namespace Hl7.Fhir.Rest
             _disposeHttpClient = false;
         }
 
-//        public async Task<EntryResponse> ExecuteAsync(HttpRequestMessage message, IFhirSerializationEngine ser, string? mediaTypeFhirVersion, CancellationToken ct)
-//        {
-
-//#if NET6_0_OR_GREATER
-//            using var response = await Client.SendAsync(message,ct).ConfigureAwait(false);
-//#else
-//            using var response = await Client.SendAsync(message).ConfigureAwait(false);
-//#endif
-
-//            try
-//            {
-//#if NET6_0_OR_GREATER
-//                var body = await response.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
-//#else
-//                var body = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-//#endif
-//                return response.ToEntryResponse(body);
-//            }
-//            catch (AggregateException ae)
-//            {
-//                throw ae.GetBaseException();
-//            }
-//        }
-
-
         public async Task<EntryResponse> ExecuteAsync(Bundle.EntryComponent interaction, IFhirSerializationEngine ser, string? mediaTypeFhirVersion, CancellationToken ct)
         {
             if (interaction == null) throw Error.ArgumentNull(nameof(interaction));

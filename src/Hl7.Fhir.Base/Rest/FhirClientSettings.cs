@@ -134,9 +134,6 @@ namespace Hl7.Fhir.Rest
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            other.CompressRequestBody = CompressRequestBody;
-#pragma warning restore CS0618 // Type or member is obsolete
             other.ParserSettings = ParserSettings;
             other.PreferCompressedResponses = PreferCompressedResponses;
             other.PreferredFormat = PreferredFormat;
@@ -149,6 +146,7 @@ namespace Hl7.Fhir.Rest
             other.ExplicitFhirVersion = ExplicitFhirVersion;
             other.PreferredParameterHandling = PreferredParameterHandling;
             other.SerializationEngine = SerializationEngine;
+            other.RequestBodyCompressionMethod = RequestBodyCompressionMethod;
         }
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> object that is a copy of the current instance.</summary>

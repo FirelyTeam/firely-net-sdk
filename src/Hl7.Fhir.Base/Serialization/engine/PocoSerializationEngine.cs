@@ -30,9 +30,9 @@ namespace Hl7.Fhir.Serialization
             _inspector = inspector;
         }
 
-        public virtual Resource? DeserializeFromXml(string data) => new BaseFhirXmlPocoDeserializer(_inspector).DeserializeResource(data);
+        public Resource? DeserializeFromXml(string data) => new BaseFhirXmlPocoDeserializer(_inspector).DeserializeResource(data);
 
-        public virtual Resource? DeserializeFromJson(string data) => JsonSerializer.Deserialize<Resource>(data, _options)!;
+        public Resource? DeserializeFromJson(string data) => JsonSerializer.Deserialize<Resource>(data, _options)!;
 
         public string SerializeToXml(Resource instance) => new BaseFhirXmlPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
 

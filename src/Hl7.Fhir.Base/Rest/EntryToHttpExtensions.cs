@@ -17,7 +17,7 @@ using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class EntryToHttpExtensions
+    internal static class EntryToHttpExtensions
     {     
         public static HttpRequestMessage ToHttpRequestMessage(
             this Bundle.EntryComponent entry,

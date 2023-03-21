@@ -105,11 +105,11 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestTransactionWithAbsoluteUri()
         {
-            var observation = new TestPatient();
+            var patient = new TestPatient();
             var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
            
             var transaction = new TransactionBuilder(endpoint)
-                .Create(observation)
+                .Create(patient)
                 .Get("Patient/1");
             var bundle = transaction.ToBundle();
             bundle.Type = Bundle.BundleType.Transaction;

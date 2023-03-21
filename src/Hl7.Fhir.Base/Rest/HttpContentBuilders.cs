@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Rest
             return message;
         }
 
-        internal static HttpContent CreateContentFromBinary(Binary b)
+        public static HttpContent CreateContentFromBinary(Binary b)
         {
             var content = new ByteArrayContent(b.Data ?? b.Content);
             content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType);
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Rest
             return message;
         }
 
-        internal static HttpContent CreateContentFromParams(Parameters pars)
+        public static HttpContent CreateContentFromParams(Parameters pars)
         {
             var bodyParameters = pars.Parameter
                 .Where(p => p.Name is not null && p.Value is not null)
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Rest
             return content;
         }
 
-        internal static HttpContent CreateContentFromJson(string json, DateTimeOffset? lastUpdated, string? mimeTypeFhirVersion)
+        public static HttpContent CreateContentFromJson(string json, DateTimeOffset? lastUpdated, string? mimeTypeFhirVersion)
         {
             var content = new ByteArrayContent(Encoding.UTF8.GetBytes(json));
             content.Headers.ContentType = ContentType.BuildMediaType(ResourceFormat.Json, mimeTypeFhirVersion);
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Rest
             return content;
         }
 
-        internal static HttpContent CreateContentFromXml(string xml, DateTimeOffset? lastUpdated, string? mimeTypeFhirVersion)
+        public static HttpContent CreateContentFromXml(string xml, DateTimeOffset? lastUpdated, string? mimeTypeFhirVersion)
         {
             var content = new ByteArrayContent(Encoding.UTF8.GetBytes(xml));
             content.Headers.ContentType = ContentType.BuildMediaType(ResourceFormat.Xml, mimeTypeFhirVersion);
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Rest
             return message;
         }
 
-        internal static HttpContent CreateContentFromResource(Resource resource, ResourceFormat serialization, IFhirSerializationEngine ser, string? mimeTypeFhirVersion)
+        public static HttpContent CreateContentFromResource(Resource resource, ResourceFormat serialization, IFhirSerializationEngine ser, string? mimeTypeFhirVersion)
         {
             var lastUpdated = resource.Meta?.LastUpdated;
 
@@ -109,15 +109,15 @@ namespace Hl7.Fhir.Rest
             return message;
         }
 
-        internal const string FIRELY_SDK_CLIENT_AGENT = "firely-sdk-client";
+        private const string FIRELY_SDK_CLIENT_AGENT = "firely-sdk-client";
+        private static readonly string PRODUCT_VERSION = ReflectionHelper.GetProductVersion(typeof(BaseFhirClient).Assembly);
 
         public static HttpRequestMessage WithDefaultAgent(this HttpRequestMessage message)
         {
             // Never knew there was an official format for the UserAgent, which we have always ignored.
             // Ever since we have used the newer .NET HttpRequestMessage, we've been sending incorrect headers instead...
             // Corrected since 2023-03-03 (5.1?)
-            var productVersion = ReflectionHelper.GetProductVersion(typeof(BaseFhirClient).Assembly);
-            return message.WithAgent(FIRELY_SDK_CLIENT_AGENT, productVersion);
+            return message.WithAgent(FIRELY_SDK_CLIENT_AGENT, PRODUCT_VERSION);
         }
 
         public static HttpRequestMessage WithAccept(this HttpRequestMessage message,
