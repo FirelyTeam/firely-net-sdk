@@ -813,6 +813,9 @@ namespace Hl7.Fhir.Specification.Snapshot
                     newElement.Extension.Clear();
                 }
 
+                // Do not inherit mappings from base type.
+                newElement.Mapping.Clear();
+
                 // [WMR 20190130] STU3: Base component of new elements is empty
                 // [WMR 20190130] R4: Base components of new elements refers to self (.Base.Path = .Path)
                 // [WMR 20190723] FIX: Initialize base cardinality from current diff element

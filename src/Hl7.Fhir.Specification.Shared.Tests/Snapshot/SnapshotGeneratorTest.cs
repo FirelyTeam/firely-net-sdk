@@ -36,12 +36,15 @@ using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Xml;
+using ResourceType = Hl7.Fhir.Model.ResourceType;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Tests
@@ -9799,6 +9802,158 @@ namespace Hl7.Fhir.Specification.Tests
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
+        }
+
+        private static IEnumerable<object[]> getResourceTypes()
+        {
+            foreach (ResourceType resourceType in Enum.GetValues<ResourceType>())
+            {
+                yield return new object[] { resourceType };
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(getResourceTypes), DynamicDataSourceType.Method)]
+        public async T.Task TestElementDefinitionMappingInheritanceAllTypes(ResourceType type)
+        {
+            // Arrange
+            var sd = new StructureDefinition()
+            {
+                Url = $"http://fire.ly/fhir/StructureDefiniton/Test{type}",
+                Name = $"Test{type}",
+                Status = PublicationStatus.Active,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = type.GetLiteral(),
+                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{type}",
+                Differential = new StructureDefinition.DifferentialComponent()
+            };
+
+            var multiResolver = new MultiResolver(_testResolver, new InMemoryResourceResolver(sd));
+            var baseSd = await multiResolver.FindStructureDefinitionAsync(sd.BaseDefinition);
+            baseSd.Should().NotBeNull();
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            // Act
+            var elementDefinitions = await _generator.GenerateAsync(sd);
+
+            // Assert
+            foreach (var element in elementDefinitions)
+            {
+                var baseElement = baseSd.Differential.Element.FirstOrDefault(eld => eld.ElementId == element.ElementId);
+                
+                if (baseElement != null)
+                    element.Mapping.Should().BeEquivalentTo(baseElement.Mapping);
+            }
+        }
+
+        private static IEnumerable<object[]> getResourceTypeElements()
+        {
+            var resolver = ZipSource.CreateValidationSource();
+
+            foreach (ResourceType resourceType in Enum.GetValues<ResourceType>())
+            {
+                var sd = resolver.FindStructureDefinition($"http://hl7.org/fhir/StructureDefinition/{resourceType}");
+
+                foreach (var element in sd.Differential.Element)
+                {
+                    yield return new object[] { resourceType, element.ElementId, 0 };
+                    yield return new object[] { resourceType, element.ElementId, 3 };
+                }
+            }
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(getResourceTypeElements), DynamicDataSourceType.Method)]
+        public async T.Task TestElementDefinitionMappingInheritance(ResourceType type, string elementId, int newMappingCount)
+        {
+            // Arrange
+            var mapping = new List<ElementDefinition.MappingComponent>();
+
+            for (var index = 1; index <= newMappingCount; index++)
+                mapping.Add(new ElementDefinition.MappingComponent()
+                {
+                    Identity = $"test-id-{index}",
+                    Map = $"test-mapping-{index}"
+                });
+
+            var sd = new StructureDefinition()
+            {
+                Url = $"http://fire.ly/fhir/StructureDefiniton/Test{type}",
+                Name = $"Test{type}",
+                Status = PublicationStatus.Active,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Abstract = false,
+                Type = type.GetLiteral(),
+                BaseDefinition = $"http://hl7.org/fhir/StructureDefinition/{type}",
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition()
+                        {
+                            Path = elementId,
+                            ElementId = elementId,
+                            Mapping = mapping
+                        }
+                    }
+                }
+            };
+
+            var multiResolver = new MultiResolver(_testResolver, new InMemoryResourceResolver(sd));
+            var baseSd = await multiResolver.FindStructureDefinitionAsync(sd.BaseDefinition);
+            baseSd.Should().NotBeNull();
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            // Act
+            var elementDefinitions = await _generator.GenerateAsync(sd);
+
+            // Assert
+            var element = elementDefinitions.FirstOrDefault(eld => eld.ElementId == elementId);
+            element.Should().NotBeNull();
+
+            var baseElement = baseSd.Differential.Element.FirstOrDefault(eld => eld.ElementId == element.ElementId);
+            baseElement.Should().NotBeNull();
+
+            var baseMapping = new List<ElementDefinition.MappingComponent>();
+
+            if (element.IsRootElement())
+            {
+                var parent = baseSd;
+
+                // Root element includes mappings from the root element of all base profiles
+                while (parent.BaseDefinition != null)
+                {
+                    var rootElement = parent.Differential.Element.FirstOrDefault(eld => eld.IsRootElement());
+
+                    foreach (var item in rootElement.Mapping)
+                        baseMapping.Add(item);
+
+                    parent = await multiResolver.FindStructureDefinitionAsync(parent.BaseDefinition);
+                }
+            }
+            else
+            {
+                baseMapping.AddRange(baseElement.Mapping);
+            }
+
+            Debug.WriteLine($"Base mapping: {baseMapping.Count}");
+            foreach (var item in baseMapping)
+                Debug.WriteLine($"\t{item.Identity}: {item.Map}");
+
+            Debug.WriteLine($"Element mapping: {element.Mapping.Count}");
+            foreach (var item in element.Mapping)
+                Debug.WriteLine($"\t{item.Identity}: {item.Map}");
+
+            element.Mapping.Should().HaveCount(baseMapping.Count + mapping.Count);
+
+            foreach (var item in baseElement.Mapping)
+                element.Mapping.Should().ContainEquivalentOf(item);
+
+            foreach (var item in mapping)
+                element.Mapping.Should().ContainEquivalentOf(item);
         }
     }
 }
