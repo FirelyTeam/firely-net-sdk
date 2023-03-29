@@ -186,7 +186,8 @@ namespace Hl7.Fhir.Core.Tests.ElementModel
 
             var inspector = ModelInfo.ModelInspector;
             var aResourceMapping = inspector.FindClassMapping(typeof(Observation));
-            var fiveWsProp = aResourceMapping.PropertyMappings.Where(p => p.FiveWs != null && p.FiveWs == "FiveWs.subject").First();
+            var fiveWsProp = aResourceMapping.PropertyMappings.Where(p => p.FiveWs != null && p.FiveWs.StartsWith("FiveWs.subject")).FirstOrDefault();
+            fiveWsProp.Should().NotBeNull("There should be a fiveW mapping for subject");
 
             var subjectProp = fiveWsProp.GetValue(poco) as ResourceReference;
 
