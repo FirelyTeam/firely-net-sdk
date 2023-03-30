@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             using (var client = new FhirClient(_endpoint))
             {
                 client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.PreferredReturn = Prefer.ReturnRepresentation;
+                client.Settings.ReturnPreference = ReturnPreference.Representation;
                 await updateDelete(client);
             }
         }

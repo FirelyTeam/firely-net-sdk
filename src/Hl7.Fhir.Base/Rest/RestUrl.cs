@@ -14,8 +14,8 @@ namespace Hl7.Fhir.Rest
 {
     public class RestUrl
     {
-        private UriBuilder _builder;
-        private UriParamList _parameters = new UriParamList();
+        private readonly UriBuilder _builder;
+        private readonly UriParamList _parameters = new();
 
         public RestUrl(RestUrl url) : this(url.Uri)
         {
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Rest
             if (path == null) throw Error.ArgumentNull(nameof(path));
 
             if (path.IsAbsoluteUri)
-                throw new ArgumentException("Can only navigate to relative paths", "path");
+                throw new ArgumentException("Can only navigate to relative paths", nameof(path));
 
             return new RestUrl(new Uri(this.Uri, path));
         }
