@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Only allow data when
       /// </summary>
-      [FhirElement("enableWhen", InSummary=true, IsModifier=true, Order=100)]
+      [FhirElement("enableWhen", IsModifier=true, Order=100)]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Questionnaire.EnableWhenComponent> EnableWhen

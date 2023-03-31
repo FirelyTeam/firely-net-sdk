@@ -1346,7 +1346,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to
       /// </summary>
-      [FhirElement("relationship", InSummary=true, IsModifier=true, Order=70)]
+      [FhirElement("relationship", IsModifier=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
@@ -2082,7 +2082,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// related-to | equivalent | source-is-narrower-than-target | source-is-broader-than-target | not-related-to
       /// </summary>
-      [FhirElement("relationship", InSummary=true, IsModifier=true, Order=80)]
+      [FhirElement("relationship", IsModifier=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement

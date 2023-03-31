@@ -2964,7 +2964,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// True if the term prohibits the  action
       /// </summary>
-      [FhirElement("doNotPerform", InSummary=true, IsModifier=true, Order=40)]
+      [FhirElement("doNotPerform", IsModifier=true, Order=40)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean DoNotPerformElement
       {
