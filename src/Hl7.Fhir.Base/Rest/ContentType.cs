@@ -11,6 +11,8 @@
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace Hl7.Fhir.Rest
@@ -29,6 +31,7 @@ namespace Hl7.Fhir.Rest
     {
         public const string FORM_URL_ENCODED = "application/x-www-form-urlencoded";
         public const string JSON_CONTENT_HEADER = "application/fhir+json";  // The formal FHIR mime type (still to be registered).
+
         public static readonly string[] JSON_CONTENT_HEADERS = new string[]
             { JSON_CONTENT_HEADER,
                 "text/json",
@@ -36,6 +39,7 @@ namespace Hl7.Fhir.Rest
                 "application/json+fhir" }; // for backward compatability/tolerance
 
         public const string XML_CONTENT_HEADER = "application/fhir+xml";   // The formal FHIR mime type (still to be registered).
+
         public static readonly string[] XML_CONTENT_HEADERS = new string[]
             { XML_CONTENT_HEADER,
                 "text/xml",
@@ -45,8 +49,14 @@ namespace Hl7.Fhir.Rest
 
         public const string FORMAT_PARAM_XML = "xml";
         public const string FORMAT_PARAM_JSON = "json";
+
+        public const string VERSION_CONTENT_HEADER_NAME = "fhirVersion";
+
+        [Obsolete("Use VERSION_CONTENT_HEADER_NAME instead.")]
         public const string VERSION_CONTENT_HEADER = "fhirVersion=";
 
+        public static string DecompressionMethodHeaderValue(DecompressionMethods method) =>
+            method.ToString().ToLowerInvariant();
 
         /// <summary>
         /// Converts a format string to a ResourceFormat
@@ -75,9 +85,9 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceFormat GetResourceFormatFromContentType(string contentType)
         {
-            if (String.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
+            if (string.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
 
-            var f = ContentType.GetMediaTypeFromHeaderValue(contentType);
+            var f = GetMediaTypeFromHeaderValue(contentType);
 
             if (JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;
@@ -87,38 +97,56 @@ namespace Hl7.Fhir.Rest
                 return ResourceFormat.Unknown;
         }
 
-        internal static string BuildContentType(FhirClientSettings settings, string fhirVersion)
-            => BuildContentType(settings.PreferredFormat, settings.UseFhirVersionInAcceptHeader ? fhirVersion : String.Empty);
+        /// <summary>
+        /// Creates a string for use in a Content-Type header, given the serialization format and the fhir version in use.
+        /// </summary>
+        /// <param name="format">Whether the body is xml or json.</param>
+        /// <param name="fhirVersion">Optional. The version of FHIR to add to the header.</param>
+        public static string BuildContentType(ResourceFormat format, string? fhirVersion = default) =>
+            BuildMediaType(format, fhirVersion).ToString();
 
-        public static string BuildContentType(ResourceFormat format, string fhirVersion)
+        /// <summary>
+        /// Creates a <see cref="MediaTypeHeaderValue"/> for use in a Content-Type header, 
+        /// given the serialization format and the fhir version in use.
+        /// </summary>
+        /// <param name="format">Whether the body is xml or json.</param>
+        /// <param name="fhirVersion">Optional. The version of FHIR to add to the header.</param>
+        /// <exception cref="ArgumentException">Unsupported serialization.</exception>
+        public static MediaTypeHeaderValue BuildMediaType(ResourceFormat format, string? fhirVersion = default)
         {
-            string contentType = format switch
+            var contentType = format switch
             {
                 ResourceFormat.Json => JSON_CONTENT_HEADER,
                 ResourceFormat.Xml => XML_CONTENT_HEADER,
                 _ => throw new ArgumentException("Cannot determine content type for data format " + format),
             };
 
-            contentType += "; charset=" + Encoding.UTF8.WebName;
+            var result = new MediaTypeHeaderValue(contentType)
+            {
+                CharSet = Encoding.UTF8.WebName
+            };
 
-            if (SemVersion.TryParse(fhirVersion, out var version))
+            if (fhirVersion is not null && SemVersion.TryParse(fhirVersion, out var version))
             {
                 var majorMinor = version.Major + "." + version.Minor;
-                contentType += "; " + VERSION_CONTENT_HEADER + majorMinor;
+                result.Parameters.Add(new(VERSION_CONTENT_HEADER_NAME, majorMinor));
             }
-            return contentType;
+
+            return result;
         }
 
-
-        public static string BuildFormatParam(ResourceFormat format)
-        {
-            if (format == ResourceFormat.Json)
-                return FORMAT_PARAM_JSON;
-            else if (format == ResourceFormat.Xml)
-                return FORMAT_PARAM_XML;
-            else
-                throw new ArgumentException("Cannot determine content type for data format " + format);
-        }
+        /// <summary>
+        /// Returns the string to use for the _format parameter in a FHIR REST url, given the desired serialization.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <exception cref="ArgumentException">Unsupported serialization.</exception>
+        public static string BuildFormatParam(ResourceFormat format) =>
+            format switch
+            {
+                ResourceFormat.Json => FORMAT_PARAM_JSON,
+                ResourceFormat.Xml => FORMAT_PARAM_XML,
+                _ => throw new ArgumentException("Cannot determine content type for data format " + format)
+            };
 
         /// <summary>
         /// Checks whether a given content type is valid as a content type for resource data

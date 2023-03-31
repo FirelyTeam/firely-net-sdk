@@ -3,6 +3,7 @@
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
+using System.Net;
 
 namespace Hl7.Fhir.Rest
 {
@@ -41,19 +42,45 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public int Timeout = 100 * 1000;
 
+        /// <inheritdoc cref="ReturnPreference"/>
+        [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
+        public Prefer? PreferredReturn
+        {
+            get => UseAsync ? Prefer.RespondAsync : (Prefer?)ReturnPreference;
+            set
+            {
+                switch (value)
+                {
+                    case Prefer.RespondAsync:
+                        UseAsync = true;
+                        break;
+                    case null:
+                        UseAsync = false;
+                        ReturnPreference = null;
+                        break;
+                    default:
+                        ReturnPreference = (ReturnPreference)value;
+                        break;
+                }
+            }
+        }
+
         /// <summary>
         /// Should calls to Create, Update and transaction operations return the whole updated content, 
-        /// or an OperationOutcome?
+        /// minimal content or an OperationOutcome (see https://hl7.org/fhir/http.html#return).
         /// </summary>
-        /// <remarks>Refer to specification section 2.1.0.5 (Managing Return Content)</remarks>
-        /// <remarks>Setting this to null, will ensure the client does not send a Preferred header</remarks>
-        public Prefer? PreferredReturn = null;
+        /// <remarks>When null, no Prefer header with a "return=" prefix will be sent.</remarks>
+        public ReturnPreference? ReturnPreference = null;
+
+        /// <summary>
+        /// Request the server to use the asynchronous request pattern (https://hl7.org/fhir/async.html).
+        /// </summary>
+        public bool UseAsync = false;
 
         /// <summary>
         /// Should server return which search parameters were supported after executing a search?
-        /// If true, the server should return an error for any unknown or unsupported parameter, otherwise
-        /// the server may ignore any unknown or unsupported parameter.
         /// </summary>
+        /// <remarks>If set to null, no Prefer header with a "handling=" prefix will be sent.</remarks>
         public SearchParameterHandling? PreferredParameterHandling = null;
 
         /// <summary>
@@ -64,18 +91,29 @@ namespace Hl7.Fhir.Rest
         public bool PreferCompressedResponses;
 
         /// <summary>
-        /// Compress any Request bodies 
-        /// (warning, if a server does not handle compressed requests you will get a 415 response)
+        /// Compress any Request bodies using GZip.
         /// </summary>
-        [Obsolete("Compressing bodies is no longer supported, and this setting is ignored.")]
-        public bool CompressRequestBody;
+        /// <remarks>If a server does not handle compressed requests using GZip, it will return a 415 response.</remarks>
+        [Obsolete("Use RequestBodyCompressionMethod instead.")]
+        public bool CompressRequestBody
+        {
+            get => RequestBodyCompressionMethod is not DecompressionMethods.None;
+            set => RequestBodyCompressionMethod = value ? DecompressionMethods.GZip : DecompressionMethods.None;
+        }
+
+        /// <summary>
+        /// Compress request bodies using the selected method. Note: only <see cref="DecompressionMethods.Deflate"/> and
+        /// <see cref="DecompressionMethods.GZip"/> are currently supported.
+        /// </summary>
+        /// <remarks>If a server does not handle compressed requests using this method, it will return a 415 response.</remarks>
+        public DecompressionMethods RequestBodyCompressionMethod = DecompressionMethods.None;
 
         /// <summary>
         /// Can be used to specifically override the serialization behaviour of the FhirClient to turn
         /// POCO's into FHIR xml/json data and vice versa. If not set, the FhirClient will use the default
-        /// behaviour which is  compatible with the pre-5.0 SDK.
+        /// behaviour which is compatible with the pre-5.0 SDK.
         /// </summary>
-        //public IFhirSerializationEngine? SerializationEngine;
+        public IFhirSerializationEngine? SerializationEngine = null;
 
         public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
@@ -96,19 +134,19 @@ namespace Hl7.Fhir.Rest
         {
             if (other == null) throw Error.ArgumentNull(nameof(other));
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            other.CompressRequestBody = CompressRequestBody;
-#pragma warning restore CS0618 // Type or member is obsolete
             other.ParserSettings = ParserSettings;
             other.PreferCompressedResponses = PreferCompressedResponses;
             other.PreferredFormat = PreferredFormat;
-            other.PreferredReturn = PreferredReturn;
+            other.ReturnPreference = ReturnPreference;
+            other.UseAsync = UseAsync;
             other.Timeout = Timeout;
             other.UseFormatParameter = UseFormatParameter;
             other.UseFhirVersionInAcceptHeader = UseFhirVersionInAcceptHeader;
             other.VerifyFhirVersion = VerifyFhirVersion;
+            other.ExplicitFhirVersion = ExplicitFhirVersion;
             other.PreferredParameterHandling = PreferredParameterHandling;
-            //other.SerializationEngine = SerializationEngine;
+            other.SerializationEngine = SerializationEngine;
+            other.RequestBodyCompressionMethod = RequestBodyCompressionMethod;
         }
 
         /// <summary>Creates a new <see cref="FhirClientSettings"/> object that is a copy of the current instance.</summary>

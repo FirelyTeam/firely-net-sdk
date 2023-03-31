@@ -6,141 +6,119 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
 
 namespace Hl7.Fhir.Rest
 {
     internal static class EntryToHttpExtensions
-    {
-        public static HttpRequestMessage ToHttpRequestMessage(this EntryRequest entry, Uri baseUrl, FhirClientSettings settings)
+    {     
+        public static HttpRequestMessage ToHttpRequestMessage(
+            this Bundle.EntryComponent entry,
+            Uri baseUrl,
+            IFhirSerializationEngine ser,
+            string? fhirVersion,
+            FhirClientSettings settings)
         {
-            if (entry.RequestBodyContent != null && !(entry.Method == HTTPVerb.POST || entry.Method == HTTPVerb.PUT || entry.Method == HTTPVerb.PATCH))
-                throw Error.InvalidOperation("Cannot have a body on an Http " + entry.Method.ToString());
+            var request = entry.Request;
+            var interaction = entry.Annotation<InteractionType>();
+            var method = request.Method?.toHttpMethod(interaction)
+                        ?? throw new ArgumentException("EntryComponent should specify a Request.Method.", nameof(request));
+            var serialization = settings.PreferredFormat;
 
+            var uri = getRequestUrl(request.Url, baseUrl);
+            var message = new HttpRequestMessage(method, uri);
+
+            message = setBody(message)
+                .WithDefaultAgent()
+                .WithPreconditions(request.IfMatch, request.IfNoneMatch, request.IfModifiedSince, request.IfNoneExist);
+
+            message = settings.UseFormatParameter
+                ? message.WithFormatParameter(serialization)
+                : message.WithAccept(serialization, fhirVersion, settings.PreferCompressedResponses);
+
+            bool canHaveReturnPreference = interaction is InteractionType.Create or InteractionType.Update or InteractionType.Patch or InteractionType.Transaction;
+
+            if (canHaveReturnPreference)
+                message = message.WithReturnPreference(settings.ReturnPreference);
+
+            if (interaction == InteractionType.Search)
+                message = message.WithSearchParamHandling(settings.PreferredParameterHandling);
+
+            if (settings.UseAsync)
+                message = message.WithPreferAsync();
+
+            return message;
+
+            HttpRequestMessage setBody(HttpRequestMessage message)
+            {
+                bool isSearchUsingPost = method == HttpMethod.Post && interaction == InteractionType.Search;
+
+                message = entry.Resource switch
+                {
+                    Binary bin => message.WithBinaryContent(bin),
+                    Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
+                    Resource resource => message.WithResourceContent(resource, serialization, ser, fhirVersion),
+                    null => message
+                };
+
+                return message.WithRequestCompression(settings.RequestBodyCompressionMethod);
+            }
+        }
+
+        private static Uri getRequestUrl(string requestUrl, Uri baseUrl)
+        {
             // Create an absolute uri when the interaction.Url is relative.
-            var uri = new Uri(entry.Url, UriKind.RelativeOrAbsolute);
+            var uri = new Uri(
+                requestUrl ?? throw new ArgumentException("EntryComponent should specify a Request.Url.", nameof(requestUrl)),
+                UriKind.RelativeOrAbsolute);
+
             if (!uri.IsAbsoluteUri)
             {
                 uri = HttpUtil.MakeAbsoluteToBase(uri, baseUrl);
             }
 
-            var location = new RestUrl(uri);
-
-            if (settings.UseFormatParameter)
-                location.AddParam(HttpUtil.RESTPARAM_FORMAT, ContentType.BuildFormatParam(settings.PreferredFormat));
-
-            var request = new HttpRequestMessage(getMethod(entry.Method), location.Uri);
-
-            request.Headers.Add("User-Agent", ".NET FhirClient for FHIR " + entry.FhirVersion);
-
-            if (!settings.UseFormatParameter && !string.IsNullOrEmpty(entry.Headers.Accept))
-                request.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse(entry.Headers.Accept));
-
-            if (entry.Headers.IfMatch != null) request.Headers.Add("If-Match", entry.Headers.IfMatch);
-            if (entry.Headers.IfNoneMatch != null) request.Headers.Add("If-None-Match", entry.Headers.IfNoneMatch);
-            if (entry.Headers.IfModifiedSince != null) request.Headers.IfModifiedSince = entry.Headers.IfModifiedSince.Value.UtcDateTime;
-            if (entry.Headers.IfNoneExist != null) request.Headers.Add("If-None-Exist", entry.Headers.IfNoneExist);
-
-            var interactionType = entry.Type;
-
-            bool canHaveReturnPreference() => entry.Type == InteractionType.Create ||
-              entry.Type == InteractionType.Update ||
-              entry.Type == InteractionType.Patch;
-
-            if (canHaveReturnPreference() && settings.PreferredReturn != null)
-            {
-                if (settings.PreferredReturn == Prefer.RespondAsync)
-                    request.Headers.Add("Prefer", PrimitiveTypeConverter.ConvertTo<string>(settings.PreferredReturn));
-                else
-                    request.Headers.Add("Prefer", "return=" + PrimitiveTypeConverter.ConvertTo<string>(settings.PreferredReturn));
-            }
-
-            else if (interactionType == InteractionType.Search && settings.PreferredParameterHandling != null)
-            {
-                List<string> preferHeader = new();
-                if (settings.PreferredParameterHandling.HasValue)
-                    preferHeader.Add("handling=" + settings.PreferredParameterHandling.GetLiteral());
-                if (settings.PreferredReturn.HasValue && settings.PreferredReturn == Prefer.RespondAsync)
-                    preferHeader.Add(settings.PreferredReturn.GetLiteral());
-                if (preferHeader.Count > 0)
-                    request.Headers.Add("Prefer", string.Join(", ", preferHeader));
-            }
-
-
-            if (entry.RequestBodyContent != null)
-                setContentAndContentType(request, entry.RequestBodyContent, entry.ContentType);
-
-            return request;
+            return uri;
         }
+
+
+#if NETSTANDARD
+        private readonly static HttpMethod HTTP_PATCH = new("PATCH");
+#else
+        private readonly static HttpMethod HTTP_PATCH = HttpMethod.Patch;
+#endif
 
         /// <summary>
-        /// Converts bundle http verb to corresponding <see cref="HttpMethod"/>.
+        /// Converts the <see cref="Bundle.HTTPVerb" /> (e.g. from a <see cref="Bundle.RequestComponent.Method"/>) to a <see cref="HttpMethod"/>. />
         /// </summary>
-        /// <param name="verb"><see cref="HTTPVerb"/> specified by input bundle.</param>
-        /// <returns><see cref="HttpMethod"/> corresponding to verb specified in input bundle.</returns>
-        private static HttpMethod getMethod(HTTPVerb? verb) => verb switch
+        /// <param name="bundleVerb">The FHIR HTTPVerb.</param>
+        /// <param name="interaction">The kind of FHIR interaction, if known.</param>
+        /// <exception cref="ArgumentException">The given HTTPVerb cannot be translated to a .NET HttpMethod.</exception>
+        private static HttpMethod toHttpMethod(this Bundle.HTTPVerb bundleVerb, InteractionType? interaction = default)
         {
-            HTTPVerb.GET => HttpMethod.Get,
-            HTTPVerb.POST => HttpMethod.Post,
-            HTTPVerb.PUT => HttpMethod.Put,
-            HTTPVerb.DELETE => HttpMethod.Delete,
-            HTTPVerb.HEAD => HttpMethod.Head,
-            HTTPVerb.PATCH => new HttpMethod("PATCH"),
-            _ => throw new HttpRequestException($"Valid HttpVerb could not be found for verb type: [{verb}]"),
-        };
+            return bundleVerb switch
+            {
+                Bundle.HTTPVerb.POST => HttpMethod.Post,
+                Bundle.HTTPVerb.GET => HttpMethod.Get,
+                Bundle.HTTPVerb.DELETE => HttpMethod.Delete,
 
-        private static void setContentAndContentType(HttpRequestMessage request, byte[] data, string contentType)
-        {
-            if (data == null) throw Error.ArgumentNull(nameof(data));
-            request.Content = new ByteArrayContent(data);
-            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(contentType);
+                //No PATCH in Bundle.HttpVerb in STU3, so this is corrected here. 
+                Bundle.HTTPVerb.PUT when interaction == InteractionType.Patch => HTTP_PATCH,
+                Bundle.HTTPVerb.PUT => HttpMethod.Put,
+                Bundle.HTTPVerb.PATCH => HTTP_PATCH,
+                Bundle.HTTPVerb.HEAD => HttpMethod.Head,
+
+                _ => throw new ArgumentException($"There is no known mapping from HTTPVerb {bundleVerb} to a HttpMethod.", nameof(bundleVerb))
+            };
         }
 
-        /// <summary>
-        /// Flag to control the setting of the User Agent string (different platforms have different abilities)
-        /// </summary>
-        public static bool SetUserAgentUsingReflection = true;
-        public static bool SetUserAgentUsingDirectHeaderManipulation = true;
-
-        private static void setAgent(HttpWebRequest request, string agent)
-        {
-            bool userAgentSet = false;
-            if (SetUserAgentUsingReflection)
-            {
-                try
-                {
-                    PropertyInfo prop = request.GetType().GetRuntimeProperty("UserAgent");
-
-                    if (prop != null)
-                        prop.SetValue(request, agent, null);
-                    userAgentSet = true;
-                }
-                catch (Exception)
-                {
-                    // This approach doesn't work on this platform, so don't try it again.
-                    SetUserAgentUsingReflection = false;
-                }
-            }
-            if (!userAgentSet && SetUserAgentUsingDirectHeaderManipulation)
-            {
-                // platform does not support UserAgent property...too bad
-                try
-                {
-                    request.UserAgent = agent;
-                }
-                catch (ArgumentException)
-                {
-                    SetUserAgentUsingDirectHeaderManipulation = false;
-                    throw;
-                }
-            }
-        }
     }
 }
+
+#nullable restore

@@ -13,12 +13,7 @@ namespace Hl7.Fhir.Utility
     /// A semantic version implementation.
     /// Conforms with v2.0.0 of http://semver.org
     /// </summary>
-#if !NET452
     internal sealed class SemVersion : IComparable<SemVersion>, IComparable
-#else
-    [Serializable]
-    public sealed class SemVersion : IComparable<SemVersion>, IComparable, ISerializable
-#endif
     {
         private static readonly Regex ParseEx =
             new Regex(@"^(?<major>\d+)" +
@@ -26,31 +21,8 @@ namespace Hl7.Fhir.Utility
                 @"(?>\.(?<patch>\d+))?" +
                 @"(?>\-(?<pre>[0-9A-Za-z\-\.]+))?" +
                 @"(?>\+(?<build>[0-9A-Za-z\-\.]+))?$",
-#if !NET452
                 RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture
-#else
-                RegexOptions.CultureInvariant | RegexOptions.Compiled | RegexOptions.ExplicitCapture
-#endif
                 );
-
-#if NET452
-#pragma warning disable CA1801 // Parameter unused
-        /// <summary>
-        /// Deserialize a <see cref="SemVersion"/>.
-        /// </summary>
-        /// <exception cref="ArgumentNullException">The <paramref name="info"/> parameter is null.</exception>
-        private SemVersion(SerializationInfo info, StreamingContext context)
-#pragma warning restore CA1801 // Parameter unused
-        {
-            if (info == null) throw new ArgumentNullException(nameof(info));
-            var semVersion = Parse(info.GetString("SemVersion"));
-            Major = semVersion.Major;
-            Minor = semVersion.Minor;
-            Patch = semVersion.Patch;
-            Prerelease = semVersion.Prerelease;
-            Build = semVersion.Build;
-        }
-#endif
 
         /// <summary>
         /// Constructs a new instance of the <see cref="SemVersion" /> class.
@@ -477,20 +449,6 @@ namespace Hl7.Fhir.Utility
                 return result;
             }
         }
-
-#if NET452
-        /// <summary>
-        /// Populates a <see cref="SerializationInfo"/> with the data needed to serialize the target object.
-        /// </summary>
-        /// <param name="info">The <see cref="SerializationInfo"/> to populate with data.</param>
-        /// <param name="context">The destination (see <see cref="SerializationInfo"/>) for this serialization.</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            if (info == null) throw new ArgumentNullException(nameof(info));
-            info.AddValue("SemVersion", ToString());
-        }
-#endif
 
 #pragma warning disable CA2225 // Operator overloads have named alternates
         /// <summary>

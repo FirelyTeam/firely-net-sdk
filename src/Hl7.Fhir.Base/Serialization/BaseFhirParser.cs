@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
             _inspector = inspector;
         }
 
-        internal PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
+        internal static PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
             new PocoBuilderSettings
             {
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
