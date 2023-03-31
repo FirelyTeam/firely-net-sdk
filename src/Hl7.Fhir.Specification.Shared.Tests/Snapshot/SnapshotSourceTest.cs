@@ -42,7 +42,10 @@ namespace Hl7.Fhir.Specification.Tests
             void assert_ele1(ElementDefinition eld)
             {
                 Assert.AreEqual("ele-1", eld.Constraint.FirstOrDefault()?.Key);
+#if !R5
+                // In R5 ele-1 is not a condition anymore
                 Assert.AreEqual("ele-1", eld.Condition.FirstOrDefault());
+#endif
             }
 
             // Assumption: differential introduces constraint "ele-1" on root element (only)
@@ -52,7 +55,10 @@ namespace Hl7.Fhir.Specification.Tests
             {
                 var elem = diffElems[i];
                 Assert.IsFalse(elem.Constraint.Any());
+#if !R5
+                // In R5 ele-1 is not a condition anymore
                 Assert.IsFalse(elem.Condition.Any());
+#endif
             }
 
             // Verify explicit inheritance of recursive constraints in snapshot
