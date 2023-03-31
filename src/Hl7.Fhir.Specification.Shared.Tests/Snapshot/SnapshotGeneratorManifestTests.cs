@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Specification.Tests
             var timingSource = new TimingSource(_dirSource);
             _resolver = new CachedResolver(
                 new MultiResolver(
-                    new ZipSource("specification.zip"),
+                    ZipSource.CreateValidationSource(),
                     timingSource
             //,extensionSource
             ));
