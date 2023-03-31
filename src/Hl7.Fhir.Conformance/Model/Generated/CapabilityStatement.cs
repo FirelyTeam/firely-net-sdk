@@ -574,6 +574,8 @@ namespace Hl7.Fhir.Model
       /// Describes this specific instance
       /// </summary>
       [FhirElement("description", InSummary=true, Order=40)]
+      [DeclaredType(Type = typeof(FhirString))]
+      [DeclaredType(Type = typeof(Markdown), Since = FhirRelease.R5)]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Markdown DescriptionElement
@@ -3601,9 +3603,9 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// Additional identifier for the CapabilityStatement (business identifier)
+    /// Additional identifier for the CapabilityStatement (business identifier). Note: Element was introduced in R5, do not use when working with older releases.
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier")]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="FiveWs.identifier", Since=FhirRelease.R5)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
