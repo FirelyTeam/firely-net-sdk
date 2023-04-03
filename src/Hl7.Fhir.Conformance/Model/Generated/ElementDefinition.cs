@@ -227,28 +227,6 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
-    /// SHALL applications comply with this constraint?
-    /// (url: http://hl7.org/fhir/ValueSet/constraint-severity)
-    /// (system: http://hl7.org/fhir/constraint-severity)
-    /// </summary>
-    [FhirEnumeration("ConstraintSeverity")]
-    public enum ConstraintSeverity
-    {
-      /// <summary>
-      /// If the constraint is violated, the resource is not conformant.
-      /// (system: http://hl7.org/fhir/constraint-severity)
-      /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/constraint-severity"), Description("Error")]
-      Error,
-      /// <summary>
-      /// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
-      /// (system: http://hl7.org/fhir/constraint-severity)
-      /// </summary>
-      [EnumLiteral("warning", "http://hl7.org/fhir/constraint-severity"), Description("Warning")]
-      Warning,
-    }
-
-    /// <summary>
     /// Additional Binding Purpose
     /// (url: http://hl7.org/fhir/ValueSet/additional-binding-purpose)
     /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
@@ -1459,20 +1437,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity> SeverityElement
+      public Code<Hl7.Fhir.Model.ConstraintSeverity> SeverityElement
       {
         get { return _SeverityElement; }
         set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity> _SeverityElement;
+      private Code<Hl7.Fhir.Model.ConstraintSeverity> _SeverityElement;
 
       /// <summary>
       /// error | warning
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity? Severity
+      public Hl7.Fhir.Model.ConstraintSeverity? Severity
       {
         get { return SeverityElement != null ? SeverityElement.Value : null; }
         set
@@ -1480,7 +1458,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             SeverityElement = null;
           else
-            SeverityElement = new Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity>(value);
+            SeverityElement = new Code<Hl7.Fhir.Model.ConstraintSeverity>(value);
           OnPropertyChanged("Severity");
         }
       }
@@ -1654,7 +1632,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(KeyElement != null) dest.KeyElement = (Hl7.Fhir.Model.Id)KeyElement.DeepCopy();
         if(RequirementsElement != null) dest.RequirementsElement = (Hl7.Fhir.Model.Markdown)RequirementsElement.DeepCopy();
-        if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity>)SeverityElement.DeepCopy();
+        if(SeverityElement != null) dest.SeverityElement = (Code<Hl7.Fhir.Model.ConstraintSeverity>)SeverityElement.DeepCopy();
         if(SuppressElement != null) dest.SuppressElement = (Hl7.Fhir.Model.FhirBoolean)SuppressElement.DeepCopy();
         if(HumanElement != null) dest.HumanElement = (Hl7.Fhir.Model.FhirString)HumanElement.DeepCopy();
         if(ExpressionElement != null) dest.ExpressionElement = (Hl7.Fhir.Model.FhirString)ExpressionElement.DeepCopy();

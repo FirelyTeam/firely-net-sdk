@@ -137,6 +137,28 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
+  /// SHALL applications comply with this constraint?
+  /// (url: http://hl7.org/fhir/ValueSet/constraint-severity)
+  /// (system: http://hl7.org/fhir/constraint-severity)
+  /// </summary>
+  [FhirEnumeration("ConstraintSeverity")]
+  public enum ConstraintSeverity
+  {
+    /// <summary>
+    /// If the constraint is violated, the resource is not conformant.
+    /// (system: http://hl7.org/fhir/constraint-severity)
+    /// </summary>
+    [EnumLiteral("error", "http://hl7.org/fhir/constraint-severity"), Description("Error")]
+    Error,
+    /// <summary>
+    /// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
+    /// (system: http://hl7.org/fhir/constraint-severity)
+    /// </summary>
+    [EnumLiteral("warning", "http://hl7.org/fhir/constraint-severity"), Description("Warning")]
+    Warning,
+  }
+
+  /// <summary>
   /// Data types allowed to be used for search parameters.
   /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
   /// (system: http://hl7.org/fhir/search-param-type)
