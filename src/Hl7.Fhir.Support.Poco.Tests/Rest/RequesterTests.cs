@@ -326,78 +326,41 @@ namespace Hl7.Fhir.Test
             request.Method.Method.Should().Be(method);
         }
 
-        #region STILL TODO - EntryResponse To TypedEntryResponse
-
-
         [TestMethod]
         public async Tasks.Task TestToTypedEntryResponse()
         {
             var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
-            var response = new EntryResponse
+            var engine = FhirSerializationEngine.Poco(TESTINSPECTOR);
+            var xmlContent = new StringContent(xml, Encoding.UTF8,  ContentType.XML_CONTENT_HEADER);
+            xmlContent.Headers.LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
+
+            var request = new HttpRequestMessage(HttpMethod.Get, "http://www.myserver.com");
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                ContentType = "text/xml; charset=us-ascii",
-                Etag = "Test-Etag",
-                LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan()),
-                Location = "Test-Location",
-                ResponseUri = new Uri("http://www.myserver.com"),
-                Status = "200",
-                Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
-                Body = Encoding.UTF8.GetBytes(xml),
+                RequestMessage = request,
+                Content = xmlContent,
             };
 
-            var result = await response.ToTypedEntryResponseAsync(TESTINSPECTOR);
+            var etag = "Test-Etag";
+            response.Headers.ETag = new(etag, true);
+            response.Headers.Location = new Uri("Test-Location");
+            response.Headers.TryAddWithoutValidation("Test-key", "Test-value");
 
-            var typedElementXml = await result.TypedElement.ToXmlAsync();
-            Assert.AreEqual(xml, typedElementXml);
-            Assert.AreEqual(response.ContentType, result.ContentType);
-            Assert.AreEqual(response.Etag, result.Etag);
-            Assert.AreEqual(response.LastModified, result.LastModified);
-            Assert.AreEqual(response.Location, result.Location);
-            Assert.AreEqual(response.ResponseUri, result.ResponseUri);
-            Assert.AreEqual(response.Status, result.Status);
-            Assert.AreEqual(response.GetBodyAsText(), result.GetBodyAsText());
-            Assert.AreEqual(response.Headers["Test-key"], result.Headers["Test-key"]);
+            var result = await response.ExtractResponseComponents(engine);
+
+            Assert.AreEqual(xml, result.BodyText);
+            Assert.AreEqual(xml, engine.SerializeToXml(result.BodyResource!));
+            Assert.AreEqual(etag, result.Response.Etag);
+            Assert.AreEqual(response.Content.Headers.LastModified, result.Response.LastModified);
+            Assert.AreEqual(response.Headers.Location, result.Response.Location);
+            Assert.AreEqual(response.RequestMessage.RequestUri, response.GetRequestUri());
+            Assert.AreEqual(response.StatusCode, result.Response.Status);
+
+            var headersExtension = "http://hl7.org/fhir/StructureDefinition/http-response-header";
+            var headers = result.Response.GetExtensions(headersExtension).OfType<FhirString>().Select(s => s.Value).ToList();
+
+            Assert.AreEqual("Test-key:Test-value", headers.Single());
         }
-
-        #endregion
-
-        #region TypedEntryResponse To BundleEntryResponse
-
-        [TestMethod]
-        public async Tasks.Task TestTypedEntryResponseToBundle()
-        {
-            var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
-            var response = new EntryResponse
-            {
-                ContentType = "text/xml; charset=us-ascii",
-                Etag = "Test-Etag",
-                LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan()),
-                Location = "Test-Location",
-                ResponseUri = new Uri("http://www.myserver.com"),
-                Status = "200",
-                Headers = new Dictionary<string, string>() { { "Test-key", "Test-value" } },
-                Body = Encoding.UTF8.GetBytes(xml),
-            };
-            var typedresponse = await response.ToTypedEntryResponseAsync(TESTINSPECTOR);
-
-            var settings = new ParserSettings
-            {
-                AcceptUnknownMembers = false,
-                AllowUnrecognizedEnums = false,
-                DisallowXsiAttributesOnRoot = true,
-                PermissiveParsing = false
-            };
-
-            var bundleresponse = typedresponse.ToBundleEntry(TESTINSPECTOR, settings);
-
-            Assert.AreEqual(bundleresponse.Response.Etag, response.Etag);
-            Assert.AreEqual(bundleresponse.Response.LastModified, response.LastModified);
-            Assert.AreEqual(bundleresponse.Response.Status, response.Status);
-            Assert.AreEqual(bundleresponse.Response.Location, response.Location);
-            Assert.AreEqual(bundleresponse.Response.GetBody(), response.Body);
-        }
-
-        #endregion
     }
 }
 
