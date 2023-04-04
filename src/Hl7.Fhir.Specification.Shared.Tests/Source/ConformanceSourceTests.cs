@@ -159,8 +159,14 @@ namespace Hl7.Fhir.Specification.Tests
             var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
             // var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+
             var ns = source.ListResourceUris(ResourceType.NamingSystem);
+#if R5
+            // In specification.zip for R5 there are no NamingSystems anymore.
+            Assert.IsFalse(ns.Any());
+#else
             Assert.IsTrue(ns.Any());
+#endif
 
             var all = source.ListResourceUris();
 
@@ -175,7 +181,10 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(cs.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system"));
             Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
             Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
+#if !R5
+            // In specification.zip for R5 there are no NamingSystems anymore.
             Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
+#endif
         }
 
         [TestMethod]
