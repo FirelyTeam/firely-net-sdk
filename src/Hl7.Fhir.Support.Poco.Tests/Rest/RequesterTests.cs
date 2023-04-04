@@ -86,6 +86,7 @@ namespace Hl7.Fhir.Test
             HttpRequestMessage build(InteractionType interaction) => makeMessage(settings, interaction: interaction);
         }
 
+#pragma warning disable CS0618 // Type or member is obsolete
         [TestMethod]
         [DataRow(Prefer.ReturnRepresentation, ReturnPreference.Representation, false)]
         [DataRow(Prefer.OperationOutcome, ReturnPreference.OperationOutcome, false)]
@@ -94,11 +95,9 @@ namespace Hl7.Fhir.Test
         [DataRow(null, null, false)]
         public void TestConvertPreferredReturn(Prefer? setting, ReturnPreference? pref, bool isAsync)
         {
-#pragma warning disable CS0618 // Type or member is obsolete
             var settings = new FhirClientSettings { PreferredReturn = setting };
             settings.ReturnPreference.Should().Be(pref);
             settings.UseAsync.Should().Be(isAsync);
-#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         [TestMethod]
@@ -110,11 +109,10 @@ namespace Hl7.Fhir.Test
         [DataRow(ReturnPreference.OperationOutcome, true, Prefer.RespondAsync)]
         public void TestConvertReturnPreference(ReturnPreference? pref, bool isAsync, Prefer? setting)
         {
-#pragma warning disable CS0618 // Type or member is obsolete
             var settings = new FhirClientSettings { ReturnPreference = pref, UseAsync = isAsync };
             settings.PreferredReturn.Should().Be(setting);
-#pragma warning restore CS0618 // Type or member is obsolete
         }
+#pragma warning restore CS0618 // Type or member is obsolete
 
         [TestMethod]
         [DataRow(false, DecompressionMethods.None)]

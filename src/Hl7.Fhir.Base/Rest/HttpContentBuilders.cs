@@ -34,6 +34,10 @@ namespace Hl7.Fhir.Rest
         {
             var content = new ByteArrayContent(b.Data ?? b.Content);
             content.Headers.ContentType = MediaTypeHeaderValue.Parse(b.ContentType);
+
+            if (b.SecurityContext?.Reference is { } secRef)
+                content.Headers.Add(HttpUtil.SECURITYCONTEXT, secRef);
+
             return content;
         }
 
@@ -72,6 +76,11 @@ namespace Hl7.Fhir.Rest
             return content;
         }
 
+        public static HttpRequestMessage WithNoBody(this HttpRequestMessage message)
+        {
+            message.Content = null;
+            return message;
+        }
         public static HttpRequestMessage WithResourceContent(this HttpRequestMessage message, Resource resource, ResourceFormat serialization, IFhirSerializationEngine ser, string? mimeTypeFhirVersion)
         {
             message.Content = CreateContentFromResource(resource, serialization, ser, mimeTypeFhirVersion);
@@ -80,7 +89,7 @@ namespace Hl7.Fhir.Rest
 
         public static HttpRequestMessage WithRequestCompression(this HttpRequestMessage message, DecompressionMethods method)
         {
-            if (method is not DecompressionMethods.None)
+            if (method is not DecompressionMethods.None && message.Content is not null)
                 message.Content = new CompressedContent(message.Content, method);
 
             return message;

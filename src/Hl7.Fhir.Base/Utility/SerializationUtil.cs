@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -40,7 +42,14 @@ namespace Hl7.Fhir.Utility
             return xml.IsMatch(data.TrimStart());
         }
 
+        public static bool ProbeIsFhirXml(string data) =>
+            ProbeIsXml(data) && (data.Contains($"'{XmlNs.FHIR}'") || data.Contains($"\"{XmlNs.FHIR}\""));
+
+       
         public static bool ProbeIsJson(string data) => data.TrimStart().StartsWith("{");
+
+        public static bool ProbeIsFhirJson(string data) =>
+            ProbeIsJson(data) && data.Contains($"\"resourceType\"");
 
 
         private static XDocument XDocumentFromReaderInternal(XmlReader reader, bool ignoreComments = false)
@@ -351,7 +360,7 @@ namespace Hl7.Fhir.Utility
         }
 
         /// <inheritdoc cref="WriteJsonToDocumentAsync(Func{JsonWriter, Task})" />
-        public static JObject WriteJsonToDocument(Action<JsonWriter> serializer)
+        public static JObject? WriteJsonToDocument(Action<JsonWriter> serializer)
         {
             // [WMR 20180409] Triggers runtime exception "Can not add Newtonsoft.Json.Linq.JObject to Newtonsoft.Json.Linq.JObject."
             // JsonDomFhirWriter.WriteEndProperty() => _root.WriteTo(jw) => jw.WriteStartObject() => exception...
@@ -370,7 +379,7 @@ namespace Hl7.Fhir.Utility
             return doc.First as JObject;
         }
 
-        public static async Task<JObject> WriteJsonToDocumentAsync(Func<JsonWriter, Task> serializer)
+        public static async Task<JObject?> WriteJsonToDocumentAsync(Func<JsonWriter, Task> serializer)
         {
             // [WMR 20180409] Triggers runtime exception "Can not add Newtonsoft.Json.Linq.JObject to Newtonsoft.Json.Linq.JObject."
             // JsonDomFhirWriter.WriteEndProperty() => _root.WriteTo(jw) => jw.WriteStartObject() => exception...
@@ -481,7 +490,7 @@ namespace Hl7.Fhir.Utility
             if (!doc.Root.AtXhtmlDiv())
                 return new[] { $"Root element of XHTML is not a <div> from the XHTML namespace ({XmlNs.XHTML})." };
 
-            if (!hasContent(doc.Root))
+            if (!hasContent(doc.Root!))
                 return new[] { $"The narrative SHALL have some non-whitespace content." };
 
             doc.Validate(BASEFHIRSCHEMAS.CompiledSchemas, (s, a) => result.Add(a.Message));
@@ -494,7 +503,7 @@ namespace Hl7.Fhir.Utility
 
 
         private static readonly Regex _re = new Regex("(&[a-zA-Z0-9]+;)", RegexOptions.Compiled | RegexOptions.CultureInvariant);
-        private static Dictionary<string, string> _xmlReplacements;
+        private static Dictionary<string, string>? _xmlReplacements;
         private static Dictionary<string, string> getXmlReplacements()
         {
             if (_xmlReplacements != null)
@@ -724,3 +733,4 @@ namespace Hl7.Fhir.Utility
     }
 }
 
+#nullable restore
