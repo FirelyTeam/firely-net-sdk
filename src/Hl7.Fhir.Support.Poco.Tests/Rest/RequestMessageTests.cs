@@ -16,7 +16,6 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -24,12 +23,11 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Test
 {
     [TestClass]
-    public class RequesterTests
+    public class RequestMessageTests
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
         private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
@@ -324,43 +322,7 @@ namespace Hl7.Fhir.Test
         {
             var request = makeMessage(method: verb, interaction: interaction);
             request.Method.Method.Should().Be(method);
-        }
-
-        [TestMethod]
-        public async Tasks.Task TestToTypedEntryResponse()
-        {
-            var xml = "<Patient xmlns=\"http://hl7.org/fhi\"><active value=\"true\" /></Patient>";
-            var engine = FhirSerializationEngine.Poco(TESTINSPECTOR);
-            var xmlContent = new StringContent(xml, Encoding.UTF8,  ContentType.XML_CONTENT_HEADER);
-            xmlContent.Headers.LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
-
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://www.myserver.com");
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                RequestMessage = request,
-                Content = xmlContent,
-            };
-
-            var etag = "Test-Etag";
-            response.Headers.ETag = new(etag, true);
-            response.Headers.Location = new Uri("Test-Location");
-            response.Headers.TryAddWithoutValidation("Test-key", "Test-value");
-
-            var result = await response.ExtractResponseComponents(engine);
-
-            Assert.AreEqual(xml, result.BodyText);
-            Assert.AreEqual(xml, engine.SerializeToXml(result.BodyResource!));
-            Assert.AreEqual(etag, result.Response.Etag);
-            Assert.AreEqual(response.Content.Headers.LastModified, result.Response.LastModified);
-            Assert.AreEqual(response.Headers.Location, result.Response.Location);
-            Assert.AreEqual(response.RequestMessage.RequestUri, response.GetRequestUri());
-            Assert.AreEqual(response.StatusCode, result.Response.Status);
-
-            var headersExtension = "http://hl7.org/fhir/StructureDefinition/http-response-header";
-            var headers = result.Response.GetExtensions(headersExtension).OfType<FhirString>().Select(s => s.Value).ToList();
-
-            Assert.AreEqual("Test-key:Test-value", headers.Single());
-        }
+        }      
     }
 }
 

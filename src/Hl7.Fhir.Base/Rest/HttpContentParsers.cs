@@ -16,7 +16,9 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Runtime;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -32,25 +34,50 @@ namespace Hl7.Fhir.Rest
                 Status = ((int)responseMessage.StatusCode).ToString(),
                 LastModified = responseMessage.Content?.Headers.LastModified,
                 Location = responseMessage.Headers.Location?.OriginalString ?? responseMessage.Content?.Headers.ContentLocation?.OriginalString,
-                Etag = responseMessage.GetVersionFromETag(),
+                Etag = responseMessage.Headers.ETag?.ToString(),
             };
 
-            setHeaders(response, responseMessage.Headers);
-
+            response.SetHttpHeaders(responseMessage.Headers);
             return response;
         }
 
-
-        private static void setHeaders(Bundle.ResponseComponent interaction, HttpResponseHeaders headers)
+        /// <summary>
+        /// Add the headers from a <see cref="HttpResponseHeaders"/> as extensions to a <see cref="Bundle.ResponseComponent"/>.
+        /// </summary>
+        /// <remarks>The headers will be added, even if they we already present on the <see cref="Bundle.ResponseComponent"/>.
+        /// </remarks>
+        public static void SetHttpHeaders(this Bundle.ResponseComponent interaction, HttpResponseHeaders headers)
         {
             foreach (var header in headers)
             {
-                //TODO: check multiple values for a header??
                 var key = header.Key;
-                var value = header.Value.FirstOrDefault();
-
-                interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString(key + ":" + value));
+                foreach (var value in header.Value)
+                    interaction.AddExtension(EXTENSION_RESPONSE_HEADER, new FhirString($"{key}:{value}"));
             }
+        }
+
+        private static readonly char[] HEADERSPLIT = new[] { ':' };
+
+        /// <summary>
+        /// Extract the headers founds as extensions on the <see cref="Bundle.RequestComponent"/> and return them
+        /// as a <see cref="HttpResponseHeaders"/> collection.
+        /// </summary>
+        public static HttpResponseHeaders GetHttpHeaders(this Bundle.ResponseComponent interaction)
+        {
+            var msg = new HttpResponseMessage();
+            var extensionValues = interaction.GetExtensions(EXTENSION_RESPONSE_HEADER)
+                .Select(e => e.Value).OfType<FhirString>();
+
+            foreach (var extension in extensionValues)
+            {
+                var pair = extension.Value.Split(HEADERSPLIT,2);
+                var key = pair[0];
+                var value = pair[1];
+
+                msg.Headers.TryAddWithoutValidation(key, value);
+            }
+
+            return msg.Headers;
         }
 
         /// <summary>
@@ -76,135 +103,81 @@ namespace Hl7.Fhir.Rest
             response.Headers.ETag?.Tag.Trim('\"');
 
         /// <summary>
-        /// Gets the content type from the header, removing parameters.
+        /// Gets the content type from the header, removing all parameters including character 
+        /// encoding and fhirVersion parameter.
         /// </summary>
-        /// <remarks>Note that this also removes the fhirVersion parameter.</remarks>
         public static string? GetContentType(this HttpContent content) =>
             content.Headers.ContentType?.MediaType;
 
         internal record ResponseComponents(Bundle.ResponseComponent Response, byte[]? BodyData, string? BodyText, Resource? BodyResource);
 
-        internal static async Task<ResponseComponents> ExtractResponseComponents(this HttpResponseMessage responseMessage, IFhirSerializationEngine ser)
-        {
-            var response = responseMessage.ExtractResponseComponent();
-
-            if (responseMessage.Content is not null)
-            {
-                var bodyData = await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-                var bodyText = await responseMessage.Content.GetBodyAsString().ConfigureAwait(false);
-
-                var responseBody = await responseMessage.GetBodyFromContent(ser).ConfigureAwait(false);
-                var bodyResource = responseBody switch
-                {
-                    ResponseWithoutBody => null,
-                    ResponseWithNonFhirPayload => null,
-                    ResponseWithFhirPayload rwfp => rwfp.Body,
-                    ResponseWithBinaryPayload =>
-                        throw new NotImplementedException("Cannot handle binary resources yet."),
-                    _ =>
-                        throw new InvalidOperationException("Unexpected ReceivedResponse subclass.")
-                };
-
-                return new(response, bodyData, bodyText, bodyResource);
-            }
-            else
-                return new(response, null, null, null);
-        }
-
-        // TODO:  We might need to keep an eye on the expected/actual fhirVersion we are receiving to improve
-        // the error messages when a parse failure occurs.
+             
         /// <summary>
-        /// Tries to extract the body, returning information about success and the kind of body encountered.
+        /// Tries to extract the body.
         /// </summary>
-        /// <returns>A <see cref="ResponseWithFhirPayload"/> if the body contains FHIR data, <see cref="ResponseWithNonFhirPayload"/> if the body
-        /// data was not recognized or parseable, a <see cref="ResponseWithBinaryPayload"/> if the server returned binary data
-        /// and <see cref="ResponseWithoutBody"/> if there was no body at all.</returns>
-        /// <exception cref="DeserializationFailedException">When the Content-Type and serialization indicate this is a FHIR payload, but it cannot
+        /// <returns>A <see cref="ResponseWithFhirPayload"/> if the body contains FHIR data, a <see cref="ResponseWithNonFhirPayload"/> if the body
+        /// data was not recognized or parseable or a <see cref="ResponseWithNoPayload"/> when the response has no body.</returns>
+        /// <exception cref="DeserializationFailedException">Thrown when the Content-Type and serialization indicate this is a FHIR payload, but it cannot
         /// be parsed correctly.</exception>
-
-        public static Task<ReceivedResponse> GetBodyFromContent(this HttpResponseMessage message, IFhirSerializationEngine ser) =>
-            message.IsSuccessStatusCode ? getBodyOnSuccess(message, ser) : getBodyOnFailure(message, ser);
-
-        /// <summary>
-        /// Tries to extract the body, with the assumption that the operation has failed.
-        /// </summary>
-        /// <returns>A <see cref="ResponseWithFhirPayload"/> if the body contains FHIR data, <see cref="ResponseWithNonFhirPayload"/> if the body
-        /// data was not recognized or parseable, and <see cref="ResponseWithoutBody"/> if there was no body at all.</returns>
-        /// <exception cref="DeserializationFailedException">When the Content-Type and serialization indicate this is a FHIR payload, but it cannot
-        /// be parsed correctly.</exception>
-        /// <exception cref="UnsupportedBodyTypeException">if the Content-Type is not a FHIR serialization or the data is not recognizable as FHIR.</exception>
-        private static async Task<ReceivedResponse> getBodyOnFailure(HttpResponseMessage message, IFhirSerializationEngine ser)
+        /// <exception cref="UnsupportedBodyTypeException">Thrown when the Content-Type is not a FHIR serialization or the data is not recognizable as FHIR.</exception>
+        /// <remarks>If the status of the response indicates failure, this function will be lenient and return the body as a <see cref="ResponseWithNonFhirPayload"/>
+        /// instead of throwing an <see cref="UnsupportedBodyTypeException"/> when the content type or content itself is not recognizable as FHIR. This improves
+        /// the chances of capturing diagnostic (non-FHIR) bodies returned by the server when an operation fails.</remarks>
+        internal static async Task<ResponseComponents> ExtractResponseComponents(this HttpResponseMessage message, IFhirSerializationEngine ser)
         {
-            if (message.Content is null) return new ResponseWithoutBody(false);
+            var response = message.ExtractResponseComponent();
+
             var content = message.Content;
-
-            var serialization = ContentType.GetResourceFormatFromContentType(content.GetContentType());
-            var bodyText = await content.ReadAsStringAsync();
-
-            // If this is a failure, the server could have set the content-type incorrectly as well,
-            // do double check whether we need to take this payload as FHIR data
-            return serialization switch
-            {
-                ResourceFormat.Xml when SerializationUtil.ProbeIsFhirXml(bodyText) =>
-                            new ResponseWithFhirPayload(false, setLocation(ser.DeserializeFromXml(bodyText), message)),
-                ResourceFormat.Json when SerializationUtil.ProbeIsFhirJson(bodyText) =>
-                            new ResponseWithFhirPayload(false, setLocation(ser.DeserializeFromJson(bodyText), message)),
-                _ => new ResponseWithNonFhirPayload(false, bodyText)
-            };
-        }
-
-        /// <summary>
-        /// Tries to extract the body, with the assumption that the operation has succeeded.
-        /// </summary>
-        /// <returns>A <see cref="ResponseWithFhirPayload"/> if the body contains FHIR data, <see cref="ResponseWithoutBody"/> when there was no body.</returns>
-        /// <exception cref="DeserializationFailedException">When the Content-Type and serialization indicate this is a FHIR payload, but it cannot
-        /// be parsed correctly.</exception>
-        /// <exception cref="UnsupportedBodyTypeException">if the Content-Type is not a FHIR serialization or the data is not recognizable as FHIR.</exception>
-        private static async Task<ReceivedResponse> getBodyOnSuccess(HttpResponseMessage message, IFhirSerializationEngine ser)
-        {
-            if (message.Content is null) return new ResponseWithoutBody(true);
-            var content = message.Content;
+            var bodyData = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            if (bodyData.Length == 0) return new(response, null, null, null);
 
             var contentType = content.GetContentType();
-            var serialization = ContentType.GetResourceFormatFromContentType(contentType);
-            var bodyText = await content.ReadAsStringAsync();
 
-            return serialization switch
+            // TODO:  We might need to keep an eye on the expected/actual fhirVersion we are receiving to improve
+            // the error response in case we are dealing with a server that uses another version of FHIR.
+            var serialization = ContentType.GetResourceFormatFromContentType(content.GetContentType());
+            var bodyText = await content.GetBodyAsString().ConfigureAwait(false);  // will be null if not parseable as text
+
+            // Depending on whether this is a failure, the server could have set the content-type incorrectly as well,
+            // do double check whether we need to take this payload as FHIR data
+            var resource = serialization switch
             {
-                ResourceFormat.Xml when SerializationUtil.ProbeIsFhirXml(bodyText) =>
-                            new ResponseWithFhirPayload(true, setLocation(ser.DeserializeFromXml(bodyText), message)),
-                ResourceFormat.Json when SerializationUtil.ProbeIsFhirJson(bodyText) =>
-                            new ResponseWithFhirPayload(true, setLocation(ser.DeserializeFromJson(bodyText), message)),
-                ResourceFormat.Unknown => throw new UnsupportedBodyTypeException(
-                    $"Endpoint returned a body with contentType '{contentType}', " +
-                    $"while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?",
-                    contentType, bodyText),
-                _ => throw new UnsupportedBodyTypeException(
-                        $"Endpoint said it returned '{contentType}', but the body is not recognized as either xml or json.", contentType, bodyText)
+                ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsFhirXml(bodyText) =>
+                            ser.DeserializeFromXml(bodyText),
+                ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsFhirJson(bodyText) =>
+                            ser.DeserializeFromJson(bodyText),
+                (ResourceFormat.Xml or ResourceFormat.Json) when message.IsSuccessStatusCode =>
+                    throw new UnsupportedBodyTypeException(
+                       $"Endpoint said it returned '{contentType}', but the body is not recognized as either xml or json.", contentType, bodyText),
+                ResourceFormat.Unknown when message.IsSuccessStatusCode => throw new UnsupportedBodyTypeException(
+                       $"Endpoint returned a body with contentType '{contentType}', " +
+                       $"while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?",
+                       contentType, bodyText),
+                _ => null
             };
-        }
 
-        // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
-        private static Resource setLocation(Resource r, HttpResponseMessage response)
-        {
-            if (response.GetRequestUri()?.OriginalString is string location)
-            {
-                r.ResourceBase = new ResourceIdentity(location).BaseUri;
-            }
+            // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
+            if (resource is not null && message.GetRequestUri()?.OriginalString is string location)
+                resource.ResourceBase = new ResourceIdentity(location).BaseUri;
 
-            return r;
+            return new(response, bodyData, bodyText, resource);
         }
     }
 
-    internal abstract record ReceivedResponse(bool Success);
+    //internal abstract record ReceivedResponse;
 
-    internal record ResponseWithoutBody(bool Success) : ReceivedResponse(Success);
+    //internal record ResponseWithNoPayload : ReceivedResponse
+    //{
+    //    public static ResponseWithNoPayload Instance = new();
+    //}
 
-    internal record ResponseWithFhirPayload(bool Success, Resource Body) : ReceivedResponse(Success);
+    //internal record ResponseWithFhirPayload(Resource Body) : ReceivedResponse;
 
-    internal record ResponseWithBinaryPayload(bool Success, byte[] Body) : ReceivedResponse(Success);
+    //internal record ResponseWithBinaryPayload(byte[] Body) : ReceivedResponse;
 
-    internal record ResponseWithNonFhirPayload(bool Success, string Body) : ReceivedResponse(Success);
+    //internal record ResponseWithNonFhirTextPayload(string Body) : ReceivedResponse;
+
+    //internal record ResponseWithNonFhirDataPayload(byte[] Body) : ReceivedResponse;
 
 }
 
