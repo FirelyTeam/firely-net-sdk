@@ -16,10 +16,10 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             ps.EnterResource("A"); t("A");
 
-            ps.EnterElement("b"); t("A.b");
-            ps.EnterElement("c"); t("A.b.c");
+            ps.EnterElement("b", 0, false); t("A.b");
+            ps.EnterElement("c", 0, false); t("A.b.c");
             ps.EnterResource("D"); t("D");
-            ps.EnterElement("e"); t("D.e");
+            ps.EnterElement("e", 0, false); t("D.e");
 
             Assert.ThrowsException<InvalidOperationException>(() => ps.ExitResource());
             ps.ExitElement(); t("D");

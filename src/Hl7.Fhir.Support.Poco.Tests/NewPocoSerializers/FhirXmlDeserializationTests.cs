@@ -58,7 +58,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.MoveToFirstAttribute();
 
             var deserializer = getTestDeserializer(new());
-            var (value, error) = deserializer.ParsePrimitiveValue(reader, implementingType);
+            var ps = new PathStack();
+            ps.EnterElement("Patient", 0, false);
+            var (value, error) = deserializer.ParsePrimitiveValue(reader, implementingType, ps);
 
             error?.ErrorCode.Should().Be(expectedErrorCode);
 

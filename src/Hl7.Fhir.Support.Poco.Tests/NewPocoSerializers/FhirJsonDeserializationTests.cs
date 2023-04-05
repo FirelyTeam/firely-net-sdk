@@ -61,7 +61,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType);
+            var ps = new PathStack();
+            ps.EnterElement("Patient", 0, false);
+            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType, ps);
 
             if (code is not null)
                 error?.ErrorCode.Should().Be(code);
@@ -144,7 +146,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             {
                 var reader = constructReader(number); reader.Read();
                 var deserializer = getTestDeserializer(new() { OnPrimitiveParseFailed = correctIntToBool });
-                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null);
+                var ps = new PathStack();
+                ps.EnterElement("Patient", 0, false);
+                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null, ps);
             }
         }
 

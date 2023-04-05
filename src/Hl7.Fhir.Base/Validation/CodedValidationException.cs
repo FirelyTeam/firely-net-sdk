@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Validation
     /// <summary>
     /// An error found during validation of POCO's using the <see cref="ValidationAttribute"/> validators.
     /// </summary>
-    public class CodedValidationException : CodedException
+    public class CodedValidationException : CodedWithLocationException
     {
         public const string CHOICE_TYPE_NOT_ALLOWED_CODE = "PVAL101";
         public const string INCORRECT_CARDINALITY_MIN_CODE = "PVAL102";
@@ -63,11 +63,47 @@ namespace Hl7.Fhir.Validation
             // nothing
         }
 
+        /// <summary>
+        /// Convert to an OperationOutcome.Issue
+        /// </summary>
+        /// <returns></returns>
+        public override Model.OperationOutcome.IssueComponent ToIssue()
+        {
+            var result = base.ToIssue();
+
+            // Set the Display values based on the code
+            switch (ErrorCode)
+            {
+                case CHOICE_TYPE_NOT_ALLOWED_CODE: result.Details.Coding[0].Display = "PVAL101"; break;
+                case INCORRECT_CARDINALITY_MIN_CODE: result.Details.Coding[0].Display = "Missing mandatory field"; break;
+                case INCORRECT_CARDINALITY_MAX_CODE: result.Details.Coding[0].Display = "PVAL103"; break;
+                case REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE: result.Details.Coding[0].Display = "Cannot be null"; break;
+                case MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE: result.Details.Coding[0].Display = "Mandatory field cannot be null"; break;
+                case CODE_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL106"; break;
+                case DATE_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL107"; break;
+                case DATETIME_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL108"; break;
+                case ID_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL109"; break;
+                case OID_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL110"; break;
+                case TIME_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL111"; break;
+                case URI_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL112"; break;
+                case UUID_LITERAL_INVALID_CODE: result.Details.Coding[0].Display = "PVAL113"; break;
+                case NARRATIVE_XML_IS_MALFORMED_CODE: result.Details.Coding[0].Display = "PVAL114"; break;
+                case NARRATIVE_XML_IS_INVALID_CODE: result.Details.Coding[0].Display = "PVAL115"; break;
+                case INVALID_CODED_VALUE_CODE: result.Details.Coding[0].Display = "PVAL116"; break;
+                case CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE: result.Details.Coding[0].Display = "PVAL117"; break;
+                case CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE: result.Details.Coding[0].Display = "PVAL118"; break;
+            }
+
+            return result;
+        }
+
         internal CodedValidationResult AsResult(ValidationContext context, params object?[] parameters)
         {
             string? location = null;
+            string? path = context.GetLocation() as string;
+            var pi = context.GetPositionInfo() as IPositionInfo;
 
-            if (context.GetPositionInfo() is IPositionInfo pi)
+            if (pi != null)
                 location = $"line {pi.LineNumber}, position {pi.LinePosition}";
 
             if (context.GetLocation() is string loc)
@@ -76,7 +112,11 @@ namespace Hl7.Fhir.Validation
                 // whether this validation is run within the deserializer or the DataAnnotations.Validator.
                 // In the latter case, the MemberName will be set, and the location will be the GetLocation()
                 // will return the parent, so we need to add the MemberName.
-                if (context.MemberName is not null) loc = $"{loc}.{context.MemberName}";
+                if (context.MemberName is not null)
+                {
+                    path = $"{loc}.{context.MemberName}";
+                    loc = path;
+                }
                 location = location is null ? loc : $"{loc}, {location}";
             }
 
@@ -84,7 +124,13 @@ namespace Hl7.Fhir.Validation
 
             var messageWithLocation = $"{formattedMessage} At {location}.";
 
-            var codedException = new CodedValidationException(ErrorCode, messageWithLocation);
+            var codedException = new CodedValidationException(ErrorCode, messageWithLocation)
+            {
+                FormattedMessage = formattedMessage,
+                LineNumber = pi?.LineNumber,
+                Position = pi?.LinePosition,
+                Location = path
+            };
 
             return context.MemberName is string mn
                 ? new(codedException, memberNames: new[] { mn })

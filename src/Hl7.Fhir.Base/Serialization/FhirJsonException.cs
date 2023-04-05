@@ -8,6 +8,7 @@
 
 
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Globalization;
@@ -22,7 +23,7 @@ namespace Hl7.Fhir.Serialization
     /// with the Json itself, but issues in the data with regards to the rules for FHIR Json format described
     /// in http://hl7.org/fhir/json.html.
     /// </summary>
-    public class FhirJsonException : CodedException
+    public class FhirJsonException : CodedWithLocationException
     {
         // TODO: Document each of these errors, based on the text for the error.
         public const string EXPECTED_START_OF_OBJECT_CODE = "JSON101";
@@ -80,7 +81,7 @@ namespace Hl7.Fhir.Serialization
         internal static readonly FhirJsonException INCORRECT_BASE64_DATA = new(INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.");
         internal static readonly FhirJsonException STRING_ISNOTAN_INSTANT = new(STRING_ISNOTAN_INSTANT_CODE, "Literal string '{0}' cannot be parsed as an instant.");
         internal static readonly FhirJsonException NUMBER_CANNOT_BE_PARSED = new(NUMBER_CANNOT_BE_PARSED_CODE, "Json number '{0}' cannot be parsed as a {1}.");
-        internal static readonly FhirJsonException UNEXPECTED_JSON_TOKEN = new(UNEXPECTED_JSON_TOKEN_CODE, "Expecting a {0}, but found a json {1} with value '{2}'.");
+        internal static readonly FhirJsonException UNEXPECTED_JSON_TOKEN = new(UNEXPECTED_JSON_TOKEN_CODE, "Expecting a {0}, but found a json {1} with value '{2}'.") { IssueSeverity = OperationOutcome.IssueSeverity.Warning, IssueType = OperationOutcome.IssueType.Value };
 
         // In R5 Integer64 (long) are serialized as string. So we would expect a string during parsing.
         internal static readonly FhirJsonException LONG_CANNOT_BE_PARSED = new(LONG_CANNOT_BE_PARSED_CODE, "Json string '{0}' cannot be parsed as a {1}.");
@@ -106,6 +107,42 @@ namespace Hl7.Fhir.Serialization
         // This leaves the incorrect nulls in place, no change in data.
         internal static readonly FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL = new(PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.");
 
+        public override OperationOutcome.IssueComponent ToIssue()
+        {
+            var result = base.ToIssue();
+            // Set the Display values based on the code
+            switch (ErrorCode)
+            {
+                case EXPECTED_START_OF_OBJECT_CODE: result.Details.Coding[0].Display = "JSON101"; break;
+                case RESOURCETYPE_SHOULD_BE_STRING_CODE: result.Details.Coding[0].Display = "JSON102"; break;
+                case NO_RESOURCETYPE_PROPERTY_CODE: result.Details.Coding[0].Display = "JSON103"; break;
+                case EXPECTED_PRIMITIVE_NOT_OBJECT_CODE: result.Details.Coding[0].Display = "JSON104"; break;
+                case EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: result.Details.Coding[0].Display = "JSON105"; break;
+                case INCORRECT_BASE64_DATA_CODE: result.Details.Coding[0].Display = "JSON106"; break;
+                case STRING_ISNOTAN_INSTANT_CODE: result.Details.Coding[0].Display = "JSON107"; break;
+                case NUMBER_CANNOT_BE_PARSED_CODE: result.Details.Coding[0].Display = "JSON108"; break;
+                case EXPECTED_PRIMITIVE_NOT_NULL_CODE: result.Details.Coding[0].Display = "JSON109"; break;
+                case UNEXPECTED_JSON_TOKEN_CODE: result.Details.Coding[0].Display = "JSON110"; break;
+                case EXPECTED_START_OF_ARRAY_CODE: result.Details.Coding[0].Display = "JSON111"; break;
+                case USE_OF_UNDERSCORE_ILLEGAL_CODE: result.Details.Coding[0].Display = "JSON113"; break;
+                case CHOICE_ELEMENT_HAS_NO_TYPE_CODE: result.Details.Coding[0].Display = "JSON114"; break;
+                case CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE: result.Details.Coding[0].Display = "JSON115"; break;
+                case UNKNOWN_RESOURCE_TYPE_CODE: result.Details.Coding[0].Display = "JSON116"; break;
+                case RESOURCE_TYPE_NOT_A_RESOURCE_CODE: result.Details.Coding[0].Display = "JSON117"; break;
+                case UNKNOWN_PROPERTY_FOUND_CODE: result.Details.Coding[0].Display = "JSON118"; break;
+                case RESOURCETYPE_UNEXPECTED_CODE: result.Details.Coding[0].Display = "JSON119"; break;
+                case OBJECTS_CANNOT_BE_EMPTY_CODE: result.Details.Coding[0].Display = "JSON120"; break;
+                case ARRAYS_CANNOT_BE_EMPTY_CODE: result.Details.Coding[0].Display = "JSON121"; break;
+                case LONG_CANNOT_BE_PARSED_CODE: result.Details.Coding[0].Display = "JSON122"; break;
+                case LONG_INCORRECT_FORMAT_CODE: result.Details.Coding[0].Display = "JSON123"; break;
+
+                case PRIMITIVE_ARRAYS_ONLY_NULL_CODE: result.Details.Coding[0].Display = "JSON125"; break;
+                case INCOMPATIBLE_SIMPLE_VALUE_CODE: result.Details.Coding[0].Display = "JSON126"; break;
+            }
+
+            return result;
+        }
+
         public FhirJsonException(string code, string message) : base(code, message)
         {
         }
@@ -114,20 +151,28 @@ namespace Hl7.Fhir.Serialization
         {
         }
 
-        internal FhirJsonException With(ref Utf8JsonReader reader, params object?[] parameters) =>
-            With(ref reader, inner: null, parameters);
+        internal FhirJsonException With(ref Utf8JsonReader reader, string locationPath, params object?[] parameters) =>
+            With(ref reader, locationPath, inner: null, parameters);
 
         /// <summary>
         /// Creates a new instance of a <see cref="FhirJsonException"/> based on this one. This exception
         /// serves as the prototype for which the location and message can be altered for the copy.
         /// </summary>
-        internal FhirJsonException With(ref Utf8JsonReader reader, FhirJsonException? inner, params object?[] parameters)
+        internal FhirJsonException With(ref Utf8JsonReader reader, string locationPath, FhirJsonException? inner, params object?[] parameters)
         {
             var formattedMessage = string.Format(CultureInfo.InvariantCulture, Message, parameters);
-            var location = reader.GenerateLocationMessage();
+            var location = reader.GenerateLocationMessage(out long lineNumber, out long position);
             var message = $"{formattedMessage} {location}";
 
-            return new FhirJsonException(ErrorCode, message, inner);
+            return new FhirJsonException(ErrorCode, message, inner)
+            {
+                FormattedMessage = formattedMessage,
+                LineNumber = lineNumber,
+                Position = position,
+                Location = locationPath,
+                IssueSeverity = IssueSeverity,
+                IssueType = IssueType,
+            };
         }
     }
 }
