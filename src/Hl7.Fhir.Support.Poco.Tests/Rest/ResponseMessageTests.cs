@@ -13,13 +13,9 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -70,12 +66,25 @@ namespace Hl7.Fhir.Test
             msg.GetVersionFromETag().Should().Be("314");
         }
 
+        private const string DEFAULT_XML = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"true\" /></Patient>";
+        private static readonly Uri REQUEST_URI = new("http://server.nl/fhir/SomeResource/1", UriKind.Absolute);
+        private HttpContent makeXmlContent(string? xml = null) => 
+            new StringContent(xml ?? DEFAULT_XML, Encoding.UTF8, ContentType.XML_CONTENT_HEADER);
+        private HttpResponseMessage makeXmlMessage(HttpStatusCode status = HttpStatusCode.OK, string? xml = null) => 
+            new(status) { Content = makeXmlContent(xml), RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
+
+        private const string DEFAULT_JSON = """{"resourceType":"Patient","active":true}""";
+
+        private HttpContent makeJsonContent(string? json = null) =>
+            new StringContent(json ?? DEFAULT_JSON, Encoding.UTF8, ContentType.JSON_CONTENT_HEADER);
+        private HttpResponseMessage makeJsonMessage(HttpStatusCode status = HttpStatusCode.OK, string? json = null) =>
+            new(status) { Content = makeJsonContent(json), RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
+
         [TestMethod]
         public async Tasks.Task SetAndExtractRelevantHeaders()
-        {
-            var xml = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"true\" /></Patient>";
+        {           
             var engine = FhirSerializationEngine.Poco(TESTINSPECTOR);
-            var xmlContent = new StringContent(xml, Encoding.UTF8,  ContentType.XML_CONTENT_HEADER);
+            var xmlContent = makeXmlContent();
             xmlContent.Headers.LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
 
             var request = new HttpRequestMessage(HttpMethod.Get, "http://www.myserver.com");
@@ -90,10 +99,10 @@ namespace Hl7.Fhir.Test
             response.Headers.Location = new Uri("http://nu.nl");
             response.Headers.TryAddWithoutValidation("Test-key", "Test-value");
 
-            var extracted = await response.ExtractResponseComponents(engine);
+            var extracted = await response.ExtractResponseData(engine);
 
-            extracted.BodyText.Should().Be(xml);
-            engine.SerializeToXml(extracted.BodyResource!).Should().Be(xml);
+            extracted.BodyText.Should().Be(DEFAULT_XML);
+            engine.SerializeToXml(extracted.BodyResource!).Should().Be(DEFAULT_XML);
             extracted.Response.Etag.Should().Be(etag);
             extracted.Response.LastModified.Should().Be(response.Content.Headers.LastModified);
             extracted.Response.Location.Should().Be(response.Headers.Location.OriginalString);
@@ -106,7 +115,7 @@ namespace Hl7.Fhir.Test
         public async Task GetEmptyResponse()
         {
             var response = new HttpResponseMessage(HttpStatusCode.Conflict);
-            var components = await response.ExtractResponseComponents(POCOENGINE);
+            var components = await response.ExtractResponseData(POCOENGINE);
 
             components.Response.Status.Should().Be("409");
             components.BodyData.Should().BeNull();
@@ -114,20 +123,83 @@ namespace Hl7.Fhir.Test
             components.BodyResource.Should().BeNull();
         }
 
-
-        // probe isfhirxml
-        // probe isfhirjson
-        
-        public void GetResponseWithCorrectXml()
+        private async Task check(string status, HttpResponseMessage response, IFhirSerializationEngine engine, ResourceFormat format, bool hasResource=true)
         {
+            var components = await response.ExtractResponseData(engine);
 
+            components.Response.Status.Should().Be(status);
+            components.BodyData.Should().BeEquivalentTo(await response.Content.ReadAsByteArrayAsync());
+            components.BodyText.Should().Be(await response.Content.ReadAsStringAsync());
+
+            if (hasResource)
+            {
+                components.BodyResource.Should().NotBeNull();
+
+                if(format == ResourceFormat.Xml)
+                    engine.SerializeToXml(components.BodyResource!).Should().Be(components.BodyText);
+                else
+                    engine.SerializeToJson(components.BodyResource!).Should().Be(components.BodyText);
+
+                components.BodyResource!.ResourceBase.Should().Be(REQUEST_URI);
+            }
+            else
+                components.BodyResource.Should().BeNull();
         }
 
-        public void GetResponseWithCorrectJson()
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task GetResponseWithCorrectXml(IFhirSerializationEngine engine)
         {
-            // both parsers
+            var response = makeXmlMessage();
+            await check("200", response, engine, ResourceFormat.Xml);
         }
 
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task GetResponseWithCorrectJson(IFhirSerializationEngine engine)
+        {
+            var response = makeJsonMessage();
+            await check("200", response, engine, ResourceFormat.Json);
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithXmlButNotXml(IFhirSerializationEngine engine)
+        {
+            var response = makeXmlMessage(HttpStatusCode.Accepted, "this is not xml");
+            await Assert.ThrowsExceptionAsync<UnsupportedBodyTypeException>( () => response.ExtractResponseData(engine) );
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithJsonButNotJson(IFhirSerializationEngine engine)
+        {
+            var response = makeJsonMessage(HttpStatusCode.Accepted, "this is not json");
+            await Assert.ThrowsExceptionAsync<UnsupportedBodyTypeException>(() => response.ExtractResponseData(engine));
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleFailureResponseWithXmlButNotXml(IFhirSerializationEngine engine)
+        {
+            var response = makeXmlMessage(HttpStatusCode.Forbidden, "this is not xml");
+            await check("403", response, engine, ResourceFormat.Xml, false);
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleFailureResponseWithJsonButNotJson(IFhirSerializationEngine engine)
+        {
+            var response = makeXmlMessage(HttpStatusCode.Forbidden, "this is not xml");
+            await check("403", response, engine, ResourceFormat.Json, false);
+        }
+
+        public static IEnumerable<object[]> GetEngines()
+        {
+            yield return new object[] { POCOENGINE };
+            yield return new object[] { ELEMENTENGINE };
+        }
+     
         public void GetSuccessResponseWithInvalidXml()
         {
         }

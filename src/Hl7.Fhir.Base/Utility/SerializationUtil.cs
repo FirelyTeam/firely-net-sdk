@@ -35,18 +35,17 @@ namespace Hl7.Fhir.Utility
         public static readonly IncludedXsdSchemaSet BASEFHIRSCHEMAS =
             new(typeof(SerializationUtil).Assembly, XML_XSD_RESOURCENAME, XMLDSIGCORESCHEMA_XSD_RESOURCENAME, FHIRXHTML_XSD_RESOURCENAME);
 
-        public static bool ProbeIsXml(string data)
-        {
-            Regex xml = new Regex("^<[^>]+>");
+        private readonly static Regex xml = new Regex("""^\s*<[^>]+>""", RegexOptions.Compiled);
+        private readonly static Regex json = new Regex("""^\s*(\{\s*("[^"]+"\s*:[^\}]*)?\})\s*$""", RegexOptions.Compiled);
 
-            return xml.IsMatch(data.TrimStart());
-        }
+
+        public static bool ProbeIsXml(string data) => xml.IsMatch(data);
 
         public static bool ProbeIsFhirXml(string data) =>
             ProbeIsXml(data) && (data.Contains($"'{XmlNs.FHIR}'") || data.Contains($"\"{XmlNs.FHIR}\""));
 
-       
-        public static bool ProbeIsJson(string data) => data.TrimStart().StartsWith("{");
+
+        public static bool ProbeIsJson(string data) => json.IsMatch(data);
 
         public static bool ProbeIsFhirJson(string data) =>
             ProbeIsJson(data) && data.Contains($"\"resourceType\"");

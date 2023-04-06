@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Rest
         {
             try
             {
-                return await content.ReadAsStringAsync();
+                return await content.ReadAsStringAsync().ConfigureAwait(false);
             }
             catch
             {
@@ -109,21 +109,21 @@ namespace Hl7.Fhir.Rest
         public static string? GetContentType(this HttpContent content) =>
             content.Headers.ContentType?.MediaType;
 
-        internal record ResponseComponents(Bundle.ResponseComponent Response, byte[]? BodyData, string? BodyText, Resource? BodyResource);
-
+        internal record ResponseData(Bundle.ResponseComponent Response, byte[]? BodyData, string? BodyText, Resource? BodyResource);
              
         /// <summary>
-        /// Tries to extract the body.
+        /// Extract headers into a <see cref="Bundle.ResponseComponent"/>, the body as a byte array, as text and when possible, a parsed resource.
         /// </summary>
-        /// <returns>A <see cref="ResponseWithFhirPayload"/> if the body contains FHIR data, a <see cref="ResponseWithNonFhirPayload"/> if the body
-        /// data was not recognized or parseable or a <see cref="ResponseWithNoPayload"/> when the response has no body.</returns>
+        /// <returns>A <see cref="ResponseData"/> with a non-null <see cref="ResponseData.BodyResource"/> if the body contains FHIR data, 
+        /// a non-null <see cref="ResponseData.BodyText"/> if the body is valid UTF-8 encoded text and the body data as a byte array, if there is a body.
+        /// </returns>
         /// <exception cref="DeserializationFailedException">Thrown when the Content-Type and serialization indicate this is a FHIR payload, but it cannot
         /// be parsed correctly.</exception>
         /// <exception cref="UnsupportedBodyTypeException">Thrown when the Content-Type is not a FHIR serialization or the data is not recognizable as FHIR.</exception>
-        /// <remarks>If the status of the response indicates failure, this function will be lenient and return the body as a <see cref="ResponseWithNonFhirPayload"/>
+        /// <remarks>If the status of the response indicates failure, this function will be lenient and return the body data 
         /// instead of throwing an <see cref="UnsupportedBodyTypeException"/> when the content type or content itself is not recognizable as FHIR. This improves
         /// the chances of capturing diagnostic (non-FHIR) bodies returned by the server when an operation fails.</remarks>
-        internal static async Task<ResponseComponents> ExtractResponseComponents(this HttpResponseMessage message, IFhirSerializationEngine ser)
+        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser)
         {
             var response = message.ExtractResponseComponent();
 
@@ -158,7 +158,12 @@ namespace Hl7.Fhir.Rest
 
             // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
             if (resource is not null && message.GetRequestUri()?.OriginalString is string location)
-                resource.ResourceBase = new ResourceIdentity(location).BaseUri;
+            {
+                var ri = new ResourceIdentity(location);
+                resource.ResourceBase = ri.HasBaseUri && ri.Form == ResourceIdentityForm.AbsoluteRestUrl
+                    ? ResourceIdentity.Build(ri.BaseUri, ri.ResourceType, ri.Id, ri.VersionId)
+                    : new Uri(location, UriKind.Absolute);
+            }
 
             return new(response, bodyData, bodyText, resource);
         }

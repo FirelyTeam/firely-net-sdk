@@ -1113,11 +1113,12 @@ namespace Hl7.Fhir.Rest
                 return execResult as TResource;
         }
 
-        private async Task<HttpContentParsers.ResponseComponents> extractBodyComponentsAndManageExceptions(HttpResponseMessage responseMessage)
+        // This little function simulates the original exception-throwing behaviour on top of the ExtractResponseComponents function.
+        private async Task<HttpContentParsers.ResponseData> extractBodyComponentsAndManageExceptions(HttpResponseMessage responseMessage)
         {
             try
             {
-                return await responseMessage.ExtractResponseComponents(_serializationEngine).ConfigureAwait(false);
+                return await responseMessage.ExtractResponseData(_serializationEngine).ConfigureAwait(false);
             }
             catch (UnsupportedBodyTypeException ex)
             {

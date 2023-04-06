@@ -26,7 +26,7 @@ namespace Hl7.Fhir.Serialization
 
         public PocoSerializationEngine(ModelInspector inspector)
         {
-            _options = new JsonSerializerOptions().ForFhir(inspector).Pretty();
+            _options = new JsonSerializerOptions().ForFhir(inspector);
             _inspector = inspector;
         }
 
