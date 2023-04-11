@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Specification.Source
         {
             return !File.Exists(path)
                 ? throw new FileNotFoundException($"Cannot create a {nameof(CommonZipSource)} for the core specification: '{SpecificationZipFileName}' was not found.")
-                : new ZipSource(path);
+                : new ZipSource(path, new DirectorySourceSettings { IncludeSubDirectories = true });
         }
 
         /// <summary>Create a new <see cref="ZipSource"/> instance to read FHIR artifacts from the core specification archive "specification.zip".</summary>

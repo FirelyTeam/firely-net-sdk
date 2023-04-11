@@ -6,19 +6,14 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Hl7.Fhir.Specification.Tests
 {
     [TestClass]
     public partial class StructureDefinitionSummaryProviderTest
     {
-        [TestMethod]
-        public void PocoAndSdSummaryProvidersShouldBeEqual()
-        {
-            assertPocoAndSdSummaryProviders();
-        }
-
-        private void assertPocoAndSdSummaryProviders()
+        public static IEnumerable<object[]> GetPocoAndSdSummaryProviders()
         {
             IStructureDefinitionSummaryProvider pocoSdProvider = new PocoStructureDefinitionSummaryProvider();
             var resolver = ZipSource.CreateValidationSource();
@@ -30,12 +25,19 @@ namespace Hl7.Fhir.Specification.Tests
                 var pocoSummary = pocoSdProvider.Provide(canonicalResource);
                 var sdSummary = sdProvide.Provide(canonicalResource);
 
-                AssertEqual(pocoSummary, sdSummary);
+                yield return new object[] { canonicalResource, pocoSummary, sdSummary };
             }
         }
 
+        public static string GetCanonicalDisplayName(MethodInfo methodInfo, object[] data)
+        {
+            return data[0].ToString();
+        }
 
-        private static void AssertEqual(IStructureDefinitionSummary left, IStructureDefinitionSummary right) =>
+
+        [TestMethod]
+        [DynamicData(nameof(GetPocoAndSdSummaryProviders), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetCanonicalDisplayName))]
+        public void PocoAndSdSummaryProvidersShouldBeEqual(Canonical canonicalResource, IStructureDefinitionSummary left, IStructureDefinitionSummary right) =>
             areEqual(left, right, new());
 
         private static void areEqual(IStructureDefinitionSummary left, IStructureDefinitionSummary right, Stack<string> workStack)
@@ -83,7 +85,7 @@ namespace Hl7.Fhir.Specification.Tests
                 left.Select(x => x.ElementName).Should().BeEquivalentTo(right.Select(x => x.ElementName), because: context + ": left and right have different number of elements.");
 
                 // this implicitly tests the correctness of order, without order having to be exactly
-                // the same for let and right.
+                // the same for left and right.
                 var orderedLeft = left.OrderBy(leds => leds.Order).ToList();
                 var orderedRight = right.OrderBy(reds => reds.Order).ToList();
 
