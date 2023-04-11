@@ -1059,66 +1059,76 @@ namespace Hl7.Fhir.Rest
 
             // Note: if the body contains unparsable content, this helper method will throw FhirOperationException, 
             // DeserializationFailedException or the legacy FormatException (or subclass).
-            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource) = await extractBodyComponentsAndManageExceptions(responseMessage).ConfigureAwait(false);
-
-            // If the response is an operation outcome, add it to response.outcome.
-            // This is necessary for when a client uses return=OperationOutcome as a prefer header.
-            // See also issue #1681.
-            if (LastBodyAsResource is OperationOutcome oo)
-                LastResult.Outcome = oo;
-
-            // If the operation failed, signal this with a FhirOperationException.
-            if (!responseMessage.IsSuccessStatusCode)
-                throw FhirOperationException.BuildFhirOperationException(responseMessage.StatusCode, LastBodyAsResource, LastBodyAsText);
-
-            // If the operation succeeded, but with an unexpected status code, report failure anyway.
-            if (!expect.Contains(responseMessage.StatusCode))
-            {
-                throw new FhirOperationException(
-                    $"Operation concluded successfully, but the return status {responseMessage.StatusCode} was unexpected",
-                    responseMessage.StatusCode);
-            }
-
-            Resource? execResult = LastBodyAsResource;
+            var checkVersion = Settings.VerifyFhirVersion ? fhirVersion : null;
+            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource) = await ProcessResponse(responseMessage, expect, _serializationEngine, checkVersion).ConfigureAwait(false);
 
             // If the full representation was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the altered resource.
             var noRealBody = LastBodyAsResource is null || (LastBodyAsResource is OperationOutcome && string.IsNullOrEmpty(LastBodyAsResource.Id));
-            if (noRealBody
-                && isPostOrPut(request)
+            var shouldFetchFullRepresentation = noRealBody
+                && isPostOrPutOrPatch(request)
                 && Settings.ReturnPreference == ReturnPreference.Representation
                 && LastResult.Location is string fetchLocation
-                && new ResourceIdentity(fetchLocation).IsRestResourceIdentity()) // Check that it isn't an operation too
-            {
-                execResult = await GetAsync(fetchLocation).ConfigureAwait(false);
-            }
+                && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
 
-            // If there's nothing to return, return null. Note that the LastBodyXXXX properties can still contain useful data.
-            if (execResult is null) return null;
+            var execResult = shouldFetchFullRepresentation ?
+                await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
 
             // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
-            if (execResult is not TResource)
+            return execResult switch
             {
-                // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
-                // the LastResult, and return null as the result. Otherwise, throw.
-                if (execResult is OperationOutcome)
-                    return null;
+                // We have the expected resource type, fine!
+                TResource resource => resource,
 
-                var message = $"Operation {request.Request.Method} on {request.Request.Url} " +
+                // If this is an operationoutcome, that may still be all right. The OperationOutcome has 
+                // been stored in the LastResult, and return null as the result of the function.
+                OperationOutcome => null,
+
+                // If there's nothing to return, return null. Note that the LastBodyXXXX properties can still contain useful data.
+                null => null,  
+
+                // Unexpected response type in the body, throw.
+                _ => throw new FhirOperationException(unexpectedBodyType(request.Request), responseMessage.StatusCode)
+            }; 
+            
+            static string unexpectedBodyType(Bundle.RequestComponent rc) => $"Operation {rc.Method} on {rc.Url} " +
                     $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
-                throw new FhirOperationException(message, responseMessage.StatusCode);
-            }
-            else
-                return execResult as TResource;
         }
 
-        // This little function simulates the original exception-throwing behaviour on top of the ExtractResponseComponents function.
-        private async Task<HttpContentParsers.ResponseData> extractBodyComponentsAndManageExceptions(HttpResponseMessage responseMessage)
+        /// <summary>
+        /// Inspects the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions that the contract of the methods on the FhirClient requires.
+        /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
+        /// </summary>        
+        /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
+        /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
+        /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
+        /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine)"/>
+        internal static async Task<HttpContentParsers.ResponseData> ProcessResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? fhirVersion)
         {
             try
             {
-                return await responseMessage.ExtractResponseData(_serializationEngine).ConfigureAwait(false);
+                var responseData = await responseMessage.ExtractResponseData(engine).ConfigureAwait(false);
+
+                // If the response is an operation outcome, add it to response.outcome.
+                // This is necessary for when a client uses return=OperationOutcome as a prefer header.
+                // See also issue #1681.
+                if (responseData.BodyResource is OperationOutcome oo)
+                    responseData.Response.Outcome = oo;
+
+                // If the operation failed, signal this with a FhirOperationException.
+                if (!responseMessage.IsSuccessStatusCode)
+                    throw FhirOperationException.BuildFhirOperationException(responseMessage.StatusCode, responseData.BodyResource, responseData.BodyText);
+
+                // If the operation succeeded, but with an unexpected status code, report failure anyway.
+                if (!expect.Contains(responseMessage.StatusCode))
+                {
+                    throw new FhirOperationException(
+                        $"Operation concluded successfully, but the return status {responseMessage.StatusCode} was unexpected",
+                        responseMessage.StatusCode);
+                }
+
+                return responseData;
             }
             catch (UnsupportedBodyTypeException ex)
             {
@@ -1139,7 +1149,7 @@ namespace Hl7.Fhir.Rest
                 // so that will be thrown as-is.
                 if (isLegacyException)
                 {
-                    if (!Settings.VerifyFhirVersion)
+                    if (fhirVersion is not null)
                     {
                         throw new StructuralTypeException(legacyException!.Message + Environment.NewLine +
                                 $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
@@ -1153,11 +1163,8 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private static bool isPostOrPut(Bundle.EntryComponent interaction)
-        {
-            var method = interaction.Request.Method;
-            return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
-        }
+        private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>
+            interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
 
         private bool _versionChecked = false;
 

@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -28,6 +28,8 @@ namespace Hl7.Fhir.Tests.Rest
         {
             yield return new object[] { "<start><field value='3' /></start>", true, false };
             yield return new object[] { "  <start>  <field value='3' />  </start>  ", true, false };
+            yield return new object[] { "<Patient><field value='3' /></Patient>", true, false };
+            yield return new object[] { """<Unknown><active value="true" /></Unknown>""", true, false };            
             yield return new object[] { "<!DOCTYPE html><html lang=en><head /></html>", true, false };
             yield return new object[] { "crap", false, false };
             yield return new object[] { "crap <hi />", false, false };

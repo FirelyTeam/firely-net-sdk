@@ -1,7 +1,7 @@
 ﻿#nullable enable
 
 /*
- * Copyright(c) 2017, Firely (info@fire.ly) and contributors
+ * Copyright(c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
  * This file is licensed under the BSD 3-Clause license
@@ -156,10 +156,32 @@ namespace Hl7.Fhir.Test
 
         [TestMethod]
         [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithIncorrectXml(IFhirSerializationEngine engine)
+        {
+            var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
+            await Assert.ThrowsExceptionAsync<DeserializationFailedException>(() => response.ExtractResponseData(engine));
+
+            response = makeXmlMessage(xml: """<Patient><activex value="true" /></Patient>""");
+            await Assert.ThrowsExceptionAsync<DeserializationFailedException>(() => response.ExtractResponseData(engine));
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
         public async Task GetResponseWithCorrectJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage();
             await check("200", response, engine, ResourceFormat.Json);
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithIncorrectJson(IFhirSerializationEngine engine)
+        {
+            var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""" );
+            await Assert.ThrowsExceptionAsync<DeserializationFailedException>( () => response.ExtractResponseData(engine));
+            
+            response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
+            await Assert.ThrowsExceptionAsync<DeserializationFailedException>(() => response.ExtractResponseData(engine));
         }
 
         [TestMethod]
@@ -190,28 +212,34 @@ namespace Hl7.Fhir.Test
         [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
         public async Task HandleFailureResponseWithJsonButNotJson(IFhirSerializationEngine engine)
         {
-            var response = makeXmlMessage(HttpStatusCode.Forbidden, "this is not xml");
+            var response = makeJsonMessage(HttpStatusCode.Forbidden, "this is not json");
             await check("403", response, engine, ResourceFormat.Json, false);
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleSuccessResponseWithUnknown(IFhirSerializationEngine engine)
+        {
+            var response = makeXmlMessage(xml: "this is not xml or json");
+            response.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
+
+            await Assert.ThrowsExceptionAsync<UnsupportedBodyTypeException>(() => response.ExtractResponseData(engine));
+        }
+
+        [TestMethod]
+        [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
+        public async Task HandleFailureResponseWithUnknown(IFhirSerializationEngine engine)
+        {
+            var response = makeXmlMessage(HttpStatusCode.InternalServerError, "this is not xml or json");
+            response.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
+            await check("500", response, engine, ResourceFormat.Unknown, false);
         }
 
         public static IEnumerable<object[]> GetEngines()
         {
             yield return new object[] { POCOENGINE };
             yield return new object[] { ELEMENTENGINE };
-        }
-     
-        public void GetSuccessResponseWithInvalidXml()
-        {
-        }
-
-        public void GetSuccessResponseWithInvalidJson()
-        {
-        }
-
-        public void GetSuccessResponseWithNonFhirPayload()
-        {
-        }
-
+        }         
     }
 }
 

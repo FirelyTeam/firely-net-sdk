@@ -1,5 +1,5 @@
 ﻿/* 
- * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
  * This file is licensed under the BSD 3-Clause license
@@ -8,7 +8,6 @@
 
 #nullable enable
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
@@ -16,9 +15,6 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Runtime;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Rest
@@ -27,6 +23,9 @@ namespace Hl7.Fhir.Rest
     {
         private const string EXTENSION_RESPONSE_HEADER = "http://hl7.org/fhir/StructureDefinition/http-response-header";
 
+        /// <summary>
+        /// Builds a <see cref="Bundle.ResponseComponent"/> out of the data in a <see cref="HttpResponseMessage"/>.
+        /// </summary>
         public static Bundle.ResponseComponent ExtractResponseComponent(this HttpResponseMessage responseMessage)
         {
             var response = new Bundle.ResponseComponent()
@@ -142,9 +141,9 @@ namespace Hl7.Fhir.Rest
             // do double check whether we need to take this payload as FHIR data
             var resource = serialization switch
             {
-                ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsFhirXml(bodyText) =>
+                ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsXml(bodyText) =>
                             ser.DeserializeFromXml(bodyText),
-                ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsFhirJson(bodyText) =>
+                ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsJson(bodyText) =>
                             ser.DeserializeFromJson(bodyText),
                 (ResourceFormat.Xml or ResourceFormat.Json) when message.IsSuccessStatusCode =>
                     throw new UnsupportedBodyTypeException(
