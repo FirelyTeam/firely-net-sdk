@@ -286,6 +286,46 @@ using Hl7.Fhir.Utility;
         yield return $"}}";
     }
 
+    public static IEnumerable<string> RenderPrimitiveSetElementFromSource(string primitiveTypeName)
+    {
+        foreach (var line in RenderSetElementFromSourceBegin()) yield return line;
+        yield return $"    if (elementName == \"@value\")";
+        yield return $"    {{";
+        yield return $"        Value = source.Get{primitiveTypeName}Value();";
+        yield return $"        return true;";
+        yield return $"    }}";
+        foreach (var line in RenderSetElementFromSourceEnd()) yield return line;
+    }
+
+    public static IEnumerable<string> RenderSetElementFromSource(IEnumerable<PropertyDetails> properties)
+    {
+        foreach (var line in RenderSetElementFromSourceBegin()) yield return line;
+        yield return $"    switch (elementName)";
+        yield return $"    {{";
+        foreach (var property in properties)
+        {
+            foreach (var line in property.RenderSetElement()) yield return "        " + line;
+        }
+        yield return $"    }}";
+        foreach (var line in RenderSetElementFromSourceEnd()) yield return line;
+    }
+
+    public static IEnumerable<string> RenderSetElementFromSourceBegin()
+    {
+        yield return $"internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)";
+        yield return $"{{";
+        yield return $"    if (base.SetElementFromSource(elementName, source))";
+        yield return $"    {{";
+        yield return $"        return true;";
+        yield return $"    }}";
+    }
+
+    public static IEnumerable<string> RenderSetElementFromSourceEnd()
+    {
+        yield return $"    return false;";
+        yield return $"}}";
+    }
+
     public static IEnumerable<string> RenderSetElementFromJson(IEnumerable<PropertyDetails> properties)
     {
         yield return $"internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)";
@@ -1537,6 +1577,8 @@ public class ResourceDetails
             yield return $"        get {{ return ({ PrimitiveTypeName })ObjectValue; }}";
             yield return $"        set {{ ObjectValue = value; OnPropertyChanged(\"Value\"); }}";
             yield return $"    }}";
+            yield return string.Empty;
+            foreach (var line in StringUtils.RenderPrimitiveSetElementFromSource(Name)) yield return "    " + line;
         }
 
         foreach (var component in Components)
@@ -1603,6 +1645,8 @@ public class ResourceDetails
             {
                 yield return string.Empty;
                 foreach (var line in StringUtils.RenderSerialize(FhirName, AbstractType, isElement, Properties)) yield return "    " + line;
+                yield return string.Empty;
+                foreach (var line in StringUtils.RenderSetElementFromSource(Properties)) yield return "    " + line;
                 yield return string.Empty;
                 foreach (var line in StringUtils.RenderSetElementFromJson(Properties)) yield return "    " + line;
                 yield return string.Empty;
@@ -2419,6 +2463,9 @@ public class ComponentDetails
         foreach (var line in StringUtils.RenderSerialize(Name, false, true, Properties)) yield return "    " + line;
 
         yield return string.Empty;
+        foreach (var line in StringUtils.RenderSetElementFromSource(Properties)) yield return "    " + line;
+
+        yield return string.Empty;
         foreach (var line in StringUtils.RenderSetElementFromJson(Properties)) yield return "    " + line;
 
         yield return string.Empty;
@@ -2917,6 +2964,47 @@ public class PropertyDetails
         }
     }
 
+    public IEnumerable<string> RenderSetElement()
+    {
+        var versionsWhen = VersionsWhen(Versions);
+        if (IsMultiCard())
+        {
+            yield return $"case \"{FhirName}\"{versionsWhen}:";
+            if (PropType == "Hl7.Fhir.Model.Resource")
+            {
+                yield return $"    {Name} = source.GetResourceList();";
+            }
+            else
+            {
+                yield return $"    {Name} = source.GetList<{PropType}>();";
+            }
+            yield return $"    return true;";
+        }
+        else if (PropType == "Hl7.Fhir.Model.Resource")
+        {
+            yield return $"case \"{FhirName}\"{versionsWhen}:";
+            yield return $"    {Name} = source.GetResource();";
+            yield return $"    return true;";
+        }
+        else
+        {
+            var versionsByAllowedType = ComputeVersionsByAllowedType();
+            if (versionsByAllowedType != null && versionsByAllowedType.Any())
+            {
+                foreach (var pair in versionsByAllowedType)
+                {
+                    foreach (var line in RenderSetElementX(pair.Key, pair.Value)) yield return line;
+                }
+            }
+            else
+            {
+                yield return $"case \"{FhirName}\"{versionsWhen}:";
+                yield return $"    {Name} = source.Get<{PropType}>();";
+                yield return $"    return true;";
+            }
+        }
+    }
+
     public IEnumerable<string> RenderSetElementFromJson()
     {
         var versionsWhen = VersionsWhen(Versions);
@@ -2998,6 +3086,17 @@ public class PropertyDetails
             }
         }
         return result;
+    }
+
+    private IEnumerable<string> RenderSetElementX(string type, HashSet<string> versions)
+    {
+        var versionsWhen = VersionsWhen(versions);
+        var fhirType = Globals.FhirDataTypeByCsType[type];
+        var propertyName = FhirName + StringUtils.FirstToUpper(fhirType);
+        yield return $"case \"{propertyName}\"{versionsWhen}:";
+        yield return $"    source.CheckDuplicates<{type}>({Name}, \"{FhirName}\");";
+        yield return $"    {Name} = source.Get<{type}>();";
+        yield return $"    return true;";
     }
 
     private IEnumerable<string> RenderSetElementXFromJson(string type, HashSet<string> versions)

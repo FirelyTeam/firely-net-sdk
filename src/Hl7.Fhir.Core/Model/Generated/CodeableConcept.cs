@@ -160,6 +160,24 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "coding":
+                    Coding = source.GetList<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "text":
+                    TextElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

@@ -68,6 +68,20 @@ namespace Hl7.Fhir.Model
             set { ObjectValue = value; OnPropertyChanged("Value"); }
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            if (elementName == "@value")
+            {
+                Value = source.GetMarkdownValue();
+                return true;
+            }
+            return false;
+        }
+    
     
     }
 

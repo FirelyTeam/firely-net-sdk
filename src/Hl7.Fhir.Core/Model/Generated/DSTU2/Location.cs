@@ -170,6 +170,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "longitude":
+                        LongitudeElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "latitude":
+                        LatitudeElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "altitude":
+                        AltitudeElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -629,6 +650,54 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("managingOrganization", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ManagingOrganization?.Serialize(sink);
             sink.Element("partOf", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); PartOf?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.LocationStatus>>();
+                    return true;
+                case "name":
+                    NameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "description":
+                    DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "mode":
+                    ModeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.LocationMode>>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "telecom":
+                    Telecom = source.GetList<Hl7.Fhir.Model.DSTU2.ContactPoint>();
+                    return true;
+                case "address":
+                    Address = source.Get<Hl7.Fhir.Model.Address>();
+                    return true;
+                case "physicalType":
+                    PhysicalType = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "position":
+                    Position = source.Get<PositionComponent>();
+                    return true;
+                case "managingOrganization":
+                    ManagingOrganization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "partOf":
+                    PartOf = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

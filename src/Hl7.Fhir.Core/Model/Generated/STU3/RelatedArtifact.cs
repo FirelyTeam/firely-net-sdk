@@ -284,6 +284,36 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "type":
+                    TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.RelatedArtifactType>>();
+                    return true;
+                case "display":
+                    DisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "citation":
+                    CitationElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "url":
+                    UrlElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "document":
+                    Document = source.Get<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "resource":
+                    Resource = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

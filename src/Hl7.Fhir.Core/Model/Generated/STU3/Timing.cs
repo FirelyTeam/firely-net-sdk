@@ -568,6 +568,72 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "boundsDuration":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Duration>(Bounds, "bounds");
+                        Bounds = source.Get<Hl7.Fhir.Model.STU3.Duration>();
+                        return true;
+                    case "boundsRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Bounds, "bounds");
+                        Bounds = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "boundsPeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Bounds, "bounds");
+                        Bounds = source.Get<Hl7.Fhir.Model.Period>();
+                        return true;
+                    case "count":
+                        CountElement = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                    case "countMax":
+                        CountMaxElement = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                    case "duration":
+                        DurationElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "durationMax":
+                        DurationMaxElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "durationUnit":
+                        DurationUnitElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.UnitsOfTime>>();
+                        return true;
+                    case "frequency":
+                        FrequencyElement = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                    case "frequencyMax":
+                        FrequencyMaxElement = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                    case "period":
+                        PeriodElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "periodMax":
+                        PeriodMaxElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "periodUnit":
+                        PeriodUnitElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.UnitsOfTime>>();
+                        return true;
+                    case "dayOfWeek":
+                        DayOfWeekElement = source.GetList<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DaysOfWeek>>();
+                        return true;
+                    case "timeOfDay":
+                        TimeOfDayElement = source.GetList<Hl7.Fhir.Model.Time>();
+                        return true;
+                    case "when":
+                        WhenElement = source.GetList<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.EventTiming>>();
+                        return true;
+                    case "offset":
+                        OffsetElement = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -1037,6 +1103,27 @@ namespace Hl7.Fhir.Model.STU3
             sink.Element("repeat", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Repeat?.Serialize(sink);
             sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Code?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "event":
+                    EventElement = source.GetList<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "repeat":
+                    Repeat = source.Get<RepeatComponent>();
+                    return true;
+                case "code":
+                    Code = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

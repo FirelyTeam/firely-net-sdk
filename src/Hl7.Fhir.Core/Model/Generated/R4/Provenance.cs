@@ -137,6 +137,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "type":
+                        Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "role":
+                        Role = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "who":
+                        Who = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "onBehalfOf":
+                        OnBehalfOf = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -340,6 +364,27 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "role":
+                        RoleElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.ProvenanceEntityRole>>();
+                        return true;
+                    case "what":
+                        What = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "agent":
+                        Agent = source.GetList<AgentComponent>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -758,6 +803,53 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "target":
+                    Target = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "occurredPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Occurred, "occurred");
+                    Occurred = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "occurredDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurred, "occurred");
+                    Occurred = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "recorded":
+                    RecordedElement = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "policy":
+                    PolicyElement = source.GetList<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "location":
+                    Location = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "reason":
+                    Reason = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "activity":
+                    Activity = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "agent":
+                    Agent = source.GetList<AgentComponent>();
+                    return true;
+                case "entity":
+                    Entity = source.GetList<EntityComponent>();
+                    return true;
+                case "signature":
+                    Signature = source.GetList<Hl7.Fhir.Model.R4.Signature>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

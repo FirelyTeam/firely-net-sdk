@@ -497,6 +497,77 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3):
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "ruleset" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2):
+                    Ruleset = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "originalRuleset" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2):
+                    OriginalRuleset = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "created" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3):
+                    CreatedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "target" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2):
+                    Target = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "provider" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3):
+                    Provider = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "organization" when source.IsVersion(Hl7.Fhir.Model.Version.DSTU2|Hl7.Fhir.Model.Version.STU3):
+                    Organization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "status" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>();
+                    return true;
+                case "priority" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    Priority = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "patient" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    Patient = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "servicedDate" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Serviced, "serviced");
+                    Serviced = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "servicedPeriod" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Serviced, "serviced");
+                    Serviced = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "enterer" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    Enterer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "insurer" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    Insurer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "facility" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    Facility = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "coverage" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    Coverage = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "businessArrangement" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    BusinessArrangementElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "benefitCategory" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    BenefitCategory = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "benefitSubCategory" when source.IsVersion(Hl7.Fhir.Model.Version.STU3):
+                    BenefitSubCategory = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

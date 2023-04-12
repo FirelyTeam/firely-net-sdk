@@ -107,9 +107,12 @@ namespace Hl7.Fhir.Serialization.Tests
 
         private void assertAreAllEqual(ITypedElement subnavXml, ITypedElement subnavJson, ITypedElement subnavPoco)
         {
-            Assert.IsTrue(subnavXml.IsEqualTo(subnavJson).Success);
-            Assert.IsTrue(subnavJson.IsEqualTo(subnavPoco).Success);
-            Assert.IsTrue(subnavPoco.IsEqualTo(subnavXml).Success);
+            var result = subnavXml.IsEqualTo(subnavJson);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
+            result = subnavJson.IsEqualTo(subnavPoco);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
+            result = subnavPoco.IsEqualTo(subnavXml);
+            Assert.IsTrue(result.Success, result.Details + " at " + result.FailureLocation);
         }
 
         [TestMethod]

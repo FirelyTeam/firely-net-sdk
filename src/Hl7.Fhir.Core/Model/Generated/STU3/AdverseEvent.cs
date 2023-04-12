@@ -215,6 +215,39 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "instance":
+                        Instance = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "causality":
+                        CausalityElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.AdverseEventCausality>>();
+                        return true;
+                    case "causalityAssessment":
+                        CausalityAssessment = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "causalityProductRelatedness":
+                        CausalityProductRelatednessElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "causalityMethod":
+                        CausalityMethod = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "causalityAuthor":
+                        CausalityAuthor = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "causalityResult":
+                        CausalityResult = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -782,6 +815,66 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "category":
+                    CategoryElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.AdverseEventCategory>>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "date":
+                    DateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "reaction":
+                    Reaction = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "location":
+                    Location = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "seriousness":
+                    Seriousness = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "outcome":
+                    Outcome = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "recorder":
+                    Recorder = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "eventParticipant":
+                    EventParticipant = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "description":
+                    DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "suspectEntity":
+                    SuspectEntity = source.GetList<SuspectEntityComponent>();
+                    return true;
+                case "subjectMedicalHistory":
+                    SubjectMedicalHistory = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "referenceDocument":
+                    ReferenceDocument = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "study":
+                    Study = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

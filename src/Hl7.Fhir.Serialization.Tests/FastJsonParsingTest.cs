@@ -921,6 +921,26 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void EmptyElementIdTest()
+        {
+            var patientJson = "{\"resourceType\":\"Patient\",\"active\": true,\"_active\": {\"id\": \"\"}}";
+            Throws(
+                () => JsonSerializer.Deserialize<Model.R4.Patient>(
+                    patientJson,
+                    new JsonSerializerOptions().ForFhir(Model.Version.R4)
+                ),
+                "Empty strings are not allowed"
+            );
+            var patient = JsonSerializer.Deserialize<Model.R4.Patient>(
+                patientJson,
+                new JsonSerializerOptions().ForFhir(new ParserSettings(Model.Version.R4) { PermissiveParsing = true })
+            );
+            Assert.IsNotNull(patient.Active);
+            Assert.AreEqual(true, patient.Active.Value);
+            Assert.IsNull(patient.ActiveElement.ElementId);
+        }
+
+        [TestMethod]
         public void ExtensionTest()
         {
             AssertSuccess(
@@ -2331,6 +2351,36 @@ namespace Hl7.Fhir.Serialization.Tests
             var observationJson = new FhirJsonFastSerializer(Model.Version.R4).SerializeToString(observation);
             var parsedObservation = JsonSerializer.Deserialize<Model.R4.Observation>(observationJson, new JsonSerializerOptions().ForFhir(Model.Version.R4));
             Assert.IsTrue(observation.IsExactly(parsedObservation));
+        }
+
+        [TestMethod]
+        public void WhitespaceRoundtrip()
+        {
+            var markdown = @"# Headline
+
+This is the **first** paragraph
+
+This is a list
+
+- first
+
+- second
+
+- third with a [link](http://something.com)";
+
+            var capabilityStatement = new Model.R4.CapabilityStatement
+            {
+                Rest = new List<Model.R4.CapabilityStatement.RestComponent>
+                {
+                    new Model.R4.CapabilityStatement.RestComponent
+                    {
+                        Documentation = markdown
+                    }
+                }
+            };
+            var json = new FhirJsonFastSerializer(Model.Version.R4).SerializeToString(capabilityStatement);
+            var parsedCapabilityStatement = JsonSerializer.Deserialize<Model.R4.CapabilityStatement>(json, new JsonSerializerOptions().ForFhir(Model.Version.R4));
+            Assert.AreEqual(markdown, parsedCapabilityStatement.Rest[0].Documentation);
         }
 
         private void RoundTripOneExample(Model.Version version, string filename)

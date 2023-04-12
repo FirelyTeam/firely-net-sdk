@@ -119,6 +119,24 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "target":
+                        Target = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "assurance":
+                        AssuranceElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.IdentityAssuranceLevel>>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -528,6 +546,48 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "name":
+                    Name = source.GetList<Hl7.Fhir.Model.DSTU2.HumanName>();
+                    return true;
+                case "telecom":
+                    Telecom = source.GetList<Hl7.Fhir.Model.DSTU2.ContactPoint>();
+                    return true;
+                case "gender":
+                    GenderElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AdministrativeGender>>();
+                    return true;
+                case "birthDate":
+                    BirthDateElement = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "address":
+                    Address = source.GetList<Hl7.Fhir.Model.Address>();
+                    return true;
+                case "photo":
+                    Photo = source.Get<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "managingOrganization":
+                    ManagingOrganization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "active":
+                    ActiveElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "link":
+                    Link = source.GetList<LinkComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

@@ -121,6 +121,27 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "coverage":
+                        Coverage = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "contract":
+                        Contract = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "benefitBalance":
+                        BenefitBalance = source.GetList<BenefitsComponent>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -437,6 +458,45 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "category":
+                        Category = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "subCategory":
+                        SubCategory = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "excluded":
+                        ExcludedElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "name":
+                        NameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "description":
+                        DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "network":
+                        Network = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "unit":
+                        Unit = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "term":
+                        Term = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "financial":
+                        Financial = source.GetList<BenefitComponent>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -667,6 +727,41 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "type":
+                        Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "allowedUnsignedInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(Allowed, "allowed");
+                        Allowed = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                        return true;
+                    case "allowedString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Allowed, "allowed");
+                        Allowed = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "allowedMoney":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Money>(Allowed, "allowed");
+                        Allowed = source.Get<Hl7.Fhir.Model.STU3.Money>();
+                        return true;
+                    case "usedUnsignedInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(Used, "used");
+                        Used = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                        return true;
+                    case "usedMoney":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Money>(Used, "used");
+                        Used = source.Get<Hl7.Fhir.Model.STU3.Money>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -817,6 +912,21 @@ namespace Hl7.Fhir.Model.STU3
                 base.Serialize(sink);
                 sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); Code?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1268,6 +1378,57 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>();
+                    return true;
+                case "created":
+                    CreatedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "requestProvider":
+                    RequestProvider = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "requestOrganization":
+                    RequestOrganization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "request":
+                    Request = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "outcome":
+                    Outcome = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "disposition":
+                    DispositionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "insurer":
+                    Insurer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "inforce":
+                    InforceElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "insurance":
+                    Insurance = source.GetList<InsuranceComponent>();
+                    return true;
+                case "form":
+                    Form = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "error":
+                    Error = source.GetList<ErrorsComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

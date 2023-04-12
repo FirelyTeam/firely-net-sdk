@@ -341,6 +341,48 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>();
+                    return true;
+                case "request":
+                    Request = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "response":
+                    Response = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "statusDate":
+                    StatusDateElement = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "created":
+                    CreatedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "target":
+                    Target = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "provider":
+                    Provider = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "organization":
+                    Organization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "paymentStatus":
+                    PaymentStatus = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

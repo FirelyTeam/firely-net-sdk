@@ -172,6 +172,35 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "ageRange" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Age, "age");
+                    Age = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "ageCodeableConcept" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Age, "age");
+                    Age = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "gender" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Gender = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "race" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    Race = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "physiologicalCondition" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    PhysiologicalCondition = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

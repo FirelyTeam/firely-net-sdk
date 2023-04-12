@@ -156,6 +156,33 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "identifier":
+                        Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                        return true;
+                    case "country":
+                        Country = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "jurisdiction":
+                        Jurisdiction = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "legalStatusOfSupply":
+                        LegalStatusOfSupply = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "validityPeriod":
+                        ValidityPeriod = source.Get<Hl7.Fhir.Model.Period>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -367,6 +394,35 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "identifier":
+                        Identifier = source.Get<Hl7.Fhir.Model.Identifier>();
+                        return true;
+                    case "type":
+                        Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "datePeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Date, "date");
+                        Date = source.Get<Hl7.Fhir.Model.Period>();
+                        return true;
+                    case "dateDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Date, "date");
+                        Date = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                        return true;
+                    case "application":
+                        Application = source.GetList<ProcedureComponent>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -933,6 +989,66 @@ namespace Hl7.Fhir.Model.R4
             sink.Element("regulator", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Regulator?.Serialize(sink);
             sink.Element("procedure", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Procedure?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "country":
+                    Country = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "jurisdiction":
+                    Jurisdiction = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "status":
+                    Status = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "statusDate":
+                    StatusDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "restoreDate":
+                    RestoreDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "validityPeriod":
+                    ValidityPeriod = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "dataExclusivityPeriod":
+                    DataExclusivityPeriod = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "dateOfFirstAuthorization":
+                    DateOfFirstAuthorizationElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "internationalBirthDate":
+                    InternationalBirthDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "legalBasis":
+                    LegalBasis = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "jurisdictionalAuthorization":
+                    JurisdictionalAuthorization = source.GetList<JurisdictionalAuthorizationComponent>();
+                    return true;
+                case "holder":
+                    Holder = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "regulator":
+                    Regulator = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "procedure":
+                    Procedure = source.Get<ProcedureComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

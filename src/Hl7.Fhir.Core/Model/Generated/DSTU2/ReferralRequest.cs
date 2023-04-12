@@ -491,6 +491,66 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.ReferralStatus>>();
+                    return true;
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "date":
+                    DateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "specialty":
+                    Specialty = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "priority":
+                    Priority = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "patient":
+                    Patient = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "requester":
+                    Requester = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "recipient":
+                    Recipient = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "encounter":
+                    Encounter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "dateSent":
+                    DateSentElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "reason":
+                    Reason = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "description":
+                    DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "serviceRequested":
+                    ServiceRequested = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "supportingInformation":
+                    SupportingInformation = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "fulfillmentTime":
+                    FulfillmentTime = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

@@ -462,6 +462,60 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "issuer":
+                    Issuer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "bin":
+                    Bin = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "period":
+                    Period = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "subscriberId":
+                    SubscriberId = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "group":
+                    GroupElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "plan":
+                    PlanElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "subPlan":
+                    SubPlanElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "dependent":
+                    DependentElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "sequence":
+                    SequenceElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "subscriber":
+                    Subscriber = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "network":
+                    Network = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "contract":
+                    Contract = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

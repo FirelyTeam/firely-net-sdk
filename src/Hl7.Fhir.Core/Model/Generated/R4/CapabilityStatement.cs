@@ -172,6 +172,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "name":
+                        NameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "version":
+                        VersionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "releaseDate":
+                        ReleaseDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -375,6 +396,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("url", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); UrlElement?.Serialize(sink);
                 sink.Element("custodian", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Custodian?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "description":
+                        DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "url":
+                        UrlElement = source.Get<Hl7.Fhir.Model.Url>();
+                        return true;
+                    case "custodian":
+                        Custodian = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -710,6 +752,42 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "mode":
+                        ModeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.RestfulCapabilityMode>>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                    case "security":
+                        Security = source.Get<SecurityComponent>();
+                        return true;
+                    case "resource":
+                        Resource = source.GetList<ResourceComponent>();
+                        return true;
+                    case "interaction":
+                        Interaction = source.GetList<SystemInteractionComponent>();
+                        return true;
+                    case "searchParam":
+                        SearchParam = source.GetList<SearchParamComponent>();
+                        return true;
+                    case "operation":
+                        Operation = source.GetList<OperationComponent>();
+                        return true;
+                    case "compartment":
+                        CompartmentElement = source.GetList<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -984,6 +1062,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
                 sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DescriptionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "cors":
+                        CorsElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "service":
+                        Service = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "description":
+                        DescriptionElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1663,6 +1762,69 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "type":
+                        TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceType>>();
+                        return true;
+                    case "profile":
+                        ProfileElement = source.Get<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                    case "supportedProfile":
+                        SupportedProfileElement = source.GetList<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                    case "interaction":
+                        Interaction = source.GetList<ResourceInteractionComponent>();
+                        return true;
+                    case "versioning":
+                        VersioningElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ResourceVersionPolicy>>();
+                        return true;
+                    case "readHistory":
+                        ReadHistoryElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "updateCreate":
+                        UpdateCreateElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "conditionalCreate":
+                        ConditionalCreateElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "conditionalRead":
+                        ConditionalReadElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ConditionalReadStatus>>();
+                        return true;
+                    case "conditionalUpdate":
+                        ConditionalUpdateElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "conditionalDelete":
+                        ConditionalDeleteElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ConditionalDeleteStatus>>();
+                        return true;
+                    case "referencePolicy":
+                        ReferencePolicyElement = source.GetList<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ReferenceHandlingPolicy>>();
+                        return true;
+                    case "searchInclude":
+                        SearchIncludeElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "searchRevInclude":
+                        SearchRevIncludeElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "searchParam":
+                        SearchParam = source.GetList<SearchParamComponent>();
+                        return true;
+                    case "operation":
+                        Operation = source.GetList<OperationComponent>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -2032,6 +2194,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        CodeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.TypeRestfulInteraction>>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -2275,6 +2455,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "name":
+                        NameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "definition":
+                        DefinitionElement = source.Get<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                    case "type":
+                        TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SearchParamType>>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -2509,6 +2713,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "name":
+                        NameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "definition":
+                        DefinitionElement = source.Get<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -2694,6 +2919,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("code", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, true, false); CodeElement?.Serialize(sink);
                 sink.Element("documentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DocumentationElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        CodeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.SystemRestfulInteraction>>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -2918,6 +3161,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "endpoint":
+                        Endpoint = source.GetList<EndpointComponent>();
+                        return true;
+                    case "reliableCache":
+                        ReliableCacheElement = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                    case "supportedMessage":
+                        SupportedMessage = source.GetList<SupportedMessageComponent>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -3110,6 +3377,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "protocol":
+                        Protocol = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "address":
+                        AddressElement = source.Get<Hl7.Fhir.Model.Url>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -3284,6 +3569,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("mode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ModeElement?.Serialize(sink);
                 sink.Element("definition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); DefinitionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "mode":
+                        ModeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.EventCapabilityMode>>();
+                        return true;
+                    case "definition":
+                        DefinitionElement = source.Get<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -3496,6 +3799,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("documentation", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); DocumentationElement?.Serialize(sink);
                 sink.Element("profile", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); ProfileElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "mode":
+                        ModeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DocumentMode>>();
+                        return true;
+                    case "documentation":
+                        DocumentationElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                    case "profile":
+                        ProfileElement = source.Get<Hl7.Fhir.Model.Canonical>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -4618,6 +4942,96 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "url":
+                    UrlElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "version":
+                    VersionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "name":
+                    NameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "title":
+                    TitleElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.PublicationStatus>>();
+                    return true;
+                case "experimental":
+                    ExperimentalElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "date":
+                    DateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "publisher":
+                    PublisherElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "contact":
+                    Contact = source.GetList<Hl7.Fhir.Model.R4.ContactDetail>();
+                    return true;
+                case "description":
+                    DescriptionElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "useContext":
+                    UseContext = source.GetList<Hl7.Fhir.Model.UsageContext>();
+                    return true;
+                case "jurisdiction":
+                    Jurisdiction = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "purpose":
+                    PurposeElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "copyright":
+                    CopyrightElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "kind":
+                    KindElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.CapabilityStatementKind>>();
+                    return true;
+                case "instantiates":
+                    InstantiatesElement = source.GetList<Hl7.Fhir.Model.Canonical>();
+                    return true;
+                case "imports":
+                    ImportsElement = source.GetList<Hl7.Fhir.Model.Canonical>();
+                    return true;
+                case "software":
+                    Software = source.Get<SoftwareComponent>();
+                    return true;
+                case "implementation":
+                    Implementation = source.Get<ImplementationComponent>();
+                    return true;
+                case "fhirVersion":
+                    FhirVersionElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.FHIRVersion>>();
+                    return true;
+                case "format":
+                    FormatElement = source.GetList<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "patchFormat":
+                    PatchFormatElement = source.GetList<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "implementationGuide":
+                    ImplementationGuideElement = source.GetList<Hl7.Fhir.Model.Canonical>();
+                    return true;
+                case "rest":
+                    Rest = source.GetList<RestComponent>();
+                    return true;
+                case "messaging":
+                    Messaging = source.GetList<MessagingComponent>();
+                    return true;
+                case "document":
+                    Document = source.GetList<DocumentComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

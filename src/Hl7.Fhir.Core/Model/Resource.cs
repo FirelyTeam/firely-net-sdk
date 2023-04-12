@@ -271,6 +271,30 @@ namespace Hl7.Fhir.Model
             sink.Element("language", summaryVersions: Version.None); LanguageElement?.Serialize(sink);
         }
 
+        internal override bool SetElementFromSource(string elementName, ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "id":
+                    IdElement = source.Get<Id>();
+                    return true;
+                case "meta":
+                    Meta = source.Get<Meta>();
+                    return true;
+                case "implicitRules":
+                    ImplicitRulesElement = source.Get<FhirUri>();
+                    return true;
+                case "language":
+                    LanguageElement = source.Get<Code>();
+                    return true;
+            }
+            return false;
+        }
+
         internal override bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

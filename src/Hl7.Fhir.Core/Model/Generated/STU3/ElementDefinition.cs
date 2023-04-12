@@ -191,6 +191,30 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "discriminator":
+                        Discriminator = source.GetList<DiscriminatorComponent>();
+                        return true;
+                    case "description":
+                        DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "ordered":
+                        OrderedElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "rules":
+                        RulesElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.SlicingRules>>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -402,6 +426,24 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); TypeElement?.Serialize(sink);
                 sink.Element("path", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); PathElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "type":
+                        TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DiscriminatorType>>();
+                        return true;
+                    case "path":
+                        PathElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -616,6 +658,27 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("min", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); MinElement?.Serialize(sink);
                 sink.Element("max", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); MaxElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "path":
+                        PathElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "min":
+                        MinElement = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                        return true;
+                    case "max":
+                        MaxElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -912,6 +975,33 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        CodeElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                        return true;
+                    case "profile":
+                        ProfileElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                        return true;
+                    case "targetProfile":
+                        TargetProfileElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                        return true;
+                    case "aggregation":
+                        AggregationElement = source.GetList<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AggregationMode>>();
+                        return true;
+                    case "versioning":
+                        VersioningElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ReferenceVersionRules>>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -1120,6 +1210,173 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("label", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); LabelElement?.Serialize(sink);
                 sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, true); Value?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "label":
+                        LabelElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "valueBase64Binary":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Base64Binary>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Base64Binary>();
+                        return true;
+                    case "valueBoolean":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "valueCode":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Code>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Code>();
+                        return true;
+                    case "valueDate":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Date>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Date>();
+                        return true;
+                    case "valueDateTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                        return true;
+                    case "valueDecimal":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "valueId":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Id>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Id>();
+                        return true;
+                    case "valueInstant":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Instant>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Instant>();
+                        return true;
+                    case "valueInteger":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Integer>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                    case "valueMarkdown":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Markdown>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Markdown>();
+                        return true;
+                    case "valueOid":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Oid>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Oid>();
+                        return true;
+                    case "valuePositiveInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "valueString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "valueTime":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Time>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Time>();
+                        return true;
+                    case "valueUnsignedInt":
+                        source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                        return true;
+                    case "valueUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.FhirUri>();
+                        return true;
+                    case "valueAddress":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Address>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Address>();
+                        return true;
+                    case "valueAge":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Age>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Age>();
+                        return true;
+                    case "valueAnnotation":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Annotation>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Annotation>();
+                        return true;
+                    case "valueAttachment":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Attachment>();
+                        return true;
+                    case "valueCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "valueCoding":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Coding>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "valueContactPoint":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.ContactPoint>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.ContactPoint>();
+                        return true;
+                    case "valueCount":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Count>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Count>();
+                        return true;
+                    case "valueDistance":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Distance>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Distance>();
+                        return true;
+                    case "valueDuration":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Duration>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Duration>();
+                        return true;
+                    case "valueHumanName":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.HumanName>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.HumanName>();
+                        return true;
+                    case "valueIdentifier":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Identifier>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Identifier>();
+                        return true;
+                    case "valueMoney":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Money>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Money>();
+                        return true;
+                    case "valuePeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Period>();
+                        return true;
+                    case "valueQuantity":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Quantity>();
+                        return true;
+                    case "valueRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "valueRatio":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Ratio>();
+                        return true;
+                    case "valueReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "valueSampledData":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.SampledData>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.SampledData>();
+                        return true;
+                    case "valueSignature":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Signature>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Signature>();
+                        return true;
+                    case "valueTiming":
+                        source.CheckDuplicates<Hl7.Fhir.Model.STU3.Timing>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.STU3.Timing>();
+                        return true;
+                    case "valueMeta":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Meta>(Value, "value");
+                        Value = source.Get<Hl7.Fhir.Model.Meta>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1683,6 +1940,39 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "key":
+                        KeyElement = source.Get<Hl7.Fhir.Model.Id>();
+                        return true;
+                    case "requirements":
+                        RequirementsElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "severity":
+                        SeverityElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ConstraintSeverity>>();
+                        return true;
+                    case "human":
+                        HumanElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "expression":
+                        ExpressionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "xpath":
+                        XpathElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "source":
+                        SourceElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -1930,6 +2220,32 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("description", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); DescriptionElement?.Serialize(sink);
                 sink.Element("valueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, true); ValueSet?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "strength":
+                        StrengthElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.BindingStrength>>();
+                        return true;
+                    case "description":
+                        DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "valueSetUri":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(ValueSet, "valueSet");
+                        ValueSet = source.Get<Hl7.Fhir.Model.FhirUri>();
+                        return true;
+                    case "valueSetReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(ValueSet, "valueSet");
+                        ValueSet = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -2194,6 +2510,30 @@ namespace Hl7.Fhir.Model.STU3
                 sink.Element("map", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, true, false); MapElement?.Serialize(sink);
                 sink.Element("comment", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); CommentElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "identity":
+                        IdentityElement = source.Get<Hl7.Fhir.Model.Id>();
+                        return true;
+                    case "language":
+                        LanguageElement = source.Get<Hl7.Fhir.Model.Code>();
+                        return true;
+                    case "map":
+                        MapElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "comment":
+                        CommentElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -3480,6 +3820,627 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "path":
+                    PathElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "representation":
+                    RepresentationElement = source.GetList<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.PropertyRepresentation>>();
+                    return true;
+                case "sliceName":
+                    SliceNameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "label":
+                    LabelElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "code":
+                    Code = source.GetList<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "slicing":
+                    Slicing = source.Get<SlicingComponent>();
+                    return true;
+                case "short":
+                    ShortElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "definition":
+                    DefinitionElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "comment":
+                    CommentElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "requirements":
+                    RequirementsElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "alias":
+                    AliasElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "min":
+                    MinElement = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                    return true;
+                case "max":
+                    MaxElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "base":
+                    Base = source.Get<BaseComponent>();
+                    return true;
+                case "contentReference":
+                    ContentReferenceElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "type":
+                    Type = source.GetList<TypeRefComponent>();
+                    return true;
+                case "defaultValueBase64Binary":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Base64Binary>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Base64Binary>();
+                    return true;
+                case "defaultValueBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "defaultValueCode":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Code>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "defaultValueDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "defaultValueDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "defaultValueDecimal":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                    return true;
+                case "defaultValueId":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Id>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Id>();
+                    return true;
+                case "defaultValueInstant":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Instant>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "defaultValueInteger":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Integer>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "defaultValueMarkdown":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Markdown>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "defaultValueOid":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Oid>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Oid>();
+                    return true;
+                case "defaultValuePositiveInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "defaultValueString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "defaultValueTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Time>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Time>();
+                    return true;
+                case "defaultValueUnsignedInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                    return true;
+                case "defaultValueUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "defaultValueAddress":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Address>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Address>();
+                    return true;
+                case "defaultValueAge":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Age>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Age>();
+                    return true;
+                case "defaultValueAnnotation":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Annotation>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Annotation>();
+                    return true;
+                case "defaultValueAttachment":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "defaultValueCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "defaultValueCoding":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Coding>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "defaultValueContactPoint":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.ContactPoint>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.ContactPoint>();
+                    return true;
+                case "defaultValueCount":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Count>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Count>();
+                    return true;
+                case "defaultValueDistance":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Distance>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Distance>();
+                    return true;
+                case "defaultValueDuration":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Duration>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Duration>();
+                    return true;
+                case "defaultValueHumanName":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.HumanName>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.HumanName>();
+                    return true;
+                case "defaultValueIdentifier":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Identifier>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "defaultValueMoney":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Money>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Money>();
+                    return true;
+                case "defaultValuePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "defaultValueQuantity":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "defaultValueRange":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "defaultValueRatio":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Ratio>();
+                    return true;
+                case "defaultValueReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "defaultValueSampledData":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.SampledData>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.SampledData>();
+                    return true;
+                case "defaultValueSignature":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Signature>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Signature>();
+                    return true;
+                case "defaultValueTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Timing>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.STU3.Timing>();
+                    return true;
+                case "defaultValueMeta":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Meta>(DefaultValue, "defaultValue");
+                    DefaultValue = source.Get<Hl7.Fhir.Model.Meta>();
+                    return true;
+                case "meaningWhenMissing":
+                    MeaningWhenMissingElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "orderMeaning":
+                    OrderMeaningElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "fixedBase64Binary":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Base64Binary>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Base64Binary>();
+                    return true;
+                case "fixedBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "fixedCode":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Code>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "fixedDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "fixedDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "fixedDecimal":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                    return true;
+                case "fixedId":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Id>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Id>();
+                    return true;
+                case "fixedInstant":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Instant>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "fixedInteger":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Integer>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "fixedMarkdown":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Markdown>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "fixedOid":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Oid>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Oid>();
+                    return true;
+                case "fixedPositiveInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "fixedString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "fixedTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Time>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Time>();
+                    return true;
+                case "fixedUnsignedInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                    return true;
+                case "fixedUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "fixedAddress":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Address>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Address>();
+                    return true;
+                case "fixedAge":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Age>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Age>();
+                    return true;
+                case "fixedAnnotation":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Annotation>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Annotation>();
+                    return true;
+                case "fixedAttachment":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "fixedCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "fixedCoding":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Coding>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "fixedContactPoint":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.ContactPoint>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.ContactPoint>();
+                    return true;
+                case "fixedCount":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Count>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Count>();
+                    return true;
+                case "fixedDistance":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Distance>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Distance>();
+                    return true;
+                case "fixedDuration":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Duration>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Duration>();
+                    return true;
+                case "fixedHumanName":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.HumanName>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.HumanName>();
+                    return true;
+                case "fixedIdentifier":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Identifier>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "fixedMoney":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Money>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Money>();
+                    return true;
+                case "fixedPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "fixedQuantity":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "fixedRange":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "fixedRatio":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Ratio>();
+                    return true;
+                case "fixedReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "fixedSampledData":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.SampledData>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.SampledData>();
+                    return true;
+                case "fixedSignature":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Signature>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Signature>();
+                    return true;
+                case "fixedTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Timing>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.STU3.Timing>();
+                    return true;
+                case "fixedMeta":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Meta>(Fixed, "fixed");
+                    Fixed = source.Get<Hl7.Fhir.Model.Meta>();
+                    return true;
+                case "patternBase64Binary":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Base64Binary>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Base64Binary>();
+                    return true;
+                case "patternBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "patternCode":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Code>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "patternDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "patternDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "patternDecimal":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                    return true;
+                case "patternId":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Id>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Id>();
+                    return true;
+                case "patternInstant":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Instant>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "patternInteger":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Integer>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "patternMarkdown":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Markdown>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+                case "patternOid":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Oid>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Oid>();
+                    return true;
+                case "patternPositiveInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "patternString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "patternTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Time>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Time>();
+                    return true;
+                case "patternUnsignedInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                    return true;
+                case "patternUri":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirUri>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "patternAddress":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Address>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Address>();
+                    return true;
+                case "patternAge":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Age>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Age>();
+                    return true;
+                case "patternAnnotation":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Annotation>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Annotation>();
+                    return true;
+                case "patternAttachment":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "patternCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "patternCoding":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Coding>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "patternContactPoint":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.ContactPoint>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.ContactPoint>();
+                    return true;
+                case "patternCount":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Count>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Count>();
+                    return true;
+                case "patternDistance":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Distance>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Distance>();
+                    return true;
+                case "patternDuration":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Duration>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Duration>();
+                    return true;
+                case "patternHumanName":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.HumanName>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.HumanName>();
+                    return true;
+                case "patternIdentifier":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Identifier>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "patternMoney":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Money>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Money>();
+                    return true;
+                case "patternPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "patternQuantity":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "patternRange":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "patternRatio":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Ratio>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Ratio>();
+                    return true;
+                case "patternReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "patternSampledData":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.SampledData>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.SampledData>();
+                    return true;
+                case "patternSignature":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Signature>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Signature>();
+                    return true;
+                case "patternTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Timing>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.STU3.Timing>();
+                    return true;
+                case "patternMeta":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Meta>(Pattern, "pattern");
+                    Pattern = source.Get<Hl7.Fhir.Model.Meta>();
+                    return true;
+                case "example":
+                    Example = source.GetList<ExampleComponent>();
+                    return true;
+                case "minValueDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "minValueDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "minValueInstant":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Instant>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "minValueTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Time>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.Time>();
+                    return true;
+                case "minValueDecimal":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                    return true;
+                case "minValueInteger":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Integer>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "minValuePositiveInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "minValueUnsignedInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                    return true;
+                case "minValueQuantity":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(MinValue, "minValue");
+                    MinValue = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "maxValueDate":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Date>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "maxValueDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "maxValueInstant":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Instant>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "maxValueTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Time>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.Time>();
+                    return true;
+                case "maxValueDecimal":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                    return true;
+                case "maxValueInteger":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Integer>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "maxValuePositiveInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.PositiveInt>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "maxValueUnsignedInt":
+                    source.CheckDuplicates<Hl7.Fhir.Model.UnsignedInt>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.UnsignedInt>();
+                    return true;
+                case "maxValueQuantity":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(MaxValue, "maxValue");
+                    MaxValue = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "maxLength":
+                    MaxLengthElement = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "condition":
+                    ConditionElement = source.GetList<Hl7.Fhir.Model.Id>();
+                    return true;
+                case "constraint":
+                    Constraint = source.GetList<ConstraintComponent>();
+                    return true;
+                case "mustSupport":
+                    MustSupportElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "isModifier":
+                    IsModifierElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "isSummary":
+                    IsSummaryElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "binding":
+                    Binding = source.Get<ElementDefinitionBindingComponent>();
+                    return true;
+                case "mapping":
+                    Mapping = source.GetList<MappingComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

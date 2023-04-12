@@ -86,6 +86,30 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "contentString":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Content, "content");
+                        Content = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "contentAttachment":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Attachment>(Content, "content");
+                        Content = source.Get<Hl7.Fhir.Model.Attachment>();
+                        return true;
+                    case "contentReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Content, "content");
+                        Content = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -553,6 +577,65 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.Element("subject", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Subject?.Serialize(sink);
             sink.Element("priority", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Priority?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "category":
+                    Category = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "sender":
+                    Sender = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "recipient":
+                    Recipient = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "payload":
+                    Payload = source.GetList<PayloadComponent>();
+                    return true;
+                case "medium":
+                    Medium = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "requester":
+                    Requester = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.CommunicationRequestStatus>>();
+                    return true;
+                case "encounter":
+                    Encounter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "scheduledDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Scheduled, "scheduled");
+                    Scheduled = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "scheduledPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Scheduled, "scheduled");
+                    Scheduled = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "reason":
+                    Reason = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "requestedOn":
+                    RequestedOnElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "priority":
+                    Priority = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

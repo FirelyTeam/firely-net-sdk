@@ -453,6 +453,48 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "use":
+                    UseElement = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "type":
+                    TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AddressType>>();
+                    return true;
+                case "text":
+                    TextElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "line":
+                    LineElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "city":
+                    CityElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "district":
+                    DistrictElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "state":
+                    StateElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "postalCode":
+                    PostalCodeElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "country":
+                    CountryElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "period":
+                    Period = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

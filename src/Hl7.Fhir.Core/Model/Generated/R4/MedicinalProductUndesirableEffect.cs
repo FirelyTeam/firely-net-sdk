@@ -204,6 +204,33 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "subject":
+                    Subject = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "symptomConditionEffect":
+                    SymptomConditionEffect = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "classification":
+                    Classification = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "frequencyOfOccurrence":
+                    FrequencyOfOccurrence = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "population":
+                    Population = source.GetList<Hl7.Fhir.Model.Population>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

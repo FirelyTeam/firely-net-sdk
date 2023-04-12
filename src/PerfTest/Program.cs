@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Text.Json;
 using FhirModel = Hl7.Fhir.Model;
 using FhirModel2 = Hl7.Fhir.Model.DSTU2;
@@ -44,6 +45,37 @@ namespace PerfTest
             watch.Stop();
             memoryUsed = GC.GetAllocatedBytesForCurrentThread() - initialMemory;
             Console.WriteLine("JSON parse X {1:N0}: {0:N1}ms, {2:N0} bytes", watch.ElapsedMilliseconds, count, memoryUsed);
+        }
+
+        static void ParseXml()
+        {
+            var xml = File.ReadAllText(@"bundle.xml");
+
+            const int count = 100;
+
+            var xmlParser = new FhirSerialization.FhirXmlParser(FhirModel.Version.R4);
+            xmlParser.Parse<FhirModel4.Bundle>(xml);
+            var initialMemory = GC.GetAllocatedBytesForCurrentThread();
+            var watch = Stopwatch.StartNew();
+            for (var i = 0; i < count; i++)
+            {
+                xmlParser.Parse<FhirModel4.Bundle>(xml);
+            }
+            watch.Stop();
+            var memoryUsed = GC.GetAllocatedBytesForCurrentThread() - initialMemory;
+            Console.WriteLine("XML fast parse X {1:N0}: {0:N1}ms, {2:N0} bytes", watch.ElapsedMilliseconds, count, memoryUsed);
+
+            var xmlOldParser = new FhirSerialization.FhirXmlOldParser(FhirModel.Version.R4);
+            xmlOldParser.Parse<FhirModel4.Bundle>(xml);
+            initialMemory = GC.GetAllocatedBytesForCurrentThread();
+            watch.Restart();
+            for (var i = 0; i < count; i++)
+            {
+                xmlOldParser.Parse<FhirModel4.Bundle>(xml);
+            }
+            watch.Stop();
+            memoryUsed = GC.GetAllocatedBytesForCurrentThread() - initialMemory;
+            Console.WriteLine("XML parse X {1:N0}: {0:N1}ms, {2:N0} bytes", watch.ElapsedMilliseconds, count, memoryUsed);
         }
 
         static void Serialize()
@@ -98,5 +130,4 @@ namespace PerfTest
             Console.WriteLine("XML fast serialize X {1:N0}: {0:N1}ms", watch.ElapsedMilliseconds, count);
         }
     }
-
 }

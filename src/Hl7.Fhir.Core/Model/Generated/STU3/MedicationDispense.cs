@@ -102,6 +102,24 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "actor":
+                        Actor = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "onBehalfOf":
+                        OnBehalfOf = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -293,6 +311,30 @@ namespace Hl7.Fhir.Model.STU3
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "wasSubstituted":
+                        WasSubstitutedElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "type":
+                        Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "reason":
+                        Reason = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "responsibleParty":
+                        ResponsibleParty = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1053,6 +1095,100 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "partOf":
+                    PartOf = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.MedicationDispenseStatus>>();
+                    return true;
+                case "category":
+                    Category = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "medicationCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Medication, "medication");
+                    Medication = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "medicationReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Medication, "medication");
+                    Medication = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "context":
+                    Context = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "supportingInformation":
+                    SupportingInformation = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "performer":
+                    Performer = source.GetList<PerformerComponent>();
+                    return true;
+                case "authorizingPrescription":
+                    AuthorizingPrescription = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "quantity":
+                    Quantity = source.Get<Hl7.Fhir.Model.SimpleQuantity>();
+                    return true;
+                case "daysSupply":
+                    DaysSupply = source.Get<Hl7.Fhir.Model.SimpleQuantity>();
+                    return true;
+                case "whenPrepared":
+                    WhenPreparedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "whenHandedOver":
+                    WhenHandedOverElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "destination":
+                    Destination = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "receiver":
+                    Receiver = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "note":
+                    Note = source.GetList<Hl7.Fhir.Model.Annotation>();
+                    return true;
+                case "dosageInstruction":
+                    DosageInstruction = source.GetList<Hl7.Fhir.Model.STU3.Dosage>();
+                    return true;
+                case "substitution":
+                    Substitution = source.Get<SubstitutionComponent>();
+                    return true;
+                case "detectedIssue":
+                    DetectedIssue = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "notDone":
+                    NotDoneElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "notDoneReasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(NotDoneReason, "notDoneReason");
+                    NotDoneReason = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "notDoneReasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(NotDoneReason, "notDoneReason");
+                    NotDoneReason = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "eventHistory":
+                    EventHistory = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

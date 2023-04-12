@@ -76,7 +76,6 @@ namespace Hl7.Fhir.Tests.Serialization
             }            
         }
 
-
         [TestMethod]
         public void RequiresHl7Namespace()
         {
@@ -93,17 +92,29 @@ namespace Hl7.Fhir.Tests.Serialization
                 Assert.IsTrue(fe.Message.Contains("expected the HL7 FHIR namespace"));
             }
 
-            xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
-            
-            try
-            {
-                parser.Parse<Resource>(xml);
-                Assert.Fail("Should have thrown on Patient.active with incorrect namespace");
-            }
-            catch (FormatException fe)
-            {
-                Assert.IsTrue(fe.Message.Contains("which is not allowed"));
-            }
+            // The old parser failed on elements in different namespaces, that is wrong though - they should just be ignored
+            //
+            //      xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /></Patient>";
+            //      
+            //      try
+            //      {
+            //          parser.Parse<Resource>(xml);
+            //          Assert.Fail("Should have thrown on Patient.active with incorrect namespace");
+            //      }
+            //      catch (FormatException fe)
+            //      {
+            //          Assert.IsTrue(fe.Message.Contains("which is not allowed"));
+            //      }
+        }
+
+        [TestMethod]
+        public void IgnoresDifferentNamespace()
+        {
+            var xml = "<Patient xmlns='http://hl7.org/fhir'><f:active value='false' xmlns:f='http://somehwere.else.nl' /><active value='true'/></Patient>";
+            var parser = new FhirXmlParser(Fhir.Model.Version.DSTU2);
+            var patient = parser.Parse<Patient>(xml);
+            Assert.IsNotNull(patient.Active);
+            Assert.IsTrue(patient.Active.Value);
         }
 
         [TestMethod]
@@ -130,14 +141,14 @@ namespace Hl7.Fhir.Tests.Serialization
             }
         }
 
-
         [TestMethod]
         public void AcceptNsReassignments()
         {
             var xml = "<ns4:ValueSet xmlns:ns4=\"http://hl7.org/fhir\"><f:identifier xmlns:f=\"http://hl7.org/fhir\"><f:value value=\"....\"/></f:identifier></ns4:ValueSet>";
 
-            FhirDstu2XmlParser.Parse<Resource>(xml);
-            Assert.IsNotNull(FhirDstu2XmlParser.Parse<Resource>(xml));
+            var valueSet = FhirDstu2XmlParser.Parse<Resource>(xml) as ValueSet;
+            Assert.IsNotNull(valueSet);
+            Assert.AreEqual("....", valueSet.Identifier?.Value);
         }
 
 

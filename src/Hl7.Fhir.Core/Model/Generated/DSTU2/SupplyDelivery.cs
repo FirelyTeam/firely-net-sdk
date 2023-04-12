@@ -348,6 +348,51 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.SupplyDeliveryStatus>>();
+                    return true;
+                case "patient":
+                    Patient = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "quantity":
+                    Quantity = source.Get<Hl7.Fhir.Model.SimpleQuantity>();
+                    return true;
+                case "suppliedItem":
+                    SuppliedItem = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "supplier":
+                    Supplier = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "whenPrepared":
+                    WhenPrepared = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "time":
+                    TimeElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "destination":
+                    Destination = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "receiver":
+                    Receiver = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

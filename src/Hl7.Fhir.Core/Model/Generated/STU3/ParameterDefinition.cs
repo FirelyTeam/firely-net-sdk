@@ -342,6 +342,39 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "name":
+                    NameElement = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "use":
+                    UseElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.OperationParameterUse>>();
+                    return true;
+                case "min":
+                    MinElement = source.Get<Hl7.Fhir.Model.Integer>();
+                    return true;
+                case "max":
+                    MaxElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "documentation":
+                    DocumentationElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "type":
+                    TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.STU3.FHIRAllTypes>>();
+                    return true;
+                case "profile":
+                    Profile = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

@@ -704,30 +704,219 @@ namespace Hl7.Fhir.Serialization
     }
 
     /// <summary>
-    /// Sink generating XML output - via a XmlWriter
+    /// Serrializer target to use with GenericSerializerSink to generate the standard FHIR XML representation 
     /// </summary>
-    internal class XmlSerializerSink : SerializerSink
+    internal class XmlSerializerTarget : ISerializerTarget
     {
-        public XmlSerializerSink(XmlWriter writer, Model.Version version, Rest.SummaryType summary = Rest.SummaryType.False, string root = null, IEnumerable<string> elements = null) :
-            base(version, summary, elements)
+        public XmlSerializerTarget(XmlWriter writer, string root = null)
         {
             _writer = writer ?? throw new ArgumentNullException(nameof(writer));
             _root = root;
+        }
+
+        public void BeginObject(string name, string resourceType)
+        {
+            if (name != null)
+            {
+                WriteStartElement(name);
+            }
+            if (resourceType != null)
+            {
+                WriteStartElement(resourceType);
+            }
+        }
+
+        public void EndObject(string name, string resourceType)
+        {
+            if (name != null)
+            {
+                _writer.WriteEndElement();
+            }
+            if (resourceType != null)
+            {
+                _writer.WriteEndElement();
+            }
+        }
+
+        public void BeginList(string name)
+        {
+            // Empty
+        }
+
+        public void EndList(string name)
+        {
+            // Empty
+        }
+
+        public void WriteAttribute(string name, string value)
+        {
+            _writer.WriteAttributeString(name, value);
+        }
+
+        public void WriteXhtmlElement(string name, string value)
+        {
+            if (!value.StartsWith("<"))
+            {
+                value = $"<{name}>{value}</{name}>";
+            }
+            var addedRootElement = false;
+            var firstElement = true;
+            using (var xmlReader = Utility.SerializationUtil.XmlReaderFromXmlText(value))
+            {
+                    while (xmlReader.Read())
+                {
+                    // Remove comments, processing instructions, non-significative whitespaces
+                    // Put all elements in the XHTML namespace
+                    switch (xmlReader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            if (firstElement)
+                            {
+                                if (xmlReader.LocalName != name)
+                                {
+                                    _writer.WriteStartElement(name, Utility.XmlNs.XHTML);
+                                    addedRootElement = true;
+                                }
+                                firstElement = false;
+                            }
+                            _writer.WriteStartElement(xmlReader.LocalName, Utility.XmlNs.XHTML);
+                            _writer.WriteAttributes(xmlReader, defattr: false);
+                            if (xmlReader.IsEmptyElement)
+                            {
+                                _writer.WriteEndElement();
+                            }
+                            break;
+                        case XmlNodeType.Text:
+                            _writer.WriteString(xmlReader.Value);
+                            break;
+                        case XmlNodeType.SignificantWhitespace:
+                            _writer.WriteWhitespace(xmlReader.Value);
+                            break;
+                        case XmlNodeType.CDATA:
+                            _writer.WriteCData(xmlReader.Value);
+                            break;
+                        case XmlNodeType.EndElement:
+                            _writer.WriteEndElement();
+                            break;
+                    }
+                }
+                if (addedRootElement)
+                {
+                    _writer.WriteEndElement();
+                }
+            }
+        }
+
+        public void WriteValue(string stringValue)
+        {
+            _writer.WriteStartAttribute("value");
+            _writer.WriteValue(stringValue);
+            _writer.WriteEndAttribute();
+        }
+
+        public void WriteValue(bool boolValue)
+        {
+            _writer.WriteStartAttribute("value");
+            _writer.WriteValue(boolValue);
+            _writer.WriteEndAttribute();
+        }
+
+        public void WriteValue(int intValue)
+        {
+            _writer.WriteStartAttribute("value");
+            _writer.WriteValue(intValue);
+            _writer.WriteEndAttribute();
+        }
+
+        public void WriteValue(decimal decimalValue)
+        {
+            _writer.WriteStartAttribute("value");
+            _writer.WriteValue(decimalValue);
+            _writer.WriteEndAttribute();
+        }
+
+        public void WriteValue(DateTimeOffset dateTimeOffsetValue)
+        {
+            _writer.WriteStartAttribute("value");
+            _writer.WriteValue(dateTimeOffsetValue);
+            _writer.WriteEndAttribute();
+        }
+
+        public void WriteValue(byte[] bytesValue)
+        {
+            _writer.WriteStartAttribute("value");
+            _writer.WriteValue(bytesValue);
+            _writer.WriteEndAttribute();
+        }
+
+        private void WriteStartElement(string localName)
+        {
+            if (_root != null)
+            {
+                localName = _root;
+                _root = null;
+            }
+            _writer.WriteStartElement(localName, "http://hl7.org/fhir");
+        }
+
+        private readonly XmlWriter _writer;
+        private string _root;
+    }
+
+    /// <summary>
+    /// Sink generating custom outputs via a <see cref="ISerializerTarget"/> implementation.
+    /// One of these outputs is the standard FHIR XML via a <see cref="XmlSerializerTarget"/>
+    /// </summary>
+    internal class GenericSerializerSink : SerializerSink
+    {
+        public GenericSerializerSink(ISerializerTarget target, Model.Version version, Rest.SummaryType summary = Rest.SummaryType.False, IEnumerable<string> elements = null) :
+            base(version, summary, elements)
+        {
+            _target = target ?? throw new ArgumentNullException(nameof(target));
         }
 
         public override void Serialize(Primitive primitive)
         {
             if (primitive != null)
             {
-                if (BeginDataTypePrimitive(primitive.TypeName, true))
+                if (BeginDataTypePrimitive(primitive.TypeName, isPrimitiveType: true))
                 {
-                    var valueToWrite = ValueToWrite(primitive.ObjectValue);
-                    if (valueToWrite != null)
+                    if (primitive.ObjectValue is string stringValue)
+                    {
+                        if (!string.IsNullOrWhiteSpace(stringValue))
+                        {
+                            RenderStates();
+                            _target.WriteValue(stringValue.Trim());
+                        }
+                    }
+                    else if (primitive.ObjectValue is bool boolValue)
                     {
                         RenderStates();
-                        _writer.WriteStartAttribute("value");
-                        _writer.WriteValue(valueToWrite);
-                        _writer.WriteEndAttribute();
+                        _target.WriteValue(boolValue);
+                    }
+                    else if (primitive.ObjectValue is int intValue)
+                    {
+                        RenderStates();
+                        _target.WriteValue(intValue);
+                    }
+                    else if (primitive.ObjectValue is decimal decimalValue)
+                    {
+                        RenderStates();
+                        _target.WriteValue(decimalValue);
+                    }
+                    else if (primitive.ObjectValue is byte[] bytesValue)
+                    {
+                        RenderStates();
+                        _target.WriteValue(bytesValue);
+                    }
+                    else if (primitive.ObjectValue is DateTimeOffset dateTimeOffsetValue)
+                    {
+                        RenderStates();
+                        _target.WriteValue(dateTimeOffsetValue);
+                    }
+                    else if (primitive.ObjectValue != null)
+                    {
+                        throw new SerializerSinkException($"Not supported primitive type {primitive.ObjectValue.GetType().Name}");
                     }
                 }
                 primitive.SerializeElement(this);
@@ -735,7 +924,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public override void Serialize(IEnumerable<Model.Primitive> primitives)
+        public override void Serialize(IEnumerable<Primitive> primitives)
         {
             if (primitives != null)
             {
@@ -751,7 +940,7 @@ namespace Hl7.Fhir.Serialization
             if (!IsSkipping() && !ShouldSkip(name, elementVersions, summaryVersions, isRequired) && !string.IsNullOrWhiteSpace(value))
             {
                 RenderStates();
-                _writer.WriteAttributeString(name, value.Trim());
+                _target.WriteAttribute(name, value.Trim());
             }
         }
 
@@ -760,77 +949,25 @@ namespace Hl7.Fhir.Serialization
             if (!IsSkipping() && !ShouldSkip(name, elementVersions, summaryVersions, isRequired) && !string.IsNullOrWhiteSpace(value))
             {
                 RenderStates();
-                value = value.Trim();
-                if (!value.StartsWith("<"))
-                {
-                    value = $"<{name}>{value}</{name}>";
-                }
-                var addedRootElement = false;
-                var firstElement = true;
-                using (var xmlReader = Utility.SerializationUtil.XmlReaderFromXmlText(value))
-                {
-                    while (xmlReader.Read())
-                    {
-                        // Remove comments, processing instructions, non-significative whitespaces
-                        // Put all elements in the XHTML namespace
-                        switch (xmlReader.NodeType)
-                        {
-                            case XmlNodeType.Element:
-                                if (firstElement)
-                                {
-                                    if (xmlReader.LocalName != name)
-                                    {
-                                        _writer.WriteStartElement(name, Utility.XmlNs.XHTML);
-                                        addedRootElement = true;
-                                    }
-                                    firstElement = false;
-                                }
-                                _writer.WriteStartElement(xmlReader.LocalName, Utility.XmlNs.XHTML);
-                                _writer.WriteAttributes(xmlReader, defattr: false);
-                                if (xmlReader.IsEmptyElement)
-                                {
-                                    _writer.WriteEndElement();
-                                }
-                                break;
-                            case XmlNodeType.Text:
-                                _writer.WriteString(xmlReader.Value);
-                                break;
-                            case XmlNodeType.SignificantWhitespace:
-                                _writer.WriteWhitespace(xmlReader.Value);
-                                break;
-                            case XmlNodeType.CDATA:
-                                _writer.WriteCData(xmlReader.Value);
-                                break;
-                            case XmlNodeType.EndElement:
-                                _writer.WriteEndElement();
-                                break;
-                        }
-                    }
-                    if (addedRootElement)
-                    {
-                        _writer.WriteEndElement();
-                    }
-                }
+                _target.WriteXhtmlElement(name, value.Trim());
             }
         }
 
         protected override void RenderBeginState(IState state, IState previousState)
         {
-            if (state is DataTypeState dataTypeState)
+            if (state is ListState)
             {
-                var outerElementName = previousState != null && previousState is ListState listState ?
-                    listState.Name :
-                    dataTypeState.Name;
-                if (outerElementName != null)
+                if (state.Name == null)
                 {
-                    WriteStartElement(outerElementName);
+                    throw new SerializerSinkException("List must have a name");
                 }
-                if (dataTypeState.Type != null)
-                {
-                    WriteStartElement(dataTypeState.Type);
-                }
+                _target.BeginList(state.Name);
             }
-            else if (!(state is ListState))
+            else if (state is DataTypeState dataTypeState)
+            {
+                _target.BeginObject(dataTypeState.Name, dataTypeState.Type);
+            }
+            else
             {
                 throw new SerializerSinkException($"Unexpected state {state.GetType()}");
             }
@@ -838,30 +975,20 @@ namespace Hl7.Fhir.Serialization
 
         protected override void RenderEndState(IState renderedState)
         {
-            if (renderedState is DataTypeState dataTypeState)
+            if (renderedState is ListState listState)
             {
-                if (dataTypeState.Name != null)
-                {
-                    _writer.WriteEndElement();
-                }
-                if (dataTypeState.Type != null)
-                {
-                    _writer.WriteEndElement();
-                }
+                _target.EndList(listState.Name);
+            }
+            else if (renderedState is DataTypeState dataTypeState)
+            {
+                _target.EndObject(dataTypeState.Name, dataTypeState.Type);
+            }
+            else
+            {
+                throw new SerializerSinkException($"Unexpected state {renderedState.GetType()}");
             }
         }
 
-        private void WriteStartElement(string localName)
-        {
-            if (_root != null)
-            {
-                localName = _root;
-                _root = null;
-            }
-            _writer.WriteStartElement(localName, "http://hl7.org/fhir");
-        }
-
-        private readonly XmlWriter _writer;
-        private string _root;
+        private readonly ISerializerTarget _target;
     }
 }

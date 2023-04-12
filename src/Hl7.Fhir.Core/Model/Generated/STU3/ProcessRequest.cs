@@ -103,6 +103,21 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -647,6 +662,63 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
             sink.Element("period", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); Period?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>();
+                    return true;
+                case "action":
+                    ActionElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.ActionList>>();
+                    return true;
+                case "target":
+                    Target = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "created":
+                    CreatedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "provider":
+                    Provider = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "organization":
+                    Organization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "request":
+                    Request = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "response":
+                    Response = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "nullify":
+                    NullifyElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "reference":
+                    ReferenceElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "item":
+                    Item = source.GetList<ItemsComponent>();
+                    return true;
+                case "include":
+                    IncludeElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "exclude":
+                    ExcludeElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "period":
+                    Period = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

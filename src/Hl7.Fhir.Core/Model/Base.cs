@@ -55,6 +55,11 @@ namespace Hl7.Fhir.Model
             // Empty
         }
 
+        internal virtual bool SetElementFromSource(string elementName, ParserSource source)
+        {
+            return false;
+        }
+
         internal virtual bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
         {
             return false;

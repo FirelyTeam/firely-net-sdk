@@ -209,6 +209,39 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "who":
+                        Who = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "type":
+                        Type = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "communicationMethod":
+                        CommunicationMethod = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "validationStatus":
+                        ValidationStatus = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "validationDate":
+                        ValidationDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                        return true;
+                    case "canPushUpdates":
+                        CanPushUpdates = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "pushTypeAvailable":
+                        PushTypeAvailable = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -551,6 +584,42 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "who":
+                        Who = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "onBehalfOf":
+                        OnBehalfOf = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "communicationMethod":
+                        CommunicationMethod = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "date":
+                        DateElement = source.Get<Hl7.Fhir.Model.Date>();
+                        return true;
+                    case "sourceIdentityCertificate":
+                        SourceIdentityCertificateElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "proxyIdentityCertificate":
+                        ProxyIdentityCertificateElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "proxySignature":
+                        ProxySignature = source.Get<Hl7.Fhir.Model.R4.Signature>();
+                        return true;
+                    case "sourceSignature":
+                        SourceSignature = source.Get<Hl7.Fhir.Model.R4.Signature>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -773,6 +842,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("identityCertificate", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); IdentityCertificateElement?.Serialize(sink);
                 sink.Element("attestationSignature", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AttestationSignature?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "organization":
+                        Organization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "identityCertificate":
+                        IdentityCertificateElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "attestationSignature":
+                        AttestationSignature = source.Get<Hl7.Fhir.Model.R4.Signature>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1288,6 +1378,60 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "target":
+                    Target = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "targetLocation":
+                    TargetLocationElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "need":
+                    Need = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.status>>();
+                    return true;
+                case "statusDate":
+                    StatusDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "validationType":
+                    ValidationType = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "validationProcess":
+                    ValidationProcess = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "frequency":
+                    Frequency = source.Get<Hl7.Fhir.Model.R4.Timing>();
+                    return true;
+                case "lastPerformed":
+                    LastPerformedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "nextScheduled":
+                    NextScheduledElement = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "failureAction":
+                    FailureAction = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "primarySource":
+                    PrimarySource = source.GetList<PrimarySourceComponent>();
+                    return true;
+                case "attestation":
+                    Attestation = source.Get<AttestationComponent>();
+                    return true;
+                case "validator":
+                    Validator = source.GetList<ValidatorComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

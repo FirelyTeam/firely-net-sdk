@@ -262,6 +262,36 @@ namespace Hl7.Fhir.Model
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "severity":
+                        SeverityElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.IssueSeverity>>();
+                        return true;
+                    case "code":
+                        CodeElement = source.Get<Hl7.Fhir.Model.Code>();
+                        return true;
+                    case "details":
+                        Details = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "diagnostics":
+                        DiagnosticsElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "location":
+                        LocationElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "expression" when source.IsVersion(Hl7.Fhir.Model.Version.R4|Hl7.Fhir.Model.Version.STU3):
+                        ExpressionElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -486,6 +516,21 @@ namespace Hl7.Fhir.Model
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "issue":
+                    Issue = source.GetList<IssueComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

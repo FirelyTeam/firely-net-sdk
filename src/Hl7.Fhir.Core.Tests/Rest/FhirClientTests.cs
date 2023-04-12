@@ -1267,7 +1267,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestMethod, TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public void TestNextGenMetadata()
         {
-            var client = new FhirDstu2Client("https://fhir.nextgen.com/mu3api/dstu2/v1.0")
+            var client = new FhirDstu2Client("https://fhir.nextgen.com/nge/prod/fhir-api/fhir/dstu2/")
             {
                 PreferredFormat = ResourceFormat.Json,
                 Timeout = 120_000,
@@ -1276,7 +1276,7 @@ namespace Hl7.Fhir.Tests.Rest
             client.ParserSettings.PermissiveParsing = true;
             client.ParserSettings.AllowUnrecognizedEnums = true;
             var conformance = client.Metadata();
-            Assert.AreEqual("1.0", conformance.Version);
+            Assert.AreEqual("5.0.0.195", conformance.Version);
         }
     }
 

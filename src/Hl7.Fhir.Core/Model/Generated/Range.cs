@@ -149,6 +149,24 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "low":
+                    Low = source.Get<Hl7.Fhir.Model.SimpleQuantity>();
+                    return true;
+                case "high":
+                    High = source.Get<Hl7.Fhir.Model.SimpleQuantity>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

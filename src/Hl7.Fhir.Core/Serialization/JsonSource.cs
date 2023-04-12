@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -11,22 +10,6 @@ using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class JsonSourceException : Exception
-    {
-        public JsonSourceException(string message, string path, long lineNumber, long bytePositionInLine) : base(message)
-        {
-            Path = path;
-            LineNumber = lineNumber;
-            BytePositionInLine = bytePositionInLine;
-        }
-
-        public string Path { get; }
-
-        public long LineNumber { get; }
-
-        public long BytePositionInLine { get; }
-    }
-
     internal ref struct JsonSource
     {
         public const string ResourceTypePropertyName = "resourceType";
@@ -49,7 +32,7 @@ namespace Hl7.Fhir.Serialization
             return (versions & _settings.Version) != 0;
         }
 
-        public JsonSourceException CreateWrongResourceTypeException(Type expectedType, Resource actualResource)
+        public SourceException CreateWrongResourceTypeException(Type expectedType, Resource actualResource)
         {
             var expectedResourceType = _model.GetFhirTypeNameForType(expectedType) ?? expectedType.Name;
             return CreateWrongResourceTypeException(expectedResourceType, actualResource.TypeName);
@@ -87,7 +70,7 @@ namespace Hl7.Fhir.Serialization
             return null;
         }
 
-        public string GetUrl()
+        public string GetExtensionUrl()
         {
             if (TryGetNonEmptyString(out var url))
             {
@@ -367,7 +350,7 @@ namespace Hl7.Fhir.Serialization
             {
                 if (!_reader.TryGetBytesFromBase64(out var value))
                 {
-                    ThrowIfStrictParsing($"'\"{Truncate(GetTokenAsString())}\"' is not a valid base64 binary");
+                    ThrowIfStrictParsing($"'\"{SourceHelpers.Truncate(GetTokenAsString())}\"' is not a valid base64 binary");
                 }
                 else
                 {
@@ -439,7 +422,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetString(out var value))
             {
-                if (!IsValidDate(value))
+                if (!SourceHelpers.IsValidDate(value))
                 {
                     ThrowIfStrictParsing($"'{value}' is not a valid date");
                 }
@@ -460,8 +443,8 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetString(out var value))
             {
-                if (!IsValidDate(value)
-                    && !TryParseFhirInstant(value, out var _))
+                if (!SourceHelpers.IsValidDate(value)
+                    && !SourceHelpers.TryParseFhirInstant(value, out var _))
                 {
                     ThrowIfStrictParsing($"'{value}' is not a valid date-time");
                 }
@@ -482,7 +465,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetString(out var valueString))
             {
-                if (!TryParseFhirInstant(valueString, out var value))
+                if (!SourceHelpers.TryParseFhirInstant(valueString, out var value))
                 {
                     ThrowIfStrictParsing($"'{valueString}' is not a valid instant");
                 }
@@ -503,7 +486,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (TryGetString(out var value))
             {
-                if (!DateTimeOffset.TryParseExact(value, _timeFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var _))
+                if (!SourceHelpers.IsValidTime(value))
                 {
                     ThrowIfStrictParsing($"'{value}' is not a valid time");
                 }
@@ -1042,39 +1025,39 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private JsonSourceException CreateWrongResourceTypeException(string expectedResourceType, string actualResourceType)
+        private SourceException CreateWrongResourceTypeException(string expectedResourceType, string actualResourceType)
         {
             return CreateException($"Expected a {expectedResourceType} but found a {actualResourceType}");
         }
 
-        private JsonSourceException CreateUnknownResourceTypeException(string resourceType)
+        private SourceException CreateUnknownResourceTypeException(string resourceType)
         {
             return CreateException($"Unknown resource type '{resourceType}'");
         }
 
-        private JsonSourceException CreateNotAStringException()
+        private SourceException CreateNotAStringException()
         {
             return CreateUnexpectedTokenTypeException("a string");
         }
 
-        private JsonSourceException CreateUnexpectedTokenTypeException(string expected)
+        private SourceException CreateUnexpectedTokenTypeException(string expected)
         {
-            throw CreateException($"Expected {expected} but found {TokenDescription()}");
+            return CreateException($"Expected {expected} but found {TokenDescription()}");
         }
 
-        private JsonSourceException CreateEmptyStringException()
+        private SourceException CreateEmptyStringException()
         {
             return CreateException("Empty strings are not allowed");
         }
 
-        private JsonSourceException CreateRepeatedElementException(string elementName)
+        private SourceException CreateRepeatedElementException(string elementName)
         {
             return CreateException($"Element '{elementName}' must not repeat");
         }
 
-        private JsonSourceException CreateException(string message)
+        private SourceException CreateException(string message)
         {
-            return new JsonSourceException(message, GetCurrentPath(), GETLINENUMBER.Value(_reader.CurrentState), GETPOSITION.Value(_reader.CurrentState) );
+            return new SourceException(message, GetCurrentPath(), GETLINENUMBER.Value(_reader.CurrentState), GETPOSITION.Value(_reader.CurrentState) );
         }
 
         private string GetCurrentPath()
@@ -1103,7 +1086,7 @@ namespace Hl7.Fhir.Serialization
             switch (_reader.TokenType)
             {
                 case JsonTokenType.String:
-                    return $"a string ('\"{Truncate(_reader.GetString())}\"')";
+                    return $"a string ('\"{SourceHelpers.Truncate(_reader.GetString())}\"')";
                 case JsonTokenType.Number:
                     return $"a number ('{GetTokenAsString()}')";
                 case JsonTokenType.True:
@@ -1121,7 +1104,7 @@ namespace Hl7.Fhir.Serialization
                 case JsonTokenType.EndArray:
                     return "']'";
                 case JsonTokenType.Comment:
-                    return $"a comment ('{Truncate(_reader.GetComment())}')";
+                    return $"a comment ('{SourceHelpers.Truncate(_reader.GetComment())}')";
                 case JsonTokenType.PropertyName:
                     return $"a property ('{_reader.GetString()}')";
                 default:
@@ -1136,60 +1119,6 @@ namespace Hl7.Fhir.Serialization
                 _reader.ValueSpan;
             return Encoding.UTF8.GetString(span.ToArray());
         }
-
-        private static string Truncate(string str)
-        {
-            const int maxLength = 40;
-
-            if (str == null || str.Length < maxLength)
-            {
-                return str;
-            }
-            return str.Substring(0, maxLength - 3) + "...";
-        }
-
-        private static bool IsValidDate(string dateString)
-        {
-            return DateTimeOffset.TryParseExact(dateString, _dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var _);
-        }
-
-        private static bool TryParseFhirInstant(string instantString, out DateTimeOffset instant)
-        {
-            if (DateTimeOffset.TryParseExact(instantString, _utcFormats, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out instant) ||
-                DateTimeOffset.TryParseExact(instantString, _timeZoneFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out instant))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private static readonly string[] _dateFormats = new[]
-        {
-            "yyyy",
-            "yyyy'-'MM",
-            "yyyy'-'MM'-'dd"
-        };
-
-        private static readonly string[] _utcFormats = new[]
-        {
-                "yyyy'-'MM'-'dd'T'HH':'mm'Z'",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'FFFFFFF'Z'",
-        };
-
-        private static readonly string[] _timeZoneFormats = new[]
-        {
-                "yyyy'-'MM'-'dd'T'HH':'mmzzz",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'sszzz",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'FFFFFFFzzz",
-        };
-
-        private static readonly string[] _timeFormats = new[]
-        {
-                "HH':'mm",
-                "HH':'mm':'ss",
-                "HH':'mm':'ss'.'FFFFFFF",
-        };
 
         private class State
         {

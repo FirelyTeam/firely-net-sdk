@@ -163,6 +163,30 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "customaryUnit":
+                        CustomaryUnit = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "unit":
+                        Unit = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "conversionFactor":
+                        ConversionFactorElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "decimalPrecision":
+                        DecimalPrecisionElement = source.Get<Hl7.Fhir.Model.Integer>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -461,6 +485,42 @@ namespace Hl7.Fhir.Model.R4
                 sink.Element("gestationalAge", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); GestationalAge?.Serialize(sink);
                 sink.Element("condition", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); ConditionElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "category":
+                        CategoryElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.ObservationRangeCategory>>();
+                        return true;
+                    case "range":
+                        Range = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "context":
+                        Context = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "appliesTo":
+                        AppliesTo = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "gender":
+                        GenderElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AdministrativeGender>>();
+                        return true;
+                    case "age":
+                        Age = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "gestationalAge":
+                        GestationalAge = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "condition":
+                        ConditionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -979,6 +1039,57 @@ namespace Hl7.Fhir.Model.R4
             sink.Element("abnormalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); AbnormalCodedValueSet?.Serialize(sink);
             sink.Element("criticalCodedValueSet", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.None, false, false); CriticalCodedValueSet?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "category":
+                    Category = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "code":
+                    Code = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "permittedDataType":
+                    PermittedDataTypeElement = source.GetList<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.ObservationDataType>>();
+                    return true;
+                case "multipleResultsAllowed":
+                    MultipleResultsAllowedElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "method":
+                    Method = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "preferredReportName":
+                    PreferredReportNameElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "quantitativeDetails":
+                    QuantitativeDetails = source.Get<QuantitativeDetailsComponent>();
+                    return true;
+                case "qualifiedInterval":
+                    QualifiedInterval = source.GetList<QualifiedIntervalComponent>();
+                    return true;
+                case "validCodedValueSet":
+                    ValidCodedValueSet = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "normalCodedValueSet":
+                    NormalCodedValueSet = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "abnormalCodedValueSet":
+                    AbnormalCodedValueSet = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "criticalCodedValueSet":
+                    CriticalCodedValueSet = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

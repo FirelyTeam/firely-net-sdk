@@ -117,6 +117,24 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "language":
+                        Language = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "preferred":
+                        PreferredElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -570,6 +588,54 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "active":
+                    ActiveElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "patient":
+                    Patient = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "relationship":
+                    Relationship = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "name":
+                    Name = source.GetList<Hl7.Fhir.Model.R4.HumanName>();
+                    return true;
+                case "telecom":
+                    Telecom = source.GetList<Hl7.Fhir.Model.R4.ContactPoint>();
+                    return true;
+                case "gender":
+                    GenderElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AdministrativeGender>>();
+                    return true;
+                case "birthDate":
+                    BirthDateElement = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "address":
+                    Address = source.GetList<Hl7.Fhir.Model.Address>();
+                    return true;
+                case "photo":
+                    Photo = source.GetList<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "period":
+                    Period = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "communication":
+                    Communication = source.GetList<CommunicationComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

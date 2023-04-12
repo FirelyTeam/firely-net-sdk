@@ -193,6 +193,32 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "authorReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Author, "author");
+                    Author = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "authorString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Author, "author");
+                    Author = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "time":
+                    TimeElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "text":
+                    TextElement = source.Get<Hl7.Fhir.Model.Markdown>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

@@ -133,6 +133,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "specType":
+                        SpecType = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "componentId":
+                        ComponentId = source.Get<Hl7.Fhir.Model.Identifier>();
+                        return true;
+                    case "productionSpec":
+                        ProductionSpecElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -515,6 +536,48 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
             sink.Element("languageCode", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); LanguageCode?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "identifier":
+                    Identifier = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "lastSystemChange":
+                    LastSystemChangeElement = source.Get<Hl7.Fhir.Model.Instant>();
+                    return true;
+                case "source":
+                    Source = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "parent":
+                    Parent = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "operationalStatus":
+                    OperationalStatus = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "parameterGroup":
+                    ParameterGroup = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "measurementPrinciple":
+                    MeasurementPrincipleElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.Measmnt_Principle>>();
+                    return true;
+                case "productionSpecification":
+                    ProductionSpecification = source.GetList<ProductionSpecificationComponent>();
+                    return true;
+                case "languageCode":
+                    LanguageCode = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

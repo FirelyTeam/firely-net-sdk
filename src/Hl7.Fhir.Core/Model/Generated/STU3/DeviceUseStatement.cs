@@ -356,6 +356,60 @@ namespace Hl7.Fhir.Model.STU3
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DeviceUseStatementStatus>>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "whenUsed":
+                    WhenUsed = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "timingTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.STU3.Timing>(Timing, "timing");
+                    Timing = source.Get<Hl7.Fhir.Model.STU3.Timing>();
+                    return true;
+                case "timingPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Timing, "timing");
+                    Timing = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "timingDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Timing, "timing");
+                    Timing = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "recordedOn":
+                    RecordedOnElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "source":
+                    Source = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "device":
+                    Device = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "indication":
+                    Indication = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "bodySite":
+                    BodySite = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "note":
+                    Note = source.GetList<Hl7.Fhir.Model.Annotation>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

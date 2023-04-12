@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
                 source.GetReader(ref reader);
                 return result;
             }
-            catch (JsonSourceException jsonSourceException)
+            catch (SourceException jsonSourceException)
             {
                 throw new JsonException(jsonSourceException.Message, jsonSourceException.Path, jsonSourceException.LineNumber, jsonSourceException.BytePositionInLine);
             }

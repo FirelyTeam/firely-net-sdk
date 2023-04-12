@@ -183,6 +183,30 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "noteNumber":
+                        NoteNumberElement = source.GetList<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "adjudication":
+                        Adjudication = source.GetList<ItemAdjudicationComponent>();
+                        return true;
+                    case "detail":
+                        Detail = source.GetList<ItemDetailComponent>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -395,6 +419,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "amount":
+                        Amount = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "value":
+                        ValueElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -587,6 +632,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "adjudication":
+                        Adjudication = source.GetList<DetailAdjudicationComponent>();
+                        return true;
+                    case "subDetail":
+                        SubDetail = source.GetList<SubDetailComponent>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -786,6 +852,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "amount":
+                        Amount = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "value":
+                        ValueElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -954,6 +1041,24 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "adjudication":
+                        Adjudication = source.GetList<SubdetailAdjudicationComponent>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1140,6 +1245,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(sink);
                 sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "amount":
+                        Amount = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "value":
+                        ValueElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1403,6 +1529,36 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.GetList<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "service":
+                        Service = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "fee":
+                        Fee = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "noteNumberLinkId":
+                        NoteNumberLinkIdElement = source.GetList<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "adjudication":
+                        Adjudication = source.GetList<AddedItemAdjudicationComponent>();
+                        return true;
+                    case "detail":
+                        Detail = source.GetList<AddedItemsDetailComponent>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -1635,6 +1791,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "amount":
+                        Amount = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "value":
+                        ValueElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -1799,6 +1976,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "service":
+                        Service = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "fee":
+                        Fee = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "adjudication":
+                        Adjudication = source.GetList<AddedItemDetailAdjudicationComponent>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -1990,6 +2188,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("amount", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Amount?.Serialize(sink);
                 sink.Element("value", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ValueElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "amount":
+                        Amount = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                        return true;
+                    case "value":
+                        ValueElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -2224,6 +2443,30 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequenceLinkId":
+                        SequenceLinkIdElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "detailSequenceLinkId":
+                        DetailSequenceLinkIdElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "subdetailSequenceLinkId":
+                        SubdetailSequenceLinkIdElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "code":
+                        Code = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -2433,6 +2676,27 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("type", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); Type?.Serialize(sink);
                 sink.Element("text", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); TextElement?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "number":
+                        NumberElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "type":
+                        Type = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "text":
+                        TextElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -2755,6 +3019,42 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.Element("claimResponse", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); ClaimResponse?.Serialize(sink);
                 sink.Element("originalRuleset", Hl7.Fhir.Model.Version.All, Hl7.Fhir.Model.Version.All, false, false); OriginalRuleset?.Serialize(sink);
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "sequence":
+                        SequenceElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                        return true;
+                    case "focal":
+                        FocalElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                        return true;
+                    case "coverage":
+                        Coverage = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "businessArrangement":
+                        BusinessArrangementElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "relationship":
+                        Relationship = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                    case "preAuthRef":
+                        PreAuthRefElement = source.GetList<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "claimResponse":
+                        ClaimResponse = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "originalRuleset":
+                        OriginalRuleset = source.Get<Hl7.Fhir.Model.Coding>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -3553,6 +3853,96 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "request":
+                    Request = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "ruleset":
+                    Ruleset = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "originalRuleset":
+                    OriginalRuleset = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "created":
+                    CreatedElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "organization":
+                    Organization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "requestProvider":
+                    RequestProvider = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "requestOrganization":
+                    RequestOrganization = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "outcome":
+                    OutcomeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.RemittanceOutcome>>();
+                    return true;
+                case "disposition":
+                    DispositionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "payeeType":
+                    PayeeType = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "item":
+                    Item = source.GetList<ItemsComponent>();
+                    return true;
+                case "addItem":
+                    AddItem = source.GetList<AddedItemComponent>();
+                    return true;
+                case "error":
+                    Error = source.GetList<ErrorsComponent>();
+                    return true;
+                case "totalCost":
+                    TotalCost = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                    return true;
+                case "unallocDeductable":
+                    UnallocDeductable = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                    return true;
+                case "totalBenefit":
+                    TotalBenefit = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                    return true;
+                case "paymentAdjustment":
+                    PaymentAdjustment = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                    return true;
+                case "paymentAdjustmentReason":
+                    PaymentAdjustmentReason = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "paymentDate":
+                    PaymentDateElement = source.Get<Hl7.Fhir.Model.Date>();
+                    return true;
+                case "paymentAmount":
+                    PaymentAmount = source.Get<Hl7.Fhir.Model.DSTU2.Money>();
+                    return true;
+                case "paymentRef":
+                    PaymentRef = source.Get<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "reserved":
+                    Reserved = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "form":
+                    Form = source.Get<Hl7.Fhir.Model.Coding>();
+                    return true;
+                case "note":
+                    Note = source.GetList<NotesComponent>();
+                    return true;
+                case "coverage":
+                    Coverage = source.GetList<CoverageComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

@@ -301,6 +301,42 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "active":
+                    ActiveElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "morphology":
+                    Morphology = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "location":
+                    Location = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "locationQualifier":
+                    LocationQualifier = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "description":
+                    DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "image":
+                    Image = source.GetList<Hl7.Fhir.Model.Attachment>();
+                    return true;
+                case "patient":
+                    Patient = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

@@ -214,6 +214,24 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
 
+        internal override bool SetElementFromSource(string elementName, ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "status":
+                    StatusElement = source.Get<Code<NarrativeStatus>>();
+                    return true;
+                case "div":
+                    Div = source.GetXHtml();
+                    return true;
+            }
+            return false;
+        }
+
         internal override bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

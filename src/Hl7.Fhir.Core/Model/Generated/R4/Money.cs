@@ -173,6 +173,24 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "value":
+                    ValueElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                    return true;
+                case "currency":
+                    CurrencyElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.Currencies>>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

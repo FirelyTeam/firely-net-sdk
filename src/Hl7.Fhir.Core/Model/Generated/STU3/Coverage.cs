@@ -477,6 +477,54 @@ namespace Hl7.Fhir.Model.STU3
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "group":
+                        GroupElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "groupDisplay":
+                        GroupDisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "subGroup":
+                        SubGroupElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "subGroupDisplay":
+                        SubGroupDisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "plan":
+                        PlanElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "planDisplay":
+                        PlanDisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "subPlan":
+                        SubPlanElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "subPlanDisplay":
+                        SubPlanDisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "class":
+                        ClassElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "classDisplay":
+                        ClassDisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "subClass":
+                        SubClassElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "subClassDisplay":
+                        SubClassDisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -1149,6 +1197,66 @@ namespace Hl7.Fhir.Model.STU3
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.FinancialResourceStatusCodes>>();
+                    return true;
+                case "type":
+                    Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "policyHolder":
+                    PolicyHolder = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "subscriber":
+                    Subscriber = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "subscriberId":
+                    SubscriberIdElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "beneficiary":
+                    Beneficiary = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "relationship":
+                    Relationship = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "period":
+                    Period = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "payor":
+                    Payor = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "grouping":
+                    Grouping = source.Get<GroupComponent>();
+                    return true;
+                case "dependent":
+                    DependentElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "sequence":
+                    SequenceElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "order":
+                    OrderElement = source.Get<Hl7.Fhir.Model.PositiveInt>();
+                    return true;
+                case "network":
+                    NetworkElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "contract":
+                    Contract = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

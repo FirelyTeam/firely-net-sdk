@@ -284,6 +284,33 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "system":
+                    SystemElement = source.Get<Hl7.Fhir.Model.FhirUri>();
+                    return true;
+                case "version":
+                    VersionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "code":
+                    CodeElement = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "display":
+                    DisplayElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "userSelected":
+                    UserSelectedElement = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

@@ -119,6 +119,27 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "summary":
+                        Summary = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "assessment":
+                        Assessment = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                    case "type":
+                        Type = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -285,6 +306,24 @@ namespace Hl7.Fhir.Model.R4
                 }
                 sink.End();
                 sink.End();
+            }
+        
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "code":
+                        Code = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "detail":
+                        Detail = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
             }
         
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
@@ -854,6 +893,103 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "clinicalStatus":
+                    ClinicalStatus = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "verificationStatus":
+                    VerificationStatus = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "category":
+                    Category = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "severity":
+                    Severity = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "code":
+                    Code = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "bodySite":
+                    BodySite = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "encounter":
+                    Encounter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "onsetDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Onset, "onset");
+                    Onset = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "onsetAge":
+                    source.CheckDuplicates<Hl7.Fhir.Model.R4.Age>(Onset, "onset");
+                    Onset = source.Get<Hl7.Fhir.Model.R4.Age>();
+                    return true;
+                case "onsetPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Onset, "onset");
+                    Onset = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "onsetRange":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Onset, "onset");
+                    Onset = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "onsetString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Onset, "onset");
+                    Onset = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "abatementDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Abatement, "abatement");
+                    Abatement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "abatementAge":
+                    source.CheckDuplicates<Hl7.Fhir.Model.R4.Age>(Abatement, "abatement");
+                    Abatement = source.Get<Hl7.Fhir.Model.R4.Age>();
+                    return true;
+                case "abatementPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Abatement, "abatement");
+                    Abatement = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "abatementRange":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Abatement, "abatement");
+                    Abatement = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "abatementString":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Abatement, "abatement");
+                    Abatement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "recordedDate":
+                    RecordedDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "recorder":
+                    Recorder = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "asserter":
+                    Asserter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "stage":
+                    Stage = source.GetList<StageComponent>();
+                    return true;
+                case "evidence":
+                    Evidence = source.GetList<EvidenceComponent>();
+                    return true;
+                case "note":
+                    Note = source.GetList<Hl7.Fhir.Model.Annotation>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

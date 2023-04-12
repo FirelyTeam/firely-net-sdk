@@ -102,6 +102,29 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "therapyRelationshipType":
+                        TherapyRelationshipType = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "medicationCodeableConcept":
+                        source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Medication, "medication");
+                        Medication = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "medicationReference":
+                        source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Medication, "medication");
+                        Medication = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -398,6 +421,39 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "subject":
+                    Subject = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "disease":
+                    Disease = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "diseaseStatus":
+                    DiseaseStatus = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "comorbidity":
+                    Comorbidity = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "therapeuticIndication":
+                    TherapeuticIndication = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "otherTherapy":
+                    OtherTherapy = source.GetList<OtherTherapyComponent>();
+                    return true;
+                case "population":
+                    Population = source.GetList<Hl7.Fhir.Model.Population>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

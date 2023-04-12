@@ -249,6 +249,39 @@ namespace Hl7.Fhir.Model.R4
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "manufacturedDoseForm":
+                    ManufacturedDoseForm = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "unitOfPresentation":
+                    UnitOfPresentation = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "quantity":
+                    Quantity = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "manufacturer":
+                    Manufacturer = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "ingredient":
+                    Ingredient = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "physicalCharacteristics":
+                    PhysicalCharacteristics = source.Get<Hl7.Fhir.Model.ProdCharacteristic>();
+                    return true;
+                case "otherCharacteristics":
+                    OtherCharacteristics = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

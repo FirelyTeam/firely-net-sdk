@@ -305,6 +305,281 @@ namespace Hl7.Fhir.Model
             sink.End();
         }
 
+        internal override bool SetElementFromSource(string elementName, ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "@url":
+                    Url = source.GetExtensionUrl();
+                    return true;
+                case "valueBoolean":
+                    source.CheckDuplicates<FhirBoolean>(Value, "value");
+                    Value = source.Get<FhirBoolean>();
+                    return true;
+                case "valueInteger":
+                    source.CheckDuplicates<Integer>(Value, "value");
+                    Value = source.Get<Integer>();
+                    return true;
+                case "valueDecimal":
+                    source.CheckDuplicates<FhirDecimal>(Value, "value");
+                    Value = source.Get<FhirDecimal>();
+                    return true;
+                case "valueBase64Binary":
+                    source.CheckDuplicates<Base64Binary>(Value, "value");
+                    Value = source.Get<Base64Binary>();
+                    return true;
+                case "valueInstant":
+                    source.CheckDuplicates<Instant>(Value, "value");
+                    Value = source.Get<Instant>();
+                    return true;
+                case "valueString":
+                    source.CheckDuplicates<FhirString>(Value, "value");
+                    Value = source.Get<FhirString>();
+                    return true;
+                case "valueUri":
+                    source.CheckDuplicates<FhirUri>(Value, "value");
+                    Value = source.Get<FhirUri>();
+                    return true;
+                case "valueDate":
+                    source.CheckDuplicates<Date>(Value, "value");
+                    Value = source.Get<Date>();
+                    return true;
+                case "valueDateTime":
+                    source.CheckDuplicates<FhirDateTime>(Value, "value");
+                    Value = source.Get<FhirDateTime>();
+                    return true;
+                case "valueTime":
+                    source.CheckDuplicates<Time>(Value, "value");
+                    Value = source.Get<Time>();
+                    return true;
+                case "valueCode":
+                    source.CheckDuplicates<Code>(Value, "value");
+                    Value = source.Get<Code>();
+                    return true;
+                case "valueOid":
+                    source.CheckDuplicates<Oid>(Value, "value");
+                    Value = source.Get<Oid>();
+                    return true;
+                case "valueId":
+                    source.CheckDuplicates<Id>(Value, "value");
+                    Value = source.Get<Id>();
+                    return true;
+                case "valueUnsignedInt":
+                    source.CheckDuplicates<UnsignedInt>(Value, "value");
+                    Value = source.Get<UnsignedInt>();
+                    return true;
+                case "valuePositiveInt":
+                    source.CheckDuplicates<PositiveInt>(Value, "value");
+                    Value = source.Get<PositiveInt>();
+                    return true;
+                case "valueMarkdown":
+                    source.CheckDuplicates<Markdown>(Value, "value");
+                    Value = source.Get<Markdown>();
+                    return true;
+                case "valueAnnotation":
+                    source.CheckDuplicates<Annotation>(Value, "value");
+                    Value = source.Get<Annotation>();
+                    return true;
+                case "valueAttachment":
+                    source.CheckDuplicates<Attachment>(Value, "value");
+                    Value = source.Get<Attachment>();
+                    return true;
+                case "valueIdentifier":
+                    source.CheckDuplicates<Identifier>(Value, "value");
+                    Value = source.Get<Identifier>();
+                    return true;
+                case "valueCodeableConcept":
+                    source.CheckDuplicates<CodeableConcept>(Value, "value");
+                    Value = source.Get<CodeableConcept>();
+                    return true;
+                case "valueCoding":
+                    source.CheckDuplicates<Coding>(Value, "value");
+                    Value = source.Get<Coding>();
+                    return true;
+                case "valueQuantity":
+                    source.CheckDuplicates<Quantity>(Value, "value");
+                    Value = source.Get<Quantity>();
+                    return true;
+                case "valueRange":
+                    source.CheckDuplicates<Range>(Value, "value");
+                    Value = source.Get<Range>();
+                    return true;
+                case "valuePeriod":
+                    source.CheckDuplicates<Period>(Value, "value");
+                    Value = source.Get<Period>();
+                    return true;
+                case "valueRatio":
+                    source.CheckDuplicates<Ratio>(Value, "value");
+                    Value = source.Get<Ratio>();
+                    return true;
+                case "valueSampledData" when source.IsVersion(Version.DSTU2):
+                    source.CheckDuplicates<DSTU2.SampledData>(Value, "value");
+                    Value = source.Get<DSTU2.SampledData>();
+                    return true;
+                case "valueSignature" when source.IsVersion(Version.DSTU2):
+                    source.CheckDuplicates<DSTU2.Signature>(Value, "value");
+                    Value = source.Get<DSTU2.Signature>();
+                    return true;
+                case "valueHumanName" when source.IsVersion(Version.DSTU2):
+                    source.CheckDuplicates<DSTU2.HumanName>(Value, "value");
+                    Value = source.Get<DSTU2.HumanName>();
+                    return true;
+                case "valueAddress":
+                    source.CheckDuplicates<Address>(Value, "value");
+                    Value = source.Get<Address>();
+                    return true;
+                case "valueContactPoint" when source.IsVersion(Version.DSTU2):
+                    source.CheckDuplicates<DSTU2.ContactPoint>(Value, "value");
+                    Value = source.Get<DSTU2.ContactPoint>();
+                    return true;
+                case "valueTiming" when source.IsVersion(Version.DSTU2):
+                    source.CheckDuplicates<DSTU2.Timing>(Value, "value");
+                    Value = source.Get<DSTU2.Timing>();
+                    return true;
+                case "valueReference":
+                    source.CheckDuplicates<ResourceReference>(Value, "value");
+                    Value = source.Get<ResourceReference>();
+                    return true;
+                case "valueMeta":
+                    source.CheckDuplicates<Meta>(Value, "value");
+                    Value = source.Get<Meta>();
+                    return true;
+                case "valueCanonical" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<Canonical>(Value, "value");
+                    Value = source.Get<Canonical>();
+                    return true;
+                case "valueUrl" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<Url>(Value, "value");
+                    Value = source.Get<Url>();
+                    return true;
+                case "valueUuid" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<Uuid>(Value, "value");
+                    Value = source.Get<Uuid>();
+                    return true;
+                case "valueAge" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Age>(Value, "value");
+                    Value = source.Get<R4.Age>();
+                    return true;
+                case "valueContactPoint" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.ContactPoint>(Value, "value");
+                    Value = source.Get<R4.ContactPoint>();
+                    return true;
+                case "valueCount" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Count>(Value, "value");
+                    Value = source.Get<R4.Count>();
+                    return true;
+                case "valueDistance" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Distance>(Value, "value");
+                    Value = source.Get<R4.Distance>();
+                    return true;
+                case "valueDuration" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Duration>(Value, "value");
+                    Value = source.Get<R4.Duration>();
+                    return true;
+                case "valueHumanName" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.HumanName>(Value, "value");
+                    Value = source.Get<R4.HumanName>();
+                    return true;
+                case "valueMoney" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Money>(Value, "value");
+                    Value = source.Get<R4.Money>();
+                    return true;
+                case "valueSampledData" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.SampledData>(Value, "value");
+                    Value = source.Get<R4.SampledData>();
+                    return true;
+                case "valueSignature" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Signature>(Value, "value");
+                    Value = source.Get<R4.Signature>();
+                    return true;
+                case "valueTiming" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Timing>(Value, "value");
+                    Value = source.Get<R4.Timing>();
+                    return true;
+                case "valueContactDetail" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.ContactDetail>(Value, "value");
+                    Value = source.Get<R4.ContactDetail>();
+                    return true;
+                case "valueContributor" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Contributor>(Value, "value");
+                    Value = source.Get<R4.Contributor>();
+                    return true;
+                case "valueDataRequirement" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.DataRequirement>(Value, "value");
+                    Value = source.Get<R4.DataRequirement>();
+                    return true;
+                case "valueExpression" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<Expression>(Value, "value");
+                    Value = source.Get<Expression>();
+                    return true;
+                case "valueParameterDefinition" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.ParameterDefinition>(Value, "value");
+                    Value = source.Get<R4.ParameterDefinition>();
+                    return true;
+                case "valueRelatedArtifact" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.RelatedArtifact>(Value, "value");
+                    Value = source.Get<R4.RelatedArtifact>();
+                    return true;
+                case "valueTriggerDefinition" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.TriggerDefinition>(Value, "value");
+                    Value = source.Get<R4.TriggerDefinition>();
+                    return true;
+                case "valueUsageContext" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<UsageContext>(Value, "value");
+                    Value = source.Get<UsageContext>();
+                    return true;
+                case "valueDosage" when source.IsVersion(Version.R4):
+                    source.CheckDuplicates<R4.Dosage>(Value, "value");
+                    Value = source.Get<R4.Dosage>();
+                    return true;
+                case "valueAge" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Age>(Value, "value");
+                    Value = source.Get<STU3.Age>();
+                    return true;
+                case "valueContactPoint" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.ContactPoint>(Value, "value");
+                    Value = source.Get<STU3.ContactPoint>();
+                    return true;
+                case "valueCount" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Count>(Value, "value");
+                    Value = source.Get<STU3.Count>();
+                    return true;
+                case "valueDistance" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Distance>(Value, "value");
+                    Value = source.Get<STU3.Distance>();
+                    return true;
+                case "valueDuration" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Duration>(Value, "value");
+                    Value = source.Get<STU3.Duration>();
+                    return true;
+                case "valueHumanName" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.HumanName>(Value, "value");
+                    Value = source.Get<STU3.HumanName>();
+                    return true;
+                case "valueMoney" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Money>(Value, "value");
+                    Value = source.Get<STU3.Money>();
+                    return true;
+                case "valueSampledData" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.SampledData>(Value, "value");
+                    Value = source.Get<STU3.SampledData>();
+                    return true;
+                case "valueSignature" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Signature>(Value, "value");
+                    Value = source.Get<STU3.Signature>();
+                    return true;
+                case "valueTiming" when source.IsVersion(Version.STU3):
+                    source.CheckDuplicates<STU3.Timing>(Value, "value");
+                    Value = source.Get<STU3.Timing>();
+                    return true;
+            }
+            return false;
+        }
+
         internal override bool SetElementFromJson(string jsonPropertyName, ref JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -314,7 +589,7 @@ namespace Hl7.Fhir.Model
             switch (jsonPropertyName)
             {
                 case "url":
-                    Url = source.GetUrl();
+                    Url = source.GetExtensionUrl();
                     return true;
                 case "valueBoolean":
                     source.CheckDuplicates<FhirBoolean>(Value, "value");

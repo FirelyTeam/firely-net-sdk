@@ -100,6 +100,20 @@ namespace Hl7.Fhir.Model
             }
         }
 
+        internal override bool SetElementFromSource(string elementName, ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            if (elementName == "@value")
+            {
+                Value = source.GetCodeValue<T>();
+                return true;
+            }
+            return false;
+        }
+
         public Code() : this(null) {}
 
         public Code(T? value)

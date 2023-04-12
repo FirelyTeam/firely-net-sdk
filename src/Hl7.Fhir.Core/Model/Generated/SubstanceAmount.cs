@@ -97,6 +97,24 @@ namespace Hl7.Fhir.Model
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "lowLimit" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                        LowLimit = source.Get<Hl7.Fhir.Model.Quantity>();
+                        return true;
+                    case "highLimit" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                        HighLimit = source.Get<Hl7.Fhir.Model.Quantity>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -322,6 +340,39 @@ namespace Hl7.Fhir.Model
             sink.Element("amountText", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); AmountTextElement?.Serialize(sink);
             sink.Element("referenceRange", Hl7.Fhir.Model.Version.R4, Hl7.Fhir.Model.Version.R4, false, false); ReferenceRange?.Serialize(sink);
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "amountQuantity" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.CheckDuplicates<Hl7.Fhir.Model.Quantity>(Amount, "amount");
+                    Amount = source.Get<Hl7.Fhir.Model.Quantity>();
+                    return true;
+                case "amountRange" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.CheckDuplicates<Hl7.Fhir.Model.Range>(Amount, "amount");
+                    Amount = source.Get<Hl7.Fhir.Model.Range>();
+                    return true;
+                case "amountString" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirString>(Amount, "amount");
+                    Amount = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "amountType" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    AmountType = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "amountText" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    AmountTextElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "referenceRange" when source.IsVersion(Hl7.Fhir.Model.Version.R4):
+                    ReferenceRange = source.Get<ReferenceRangeComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

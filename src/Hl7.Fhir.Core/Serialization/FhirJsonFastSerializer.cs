@@ -25,8 +25,8 @@ namespace Hl7.Fhir.Serialization
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             if (writer == null) throw new ArgumentNullException(nameof(writer));
 
-            var serializer = new JsonSerializerSink(writer, Settings.Version, summary, elements);
-            instance.Serialize(serializer);
+            var serializerSink = new JsonSerializerSink(writer, Settings.Version, summary, elements);
+            instance.Serialize(serializerSink);
         }
     }
 }

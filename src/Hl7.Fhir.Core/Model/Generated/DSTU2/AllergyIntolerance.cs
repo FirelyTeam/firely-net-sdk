@@ -269,6 +269,42 @@ namespace Hl7.Fhir.Model.DSTU2
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "substance":
+                        Substance = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "certainty":
+                        CertaintyElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCertainty>>();
+                        return true;
+                    case "manifestation":
+                        Manifestation = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "description":
+                        DescriptionElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                    case "onset":
+                        OnsetElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                        return true;
+                    case "severity":
+                        SeverityElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntoleranceSeverity>>();
+                        return true;
+                    case "exposureRoute":
+                        ExposureRoute = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "note":
+                        Note = source.Get<Hl7.Fhir.Model.Annotation>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -880,6 +916,60 @@ namespace Hl7.Fhir.Model.DSTU2
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "onset":
+                    OnsetElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "recordedDate":
+                    RecordedDateElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "recorder":
+                    Recorder = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "patient":
+                    Patient = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "reporter":
+                    Reporter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "substance":
+                    Substance = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceStatus>>();
+                    return true;
+                case "criticality":
+                    CriticalityElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCriticality>>();
+                    return true;
+                case "type":
+                    TypeElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.AllergyIntoleranceType>>();
+                    return true;
+                case "category":
+                    CategoryElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.AllergyIntoleranceCategory>>();
+                    return true;
+                case "lastOccurence":
+                    LastOccurenceElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "note":
+                    Note = source.Get<Hl7.Fhir.Model.Annotation>();
+                    return true;
+                case "reaction":
+                    Reaction = source.GetList<ReactionComponent>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)

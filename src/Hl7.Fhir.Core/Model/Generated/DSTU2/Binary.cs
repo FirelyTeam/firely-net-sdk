@@ -177,6 +177,24 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "contentType":
+                    ContentTypeElement = source.Get<Hl7.Fhir.Model.Code>();
+                    return true;
+                case "content":
+                    ContentElement = source.Get<Hl7.Fhir.Model.Base64Binary>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

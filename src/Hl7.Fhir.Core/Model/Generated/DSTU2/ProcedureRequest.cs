@@ -437,6 +437,79 @@ namespace Hl7.Fhir.Model.DSTU2
             sink.End();
         }
     
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "code":
+                    Code = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "bodySite":
+                    BodySite = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "reasonCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(Reason, "reason");
+                    Reason = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "reasonReference":
+                    source.CheckDuplicates<Hl7.Fhir.Model.ResourceReference>(Reason, "reason");
+                    Reason = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "scheduledDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Scheduled, "scheduled");
+                    Scheduled = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "scheduledPeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Scheduled, "scheduled");
+                    Scheduled = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "scheduledTiming":
+                    source.CheckDuplicates<Hl7.Fhir.Model.DSTU2.Timing>(Scheduled, "scheduled");
+                    Scheduled = source.Get<Hl7.Fhir.Model.DSTU2.Timing>();
+                    return true;
+                case "encounter":
+                    Encounter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "performer":
+                    Performer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.ProcedureRequestStatus>>();
+                    return true;
+                case "notes":
+                    Notes = source.GetList<Hl7.Fhir.Model.Annotation>();
+                    return true;
+                case "asNeededBoolean":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirBoolean>(AsNeeded, "asNeeded");
+                    AsNeeded = source.Get<Hl7.Fhir.Model.FhirBoolean>();
+                    return true;
+                case "asNeededCodeableConcept":
+                    source.CheckDuplicates<Hl7.Fhir.Model.CodeableConcept>(AsNeeded, "asNeeded");
+                    AsNeeded = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "orderedOn":
+                    OrderedOnElement = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "orderer":
+                    Orderer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "priority":
+                    PriorityElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.DSTU2.ProcedureRequestPriority>>();
+                    return true;
+            }
+            return false;
+        }
+    
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
         {
             if (base.SetElementFromJson(jsonPropertyName, ref source))

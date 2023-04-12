@@ -195,6 +195,46 @@ namespace Hl7.Fhir.Model.R4
                 sink.End();
             }
         
+            internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+            {
+                if (base.SetElementFromSource(elementName, source))
+                {
+                    return true;
+                }
+                switch (elementName)
+                {
+                    case "outcome":
+                        Outcome = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "probabilityDecimal":
+                        source.CheckDuplicates<Hl7.Fhir.Model.FhirDecimal>(Probability, "probability");
+                        Probability = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "probabilityRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(Probability, "probability");
+                        Probability = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "qualitativeRisk":
+                        QualitativeRisk = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                        return true;
+                    case "relativeRisk":
+                        RelativeRiskElement = source.Get<Hl7.Fhir.Model.FhirDecimal>();
+                        return true;
+                    case "whenPeriod":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Period>(When, "when");
+                        When = source.Get<Hl7.Fhir.Model.Period>();
+                        return true;
+                    case "whenRange":
+                        source.CheckDuplicates<Hl7.Fhir.Model.Range>(When, "when");
+                        When = source.Get<Hl7.Fhir.Model.Range>();
+                        return true;
+                    case "rationale":
+                        RationaleElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                        return true;
+                }
+                return false;
+            }
+        
             internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
             {
                 if (base.SetElementFromJson(jsonPropertyName, ref source))
@@ -790,6 +830,74 @@ namespace Hl7.Fhir.Model.R4
             }
             sink.End();
             sink.End();
+        }
+    
+        internal override bool SetElementFromSource(string elementName, Serialization.ParserSource source)
+        {
+            if (base.SetElementFromSource(elementName, source))
+            {
+                return true;
+            }
+            switch (elementName)
+            {
+                case "identifier":
+                    Identifier = source.GetList<Hl7.Fhir.Model.Identifier>();
+                    return true;
+                case "basedOn":
+                    BasedOn = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "parent":
+                    Parent = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "status":
+                    StatusElement = source.Get<Hl7.Fhir.Model.Code<Hl7.Fhir.Model.R4.ObservationStatus>>();
+                    return true;
+                case "method":
+                    Method = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "code":
+                    Code = source.Get<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "subject":
+                    Subject = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "encounter":
+                    Encounter = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "occurrenceDateTime":
+                    source.CheckDuplicates<Hl7.Fhir.Model.FhirDateTime>(Occurrence, "occurrence");
+                    Occurrence = source.Get<Hl7.Fhir.Model.FhirDateTime>();
+                    return true;
+                case "occurrencePeriod":
+                    source.CheckDuplicates<Hl7.Fhir.Model.Period>(Occurrence, "occurrence");
+                    Occurrence = source.Get<Hl7.Fhir.Model.Period>();
+                    return true;
+                case "condition":
+                    Condition = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "performer":
+                    Performer = source.Get<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "reasonCode":
+                    ReasonCode = source.GetList<Hl7.Fhir.Model.CodeableConcept>();
+                    return true;
+                case "reasonReference":
+                    ReasonReference = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "basis":
+                    Basis = source.GetList<Hl7.Fhir.Model.ResourceReference>();
+                    return true;
+                case "prediction":
+                    Prediction = source.GetList<PredictionComponent>();
+                    return true;
+                case "mitigation":
+                    MitigationElement = source.Get<Hl7.Fhir.Model.FhirString>();
+                    return true;
+                case "note":
+                    Note = source.GetList<Hl7.Fhir.Model.Annotation>();
+                    return true;
+            }
+            return false;
         }
     
         internal override bool SetElementFromJson(string jsonPropertyName, ref Serialization.JsonSource source)
