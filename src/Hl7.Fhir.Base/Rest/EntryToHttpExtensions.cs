@@ -12,9 +12,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 
 namespace Hl7.Fhir.Rest
 {

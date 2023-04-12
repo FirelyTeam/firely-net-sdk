@@ -182,22 +182,6 @@ namespace Hl7.Fhir.Rest
                         _ => null
                     };
     }
-
-    //internal abstract record ReceivedResponse;
-
-    //internal record ResponseWithNoPayload : ReceivedResponse
-    //{
-    //    public static ResponseWithNoPayload Instance = new();
-    //}
-
-    //internal record ResponseWithFhirPayload(Resource Body) : ReceivedResponse;
-
-    //internal record ResponseWithBinaryPayload(byte[] Body) : ReceivedResponse;
-
-    //internal record ResponseWithNonFhirTextPayload(string Body) : ReceivedResponse;
-
-    //internal record ResponseWithNonFhirDataPayload(byte[] Body) : ReceivedResponse;
-
 }
 
 #nullable restore
