@@ -307,57 +307,22 @@
       <time value="2012-09-10"/>
       <text value="Eve eats one meal a day with her parents"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
-      <goal>
-        <reference value="#g1"/>
-      </goal>
-      <status value="not-started"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-09-10"/>
-      </scheduledPeriod>
-      <description value="Eve will review photos of high and low density foods and share with her parents"/>
-    </plannedActivityDetail>
+	  <!--  Eve will review photos of high and low density foods and share with her parents  -->
+	<plannedActivityReference>
+		<reference value="ServiceRequest/activity-1"/>
+	</plannedActivityReference>
   </activity>
   <activity>
-    <progress>
-      <time value="2012-09-10"/>
-      <text value="Eve will sleep in her bed more often than the couch"/>
-    </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
-      <kind value="CommunicationRequest"/>
-      <goal>
-        <reference value="#g1"/>
-      </goal>
-      <status value="not-started"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-09-10"/>
-      </scheduledPeriod>
-      <description value="Eve will ask her dad to asist her to put the head of her bed on blocks"/>
-    </plannedActivityDetail>
+      <!--  Eve will ask her dad to asist her to put the head of her bed on blocks  -->
+    <plannedActivityReference>
+		<reference value="ServiceRequest/activity-2"/>
+	</plannedActivityReference>
   </activity>
   <activity>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
-      <goal>
-        <reference value="#g2"/>
-      </goal>
-      <status value="in-progress"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-09-10"/>
-      </scheduledPeriod>
-      <description value="Eve will reduce her intake of coffee and chocolate"/>
-    </plannedActivityDetail>
+      <!--  Eve will reduce her intake of coffee and chocolate  -->
+    <plannedActivityReference>
+		<reference value="NutritionOrder/activity-3"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
@@ -368,20 +333,10 @@
       <time value="2012-09-10"/>
       <text value="Eve is still walking the dogs."/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
-      <goal>
-        <reference value="#g3"/>
-      </goal>
-      <status value="in-progress"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-08-27"/>
-      </scheduledPeriod>
-      <description value="Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week"/>
-    </plannedActivityDetail>
+	  <!--  Eve will walk her friend's dog up and down a big hill 15-30 minutes 3 days a week  -->
+	<plannedActivityReference>
+		<reference value="ServiceRequest/activity-4"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
@@ -392,36 +347,16 @@
       <time value="2012-09-10"/>
       <text value="Eve did not walk to her parents the last week, but has plans to start again"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
-      <goal>
-        <reference value="#g3"/>
-      </goal>
-      <status value="in-progress"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-23"/>
-      </scheduledPeriod>
-      <description value="Eve will walk 3 blocks to her parents house twice a week"/>
-    </plannedActivityDetail>
+	  <!--  Eve will walk 3 blocks to her parents house twice a week  -->
+	<plannedActivityReference>
+		<reference value="ServiceRequest/activity-5"/>
+	</plannedActivityReference>
   </activity>
   <activity>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-13"/>
-      </extension>
-      <goal>
-        <reference value="#g4"/>
-      </goal>
-      <status value="in-progress"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-23"/>
-      </scheduledPeriod>
-      <description value="Eve will use a calendar to check off after medications are taken"/>
-    </plannedActivityDetail>
+      <!--  Eve will use a calendar to check off after medications are taken  -->
+    <plannedActivityReference>
+		<reference value="ServiceRequest/activity-6"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
@@ -432,40 +367,20 @@
       <time value="2012-08-27"/>
       <text value="Since her skin is improved Eve has not been using the light treatment as often, maybe once a week.  She would like to increase to 3 times a week again"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-27"/>
-      </extension>
-      <goal>
-        <reference value="#g5"/>
-      </goal>
-      <status value="in-progress"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-23"/>
-      </scheduledPeriod>
-      <description value="Eve will use her lights MWF after her shower for 3 minutes"/>
-    </plannedActivityDetail>
+	  <!--  Eve will use her lights MWF after her shower for 3 minutes  -->
+	<plannedActivityReference>
+		<reference value="ServiceRequest/activity-7"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
       <time value="2012-07-23"/>
       <text value="Eve created a chart as a reminer to take the medications that do not fit in her pill box"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-09-10"/>
-      </extension>
-      <goal>
-        <reference value="#g4"/>
-      </goal>
-      <status value="in-progress"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-10"/>
-      </scheduledPeriod>
-      <description value="Eve will use a calendar of a chart to help her remember when to take her medications"/>
-    </plannedActivityDetail>
+	  <!--  Eve will use a calendar of a chart to help her remember when to take her medications  -->
+    <plannedActivityReference>
+		<reference value="ServiceRequest/activity-8"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
@@ -476,56 +391,26 @@
       <time value="2012-08-13"/>
       <text value="Eve prefers to focus on walking at this time"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-23"/>
-      </extension>
-      <goal>
-        <reference value="#g3"/>
-      </goal>
-      <status value="on-hold"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-23"/>
-      </scheduledPeriod>
-      <description value="Eve will start using stretch bands and one step 2 days a week Mon/Wed 6-7am and maybe Friday afternoon"/>
-    </plannedActivityDetail>
+	  <!--  Eve will start using stretch bands and one step 2 days a week Mon/Wed 6-7am and maybe Friday afternoon  -->
+    <plannedActivityReference>
+		<reference value="ServiceRequest/activity-9"/>
+	</plannedActivityReference>
   </activity>
   <activity>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-07-23"/>
-      </extension>
-      <goal>
-        <reference value="#g4"/>
-      </goal>
-      <status value="completed"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-10"/>
-      </scheduledPeriod>
-      <description value="Eve will match a printed medication worksheet with the medication bottles at home"/>
-    </plannedActivityDetail>
+      <!--  Eve will match a printed medication worksheet with the medication bottles at home  -->
+    <plannedActivityReference>
+		<reference value="ServiceRequest/activity-10"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
       <time value="2012-07-16"/>
       <text value="Eve now has some of her medications set up in pill packs by her pharmacist"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-07-16"/>
-      </extension>
-      <goal>
-        <reference value="#g4"/>
-      </goal>
-      <status value="completed"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-10"/>
-      </scheduledPeriod>
-      <description value="Eve will get a medication box to sort her pills.  She will have one for scheduled medications and one for as needed"/>
-    </plannedActivityDetail>
+	  <!--   Eve will get a medication box to sort her pills.  She will have one for scheduled medications and one for as needed  -->
+	<plannedActivityReference>
+		<reference value="ServiceRequest/activity-11"/>
+	</plannedActivityReference>
   </activity>
   <activity>
     <progress>
@@ -536,20 +421,10 @@
       <time value="2012-08-13"/>
       <text value="hold until &quot;less busy&quot;"/>
     </progress>
-    <plannedActivityDetail>
-      <extension url="http://example.org/fhir/StructureDefinition/RevisionDate">
-        <valueDate value="2012-08-13"/>
-      </extension>
-      <goal>
-        <reference value="#g3"/>
-      </goal>
-      <status value="on-hold"/>
-      <doNotPerform value="false"/>
-      <scheduledPeriod>
-        <start value="2012-07-23"/>
-      </scheduledPeriod>
-      <description value="Eve will open &quot;The Firm&quot; DVD workout package and listen to it"/>
-    </plannedActivityDetail>
+	  <!--  Eve will open execersie DVD workout package and listen to it  -->
+    <plannedActivityReference>
+		<reference value="ServiceRequest/activity-12"/>
+	</plannedActivityReference>
   </activity>
   <note>
     <text value="Patient family is not ready to commit to goal setting at this time.  Goal setting will be addressed in the future"/>

@@ -16,24 +16,24 @@ namespace Hl7.Fhir.Specification.Tests
     {
         internal static StructureDefinition MedicationUsageWithSimpleQuantitySlice => new StructureDefinition()
         {
-            Type = FHIRAllTypes.MedicationUsage.GetLiteral(),
-            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationUsage),
-            Name = "MedicationUsageWithSimpleQuantitySlice",
-            Url = @"http://example.org/fhir/StructureDefinition/MedicationUsageWithSimpleQuantitySlice",
+            Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
+            BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
+            Name = "MedicationStatementWithSimpleQuantitySlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MedicationStatementWithSimpleQuantitySlice",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()
             {
                 Element = new List<ElementDefinition>()
                 {
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
                     {
                         Slicing = new ElementDefinition.SlicingComponent()
                         {
                             Discriminator = ElementDefinition.DiscriminatorComponent.ForTypeSlice().ToList()
                         }
                     },
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
                     {
                         SliceName = "doseSimpleQuantity",
                         Type = new List<ElementDefinition.TypeRefComponent>()
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Tests
                             }
                         }
                     },
-                    new ElementDefinition("MedicationUsage.dosage.dose[x]")
+                    new ElementDefinition("MedicationStatement.dosage.dose[x]")
                     {
                         SliceName = "dosePeriod",
                         Type = new List<ElementDefinition.TypeRefComponent>()

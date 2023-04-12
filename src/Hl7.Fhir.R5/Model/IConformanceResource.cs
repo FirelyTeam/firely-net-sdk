@@ -27,8 +27,6 @@
   
 */
 
-using System;
-
 namespace Hl7.Fhir.Model
 {
     public partial class SearchParameter : IVersionableConformanceResource
@@ -48,15 +46,6 @@ namespace Hl7.Fhir.Model
 
     public partial class ImplementationGuide : IVersionableConformanceResource
     {
-        //I think ImplementationGuide should have a purpose element.
-        [Obsolete("This property is not a part of the official FHIR specification", true)]
-        public Markdown PurposeElement
-        {
-            get { return null; }
-            set { throw new NotImplementedException(); }
-        }
-
-        public string Purpose { get => null; set => throw new NotImplementedException(); }
     }
 
     public partial class CompartmentDefinition : IVersionableConformanceResource

@@ -39,18 +39,20 @@ namespace Hl7.Fhir.Specification.Tests
             var od = source.ListSummaries(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.ListSummaries(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
             var cd = source.ListSummaries(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+#if R5
+            // In specification.zip for R5 are now also ImplementationGuides
+            var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsTrue(ig.Any());
+#else
             var ig = source.ListSummaries(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
-
+#endif
             var cs = source.ListSummaries(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
             var vs = source.ListSummaries(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListSummaries(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
             // [WMR 20181218] R4 OBSOLETE - ExpansionProfile resource no longer exists
             // var ep = source.ListSummaries(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+#if !R5
+            // In specification.zip for R5 there are no NamingSystems anymore.
             var ns = source.ListSummaries(ResourceType.NamingSystem);
-#if R5
-            // Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore. 
-            Assert.IsFalse(ns.Any());
-#else
             Assert.IsTrue(ns.Any());
 #endif
         }
