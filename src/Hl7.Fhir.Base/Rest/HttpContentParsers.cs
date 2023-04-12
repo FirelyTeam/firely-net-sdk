@@ -139,21 +139,9 @@ namespace Hl7.Fhir.Rest
 
             // Depending on whether this is a failure, the server could have set the content-type incorrectly as well,
             // do double check whether we need to take this payload as FHIR data
-            var resource = serialization switch
-            {
-                ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsXml(bodyText) =>
-                            ser.DeserializeFromXml(bodyText),
-                ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsJson(bodyText) =>
-                            ser.DeserializeFromJson(bodyText),
-                (ResourceFormat.Xml or ResourceFormat.Json) when message.IsSuccessStatusCode =>
-                    throw new UnsupportedBodyTypeException(
-                       $"Endpoint said it returned '{contentType}', but the body is not recognized as either xml or json.", contentType, bodyText),
-                ResourceFormat.Unknown when message.IsSuccessStatusCode => throw new UnsupportedBodyTypeException(
-                       $"Endpoint returned a body with contentType '{contentType}', " +
-                       $"while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?",
-                       contentType, bodyText),
-                _ => null
-            };
+            Resource? resource = message.IsSuccessStatusCode ?
+                parseMessageOnSuccess(ser, contentType, serialization, bodyText):
+                parseMessageOnFailure(ser, contentType, serialization, bodyText);
 
             // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
             if (resource is not null && message.GetRequestUri()?.OriginalString is string location)
@@ -166,6 +154,33 @@ namespace Hl7.Fhir.Rest
 
             return new(response, bodyData, bodyText, resource);
         }
+
+        private static Resource? parseMessageOnSuccess(IFhirSerializationEngine ser, string? contentType, ResourceFormat serialization, string? bodyText) =>
+                    serialization switch
+                    {
+                        ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsXml(bodyText) =>
+                                    ser.DeserializeFromXml(bodyText),
+                        ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsJson(bodyText) =>
+                                    ser.DeserializeFromJson(bodyText),
+                        ResourceFormat.Xml or ResourceFormat.Json =>
+                            throw new UnsupportedBodyTypeException(
+                               $"Endpoint said it returned '{contentType}', but the body is not recognized as either xml or json.", contentType, bodyText),
+                        ResourceFormat.Unknown => throw new UnsupportedBodyTypeException(
+                               $"Endpoint returned a body with contentType '{contentType}', " +
+                               $"while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?",
+                               contentType, bodyText),
+                        _ => null
+                    };
+
+        private static Resource? parseMessageOnFailure(IFhirSerializationEngine ser, string? contentType, ResourceFormat serialization, string? bodyText) =>
+                    serialization switch
+                    {
+                        ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsFhirXml(bodyText) =>
+                                    ser.DeserializeFromXml(bodyText),
+                        ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsFhirJson(bodyText) =>
+                                    ser.DeserializeFromJson(bodyText),
+                        _ => null
+                    };
     }
 
     //internal abstract record ReceivedResponse;

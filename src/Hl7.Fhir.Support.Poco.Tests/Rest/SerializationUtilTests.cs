@@ -57,6 +57,7 @@ namespace Hl7.Fhir.Tests.Rest
             yield return new object[] { "crap", false, false };
             yield return new object[] { """crap { "element": true }""", false, false };
             yield return new object[] { """{ "element": "value", "resourceType": "Patient" }""", true, true };
+            yield return new object[] { """{"resourceType": "Parameters",  "parameter": [ { "name": "result", "valueString": "connected"}]  }""", true, true };
             yield return new object[] { "<start><field value='3' /></start>", false, false };
         }
     }

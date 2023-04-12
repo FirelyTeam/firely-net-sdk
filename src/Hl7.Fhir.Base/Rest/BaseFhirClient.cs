@@ -23,6 +23,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using static Hl7.Fhir.Rest.HttpContentParsers;
 
 namespace Hl7.Fhir.Rest
 {
@@ -1057,14 +1058,21 @@ namespace Hl7.Fhir.Rest
 
             using var responseMessage = await Requester.ExecuteAsync(requestMessage, cancellation).ConfigureAwait(false);
 
-            // Note: if the body contains unparsable content, this helper method will throw FhirOperationException, 
-            // DeserializationFailedException or the legacy FormatException (or subclass).
-            var checkVersion = Settings.VerifyFhirVersion ? fhirVersion : null;
-            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource) = await ProcessResponse(responseMessage, expect, _serializationEngine, checkVersion).ConfigureAwait(false);
+            // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
+            // of the server, add a suggestion about this in the (legacy) parsing exception.
+            var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
+            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource) = await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError).ConfigureAwait(false);
+
+            // If the response is an operation outcome, add it to response.outcome.
+            // This is necessary for when a client uses return=OperationOutcome as a prefer header.
+            // See also issue #1681.
+            if (LastBodyAsResource is OperationOutcome oo)
+                LastResult.Outcome = oo;
 
             // If the full representation was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
-            // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the altered resource.
+            // This behavior is only valid for PUT, POST and PATCH requests, where the server may device whether or not to return
+            // the full body of the altered resource.
             var noRealBody = LastBodyAsResource is null || (LastBodyAsResource is OperationOutcome && string.IsNullOrEmpty(LastBodyAsResource.Id));
             var shouldFetchFullRepresentation = noRealBody
                 && isPostOrPutOrPatch(request)
@@ -1072,6 +1080,8 @@ namespace Hl7.Fhir.Rest
                 && LastResult.Location is string fetchLocation
                 && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
 
+            // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
+            // and all state (e.g. Last Result etc) will be overwritten from this point on.
             var execResult = shouldFetchFullRepresentation ?
                 await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
 
@@ -1097,24 +1107,18 @@ namespace Hl7.Fhir.Rest
         }
 
         /// <summary>
-        /// Inspects the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions that the contract of the methods on the FhirClient requires.
+        /// Validates the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions.
         /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
         /// </summary>        
         /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
         /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
         /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
         /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine)"/>
-        internal static async Task<HttpContentParsers.ResponseData> ProcessResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? fhirVersion)
+        internal static async Task<ResponseData> ValidateResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? suggestedVersionOnParseError)
         {
             try
             {
                 var responseData = await responseMessage.ExtractResponseData(engine).ConfigureAwait(false);
-
-                // If the response is an operation outcome, add it to response.outcome.
-                // This is necessary for when a client uses return=OperationOutcome as a prefer header.
-                // See also issue #1681.
-                if (responseData.BodyResource is OperationOutcome oo)
-                    responseData.Response.Outcome = oo;
 
                 // If the operation failed, signal this with a FhirOperationException.
                 if (!responseMessage.IsSuccessStatusCode)
@@ -1149,10 +1153,10 @@ namespace Hl7.Fhir.Rest
                 // so that will be thrown as-is.
                 if (isLegacyException)
                 {
-                    if (fhirVersion is not null)
+                    if (suggestedVersionOnParseError is not null)
                     {
                         throw new StructuralTypeException(legacyException!.Message + Environment.NewLine +
-                                $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
+                                $"Are you connected to a FHIR server with FHIR version {suggestedVersionOnParseError}? " +
                                 "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.");
                     }
                     else

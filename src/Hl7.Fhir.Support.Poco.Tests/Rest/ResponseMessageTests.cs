@@ -30,7 +30,6 @@ namespace Hl7.Fhir.Test
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
         private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
-        private static readonly string TESTVERSION = "3.0.1";
         private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngine.ElementModel(TESTINSPECTOR, new());
         private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngine.Poco(TESTINSPECTOR);
 
@@ -239,7 +238,59 @@ namespace Hl7.Fhir.Test
         {
             yield return new object[] { POCOENGINE };
             yield return new object[] { ELEMENTENGINE };
-        }         
+        }
+
+        [TestMethod]
+        public async Task TurnsNonSuccessIntoFOE()
+        {
+            var response = makeXmlMessage(status: HttpStatusCode.NotFound);
+            await assertException<FhirOperationException>(response, "Operation was unsuccessful because of a client error*");
+        }
+
+        [TestMethod]
+        public async Task TurnsUnexpectedStatusIntoFOE()
+        {
+            var response = makeXmlMessage(status: HttpStatusCode.Accepted);
+            await assertException<FhirOperationException>(response, "Operation concluded successfully, but the return status * was unexpected");
+        }
+
+        [TestMethod]
+        public async Task TurnsUnexpectedBodyTypeIntoFOE()
+        {
+            var response = makeXmlMessage(xml: "this is not xml");
+            await assertException<FhirOperationException>(response, "Operation was unsuccessful, and returned status OK. " +
+                "OperationOutcome:*but the body is not recognized as either xml or json.*");
+
+            response.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
+            await assertException<FhirOperationException>(response, "Operation was unsuccessful, and returned status OK. " +
+                "OperationOutcome:*returned a body with contentType 'text/plain', while a valid FHIR xml/json body type was expected*");
+        }
+
+        [TestMethod]
+        public async Task TurnsNewParsingFailureIntoDFE()
+        {
+            var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
+            await assertException<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, version: "1.0.0");
+        }
+
+        [TestMethod]
+        public async Task TurnsLegacyParsingFailureIntoFE()
+        {
+            var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
+            await assertException<FormatException>(response, "*Cannot locate type information for type 'Unknown'*", engine: ELEMENTENGINE, notmatch: "with FHIR version 1.0.0");
+            await assertException<FormatException>(response, "*Cannot locate type information for type 'Unknown'*" +
+                "Are you connected to a FHIR server with FHIR version 1.0.0*", version: "1.0.0", engine: ELEMENTENGINE);
+
+            response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
+            await assertException<FormatException>(response, "*Encountered unknown element 'activex' at location*", engine: ELEMENTENGINE);
+        }
+
+        private async Task assertException<T>(HttpResponseMessage response, string match, string? version = null, IFhirSerializationEngine? engine = null, string? notmatch = null)
+                where T : Exception
+        {
+            var act = () => BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, version);
+            await act.Should().ThrowAsync<T>().WithMessage(match).Where(m => notmatch == null || !m.Message.Contains(notmatch));
+        }
     }
 }
 
