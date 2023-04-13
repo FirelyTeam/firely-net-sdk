@@ -1,5 +1,3 @@
-#pragma warning disable CS0618 // Type or member is obsolete
-
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Tests.Rest;
@@ -14,7 +12,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class FhirClientReadAsyncTests
     {
-        private static string _endpoint = FhirClientTests.TestEndpoint.OriginalString;
+        private static readonly string ENDPOINT = FhirClientTests.TestEndpoint.OriginalString;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -26,7 +24,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async T.Task Read_UsingResourceIdentity_ResultReturnedHttpClient()
         {
-            using var client = new FhirClient(_endpoint);
+            using var client = new FhirClient(ENDPOINT);
 
             Patient p = await client.ReadAsync<Patient>(ResourceIdentity.Build("Patient", PATIENTID));
             Assert.IsNotNull(p);
@@ -40,7 +38,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async T.Task Read_UsingLocationString_ResultReturnedHttpClient()
         {
-            using var client = new FhirClient(_endpoint);
+            using var client = new FhirClient(ENDPOINT);
             
             Patient p = await client.ReadAsync<Patient>(PATIENTIDEP);
             Assert.IsNotNull(p);
@@ -51,5 +49,3 @@ namespace Hl7.Fhir.Core.AsyncTests
         }
     }
 }
-
-#pragma warning restore CS0618 // Type or member is obsolete

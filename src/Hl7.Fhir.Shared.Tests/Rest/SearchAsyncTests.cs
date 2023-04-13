@@ -13,7 +13,7 @@ namespace Hl7.Fhir.Core.AsyncTests
     [TestClass]
     public class FhirClientSearchAsyncTests
     {
-        private static string _endpoint = TestEndpoint.OriginalString;
+        private static readonly string ENDPOINT = TestEndpoint.OriginalString;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [DataRow("POST")]
         public async Task Search_UsingSearchParams_SearchReturnedHttpClient(string method)
         {
-            using var client = new FhirClient(_endpoint);
+            using var client = new FhirClient(ENDPOINT);
 
             var srch = new SearchParams()
                 .Where("name=Donald")
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async Task SearchMultiple_UsingSearchParams_SearchReturnedHttpClient()
         {
-            var client = new FhirClient(_endpoint);
+            var client = new FhirClient(ENDPOINT);
             var srchParams = new SearchParams()
                 .Where("name=Donald")
                 .LimitTo(10)
@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async Task SearchWithCriteria_SyncContinue_SearchReturnedHttpClient()
         {
-            using var client = new FhirClient(_endpoint);
+            using var client = new FhirClient(ENDPOINT);
            
             var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" });
             await check(client, result1);
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async Task SearchUsingPostWithCriteria_SyncContinue_SearchReturnedHttpClient()
         {
-            using var client = new FhirClient(_endpoint);                  
+            using var client = new FhirClient(ENDPOINT);                  
             var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, pageSize: 5);
             await check(client, result1);
         }
@@ -105,8 +105,8 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async Task SearchWithCriteria_AsyncContinue_SearchReturnedHttpClient()
         {
-            using var client = new FhirClient(_endpoint);          
-            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 1);
+            using var client = new FhirClient(ENDPOINT);          
+            var result1 = await client.SearchAsync<Patient>(new[] { "family=Donald" }, null, 5);
             await check(client, result1);
         }
 
@@ -115,24 +115,9 @@ namespace Hl7.Fhir.Core.AsyncTests
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
         public async Task SearchUsingPostWithCriteria_AsyncContinue_SearchReturnedHttpClient()
         {
-            using var client = new FhirClient(_endpoint);           
+            using var client = new FhirClient(ENDPOINT);           
             var result1 = await client.SearchUsingPostAsync<Patient>(new[] { "family=Donald" }, null, 1);
             await check(client, result1);
-            Assert.IsTrue(result1.Entry.Count >= 1);
-
-            while (result1 != null)
-            {
-                foreach (var e in result1.Entry)
-                {
-                    Patient p = (Patient)e.Resource;
-                    Console.WriteLine(
-                        $"NAME: {p.Name[0].Given.FirstOrDefault()} {p.Name[0].Family.FirstOrDefault()}");
-                }
-                Console.WriteLine("Fetching more results...");
-                result1 = await client.ContinueAsync(result1);
-            }
-
-            Console.WriteLine("Test Completed");
         }
     }
 }
