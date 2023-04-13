@@ -29,6 +29,11 @@ namespace Hl7.Fhir.Tests.Rest
             yield return new object[] { "<start><field value='3' /></start>", true, false };
             yield return new object[] { "  <start>  <field value='3' />  </start>  ", true, false };
             yield return new object[] { "<Patient><field value='3' /></Patient>", true, false };
+            yield return new object[] { """
+                        <Patient>
+                            <field value='3' />
+                        </Patient>
+                        """, true, false };
             yield return new object[] { """<Unknown><active value="true" /></Unknown>""", true, false };            
             yield return new object[] { "<!DOCTYPE html><html lang=en><head /></html>", true, false };
             yield return new object[] { "crap", false, false };
@@ -58,6 +63,12 @@ namespace Hl7.Fhir.Tests.Rest
             yield return new object[] { """crap { "element": true }""", false, false };
             yield return new object[] { """{ "element": "value", "resourceType": "Patient" }""", true, true };
             yield return new object[] { """{"resourceType": "Parameters",  "parameter": [ { "name": "result", "valueString": "connected"}]  }""", true, true };
+            yield return new object[] { """
+                {
+                    "resourceType": "Parameters",  
+                    "parameter": [ { "name": "result", "valueString": "connected"}]  
+                }
+                """, true, true };
             yield return new object[] { "<start><field value='3' /></start>", false, false };
         }
     }

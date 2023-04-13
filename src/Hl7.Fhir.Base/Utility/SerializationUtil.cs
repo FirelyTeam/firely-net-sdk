@@ -36,7 +36,7 @@ namespace Hl7.Fhir.Utility
             new(typeof(SerializationUtil).Assembly, XML_XSD_RESOURCENAME, XMLDSIGCORESCHEMA_XSD_RESOURCENAME, FHIRXHTML_XSD_RESOURCENAME);
 
         private readonly static Regex xml = new Regex("""^\s*<[^>]+>""", RegexOptions.Compiled);
-        private readonly static Regex json = new Regex("""^\s*(\{\s*("[^"]+"\s*:.*)?\})\s*$""", RegexOptions.Compiled);
+        private readonly static Regex json = new Regex("""^\s*(\{\s*("[^"]+"\s*:.*)?\})\s*$""", RegexOptions.Compiled | RegexOptions.Singleline);
 
 
         public static bool ProbeIsXml(string data) => xml.IsMatch(data);
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Utility
         {
             try
             {
-                return XDocument.Load(SerializationUtil.WrapXmlReader(reader, ignoreComments: false),
+                return XDocument.Load(WrapXmlReader(reader, ignoreComments: false),
                             LoadOptions.SetLineInfo);
             }
             catch (XmlException xec)
