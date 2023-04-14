@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using Task = System.Threading.Tasks.Task;
 using static Hl7.Fhir.Tests.Rest.FhirClientTests;
+using FluentAssertions;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async Task InvokeTestPatientGetEverythingHttpClient()
         {
             using var client = new FhirClient(TESTENDPOINT);
-           
+
             var start = new FhirDateTime(2014, 11, 1);
             var end = new FhirDateTime(2015, 1, 1);
             var par = new Parameters().Add("start", start).Add("end", end);
@@ -58,19 +59,19 @@ namespace Hl7.Fhir.Tests.Rest
         public async Task InvokeExpandParameterValueSetHttpClient()
         {
             using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
-           
+
             var vs = await client.ReadAsync<ValueSet>("ValueSet/administrative-gender");
             var vsX = await client.ExpandValueSetAsync(vs);
 
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
-      
+
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Task InvokeLookupCodingHttpClient()
         {
             using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
-            
+
             var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
 
             var expansion = await client.ConceptLookupAsync(coding: coding);
@@ -83,7 +84,7 @@ namespace Hl7.Fhir.Tests.Rest
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async Task InvokeLookupCodeHttpClient()
         {
-            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);                 
+            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
             var expansion = await client.ConceptLookupAsync(code: new Code("male"), system: new FhirUri("http://hl7.org/fhir/administrative-gender"));
 
             //Assert.AreEqual("male", expansion.GetSingleValue<FhirString>("name").Value);  // Returns empty currently on Grahame's server
@@ -95,7 +96,7 @@ namespace Hl7.Fhir.Tests.Rest
         public void InvokeValidateCodeByIdHttpClient()
         {
             using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
-            
+
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var result = client.ValidateCode("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
@@ -107,7 +108,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async Task InvokeValidateCodeByCanonicalHttpClient()
         {
             using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
-           
+
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var result = await client.ValidateCodeAsync(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"),
@@ -120,7 +121,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async Task InvokeValidateCodeWithVSHttpClient()
         {
             using var client = new FhirClient(TerminologyEndpoint);
-            
+
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var vs = await client.ReadAsync<ValueSet>("ValueSet/c80-facilitycodes");
@@ -135,7 +136,7 @@ namespace Hl7.Fhir.Tests.Rest
         public async Task InvokeResourceValidationHttpClient()
         {
             using var client = new FhirClient(TESTENDPOINT);
-           
+
             var pat = await client.ReadAsync<Patient>(PATIENTIDEP);
             var vresult = await client.ValidateResourceAsync(pat, null,
                 new FhirUri("http://hl7.org/fhir/StructureDefinition/Patient"));
@@ -158,6 +159,44 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 
+        [Ignore("FS returns operation not implemented on these tests")]
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Task TestOperationEverythingWithParamsHttpClient()
+        {
+            using FhirClient client = new FhirClient(TestEndpoint);
+            var uri = new Uri(PATIENTIDEP, UriKind.Relative);
 
+            // POST operation $everything without parameters
+            var loc = await client.InstanceOperationAsync(uri, "everything", useGet: false);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 primitive parameter
+            loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Date(2017, 11)), useGet: true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 primitive2token parameter
+            loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Identifier("", "example")), useGet: true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 resource parameter
+            try
+            {
+                loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Patient()), useGet: true);
+                Assert.Fail("An InvalidOperationException was expected here");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
+            }
+
+            // GET operation $everything with 1 complex parameter
+            var act = () => client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Annotation() { Text = new Markdown("test") }), useGet: true);
+            await act.Should().ThrowAsync<InvalidOperationException>();
+
+            // POST operation $everything with 1 parameter
+            loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Date(2017, 10)), useGet: false);
+            Assert.IsNotNull(loc);
+        }                
     }
 }
