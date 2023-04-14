@@ -628,7 +628,11 @@ namespace Hl7.Fhir.Serialization
                 else
                     delayedValidations.Schedule(
                         propertyName.TrimStart('_') + INSTANCE_VALIDATION_KEY_SUFFIX,
-                        () => PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors));
+                        () => {
+                            context.PathStack.EnterElement(propertyName.TrimStart('_'), null, propertyValueMapping.IsPrimitive);
+                            PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
+                            context.PathStack.ExitElement();
+                        });
             }
 
             return targetPrimitive;

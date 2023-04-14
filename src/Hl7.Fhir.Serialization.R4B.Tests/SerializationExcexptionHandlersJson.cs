@@ -43,6 +43,32 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void JsonInvalidEmptyObservation()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Observation"
+                  // ,"id": "pat1"
+                }
+                """;
+
+            var parserSettings = new ParserSettings()
+            {
+                PermissiveParsing = false,
+                ExceptionHandler = (sender, notification) =>
+                {
+                    System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
+                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // intentionally not throwing here
+                }
+            };
+            var parser = new FhirJsonParser(parserSettings);
+            var p = parser.Parse<Observation>(rawData);
+            DebugDump.OutputJson(p);
+        }
+
+        [TestMethod]
         public void JsonInvalidDateValue()
         {
             // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth

@@ -111,10 +111,10 @@ namespace Hl7.Fhir.Serialization.Tests
                     <Patient>
                       <id value="pat1" />
                       <active value="new" />
-                      <gender value="cat" />
                       <name>
                         <text value="demo" />
                       </name>
+                      <gender value="cat" />
                     </Patient>
                   </contained>
                   <subject>
@@ -136,21 +136,23 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
 
-                Assert.AreEqual("Observation.contained[0].Patient.birthDate", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Observation.contained[0].active", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual("XML203", oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation.contained[0].Patient.birthDate", oc.Issue[1].Expression.First());
+                Assert.AreEqual("Observation.contained[0].gender", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
+                Assert.IsTrue(oc.Issue[2].Details.Text.Contains("status"));
 
                 Assert.AreEqual("Observation", oc.Issue[3].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
-                Assert.AreEqual("PVAL107", oc.Issue[3].Details.Coding[0].Code);
+                Assert.AreEqual("PVAL105", oc.Issue[3].Details.Coding[0].Code);
+                Assert.IsTrue(oc.Issue[3].Details.Text.Contains("code"));
 
                 Assert.AreEqual(4, oc.Issue.Count);
             }
@@ -735,11 +737,15 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("PVAL107", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Bundle.entry[2].resource.Patient.birthDate", oc.Issue[2].Expression.First());
+                Assert.AreEqual("Bundle.entry[2].resource.birthDate", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("PVAL107", oc.Issue[2].Details.Coding[0].Code);
 
-                Assert.AreEqual(12, oc.Issue.Count);
+                Assert.AreEqual("Bundle.entry[7].resource.status", oc.Issue[3].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
+                Assert.AreEqual("PVAL116", oc.Issue[3].Details.Coding[0].Code);
+
+                Assert.AreEqual(4, oc.Issue.Count);
             }
         }
     }

@@ -81,9 +81,11 @@ namespace Hl7.Fhir.Serialization
                     // Note that some Value accessors (for Code<T>.Value for example) can throw, but there are
                     // no Cardinality constraints on those, so we don't have to worry about that now.
                     var propValue = propMapping.GetValue(instance);
+                    validationContext.MemberName = propMapping.Name;
 
                     if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
                         errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, validationContext));
+                    validationContext.MemberName = null;
                 }
             }
 

@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Validation
         {
             if (value is null)
                 return (Min == 0) ? ValidationResult.Success :
-                    COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL.AsResult(validationContext, Min);
+                    COVE.MANDATORY_ELEMENT_CANNOT_BE_NULL.AsResult(validationContext, validationContext.MemberName, Min);
 
             var count = 1;
 

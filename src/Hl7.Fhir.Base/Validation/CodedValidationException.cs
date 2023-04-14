@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Validation
         internal static readonly COVE INCORRECT_CARDINALITY_MIN = new(INCORRECT_CARDINALITY_MIN_CODE, "Element has {0} elements, but minium cardinality is {1}.");
         internal static readonly COVE INCORRECT_CARDINALITY_MAX = new(INCORRECT_CARDINALITY_MAX_CODE, "Element has {0} elements, but maximum cardinality is {1}.");
         internal static readonly COVE REPEATING_ELEMENT_CANNOT_CONTAIN_NULL = new(REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, "Repeating elements should not contain a null value.");
-        internal static readonly COVE MANDATORY_ELEMENT_CANNOT_BE_NULL = new(MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, "Element with minimum cardinality {0} cannot be null.");
+        internal static readonly COVE MANDATORY_ELEMENT_CANNOT_BE_NULL = new(MANDATORY_ELEMENT_CANNOT_BE_NULL_CODE, "Element '{0}' with minimum cardinality {1} cannot be null.");
         internal static readonly COVE CODE_LITERAL_INVALID = new(CODE_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for a code.");
         internal static readonly COVE DATE_LITERAL_INVALID = new(DATE_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for a date.");
         internal static readonly COVE DATETIME_LITERAL_INVALID = new(DATETIME_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for a dateTime.");
@@ -114,8 +114,7 @@ namespace Hl7.Fhir.Validation
                 // will return the parent, so we need to add the MemberName.
                 if (context.MemberName is not null)
                 {
-                    path = $"{loc}.{context.MemberName}";
-                    loc = path;
+                    loc = $"{loc}.{context.MemberName}";
                 }
                 location = location is null ? loc : $"{loc}, {location}";
             }
