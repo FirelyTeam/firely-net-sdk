@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ExceptionHandler = (sender, notification) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
                     // intentionally not throwing here
                 }
             };
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ExceptionHandler = (sender, notification) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
                     // intentionally not throwing here
                 }
             };
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ExceptionHandler = (sender, notification) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
                     // intentionally not throwing here
                 }
             };
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ExceptionHandler = (sender, notification) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
                     // intentionally not throwing here
                 }
             };
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ExceptionHandler = (sender, notification) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
                     // intentionally not throwing here
                 }
             };
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 ExceptionHandler = (sender, notification) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"{notification.Severity} {notification.Message}");
-                    System.Diagnostics.Trace.WriteLine($"{notification.Location}");
+                    // System.Diagnostics.Trace.WriteLine($"{notification.Location}");
                     // intentionally not throwing here
                 }
             };

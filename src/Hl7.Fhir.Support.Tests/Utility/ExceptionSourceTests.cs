@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Support.Tests
 
             public void Test(string message, string location)
             {
-                ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(new FormatException(message), location));
+                ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(new FormatException(message)));
             }
         }
 
