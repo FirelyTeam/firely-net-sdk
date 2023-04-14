@@ -19,6 +19,14 @@ namespace Hl7.Fhir.Serialization
         /// and possibly alter the value. Setting this property to <c>null</c> will disable validation completely.
         /// </summary>
         public IDeserializationValidator? Validator { get; init; } = DataAnnotationDeserialzationValidator.Default;
+
+        /// <summary>
+        /// Perform the validation on the deserialized object even if parsing issues occurred
+        /// </summary>
+        /// <remarks>
+        /// This is useful for "strict mode" once pass validators
+        /// </remarks>
+        public bool ValidateOnFailedParse { get; init; } = false;
     }
 }
 

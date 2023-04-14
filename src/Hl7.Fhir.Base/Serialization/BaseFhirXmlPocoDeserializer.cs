@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Serialization
             }
 
 
-            if (Settings.Validator is not null && oldErrors == state.Errors.Count)
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
             {
                 var context = new InstanceDeserializationContext(
                     state.Path,
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Serialization
                 : readSingleValue(propValueMapping!, propMapping, reader, state);
 
 
-            if (Settings.Validator is not null && oldErrors == state.Errors.Count)
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
             {
                 var context = new PropertyDeserializationContext(
                     state.Path, // should this path GetPath or this?
@@ -512,7 +512,7 @@ namespace Hl7.Fhir.Serialization
 
             if (parsedValue != null)
             {
-                if (Settings.Validator is not null && oldErrors == state.Errors.Count)
+                if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
                 {
                     var (lineNumber, position) = reader.GenerateLineInfo();
                     var name = reader.LocalName;

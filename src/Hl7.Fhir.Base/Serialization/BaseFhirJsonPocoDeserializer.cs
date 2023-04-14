@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Serialization
 
             // Only run instance validation when deserialization yielded no errors
             // to avoid spurious error messages.
-            if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && state.Errors.Count == oldErrorCount)
+            if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && (Settings.ValidateOnFailedParse || state.Errors.Count == oldErrorCount))
             {
                 var context = new InstanceDeserializationContext(state.Path, line, pos, mapping);
                 PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Serialization
 
             // Only do validation when no parse errors were encountered, otherwise we'll just
             // produce spurious messages.
-            if (Settings.Validator is not null && oldErrorCount == state.Errors.Count)
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
             {
                 var deserializationContext = new PropertyDeserializationContext(
                     state.Path,
@@ -612,7 +612,7 @@ namespace Hl7.Fhir.Serialization
             // Only do validation on this instance when no parse errors were encountered, otherwise we'll just
             // produce spurious messages. Also, delay validation of this instance until we have processed both
             // the `name` and `_name` property.
-            if (Settings.Validator is not null && oldErrorCount == state.Errors.Count)
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
             {
                 var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping);
                 if (delayedValidations is null)

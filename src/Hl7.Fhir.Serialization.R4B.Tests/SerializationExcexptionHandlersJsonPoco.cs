@@ -65,6 +65,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     }
                 },
                 // Validator = null
+                ValidateOnFailedParse = true
             };
             var ds = new FhirJsonPocoDeserializer(settings);
             return (T)ds.DeserializeResource(json);
@@ -106,6 +107,46 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("PVAL116", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual(1, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
+        public void JsonInvalidEmptyObservation()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Observation"
+                  // ,"id": "pat1"
+                }
+                """;
+
+            try
+            {
+                var p = SerializeResource<Observation>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ToOperationOutcome(ex);
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Observation", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON120", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual("Observation", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("PVAL105", oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual("Observation", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
+
+                Assert.AreEqual(3, oc.Issue.Count);
             }
         }
 
@@ -190,7 +231,7 @@ namespace Hl7.Fhir.Serialization.Tests
             string rawData = """
                 {
                   "resourceType": "Patient",
-                  "id": "pat1",
+                  "id": "inv-prop",
                   "name": [
                     {
                       "family": "Doe"
