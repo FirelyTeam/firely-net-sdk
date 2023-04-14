@@ -1061,7 +1061,12 @@ namespace Hl7.Fhir.Rest
             // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
             // of the server, add a suggestion about this in the (legacy) parsing exception.
             var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
-            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource) = await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError).ConfigureAwait(false);
+            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) = 
+                await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError)
+                .ConfigureAwait(false);
+
+            // If an error occurred while trying to interpret and validate the response, we will bail out now.
+            if (issue is not null) throw issue;
 
             // If the response is an operation outcome, add it to response.outcome.
             // This is necessary for when a client uses return=OperationOutcome as a prefer header.
@@ -1096,12 +1101,12 @@ namespace Hl7.Fhir.Rest
                 OperationOutcome => null,
 
                 // If there's nothing to return, return null. Note that the LastBodyXXXX properties can still contain useful data.
-                null => null,  
+                null => null,
 
                 // Unexpected response type in the body, throw.
                 _ => throw new FhirOperationException(unexpectedBodyType(request.Request), responseMessage.StatusCode)
-            }; 
-            
+            };
+
             static string unexpectedBodyType(Bundle.RequestComponent rc) => $"Operation {rc.Method} on {rc.Url} " +
                     $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
         }
@@ -1116,55 +1121,33 @@ namespace Hl7.Fhir.Rest
         /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine)"/>
         internal static async Task<ResponseData> ValidateResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? suggestedVersionOnParseError)
         {
-            try
-            {
-                var responseData = await responseMessage.ExtractResponseData(engine).ConfigureAwait(false);
+            var responseData = (await responseMessage.ExtractResponseData(engine).ConfigureAwait(false))
+                .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
+                .TranslateLegacyParserException(suggestedVersionOnParseError);
 
-                // If the operation failed, signal this with a FhirOperationException.
-                if (!responseMessage.IsSuccessStatusCode)
-                    throw FhirOperationException.BuildFhirOperationException(responseMessage.StatusCode, responseData.BodyResource, responseData.BodyText);
-
-                // If the operation succeeded, but with an unexpected status code, report failure anyway.
-                if (!expect.Contains(responseMessage.StatusCode))
-                {
-                    throw new FhirOperationException(
-                        $"Operation concluded successfully, but the return status {responseMessage.StatusCode} was unexpected",
-                        responseMessage.StatusCode);
-                }
-
+            // If extracting the data caused an issue, return it immediately
+            if (responseData.Issue is not null)
                 return responseData;
-            }
-            catch (UnsupportedBodyTypeException ex)
-            {
-                OperationOutcome operationOutcome = OperationOutcome.ForException(ex, OperationOutcome.IssueType.Invalid);
-                throw FhirOperationException.BuildFhirOperationException(responseMessage.StatusCode, operationOutcome);
-            }
-            catch (DeserializationFailedException dfe)
-            {
-                // If the serialization engine is the "old" engine, it will have packaged its exception
-                // as an DeserializationFailedException, since that is what the IFhirSerializationEngine demands. However,
-                // if the FhirClient is configured to use the old (original) serializers, we should throw the original FormatException,
-                // for backwards compatibility reasons...
-                var isLegacyException = ElementModelSerializationEngine.TryUnpackElementModelException(dfe, out var legacyException);
 
-                // Here, we augment the original exception with extra text if a parsing failure occurred, and we have not checked
-                // whether we are actually talking to a server using the samen version of FHIR as us. This worked fine with
-                // the ElementModel parsing exceptions, but you cannot do that with the DeserializationFailedException,
-                // so that will be thrown as-is.
-                if (isLegacyException)
+            // Body is ok, but the operation failed, signal this with a FhirOperationException.
+            else if (!responseMessage.IsSuccessStatusCode)
+                return responseData with
                 {
-                    if (suggestedVersionOnParseError is not null)
-                    {
-                        throw new StructuralTypeException(legacyException!.Message + Environment.NewLine +
-                                $"Are you connected to a FHIR server with FHIR version {suggestedVersionOnParseError}? " +
-                                "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.");
-                    }
-                    else
-                        throw legacyException!;
-                }
-                else
-                    throw;
-            }
+                    Issue = FhirOperationException.BuildFhirOperationException(responseMessage.StatusCode, responseData.BodyResource, responseData.BodyText)
+                };
+
+            // Body ok, and operation succeeded, but if the result was unexpected, report failure anyway.
+            else if (!expect.Contains(responseMessage.StatusCode))
+                return responseData with
+                {
+                    Issue = new FhirOperationException(
+                        $"Operation concluded successfully, but the return status {responseMessage.StatusCode} was unexpected",
+                        responseMessage.StatusCode)
+                };
+
+            // We're all good!               
+            else
+                return responseData;
         }
 
         private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>

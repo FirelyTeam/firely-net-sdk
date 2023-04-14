@@ -22,17 +22,18 @@ namespace Hl7.Fhir.Core.AsyncTests
         {
             using var client = new FhirClient(_endpoint, new FhirClientSettings {  RequestBodyCompressionMethod = method });
 
+            var patId = "async-test-patient." + FhirClientTests.FhirReleaseString;
             var pat = new Patient()
             {
                 Name = new List<HumanName>()
                 {
                     new HumanName()
                     {
-                        Given = new List<string>() {"test_given"},
+                        Given = new List<string>() { "test_given" },
                         Family = "test_family",
                     }
                 },
-                Id = "async-test-patient"
+                Id = patId
             };
 
             // Create the patient
@@ -49,7 +50,7 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            var act = () => client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
+            var act = () => client.ReadAsync<Patient>(ResourceIdentity.Build("Patient", patId));
 
             // VERIFY //
             await act.Should().ThrowAsync<FhirOperationException>();

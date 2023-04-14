@@ -9,10 +9,12 @@
  */
 
 using FluentAssertions;
+using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -72,6 +74,9 @@ namespace Hl7.Fhir.Test
         private HttpResponseMessage makeXmlMessage(HttpStatusCode status = HttpStatusCode.OK, string? xml = null) => 
             new(status) { Content = makeXmlContent(xml), RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
 
+        private HttpResponseMessage makeEmptyXmlMessage(HttpStatusCode status = HttpStatusCode.OK) =>
+            new(status) { RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
+
         private const string DEFAULT_JSON = """{"resourceType":"Patient","active":true}""";
 
         private HttpContent makeJsonContent(string? json = null) =>
@@ -122,16 +127,34 @@ namespace Hl7.Fhir.Test
             components.BodyResource.Should().BeNull();
         }
 
-        private async Task check(string status, HttpResponseMessage response, IFhirSerializationEngine engine, ResourceFormat format, bool hasResource=true)
+        private async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
+            bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
         {
             var components = await response.ExtractResponseData(engine);
+            await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern);
+        }
 
-            components.Response.Status.Should().Be(status);
-            components.BodyData.Should().BeEquivalentTo(await response.Content.ReadAsByteArrayAsync());
-            components.BodyText.Should().Be(await response.Content.ReadAsStringAsync());
+        private async Task checkResult(HttpResponseMessage response, HttpContentParsers.ResponseData components,
+            IFhirSerializationEngine engine,
+            bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
+        {           
+            components.Response.Status.Should().Be(((int)response.StatusCode).ToString());
+
+            var expectedData = await response.Content.ReadAsByteArrayAsync();
+            if (expectedData.Length == 0)
+                components.BodyData.Should().BeNull();
+            else
+                components.BodyData.Should().BeEquivalentTo(expectedData);
+
+            var expectedText = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrEmpty(expectedText))
+                components.BodyText.Should().BeNull();
+            else
+                components.BodyText.Should().Be(expectedText);
 
             if (hasResource)
             {
+                var format = ContentType.GetResourceFormatFromContentType(response.Content.GetContentType());
                 components.BodyResource.Should().NotBeNull();
 
                 if(format == ResourceFormat.Xml)
@@ -143,6 +166,15 @@ namespace Hl7.Fhir.Test
             }
             else
                 components.BodyResource.Should().BeNull();
+
+            if (expectedIssue is not null)
+            {
+                components.Issue.Should().BeOfType(expectedIssue);
+                if (messagePattern is not null) components.Issue!.Message.Should().MatchEquivalentOf(messagePattern);
+                if (notMessagePattern is not null) components.Issue!.Message.Should().NotMatchEquivalentOf(notMessagePattern);
+            }
+            else
+                components.Issue.Should().BeNull();
         }
 
         [TestMethod]
@@ -150,7 +182,7 @@ namespace Hl7.Fhir.Test
         public async Task GetResponseWithCorrectXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage();
-            await check("200", response, engine, ResourceFormat.Xml);
+            await check(response, engine, hasResource: true);
         }
 
         [TestMethod]
@@ -158,10 +190,10 @@ namespace Hl7.Fhir.Test
         public async Task HandleSuccessResponseWithIncorrectXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
-            await Assert.ThrowsExceptionAsync<DeserializationFailedException>(() => response.ExtractResponseData(engine));
-
+            await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
+            
             response = makeXmlMessage(xml: """<Patient><activex value="true" /></Patient>""");
-            await Assert.ThrowsExceptionAsync<DeserializationFailedException>(() => response.ExtractResponseData(engine));
+            await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
 
         [TestMethod]
@@ -169,7 +201,7 @@ namespace Hl7.Fhir.Test
         public async Task GetResponseWithCorrectJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage();
-            await check("200", response, engine, ResourceFormat.Json);
+            await check(response, engine, hasResource: true);
         }
 
         [TestMethod]
@@ -177,10 +209,10 @@ namespace Hl7.Fhir.Test
         public async Task HandleSuccessResponseWithIncorrectJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""" );
-            await Assert.ThrowsExceptionAsync<DeserializationFailedException>( () => response.ExtractResponseData(engine));
+            await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
             
             response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
-            await Assert.ThrowsExceptionAsync<DeserializationFailedException>(() => response.ExtractResponseData(engine));
+            await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
 
         [TestMethod]
@@ -188,7 +220,7 @@ namespace Hl7.Fhir.Test
         public async Task HandleSuccessResponseWithXmlButNotXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(HttpStatusCode.Accepted, "this is not xml");
-            await Assert.ThrowsExceptionAsync<UnsupportedBodyTypeException>( () => response.ExtractResponseData(engine) );
+            await check(response, engine, expectedIssue: typeof(UnsupportedBodyTypeException));
         }
 
         [TestMethod]
@@ -196,7 +228,7 @@ namespace Hl7.Fhir.Test
         public async Task HandleSuccessResponseWithJsonButNotJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(HttpStatusCode.Accepted, "this is not json");
-            await Assert.ThrowsExceptionAsync<UnsupportedBodyTypeException>(() => response.ExtractResponseData(engine));
+            await check(response, engine, expectedIssue: typeof(UnsupportedBodyTypeException));
         }
 
         [TestMethod]
@@ -204,7 +236,7 @@ namespace Hl7.Fhir.Test
         public async Task HandleFailureResponseWithXmlButNotXml(IFhirSerializationEngine engine)
         {
             var response = makeXmlMessage(HttpStatusCode.Forbidden, "this is not xml");
-            await check("403", response, engine, ResourceFormat.Xml, false);
+            await check(response, engine);
         }
 
         [TestMethod]
@@ -212,7 +244,7 @@ namespace Hl7.Fhir.Test
         public async Task HandleFailureResponseWithJsonButNotJson(IFhirSerializationEngine engine)
         {
             var response = makeJsonMessage(HttpStatusCode.Forbidden, "this is not json");
-            await check("403", response, engine, ResourceFormat.Json, false);
+            await check(response, engine);
         }
 
         [TestMethod]
@@ -221,8 +253,7 @@ namespace Hl7.Fhir.Test
         {
             var response = makeXmlMessage(xml: "this is not xml or json");
             response.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
-
-            await Assert.ThrowsExceptionAsync<UnsupportedBodyTypeException>(() => response.ExtractResponseData(engine));
+            await check(response, engine, expectedIssue: typeof(UnsupportedBodyTypeException));
         }
 
         [TestMethod]
@@ -231,7 +262,7 @@ namespace Hl7.Fhir.Test
         {
             var response = makeXmlMessage(HttpStatusCode.InternalServerError, "this is not xml or json");
             response.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
-            await check("500", response, engine, ResourceFormat.Unknown, false);
+            await check(response, engine);
         }
 
         public static IEnumerable<object[]> GetEngines()
@@ -243,26 +274,26 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Task TurnsNonSuccessIntoFOE()
         {
-            var response = makeXmlMessage(status: HttpStatusCode.NotFound);
-            await assertException<FhirOperationException>(response, "Operation was unsuccessful because of a client error*");
+            var response = makeEmptyXmlMessage(status: HttpStatusCode.NotFound);
+            await assertIssue<FhirOperationException>(response, "Operation was unsuccessful because of a client error*");
         }
 
         [TestMethod]
         public async Task TurnsUnexpectedStatusIntoFOE()
         {
-            var response = makeXmlMessage(status: HttpStatusCode.Accepted);
-            await assertException<FhirOperationException>(response, "Operation concluded successfully, but the return status * was unexpected");
+            var response = makeEmptyXmlMessage(status: HttpStatusCode.Accepted);
+            await assertIssue<FhirOperationException>(response, "Operation concluded successfully, but the return status * was unexpected");
         }
 
         [TestMethod]
         public async Task TurnsUnexpectedBodyTypeIntoFOE()
         {
             var response = makeXmlMessage(xml: "this is not xml");
-            await assertException<FhirOperationException>(response, "Operation was unsuccessful, and returned status OK. " +
+            await assertIssue<FhirOperationException>(response, "Operation was unsuccessful, and returned status OK. " +
                 "OperationOutcome:*but the body is not recognized as either xml or json.*");
 
             response.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("text/plain");
-            await assertException<FhirOperationException>(response, "Operation was unsuccessful, and returned status OK. " +
+            await assertIssue<FhirOperationException>(response, "Operation was unsuccessful, and returned status OK. " +
                 "OperationOutcome:*returned a body with contentType 'text/plain', while a valid FHIR xml/json body type was expected*");
         }
 
@@ -270,26 +301,27 @@ namespace Hl7.Fhir.Test
         public async Task TurnsNewParsingFailureIntoDFE()
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
-            await assertException<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, version: "1.0.0");
+            await assertIssue<DeserializationFailedException>(response, "*Unknown type 'Unknown' found in root property*", engine: POCOENGINE, version: "1.0.0");
         }
 
         [TestMethod]
         public async Task TurnsLegacyParsingFailureIntoFE()
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
-            await assertException<FormatException>(response, "*Cannot locate type information for type 'Unknown'*", engine: ELEMENTENGINE, notmatch: "with FHIR version 1.0.0");
-            await assertException<FormatException>(response, "*Cannot locate type information for type 'Unknown'*" +
+            await assertIssue<FormatException>(response, "*Cannot locate type information for type 'Unknown'*", engine: ELEMENTENGINE, notmatch: "*with FHIR version 1.0.0*");
+            await assertIssue<StructuralTypeException>(response, "*Cannot locate type information for type 'Unknown'*" +
                 "Are you connected to a FHIR server with FHIR version 1.0.0*", version: "1.0.0", engine: ELEMENTENGINE);
 
             response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
-            await assertException<FormatException>(response, "*Encountered unknown element 'activex' at location*", engine: ELEMENTENGINE);
+            await assertIssue<StructuralTypeException>(response, "*Encountered unknown element 'activex' at location*", engine: ELEMENTENGINE);
         }
 
-        private async Task assertException<T>(HttpResponseMessage response, string match, string? version = null, IFhirSerializationEngine? engine = null, string? notmatch = null)
+        private async Task assertIssue<T>(HttpResponseMessage response, string match, string? version = null,
+            IFhirSerializationEngine? engine = null, string? notmatch = null)
                 where T : Exception
         {
-            var act = () => BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, version);
-            await act.Should().ThrowAsync<T>().WithMessage(match).Where(m => notmatch == null || !m.Message.Contains(notmatch));
+            var result = await BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, version);
+            await checkResult(response, result, engine ?? POCOENGINE, hasResource: false, expectedIssue: typeof(T), messagePattern: match, notMessagePattern: notmatch);
         }
     }
 }

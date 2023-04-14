@@ -136,10 +136,28 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using var client = new FhirClient(TESTENDPOINT);
            
-            var pat = await client.ReadAsync<Patient>("Patient/pat1");
+            var pat = await client.ReadAsync<Patient>(PATIENTIDEP);
             var vresult = await client.ValidateResourceAsync(pat, null,
                 new FhirUri("http://hl7.org/fhir/StructureDefinition/Patient"));
             Assert.IsTrue(vresult.Success);
         }
+
+#if R5
+    [Ignore("No R5 version of FS yet - this operation fails when run on R4.")]
+#endif
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Task TestOperationEverythingHttpClient()
+        {
+            using FhirClient client = new FhirClient(TestEndpoint);
+            // GET operation $everything without parameters
+            var uri = new Uri(PATIENTIDEP, UriKind.Relative);
+
+            var loc = await client.InstanceOperationAsync(uri, "everything", useGet: true);
+            Assert.IsNotNull(loc);
+        }
+
+
+
     }
 }

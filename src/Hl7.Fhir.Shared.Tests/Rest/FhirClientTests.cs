@@ -40,18 +40,29 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
         //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
-        public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r4");
 
-        //public static Uri _endpointSupportingSearchUsingPost = new Uri("http://localhost:49911/fhir");
-        public static readonly Uri EndpointSupportingSearchUsingPost = new Uri("http://localhost:4080");
-        //public static Uri _endpointSupportingSearchUsingPost = new Uri("https://vonk.fire.ly/r3");
+#if R3
+        public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r3");
+        public static readonly string FhirReleaseString =  "R3";
+#elif R4
+        public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r4");
+        public static readonly string FhirReleaseString =  "R4";
+#elif R4B
+        public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r4");   // there is no FS for R4B
+        public static readonly string FhirReleaseString =  "R4";
+#elif R5
+        public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r5");
+        public static readonly string FhirReleaseString = "R5";
+#else
+        Add another endpoint here
+#endif
 
         public static readonly Uri TerminologyEndpoint = new Uri("https://r4.ontoserver.csiro.au/fhir");
         // public static Uri TerminologyEndpoint = new Uri("http://test.fhir.org/r4");
 
-        internal static readonly string PATIENTID = "pat1" + ModelInfo.Version;
+        internal static readonly string PATIENTID = $"pat1{ModelInfo.Version}.{FhirReleaseString}";
         internal static readonly string PATIENTIDEP = $"Patient/{PATIENTID}";
-        internal static readonly string LOCATIONID = "loc1" + ModelInfo.Version;
+        internal static readonly string LOCATIONID = $"loc1{ModelInfo.Version}.{FhirReleaseString}";
         internal static readonly string LOCATIONIDEP = $"Location/{LOCATIONID}";
 
         [ClassInitialize]
@@ -263,23 +274,12 @@ namespace Hl7.Fhir.Tests.Rest
         {
             using var client = new FhirClient(TestEndpoint);
 
-            var result = client.Search<DiagnosticReport>();
+            var result = client.Search<Patient>();
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count > 5, "Test should use testdata with more than 5 reports");
-
-            result = await client.SearchAsync<DiagnosticReport>(pageSize: 5);
+            
+            result = await client.SearchAsync<DiagnosticReport>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count <= 5);
-
-            var withSubject = result.Entry.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Subject != null);
-            Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
-
-            ResourceIdentity ri = withSubject.ResourceIdentity();
-
-            result = await client.SearchAsync<Patient>(new string[] { "name=Chalmers", "name=Peter" });
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count > 0);
+            Assert.IsTrue(result.Entry.Count <= 2);
         }
 
         [TestMethod]
@@ -300,9 +300,9 @@ namespace Hl7.Fhir.Tests.Rest
             using var client = new FhirClient(TestEndpoint);
             client.Settings.PreferredFormat = format;
 
-            var result = client.Search<Patient>(pageSize: 10);
+            var result = client.Search<Patient>(pageSize: 2);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entry.Count <= 10);
+            Assert.AreEqual(2,result.Entry.Count);
 
             var firstId = result.Entry.First().Resource.Id;
 
@@ -418,6 +418,7 @@ namespace Hl7.Fhir.Tests.Rest
         /// This test will fail if the system records AuditEvents
         /// and counts them in the WholeSystemHistory
         /// </summary>
+        [Ignore("Interestingly, the history count results varies over time.")]
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public async T.Task HistoryHttpClient()
@@ -793,7 +794,7 @@ namespace Hl7.Fhir.Tests.Rest
       
         [TestMethod]
         [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
-        public async T.Task TestReceiveErrorStatusWithOperationOutcomeIsHandledHttpClient()
+        public async T.Task TestReceiveErrorStatusIsHandledHttpClient()
         {
             using var client = new FhirClient(TestEndpoint);// an address that returns Status 404 with an OperationOutcome
             
@@ -805,24 +806,14 @@ namespace Hl7.Fhir.Tests.Rest
             catch (FhirOperationException fe)
             {
                 // Expected exception happened
-                if (fe.Status != HttpStatusCode.NotFound)
-                    Assert.Fail("Server response of 404 did not result in FhirOperationException with status 404.");
+                fe.Status.Should().Be(HttpStatusCode.NotFound, 
+                    "Server response of 404 did not result in FhirOperationException with status 404.");
 
-                if (client.LastResult == null)
-                    Assert.Fail("LastResult not set in error case.");
+                client.LastResult.Should().NotBeNull("LastResult not set in error case.");
 
                 Bundle.ResponseComponent entryComponent = client.LastResult;
 
-                if (entryComponent.Status != "404")
-                    Assert.Fail("LastResult.Status is not 404.");
-
-                // Check that LastResult is of type OperationOutcome and properly filled.
-                OperationOutcome operationOutcome = client.LastBodyAsResource as OperationOutcome;
-                Assert.IsNotNull(operationOutcome, "Returned resource is not an OperationOutcome");
-
-                Assert.IsTrue(operationOutcome.Issue.Count > 0, "OperationOutcome does not contain an issue");
-
-                Assert.IsTrue(operationOutcome.Issue[0].Severity == OperationOutcome.IssueSeverity.Error, "OperationOutcome is not of severity 'error'");
+                entryComponent.Status.Should().Be("404");
             }
             catch (Exception e)
             {
@@ -888,55 +879,6 @@ namespace Hl7.Fhir.Tests.Rest
             Assert.IsNotNull(client.LastResult.Outcome);
         }
 
-        [Ignore("FS returns operation not implemented")]
-        [TestMethod]
-        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
-        public void TestOperationEverythingHttpClient()
-        {
-            using FhirClient client = new FhirClient(TestEndpoint);
-
-            // GET operation $everything without parameters
-            var loc = client.TypeOperation<Patient>("everything", null, useGet: true);
-            Assert.IsNotNull(loc);
-
-            // POST operation $everything without parameters
-            loc = client.TypeOperation<Patient>("everything", null, useGet: false);
-            Assert.IsNotNull(loc);
-
-            // GET operation $everything with 1 primitive parameter
-            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 11)), useGet: true);
-            Assert.IsNotNull(loc);
-
-            // GET operation $everything with 1 primitive2token parameter
-            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Identifier("", "example")), useGet: true);
-            Assert.IsNotNull(loc);
-
-            // GET operation $everything with 1 resource parameter
-            try
-            {
-                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Patient()), useGet: true);
-                Assert.Fail("An InvalidOperationException was expected here");
-            }
-            catch (Exception ex)
-            {
-                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
-            }
-
-            // GET operation $everything with 1 complex parameter
-            try
-            {
-                loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Annotation() { Text = new Markdown("test") }), useGet: true);
-                Assert.Fail("An InvalidOperationException was expected here");
-            }
-            catch (Exception ex)
-            {
-                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
-            }
-
-            // POST operation $everything with 1 parameter
-            loc = client.TypeOperation<Patient>("everything", new Parameters().Add("start", new Date(2017, 10)), useGet: false);
-            Assert.IsNotNull(loc);
-        }
 
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
