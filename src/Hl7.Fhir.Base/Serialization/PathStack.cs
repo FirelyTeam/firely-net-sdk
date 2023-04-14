@@ -21,10 +21,12 @@ namespace Hl7.Fhir.Serialization
     {
         private const char RESOURCEPREFIX = '資';
         private string _path = string.Empty;
-        private string _fhirpath = string.Empty;
 
         private readonly Stack<int> _tops = new();
-        private readonly Stack<int> _tops2 = new();
+
+        // Each entry is a component of the full path (built up as it navigates through - so is the value passed in from the model not a new string
+        private readonly Stack<string> _paths = new();
+        // the index of the specific path in the stack (where a property is indexed)
         private readonly Stack<int> _indexer = new();
 
         public void EnterResource(string name)
@@ -32,8 +34,8 @@ namespace Hl7.Fhir.Serialization
             _tops.Push(_path.Length);
             _path += RESOURCEPREFIX + name;
 
-            _tops2.Push(_fhirpath.Length);
-            _fhirpath += RESOURCEPREFIX + name;
+            if (!_paths.Any())
+                _paths.Push(name);
         }
 
         public void ExitResource()
@@ -51,9 +53,10 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 _path = _path.Substring(0, top);
-                var top2 = _tops2.Pop();
-                _fhirpath = _fhirpath.Substring(0, top2);
             }
+
+            if (_paths.Count() == 1)
+                _paths.Pop();
         }
 
         public void EnterElement(string name, int? index, bool isPrimitive)
@@ -64,11 +67,14 @@ namespace Hl7.Fhir.Serialization
             _path += empty ? name : $".{name}";
             if (!isPrimitive)
             {
-                _tops2.Push(_fhirpath.Length);
                 if (index.HasValue)
-                    _fhirpath += empty ? name : $".{name}[{index}]";
+                    _paths.Push($"{name}[{index}]");
                 else
-                    _fhirpath += empty ? name : $".{name}";
+                    _paths.Push(name);
+            }
+            else
+            {
+                _paths.Push(String.Empty);
             }
         }
 
@@ -88,20 +94,21 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 _indexer.Pop();
-                if (_tops2.Count == _tops.Count + 1) // primitives don't add
-                {
-                    var top2 = _tops2.Pop();
-                    _fhirpath = _fhirpath.Substring(0, top2);
-                }
                 _path = _path.Substring(0, top);
             }
+
+            _paths.Pop();
         }
 
         public void IncrementIndex()
         {
+            var prevVal = _paths.Pop();
+            var name = prevVal.Substring(0, prevVal.IndexOf('['));
+
             var val = _indexer.Pop()+1;
             _indexer.Push(val);
-            _fhirpath = _fhirpath.Substring(0, _fhirpath.LastIndexOf('[') + 1) + val + "]";
+
+            _paths.Push($"{name}[{val}]");
         }
 
         /// <summary>
@@ -120,10 +127,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         public string GetInstancePath()
         {
-            if (_tops.Count == 0) return "$this";
-
-            var index = _fhirpath.LastIndexOf(RESOURCEPREFIX);
-            return index != -1 ? _fhirpath.Substring(index + 1) : _fhirpath;
+            return String.Join(".", _paths.Reverse().Where(v => !string.IsNullOrEmpty(v)));
         }
     }
 }
