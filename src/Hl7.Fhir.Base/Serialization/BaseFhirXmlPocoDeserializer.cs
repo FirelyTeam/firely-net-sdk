@@ -5,6 +5,8 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Xml;
 using ERR = Hl7.Fhir.Serialization.FhirXmlException;
@@ -138,6 +140,7 @@ namespace Hl7.Fhir.Serialization
                 try
                 {
                     state.Path.EnterResource(resourceMapping.Name);
+                    int nErrorCount = state.Errors.Count;
                     deserializeElementInto(newResource, resourceMapping, reader, state);
 
                     if (!resourceMapping.IsResource)
@@ -146,7 +149,14 @@ namespace Hl7.Fhir.Serialization
                         return null;
                     }
                     else
+                    {
+                        if (state.Errors.Count > nErrorCount)
+                        {
+                            List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
+                            ((Resource)newResource).SetAnnotation(resourceErrs);
+                        }
                         return (Resource)newResource;
+                    }
                 }
                 finally
                 {

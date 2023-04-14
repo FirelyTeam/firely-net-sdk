@@ -171,6 +171,7 @@ namespace Hl7.Fhir.Serialization
                 try
                 {
                     state.Path.EnterResource(resourceMapping.Name);
+                    int nErrorCount = state.Errors.Count;
                     deserializeObjectInto(newResource, resourceMapping, ref reader, DeserializedObjectKind.Resource, state, stayOnLastToken);
 
                     if (!resourceMapping.IsResource)
@@ -179,7 +180,14 @@ namespace Hl7.Fhir.Serialization
                         return null;
                     }
                     else
+                    {
+                        if (state.Errors.Count > nErrorCount)
+                        {
+                            List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
+                            ((Resource)newResource).SetAnnotation(resourceErrs);
+                        }
                         return (Resource)newResource;
+                    }
                 }
                 finally
                 {
