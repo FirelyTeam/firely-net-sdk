@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
                 .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
                 .SetNarrativeValidationKind(NarrativeValidation)
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                .SetLocation(context.Path);
+                .SetLocation(context.PathStack);
 
             reportedErrors = runAttributeValidation(instance, context.ElementMapping.ValidationAttributes, validationContext);
         }
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
                 .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
                 .SetNarrativeValidationKind(NarrativeValidation)
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                .SetLocation(context.Path);
+                .SetLocation(context.PathStack);
 
             if (instance is null)
             {

@@ -20,23 +20,27 @@ namespace Hl7.Fhir.Serialization
     public readonly struct PropertyDeserializationContext
     {
         internal PropertyDeserializationContext(
-            string path,
+            PathStack path,
             string propertyName,
             long lineNumber,
             long linePosition,
             PropertyMapping propMapping)
         {
-            Path = path;
+            _path = path;
             PropertyName = propertyName;
             LineNumber = lineNumber;
             LinePosition = linePosition;
             ElementMapping = propMapping;
         }
 
+        private readonly PathStack _path;
+
+        internal PathStack PathStack { get { return _path; } }
+
         /// <summary>
         /// The dotted FhirPath path leading to this element from the root.
         /// </summary>
-        public string Path { get; }
+        public string Path { get { return _path.GetInstancePath(); } }
 
         /// <summary>
         /// The property name for which an instance is currently being deserialized.
@@ -66,21 +70,25 @@ namespace Hl7.Fhir.Serialization
     public readonly struct InstanceDeserializationContext
     {
         internal InstanceDeserializationContext(
-            string path,
+            PathStack path,
             long lineNumber,
             long linePosition,
             ClassMapping instanceMapping)
         {
-            Path = path;
+            _path = path;
             LineNumber = lineNumber;
             LinePosition = linePosition;
             InstanceMapping = instanceMapping;
         }
 
+        private readonly PathStack _path;
+
+        internal PathStack PathStack { get { return _path; } }
+
         /// <summary>
         /// The dotted FhirPath path leading to this element from the root.
         /// </summary>
-        public string Path { get; }
+        public string Path { get { return _path.GetInstancePath(); } }
 
         /// <summary>
         /// The approximate line number in the source data that is being deserialized.

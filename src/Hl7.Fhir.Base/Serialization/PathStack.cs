@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
-        /// Return the path. Note: in contained resources, this is just the path within the contained resource.
+        /// Return the definition path (has no indexes). Note: in contained resources, this is just the path within the contained resource.
         /// </summary>
         public string GetPath()
         {
@@ -116,9 +116,9 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>
-        /// Return the path. Note: in contained resources, this is just the path within the contained resource.
+        /// Return the fhirpath that includes the indexes. Note: in contained resources, this is just the path within the contained resource.
         /// </summary>
-        public string GetIndexedPath()
+        public string GetInstancePath()
         {
             if (_tops.Count == 0) return "$this";
 
