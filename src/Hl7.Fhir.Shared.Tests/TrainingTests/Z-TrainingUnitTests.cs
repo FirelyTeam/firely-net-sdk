@@ -135,7 +135,7 @@ namespace FHIR.Server.Tests
                 {
                     Expression = expression,
                     Key = key,
-                    Severity = severity == "Error" ? ConstraintSeverity.Error : ConstraintSeverity.Warning,
+                    Severity = severity == "Error" ? Hl7.Fhir.Model.ConstraintSeverity.Error : Hl7.Fhir.Model.ConstraintSeverity.Warning,
                     Human = human,
                 };
             }

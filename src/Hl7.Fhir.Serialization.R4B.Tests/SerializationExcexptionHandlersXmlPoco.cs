@@ -318,8 +318,8 @@ namespace Hl7.Fhir.Serialization.Tests
                         <family value="Doe"/>
                     </name>
                     <name>
-                        <family xmlns="http://example.org/external-content" value="Doe2"/>
                         <family value="Doe2"/>
+                        <family xmlns="http://example.org/external-content" value="Doe3"/>
                         <turkey value2="rubbish prop"/>
                     </name>
                     <chicken value="rubbish prop"/>
@@ -340,6 +340,8 @@ namespace Hl7.Fhir.Serialization.Tests
                 OperationOutcome oc = ToOperationOutcome(ex);
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputXml(ex.PartialResult);
+
+                Assert.AreEqual("Doe2", (ex.PartialResult as Patient).Name[1].Family);
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);

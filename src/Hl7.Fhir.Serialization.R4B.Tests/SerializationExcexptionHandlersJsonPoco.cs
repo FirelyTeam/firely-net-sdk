@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputJson(ex.PartialResult);
 
                 Assert.AreEqual("Observation", oc.Issue[0].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
                 Assert.AreEqual("JSON120", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Observation", oc.Issue[1].Expression.First());

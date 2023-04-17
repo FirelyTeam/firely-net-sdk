@@ -21,12 +21,16 @@ namespace Hl7.Fhir.Utility
     /// for this subclass, providing a list of codes used by that module.</remarks>
     public class CodedWithLocationException : CodedException
     {
-        public CodedWithLocationException(string errorCode, string message) : base(errorCode, message)
+        public CodedWithLocationException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(errorCode, message)
         {
+            IssueSeverity = issueSeverity;
+            IssueType = issueType;
         }
 
-        public CodedWithLocationException(string errorCode, string message, Exception? innerException) : base(errorCode, message, innerException)
+        public CodedWithLocationException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException) : base(errorCode, message, innerException)
         {
+            IssueSeverity = issueSeverity;
+            IssueType = issueType;
         }
 
         /// <summary>
