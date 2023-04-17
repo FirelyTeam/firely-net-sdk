@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
 #if R5
-    [Ignore("No R5 version of FS yet - this operation fails when run on R4.")]
+    [Ignore("No R5 version of FS yet - this operation fails when run on R5.")]
 #endif
         [TestMethod]
         [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
