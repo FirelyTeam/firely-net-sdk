@@ -34,6 +34,7 @@ namespace Hl7.Fhir.Serialization
         public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
         public const string ENCOUNTERED_DTP_REFERENCES_CODE = "XML119";
         public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
+        public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";
 
         public const string INCORRECT_BASE64_DATA_CODE = "XML202";
         public const string VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE = "XML203";
@@ -62,11 +63,12 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string locationPath, string elementName) => Initialize(reader, locationPath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Element '{elementName}' has a contained resource and therefore should not have attributes.", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException UNALLOWED_NODE_TYPE(XmlReader reader, string locationPath, string s0) => Initialize(reader, locationPath, UNALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE(XmlReader reader, string locationPath, string localName, string elementName, string namespaceURI) => Initialize(reader, locationPath, INCORRECT_ATTRIBUTE_NAMESPACE_CODE, $"The attribute '{localName}' in element '{elementName}' uses the namespace '{namespaceURI}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
-        internal static FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE(XmlReader reader, string locationPath) => Initialize(reader, locationPath, ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content", OO_Sev.Error, OO_Typ.Structure);
+        internal static FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE(XmlReader reader, string locationPath) => Initialize(reader, locationPath, ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content", OO_Sev.Warning, OO_Typ.Structure);
         internal static FhirXmlException SCHEMALOCATION_DISALLOWED(XmlReader reader, string locationPath) => Initialize(reader, locationPath, SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string locationPath, string openElementName) => Initialize(reader, locationPath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException ENCOUNTERED_DTD_REFERENCES(XmlReader reader, string locationPath) => Initialize(reader, locationPath, ENCOUNTERED_DTP_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string locationPath, string elementName) => Initialize(reader, locationPath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Structure);
+        internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string locationPath, string elementName) => Initialize(reader, locationPath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
 
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(string locationPath, int lineNumber, int position, string? locationMessage, string? localName)
         {

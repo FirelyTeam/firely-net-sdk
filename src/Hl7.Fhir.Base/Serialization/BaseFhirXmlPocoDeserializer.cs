@@ -338,6 +338,10 @@ namespace Hl7.Fhir.Serialization
                 ? createOrExpandList(target, incorrectOrder, propValueMapping!, propMapping, reader, state)
                 : readSingleValue(propValueMapping!, propMapping, reader, state);
 
+            if (!propMapping.IsCollection && propMapping.GetValue(target) != null)
+            {
+                state.Errors.Add(ERR.INVALID_DUPLICATE_PROPERTY(reader, state.Path.GetInstancePath(), propMapping.Name));
+            }
 
             if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrors == state.Errors.Count))
             {

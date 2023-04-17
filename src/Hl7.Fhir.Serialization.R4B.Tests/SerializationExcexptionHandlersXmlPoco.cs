@@ -101,6 +101,51 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void XMLInvalidMultipleSinglePropValues()
+        {
+            string rawData = """
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="pat1"/>
+                    <name>
+                        <family value="Doe"/>
+                        <family value="Doe2"/>
+                    </name>
+                    <birthDate value="1970"/>
+                    <contact>
+                        <name>
+                            <text value="brian"/>
+                        </name>
+                        <gender value="cat"/>
+                    </contact>
+                </Patient>
+                """;
+
+            try
+            {
+                var p = SerializeResource<Patient>(rawData);
+                DebugDump.OutputXml(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ToOperationOutcome(ex);
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputXml(ex.PartialResult);
+
+                Assert.AreEqual("Patient.name[0].family", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
+                Assert.AreEqual("XML121", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.contact[0].gender", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual(2, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
         public void XmlInvalidPatientContainedInObservation()
         {
             // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
@@ -168,6 +213,8 @@ namespace Hl7.Fhir.Serialization.Tests
                     <id value="pat1"/>
                     <name>
                         <family value="Doe"/>
+                        <given value="Br"/>
+                        <given value="Ri"/>
                     </name>
                     <birthDate value="1 Jan 1970"/>
                 </Patient>
