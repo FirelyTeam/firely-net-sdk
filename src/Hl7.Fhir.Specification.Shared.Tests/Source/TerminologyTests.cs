@@ -42,7 +42,13 @@ namespace Hl7.Fhir.Specification.Tests
 
             Assert.True(issueTypeVs.CodeInExpansion("security", "http://hl7.org/fhir/issue-type"));
             Assert.True(issueTypeVs.CodeInExpansion("expired", "http://hl7.org/fhir/issue-type"));
+#if R5
+            // In R5 version 5.0.0 2 extra issuetypes are added
+            Assert.Equal(33, issueTypeVs.Expansion.Contains.CountConcepts());
+#else
             Assert.Equal(31, issueTypeVs.Expansion.Contains.CountConcepts());
+#endif
+
             Assert.Equal(issueTypeVs.Expansion.Contains.CountConcepts(), issueTypeVs.Expansion.Total);
 
             var trans = issueTypeVs.FindInExpansion("transient", "http://hl7.org/fhir/issue-type");
@@ -53,7 +59,12 @@ namespace Hl7.Fhir.Specification.Tests
             issueTypeVs.Version = "3.14";
             await expander.ExpandAsync(issueTypeVs);
             Assert.NotEqual(id, issueTypeVs.Expansion.Identifier);
+#if R5
+            // In R5 version 5.0.0 2 extra issuetypes are added
+            Assert.Equal(33, issueTypeVs.Expansion.Total);
+#else
             Assert.Equal(31, issueTypeVs.Expansion.Total);
+#endif
 
             //var versionParam = issueTypeVs.Expansion.Parameter.Single(c => c.Name == "version");
             //Assert.Equal("http://hl7.org/fhir/ValueSet/issue-type?version=3.14", ((FhirUri)versionParam.Value).Value);

@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestBuild()
         {
-            var p = new Patient();
+            var p = new TestPatient();
             var b = new TransactionBuilder("http://myserver.org/fhir")
                         .Create(p)
                         .ResourceHistory("Patient", "7")
@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Test
             tx = new TransactionBuilder("http://myserver.org/fhir").ServerOperation("$everything", null);
             Assert.AreEqual(InteractionType.Operation, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
-            var p = new Patient();
+            var p = new TestPatient();
             tx = new TransactionBuilder("http://myserver.org/fhir").Create(p);
             Assert.AreEqual(InteractionType.Create, tx.ToBundle().Entry[0].Annotation<InteractionType>());
 
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestConditionalCreate()
         {
-            var p = new Patient();
+            var p = new TestPatient();
             var tx = new TransactionBuilder("http://myserver.org/fhir")
                         .Create(p, new SearchParams().Where("name=foobar"));
             var b = tx.ToBundle();
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestConditionalUpdate()
         {
-            var p = new Patient();
+            var p = new TestPatient();
             var tx = new TransactionBuilder("http://myserver.org/fhir")
                         .Update(new SearchParams().Where("name=foobar"), p, versionId: "314");
             var b = tx.ToBundle();
@@ -105,27 +105,18 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public void TestTransactionWithAbsoluteUri()
         {
-            var observation = new Observation
-            {
-                Status = ObservationStatus.Final,
-                Code = new CodeableConcept("http://loinc.org", "29463-7", "Body weight"),
-                Value = new Quantity(74, "kg")
-            };
-
+            var patient = new TestPatient();
             var endpoint = "http://fhirtest.uhn.ca/baseDstu2";
-
-            var client = new FhirClient(endpoint);
-            client.Settings.PreferredFormat = ResourceFormat.Json;
-            
-            var transaction = new TransactionBuilder(client.Endpoint)
-                .Create(observation)
+           
+            var transaction = new TransactionBuilder(endpoint)
+                .Create(patient)
                 .Get("Patient/1");
             var bundle = transaction.ToBundle();
             bundle.Type = Bundle.BundleType.Transaction;
 
             Assert.AreEqual(2, bundle.Entry.Count);
             Assert.IsFalse(bundle.Entry[0].Request.Url.StartsWith(endpoint), "Entries in the transaction bundle cannot contain absolute url.");
-            Assert.AreEqual(nameof(Observation), bundle.Entry[0].Request.Url, "Entry must be a relative url");
+            Assert.AreEqual("Patient", bundle.Entry[0].Request.Url, "Entry must be a relative url");
         }
     }
 }

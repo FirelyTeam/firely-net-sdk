@@ -1,5 +1,13 @@
 ﻿#nullable enable
 
+/* 
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
@@ -11,7 +19,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,7 +27,7 @@ namespace Hl7.Fhir.Rest
     public partial class BaseFhirClient : IDisposable
     {
         private readonly ModelInspector _inspector;
-        //private readonly IFhirSerializationEngine _serializationEngine;
+        private readonly IFhirSerializationEngine _serializationEngine;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -41,7 +48,7 @@ namespace Hl7.Fhir.Rest
             _inspector = inspector;
             Settings = settings ?? new FhirClientSettings();
             Endpoint = getValidatedEndpoint(endpoint);
-            //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, Settings, messageHandler ?? makeDefaultHandler(), messageHandler == null);
             Requester = requester;
@@ -69,7 +76,7 @@ namespace Hl7.Fhir.Rest
             _inspector = inspector;
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            //_serializationEngine = settings?.SerializationEngine ?? getDefaultElementModelSerializers();
+            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, Settings, httpClient);
             Requester = requester;
@@ -94,12 +101,6 @@ namespace Hl7.Fhir.Rest
             {
                 AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
             };
-
-        //internal static IFhirSerializationEngine GetDefaultElementModelSerializers(ModelInspector inspector, ParserSettings? settings = null)
-        //    => new FhirClientElementModelSerializationEngine(inspector, () => settings);
-
-        //private IFhirSerializationEngine getDefaultElementModelSerializers()
-        //    => new FhirClientElementModelSerializationEngine(_inspector, () => Settings.ParserSettings);
 
         internal HttpClientRequester Requester { get; init; }
 
@@ -1035,9 +1036,8 @@ namespace Hl7.Fhir.Rest
             await verifyServerVersion(cancellation);
             
             var request = tx.Entry[0];
-            var entryRequest = await request.ToEntryRequestAsync(Settings, _inspector, fhirVersion).ConfigureAwait(false);
 
-            EntryResponse entryResponse = await Requester.ExecuteAsync(entryRequest, cancellation).ConfigureAwait(false);
+            EntryResponse entryResponse = await Requester.ExecuteAsync(request, _serializationEngine, fhirVersion, cancellation).ConfigureAwait(false);
             TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
 
             try
@@ -1110,8 +1110,8 @@ namespace Hl7.Fhir.Rest
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
             // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
             var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
-            if (noRealBody && isPostOrPut(request)
-                && Settings.PreferredReturn == Prefer.ReturnRepresentation && response.Response.Location != null
+            if (noRealBody && BaseFhirClient.isPostOrPut(request)
+                && Settings.ReturnPreference == ReturnPreference.Representation && response.Response.Location != null
                 && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
             {
                 result = await GetAsync(response.Response.Location).ConfigureAwait(false);
@@ -1139,7 +1139,7 @@ namespace Hl7.Fhir.Rest
                 return result as TResource;
         }
 
-        private bool isPostOrPut(Bundle.EntryComponent interaction)
+        private static bool isPostOrPut(Bundle.EntryComponent interaction)
         {
             var method = interaction.Request.Method;
             return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
@@ -1163,10 +1163,10 @@ namespace Hl7.Fhir.Rest
                 Settings.ParserSettings = new Serialization.ParserSettings() { AllowUnrecognizedEnums = true };
                 serverVersion = await getFhirVersionOfServer(ct);
             }
-            catch (FormatException)
+            catch (FormatException fe)
             {
                 // Mmmm...cannot even read the body. Probably not so good.
-                throw Error.NotSupported("Cannot read the conformance statement of the server to verify FHIR version compatibility");
+                throw Error.NotSupported($"Cannot read the conformance statement of the server to verify FHIR version compatibility: {fe.Message}");
             }
             finally
             {

@@ -194,12 +194,8 @@ namespace Hl7.Fhir.Introspection
         /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
         /// on this class.
         /// </summary>
-        public ValidationAttribute[] ValidationAttributes { get; private set; } =
-#if NET452
-            new ValidationAttribute[0];
-#else
-            Array.Empty<ValidationAttribute>();
-#endif
+        public ValidationAttribute[] ValidationAttributes { get; private set; } = Array.Empty<ValidationAttribute>();
+
 
         private PropertyMappingCollection? _mappings;
         private Func<PropertyMappingCollection> _mappingInitializer;

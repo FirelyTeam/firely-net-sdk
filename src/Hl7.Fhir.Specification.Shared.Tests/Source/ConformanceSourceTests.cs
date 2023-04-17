@@ -137,21 +137,32 @@ namespace Hl7.Fhir.Specification.Tests
         public void ListCanonicalUris()
         {
             var sd = source.ListResourceUris(ResourceType.StructureDefinition); Assert.IsTrue(sd.Any());
+#if R5
+            // In specification.zip for R5 are now also StructureMaps
+            var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsTrue(sm.Any());
+#else
             var sm = source.ListResourceUris(ResourceType.StructureMap); Assert.IsFalse(sm.Any());
+#endif
             var cf = source.ListResourceUris(ResourceType.CapabilityStatement); Assert.IsTrue(cf.Any());
             var md = source.ListResourceUris(ResourceType.MessageDefinition); Assert.IsFalse(md.Any());
             var od = source.ListResourceUris(ResourceType.OperationDefinition); Assert.IsTrue(od.Any());
             var sp = source.ListResourceUris(ResourceType.SearchParameter); Assert.IsTrue(sp.Any());
             var cd = source.ListResourceUris(ResourceType.CompartmentDefinition); Assert.IsFalse(md.Any());
+#if R5
+            // In specification.zip for R5 are now also ImplementationGuides
+            var ig = source.ListResourceUris(ResourceType.ImplementationGuide); Assert.IsTrue(ig.Any());
+#else
             var ig = source.ListResourceUris(ResourceType.ImplementationGuide); Assert.IsFalse(ig.Any());
+#endif
 
             var cs = source.ListResourceUris(ResourceType.CodeSystem); Assert.IsTrue(cs.Any());
             var vs = source.ListResourceUris(ResourceType.ValueSet); Assert.IsTrue(vs.Any());
             var cm = source.ListResourceUris(ResourceType.ConceptMap); Assert.IsTrue(cm.Any());
             // var ep = source.ListResourceUris(ResourceType.ExpansionProfile); Assert.IsFalse(ep.Any());
+
             var ns = source.ListResourceUris(ResourceType.NamingSystem);
 #if R5
-            // Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore. 
+            // In specification.zip for R5 there are no NamingSystems anymore.
             Assert.IsFalse(ns.Any());
 #else
             Assert.IsTrue(ns.Any());
@@ -170,10 +181,8 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsTrue(cs.Contains("http://hl7.org/fhir/CodeSystem/contact-point-system"));
             Assert.IsTrue(vs.Contains("http://hl7.org/fhir/ValueSet/contact-point-system"));
             Assert.IsTrue(cm.Contains("http://hl7.org/fhir/ConceptMap/cm-name-use-v2"));
-#if R5
-            // Version 5.0.0-snapshot3 lacks Namingsystem-registry.xml: the bundle contains no entries anymore.
-            Assert.IsFalse(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
-#else
+#if !R5
+            // In specification.zip for R5 there are no NamingSystems anymore.
             Assert.IsTrue(ns.Contains("http://hl7.org/fhir/NamingSystem/us-ssn"));
 #endif
         }

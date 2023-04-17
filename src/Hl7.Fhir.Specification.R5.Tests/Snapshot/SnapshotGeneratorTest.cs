@@ -18,8 +18,8 @@ namespace Hl7.Fhir.Specification.Tests
         {
             Type = FHIRAllTypes.MedicationStatement.GetLiteral(),
             BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.MedicationStatement),
-            Name = "MedicationUsageWithSimpleQuantitySlice",
-            Url = @"http://example.org/fhir/StructureDefinition/MedicationUsageWithSimpleQuantitySlice",
+            Name = "MedicationStatementWithSimpleQuantitySlice",
+            Url = @"http://example.org/fhir/StructureDefinition/MedicationStatementWithSimpleQuantitySlice",
             Derivation = StructureDefinition.TypeDerivationRule.Constraint,
             Kind = StructureDefinition.StructureDefinitionKind.Resource,
             Differential = new StructureDefinition.DifferentialComponent()

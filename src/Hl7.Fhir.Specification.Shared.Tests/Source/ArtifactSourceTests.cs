@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Specification.Tests
             var testPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             Directory.CreateDirectory(testPath);
 
-            copy(zipPath, "extension-definitions.xml", testPath);
+            copy(zipPath, "profiles-types.xml", testPath);
             copy(zipPath, "flag.xsd", testPath);
             copy(zipPath, "patient.sch", testPath);
             copy(@"TestData", "TestPatient.xml", testPath);
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Specification.Tests
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(5, names.Count());
-            Assert.IsTrue(names.Contains("extension-definitions.xml"));
+            Assert.IsTrue(names.Contains("profiles-types.xml"));
             Assert.IsTrue(names.Contains("flag.xsd"));
             Assert.IsFalse(names.Contains("patient.sch"));
             Assert.IsTrue(names.Contains("TestPatient.xml"));
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Specification.Tests
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(4, names.Count());
-            Assert.IsTrue(names.Contains("extension-definitions.xml"));
+            Assert.IsTrue(names.Contains("profiles-types.xml"));
             Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsFalse(names.Contains("nonfhir.xml"));
             Assert.IsTrue(names.Contains("invalid.xml"));
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Specification.Tests
             var names = fa.ListArtifactNames();
 
             Assert.AreEqual(4, names.Count());
-            Assert.IsTrue(names.Contains("extension-definitions.xml"));
+            Assert.IsTrue(names.Contains("profiles-types.xml"));
             Assert.IsTrue(names.Contains("TestPatient.xml"));
             Assert.IsTrue(names.Contains("nonfhir.xml"));
             Assert.IsTrue(names.Contains("invalid.xml"));
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Specification.Tests
             //Assert.AreEqual(0, fa.Errors.Length);
 
             // Call a method on the IConformanceSource interface to trigger prepareResources
-            var sd = await fa.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/patient-birthTime");
+            var sd = await fa.FindStructureDefinitionAsync("http://hl7.org/fhir/StructureDefinition/string");
             Assert.IsNotNull(sd);
 
             var errors = fa.ListSummaryErrors().ToList();

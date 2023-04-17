@@ -51,11 +51,13 @@ namespace Hl7.Fhir.Rest
         {
         }
 
-        private Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
+        private static Bundle.EntryComponent newEntry(Bundle.HTTPVerb method, InteractionType interactionType)
         {
-            var newEntry = new Bundle.EntryComponent();
-            newEntry.Request = new Bundle.RequestComponent();
-            newEntry.Request.Method = method;
+            var newEntry = new Bundle.EntryComponent
+            {
+                Request = new Bundle.RequestComponent() { Method = method }
+            };
+
             newEntry.AddAnnotation(interactionType);
 
             return newEntry;
@@ -219,15 +221,13 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        private string createIfMatchETag(string versionId)
+        private static string createIfMatchETag(string versionId)
         {
             if (versionId == null) return versionId;
 
             //To not break our previous public interface, we need to make sure we don't double
             //convert to an eTag
-            if (versionId.StartsWith("W/")) return versionId;
-
-            return $"W/\"{versionId}\"";
+            return versionId.StartsWith("W/") ? versionId : $"W/\"{versionId}\"";
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Rest
             return this;
         }
 
-        private string paramValueToString(Parameters.ParameterComponent parameter)
+        private static string paramValueToString(Parameters.ParameterComponent parameter)
         {
             if (parameter.Value != null)
             {

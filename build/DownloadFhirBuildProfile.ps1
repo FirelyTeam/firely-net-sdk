@@ -4,6 +4,7 @@
 # cls
 
 # Script to be run from 'build' directory
+using namespace System.Collections.Generic
 
 param(
      [Parameter(Mandatory, HelpMessage="Enter the url 	from which the specification is to be downloaded")]
@@ -19,8 +20,8 @@ $srcdir = "$baseDir\src";
 
 # These are all files from the spec that we need. Narratives are stripped after download
 $allFiles = @("conceptmaps.xml",
-                #"extension-definitions.xml", 
-				#"namingsystem-registry.xml",
+                "extension-definitions.xml", 
+				"namingsystem-registry.xml",
 				"profiles-others.xml", 
 				"profiles-resources.xml", 
 				"profiles-types.xml" 
@@ -28,6 +29,13 @@ $allFiles = @("conceptmaps.xml",
 				"valuesets.xml"
 				"fhir-all-xsd.zip"
 				);
+
+if ($fhirRelease -eq "R5")
+{
+	# remove extension-definitions.xml and namingsystem-registry.xml because from R5 those files do not exist anymore.
+	$allFiles.Remove("extension-definitions.xml"); #
+	$allFiles.Remove("namingsystem-registry.xml"); #
+}
 
 function New-TemporaryDirectory {
     $parent = [System.IO.Path]::GetTempPath()
@@ -37,7 +45,6 @@ function New-TemporaryDirectory {
 }
 
 $tempDir = New-TemporaryDirectory
-
 
 # Download a file from a URL and place it at the specified target path.
 # This also has some basic capabilities to go through proxies without any additional configuration.
@@ -296,6 +303,30 @@ function CorrectConceptmap($name)
 	$xml.Save($filename)
 }
 
+function ExtractPackageToDirectory($packageBaseUrl, $packageName, $packageVersion, $destDir)
+{
+	$packageUrl = $packageBaseUrl + $packageName + "/" + $packageVersion;
+
+	$destFile = Join-Path $tempDir $packageName
+	$destFile = $destFile + ".tgz";
+
+	$extractDir = Join-Path $tempDir $packageName
+
+	# Download extension package
+	PowerCurl $destFile $packageUrl
+	
+	# Unpack extension package
+	New-Item -ItemType Directory $extractDir -Force | Out-Null
+	tar -xf $destFile -C $extractDir
+
+	# move part of the content to specification dir
+	New-Item -ItemType Directory $destDir -Force | Out-Null
+	$exclude = @('.index.json','package.json')
+	Copy-Item -Path $extractDir\Package\* -Filter "*.json" -Container:$false -Destination  $destDir  -Exclude $exclude 
+}
+
+# Start of processing:
+
 
 foreach($file in $allFiles)			
 {
@@ -339,7 +370,6 @@ foreach($file in $allFiles)
 			ChangeValueElementOfFhirType $file
 		}
 	}
-
 }
 
 $specificationDir = New-TemporaryDirectory
@@ -347,14 +377,14 @@ $specificationDir = New-TemporaryDirectory
 Write-Host -ForegroundColor White "Copy files to project..."
 
 # Copy the files necessary for the specification library (specification.zip / data)
-foreach($specFile in $allFiles)			
-{
-	if ($specFile.EndsWith(".xml")) 
-	{
-		Write-Host "Copy $specFile to $specificationDir"
-		CopySpecFile $specFile $specificationDir
-	}
-}
+CopySpecFile "conceptmaps.xml" $specificationDir
+CopySpecFile "extension-definitions.xml" $specificationDir
+CopySpecFile "namingsystem-registry.xml" $specificationDir
+CopySpecFile "profiles-others.xml" $specificationDir
+CopySpecFile "profiles-resources.xml" $specificationDir
+CopySpecFile "profiles-types.xml" $specificationDir
+CopySpecFile "search-parameters.xml" $specificationDir
+CopySpecFile "valuesets.xml" $specificationDir
 
 # Add example files used for testing
 

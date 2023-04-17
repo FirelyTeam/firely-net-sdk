@@ -7766,8 +7766,11 @@ namespace Hl7.Fhir.Specification.Tests
             Assert.IsNotNull(regularExpr);
             var extValue = regularExpr.Value as FhirString;
             Assert.IsNotNull(extValue);
+#if R5
+            Assert.AreEqual(@"^[\s\S]+$", extValue.Value);
+#else
             Assert.AreEqual("[ \\r\\n\\t\\S]+", extValue.Value);
-
+#endif
             // Verify fhir-type extension
             var fhirTypeExpr = elem.Type[0].Extension.FirstOrDefault(e => e.Url is "http://hl7.org/fhir/StructureDefinition/structuredefinition-fhir-type");
             Assert.IsNotNull(fhirTypeExpr);

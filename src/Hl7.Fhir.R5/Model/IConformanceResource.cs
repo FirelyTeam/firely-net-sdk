@@ -46,7 +46,6 @@ namespace Hl7.Fhir.Model
 
     public partial class ImplementationGuide : IVersionableConformanceResource
     {
-
     }
 
     public partial class CompartmentDefinition : IVersionableConformanceResource
