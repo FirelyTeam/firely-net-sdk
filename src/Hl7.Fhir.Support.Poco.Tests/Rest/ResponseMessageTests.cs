@@ -32,8 +32,8 @@ namespace Hl7.Fhir.Test
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
         private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
-        private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngine.ElementModel(TESTINSPECTOR, new());
-        private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngine.Poco(TESTINSPECTOR);
+        private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngineFactory.ElementModel.Permissive(TESTINSPECTOR);
+        private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngineFactory.Poco.Strict(TESTINSPECTOR);
 
         [TestMethod]
         public void CanRoundtripHeaders()
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Test
         [TestMethod]
         public async Tasks.Task SetAndExtractRelevantHeaders()
         {           
-            var engine = FhirSerializationEngine.Poco(TESTINSPECTOR);
+            var engine = FhirSerializationEngineFactory.Poco.Strict(TESTINSPECTOR);
             var xmlContent = makeXmlContent();
             xmlContent.Headers.LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
 

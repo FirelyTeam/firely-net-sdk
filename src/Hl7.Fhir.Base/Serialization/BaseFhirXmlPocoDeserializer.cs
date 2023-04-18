@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Serialization
         internal Resource? DeserializeResourceInternal(XmlReader reader, FhirXmlPocoDeserializerState state)
         {
             //check if we are actually on an opening element. 
-            VerifyOpeningElement(reader, state);
+            verifyOpeningElement(reader, state);
 
             (ClassMapping? resourceMapping, FhirXmlException? error) = DetermineClassMappingFromInstance(reader, _inspector);
 
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private static void VerifyOpeningElement(XmlReader reader, FhirXmlPocoDeserializerState state)
+        private static void verifyOpeningElement(XmlReader reader, FhirXmlPocoDeserializerState state)
         {
             //If not skip all non-content and check again.
             reader.MoveToContent();
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Serialization
                   $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
 
             //check if we are at an opening element.
-            VerifyOpeningElement(reader, state);
+            verifyOpeningElement(reader, state);
 
             // If we have at least a mapping, let's try to continue               
             var newDatatype = (Base)mapping.Factory();

@@ -107,16 +107,36 @@ namespace Hl7.Fhir.Serialization
         // This leaves the incorrect nulls in place, no change in data.
         internal static readonly FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL = new(PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.");
 
-        internal static readonly FhirJsonException[] RECOVERABLE_ERRORS = new[] { EXPECTED_PRIMITIVE_NOT_NULL, INCORRECT_BASE64_DATA, STRING_ISNOTAN_INSTANT,
-            NUMBER_CANNOT_BE_PARSED, UNEXPECTED_JSON_TOKEN, LONG_CANNOT_BE_PARSED, LONG_INCORRECT_FORMAT, EXPECTED_START_OF_ARRAY, USE_OF_UNDERSCORE_ILLEGAL,
-            RESOURCETYPE_UNEXPECTED, OBJECTS_CANNOT_BE_EMPTY, ARRAYS_CANNOT_BE_EMPTY, PRIMITIVE_ARRAYS_ONLY_NULL};
+        /// <summary>
+        /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
+        /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
+        /// </summary>
+        internal static bool IsRecoverableIssue(FhirJsonException e) => 
+            e.ErrorCode is EXPECTED_PRIMITIVE_NOT_NULL_CODE or
+            INCORRECT_BASE64_DATA_CODE or
+            STRING_ISNOTAN_INSTANT_CODE or
+            NUMBER_CANNOT_BE_PARSED_CODE or
+            UNEXPECTED_JSON_TOKEN_CODE or
+            LONG_CANNOT_BE_PARSED_CODE or
+            LONG_INCORRECT_FORMAT_CODE or
+            EXPECTED_START_OF_ARRAY_CODE or
+            USE_OF_UNDERSCORE_ILLEGAL_CODE or
+            RESOURCETYPE_UNEXPECTED_CODE or
+            OBJECTS_CANNOT_BE_EMPTY_CODE or
+            ARRAYS_CANNOT_BE_EMPTY_CODE or
+            PRIMITIVE_ARRAYS_ONLY_NULL_CODE;
 
-        internal static readonly CodedException[] BACKWARDS_COMPAT_ERRORS = new CodedException[] { 
-            CodedValidationException.INVALID_CODED_VALUE, EXPECTED_PRIMITIVE_NOT_OBJECT, EXPECTED_PRIMITIVE_NOT_ARRAY, CHOICE_ELEMENT_HAS_UNKOWN_TYPE,
-            UNKNOWN_PROPERTY_FOUND, 
-        };
-
-
+        /// <summary>
+        /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
+        /// FHIR release. This means allowing unknown elements, codes and types in a choice element. Note that the POCO model cannot capture
+        /// these newer elements and data, so this means data loss may occur.
+        /// </summary>
+        internal static bool AllowedForBackwardsCompatibility(CodedException e) =>
+            e.ErrorCode is CodedValidationException.INVALID_CODED_VALUE_CODE or
+            //EXPECTED_PRIMITIVE_NOT_OBJECT_CODE or  
+            //EXPECTED_PRIMITIVE_NOT_ARRAY_CODE or
+            CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE or
+            UNKNOWN_PROPERTY_FOUND_CODE;
 
         public FhirJsonException(string code, string message) : base(code, message)
         {

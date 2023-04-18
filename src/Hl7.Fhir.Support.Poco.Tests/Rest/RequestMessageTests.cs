@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Test
 
             return entryToConvert.ToHttpRequestMessage(
                 ENDPOINT,
-                FhirSerializationEngine.Poco(TESTINSPECTOR),
+                FhirSerializationEngineFactory.Poco.Strict(TESTINSPECTOR),
                 TESTVERSION,
                 settings);
         }

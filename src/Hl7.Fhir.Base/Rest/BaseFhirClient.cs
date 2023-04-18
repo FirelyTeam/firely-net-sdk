@@ -25,14 +25,6 @@ using static Hl7.Fhir.Rest.HttpContentParsers;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class FhirClientConfigExtensions
-    {
-        public static BaseFhirClient WithPocoDeserializers(this BaseFhirClient client)
-        {
-            client.Settings.SerializationEngine = FhirSerializationEngine.Poco(client.Inspector);
-            return client;
-        }
-    }
 
     public partial class BaseFhirClient : IDisposable
     {
@@ -58,7 +50,8 @@ namespace Hl7.Fhir.Rest
             Inspector = inspector;
             Settings = settings ?? new FhirClientSettings();
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(Inspector, Settings.ParserSettings);
+            _serializationEngine = settings?.SerializationEngine ?? 
+                new ElementModelSerializationEngine(Inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, Settings.Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null);
             Requester = requester;
@@ -86,7 +79,8 @@ namespace Hl7.Fhir.Rest
             Inspector = inspector;
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(Inspector, Settings.ParserSettings);
+            _serializationEngine = settings?.SerializationEngine ?? 
+                new ElementModelSerializationEngine(Inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, httpClient);
             Requester = requester;
