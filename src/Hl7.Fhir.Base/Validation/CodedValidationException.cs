@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Validation
         public const string NARRATIVE_XML_IS_MALFORMED_CODE = "PVAL114";
         public const string NARRATIVE_XML_IS_INVALID_CODE = "PVAL115";
         public const string INVALID_CODED_VALUE_CODE = "PVAL116";
-        // public const string CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE = "PVAL117"; // This was removed in R4 and is no longer validated
+        public const string CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE = "PVAL117"; // This was removed in R4 and is no longer validated
         public const string CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE = "PVAL118";
 
         internal static COVE CHOICE_TYPE_NOT_ALLOWED(ValidationContext context, string TypeName) => Initialize(context, CHOICE_TYPE_NOT_ALLOWED_CODE, $"Value is of type '{TypeName}', which is not an allowed choice.", OO_Sev.Error, OO_Typ.Structure);

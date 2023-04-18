@@ -38,9 +38,14 @@ namespace Hl7.Fhir.Serialization
         internal PathStack PathStack { get { return _path; } }
 
         /// <summary>
-        /// The dotted FhirPath path leading to this element from the root.
+        /// The dotted path leading to this element from the root (has no indexers and includes the value virtual property on primitives)
         /// </summary>
-        public string Path { get { return _path.GetInstancePath(); } }
+        public string Path { get { return _path.GetPath(); } }
+
+        /// <summary>
+        /// The dotted FhirPath path leading to this element from the root with indexers (and no value property on primitives).
+        /// </summary>
+        public string InstancePath { get { return _path.GetInstancePath(); } }
 
         /// <summary>
         /// The property name for which an instance is currently being deserialized.

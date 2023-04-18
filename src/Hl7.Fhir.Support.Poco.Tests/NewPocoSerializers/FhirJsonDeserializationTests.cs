@@ -8,6 +8,7 @@ using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -84,8 +85,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 else
                     result.Should().Be(input);
             }
-            else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY.ErrorCode ||
-                code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode)
+            else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE ||
+                code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE)
 #pragma warning disable CS0642 // Possible mistaken empty statement
                 ; // nothing to check
 #pragma warning restore CS0642 // Possible mistaken empty statement
@@ -136,7 +137,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 {
                     < 10 => (false, null),
                     < 20 => (true, null),
-                    < 30 => (originalValue, ERR.ARRAYS_CANNOT_BE_EMPTY),
+                    < 30 => (originalValue, ERR.ARRAYS_CANNOT_BE_EMPTY(ref reader, "Patient")),
                     < 40 => (null, originalException),
                     _ => throw new InvalidOperationException("Something")
                 };
@@ -155,7 +156,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         public void PrimitiveValueCannotBeComplex()
         {
-            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode);
+            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
             TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture), typeof(decimal), null, FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE);
             TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(uint), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE);
             TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(int), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE);
@@ -189,7 +190,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var reader = new Utf8JsonReader(jsonBytes);
                 reader.Read();
 
-                return BaseFhirJsonPocoDeserializer.DetermineClassMappingFromInstance(ref reader, inspector);
+                var ps = new PathStack();
+                ps.EnterElement("Patient", 0, false);
+                return BaseFhirJsonPocoDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
             }
         }
 
@@ -666,7 +669,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 // deserialization of the FhirDateTime, validation will not be triggered!
                 if (f.Value.EndsWith("Z")) f.Value = f.Value.TrimEnd('Z') + "+00:00";
 
-                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID };
+                var validationContext = new ValidationContext(instance ?? new object())
+                    .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
+                    .SetLocation(context.PathStack);
+
+                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, context.PropertyName) };
             }
 
         }
@@ -695,7 +703,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 {
                     instance = f.TrimEnd('Z') + "+00:00";
                 }
-                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID };
+
+                var validationContext = new ValidationContext(instance ?? new object())
+                    .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
+                    .SetLocation(context.PathStack);
+                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, f) };
             }
 
         }
@@ -704,12 +717,17 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             public void ValidateInstance(object? instance, in InstanceDeserializationContext context, out COVE[]? reportedErrors)
             {
+                var validationContext = new ValidationContext(instance ?? new object())
+                    .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
+                    .SetLocation(context.PathStack);
+
                 if (context.InstanceMapping.Name == "dateTime")
                 {
                     var dt = instance.Should().BeOfType<FhirDateTime>().Subject;
 
                     if (dt.Value.EndsWith("Z")) dt.Value = dt.Value.TrimEnd('Z') + "+00:00";
-                    reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID };
+                    reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, dt.Value) };
                 }
                 else
                 {
