@@ -108,42 +108,6 @@ namespace Hl7.Fhir.Serialization
         // This leaves the incorrect nulls in place, no change in data.
         internal static FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL(ref Utf8JsonReader reader, string locationPath) => Initialize(ref reader, locationPath, PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.", OO_Sev.Warning, OO_Typ.Structure);
 
-        public override OperationOutcome.IssueComponent ToIssue()
-        {
-            var result = base.ToIssue();
-            // Set the Display values based on the code
-            switch (ErrorCode)
-            {
-                case EXPECTED_START_OF_OBJECT_CODE: result.Details.Coding[0].Display = "JSON101"; break;
-                case RESOURCETYPE_SHOULD_BE_STRING_CODE: result.Details.Coding[0].Display = "JSON102"; break;
-                case NO_RESOURCETYPE_PROPERTY_CODE: result.Details.Coding[0].Display = "JSON103"; break;
-                case EXPECTED_PRIMITIVE_NOT_OBJECT_CODE: result.Details.Coding[0].Display = "JSON104"; break;
-                case EXPECTED_PRIMITIVE_NOT_ARRAY_CODE: result.Details.Coding[0].Display = "JSON105"; break;
-                case INCORRECT_BASE64_DATA_CODE: result.Details.Coding[0].Display = "JSON106"; break;
-                case STRING_ISNOTAN_INSTANT_CODE: result.Details.Coding[0].Display = "JSON107"; break;
-                case NUMBER_CANNOT_BE_PARSED_CODE: result.Details.Coding[0].Display = "JSON108"; break;
-                case EXPECTED_PRIMITIVE_NOT_NULL_CODE: result.Details.Coding[0].Display = "JSON109"; break;
-                case UNEXPECTED_JSON_TOKEN_CODE: result.Details.Coding[0].Display = "JSON110"; break;
-                case EXPECTED_START_OF_ARRAY_CODE: result.Details.Coding[0].Display = "JSON111"; break;
-                case USE_OF_UNDERSCORE_ILLEGAL_CODE: result.Details.Coding[0].Display = "JSON113"; break;
-                case CHOICE_ELEMENT_HAS_NO_TYPE_CODE: result.Details.Coding[0].Display = "JSON114"; break;
-                case CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE: result.Details.Coding[0].Display = "JSON115"; break;
-                case UNKNOWN_RESOURCE_TYPE_CODE: result.Details.Coding[0].Display = "JSON116"; break;
-                case RESOURCE_TYPE_NOT_A_RESOURCE_CODE: result.Details.Coding[0].Display = "JSON117"; break;
-                case UNKNOWN_PROPERTY_FOUND_CODE: result.Details.Coding[0].Display = "JSON118"; break;
-                case RESOURCETYPE_UNEXPECTED_CODE: result.Details.Coding[0].Display = "JSON119"; break;
-                case OBJECTS_CANNOT_BE_EMPTY_CODE: result.Details.Coding[0].Display = "JSON120"; break;
-                case ARRAYS_CANNOT_BE_EMPTY_CODE: result.Details.Coding[0].Display = "JSON121"; break;
-                case LONG_CANNOT_BE_PARSED_CODE: result.Details.Coding[0].Display = "JSON122"; break;
-                case LONG_INCORRECT_FORMAT_CODE: result.Details.Coding[0].Display = "JSON123"; break;
-
-                case PRIMITIVE_ARRAYS_ONLY_NULL_CODE: result.Details.Coding[0].Display = "JSON125"; break;
-                case INCOMPATIBLE_SIMPLE_VALUE_CODE: result.Details.Coding[0].Display = "JSON126"; break;
-            }
-
-            return result;
-        }
-
         public FhirJsonException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
         {
         }

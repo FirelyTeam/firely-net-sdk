@@ -14,33 +14,6 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializationExceptionHandlersJsonPoco
     {
-        /// <summary>
-        /// Convert to an OperationOutcome
-        /// </summary>
-        /// <param name="ex"></param>
-        /// <returns></returns>
-        private static OperationOutcome ToOperationOutcome(DeserializationFailedException ex)
-        {
-            // Need to convert the list of general exceptions into an OperationOutcome.
-            OperationOutcome oc = new OperationOutcome();
-            foreach (var e in ex.Exceptions)
-            {
-                var issue =
-                new OperationOutcome.IssueComponent()
-                {
-                    Severity = OperationOutcome.IssueSeverity.Error,
-                    Code = OperationOutcome.IssueType.Invalid
-                };
-                if (e is CodedWithLocationException ecl)
-                {
-                    issue = ecl.ToIssue();
-                }
-                oc.Issue.Add(issue);
-            }
-
-            return oc;
-        }
-
         private T SerializeResource<T>(string json)
             where T : Resource
         {
@@ -100,7 +73,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -132,7 +105,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -188,7 +161,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -239,7 +212,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -277,7 +250,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -320,7 +293,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -424,7 +397,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -477,7 +450,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -526,7 +499,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -582,7 +555,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
@@ -840,7 +813,7 @@ namespace Hl7.Fhir.Serialization.Tests
             catch (DeserializationFailedException ex)
             {
                 System.Diagnostics.Trace.WriteLine($"{ex.Message}");
-                OperationOutcome oc = ToOperationOutcome(ex);
+                OperationOutcome oc = ex.ToOperationOutcome();
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 

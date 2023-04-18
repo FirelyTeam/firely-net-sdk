@@ -34,31 +34,6 @@ namespace Hl7.Fhir.Utility
         }
 
         /// <summary>
-        /// CodeSystem to be used in generating error messages in the OperationOutcome
-        /// </summary>
-        public static string ValidationErrorMessageCodeSystem = "http://firely.com/CodeSystem/ErrorMessages";
-
-        /// <summary>
-        /// Convert to an OperationOutcome.Issue
-        /// </summary>
-        /// <returns></returns>
-        public virtual Model.OperationOutcome.IssueComponent ToIssue()
-        {
-            var result = new Model.OperationOutcome.IssueComponent()
-            {
-                Severity = IssueSeverity,
-                Code = IssueType,
-                Details = new Model.CodeableConcept(ValidationErrorMessageCodeSystem, ErrorCode, null, FormattedMessage)
-            };
-            if (LineNumber.HasValue && Position.HasValue)
-                result.Location = new[] { $"line {LineNumber}, position {Position}" };
-            if (!string.IsNullOrEmpty(Location))
-                result.Expression = new[] { Location };
-
-            return result;
-        }
-
-        /// <summary>
         /// Severity of this specific issue
         /// </summary>
         /// <remarks>

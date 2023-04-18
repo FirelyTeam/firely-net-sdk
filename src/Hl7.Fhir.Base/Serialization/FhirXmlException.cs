@@ -84,40 +84,6 @@ namespace Hl7.Fhir.Serialization
             };
         }
 
-        public override OperationOutcome.IssueComponent ToIssue()
-        { 
-            var result = base.ToIssue();
-            // Set the Display values based on the code
-            switch (ErrorCode)
-            {
-                case EMPTY_ELEMENT_NAMESPACE_CODE: result.Details.Coding[0].Display ="XML101"; break;
-                case UNKNOWN_RESOURCE_TYPE_CODE: result.Details.Coding[0].Display ="XML102"; break;
-                case RESOURCE_TYPE_NOT_A_RESOURCE_CODE: result.Details.Coding[0].Display ="XML103"; break;
-                case UNKNOWN_ELEMENT_CODE: result.Details.Coding[0].Display ="XML104"; break;
-                case CHOICE_ELEMENT_HAS_NO_TYPE_CODE: result.Details.Coding[0].Display ="XML105"; break;
-                case CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE: result.Details.Coding[0].Display ="XML106"; break;
-                case INCORRECT_XHTML_NAMESPACE_CODE: result.Details.Coding[0].Display ="XML107"; break;
-                case UNKNOWN_ATTRIBUTE_CODE: result.Details.Coding[0].Display ="XML108"; break;
-                case ELEMENT_OUT_OF_ORDER_CODE: result.Details.Coding[0].Display ="XML109"; break;
-                case UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE: result.Details.Coding[0].Display ="XML110"; break;
-                case NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE: result.Details.Coding[0].Display ="XML111"; break;
-                case INCORRECT_ELEMENT_NAMESPACE_CODE: result.Details.Coding[0].Display ="XML112"; break;
-                case UNALLOWED_NODE_TYPE_CODE: result.Details.Coding[0].Display ="XML113"; break;
-                case INCORRECT_ATTRIBUTE_NAMESPACE_CODE: result.Details.Coding[0].Display ="XML114"; break;
-                case ATTRIBUTE_HAS_EMPTY_VALUE_CODE: result.Details.Coding[0].Display ="XML115"; break;
-                case ELEMENT_NOT_IN_SEQUENCE_CODE: result.Details.Coding[0].Display ="XML116"; break;
-                case SCHEMALOCATION_DISALLOWED_CODE: result.Details.Coding[0].Display ="XML117"; break;
-                case EXPECTED_OPENING_ELEMENT_CODE: result.Details.Coding[0].Display ="XML118"; break;
-                case ENCOUNTERED_DTP_REFERENCES_CODE: result.Details.Coding[0].Display ="XML119"; break;
-                case ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE: result.Details.Coding[0].Display ="XML120"; break;
-
-                case INCORRECT_BASE64_DATA_CODE: result.Details.Coding[0].Display ="XML202"; break;
-                case VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE: result.Details.Coding[0].Display ="XML203"; break;
-            }
-
-            return result;
-        }
-
         public FhirXmlException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(errorCode, message, issueSeverity, issueType)
         {
         }
@@ -132,7 +98,7 @@ namespace Hl7.Fhir.Serialization
             var messageWithLocation = $"{message} {location}";
 
             return new FhirXmlException(code, message, issueSeverity, issueType, innerException)
-        {
+            {
                 FormattedMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
