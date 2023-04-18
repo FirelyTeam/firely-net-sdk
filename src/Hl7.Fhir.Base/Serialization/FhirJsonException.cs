@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Serialization
 
             return new FhirJsonException(code, messageWithLocation, issueSeverity, issueType, innerException)
             {
-                FormattedMessage = message,
+                BaseErrorMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
                 Location = instancePath,

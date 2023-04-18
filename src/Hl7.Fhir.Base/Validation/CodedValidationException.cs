@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Validation
 
             var codedException = new CodedValidationException(code, messageWithLocation, issueSeverity, issueType)
             {
-                FormattedMessage = message,
+                BaseErrorMessage = message,
                 LineNumber = pi?.LineNumber,
                 Position = pi?.LinePosition,
                 Location = path

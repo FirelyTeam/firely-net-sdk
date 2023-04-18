@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// The error message without any location information appended to it
         /// </summary>
-        public string? FormattedMessage { get; protected set; }
+        public string? BaseErrorMessage { get; protected set; }
 
         /// <summary>
         /// The line number of the error in the original source data
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Utility
         public long? Position { get; protected set; }
 
         /// <summary>
-        /// The location of the error in the resource in simple fhirpath format
+        /// The instancePath of the error in the resource in simple fhirpath format
         /// </summary>
         public string? Location { get; protected set; }
     }

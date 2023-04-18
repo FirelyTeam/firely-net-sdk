@@ -780,8 +780,8 @@ namespace Hl7.Fhir.Serialization
             //}
         }
 
-        private static (object?, FhirJsonException) unexpectedToken(ref Utf8JsonReader reader, string locationPath, string? value, string expected, string actual) =>
-            new(value, ERR.UNEXPECTED_JSON_TOKEN(ref reader, locationPath, expected, actual, value));
+        private static (object?, FhirJsonException) unexpectedToken(ref Utf8JsonReader reader, string instancePath, string? value, string expected, string actual) =>
+            new(value, ERR.UNEXPECTED_JSON_TOKEN(ref reader, instancePath, expected, actual, value));
 
         /// <summary>
         /// This function tries to map from the json-format "generic" number to the kind of numeric type defined in the POCO.

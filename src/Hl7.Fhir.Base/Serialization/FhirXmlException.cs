@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Serialization
 
             return new FhirXmlException(ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, messageWithLocation, OO_Sev.Error, OO_Typ.Structure)
             {
-                FormattedMessage = message,
+                BaseErrorMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
                 Location = instancePath,
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Serialization
 
             return new FhirXmlException(code, messageWithLocation, issueSeverity, issueType, innerException)
             {
-                FormattedMessage = message,
+                BaseErrorMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
                 Location = instancePath,
