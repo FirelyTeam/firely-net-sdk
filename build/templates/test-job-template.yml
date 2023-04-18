@@ -10,7 +10,7 @@ steps:
   displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
   inputs:
     packageType: runtime
-    version: 6.0.
+    version: 6.0.x
 - task: DownloadPipelineArtifact@2
   inputs:
     displayName: Download Build artifacts

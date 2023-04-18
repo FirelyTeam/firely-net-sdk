@@ -118,12 +118,12 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.IsFalse(SerializationUtil.ProbeIsJson("this is nothing"));
             Assert.IsFalse(SerializationUtil.ProbeIsJson("  crap { "));
             Assert.IsFalse(SerializationUtil.ProbeIsJson("<element/>"));
-            Assert.IsTrue(SerializationUtil.ProbeIsJson("   { x:5 }"));
+            Assert.IsTrue(SerializationUtil.ProbeIsJson("""   { "x":5 }"""));
 
             Assert.IsFalse(SerializationUtil.ProbeIsXml("this is nothing"));
             Assert.IsFalse(SerializationUtil.ProbeIsXml("  crap { "));
             Assert.IsFalse(SerializationUtil.ProbeIsXml(" < crap  "));
-            Assert.IsFalse(SerializationUtil.ProbeIsXml("   { x:5 }"));
+            Assert.IsFalse(SerializationUtil.ProbeIsXml("""   { "x":5 }"""));
             Assert.IsTrue(SerializationUtil.ProbeIsXml("   <element/>"));
             Assert.IsTrue(SerializationUtil.ProbeIsXml("<?xml />"));
         }
