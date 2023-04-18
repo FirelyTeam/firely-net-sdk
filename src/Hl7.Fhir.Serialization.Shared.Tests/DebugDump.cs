@@ -66,6 +66,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 {
                     issue = ecl.ToIssue();
                 }
+                issue.Diagnostics = e.Message;
                 oc.Issue.Add(issue);
             }
 

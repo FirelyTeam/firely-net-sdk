@@ -14,14 +14,14 @@ namespace Hl7.Fhir.Serialization.Tests
     [TestClass]
     public class SerializationExceptionHandlersJsonPoco
     {
-        private T SerializeResource<T>(string json)
+        private static T serializeResource<T>(string json)
             where T : Resource
         {
             var settings = new FhirJsonPocoDeserializerSettings()
             {
                 OnPrimitiveParseFailed = (ref Utf8JsonReader reader,
                     Type targetType,
-                    object? originalValue,
+                    object originalValue,
                     FhirJsonException originalException) =>
                 {
                     System.Diagnostics.Trace.WriteLine($"Primitive Parse Failed: {originalValue} {originalException.Message}");
@@ -35,6 +35,7 @@ namespace Hl7.Fhir.Serialization.Tests
                     }
                     catch (Exception ex)
                     {
+                        System.Diagnostics.Trace.WriteLine($" => {ex.Message}");
                         originalException.IssueSeverity = OperationOutcome.IssueSeverity.Fatal;
                         return (null, originalException);
                     }
@@ -66,7 +67,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -98,7 +99,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = serializeResource<Observation>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -154,7 +155,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = serializeResource<Observation>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -205,7 +206,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 """;
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -243,7 +244,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -286,7 +287,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -390,7 +391,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = serializeResource<Observation>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -443,7 +444,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = serializeResource<Observation>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -492,7 +493,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Observation>(rawData);
+                var p = serializeResource<Observation>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -548,7 +549,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -806,7 +807,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = SerializeResource<Patient>(rawData);
+                var p = serializeResource<Patient>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }

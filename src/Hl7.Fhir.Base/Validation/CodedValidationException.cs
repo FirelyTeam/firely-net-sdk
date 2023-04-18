@@ -63,10 +63,10 @@ namespace Hl7.Fhir.Validation
 
         public CodedValidationException(ValidationContext context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
         {
-            validationContext = context;
+            _validationContext = context;
         }
 
-        private ValidationContext validationContext;
+        private readonly ValidationContext _validationContext;
 
         internal static CodedValidationException Initialize(ValidationContext context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
         {
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Validation
 
         internal CodedValidationResult AsResult()
         {
-            return validationContext.MemberName is string mn
+            return _validationContext.MemberName is string mn
                 ? new(this, memberNames: new[] { mn })
                 : new(this);
         }
