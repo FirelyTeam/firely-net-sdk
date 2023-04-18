@@ -61,12 +61,9 @@ namespace Hl7.Fhir.Validation
         // internal static COVE CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE(ValidationContext context) => Initialize(context, CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE, "Resource has contained resources with narrative, which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
         internal static COVE CONTAINED_RESOURCES_CANNOT_BE_NESTED(ValidationContext context) => Initialize(context, CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE, "It is not allowed for a resource to contain resources which themselves contain resources.", OO_Sev.Error, OO_Typ.Structure);
 
-        public CodedValidationException(ValidationContext context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
+        public CodedValidationException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
         {
-            _validationContext = context;
         }
-
-        private readonly ValidationContext _validationContext;
 
         internal static CodedValidationException Initialize(ValidationContext context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
         {
@@ -92,7 +89,7 @@ namespace Hl7.Fhir.Validation
 
             var messageWithLocation = $"{message} At {location}.";
 
-            var codedException = new CodedValidationException(context, code, messageWithLocation, issueSeverity, issueType)
+            var codedException = new CodedValidationException(code, messageWithLocation, issueSeverity, issueType)
             {
                 FormattedMessage = message,
                 LineNumber = pi?.LineNumber,
@@ -103,9 +100,9 @@ namespace Hl7.Fhir.Validation
             return codedException;
         }
 
-        internal CodedValidationResult AsResult()
+        internal CodedValidationResult AsResult(ValidationContext context)
         {
-            return _validationContext.MemberName is string mn
+            return context.MemberName is string mn
                 ? new(this, memberNames: new[] { mn })
                 : new(this);
         }
