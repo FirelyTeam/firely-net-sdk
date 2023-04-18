@@ -44,12 +44,23 @@ namespace Hl7.Fhir.Serialization
         public IDeserializationValidator? Validator { get; init; } = DataAnnotationDeserialzationValidator.Default;
 
         /// <summary>
-        /// Perform the validation on the deserialized object even if parsing issues occurred
+        /// Perform the parse time validation on the deserialized object even if parsing issues occurred
         /// </summary>
         /// <remarks>
         /// This is useful for "strict mode" once pass validators
         /// </remarks>
         public bool ValidateOnFailedParse { get; init; } = false;
+
+        /// <summary>
+        /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exceotion
+        /// will have a List&lt;CodedException&gt; of these exceptions added as an annotion to the child resource.
+        /// </summary>
+        /// <remarks>
+        /// This is primarily added to ease the processing of bundles during a batch submission
+        /// (without requiring processing fhirpath expressions in the issues in the parsing operation outcome to determine if a 
+        /// resource was clean and possibly ok to process)
+        /// </remarks>
+        public bool AnnotateResourceParseExceptions { get; init; } = false;
     }
 
     /// <summary>

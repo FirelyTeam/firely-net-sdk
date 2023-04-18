@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Serialization
                     }
                     else
                     {
-                        if (state.Errors.Count > nErrorCount)
+                        if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
                         {
                             List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
                             ((Resource)newResource).SetAnnotation(resourceErrs);
