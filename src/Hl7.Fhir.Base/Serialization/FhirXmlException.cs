@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Globalization;
 using System.Xml;
@@ -33,28 +34,51 @@ namespace Hl7.Fhir.Serialization
         public const string INCORRECT_BASE64_DATA_CODE = "XML202";
         public const string VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE = "XML203";
 
-        internal static readonly FhirXmlException EMPTY_ELEMENT_NAMESPACE = new(EMPTY_ELEMENT_NAMESPACE_CODE, $"The element '{0}' has no namespace, expected the HL7 FHIR namespace ({XmlNs.FHIR})");
-        internal static readonly FhirXmlException INCORRECT_ELEMENT_NAMESPACE = new(INCORRECT_ELEMENT_NAMESPACE_CODE, "The element '{0}' uses the namespace '{1}', which is not allowed.");
+        // ==========================================
+        // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
+        // ==========================================
         internal static readonly FhirXmlException UNKNOWN_RESOURCE_TYPE = new(UNKNOWN_RESOURCE_TYPE_CODE, "Unknown type '{0}' found in root property.");
         internal static readonly FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE = new(RESOURCE_TYPE_NOT_A_RESOURCE_CODE, "Data type '{0}' in property 'resourceType' is not a type of resource.");
         internal static readonly FhirXmlException UNKNOWN_ELEMENT = new(UNKNOWN_ELEMENT_CODE, "Encountered unrecognized element '{0}'.");
         internal static readonly FhirXmlException CHOICE_ELEMENT_HAS_NO_TYPE = new(CHOICE_ELEMENT_HAS_NO_TYPE_CODE, "Choice element '{0}' is not suffixed with a type.");
-        internal static readonly FhirXmlException CHOICE_ELEMENT_HAS_UNKOWN_TYPE = new(CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, "Choice element '{0}' is suffixed with an unrecognized type '{1}'.");
-        internal static readonly FhirXmlException INCORRECT_BASE64_DATA = new(INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.");
-        internal static readonly FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE = new(VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, "Literal string '{0}' cannot be parsed as a '{1}'.");
-        internal static readonly FhirXmlException INCORRECT_XHTML_NAMESPACE = new(INCORRECT_XHTML_NAMESPACE_CODE, $"Narrative has incorrect namespace. Namespace should be {XmlNs.XHTML}");
+        internal static readonly FhirXmlException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE = new(CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, "Choice element '{0}' is suffixed with an unrecognized type '{1}'.");
         internal static readonly FhirXmlException UNKNOWN_ATTRIBUTE = new(UNKNOWN_ATTRIBUTE_CODE, "Encountered unrecognized attribute '{0}'.");
-        internal static readonly FhirXmlException ELEMENT_OUT_OF_ORDER = new(ELEMENT_OUT_OF_ORDER_CODE, "Element '{0}' is not in the correct order ");
-        internal static readonly FhirXmlException ELEMENT_NOT_IN_SEQUENCE = new(ELEMENT_NOT_IN_SEQUENCE_CODE, "Element with name '{0}' was found multiple times, but not in sequence.");
         internal static readonly FhirXmlException UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER = new(UNALLOWED_ELEMENT_IN_RESOURCE_CONTAINER_CODE, "Encountered unallowed content '{0}' in the resource container. Only a single resource is allowed.");
         internal static readonly FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER = new(NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, "The element '{0}' has a contained resource and therefore should not have attributes.");
         internal static readonly FhirXmlException UNALLOWED_NODE_TYPE = new(UNALLOWED_NODE_TYPE_CODE, "Xml node of type '{0}' is unexpected at this point");
-        internal static readonly FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE = new(INCORRECT_ATTRIBUTE_NAMESPACE_CODE, "The attribute '{0}' in element '{1}' uses the namespace '{2}', which is not allowed.");
-        internal static readonly FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE = new(ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content");
-        internal static readonly FhirXmlException SCHEMALOCATION_DISALLOWED = new(SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.");
         internal static readonly FhirXmlException EXPECTED_OPENING_ELEMENT = new(EXPECTED_OPENING_ELEMENT_CODE, "Expected opening element, but found {0}.");
-        internal static readonly FhirXmlException ENCOUNTERED_DTD_REFERENCES = new(ENCOUNTERED_DTP_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)");
+
+        // ==========================================
+        // Recoverable Errors - when adding a new error, also add it to the appropriate error collections below.
+        // ==========================================
+        // Although the namespace is not correct, we continue as if it was.
+        internal static readonly FhirXmlException EMPTY_ELEMENT_NAMESPACE = new(EMPTY_ELEMENT_NAMESPACE_CODE, $"The element '{0}' has no namespace, expected the HL7 FHIR namespace ({XmlNs.FHIR})");
+        internal static readonly FhirXmlException INCORRECT_ELEMENT_NAMESPACE = new(INCORRECT_ELEMENT_NAMESPACE_CODE, "The element '{0}' uses the namespace '{1}', which is not allowed.");
+        internal static readonly FhirXmlException INCORRECT_XHTML_NAMESPACE = new(INCORRECT_XHTML_NAMESPACE_CODE, $"Narrative has incorrect namespace. Namespace should be {XmlNs.XHTML}");
+        internal static readonly FhirXmlException INCORRECT_ATTRIBUTE_NAMESPACE = new(INCORRECT_ATTRIBUTE_NAMESPACE_CODE, "The attribute '{0}' in element '{1}' uses the namespace '{2}', which is not allowed.");
+
+        // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
+        internal static readonly FhirXmlException INCORRECT_BASE64_DATA = new(INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.");
+        internal static readonly FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE = new(VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, "Literal string '{0}' cannot be parsed as a '{1}'.");
+
+        // An incorrect order does not mean we cannot parse the data safely
+        internal static readonly FhirXmlException ELEMENT_OUT_OF_ORDER = new(ELEMENT_OUT_OF_ORDER_CODE, "Element '{0}' is not in the correct order ");
+        internal static readonly FhirXmlException ELEMENT_NOT_IN_SEQUENCE = new(ELEMENT_NOT_IN_SEQUENCE_CODE, "Element with name '{0}' was found multiple times, but not in sequence.");
+
+        // Empty values will result in nulls, but no data is lost.
+        internal static readonly FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE = new(ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content");
         internal static readonly FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN = new(ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, "Element '{0}' must have child elements and / or a value attribute");
+
+        // Xml paraphernalia that do not contain data so they can be safely skipped.
+        internal static readonly FhirXmlException SCHEMALOCATION_DISALLOWED = new(SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.");
+        internal static readonly FhirXmlException ENCOUNTERED_DTD_REFERENCES = new(ENCOUNTERED_DTP_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)");
+
+        internal static readonly FhirXmlException[] RECOVERABLE_ERRORS = new[] { EMPTY_ELEMENT_NAMESPACE, INCORRECT_ELEMENT_NAMESPACE, INCORRECT_XHTML_NAMESPACE,
+            INCORRECT_ATTRIBUTE_NAMESPACE, INCORRECT_BASE64_DATA, VALUE_IS_NOT_OF_EXPECTED_TYPE, ELEMENT_OUT_OF_ORDER, ELEMENT_NOT_IN_SEQUENCE,
+            ATTRIBUTE_HAS_EMPTY_VALUE, ELEMENT_HAS_NO_VALUE_OR_CHILDREN, SCHEMALOCATION_DISALLOWED, ENCOUNTERED_DTD_REFERENCES };
+        internal static readonly CodedException[] BACKWARDS_COMPAT_ERRORS = new CodedException[] { CodedValidationException.INVALID_CODED_VALUE, UNKNOWN_ELEMENT,
+            CHOICE_ELEMENT_HAS_UNKNOWN_TYPE, UNKNOWN_ATTRIBUTE};
+
 
         public FhirXmlException(string errorCode, string message) : base(errorCode, message)
         {

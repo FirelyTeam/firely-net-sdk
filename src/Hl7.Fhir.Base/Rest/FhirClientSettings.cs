@@ -123,6 +123,9 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public IFhirSerializationEngine? SerializationEngine = null;
 
+        /// <summary>
+        /// ParserSettings for the pre-5.0 SDK parsers. Are only used when <see cref="SerializationEngine"/> is not set.
+        /// </summary>
         public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
         public FhirClientSettings() { }

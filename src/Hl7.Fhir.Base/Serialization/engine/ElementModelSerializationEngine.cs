@@ -26,12 +26,12 @@ namespace Hl7.Fhir.Serialization
     internal class ElementModelSerializationEngine : IFhirSerializationEngine
     {
         private readonly ModelInspector _inspector;
-        private readonly ParserSettings? _settings;
+        private readonly ParserSettings _settings;
 
         public ElementModelSerializationEngine(ModelInspector inspector, ParserSettings? settings)
         {
             _inspector = inspector;
-            _settings = settings;
+            _settings = settings ?? new ParserSettings();
         }
 
         public static bool TryUnpackElementModelException(DeserializationFailedException dfe, out FormatException? fe)
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Serialization
 
         private Resource deserialize(Func<ISourceNode> deserializer)
         {
-            var settings = BaseFhirParser.BuildPocoBuilderSettings(_settings ?? ParserSettings.CreateDefault());
+            var settings = BaseFhirParser.BuildPocoBuilderSettings(_settings);
 
             try
             {

@@ -9,6 +9,7 @@
 
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Globalization;
 using System.Text.Json;
@@ -105,6 +106,17 @@ namespace Hl7.Fhir.Serialization
 
         // This leaves the incorrect nulls in place, no change in data.
         internal static readonly FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL = new(PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.");
+
+        internal static readonly FhirJsonException[] RECOVERABLE_ERRORS = new[] { EXPECTED_PRIMITIVE_NOT_NULL, INCORRECT_BASE64_DATA, STRING_ISNOTAN_INSTANT,
+            NUMBER_CANNOT_BE_PARSED, UNEXPECTED_JSON_TOKEN, LONG_CANNOT_BE_PARSED, LONG_INCORRECT_FORMAT, EXPECTED_START_OF_ARRAY, USE_OF_UNDERSCORE_ILLEGAL,
+            RESOURCETYPE_UNEXPECTED, OBJECTS_CANNOT_BE_EMPTY, ARRAYS_CANNOT_BE_EMPTY, PRIMITIVE_ARRAYS_ONLY_NULL};
+
+        internal static readonly CodedException[] BACKWARDS_COMPAT_ERRORS = new CodedException[] { 
+            CodedValidationException.INVALID_CODED_VALUE, EXPECTED_PRIMITIVE_NOT_OBJECT, EXPECTED_PRIMITIVE_NOT_ARRAY, CHOICE_ELEMENT_HAS_UNKOWN_TYPE,
+            UNKNOWN_PROPERTY_FOUND, 
+        };
+
+
 
         public FhirJsonException(string code, string message) : base(code, message)
         {

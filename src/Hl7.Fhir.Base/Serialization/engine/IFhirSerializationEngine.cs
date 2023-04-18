@@ -11,6 +11,9 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -24,7 +27,7 @@ namespace Hl7.Fhir.Serialization
         /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured whith defaults,
         /// which uses the "old" TypedElement-based parser and serializer.
         /// </summary>
-        public static IFhirSerializationEngine ElementModel(ModelInspector inspector, ParserSettings? settings) =>
+        public static IFhirSerializationEngine ElementModel(ModelInspector inspector, ParserSettings? settings = null) =>
             new ElementModelSerializationEngine(inspector, settings);
 
         /// <summary>
@@ -47,13 +50,13 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Xml format.</exception>
         /// <returns>Null if the data did not contain a resource, but another FHIR datatype.</returns>
-        public Resource DeserializeFromXml(string data);
+        public bool TryDeserializeFromXml(string data, out Resource? instance, out IEnumerable<CodedException> issues);
 
         /// <summary>
         /// Deserialize a Json string to a FHIR Resource POCO.
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Json format.</exception>
-        public Resource DeserializeFromJson(string data);
+        public bool TryDeserializeFromJson(string data, out Resource? instance, out IEnumerable<CodedException> issues);
 
         /// <summary>
         /// Serialize a FHIR Resource POCO into a string of Xml.

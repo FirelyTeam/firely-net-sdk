@@ -8,7 +8,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -19,17 +18,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using static Hl7.Fhir.Rest.HttpContentParsers;
 
 namespace Hl7.Fhir.Rest
 {
+    public static class FhirClientConfigExtensions
+    {
+        public static BaseFhirClient WithPocoDeserializers(this BaseFhirClient client)
+        {
+            client.Settings.SerializationEngine = FhirSerializationEngine.Poco(client.Inspector);
+            return client;
+        }
+    }
+
     public partial class BaseFhirClient : IDisposable
     {
-        private readonly ModelInspector _inspector;
+        internal readonly ModelInspector Inspector;
         private readonly IFhirSerializationEngine _serializationEngine;
 
         /// <summary>
@@ -48,10 +55,10 @@ namespace Hl7.Fhir.Rest
         /// <param name="settings"></param>
         public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
         {
-            _inspector = inspector;
+            Inspector = inspector;
             Settings = settings ?? new FhirClientSettings();
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
+            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(Inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, Settings.Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null);
             Requester = requester;
@@ -76,10 +83,10 @@ namespace Hl7.Fhir.Rest
         /// <param name="inspector"></param>
         public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)
         {
-            _inspector = inspector;
+            Inspector = inspector;
             Settings = (settings ?? new FhirClientSettings());
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
+            _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(Inspector, Settings.ParserSettings);
 
             HttpClientRequester requester = new(Endpoint, httpClient);
             Requester = requester;
@@ -88,7 +95,7 @@ namespace Hl7.Fhir.Rest
             RequestHeaders = requester.Client.DefaultRequestHeaders;
         }
 
-        private string fhirVersion => Settings?.ExplicitFhirVersion ?? _inspector.FhirVersion ??
+        private string fhirVersion => Settings?.ExplicitFhirVersion ?? Inspector.FhirVersion ??
                 throw new ArgumentException("The FHIR version to use cannot be derived from the assembly metadata, " +
                 $"use {nameof(FhirClientSettings)}.{nameof(FhirClientSettings.ExplicitFhirVersion)} instead.");
 
@@ -605,7 +612,7 @@ namespace Hl7.Fhir.Rest
 
 
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource));
 
             if (!string.IsNullOrEmpty(versionId))
                 tx.Patch(resourceType, id, patchParameters, versionId);
@@ -634,7 +641,7 @@ namespace Hl7.Fhir.Rest
         public Task<TResource?> PatchAsync<TResource>(SearchParams condition, Parameters patchParameters, CancellationToken? ct = null) where TResource : Resource
         {
             var tx = new TransactionBuilder(Endpoint);
-            var resourceType = _inspector.GetFhirTypeNameForType(typeof(TResource));
+            var resourceType = Inspector.GetFhirTypeNameForType(typeof(TResource));
             tx.Patch(resourceType, condition, patchParameters);
 
             return executeAsync<TResource>(tx.ToBundle(), new[] { HttpStatusCode.Created, HttpStatusCode.OK }, ct);
@@ -1204,7 +1211,7 @@ namespace Hl7.Fhir.Rest
                 : null;
         }
 
-        private string typeNameOrDie<TResource>() => _inspector.GetFhirTypeNameForType(typeof(TResource)) ??
+        private string typeNameOrDie<TResource>() => Inspector.GetFhirTypeNameForType(typeof(TResource)) ??
                throw new ArgumentException($"Type parameter {nameof(TResource)} is not a known resource.");
 
         #region IDisposable Support
