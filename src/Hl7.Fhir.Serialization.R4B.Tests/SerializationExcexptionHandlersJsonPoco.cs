@@ -30,14 +30,12 @@ namespace Hl7.Fhir.Serialization.Tests
                     try
                     {
                         var convertedValue = PrimitiveTypeConverter.ConvertTo(originalValue, targetType);
-                        originalException.IssueSeverity = OperationOutcome.IssueSeverity.Warning;
-                        return (convertedValue, originalException);
+                        return (convertedValue, originalException.CloneWith(originalException.BaseErrorMessage, OperationOutcome.IssueSeverity.Warning, originalException.IssueType));
                     }
                     catch (Exception ex)
                     {
                         System.Diagnostics.Trace.WriteLine($" => {ex.Message}");
-                        originalException.IssueSeverity = OperationOutcome.IssueSeverity.Fatal;
-                        return (null, originalException);
+                        return (null, originalException.CloneWith(originalException.BaseErrorMessage, OperationOutcome.IssueSeverity.Fatal, originalException.IssueType));
                     }
                 },
                 // Validator = null

@@ -131,6 +131,23 @@ namespace Hl7.Fhir.Serialization
                 Location = instancePath,
             };
         }
+
+        public FhirJsonException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType)
+        {
+            string location = $"At line {this.LineNumber}, position {this.Position}";
+            if (!string.IsNullOrEmpty(this.Location))
+                location = $"At {this.Location}, line {this.LineNumber}, position {this.Position}";
+            var messageWithLocation = $"{baseMessage} {location}";
+
+            return new FhirJsonException(ErrorCode, messageWithLocation, issueSeverity, issueType, this.InnerException)
+            {
+                BaseErrorMessage = baseMessage,
+                LineNumber = this.LineNumber,
+                Position = this.Position,
+                Location = this.Location,
+            };
+        }
+
     }
 }
 
