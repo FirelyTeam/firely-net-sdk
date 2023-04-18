@@ -95,9 +95,11 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException Initialize(XmlReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, FhirXmlException? innerException = null)
         {
             var location = reader.GenerateLocationMessage(out long lineNumber, out long position);
+            if (!string.IsNullOrEmpty(instancePath))
+                location = $"At {instancePath}, line {lineNumber}, position {position}";
             var messageWithLocation = $"{message} {location}";
 
-            return new FhirXmlException(code, message, issueSeverity, issueType, innerException)
+            return new FhirXmlException(code, messageWithLocation, issueSeverity, issueType, innerException)
             {
                 FormattedMessage = message,
                 LineNumber = lineNumber,

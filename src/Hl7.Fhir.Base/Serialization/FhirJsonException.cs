@@ -119,9 +119,11 @@ namespace Hl7.Fhir.Serialization
         internal static FhirJsonException Initialize(ref Utf8JsonReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException = null)
         {
             var location = reader.GenerateLocationMessage(out long lineNumber, out long position);
+            if (!string.IsNullOrEmpty(instancePath))
+                location = $"At {instancePath}, line {lineNumber}, position {position}";
             var messageWithLocation = $"{message} {location}";
 
-            return new FhirJsonException(code, message, issueSeverity, issueType, innerException)
+            return new FhirJsonException(code, messageWithLocation, issueSeverity, issueType, innerException)
             {
                 FormattedMessage = message,
                 LineNumber = lineNumber,
