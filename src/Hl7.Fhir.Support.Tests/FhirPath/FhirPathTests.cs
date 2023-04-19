@@ -94,12 +94,14 @@ namespace Hl7.Fhir.Support.Tests
                     ("2400.lowBoundary(8)  = 2399.50000", true),
                     ("2.25.lowBoundary(8)  = 2.24500000", true),
                     ("2.2500.lowBoundary(8)= 2.24995000", true),
+                    ("12.lowBoundary() = 12", true),
                     ("1.587 'cm'.lowBoundary(8) = 1.58650000 'cm'", true),
                     ("@2014.lowBoundary(6) = @2014-01", true),
-                    ("@2014.lowBoundary() = @2014-01", true),
+                    ("@2014.lowBoundary() = @2014-01-01T00:00:00.000", true),
                     ("@2014.lowBoundary(8) = @2014-01-01", true),
                     ("@2014-01-01T08.lowBoundary(17) = @2014-01-01T08:00:00.000", true),
                     ("@T10:30.lowBoundary(9) = @T10:30:00.0001", true),
+                    ("@T10:30:00.000.lowBoundary() = @T10:30:00.000", true),
                     ("@T10:30.lowBoundary() = @T10:30:00", true),
                 }.Select(t => new object[] { t.expression, t.expected });
 
@@ -115,16 +117,26 @@ namespace Hl7.Fhir.Support.Tests
                     ("2400.highBoundary(8)  = 2400.50000", true),
                     ("2.25.highBoundary(8)  = 2.2550000", true),
                     ("2.2500.highBoundary(8)= 2.25005000", true),
+                    ("12.highBoundary() = 12", true),
                     ("1.587 'cm'.highBoundary(8) = 1.58750000 'cm'", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
                     ("@2014.highBoundary(8) = @2014-12-31", true),
                     ("@T10:30.highBoundary(9) = @T10:30:59.999", true),
                     ("@T10:30.highBoundary() = @T10:30:59.999", true),
+                }.Select(t => new object[] { t.expression, t.expected });
 
+        public static IEnumerable<object[]> ComparableTestCases() =>
+           new (string expression, bool expected)[]
+               {
+                    ("1 'cm'.comparable(1 '[in_i]')", true),
+                    ("1 'week'.comparable(1 'wk')", true),
+                    ("1 'cm'.comparable(1 's')", false),
                 }.Select(t => new object[] { t.expression, t.expected });
 
         public static IEnumerable<object[]> AllTestCases() =>
-            LowBoundaryTestCases().Concat(HighBoundaryTestCases());
+            LowBoundaryTestCases()
+            .Concat(HighBoundaryTestCases())
+            .Concat(ComparableTestCases());
 
 
         [DataTestMethod]

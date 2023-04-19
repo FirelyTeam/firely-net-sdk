@@ -38,13 +38,20 @@ namespace Hl7.Fhir.FhirPath
 
             t.Add("lowBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, substract), doNullProp: false);
             t.Add("lowBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, substract), doNullProp: false);
+            t.Add("lowBoundary", (int i, long precision) => i, doNullProp: false);
+            t.Add("lowBoundary", (int i) => i, doNullProp: false);
             t.Add("lowBoundary", (P.Any a, long precision) => LowBoundary(a, precision), doNullProp: false);
             t.Add("lowBoundary", (P.Any a) => LowBoundary(a, null), doNullProp: false);
 
             t.Add("highBoundary", (decimal d, long precision) => AdjustBoundaryDecimal(d, precision, add), doNullProp: false);
             t.Add("highBoundary", (decimal d) => AdjustBoundaryDecimal(d, null, add), doNullProp: false);
+            t.Add("highBoundary", (int i, long precision) => i, doNullProp: false);
+            t.Add("highBoundary", (int i) => i, doNullProp: false);
             t.Add("highBoundary", (P.Any a, long precision) => HighBoundary(a, precision), doNullProp: false);
             t.Add("highBoundary", (P.Any a) => HighBoundary(a, null), doNullProp: false);
+
+            //https://github.com/hapifhir/org.hl7.fhir.core/blob/master/org.hl7.fhir.r5/src/main/java/org/hl7/fhir/r5/utils/FHIRPathEngine.java
+            t.Add("comparable", (P.Quantity l, P.Quantity r) => Comparable(l, r), doNullProp: false);
 
             return t;
 
@@ -55,6 +62,8 @@ namespace Hl7.Fhir.FhirPath
 
             static bool memberOf(object focus, string valueset) => throw new NotImplementedException("Terminology functions in FhirPath are unsupported in the .NET FhirPath engine.");
         }
+
+
 
         /// <summary>
         /// Check if the node has a value, and not just extensions.
@@ -138,9 +147,9 @@ namespace Hl7.Fhir.FhirPath
             return input switch
             {
                 P.Quantity q => AdjustBoundaryQuantity(q, precision, substract),
-                P.Date d => LowBoundaryDateTime(d, precision),
-                P.DateTime dt => LowBoundaryDateTime(dt, precision),
-                P.Time t => LowBoundaryTime(t, precision),
+                P.Date d => BoundaryDateTime(d, precision, 1, 1, 0, 0, 0, 0),
+                P.DateTime dt => BoundaryDateTime(dt, precision, 1, 1, 0, 0, 0, 0),
+                P.Time t => BoundaryTime(t, precision, 0, 0, 0),
                 _ => null
             };
         }
@@ -150,76 +159,34 @@ namespace Hl7.Fhir.FhirPath
             return input switch
             {
                 P.Quantity q => AdjustBoundaryQuantity(q, precision, add),
-                P.Date d => HighBoundaryDateTime(d, precision),
-                P.DateTime dt => HighBoundaryDateTime(dt, precision),
-                P.Time t => HighBoundaryTime(t, precision),
+                P.Date d => BoundaryDateTime(d, precision, 12, 31, 23, 59, 59, 999),
+                P.DateTime dt => BoundaryDateTime(dt, precision, 12, 31, 23, 59, 59, 999),
+                P.Time t => BoundaryTime(t, precision, 59, 59, 999),
                 _ => null
             };
         }
 
         internal static P.Quantity AdjustBoundaryQuantity(P.Quantity input, long? precision, Func<decimal, decimal, decimal> op)
         {
-            var v = AdjustBoundaryDecimal(input.Value, precision, op);
+            var value = AdjustBoundaryDecimal(input.Value, precision, op);
 
-            return new P.Quantity(v.Value, input.Unit, input.System);
+            return new P.Quantity(value.Value, input.Unit, input.System);
         }
 
-        private static P.DateTimePrecision getNext(P.DateTimePrecision value)
-        {
-            return (from P.DateTimePrecision val in Enum.GetValues(typeof(P.DateTimePrecision))
-                    where val > value
-                    orderby val
-                    select val).DefaultIfEmpty().First();
-        }
-
-        internal static P.DateTime LowBoundaryDateTime(P.DateTime dateTime, long? precision)
-        {
-            P.DateTimePrecision dtPrecision = precision switch
-            {
-                <= 6 => P.DateTimePrecision.Month,
-                <= 8 => P.DateTimePrecision.Day,
-                <= 10 => P.DateTimePrecision.Hour,
-                <= 12 => P.DateTimePrecision.Minute,
-                <= 14 => P.DateTimePrecision.Second,
-                <= 17 => P.DateTimePrecision.Fraction,
-
-                null => getNext(dateTime.Precision),
-                _ => getNext(dateTime.Precision),
-            };
-
-
-            return new(dateTime.ToString(), dateTime.ToDateTimeOffset(TimeSpan.Zero), dtPrecision, dateTime.HasOffset);
-        }
-
-        internal static P.Time LowBoundaryTime(P.Time time, long? precision)
-        {
-            P.DateTimePrecision dtPrecision = precision switch
-            {
-                2 => P.DateTimePrecision.Hour,
-                5 => P.DateTimePrecision.Minute,
-                8 => P.DateTimePrecision.Second,
-                12 => P.DateTimePrecision.Fraction,
-
-                null => getNext(time.Precision),
-                _ => getNext(time.Precision),
-            };
-
-            return P.Time.FromDateTimeOffset(time.ToDateTimeOffset(2023, 04, 18, TimeSpan.Zero), dtPrecision);
-        }
-
-        internal static P.Any HighBoundaryDateTime(P.DateTime dt, long? precision)
+        internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
         {
             TimeSpan offset = dt.HasOffset ? dt.Offset.Value : TimeSpan.Zero;
 
             DateTimeOffset dto = dt.Precision switch
             {
-                P.DateTimePrecision.Year => new(dt.Years.Value, 12, 31, 23, 59, 59, 999, offset),
-                P.DateTimePrecision.Month => new(dt.Years.Value, dt.Months.Value, DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), 23, 59, 59, 999, offset),
-                P.DateTimePrecision.Day => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, 23, 59, 59, 999, offset),
-                P.DateTimePrecision.Hour => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, 59, 59, 999, offset),
-                P.DateTimePrecision.Minute => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, 59, 999, offset),
-                P.DateTimePrecision.Second => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, dt.Seconds.Value, 999, offset),
-                _ => DateTimeOffset.Now
+                P.DateTimePrecision.Year => new(dt.Years.Value, months, days, hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Month => new(dt.Years.Value, dt.Months.Value, DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Day => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Hour => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Minute => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, seconds, milliseconds, offset),
+                P.DateTimePrecision.Second => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, dt.Seconds.Value, milliseconds, offset),
+                P.DateTimePrecision.Fraction => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, dt.Seconds.Value, dt.Millis.Value, offset),
+                _ => throw new ArgumentException("Unexpected DateTime precision found")
             };
 
             P.DateTimePrecision dtPrecision = precision switch
@@ -228,8 +195,8 @@ namespace Hl7.Fhir.FhirPath
                 6 => P.DateTimePrecision.Month,
                 8 => P.DateTimePrecision.Day,
                 14 => P.DateTimePrecision.Second,
-                17 or null => P.DateTimePrecision.Fraction,
-                _ => throw new Exception("")
+                >= 17 or null => P.DateTimePrecision.Fraction,
+                _ => throw new ArgumentException($"Unsupported DateTime precision for boundary operation: {precision}")
             };
 
             return
@@ -238,16 +205,21 @@ namespace Hl7.Fhir.FhirPath
                     new P.DateTime(dto.ToString(), dto, dtPrecision, dt.HasOffset);
         }
 
-        internal static P.Time HighBoundaryTime(P.Time time, long? precision)
+        internal static P.Time BoundaryTime(P.Time time, long? precision, int minutes, int seconds, int milliseconds)
         {
+            const int defaultYear = 2023;
+            const int defaultMonth = 1;
+            const int defaultDay = 1;
+
             TimeSpan offset = time.HasOffset ? time.Offset.Value : TimeSpan.Zero;
 
             DateTimeOffset dto = time.Precision switch
             {
-                P.DateTimePrecision.Hour => new(2023, 4, 18, time.Hours.Value, 59, 59, 9999, offset),
-                P.DateTimePrecision.Minute => new(2023, 4, 18, time.Hours.Value, time.Minutes.Value, 59, 999, offset),
-                P.DateTimePrecision.Second => new(2023, 4, 18, time.Hours.Value, time.Minutes.Value, time.Seconds.Value, 999, offset),
-                _ => DateTimeOffset.Now
+                P.DateTimePrecision.Hour => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Minute => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, time.Minutes.Value, seconds, milliseconds, offset),
+                P.DateTimePrecision.Second => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, time.Minutes.Value, time.Seconds.Value, milliseconds, offset),
+                P.DateTimePrecision.Fraction => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, time.Minutes.Value, time.Seconds.Value, time.Millis.Value, offset),
+                _ => throw new ArgumentException("Unexpected Time precision found")
             };
 
             P.DateTimePrecision dtPrecision = precision switch
@@ -256,10 +228,20 @@ namespace Hl7.Fhir.FhirPath
                 4 => P.DateTimePrecision.Minute,
                 6 => P.DateTimePrecision.Second,
                 9 or null => P.DateTimePrecision.Fraction,
-                _ => throw new Exception("")
+                _ => throw new ArgumentException($"Unsupported Time precision for boundary operation: {precision}")
             };
 
             return P.Time.FromDateTimeOffset(dto, dtPrecision);
         }
+
+        /// <summary>
+        /// Compares the singleton Quantity with the singleton other Quantity and determine their relationship to each other. Comparable means that both 
+        /// have values and that the code and system for the units are the same (irrespective of system) or both have code + system, system is recognized 
+        /// by the FHIRPath implementation and the codes are comparable within that code system. E.g. days and hours or inches and cm
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns></returns>
+        internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r).Success;
     }
 }
