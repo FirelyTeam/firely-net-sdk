@@ -47,7 +47,8 @@ namespace Hl7.Fhir.Serialization
         /// Perform the parse time validation on the deserialized object even if parsing issues occurred
         /// </summary>
         /// <remarks>
-        /// This is useful for "strict mode" once pass validators
+        /// This is useful for "strict mode" once pass validators and may result in spurious error messages
+        /// from validating incomplete content
         /// </remarks>
         public bool ValidateOnFailedParse { get; init; } = false;
 
