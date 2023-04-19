@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         [DynamicData(nameof(TestDeserializeResourceData))]
         [DynamicData(nameof(TestDeserializeNestedResource))]
-        public void TestDeserializeResource(object testObject, JsonTokenType tokenAfterParsing, params CodedException[] errors)
+        public void TestDeserializeResource(object testObject, JsonTokenType tokenAfterParsing, params string[] errors)
         {
             var reader = constructReader(testObject);
             reader.Read();
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
             var state = new FhirJsonPocoDeserializerState();
             _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
-            assertErrors(state.Errors, errors.Select(e => e.ErrorCode).ToArray());
+            assertErrors(state.Errors, errors);
             reader.TokenType.Should().Be(tokenAfterParsing);
         }
 
