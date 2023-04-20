@@ -46,18 +46,11 @@ namespace Hl7.Fhir.Rest
         /// <param name="inspector"></param>
         /// <param name="settings"></param>
         public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
+            : this(endpoint, inspector, 
+                  settings ?? new(), 
+                  new(endpoint, (settings ?? new()).Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null))
         {
-            Inspector = inspector;
-            Settings = settings ?? new FhirClientSettings();
-            Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings?.SerializationEngine ?? 
-                new ElementModelSerializationEngine(Inspector, Settings.ParserSettings);
-
-            HttpClientRequester requester = new(Endpoint, Settings.Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null);
-            Requester = requester;
-
-            // Expose default request headers to user.
-            RequestHeaders = requester.Client.DefaultRequestHeaders;
+            // Nothing
         }
 
         /// <summary>
@@ -75,14 +68,19 @@ namespace Hl7.Fhir.Rest
         /// <param name="httpClient"></param>
         /// <param name="inspector"></param>
         public BaseFhirClient(Uri endpoint, HttpClient httpClient, ModelInspector inspector, FhirClientSettings? settings = null)
+            : this(endpoint, inspector, settings ?? new(), new(endpoint, httpClient))
+        {
+            // Nothing
+        }
+
+        internal BaseFhirClient(Uri endpoint, ModelInspector inspector, FhirClientSettings settings, HttpClientRequester requester)
         {
             Inspector = inspector;
-            Settings = (settings ?? new FhirClientSettings());
+            Settings = settings;
             Endpoint = getValidatedEndpoint(endpoint);
-            _serializationEngine = settings?.SerializationEngine ?? 
-                new ElementModelSerializationEngine(Inspector, Settings.ParserSettings);
+            _serializationEngine = settings.SerializationEngine ??
+                FhirSerializationEngineFactory.ElementModel.FromParserSettings(Inspector, settings.ParserSettings ?? new());
 
-            HttpClientRequester requester = new(Endpoint, httpClient);
             Requester = requester;
 
             // Expose default request headers to user.

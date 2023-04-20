@@ -22,7 +22,8 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public static BaseFhirClient WithOriginalDeserializer(this BaseFhirClient client)
         {
-            client.Settings.SerializationEngine = new ElementModelSerializationEngine(client.Inspector, client.Settings.ParserSettings);
+            client.Settings.SerializationEngine = 
+                FhirSerializationEngineFactory.ElementModel.FromParserSettings(client.Inspector, client.Settings.ParserSettings ?? new());
             return client;
         }
 
@@ -80,6 +81,26 @@ namespace Hl7.Fhir.Rest
         public static BaseFhirClient WithBackwardsCompatibleOriginalDeserializer(this BaseFhirClient client)
         {
             client.Settings.SerializationEngine = FhirSerializationEngineFactory.ElementModel.BackwardsCompatible(client.Inspector);
+            return client;
+        }
+
+        /// <summary>
+        /// Configures the FhirClient to use the newer POCO-based serializer, configured to ignore all errors.
+        /// NB: This may cause data loss.
+        /// </summary>
+        public static BaseFhirClient WithOstrichModePocoDeserializer(this BaseFhirClient client)
+        {
+            client.Settings.SerializationEngine = FhirSerializationEngineFactory.Poco.Ostrich(client.Inspector);
+            return client;
+        }
+
+        /// <summary>
+        /// Configures the FhirClient to use the original serializer, configured to ignore all errors.
+        /// NB: This may cause data loss.
+        /// </summary>
+        public static BaseFhirClient WithOstrichModeOriginalDeserializer(this BaseFhirClient client)
+        {
+            client.Settings.SerializationEngine = FhirSerializationEngineFactory.ElementModel.Ostrich(client.Inspector);
             return client;
         }
     }

@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
         // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
         // ==========================================
         internal static readonly FhirXmlException UNKNOWN_RESOURCE_TYPE = new(UNKNOWN_RESOURCE_TYPE_CODE, "Unknown type '{0}' found in root property.");
-        internal static readonly FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE = new(RESOURCE_TYPE_NOT_A_RESOURCE_CODE, "Data type '{0}' in property 'resourceType' is not a type of resource.");
+        internal static readonly FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE = new(RESOURCE_TYPE_NOT_A_RESOURCE_CODE, "Data type '{0}' at the root is not a type of resource.");
         internal static readonly FhirXmlException UNKNOWN_ELEMENT = new(UNKNOWN_ELEMENT_CODE, "Encountered unrecognized element '{0}'.");
         internal static readonly FhirXmlException CHOICE_ELEMENT_HAS_NO_TYPE = new(CHOICE_ELEMENT_HAS_NO_TYPE_CODE, "Choice element '{0}' is not suffixed with a type.");
         internal static readonly FhirXmlException CHOICE_ELEMENT_HAS_UNKNOWN_TYPE = new(CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE, "Choice element '{0}' is suffixed with an unrecognized type '{1}'.");
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Serialization
         internal static readonly FhirXmlException ELEMENT_NOT_IN_SEQUENCE = new(ELEMENT_NOT_IN_SEQUENCE_CODE, "Element with name '{0}' was found multiple times, but not in sequence.");
 
         // Empty values will result in nulls, but no data is lost.
-        internal static readonly FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE = new(ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content");
+        internal static readonly FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE = new(ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non-whitespace content");
         internal static readonly FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN = new(ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, "Element '{0}' must have child elements and / or a value attribute");
 
         // Xml paraphernalia that do not contain data so they can be safely skipped.

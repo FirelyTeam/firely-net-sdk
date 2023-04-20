@@ -15,6 +15,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.Linq;
+using System.Net.Http.Headers;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -26,12 +27,20 @@ namespace Hl7.Fhir.Serialization
     internal class ElementModelSerializationEngine : IFhirSerializationEngine
     {
         private readonly ModelInspector _inspector;
-        private readonly ParserSettings _settings;
+        private readonly FhirXmlParsingSettings _xmlSettings;
+        private readonly FhirJsonParsingSettings _jsonSettings;
+        private readonly PocoBuilderSettings _pocoSettings;
 
-        public ElementModelSerializationEngine(ModelInspector inspector, ParserSettings? settings)
+        public ElementModelSerializationEngine(
+            ModelInspector inspector, 
+            FhirXmlParsingSettings xmlSettings, 
+            FhirJsonParsingSettings jsonSettings, 
+            PocoBuilderSettings pocoSettings)
         {
             _inspector = inspector;
-            _settings = settings ?? new ParserSettings();
+            _xmlSettings = xmlSettings;
+            _jsonSettings = jsonSettings;
+            _pocoSettings = pocoSettings;
         }
 
         public static bool TryUnpackElementModelException(DeserializationFailedException dfe, out FormatException? fe)
@@ -48,17 +57,15 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public Resource DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data));
+        public Resource DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data, settings: _xmlSettings));
 
-        public Resource DeserializeFromJson(string data) => deserialize(() => FhirJsonNode.Parse(data));
+        public Resource DeserializeFromJson(string data) => deserialize(() => FhirJsonNode.Parse(data, settings: _jsonSettings));
 
         private Resource deserialize(Func<ISourceNode> deserializer)
         {
-            var settings = BaseFhirParser.BuildPocoBuilderSettings(_settings);
-
             try
             {
-                return (Resource)deserializer().ToPoco(_inspector, null, settings);
+                return (Resource)deserializer().ToPoco(_inspector, null, _pocoSettings);
             }
             catch (FormatException fe)
             {

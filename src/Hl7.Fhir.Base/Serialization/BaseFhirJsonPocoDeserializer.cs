@@ -674,6 +674,7 @@ namespace Hl7.Fhir.Serialization
             (object? partial, FhirJsonException? error) result = reader.TokenType switch
             {
                 JsonTokenType.Null => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL.With(ref reader)),
+                JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL.With(ref reader)),
                 JsonTokenType.String when implementingType == typeof(string) => new(reader.GetString(), null),
                 JsonTokenType.String when implementingType == typeof(byte[]) =>
                                 !Settings.DisableBase64Decoding ? readBase64(ref reader) : new(reader.GetString(), null),

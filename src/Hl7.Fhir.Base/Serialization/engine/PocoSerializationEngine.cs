@@ -11,14 +11,9 @@
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
-using Hl7.Fhir.Validation;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -30,7 +25,6 @@ namespace Hl7.Fhir.Serialization
     {
         private delegate bool TryDeserializer(string data, out Resource? instance, out IEnumerable<CodedException> issues);
 
-        private readonly JsonSerializerOptions _options;
         private readonly ModelInspector _inspector;
         private readonly Predicate<CodedException> _ignoreFilter;
       
@@ -41,7 +35,6 @@ namespace Hl7.Fhir.Serialization
         /// <param name="ignoreFilter">A predicate that returns true for issues that should not be reported.</param>
         public PocoSerializationEngine(ModelInspector inspector, Predicate<CodedException> ignoreFilter)
         {
-            _options = new JsonSerializerOptions().ForFhir(inspector);
             _inspector = inspector;
             _ignoreFilter = ignoreFilter;
         }
@@ -52,7 +45,6 @@ namespace Hl7.Fhir.Serialization
         /// <param name="inspector">Reflection data of the POCO model to use.</param>
         public PocoSerializationEngine(ModelInspector inspector)
         {
-            _options = new JsonSerializerOptions().ForFhir(inspector);
             _inspector = inspector;
             _ignoreFilter = _ => false;
         }
@@ -81,7 +73,7 @@ namespace Hl7.Fhir.Serialization
 
         public string SerializeToXml(Resource instance) => new BaseFhirXmlPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
 
-        public string SerializeToJson(Resource instance) => JsonSerializer.Serialize(instance, _options);
+        public string SerializeToJson(Resource instance) => new BaseFhirJsonPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
     }
 }
 
