@@ -50,17 +50,17 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private const string POCO_UNKNOWN_ELEMENT = "*Encountered unrecognized * 'activex'*";
         private const string POCO_INCORRECT_CHOICE = "*Value is of type 'string', which is not an allowed choice*";
-        private const string POCO_EMPTY_VALUE = "*Attributes cannot be empty*";
+        private const string POCO_EMPTY_VALUE = "* cannot be empty. Either they are absent*";
 
         [TestMethod]
-        //[DataRow(correctXml, null, null, null)]
-        //[DataRow(permissiveXml, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE)]
-        //[DataRow(bwCompatibleXml, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null)]
-        //[DataRow(wrongXml, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE)]
-        //[DataRow(correctJson, null, null, null)]
+        [DataRow(correctXml, null, null, null)]
+        [DataRow(permissiveXml, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE)]
+        [DataRow(bwCompatibleXml, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null)]
+        [DataRow(wrongXml, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE)]
+        [DataRow(correctJson, null, null, null)]
         [DataRow(permissiveJson, null, POCO_EMPTY_VALUE, POCO_EMPTY_VALUE)]
-        //[DataRow(bwCompatibleJson, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null)]
-        //[DataRow(wrongJson, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE)]
+        [DataRow(bwCompatibleJson, POCO_UNKNOWN_ELEMENT, POCO_UNKNOWN_ELEMENT, null)]
+        [DataRow(wrongJson, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE, POCO_INCORRECT_CHOICE)]
         public void TestParsingPoco(string data, string? permissive, string? strict, string? bw)
         {
             test(data, FhirSerializationEngineFactory.Poco.Recoverable(TESTINSPECTOR), permissive);

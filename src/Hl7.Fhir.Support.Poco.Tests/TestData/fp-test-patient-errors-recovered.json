@@ -29,7 +29,6 @@
           "given": [ "This should be an array" ]
         },
         {
-          "id": "anothername",
           "use": "usual",
           "given": [ "Eveline", null ],
           "_given": [

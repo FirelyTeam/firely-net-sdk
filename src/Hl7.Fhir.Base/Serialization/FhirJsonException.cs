@@ -54,6 +54,7 @@ namespace Hl7.Fhir.Serialization
 
         public const string PRIMITIVE_ARRAYS_ONLY_NULL_CODE = "JSON125";
         public const string INCOMPATIBLE_SIMPLE_VALUE_CODE = "JSON126";
+        public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
 
         // ==========================================
         // Unrecoverable Errors
@@ -76,6 +77,7 @@ namespace Hl7.Fhir.Serialization
 
         // The serialization contained a json null where it is not allowed, but a null does not contain data anyway.
         internal static readonly FhirJsonException EXPECTED_PRIMITIVE_NOT_NULL = new(EXPECTED_PRIMITIVE_NOT_NULL_CODE, "Expected a primitive value, not a json null.");
+        internal static readonly FhirJsonException PROPERTY_MAY_NOT_BE_EMPTY = new(PROPERTY_MAY_NOT_BE_EMPTY_CODE, "Properties cannot be empty strings. Either they are absent, or they are present with at least one character of non-whitespace content.");
 
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
         internal static readonly FhirJsonException INCORRECT_BASE64_DATA = new(INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.");
@@ -124,7 +126,8 @@ namespace Hl7.Fhir.Serialization
             RESOURCETYPE_UNEXPECTED_CODE or
             OBJECTS_CANNOT_BE_EMPTY_CODE or
             ARRAYS_CANNOT_BE_EMPTY_CODE or
-            PRIMITIVE_ARRAYS_ONLY_NULL_CODE;
+            PRIMITIVE_ARRAYS_ONLY_NULL_CODE or
+            PROPERTY_MAY_NOT_BE_EMPTY_CODE;
 
         /// <summary>
         /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 

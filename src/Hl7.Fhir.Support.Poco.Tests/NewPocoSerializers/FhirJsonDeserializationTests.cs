@@ -35,6 +35,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow("enumvalue", null, typeof(UriFormat), null, COVE.INVALID_CODED_VALUE_CODE)]
         [DataRow(true, "true", typeof(Enum), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
         [DataRow("hi!", "hi!", typeof(int), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
+        [DataRow("", null, typeof(string), null, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE)]
 
         [DataRow(3, 3, typeof(decimal), null, null)]
         [DataRow(3, 3, typeof(uint), null, null)]
@@ -199,6 +200,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(4, typeof(Base64Binary), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4")]
 
         [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
+        [DataRow("", typeof(FhirDateTime), ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE, null)]
         [DataRow("2007-", typeof(FhirDateTime), COVE.DATETIME_LITERAL_INVALID_CODE, "2007-")]
         [DataRow(4.45, typeof(FhirDateTime), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4.45")]
 
@@ -589,6 +591,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.INCOMPATIBLE_SIMPLE_VALUE_CODE,
                     ERR.EXPECTED_START_OF_ARRAY_CODE,
                     ERR.UNKNOWN_PROPERTY_FOUND_CODE, // mother is not a property of HumanName
+                    ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
                     ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, // family is not an array,
                     //ERR.PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE, // given and _given not the same length
                     ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE, // telecom use cannot be null
