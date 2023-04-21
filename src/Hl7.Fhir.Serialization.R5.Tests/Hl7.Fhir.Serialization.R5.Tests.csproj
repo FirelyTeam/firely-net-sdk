@@ -5,6 +5,10 @@
 	<Import Project="..\firely-net-sdk-tests.props" />
 
 	<PropertyGroup>
+		<DefineConstants>R5</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup>
 		<AssemblyName>Hl7.Fhir.Serialization.R5.Tests</AssemblyName>
 	</PropertyGroup>
 
