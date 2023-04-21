@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         private const string POCO_UNKNOWN_ELEMENT = "*Encountered unrecognized * 'activex'*";
         private const string POCO_INCORRECT_CHOICE = "*Value is of type 'string', which is not an allowed choice*";
-        private const string POCO_EMPTY_VALUE = "* cannot be empty. Either they are absent*";
+        private const string POCO_EMPTY_VALUE = "* cannot be empty*. Either they are absent*";
 
         [TestMethod]
         [DataRow(correctXml, null, null, null)]
