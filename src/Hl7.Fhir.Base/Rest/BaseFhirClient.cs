@@ -8,7 +8,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -19,8 +18,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using static Hl7.Fhir.Rest.HttpContentParsers;
@@ -1061,7 +1058,7 @@ namespace Hl7.Fhir.Rest
             // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
             // of the server, add a suggestion about this in the (legacy) parsing exception.
             var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
-            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) = 
+            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
                 await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError)
                 .ConfigureAwait(false);
 
@@ -1168,7 +1165,7 @@ namespace Hl7.Fhir.Rest
             try
             {
                 Settings = Settings.Clone();
-                Settings.ParserSettings = new Serialization.ParserSettings() { AllowUnrecognizedEnums = true };
+                Settings.ParserSettings = new() { AllowUnrecognizedEnums = true };
                 serverVersion = await getFhirVersionOfServer(ct).ConfigureAwait(false);
             }
             catch (FormatException fe)

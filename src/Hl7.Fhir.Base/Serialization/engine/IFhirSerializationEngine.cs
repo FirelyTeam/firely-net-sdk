@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     public static class FhirSerializationEngine
     {
         /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured whith defaults,
+        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured with defaults,
         /// which uses the "old" TypedElement-based parser and serializer.
         /// </summary>
         public static IFhirSerializationEngine ElementModel(ModelInspector inspector, ParserSettings? settings) =>
@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="inspector"></param>
         /// <returns></returns>
-        public static IFhirSerializationEngine Poco(ModelInspector inspector) =>  new PocoSerializationEngine(inspector);
+        public static IFhirSerializationEngine Poco(ModelInspector inspector) => new PocoSerializationEngine(inspector);
     }
 
     /// <summary>
