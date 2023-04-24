@@ -9,7 +9,8 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use .NET Core sdk $(NET_CORE_SDK)'
   inputs:
-    version: $(NET_CORE_SDK)
+    packageType: runtime
+    version: 6.0.x
 - task: DownloadPipelineArtifact@2
   inputs:
     displayName: Download Build artifacts
