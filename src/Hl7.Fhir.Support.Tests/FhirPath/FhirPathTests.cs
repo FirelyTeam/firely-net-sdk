@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Support.Tests
                     ("@2014.lowBoundary() = @2014-01-01T00:00:00.000", true),
                     ("@2014.lowBoundary(8) = @2014-01-01", true),
                     ("@2014-01-01T08.lowBoundary(17) = @2014-01-01T08:00:00.000", true),
-                    ("@T10:30.lowBoundary(9) = @T10:30:00.0001", true),
+                    ("@T10:30.lowBoundary(9) = @T10:30:00.000", true),
                     ("@T10:30:00.000.lowBoundary() = @T10:30:00.000", true),
                     ("@T10:30.lowBoundary() = @T10:30:00", true),
                 }.Select(t => new object[] { t.expression, t.expected });
