@@ -124,6 +124,7 @@ namespace Hl7.Fhir.Support.Tests
                     ("1.587 'cm'.highBoundary(8) = 1.58750000 'cm'", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
                     ("@2014.highBoundary(8) = @2014-12-31", true),
+                    ("@2014-03.highBoundary(8) = @2014-03-31", true),
                     ("@2014-02.highBoundary(8) = @2014-02-28", true),
                     ("@2020-02.highBoundary(8) = @2020-02-29", true), // leap year
                     ("@T10:30.highBoundary(9) = @T10:30:59.999", true),
