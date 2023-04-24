@@ -121,8 +121,10 @@ namespace Hl7.Fhir.Tests
             if (actual.Contains(".000Z")) actual = actual.Replace(".000Z", "Z");
             actual = actual.Replace("\n", "");
             actual = actual.Replace("\r", "");
+            actual = actual.Replace("\t", "");
             expected = expected.Replace("\n", "");
             expected = expected.Replace("\r", "");
+            expected = expected.Replace("\t", "");
             expected = expected.Trim();
             actual = actual.Trim();
             expected = expected.Replace(" ", "");
