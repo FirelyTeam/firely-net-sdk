@@ -443,6 +443,24 @@ namespace Hl7.Fhir.Support.Poco.Tests
         }
 
         [TestMethod]
+        public void TryDeserializeDatatypeWithId()
+        {
+            var content =
+                """
+                    <Patient xmlns="http://hl7.org/fhir">
+                      <birthDate id="314159" value="1932-09-24"/>
+                    </Patient>
+                """;
+
+            var reader = constructReader(content);
+            var deserializer = getTestDeserializer(new());
+            var resource = deserializer.DeserializeResource(reader);
+            resource.Should().NotBeNull();
+
+            resource.As<TestPatient>().BirthDateElement.ElementId.Should().Be("314159");
+        }
+
+        [TestMethod]
         public void TestCustomValidators()
         {
             test(new FhirJsonDeserializationTests.CustomComplexValidator());
