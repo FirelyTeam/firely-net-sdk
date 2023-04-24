@@ -1,46 +1,44 @@
+using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Hl7.Fhir.Tests;
 using Hl7.Fhir.Tests.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Hl7.Fhir.Core.AsyncTests
 {
+    [TestClass]
     public class UpdateRefreshDeleteAsyncTests
     {
         private static string _endpoint = FhirClientTests.TestEndpoint.OriginalString;
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient()
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        [DataRow(DecompressionMethods.None)]
+        //[DataRow(DecompressionMethods.GZip)], Ignore("FS returns 'oops something went wrong'")]
+        public async System.Threading.Tasks.Task UpdateDelete_UsingResourceIdentity_ResultReturnedHttpClient(DecompressionMethods method)
         {
-            using (var client = new FhirClient(_endpoint))
-            {
-                client.Settings.PreferredFormat = ResourceFormat.Json;
-                client.Settings.ReturnPreference = ReturnPreference.Representation;
-                await updateDelete(client);
-            }
-        }
+            using var client = new FhirClient(_endpoint, new FhirClientSettings {  RequestBodyCompressionMethod = method });
 
-        private static async System.Threading.Tasks.Task updateDelete(BaseFhirClient client)
-        {
+            var patId = "async-test-patient." + FhirClientTests.FhirReleaseString;
             var pat = new Patient()
             {
                 Name = new List<HumanName>()
                 {
                     new HumanName()
                     {
-                        Given = new List<string>() {"test_given"},
+                        Given = new List<string>() { "test_given" },
                         Family = "test_family",
                     }
                 },
-                Id = "async-test-patient"
+                Id = patId
             };
+
             // Create the patient
             Console.WriteLine("Creating patient...");
-            Patient p = await client.UpdateAsync<Patient>(pat);
+            Patient p = await client.UpdateAsync(pat);
             Assert.IsNotNull(p);
 
             // Refresh the patient
@@ -52,15 +50,10 @@ namespace Hl7.Fhir.Core.AsyncTests
             await client.DeleteAsync(p);
 
             Console.WriteLine("Reading patient...");
-            async System.Threading.Tasks.Task act()
-            {
-                await client.ReadAsync<Patient>(new ResourceIdentity("/Patient/async-test-patient"));
-            }
+            var act = () => client.ReadAsync<Patient>(ResourceIdentity.Build("Patient", patId));
 
             // VERIFY //
-            await ExceptionAssert.Throws<FhirOperationException>(act);
-
-            Console.WriteLine("Test Completed");
+            await act.Should().ThrowAsync<FhirOperationException>();
         }
     }
 }

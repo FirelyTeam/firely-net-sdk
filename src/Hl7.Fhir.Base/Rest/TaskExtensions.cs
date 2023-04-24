@@ -1,3 +1,13 @@
+/* 
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
+#nullable enable
+
 using Hl7.Fhir.Model;
 using System;
 using System.Threading.Tasks;
@@ -7,7 +17,7 @@ namespace Hl7.Fhir.Rest
 {
     public static class TaskExtensions
     {
-        public static T WaitResult<T>(this Task<T> task) where T: class 
+        public static T? WaitResult<T>(this Task<T?> task) where T: class 
         {
             if (task == null) return null;
 
@@ -18,7 +28,7 @@ namespace Hl7.Fhir.Rest
             catch(AggregateException ae)
             {
                 //throw ae;
-                throw ae.Flatten().InnerException;
+                throw ae.Flatten().InnerException!;
             }
 
             return task.Result;
@@ -40,7 +50,7 @@ namespace Hl7.Fhir.Rest
             catch (AggregateException ae)
             {
                 //throw ae;
-                throw ae.Flatten().InnerException;
+                throw ae.Flatten().InnerException!;
             }
         }
 
@@ -52,3 +62,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore

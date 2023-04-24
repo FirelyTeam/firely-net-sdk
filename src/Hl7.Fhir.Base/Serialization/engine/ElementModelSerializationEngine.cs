@@ -48,20 +48,21 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        public Resource? DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data));
+        public Resource DeserializeFromXml(string data) => deserialize(() => FhirXmlNode.Parse(data));
 
-        public Resource? DeserializeFromJson(string data) => deserialize(() => FhirJsonNode.Parse(data));
+        public Resource DeserializeFromJson(string data) => deserialize(() => FhirJsonNode.Parse(data));
 
-        private Resource? deserialize(Func<ISourceNode> deserializer)
+        private Resource deserialize(Func<ISourceNode> deserializer)
         {
             var settings = BaseFhirParser.BuildPocoBuilderSettings(_settings ?? ParserSettings.CreateDefault());
 
             try
             {
-                return deserializer().ToPoco(_inspector, null, settings) as Resource;
+                return (Resource)deserializer().ToPoco(_inspector, null, settings);
             }
             catch (FormatException fe)
             {
+                // Note: this will catch StructuralTypeException as well, since that is a subclass of FormatException.
                 throw new DeserializationFailedException(null, new ElementModelParserException(fe));
             }
             catch (InvalidOperationException ioe)

@@ -8,7 +8,6 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -21,6 +20,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using static Hl7.Fhir.Rest.HttpContentParsers;
 
 namespace Hl7.Fhir.Rest
 {
@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Rest
             Endpoint = getValidatedEndpoint(endpoint);
             _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
 
-            HttpClientRequester requester = new(Endpoint, Settings, messageHandler ?? makeDefaultHandler(), messageHandler == null);
+            HttpClientRequester requester = new(Endpoint, Settings.Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null);
             Requester = requester;
 
             // Expose default request headers to user.
@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Rest
             Endpoint = getValidatedEndpoint(endpoint);
             _serializationEngine = settings?.SerializationEngine ?? FhirSerializationEngine.ElementModel(_inspector, Settings.ParserSettings);
 
-            HttpClientRequester requester = new(Endpoint, Settings, httpClient);
+            HttpClientRequester requester = new(Endpoint, httpClient);
             Requester = requester;
 
             // Expose default request headers to user.
@@ -126,8 +126,19 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public Bundle.ResponseComponent? LastResult { get; private set; }
 
-        public virtual byte[]? LastBody => LastResult?.GetBody();
-        public virtual string? LastBodyAsText => LastResult?.GetBodyAsText();
+        /// <summary>
+        /// The raw body returned by the last http request.
+        /// </summary>
+        public virtual byte[]? LastBody { get; private set; }
+
+        /// <summary>
+        /// The body returned by the last http request as text (or null if it could not be parsed as text).
+        /// </summary>
+        public virtual string? LastBodyAsText { get; private set; }
+
+        /// <summary>
+        /// The body returned by the last http request as a FHIR resource (or null if the body did not have a FHIR payload).
+        /// </summary>
         public virtual Resource? LastBodyAsResource { get; private set; }
 
         private static Uri getValidatedEndpoint(Uri endpoint)
@@ -1033,126 +1044,120 @@ namespace Hl7.Fhir.Rest
 
             cancellation.ThrowIfCancellationRequested();
 
-            await verifyServerVersion(cancellation);
-            
+            await verifyServerVersion(cancellation).ConfigureAwait(false);
+
             var request = tx.Entry[0];
+            var requestMessage = request.ToHttpRequestMessage(
+                    Requester.BaseUrl,
+                    _serializationEngine,
+                    Settings.UseFhirVersionInAcceptHeader ? fhirVersion : null,
+                    Settings);
 
-            EntryResponse entryResponse = await Requester.ExecuteAsync(request, _serializationEngine, fhirVersion, cancellation).ConfigureAwait(false);
-            TypedEntryResponse typedEntryResponse = new TypedEntryResponse();
+            using var responseMessage = await Requester.ExecuteAsync(requestMessage, cancellation).ConfigureAwait(false);
 
-            try
-            {
-                typedEntryResponse = await entryResponse.ToTypedEntryResponseAsync(_inspector).ConfigureAwait(false);
-            }
-            catch (UnsupportedBodyTypeException ex)
-            {
+            // Validate the response and throw the appropriate exceptions. Also, if we have *not* verified the FHIR version
+            // of the server, add a suggestion about this in the (legacy) parsing exception.
+            var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
+            (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
+                await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError)
+                .ConfigureAwait(false);
 
-                typedEntryResponse.Status = entryResponse.Status;
+            // If an error occurred while trying to interpret and validate the response, we will bail out now.
+            if (issue is not null) throw issue;
 
-                var errorResult = new Bundle.EntryComponent
-                {
-                    Response = new Bundle.ResponseComponent()
-                };
-                errorResult.Response.Status = typedEntryResponse.Status;
+            // If the response is an operation outcome, add it to response.outcome.
+            // This is necessary for when a client uses return=OperationOutcome as a prefer header.
+            // See also issue #1681.
+            if (LastBodyAsResource is OperationOutcome oo)
+                LastResult.Outcome = oo;
 
-                OperationOutcome operationOutcome = OperationOutcome.ForException(ex, OperationOutcome.IssueType.Invalid);
-
-                LastResult = errorResult.Response;
-                LastBodyAsResource = errorResult.Resource;
-
-                _ = Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
-                throw FhirOperationException.BuildFhirOperationException(code, operationOutcome);
-            }
-
-            Bundle.EntryComponent? response = null;
-
-            try
-            {
-                response = typedEntryResponse.ToBundleEntry(_inspector, Settings.ParserSettings ?? ParserSettings.CreateDefault());
-
-                LastResult = response.Response;
-                LastBodyAsResource = response.Resource;
-
-                if (!typedEntryResponse.IsSuccessful())
-                {
-                    _ = Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
-                    throw FhirOperationException.BuildFhirOperationException(code, response.Resource, typedEntryResponse.GetBodyAsText());
-                }
-
-            }
-            catch (AggregateException ae)
-            {
-                throw ae.GetBaseException();
-            }
-            catch (StructuralTypeException ste)
-            {
-                if (!Settings.VerifyFhirVersion)
-                {
-                    throw new StructuralTypeException(ste.Message + Environment.NewLine +
-                        $"Are you connected to a FHIR server with FHIR version {fhirVersion}? " +
-                        "Try the FhirClientSetting.VerifyFhirVersion to ensure that you are connected to a FHIR server with the correct FHIR version.",
-                        ste.InnerException);
-
-                }
-                throw;
-
-            }
-
-            if (!expect.Select(sc => ((int)sc).ToString()).Contains(typedEntryResponse.Status))
-            {
-                _ = Enum.TryParse(typedEntryResponse.Status, out HttpStatusCode code);
-                throw new FhirOperationException("Operation concluded successfully, but the return status {0} was unexpected".FormatWith(typedEntryResponse.Status), code);
-            }
-
-            Resource? result;
-
-            // Special feature: if ReturnFullResource was requested (using the Prefer header), but the server did not return the resource
+            // If the full representation was requested (using the Prefer header), but the server did not return the resource
             // (or it returned an OperationOutcome) - explicitly go out to the server to get the resource and return it. 
-            // This behavior is only valid for PUT and POST requests, where the server may device whether or not to return the full body of the alterend resource.
-            var noRealBody = response.Resource == null || (response.Resource is OperationOutcome && string.IsNullOrEmpty(response.Resource.Id));
-            if (noRealBody && BaseFhirClient.isPostOrPut(request)
-                && Settings.ReturnPreference == ReturnPreference.Representation && response.Response.Location != null
-                && new ResourceIdentity(response.Response.Location).IsRestResourceIdentity()) // Check that it isn't an operation too
-            {
-                result = await GetAsync(response.Response.Location).ConfigureAwait(false);
-            }
-            else
-                result = response.Resource;
+            // This behavior is only valid for PUT, POST and PATCH requests, where the server may device whether or not to return
+            // the full body of the altered resource.
+            var noRealBody = LastBodyAsResource is null || (LastBodyAsResource is OperationOutcome && string.IsNullOrEmpty(LastBodyAsResource.Id));
+            var shouldFetchFullRepresentation = noRealBody
+                && isPostOrPutOrPatch(request)
+                && Settings.ReturnPreference == ReturnPreference.Representation
+                && LastResult.Location is string fetchLocation
+                && new ResourceIdentity(fetchLocation).IsRestResourceIdentity(); // Check that it isn't an operation too
 
-            if (result == null) return null;
+            // NOTE: Since these lines may call GetAsync(), the executeAsync() method we're in might get called "recursively",
+            // and all state (e.g. Last Result etc) will be overwritten from this point on.
+            var execResult = shouldFetchFullRepresentation ?
+                await GetAsync(LastResult.Location).ConfigureAwait(false) : LastBodyAsResource;
 
             // We have a success code (2xx), we have a body, but the body may not be of the type we expect.
-            if (result is not TResource)
+            return execResult switch
             {
-                // If this is an operationoutcome, that may still be allright. Keep the OperationOutcome in 
-                // the LastResult, and return null as the result. Otherwise, throw.
-                if (result is OperationOutcome)
-                    return null;
+                // We have the expected resource type, fine!
+                TResource resource => resource,
 
-                var message = String.Format("Operation {0} on {1} expected a body of type {2} but a {3} was returned", request.Request.Method,
-                    request.Request.Url, typeof(TResource).Name, result.GetType().Name);
+                // If this is an operationoutcome, that may still be all right. The OperationOutcome has 
+                // been stored in the LastResult, and return null as the result of the function.
+                OperationOutcome => null,
 
-                _ = Enum.TryParse(response.Response.Status, out HttpStatusCode code);
-                throw new FhirOperationException(message, code);
-            }
-            else
-                return result as TResource;
+                // If there's nothing to return, return null. Note that the LastBodyXXXX properties can still contain useful data.
+                null => null,
+
+                // Unexpected response type in the body, throw.
+                _ => throw new FhirOperationException(unexpectedBodyType(request.Request), responseMessage.StatusCode)
+            };
+
+            static string unexpectedBodyType(Bundle.RequestComponent rc) => $"Operation {rc.Method} on {rc.Url} " +
+                    $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
         }
 
-        private static bool isPostOrPut(Bundle.EntryComponent interaction)
+        /// <summary>
+        /// Validates the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions.
+        /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
+        /// </summary>        
+        /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
+        /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
+        /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
+        /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine)"/>
+        internal static async Task<ResponseData> ValidateResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? suggestedVersionOnParseError)
         {
-            var method = interaction.Request.Method;
-            return method == Bundle.HTTPVerb.POST || method == Bundle.HTTPVerb.PUT;
+            var responseData = (await responseMessage.ExtractResponseData(engine).ConfigureAwait(false))
+                .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
+                .TranslateLegacyParserException(suggestedVersionOnParseError);
+
+            // If extracting the data caused an issue, return it immediately
+            if (responseData.Issue is not null)
+                return responseData;
+
+            // Body is ok, but the operation failed, signal this with a FhirOperationException.
+            else if (!responseMessage.IsSuccessStatusCode)
+                return responseData with
+                {
+                    Issue = FhirOperationException.BuildFhirOperationException(responseMessage.StatusCode, responseData.BodyResource, responseData.BodyText)
+                };
+
+            // Body ok, and operation succeeded, but if the result was unexpected, report failure anyway.
+            else if (!expect.Contains(responseMessage.StatusCode))
+                return responseData with
+                {
+                    Issue = new FhirOperationException(
+                        $"Operation concluded successfully, but the return status {responseMessage.StatusCode} was unexpected",
+                        responseMessage.StatusCode)
+                };
+
+            // We're all good!               
+            else
+                return responseData;
         }
 
-        private bool versionChecked = false;
+        private static bool isPostOrPutOrPatch(Bundle.EntryComponent interaction) =>
+            interaction.Request.Method is Bundle.HTTPVerb.POST or Bundle.HTTPVerb.PUT or Bundle.HTTPVerb.PATCH;
+
+        private bool _versionChecked = false;
 
         private async Task verifyServerVersion(CancellationToken ct)
         {
             if (!Settings.VerifyFhirVersion) return;
 
-            if (versionChecked) return;
-            versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
+            if (_versionChecked) return;
+            _versionChecked = true;      // So we can now start calling Conformance() without getting into a loop
 
             string? serverVersion;
             var settings = Settings;
@@ -1160,8 +1165,8 @@ namespace Hl7.Fhir.Rest
             try
             {
                 Settings = Settings.Clone();
-                Settings.ParserSettings = new Serialization.ParserSettings() { AllowUnrecognizedEnums = true };
-                serverVersion = await getFhirVersionOfServer(ct);
+                Settings.ParserSettings = new() { AllowUnrecognizedEnums = true };
+                serverVersion = await getFhirVersionOfServer(ct).ConfigureAwait(false);
             }
             catch (FormatException fe)
             {
@@ -1188,7 +1193,7 @@ namespace Hl7.Fhir.Rest
         private async Task<string?> getFhirVersionOfServer(CancellationToken ct)
         {
             var tx = new TransactionBuilder(Endpoint).CapabilityStatement(SummaryType.True).ToBundle();
-            var capabilityStatement = await executeAsync<Resource>(tx, HttpStatusCode.OK, ct);
+            var capabilityStatement = await executeAsync<Resource>(tx, HttpStatusCode.OK, ct).ConfigureAwait(false);
             if (capabilityStatement is null) return null;
 
             return capabilityStatement.AsReadOnlyDictionary().TryGetValue("fhirVersion", out var value) && value is PrimitiveType pt && pt.ObjectValue is string version

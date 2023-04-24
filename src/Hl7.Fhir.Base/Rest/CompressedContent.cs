@@ -1,4 +1,6 @@
-﻿/* 
+﻿#nullable enable
+
+/* 
  * This code has been copied and adapted from https://github.com/WebApiContrib/WebAPIContrib/blob/master/src/WebApiContrib/Content/CompressedContent.cs
  */
 
@@ -39,7 +41,7 @@ namespace Hl7.Fhir.Rest
             return false;
         }
 
-        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext? context)
         {
             Stream compressedStream = _method switch
             {
@@ -54,3 +56,5 @@ namespace Hl7.Fhir.Rest
         }
     }
 }
+
+#nullable restore

@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System;
 using System.IO;
@@ -20,22 +21,32 @@ namespace Hl7.Fhir.Rest
     public static class HttpUtil
     {
         #region << HTTP Headers >>
+
         /// <summary>
         /// "Content-Location" found in the HTTP Headers
         /// </summary>
         public const string CONTENTLOCATION = "Content-Location";
+
         /// <summary>
         /// "Location" found in the HTTP Headers
         /// </summary>
         public const string LOCATION = "Location";
+
         /// <summary>
         /// "Last-Modified" found in the HTTP Headers
         /// </summary>
         public const string LASTMODIFIED = "Last-Modified";
+
         /// <summary>
         /// "ETag" found in the HTTP Headers
         /// </summary>
         public const string ETAG = "ETag";
+
+        /// <summary>
+        /// The header used to communicate the Binary security context
+        /// </summary>
+        public const string SECURITYCONTEXT = "X-Security-Context";
+
         #endregion
 
         /// <summary>
@@ -182,6 +193,21 @@ namespace Hl7.Fhir.Rest
             return Regex.IsMatch(uri, RESTURI_PATTERN);
         }
 
+        public static bool IsBinaryEndpoint(string uri)
+        {
+            if (ResourceIdentity.IsRestResourceIdentity(uri))
+            {
+                var id = new ResourceIdentity(uri);
+
+                if (id.ResourceType != FhirTypeNames.BINARY_NAME) return false;
+
+                if (id.Id != null && Id.IsValidValue(id.Id)) return true;
+                if (id.VersionId != null && Id.IsValidValue(id.VersionId)) return true;
+            }
+
+            return false;
+        }
+
         public static bool IsInformational(this HttpStatusCode code)
         {
             return (int)code >= 100 && (int)code < 200;
@@ -223,7 +249,7 @@ namespace Hl7.Fhir.Rest
         Lenient
     }
 
-
+    [Obsolete("Use ReturnPreference and/or set UseAsync instead.")]
     public enum Prefer
     {
         /// <summary>
