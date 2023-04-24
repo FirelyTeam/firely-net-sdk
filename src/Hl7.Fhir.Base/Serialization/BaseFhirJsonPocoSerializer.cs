@@ -19,7 +19,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.Json;
 
@@ -110,9 +109,9 @@ namespace Hl7.Fhir.Serialization
                 if (filter?.TryEnterMember(member.Key, member.Value, propertyMapping) == false)
                     continue;
 
-                var propertyName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
-                            addSuffixToElementName(member.Key, member.Value) : member.Key;
-                var requiredType = propertyMapping?.FhirType.FirstOrDefault();
+                (string propertyName, Type? requiredType) = propertyMapping?.Choice == ChoiceType.DatatypeChoice
+                    ? addSuffixToElementName(member.Key, member.Value, propertyMapping.FhirType)
+                    : (member.Key, propertyMapping?.FhirType.FirstOrDefault());
 
                 if (member.Value is PrimitiveType pt)
                     serializeFhirPrimitive(propertyName, pt, writer, requiredType);
@@ -142,7 +141,7 @@ namespace Hl7.Fhir.Serialization
             writer.WriteEndObject();
         }
 
-        private static string addSuffixToElementName(string elementName, object elementValue)
+        private static (string, Type?) addSuffixToElementName(string elementName, object elementValue, Type[] types)
         {
             var typeName = elementValue switch
             {
@@ -151,7 +150,12 @@ namespace Hl7.Fhir.Serialization
                 _ => null
             };
 
-            return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName.Substring(1);
+            // determine type by name, when not found use the first type
+            Type? type = types.FirstOrDefault(t => t.Name.Equals(typeName, StringComparison.OrdinalIgnoreCase)) ?? types.FirstOrDefault();
+
+            return typeName is null
+                ? (elementName, type)
+                : (elementName + char.ToUpperInvariant(typeName[0]) + typeName.Substring(1), type);
         }
 
 
