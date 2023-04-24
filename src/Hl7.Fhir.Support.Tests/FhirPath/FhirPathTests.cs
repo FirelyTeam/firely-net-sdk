@@ -100,6 +100,7 @@ namespace Hl7.Fhir.Support.Tests
                     ("@2014.lowBoundary(6) = @2014-01", true),
                     ("@2014.lowBoundary() = @2014-01-01T00:00:00.000", true),
                     ("@2014.lowBoundary(8) = @2014-01-01", true),
+                    ("@2014-02.lowBoundary(8) = @2014-02-01", true),
                     ("@2014-01-01T08.lowBoundary(17) = @2014-01-01T08:00:00.000", true),
                     ("@T10:30.lowBoundary(9) = @T10:30:00.000", true),
                     ("@T10:30:00.000.lowBoundary() = @T10:30:00.000", true),
@@ -123,6 +124,8 @@ namespace Hl7.Fhir.Support.Tests
                     ("1.587 'cm'.highBoundary(8) = 1.58750000 'cm'", true),
                     ("@2014.highBoundary(6) = @2014-12", true),
                     ("@2014.highBoundary(8) = @2014-12-31", true),
+                    ("@2014-02.highBoundary(8) = @2014-02-28", true),
+                    ("@2020-02.highBoundary(8) = @2020-02-29", true), // leap year
                     ("@T10:30.highBoundary(9) = @T10:30:59.999", true),
                     ("@T10:30.highBoundary() = @T10:30:59.999", true),
                 }.Select(t => new object[] { t.expression, t.expected });

@@ -180,7 +180,7 @@ namespace Hl7.Fhir.FhirPath
             DateTimeOffset dto = dt.Precision switch
             {
                 P.DateTimePrecision.Year => new(dt.Years.Value, months, days, hours, minutes, seconds, milliseconds, offset),
-                P.DateTimePrecision.Month => new(dt.Years.Value, dt.Months.Value, DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Month => new(dt.Years.Value, dt.Months.Value, days == 1 ? days : DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), hours, minutes, seconds, milliseconds, offset),
                 P.DateTimePrecision.Day => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, hours, minutes, seconds, milliseconds, offset),
                 P.DateTimePrecision.Hour => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, minutes, seconds, milliseconds, offset),
                 P.DateTimePrecision.Minute => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, seconds, milliseconds, offset),
