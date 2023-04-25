@@ -12,6 +12,8 @@ using System.Xml.Linq;
 
 namespace Hl7.Fhir.Support.Poco.Tests
 {
+
+
     [TestClass]
     public class FhirXmlSerializationTests
     {

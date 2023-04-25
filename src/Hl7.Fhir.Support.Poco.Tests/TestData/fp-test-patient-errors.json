@@ -45,7 +45,7 @@
           "mother": "this does not exist"
         },
         {
-          "id": "anothername",
+          "id": "",
           "use": "usual",
           "family": [ "error: array is unexpected here" ],
           "given": [ "Eveline" ],

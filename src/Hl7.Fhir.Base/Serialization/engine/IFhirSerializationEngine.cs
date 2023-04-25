@@ -11,31 +11,10 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    /// <summary>
-    /// Factory methods for creating the default implementation of <see cref="IFhirSerializationEngine"/>, as used by the
-    /// FhirClient.
-    /// </summary>
-    public static class FhirSerializationEngine
-    {
-        /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured with defaults,
-        /// which uses the "old" TypedElement-based parser and serializer.
-        /// </summary>
-        public static IFhirSerializationEngine ElementModel(ModelInspector inspector, ParserSettings? settings) =>
-            new ElementModelSerializationEngine(inspector, settings);
-
-        /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured with defaults 
-        /// which uses the new Poco-based parser and serializer.
-        /// </summary>
-        /// <param name="inspector"></param>
-        /// <returns></returns>
-        public static IFhirSerializationEngine Poco(ModelInspector inspector) => new PocoSerializationEngine(inspector);
-    }
-
     /// <summary>
     /// Represents an object that can serialize/deserialize FHIR data from the supported
     /// serialization formats.

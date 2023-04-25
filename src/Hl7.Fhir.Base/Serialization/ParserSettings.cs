@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         /// <summary>Creates a new <see cref="ParserSettings"/> object that is a copy of the current instance.</summary>
-        public ParserSettings Clone() => new ParserSettings(this);
+        public ParserSettings Clone() => new(this);
 
         /// <summary>Creates a new <see cref="ParserSettings"/> instance with default property values.</summary>
         public static ParserSettings CreateDefault() => new ParserSettings();
