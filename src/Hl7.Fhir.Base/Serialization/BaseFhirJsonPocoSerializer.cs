@@ -19,7 +19,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Text.Json;
 
@@ -112,7 +111,12 @@ namespace Hl7.Fhir.Serialization
 
                 var propertyName = propertyMapping?.Choice == ChoiceType.DatatypeChoice ?
                             addSuffixToElementName(member.Key, member.Value) : member.Key;
-                var requiredType = propertyMapping?.FhirType.FirstOrDefault();
+
+                // do we have more possible types (choiceType), then the required type is dependent on the type of the member.Value (is it Integer64 or not?), 
+                // otherwise we will use the Fhirtype of the propertyMapping.
+                var requiredType = (propertyMapping?.FhirType.Length > 1)
+                                        ? (member.Value is Integer64 ? typeof(Integer64) : null)
+                                        : propertyMapping?.FhirType.FirstOrDefault();
 
                 if (member.Value is PrimitiveType pt)
                     serializeFhirPrimitive(propertyName, pt, writer, requiredType);
@@ -153,7 +157,6 @@ namespace Hl7.Fhir.Serialization
 
             return typeName is null ? elementName : elementName + char.ToUpperInvariant(typeName[0]) + typeName.Substring(1);
         }
-
 
         private void serializeMemberValue(object value, Utf8JsonWriter writer, Type? requiredType = null)
         {

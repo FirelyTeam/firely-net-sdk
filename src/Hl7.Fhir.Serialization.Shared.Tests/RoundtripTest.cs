@@ -203,6 +203,11 @@ namespace Hl7.Fhir.Serialization.Tests
 
             if (file.EndsWith("notification-empty(9601c07a-e34f-4945-93ca-6efb5394c995).xml"))
                 return true;
+
+#if R5
+            // This example contains resourceType which cannot be handled by our old serializers
+            if (file.Contains("subscription-example")) return true;
+#endif 
             return false;
         }
 

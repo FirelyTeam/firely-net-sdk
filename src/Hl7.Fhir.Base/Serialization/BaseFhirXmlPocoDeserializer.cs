@@ -518,15 +518,15 @@ namespace Hl7.Fhir.Serialization
                     PocoDeserializationHelper.RunPropertyValidation(ref parsedValue, Settings.Validator, context, state.Errors);
                 }
 
-                if (target is PrimitiveType primitive)
+                if (target is PrimitiveType primitive && propMapping.Name == "value")
+                {
                     primitive.ObjectValue = parsedValue;
+                }
                 else
                 {
                     propMapping.SetValue(target, parsedValue);
                 }
             }
-
-
         }
 
         internal (object?, FhirXmlException?) ParsePrimitiveValue(XmlReader reader, Type implementingType)
