@@ -13,7 +13,6 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,60 +20,35 @@ namespace Hl7.Fhir.Rest
 {
     internal class HttpClientRequester : IDisposable
     {
-        public FhirClientSettings Settings { get; set; }
         public Uri BaseUrl { get; private set; }
         public HttpClient Client { get; private set; }
         private readonly bool _disposeHttpClient = true;
 
-        public HttpClientRequester(Uri baseUrl, FhirClientSettings settings, HttpMessageHandler messageHandler, bool disposeHandler = true)
+        public HttpClientRequester(Uri baseUrl, int timeout, HttpMessageHandler messageHandler, bool disposeHandler = true)
         {
-            Settings = settings;
             BaseUrl = baseUrl;
 
-            Client = new HttpClient(messageHandler, disposeHandler);
-            Client.DefaultRequestHeaders.Add("User-Agent", $".NET FhirClient for FHIR");
-            Client.Timeout = TimeSpan.FromMilliseconds(Settings.Timeout);
+            Client = new HttpClient(messageHandler, disposeHandler)
+            {
+                Timeout = TimeSpan.FromMilliseconds(timeout)
+            };
         }
 
-        public HttpClientRequester(Uri baseUrl, FhirClientSettings settings, HttpClient client)
+        public HttpClientRequester(Uri baseUrl, HttpClient client)
         {
-            Settings = settings;
             BaseUrl = baseUrl;
 
             Client = client;
             _disposeHttpClient = false;
         }
 
-        public async Task<EntryResponse> ExecuteAsync(Bundle.EntryComponent interaction, IFhirSerializationEngine ser, string? mediaTypeFhirVersion, CancellationToken ct)
-        {
-            if (interaction == null) throw Error.ArgumentNull(nameof(interaction));
-          
-            using var requestMessage = interaction.ToHttpRequestMessage(
-                BaseUrl,
-                ser,
-                Settings.UseFhirVersionInAcceptHeader ? mediaTypeFhirVersion : null,
-                Settings
-                );
-
+        public async Task<HttpResponseMessage> ExecuteAsync(HttpRequestMessage message, CancellationToken ct)
+        {         
 #if NET6_0_OR_GREATER
-            using var response = await Client.SendAsync(requestMessage,ct).ConfigureAwait(false);
+            return await Client.SendAsync(message,ct).ConfigureAwait(false);
 #else
-            using var response = await Client.SendAsync(requestMessage).ConfigureAwait(false);
+            return await Client.SendAsync(message).ConfigureAwait(false);
 #endif
-
-            try
-            {
-#if NET6_0_OR_GREATER
-                var body = await response.Content.ReadAsByteArrayAsync(ct).ConfigureAwait(false);
-#else
-                var body = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-#endif
-                return response.ToEntryResponse(body);
-            }
-            catch (AggregateException ae)
-            {
-                throw ae.GetBaseException();
-            }
         }
 
 #region IDisposable Support

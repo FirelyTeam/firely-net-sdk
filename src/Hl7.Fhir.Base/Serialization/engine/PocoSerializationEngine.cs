@@ -26,13 +26,13 @@ namespace Hl7.Fhir.Serialization
 
         public PocoSerializationEngine(ModelInspector inspector)
         {
-            _options = new JsonSerializerOptions().ForFhir(inspector).Pretty();
+            _options = new JsonSerializerOptions().ForFhir(inspector);
             _inspector = inspector;
         }
 
-        public Resource? DeserializeFromXml(string data) => new BaseFhirXmlPocoDeserializer(_inspector).DeserializeResource(data);
+        public Resource DeserializeFromXml(string data) => new BaseFhirXmlPocoDeserializer(_inspector).DeserializeResource(data);
 
-        public Resource? DeserializeFromJson(string data) => JsonSerializer.Deserialize<Resource>(data, _options)!;
+        public Resource DeserializeFromJson(string data) => JsonSerializer.Deserialize<Resource>(data, _options)!;
 
         public string SerializeToXml(Resource instance) => new BaseFhirXmlPocoSerializer(_inspector.FhirRelease).SerializeToString(instance);
 

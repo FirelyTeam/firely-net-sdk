@@ -63,11 +63,11 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="format">A format string, as used by the _format Url parameter</param>
         /// <returns>The Resource format or the special value Unknow if the format was unrecognized</returns>
-        public static ResourceFormat GetResourceFormatFromFormatParam(string format)
+        public static ResourceFormat GetResourceFormatFromFormatParam(string? format)
         {
-            if (String.IsNullOrEmpty(format)) return ResourceFormat.Unknown;
+            if (string.IsNullOrEmpty(format)) return ResourceFormat.Unknown;
 
-            var f = format.ToLowerInvariant().Replace(" ", "+"); // spaces on the are decoded from the +, so convert them back
+            var f = format!.ToLowerInvariant().Replace(" ", "+"); // spaces on the are decoded from the +, so convert them back
 
             if (f == FORMAT_PARAM_JSON || JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;
@@ -83,11 +83,11 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         /// <param name="contentType">The content type, as it appears on e.g. a Http Content-Type header</param>
         /// <returns></returns>
-        public static ResourceFormat GetResourceFormatFromContentType(string contentType)
+        public static ResourceFormat GetResourceFormatFromContentType(string? contentType)
         {
             if (string.IsNullOrEmpty(contentType)) return ResourceFormat.Unknown;
 
-            var f = GetMediaTypeFromHeaderValue(contentType);
+            var f = GetMediaTypeFromHeaderValue(contentType!);
 
             if (JSON_CONTENT_HEADERS.Contains(f))
                 return ResourceFormat.Json;

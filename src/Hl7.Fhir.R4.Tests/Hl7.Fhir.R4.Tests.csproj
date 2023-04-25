@@ -8,6 +8,10 @@
 		<AssemblyName>Hl7.Fhir.R4.Tests</AssemblyName>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<DefineConstants>R4</DefineConstants>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<ProjectReference Include="..\Hl7.Fhir.Support.Tests\Hl7.Fhir.Support.Tests.csproj" />
 		<ProjectReference Include="..\Hl7.Fhir.Base\Hl7.Fhir.Base.csproj" />

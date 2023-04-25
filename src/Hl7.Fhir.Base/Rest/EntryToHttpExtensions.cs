@@ -12,11 +12,12 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using System;
-using System.Net;
 using System.Net.Http;
 
 namespace Hl7.Fhir.Rest
 {
+
+
     internal static class EntryToHttpExtensions
     {     
         public static HttpRequestMessage ToHttpRequestMessage(
@@ -65,7 +66,7 @@ namespace Hl7.Fhir.Rest
                     Binary bin => message.WithBinaryContent(bin),
                     Parameters pars when isSearchUsingPost => message.WithFormUrlEncodedParameters(pars),
                     Resource resource => message.WithResourceContent(resource, serialization, ser, fhirVersion),
-                    null => message
+                    null => message.WithNoBody()
                 };
 
                 return message.WithRequestCompression(settings.RequestBodyCompressionMethod);
