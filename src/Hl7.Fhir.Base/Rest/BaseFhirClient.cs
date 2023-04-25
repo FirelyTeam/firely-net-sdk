@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Rest
             Settings = settings;
             Endpoint = getValidatedEndpoint(endpoint);
             _serializationEngine = settings.SerializationEngine ??
-                FhirSerializationEngineFactory.ElementModel.FromParserSettings(Inspector, settings.ParserSettings ?? new());
+                FhirSerializationEngineFactory.Legacy.FromParserSettings(Inspector, settings.ParserSettings ?? new());
 
             Requester = requester;
 

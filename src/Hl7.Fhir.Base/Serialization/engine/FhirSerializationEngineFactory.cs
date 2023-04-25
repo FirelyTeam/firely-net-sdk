@@ -22,9 +22,9 @@ namespace Hl7.Fhir.Serialization
     public static class FhirSerializationEngineFactory
     {
         /// <summary>
-        /// A named scope for the factory methods that use the ElementModel deserializers.
+        /// A named scope for the factory methods that use the legacy ElementModel-based (de)serializers.
         /// </summary>
-        public static class ElementModel
+        public static class Legacy
         {
             private enum Mode
             {
@@ -38,7 +38,8 @@ namespace Hl7.Fhir.Serialization
             {
                 AllowUnrecognizedEnums = mode is Mode.BackwardsCompatible or Mode.Ostrich,
                 IgnoreUnknownMembers = mode is Mode.BackwardsCompatible or Mode.Ostrich,
-                ExceptionHandler = mode is Mode.Ostrich ? (_,_) => { } : null
+                ExceptionHandler = mode is Mode.Ostrich ? (_, _) => { }
+                : null
             };
 
 
@@ -53,11 +54,11 @@ namespace Hl7.Fhir.Serialization
             {
                 AllowJsonComments = mode is not Mode.Strict,
                 PermissiveParsing = mode is Mode.Permissive or Mode.Ostrich,
-                ValidateFhirXhtml = mode is Mode.Strict,                
+                ValidateFhirXhtml = mode is Mode.Strict,
             };
 
             /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the "old" TypedElement-based parser and serializer
+            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacy parser and serializer
             /// using <see cref="ParserSettings.PermissiveParsing"/> set to <c>true</c>.
             /// </summary>
             public static IFhirSerializationEngine FromParserSettings(ModelInspector inspector, ParserSettings settings) =>
@@ -65,19 +66,19 @@ namespace Hl7.Fhir.Serialization
                     BaseFhirParser.BuildXmlParsingSettings(settings),
                     BaseFhirParser.BuildJsonParserSettings(settings),
                     BaseFhirParser.BuildPocoBuilderSettings(settings));
-                    
+
             /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the "old" TypedElement-based parser and serializer
+            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacy parser and serializer
             /// using <see cref="ParserSettings.PermissiveParsing"/> set to <c>true</c>.
             /// </summary>
             public static IFhirSerializationEngine Permissive(ModelInspector inspector) =>
-                new ElementModelSerializationEngine(inspector, 
-                    buildXmlParsingSettings(Mode.Permissive), 
-                    buildJsonParsingSettings(Mode.Permissive), 
+                new ElementModelSerializationEngine(inspector,
+                    buildXmlParsingSettings(Mode.Permissive),
+                    buildJsonParsingSettings(Mode.Permissive),
                     buildPocoBuilderSettings(Mode.Permissive));
 
             /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the "old" TypedElement-based parser and serializer
+            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacy parser and serializer
             /// with <see cref="ParserSettings.PermissiveParsing"/> set to <c>false</c>.
             /// </summary>
             public static IFhirSerializationEngine Strict(ModelInspector inspector) =>
@@ -87,9 +88,9 @@ namespace Hl7.Fhir.Serialization
                     buildPocoBuilderSettings(Mode.Strict));
 
             /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors that 
-            /// could occur when reading data from newer releases of FHIR. Note that this parser may drop data
-            /// that cannot be captured in the POCO model, such as new elements in future FHIR releases.
+            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacyt parser and serializer
+            /// and is configured to allow errors that could occur when reading data from newer releases of FHIR. Note that this 
+            /// parser may drop data that cannot be captured in the POCO model, such as new elements in future FHIR releases.
             /// </summary>
             public static IFhirSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
                 new ElementModelSerializationEngine(inspector,
@@ -98,8 +99,8 @@ namespace Hl7.Fhir.Serialization
                     buildPocoBuilderSettings(Mode.BackwardsCompatible));
 
             /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors
-            /// and just continue parsing. Note that this may mean data loss.
+            /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the legacy parser and serializer
+            /// configured to allow errors and just continue parsing. Note that this may mean data loss.
             /// </summary>
             public static IFhirSerializationEngine Ostrich(ModelInspector inspector) =>
                 new ElementModelSerializationEngine(inspector,
@@ -108,55 +109,52 @@ namespace Hl7.Fhir.Serialization
                     buildPocoBuilderSettings(Mode.Ostrich));
         }
 
+
         /// <summary>
-        /// A named scope for the factory methods that use the Poco deserializers.
+        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to flag all parsing errors, 
+        /// which uses the new Poco-based parser and serializer.
         /// </summary>
-        public static class Poco
-        {           
-            /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to flag all parsing errors, 
-            /// which uses the new Poco-based parser and serializer.
-            /// </summary>
-            /// <param name="inspector"></param>
-            /// <returns></returns>
-            public static IFhirSerializationEngine Strict(ModelInspector inspector) => new PocoSerializationEngine(inspector);
+        /// <param name="inspector"></param>
+        /// <returns></returns>
+        public static IFhirSerializationEngine Strict(ModelInspector inspector) => new PocoSerializationEngine(inspector);
 
-            /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to ignore recoverable errors, 
-            /// which uses the new Poco-based parser and serializer.
-            /// </summary>
-            /// <param name="inspector"></param>
-            /// <returns></returns>
-            public static IFhirSerializationEngine Recoverable(ModelInspector inspector) => 
-                new PocoSerializationEngine(inspector, isRecoverableIssue);
+        /// <summary>
+        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to ignore recoverable errors, 
+        /// which uses the new Poco-based parser and serializer.
+        /// </summary>
+        /// <param name="inspector"></param>
+        /// <returns></returns>
+        public static IFhirSerializationEngine Recoverable(ModelInspector inspector) =>
+            new PocoSerializationEngine(inspector, isRecoverableIssue);
 
-            /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors that 
-            /// could occur when reading data from newer releases of FHIR. Note that this parser may drop data
-            /// that cannot be captured in the POCO model, such as new elements in future FHIR releases.
-            /// </summary>
-            public static IFhirSerializationEngine BackwardsCompatible(ModelInspector inspector) => 
-                new PocoSerializationEngine(inspector, isAllowedForBackwardsCompatibility);
+        /// <summary>
+        /// Create an implementation of <see cref="IFhirSerializationEngine"/> which uses the new Poco-based parser and 
+        /// serializers and is configured to allow errors that could occur when reading data from newer releases of FHIR.
+        /// Note that this parser may drop data that cannot be captured in the POCO model, such as new elements in future
+        /// FHIR releases.
+        /// </summary>
+        public static IFhirSerializationEngine BackwardsCompatible(ModelInspector inspector) =>
+            new PocoSerializationEngine(inspector, isAllowedForBackwardsCompatibility);
 
-            /// <summary>
-            /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors
-            /// and just continue parsing. Note that this may mean data loss.
-            /// </summary>
-            public static IFhirSerializationEngine Ostrich(ModelInspector inspector) =>
-                new PocoSerializationEngine(inspector, _ => true);
+        /// <summary>
+        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured to allow errors
+        /// and just continue parsing. Note that this may mean data loss.
+        /// </summary>
+        public static IFhirSerializationEngine Ostrich(ModelInspector inspector) =>
+            new PocoSerializationEngine(inspector, _ => true);
 
 
-            private static bool isRecoverableIssue(CodedException ce) =>
-              ce switch
-              {
-                  FhirXmlException xmle => FhirXmlException.IsRecoverableIssue(xmle),
-                  FhirJsonException jsone => FhirJsonException.IsRecoverableIssue(jsone),
-                  _ => false
-              };
+        private static bool isRecoverableIssue(CodedException ce) =>
+          ce switch
+          {
+              FhirXmlException xmle => FhirXmlException.IsRecoverableIssue(xmle),
+              FhirJsonException jsone => FhirJsonException.IsRecoverableIssue(jsone),
+              _ => false
+          };
 
-            private static bool isAllowedForBackwardsCompatibility(CodedException ce) =>
-               FhirXmlException.AllowedForBackwardsCompatibility(ce) || FhirJsonException.AllowedForBackwardsCompatibility(ce);
-        }
+        private static bool isAllowedForBackwardsCompatibility(CodedException ce) =>
+           FhirXmlException.AllowedForBackwardsCompatibility(ce) || FhirJsonException.AllowedForBackwardsCompatibility(ce);
+
     }
 }
 

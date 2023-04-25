@@ -14,7 +14,6 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -32,8 +31,8 @@ namespace Hl7.Fhir.Test
     {
         private static readonly Uri ENDPOINT = new("http://myserver.org/fhir/");
         private static readonly ModelInspector TESTINSPECTOR = ModelInspector.ForType(typeof(TestPatient));
-        private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngineFactory.ElementModel.Permissive(TESTINSPECTOR);
-        private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngineFactory.Poco.Strict(TESTINSPECTOR);
+        private static readonly IFhirSerializationEngine ELEMENTENGINE = FhirSerializationEngineFactory.Legacy.Permissive(TESTINSPECTOR);
+        private static readonly IFhirSerializationEngine POCOENGINE = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
 
         [TestMethod]
         public void CanRoundtripHeaders()
@@ -69,25 +68,25 @@ namespace Hl7.Fhir.Test
 
         private const string DEFAULT_XML = "<Patient xmlns=\"http://hl7.org/fhir\"><active value=\"true\" /></Patient>";
         private static readonly Uri REQUEST_URI = new("http://server.nl/fhir/SomeResource/1", UriKind.Absolute);
-        private HttpContent makeXmlContent(string? xml = null) => 
+        private static HttpContent makeXmlContent(string? xml = null) =>
             new StringContent(xml ?? DEFAULT_XML, Encoding.UTF8, ContentType.XML_CONTENT_HEADER);
-        private HttpResponseMessage makeXmlMessage(HttpStatusCode status = HttpStatusCode.OK, string? xml = null) => 
+        private static HttpResponseMessage makeXmlMessage(HttpStatusCode status = HttpStatusCode.OK, string? xml = null) =>
             new(status) { Content = makeXmlContent(xml), RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
 
-        private HttpResponseMessage makeEmptyXmlMessage(HttpStatusCode status = HttpStatusCode.OK) =>
+        private static HttpResponseMessage makeEmptyXmlMessage(HttpStatusCode status = HttpStatusCode.OK) =>
             new(status) { RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
 
         private const string DEFAULT_JSON = """{"resourceType":"Patient","active":true}""";
 
-        private HttpContent makeJsonContent(string? json = null) =>
+        private static HttpContent makeJsonContent(string? json = null) =>
             new StringContent(json ?? DEFAULT_JSON, Encoding.UTF8, ContentType.JSON_CONTENT_HEADER);
-        private HttpResponseMessage makeJsonMessage(HttpStatusCode status = HttpStatusCode.OK, string? json = null) =>
+        private static HttpResponseMessage makeJsonMessage(HttpStatusCode status = HttpStatusCode.OK, string? json = null) =>
             new(status) { Content = makeJsonContent(json), RequestMessage = new HttpRequestMessage(HttpMethod.Get, REQUEST_URI) };
 
         [TestMethod]
         public async Tasks.Task SetAndExtractRelevantHeaders()
-        {           
-            var engine = FhirSerializationEngineFactory.Poco.Strict(TESTINSPECTOR);
+        {
+            var engine = FhirSerializationEngineFactory.Strict(TESTINSPECTOR);
             var xmlContent = makeXmlContent();
             xmlContent.Headers.LastModified = new DateTimeOffset(new DateTime(2012, 01, 01), new TimeSpan());
 
@@ -127,17 +126,17 @@ namespace Hl7.Fhir.Test
             components.BodyResource.Should().BeNull();
         }
 
-        private async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
+        private static async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
             bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
         {
             var components = await response.ExtractResponseData(engine);
             await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern);
         }
 
-        private async Task checkResult(HttpResponseMessage response, HttpContentParsers.ResponseData components,
+        private static async Task checkResult(HttpResponseMessage response, HttpContentParsers.ResponseData components,
             IFhirSerializationEngine engine,
             bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
-        {           
+        {
             components.Response.Status.Should().Be(((int)response.StatusCode).ToString());
 
             var expectedData = await response.Content.ReadAsByteArrayAsync();
@@ -157,7 +156,7 @@ namespace Hl7.Fhir.Test
                 var format = ContentType.GetResourceFormatFromContentType(response.Content.GetContentType());
                 components.BodyResource.Should().NotBeNull();
 
-                if(format == ResourceFormat.Xml)
+                if (format == ResourceFormat.Xml)
                     engine.SerializeToXml(components.BodyResource!).Should().Be(components.BodyText);
                 else
                     engine.SerializeToJson(components.BodyResource!).Should().Be(components.BodyText);
@@ -191,7 +190,7 @@ namespace Hl7.Fhir.Test
         {
             var response = makeXmlMessage(xml: """<Unknown><active value="true" /></Unknown>""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
-            
+
             response = makeXmlMessage(xml: """<Patient><activex value="true" /></Patient>""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
@@ -208,9 +207,9 @@ namespace Hl7.Fhir.Test
         [DynamicData(nameof(GetEngines), DynamicDataSourceType.Method)]
         public async Task HandleSuccessResponseWithIncorrectJson(IFhirSerializationEngine engine)
         {
-            var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""" );
+            var response = makeJsonMessage(json: """{ "resourceType": "UnknownResource" }""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
-            
+
             response = makeJsonMessage(json: """{ "resourceType": "Patient", "activex": 4 }""");
             await check(response, engine, expectedIssue: typeof(DeserializationFailedException));
         }
@@ -316,7 +315,7 @@ namespace Hl7.Fhir.Test
             await assertIssue<StructuralTypeException>(response, "*Encountered unknown element 'activex' at location*", engine: ELEMENTENGINE);
         }
 
-        private async Task assertIssue<T>(HttpResponseMessage response, string match, string? version = null,
+        private static async Task assertIssue<T>(HttpResponseMessage response, string match, string? version = null,
             IFhirSerializationEngine? engine = null, string? notmatch = null)
                 where T : Exception
         {
