@@ -77,6 +77,8 @@ namespace Hl7.Fhir.Serialization
 
         // The serialization contained a json null where it is not allowed, but a null does not contain data anyway.
         internal static readonly FhirJsonException EXPECTED_PRIMITIVE_NOT_NULL = new(EXPECTED_PRIMITIVE_NOT_NULL_CODE, "Expected a primitive value, not a json null.");
+
+        // Encountered an empty property, which is illegal, but the empty text is maintained.
         internal static readonly FhirJsonException PROPERTY_MAY_NOT_BE_EMPTY = new(PROPERTY_MAY_NOT_BE_EMPTY_CODE, "Properties cannot be empty strings. Either they are absent, or they are present with at least one character of non-whitespace content.");
 
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
@@ -113,7 +115,7 @@ namespace Hl7.Fhir.Serialization
         /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
         /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
         /// </summary>
-        internal static bool IsRecoverableIssue(FhirJsonException e) => 
+        internal static bool IsRecoverableIssue(FhirJsonException e) =>
             e.ErrorCode is EXPECTED_PRIMITIVE_NOT_NULL_CODE or
             INCORRECT_BASE64_DATA_CODE or
             STRING_ISNOTAN_INSTANT_CODE or
