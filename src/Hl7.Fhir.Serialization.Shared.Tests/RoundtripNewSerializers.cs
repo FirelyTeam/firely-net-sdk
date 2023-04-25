@@ -85,6 +85,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true;
             if (file.Contains("xver-paths-4.6") || file.Contains("hl7.fhir.r5.corexml.manifest") || file.Contains("hl7.fhir.r5.expansions.manifest") || file.Contains("hl7.fhir.r5.core.manifest") || file.Contains("uml"))
                 return true; // non-fhir-files in the R5 examples.zip
+#if R5
+            // These examples contain resourceType which cannot be handled by our serializers
+            if (file.Contains("subscription-example")) return true;
+            if (file.Contains("consent-example-smartonfhir")) return true;
+#endif 
             return false;
         }
 

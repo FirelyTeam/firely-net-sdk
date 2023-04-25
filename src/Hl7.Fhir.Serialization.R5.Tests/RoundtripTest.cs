@@ -20,7 +20,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public void FullRoundtripOfAllExamplesXmlPoco()
         {
             FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
@@ -29,7 +28,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public async Tasks.Task FullRoundtripOfAllExamplesXmlPocoAsync()
         {
             await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
@@ -38,7 +36,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public void FullRoundtripOfAllExamplesJsonPoco()
         {
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
@@ -47,7 +44,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonPocoAsync()
         {
             await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
@@ -56,7 +52,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public void FullRoundtripOfAllExamplesXmlNavPocoProvider()
         {
             FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
@@ -65,7 +60,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public async Tasks.Task FullRoundtripOfAllExamplesXmlNavPocoProviderAsync()
         {
             await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
@@ -74,7 +68,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public void FullRoundtripOfAllExamplesJsonNavPocoProvider()
         {
             FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
@@ -83,7 +76,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonNavPocoProviderAsync()
         {
             await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
@@ -92,7 +84,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public void FullRoundtripOfAllExamplesXmlNavSdProvider()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
@@ -102,7 +93,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public async Tasks.Task FullRoundtripOfAllExamplesXmlNavSdProviderAsync()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
@@ -112,7 +102,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public void FullRoundtripOfAllExamplesJsonNavSdProvider()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
@@ -122,7 +111,6 @@ namespace Hl7.Fhir.Serialization.Tests
 
         [TestMethod]
         [TestCategory("LongRunner")]
-        [Ignore("Because of incorrect example files in R5 (5.0.0-snapshot3).")]
         public async Tasks.Task FullRoundtripOfAllExamplesJsonNavSdProviderAsync()
         {
             var source = new CachedResolver(ZipSource.CreateValidationSource());
