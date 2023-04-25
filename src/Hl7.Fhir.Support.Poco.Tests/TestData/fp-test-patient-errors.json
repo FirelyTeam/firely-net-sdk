@@ -45,7 +45,7 @@
           "mother": "this does not exist"
         },
         {
-          "id": "",
+          "id": "anothername",
           "use": "usual",
           "family": [ "error: array is unexpected here" ],
           "given": [ "Eveline" ],
@@ -329,7 +329,7 @@
   ],
   "managingOrganization": {
     "reference": "Organization/1",
-    "display": "ACME Healthcare, Inc"
+    "display": ""
   },
   "link": [
     {
