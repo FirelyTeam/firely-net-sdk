@@ -1,5 +1,7 @@
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Functions;
@@ -29,7 +31,7 @@ namespace Hl7.Fhir.FhirPath
             t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (ITypedElement f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
 
-            t.Add("memberOf", (Func<object, string, bool>)memberOf, doNullProp: false);
+            t.Add("memberOf", (object input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
@@ -59,8 +61,6 @@ namespace Hl7.Fhir.FhirPath
             {
                 return ctx is FhirEvaluationContext fctx ? f.Resolve(fctx.ElementResolver) : f.Resolve();
             }
-
-            static bool memberOf(object focus, string valueset) => throw new NotImplementedException("Terminology functions in FhirPath are unsupported in the .NET FhirPath engine.");
         }
 
 
@@ -243,5 +243,30 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="r"></param>
         /// <returns></returns>
         internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r).Success;
+
+        internal static bool MemberOf(object input, string valueset, EvaluationContext ctx)
+        {
+            var (code, system) = foo(input);
+
+            var service = ctx is FhirEvaluationContext fctx ? fctx.TerminologyService : null;
+            var inparams = new ValidateCodeParameters()
+                .WithValueSet(valueset)
+                .WithCode(code, system);
+
+
+
+            var outParams = TaskHelper.Await(() => service.ValueSetValidateCode(inparams.Build()));
+
+            return outParams.GetSingleValue<FhirBoolean>("result")?.Value ?? false;
+
+        }
+
+        private static (string code, string system) foo(object element) => element switch
+        {
+            string s => (s, null),
+            ITypedElement e when e.InstanceType is "Code" => (e.Value as string, null),
+            ITypedElement e when e.InstanceType is "Coding" => (e.Children("code").SingleOrDefault()?.Value as string, e.Children("system").SingleOrDefault()?.Value as string),
+            _ => (null, null)
+        };
     }
 }
