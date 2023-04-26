@@ -16,7 +16,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
@@ -78,7 +77,7 @@ namespace Hl7.Fhir.Serialization
         private const string INSTANCE_VALIDATION_KEY_SUFFIX = ":instance";
         private const string PROPERTY_VALIDATION_KEY_SUFFIX = ":property";
         private readonly ModelInspector _inspector;
-     
+
         /// <summary>
         /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
         /// </summary>
@@ -101,7 +100,7 @@ namespace Hl7.Fhir.Serialization
 
             return !state.Errors.HasExceptions;
         }
-     
+
         /// <summary>
         /// Reads a (subtree) of serialized FHIR Json data into a POCO object.
         /// </summary>
@@ -135,7 +134,7 @@ namespace Hl7.Fhir.Serialization
             else
                 throw new ArgumentException($"Can only deserialize into subclasses of class {nameof(Base)}. " + reader.GenerateLocationMessage(), nameof(targetType));
         }
-     
+
         internal Resource? DeserializeResourceInternal(ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, bool stayOnLastToken)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
@@ -674,7 +673,7 @@ namespace Hl7.Fhir.Serialization
             (object? partial, FhirJsonException? error) result = reader.TokenType switch
             {
                 JsonTokenType.Null => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL.With(ref reader)),
-                JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(null, ERR.PROPERTY_MAY_NOT_BE_EMPTY.With(ref reader)),
+                JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY.With(ref reader)),
                 JsonTokenType.String when implementingType == typeof(string) => new(reader.GetString(), null),
                 JsonTokenType.String when implementingType == typeof(byte[]) =>
                                 !Settings.DisableBase64Decoding ? readBase64(ref reader) : new(reader.GetString(), null),
