@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Serialization
 
         /// <summary>
         /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exception
-        /// will have a List&lt;CodedException&gt; of these exceptions added as an annotation to the child resource.
+        /// will have a <c>List&lt;CodedException&gt;</c> of these exceptions added as an annotation to the child resource.
         /// </summary>
         /// <remarks>
         /// This is primarily added to ease the processing of bundles during a batch submission.
