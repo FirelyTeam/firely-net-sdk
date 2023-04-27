@@ -19,15 +19,15 @@ namespace Hl7.Fhir.Utility
     /// </summary>
     /// <remarks>Most modules of the SDK using this Exception will create specific subclasses
     /// for this subclass, providing a list of codes used by that module.</remarks>
-    public class CodedWithLocationException : CodedException
+    public class ExtendedCodedException : CodedException
     {
-        public CodedWithLocationException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(errorCode, message)
+        public ExtendedCodedException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(errorCode, message)
         {
             IssueSeverity = issueSeverity;
             IssueType = issueType;
         }
 
-        public CodedWithLocationException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException) : base(errorCode, message, innerException)
+        public ExtendedCodedException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException) : base(errorCode, message, innerException)
         {
             IssueSeverity = issueSeverity;
             IssueType = issueType;

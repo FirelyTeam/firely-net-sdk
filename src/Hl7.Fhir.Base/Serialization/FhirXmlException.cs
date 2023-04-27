@@ -12,7 +12,7 @@ using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
 
 namespace Hl7.Fhir.Serialization
 {
-    public class FhirXmlException : CodedWithLocationException
+    public class FhirXmlException : ExtendedCodedException
     {
         public const string EMPTY_ELEMENT_NAMESPACE_CODE = "XML101";
         public const string UNKNOWN_RESOURCE_TYPE_CODE = "XML102";

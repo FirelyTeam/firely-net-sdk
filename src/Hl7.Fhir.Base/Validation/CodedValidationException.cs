@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Validation
     /// <summary>
     /// An error found during validation of POCO's using the <see cref="ValidationAttribute"/> validators.
     /// </summary>
-    public class CodedValidationException : CodedWithLocationException
+    public class CodedValidationException : ExtendedCodedException
     {
         public const string CHOICE_TYPE_NOT_ALLOWED_CODE = "PVAL101";
         public const string INCORRECT_CARDINALITY_MIN_CODE = "PVAL102";

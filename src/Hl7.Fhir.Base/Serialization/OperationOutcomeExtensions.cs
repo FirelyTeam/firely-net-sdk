@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
                     Severity = OperationOutcome.IssueSeverity.Error,
                     Code = OperationOutcome.IssueType.Invalid
                 };
-                if (e is CodedWithLocationException ecl)
+                if (e is ExtendedCodedException ecl)
                 {
                     issue = ecl.ToIssue();
                 }
@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
         /// Convert to an OperationOutcome.Issue
         /// </summary>
         /// <returns></returns>
-        public static Model.OperationOutcome.IssueComponent ToIssue(this CodedWithLocationException me)
+        public static Model.OperationOutcome.IssueComponent ToIssue(this ExtendedCodedException me)
         {
             string shortDisplay = null;
 

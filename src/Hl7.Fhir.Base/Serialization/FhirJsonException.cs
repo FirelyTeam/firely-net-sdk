@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
     /// with the Json itself, but issues in the data with regards to the rules for FHIR Json format described
     /// in http://hl7.org/fhir/json.html.
     /// </summary>
-    public class FhirJsonException : CodedWithLocationException
+    public class FhirJsonException : ExtendedCodedException
     {
         // TODO: Document each of these errors, based on the text for the error.
         public const string EXPECTED_START_OF_OBJECT_CODE = "JSON101";
