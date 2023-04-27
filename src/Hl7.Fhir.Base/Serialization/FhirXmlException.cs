@@ -84,11 +84,11 @@ namespace Hl7.Fhir.Serialization
             };
         }
 
-        public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
+        public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
         {
         }
 
-        public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException) : base(code, message, issueSeverity, issueType, innerException)
+        public FhirXmlException(string code, string message, Exception? innerException, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType, innerException)
         {
         }
 
@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Serialization
             var (lineNumber, position) = reader.GenerateLineInfo();
             string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirXmlException(code, messageWithLocation, issueSeverity, issueType, innerException)
+            return new FhirXmlException(code, messageWithLocation, innerException, issueSeverity, issueType)
             {
                 BaseErrorMessage = message,
                 LineNumber = lineNumber,

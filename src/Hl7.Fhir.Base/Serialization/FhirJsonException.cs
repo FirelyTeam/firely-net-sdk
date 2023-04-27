@@ -108,11 +108,11 @@ namespace Hl7.Fhir.Serialization
         // This leaves the incorrect nulls in place, no change in data.
         internal static FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.", OO_Sev.Warning, OO_Typ.Structure);
 
-        public FhirJsonException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
+        public FhirJsonException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
         {
         }
 
-        public FhirJsonException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException) : base(code, message, issueSeverity, issueType, innerException)
+        public FhirJsonException(string code, string message, Exception? innerException, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType, innerException)
         {
         }
 
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Serialization
             var (lineNumber, position) = reader.GetLocation();
             string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirJsonException(code, messageWithLocation, issueSeverity, issueType, innerException)
+            return new FhirJsonException(code, messageWithLocation, innerException, issueSeverity, issueType)
             {
                 BaseErrorMessage = message,
                 LineNumber = lineNumber,
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Serialization
         {
             string messageWithLocation = ExtendedCodedException.FormatLocationMessage(baseMessage, this.InstancePath, LineNumber, Position);
 
-            return new FhirJsonException(ErrorCode, messageWithLocation, issueSeverity, issueType, this.InnerException)
+            return new FhirJsonException(ErrorCode, messageWithLocation, InnerException, issueSeverity, issueType)
             {
                 BaseErrorMessage = baseMessage,
                 LineNumber = this.LineNumber,
