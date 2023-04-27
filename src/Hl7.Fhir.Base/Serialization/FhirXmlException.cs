@@ -73,18 +73,18 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(string instancePath, int lineNumber, int position, string? locationMessage, string? localName)
         {
             var message = $"Element '{localName}' must have child elements and / or a value attribute";
-            var messageWithLocation = $"{message} {locationMessage}";
+            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
             return new FhirXmlException(ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, messageWithLocation, OO_Sev.Error, OO_Typ.Structure)
             {
                 BaseErrorMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
-                Location = instancePath,
+                InstancePath = instancePath,
             };
         }
 
-        public FhirXmlException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(errorCode, message, issueSeverity, issueType)
+        public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
         {
         }
 
@@ -94,17 +94,15 @@ namespace Hl7.Fhir.Serialization
 
         internal static FhirXmlException Initialize(XmlReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, FhirXmlException? innerException = null)
         {
-            var location = reader.GenerateLocationMessage(out long lineNumber, out long position);
-            if (!string.IsNullOrEmpty(instancePath))
-                location = $"At {instancePath}, line {lineNumber}, position {position}";
-            var messageWithLocation = $"{message} {location}";
+            var (lineNumber, position) = reader.GenerateLineInfo();
+            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
             return new FhirXmlException(code, messageWithLocation, issueSeverity, issueType, innerException)
             {
                 BaseErrorMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
-                Location = instancePath,
+                InstancePath = instancePath,
             };
         }
     }

@@ -118,36 +118,30 @@ namespace Hl7.Fhir.Serialization
 
         internal static FhirJsonException Initialize(ref Utf8JsonReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException = null)
         {
-            var location = reader.GenerateLocationMessage(out long lineNumber, out long position);
-            if (!string.IsNullOrEmpty(instancePath))
-                location = $"At {instancePath}, line {lineNumber}, position {position}";
-            var messageWithLocation = $"{message} {location}";
+            var (lineNumber, position) = reader.GetLocation();
+            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
             return new FhirJsonException(code, messageWithLocation, issueSeverity, issueType, innerException)
             {
                 BaseErrorMessage = message,
                 LineNumber = lineNumber,
                 Position = position,
-                Location = instancePath,
+                InstancePath = instancePath,
             };
         }
 
         public FhirJsonException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType)
         {
-            string location = $"At line {this.LineNumber}, position {this.Position}";
-            if (!string.IsNullOrEmpty(this.Location))
-                location = $"At {this.Location}, line {this.LineNumber}, position {this.Position}";
-            var messageWithLocation = $"{baseMessage} {location}";
+            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(baseMessage, this.InstancePath, LineNumber, Position);
 
             return new FhirJsonException(ErrorCode, messageWithLocation, issueSeverity, issueType, this.InnerException)
             {
                 BaseErrorMessage = baseMessage,
                 LineNumber = this.LineNumber,
                 Position = this.Position,
-                Location = this.Location,
+                InstancePath = this.InstancePath,
             };
         }
-
     }
 }
 

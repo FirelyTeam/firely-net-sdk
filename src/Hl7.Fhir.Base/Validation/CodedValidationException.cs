@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Validation
                 BaseErrorMessage = message,
                 LineNumber = pi?.LineNumber,
                 Position = pi?.LinePosition,
-                Location = path
+                InstancePath = path
             };
 
             return codedException;

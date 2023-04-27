@@ -33,6 +33,15 @@ namespace Hl7.Fhir.Utility
             IssueType = issueType;
         }
 
+        internal static string FormatLocationMessage(string baseMessage, string? instancePath, long? lineNumber, long? position)
+        {
+            string location = $"At line {lineNumber}, position {position}";
+            if (!string.IsNullOrEmpty(instancePath))
+                location = $"At {instancePath}, line {lineNumber}, position {position}";
+            var messageWithLocation = $"{baseMessage} {location}";
+            return messageWithLocation;
+        }
+
         /// <summary>
         /// Severity of this specific issue.
         /// </summary>
@@ -63,9 +72,12 @@ namespace Hl7.Fhir.Utility
         public long? Position { get; init; }
 
         /// <summary>
-        /// The instancePath of the error in the resource in simple fhirpath format.
+        /// The InstancePath of the error in the resource in simple fhirpath format.
         /// </summary>
-        public string? Location { get; init; }
+        /// <remarks>
+        /// This is usually populated into the OperationOutcome.expression property.
+        /// </remarks>
+        public string? InstancePath { get; init; }
     }
 }
 

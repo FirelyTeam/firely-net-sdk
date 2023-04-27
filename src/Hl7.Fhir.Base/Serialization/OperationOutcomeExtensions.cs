@@ -131,8 +131,8 @@ namespace Hl7.Fhir.Serialization
 
             if (me.LineNumber.HasValue && me.Position.HasValue)
                 result.Location = new[] { $"line {me.LineNumber}, position {me.Position}" };
-            if (!string.IsNullOrEmpty(me.Location))
-                result.Expression = new[] { me.Location };
+            if (!string.IsNullOrEmpty(me.InstancePath))
+                result.Expression = new[] { me.InstancePath };
 
             return result;
         }
