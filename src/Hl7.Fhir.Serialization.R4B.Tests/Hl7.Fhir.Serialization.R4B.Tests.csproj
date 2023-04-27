@@ -4,11 +4,6 @@
 
 	<Import Project="..\firely-net-sdk-tests.props" />
 
-  <!-- Compiler settings -->
-  <PropertyGroup>
-    <LangVersion>11</LangVersion>
-  </PropertyGroup>
-
   <PropertyGroup>
 		<AssemblyName>Hl7.Fhir.Serialization.R4B.Tests</AssemblyName>
 	</PropertyGroup>
