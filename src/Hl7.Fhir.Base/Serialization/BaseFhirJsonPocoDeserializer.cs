@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Serialization
                     {
 
                         var propertyValueContext = new PropertyDeserializationContext(
-                            state.Path, // should this path GetPath or this?
+                            state.Path,
                             "value",
                             line, pos,
                             primitiveValueProperty);
