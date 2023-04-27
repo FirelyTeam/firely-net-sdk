@@ -53,8 +53,8 @@ namespace Hl7.Fhir.Serialization
         public bool ValidateOnFailedParse { get; init; } = false;
 
         /// <summary>
-        /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exceotion
-        /// will have a List&lt;CodedException&gt; of these exceptions added as an annotion to the child resource.
+        /// During parsing any contained resources (such as those in a bundle) that encounter some form of parse/validation exception
+        /// will have a List&lt;CodedException&gt; of these exceptions added as an annotation to the child resource.
         /// </summary>
         /// <remarks>
         /// This is primarily added to ease the processing of bundles during a batch submission.
