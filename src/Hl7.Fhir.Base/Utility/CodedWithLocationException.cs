@@ -34,36 +34,36 @@ namespace Hl7.Fhir.Utility
         }
 
         /// <summary>
-        /// Severity of this specific issue
+        /// Severity of this specific issue.
         /// </summary>
         /// <remarks>
         /// Setter is public to permit others to upgrade/downgrade specific issues
-        /// as needed
+        /// as needed.
         /// </remarks>
         public OperationOutcome.IssueSeverity IssueSeverity { get; protected init; } = OperationOutcome.IssueSeverity.Error;
 
         /// <summary>
-        /// Type of issue to report in a FHIR OperationOutcome
+        /// Type of issue to report in a FHIR OperationOutcome.
         /// </summary>
         public OperationOutcome.IssueType IssueType { get; protected init; } = OperationOutcome.IssueType.Invalid;
 
         /// <summary>
-        /// The error message without any location information appended to it (which is in Exception.Message property)
+        /// The error message without any location information appended to it (which is in Exception.Message property).
         /// </summary>
         public string? BaseErrorMessage { get; protected init; }
 
         /// <summary>
-        /// The line number of the error in the original source data
+        /// The line number of the error in the original source data.
         /// </summary>
         public long? LineNumber { get; protected init; }
 
         /// <summary>
-        /// The position of the error on the line in the original source data
+        /// The position of the error on the line in the original source data.
         /// </summary>
         public long? Position { get; protected init; }
 
         /// <summary>
-        /// The instancePath of the error in the resource in simple fhirpath format
+        /// The instancePath of the error in the resource in simple fhirpath format.
         /// </summary>
         public string? Location { get; protected init; }
     }
