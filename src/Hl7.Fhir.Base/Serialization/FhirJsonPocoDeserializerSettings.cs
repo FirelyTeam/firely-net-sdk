@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Serialization
         /// <remarks>
         /// This is primarily added to ease the processing of bundles during a batch submission.
         /// (without requiring processing fhirpath expressions in the issues in the parsing operation outcome to determine if a 
-        /// resource was clean and possibly ok to process)
+        /// resource was clean and possibly ok to process).
         /// </remarks>
         public bool AnnotateResourceParseExceptions { get; init; } = false;
     }
