@@ -1,8 +1,6 @@
-[![Build Status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/FirelyTeam.firely-net-sdk?branchName=develop-stu3)](https://dev.azure.com/firely/firely-net-sdk/_build/latest?definitionId=84&branchName=develop-stu3)
+[![Build Status](https://dev.azure.com/firely/firely-net-sdk/_apis/build/status/FirelyTeam.firely-net-sdk?branchName=develop)](https://dev.azure.com/firely/firely-net-sdk/_build/latest?definitionId=84&branchName=develop)
 
 > **IMPORTANT** The 5.0 version of the SDK contains substantial changes to the way we have organized the NuGet packages and source code. Please read before installing this new 5.0 version.
-
-> **IMPORTANT** Version 5.0 of the SDK is in beta. Navigate back to the [main repository](https://github.com/FirelyTeam/firely-net-sdk/) for the stable 4.x release.
 
 ## Introduction ##
 This is Firely's official support SDK for working with [HL7 FHIR][fhir-spec] on the Microsoft .NET (dotnet) platform.
@@ -24,8 +22,8 @@ Before installing one of the NuGet packages (or clone the repo) it is important 
 
 * [STU3][stu3-spec] (published March 2017) is older, but still widely in use and fully supported by the SDK.
 * [R4][r4-spec] (published January 2019) is in active use and fully supported by the SDK.
-* [R4B][r4B-spec] (published May 2022) is the latest official release of the FHIR spec and is fully supported by the SDK.
-* [R5][r5-spec] (not yet published) is work-in-progress. This library currently supports "snapshot-1".
+* [R4B][r4B-spec] (published May 2022) is in active use and fully supported by the SDK.
+* [R5][r5-spec] (published March 26 2023) is the latest official release of the FHIR spec and is fully supported by the SDK.
 
 Read the [online documentation][netsdk-docu], and download the correct for your FHIR release. Depending on the version of FHIR you require, you'll find the relevant link to the package below. For most developers, just including this NuGet package is enough to get started. 
 
@@ -77,4 +75,3 @@ If you want to participate in this project, we're using [Git Flow][nvie] for our
 [r4B-spec]: http://hl7.org/fhir/index.html
 [r5-spec]: http://build.fhir.org/index.html
 [fhirpath-spec]: http://hl7.org/fhirpath/
-
