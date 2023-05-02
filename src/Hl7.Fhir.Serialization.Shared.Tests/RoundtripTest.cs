@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
-        static bool SkipFile(string file)
+        private static bool SkipFile(string file)
         {
             if (file.Contains(".profile"))
                 return true;
@@ -177,8 +177,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true; // not a resource
             if (file.Contains("uml.json"))
                 return true; // not a resource
-            if (file.Contains("examplescenario-example"))
-                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("backbone-elements"))
                 return true; // its not really a resource!
             if (file.Contains("json-edge-cases"))
@@ -194,8 +192,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true; // this file is known to have a single dud valueset - have reported on Zulip
                              // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
-            if (file.Contains("subscriptiontopic-example-admission"))  // version 4.6.0: resourceType is not accepted in resourceTrigger
-                return true;
             if (file.Contains("conceptmaps."))  // version 4.6.0: identifier is not an array
                 return true;
             if (file.EndsWith("-questionnaire.json") && !file.EndsWith("operation-structuredefinition-questionnaire.json"))  // version 4.6.0: 'choice' is not a valid Questionnaire.Item.Type anymore
@@ -204,10 +200,6 @@ namespace Hl7.Fhir.Serialization.Tests
             if (file.EndsWith("notification-empty(9601c07a-e34f-4945-93ca-6efb5394c995).xml"))
                 return true;
 
-#if R5
-            // This example contains resourceType which cannot be handled by our old serializers
-            if (file.Contains("subscription-example")) return true;
-#endif 
             return false;
         }
 
