@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
-        static bool SkipFile(string file)
+        private static bool SkipFile(string file)
         {
             if (file.Contains(".profile"))
                 return true;
@@ -263,8 +263,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true;
             if (file.Contains(".diff"))
                 return true;
-            if (file.Contains("examplescenario-example"))
-                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("backbone-elements"))
                 return true; // its not really a resource!
             if (file.Contains("json-edge-cases"))

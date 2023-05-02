@@ -43,6 +43,8 @@ namespace Hl7.Fhir.Serialization
         public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
         public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
         public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118";
+
+        [Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
         public const string RESOURCETYPE_UNEXPECTED_CODE = "JSON119";
         public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
         public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
@@ -98,6 +100,8 @@ namespace Hl7.Fhir.Serialization
         internal static readonly FhirJsonException USE_OF_UNDERSCORE_ILLEGAL = new(USE_OF_UNDERSCORE_ILLEGAL_CODE, "Element '{0}' is not a FHIR primitive, so it should not use an underscore in the '{1}' property.");
 
         // The serialization contained a superfluous 'resourceType' property, but we have read all data anyway.
+        // Note, this is no longer considered an error, since there are Resources using an element named "resourceType" (Subscription.filterBy for example).
+        [Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
         internal static readonly FhirJsonException RESOURCETYPE_UNEXPECTED = new(RESOURCETYPE_UNEXPECTED_CODE, "The 'resourceType' property should only be used in resources.");
 
         // Empty objects and arrays can be ignored without discarding data
@@ -106,7 +110,8 @@ namespace Hl7.Fhir.Serialization
 
         // Shortest array will be filled out with nulls
         // [EK 20221027] The new R5 spec clarifies that this is actually correct behaviour, so this error is not used anymore.
-        //internal static readonly FhirJsonException PRIMITIVE_ARRAYS_INCOMPAT_SIZE = new(PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE, "Primitive arrays split in two properties should have the same size.");
+        [Obsolete("According to the latest updates of the Json format, primitive arrays of different sizes are no longer considered an error.")]
+        internal static readonly FhirJsonException PRIMITIVE_ARRAYS_INCOMPAT_SIZE = new(PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE, "Primitive arrays split in two properties should have the same size.");
 
         // This leaves the incorrect nulls in place, no change in data.
         internal static readonly FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL = new(PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.");
@@ -115,6 +120,7 @@ namespace Hl7.Fhir.Serialization
         /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
         /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
         /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
         internal static bool IsRecoverableIssue(FhirJsonException e) =>
             e.ErrorCode is EXPECTED_PRIMITIVE_NOT_NULL_CODE or
             INCORRECT_BASE64_DATA_CODE or
@@ -128,8 +134,10 @@ namespace Hl7.Fhir.Serialization
             RESOURCETYPE_UNEXPECTED_CODE or
             OBJECTS_CANNOT_BE_EMPTY_CODE or
             ARRAYS_CANNOT_BE_EMPTY_CODE or
+            PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE or
             PRIMITIVE_ARRAYS_ONLY_NULL_CODE or
             PROPERTY_MAY_NOT_BE_EMPTY_CODE;
+#pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>
         /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
