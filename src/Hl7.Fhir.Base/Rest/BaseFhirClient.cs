@@ -45,8 +45,8 @@ namespace Hl7.Fhir.Rest
         /// <param name="inspector"></param>
         /// <param name="settings"></param>
         public BaseFhirClient(Uri endpoint, HttpMessageHandler? messageHandler, ModelInspector inspector, FhirClientSettings? settings = null)
-            : this(endpoint, inspector, 
-                  settings ?? new(), 
+            : this(endpoint, inspector,
+                  settings ?? new(),
                   new(endpoint, (settings ?? new()).Timeout, messageHandler ?? makeDefaultHandler(), messageHandler == null))
         {
             // Nothing
@@ -1060,7 +1060,7 @@ namespace Hl7.Fhir.Rest
             // of the server, add a suggestion about this in the (legacy) parsing exception.
             var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
             (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
-                await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError)
+                await ValidateResponse(responseMessage, expect, _serializationEngine, suggestedVersionOnParseError, useBinaryProtocol: false)
                 .ConfigureAwait(false);
 
             // If an error occurred while trying to interpret and validate the response, we will bail out now.
@@ -1116,10 +1116,15 @@ namespace Hl7.Fhir.Rest
         /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
         /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
         /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
-        /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine)"/>
-        internal static async Task<ResponseData> ValidateResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? suggestedVersionOnParseError)
+        /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine, bool)"/>
+        internal static async Task<ResponseData> ValidateResponse(
+            HttpResponseMessage responseMessage,
+            IEnumerable<HttpStatusCode> expect,
+            IFhirSerializationEngine engine,
+            string? suggestedVersionOnParseError,
+            bool useBinaryProtocol)
         {
-            var responseData = (await responseMessage.ExtractResponseData(engine).ConfigureAwait(false))
+            var responseData = (await responseMessage.ExtractResponseData(engine, useBinaryProtocol).ConfigureAwait(false))
                 .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
                 .TranslateLegacyParserException(suggestedVersionOnParseError);
 
