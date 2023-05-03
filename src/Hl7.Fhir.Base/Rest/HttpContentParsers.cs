@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Rest
 
             foreach (var extension in extensionValues)
             {
-                var pair = extension.Value.Split(HEADERSPLIT,2);
+                var pair = extension.Value.Split(HEADERSPLIT, 2);
                 var key = pair[0];
                 var value = pair[1];
 
@@ -84,8 +84,8 @@ namespace Hl7.Fhir.Rest
         /// <summary>
         /// Returns the body, decoded as a string.
         /// </summary>
-        /// <returns>The body as a string, or null if the body could not be decoded (e.g. contains invalid Unicode code points).</returns>
-        public static async Task<string?> GetBodyAsString(this HttpContent content)
+        /// <exception cref="UnsupportedBodyTypeException">Will throw when the body contains invalid Unicode and thus cannot be decoded as a string.</exception>
+        public static async Task<string> GetBodyAsString(this HttpContent content)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Rest
             }
             catch
             {
-                return null;
+                throw new UnsupportedBodyTypeException("The endpoint returned text in the body that is not parseable as Unicode.", content.GetContentType(), null);
             }
         }
 
@@ -102,6 +102,22 @@ namespace Hl7.Fhir.Rest
 
         public static string? GetVersionFromETag(this HttpResponseMessage response) =>
             response.Headers.ETag?.Tag.Trim('\"');
+
+        public static void SetVersionFromETag(this HttpResponseMessage response, string versionId)
+        {
+            response.Headers.ETag = new EntityTagHeaderValue($"\"{versionId}\"", isWeak: true);
+        }
+
+        public static string? GetSecurityContext(this HttpResponseMessage response)
+        {
+            var success = response.Headers.TryGetValues(HttpUtil.SECURITYCONTEXT, out var secContexts);
+            return success ? secContexts!.First() : null;  // Ignore the others if there are multiple. Sorry.
+        }
+
+        public static void SetSecurityContext(this HttpResponseMessage response, string context)
+        {
+            response.Headers.TryAddWithoutValidation(HttpUtil.SECURITYCONTEXT, context);
+        }
 
         /// <summary>
         /// Gets the content type from the header, removing all parameters including character 
@@ -119,7 +135,7 @@ namespace Hl7.Fhir.Rest
         /// <param name="BodyResource">The data from the response, decoded as a resource. Maybe null if the response was not a (correct) FHIR payload.</param>
         /// <param name="Issue">An issue encountered while parsing or validating.</param>
         internal record ResponseData(Bundle.ResponseComponent Response, byte[]? BodyData, string? BodyText, Resource? BodyResource, Exception? Issue);
-             
+
         /// <summary>
         /// Extract headers into a <see cref="Bundle.ResponseComponent"/>, the body as a byte array, as text and when possible, a parsed resource.
         /// </summary>
@@ -131,76 +147,134 @@ namespace Hl7.Fhir.Rest
         /// <remarks>If the status of the response indicates failure, this function will be lenient and return the body data 
         /// instead of throwing an <see cref="UnsupportedBodyTypeException"/> when the content type or content itself is not recognizable as FHIR. This improves
         /// the chances of capturing diagnostic (non-FHIR) bodies returned by the server when an operation fails.</remarks>
-        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser)
+        internal static async Task<ResponseData> ExtractResponseData(this HttpResponseMessage message, IFhirSerializationEngine ser, bool useBinaryProtocol)
         {
-            var response = message.ExtractResponseComponent();
+            var component = message.ExtractResponseComponent();
+            var data = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            var result = new ResponseData(component, data.Length > 0 ? data : null, null, null, null);
 
-            var content = message.Content;
-            var bodyData = await content.ReadAsByteArrayAsync().ConfigureAwait(false);
-            if (bodyData.Length == 0) return new(response, null, null, null, null);
+            // If there is no data, we're done.
+            if (data.Length == 0) return result;
 
-            var contentType = content.GetContentType();
-
-            // TODO:  We might need to keep an eye on the expected/actual fhirVersion we are receiving to improve
-            // the error response in case we are dealing with a server that uses another version of FHIR.
-            var serialization = ContentType.GetResourceFormatFromContentType(content.GetContentType());
-            var bodyText = await content.GetBodyAsString().ConfigureAwait(false);  // will be null if not parseable as text
-
-            // Depending on whether this is a failure, the server could have set the content-type incorrectly as well,
-            // do double check whether we need to take this payload as FHIR data
-            Exception? issue = null;
-            Resource? resource = null;
+            // If this is not binary data, try to capture the body as text
+            if (!useBinaryProtocol)
+                result = result with { BodyText = await message.Content.GetBodyAsString().ConfigureAwait(false) };
 
             try
             {
-                resource = message.IsSuccessStatusCode ?
-                    parseMessageOnSuccess(ser, contentType, serialization, bodyText) :
-                    parseMessageOnFailure(ser, contentType, serialization, bodyText);
+                var resource = message switch
+                {
+                    { IsSuccessStatusCode: true } when useBinaryProtocol is true => await ReadBinaryDataFromMessage(message).ConfigureAwait(false),
+                    { IsSuccessStatusCode: true } => await ReadResourceFromMessage(message.Content, ser).ConfigureAwait(false),
+                    { IsSuccessStatusCode: false } => await ReadOutcomeFromMessage(message.Content, ser).ConfigureAwait(false),
+                };
+
+                result = result with { BodyResource = resource };
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                issue = e;
+                result = result with { Issue = e };
             }
 
             // Sets the Resource.ResourceBase to the location given in the RequestUri of the response message.
-            if (resource is not null && message.GetRequestUri()?.OriginalString is string location)
+            if (result.BodyResource is not null && message.GetRequestUri()?.OriginalString is string location)
             {
                 var ri = new ResourceIdentity(location);
-                resource.ResourceBase = ri.HasBaseUri && ri.Form == ResourceIdentityForm.AbsoluteRestUrl
+                result.BodyResource.ResourceBase = ri.HasBaseUri && ri.Form == ResourceIdentityForm.AbsoluteRestUrl
                     ? ResourceIdentity.Build(ri.BaseUri, ri.ResourceType, ri.Id, ri.VersionId)
                     : new Uri(location, UriKind.Absolute);
             }
 
-            return new(response, bodyData, bodyText, resource, issue);
+            return result;
         }
 
-        private static Resource? parseMessageOnSuccess(IFhirSerializationEngine ser, string? contentType, ResourceFormat serialization, string? bodyText) =>
-                    serialization switch
-                    {
-                        ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsXml(bodyText) =>
-                                    ser.DeserializeFromXml(bodyText),
-                        ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsJson(bodyText) =>
-                                    ser.DeserializeFromJson(bodyText),
-                        ResourceFormat.Xml or ResourceFormat.Json =>
-                                    throw new UnsupportedBodyTypeException(
-                               $"Endpoint said it returned '{contentType}', but the body is not recognized as either xml or json.", contentType, bodyText),
-                        ResourceFormat.Unknown => 
-                                    throw new UnsupportedBodyTypeException(
-                               $"Endpoint returned a body with contentType '{contentType}', " +
-                               $"while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?",
-                               contentType, bodyText),
-                        _ => default
-                    };
+        /// <summary>
+        /// Interprets the response as a response on a Binary endpoint where the server will stream the data
+        /// in its native format, not packaged as a FHIR Binary resource.
+        /// </summary>
+        /// <returns>A <see cref="Binary"/> resource containing the streamed binary data. The resource's
+        /// metadata will be retrieved from the appropriate HTTP headers.</returns>
+        public static async Task<Binary> ReadBinaryDataFromMessage(this HttpResponseMessage message)
+        {
+            var result = new Binary();
 
-        private static Resource? parseMessageOnFailure(IFhirSerializationEngine ser, string? contentType, ResourceFormat serialization, string? bodyText) =>
-                    serialization switch
-                    {
-                        ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsFhirXml(bodyText) =>
-                                    ser.DeserializeFromXml(bodyText),
-                        ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsFhirJson(bodyText) =>
-                                    ser.DeserializeFromJson(bodyText),
-                        _ => default
-                    };
+            result.Data = result.Content = await message.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+            result.ContentType = message.Content.GetContentType();
+            result.SecurityContext = message.GetSecurityContext() is string reference ? new ResourceReference(reference) : null;
+            result.Meta ??= new();
+            result.Meta.LastUpdated = message.Content.Headers.LastModified;
+            result.Meta.VersionId = message.GetVersionFromETag();
+
+            // If the request indicates a Binary endpoint, try to get the id from the url
+            if (message.GetRequestUri() is { } uri && HttpUtil.IsBinaryEndpoint(uri))
+                result.Id = new ResourceIdentity(uri).Id;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Interprets the response as a success result with a FHIR resource in the body.
+        /// </summary>
+        /// <returns>The resource, or <c>null</c> when the body is empty.</returns>
+        /// <exception cref="UnsupportedBodyTypeException">When the body was not recognized as FHIR xml/json unicode text.</exception>
+        /// <exception cref="DeserializationFailedException">When the serialization engine reported parse errors.</exception>
+        public static async Task<Resource?> ReadResourceFromMessage(this HttpContent content, IFhirSerializationEngine ser)
+        {
+            var contentType = content.GetContentType();
+            var bodyText = await content.GetBodyAsString().ConfigureAwait(false);
+            if (bodyText.Length == 0) return null;
+
+            return ContentType.GetResourceFormatFromContentType(contentType) switch
+            {
+                ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsXml(bodyText) =>
+                            ser.DeserializeFromXml(bodyText),
+                ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsJson(bodyText) =>
+                            ser.DeserializeFromJson(bodyText),
+                ResourceFormat.Xml or ResourceFormat.Json =>
+                            throw new UnsupportedBodyTypeException(
+                       $"Endpoint said it returned '{contentType}', but the body is not recognized as either xml or json.", contentType, bodyText),
+                ResourceFormat.Unknown =>
+                            throw new UnsupportedBodyTypeException(
+                       $"Endpoint returned a body with contentType '{contentType}', " +
+                       $"while a valid FHIR xml/json body type was expected. Is this a FHIR endpoint?",
+                       contentType, bodyText),
+                var unsupported => throw new InvalidOperationException($"Cannot handle the specified resource format {unsupported}")
+            };
+        }
+
+        /// <summary>
+        /// Tries to retrieve a FHIR resource from the body of a failed request.
+        /// </summary>
+        /// <returns>A resource if it found one, or <c>null</c> if the body was empty or not recognizable as a FHIR resource.</returns>
+        /// <exception cref="DeserializationFailedException">Thrown when the body contains FHIR xml/json, but the serialization engine reported parse errors.</exception>
+        public static async Task<Resource?> ReadOutcomeFromMessage(this HttpContent content, IFhirSerializationEngine ser)
+        {
+            var contentType = content.GetContentType();
+            string? bodyText;
+
+            try
+            {
+                bodyText = await content.GetBodyAsString().ConfigureAwait(false);
+            }
+            catch
+            {
+                // It's not even unicode, let's stop here.
+                return null;
+            }
+
+            // Empty body, return null
+            if (bodyText.Length == 0) return null;
+
+            return ContentType.GetResourceFormatFromContentType(contentType) switch
+            {
+                ResourceFormat.Xml when bodyText is not null && SerializationUtil.ProbeIsFhirXml(bodyText) =>
+                            ser.DeserializeFromXml(bodyText),
+                ResourceFormat.Json when bodyText is not null && SerializationUtil.ProbeIsFhirJson(bodyText) =>
+                            ser.DeserializeFromJson(bodyText),
+                _ => default
+            };
+        }
+
 
         /// <summary>
         /// Somewhat quircky, but the useful UnsupportedBodyTypeException is never thrown to the user, instead it is
@@ -208,7 +282,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         internal static ResponseData TranslateUnsupportedBodyTypeException(this ResponseData responseData, HttpStatusCode status)
         {
-            if(responseData.Issue is UnsupportedBodyTypeException ubte)
+            if (responseData.Issue is UnsupportedBodyTypeException ubte)
             {
                 OperationOutcome operationOutcome = OperationOutcome.ForException(ubte, OperationOutcome.IssueType.Invalid);
                 return responseData with { Issue = FhirOperationException.BuildFhirOperationException(status, operationOutcome) };
@@ -226,7 +300,7 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         internal static ResponseData TranslateLegacyParserException(this ResponseData responseData, string? suggestedVersionOnParseError)
         {
-            if(responseData.Issue is DeserializationFailedException dfe)
+            if (responseData.Issue is DeserializationFailedException dfe)
             {
                 // Call this helper on the IFhirSerializationEngine implementation of the old parser, to find out
                 // if this is indeed a legacy exception.

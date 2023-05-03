@@ -861,7 +861,7 @@ public partial class BaseFhirClient : IDisposable
         // of the server, add a suggestion about this in the (legacy) parsing exception.
         var suggestedVersionOnParseError = !Settings.VerifyFhirVersion ? fhirVersion : null;
         (LastResult, LastBody, LastBodyAsText, LastBodyAsResource, var issue) =
-            await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError)
+            await ValidateResponse(responseMessage, expect, getSerializationEngine(), suggestedVersionOnParseError, useBinaryProtocol: false)
                 .ConfigureAwait(false);
 
         // If an error occurred while trying to interpret and validate the response, we will bail out now.
@@ -913,19 +913,24 @@ public partial class BaseFhirClient : IDisposable
                                                                         $"expected a body of type {typeof(TResource).Name} but a {typeof(TResource).Name} was returned.";
     }
 
-    /// <summary>
-    /// Validates the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions.
-    /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
-    /// </summary>        
-    /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
-    /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
-    /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
-    /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine)"/>
-    internal static async Task<ResponseData> ValidateResponse(HttpResponseMessage responseMessage, IEnumerable<HttpStatusCode> expect, IFhirSerializationEngine engine, string? suggestedVersionOnParseError)
-    {
-        var responseData = (await responseMessage.ExtractResponseData(engine).ConfigureAwait(false))
-            .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
-            .TranslateLegacyParserException(suggestedVersionOnParseError);
+        /// <summary>
+        /// Validates the <see cref="HttpResponseMessage"/> and throws the appropriate exceptions.
+        /// It also simulates the exception-throwing behaviour of the original TypedElement-based parsers.
+        /// </summary>        
+        /// <exception cref="FhirOperationException">The body content type could not be handled or the response status indicated failure, or we received an unexpected success status.</exception>
+        /// <exception cref="FormatException">Thrown when the original ITypedElement-based parsers are used and a parse exception occurred.</exception>
+        /// <exception cref="DeserializationFailedException">Thrown when a newer parsers is used and a parse exception occurred.</exception>
+        /// <seealso cref="HttpContentParsers.ExtractResponseData(HttpResponseMessage, IFhirSerializationEngine, bool)"/>
+        internal static async Task<ResponseData> ValidateResponse(
+            HttpResponseMessage responseMessage,
+            IEnumerable<HttpStatusCode> expect,
+            IFhirSerializationEngine engine,
+            string? suggestedVersionOnParseError,
+            bool useBinaryProtocol)
+        {
+            var responseData = (await responseMessage.ExtractResponseData(engine, useBinaryProtocol).ConfigureAwait(false))
+                .TranslateUnsupportedBodyTypeException(responseMessage.StatusCode)
+                .TranslateLegacyParserException(suggestedVersionOnParseError);
 
         // If extracting the data caused an issue, return it immediately
         if (responseData.Issue is not null)

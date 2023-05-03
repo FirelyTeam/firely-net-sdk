@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Test
             response.Headers.Location = new Uri("http://nu.nl");
             response.Headers.TryAddWithoutValidation("Test-key", "Test-value");
 
-            var extracted = await response.ExtractResponseData(engine);
+            var extracted = await response.ExtractResponseData(engine, useBinaryProtocol: false);
 
             extracted.BodyText.Should().Be(DEFAULT_XML);
             engine.SerializeToXml(extracted.BodyResource!).Should().Be(DEFAULT_XML);
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Test
         public async Task GetEmptyResponse()
         {
             var response = new HttpResponseMessage(HttpStatusCode.Conflict);
-            var components = await response.ExtractResponseData(POCOENGINE);
+            var components = await response.ExtractResponseData(POCOENGINE, useBinaryProtocol: false);
 
             components.Response.Status.Should().Be("409");
             components.BodyData.Should().BeNull();
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Test
         private static async Task check(HttpResponseMessage response, IFhirSerializationEngine engine,
             bool hasResource = false, Type? expectedIssue = null, string? messagePattern = null, string? notMessagePattern = null)
         {
-            var components = await response.ExtractResponseData(engine);
+            var components = await response.ExtractResponseData(engine, useBinaryProtocol: false).ConfigureAwait(false);
             await checkResult(response, components, engine, hasResource, expectedIssue, messagePattern, notMessagePattern);
         }
 
@@ -319,8 +319,33 @@ namespace Hl7.Fhir.Test
             IFhirSerializationEngine? engine = null, string? notmatch = null)
                 where T : Exception
         {
-            var result = await BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, version);
+            var result = await BaseFhirClient.ValidateResponse(response, new[] { HttpStatusCode.OK }, engine ?? POCOENGINE, version, useBinaryProtocol: false);
             await checkResult(response, result, engine ?? POCOENGINE, hasResource: false, expectedIssue: typeof(T), messagePattern: match, notMessagePattern: notmatch);
+        }
+
+        [TestMethod]
+        public async Task GetBinaryBody()
+        {
+            var msg = new HttpResponseMessage(HttpStatusCode.OK);
+            msg.RequestMessage = new HttpRequestMessage(HttpMethod.Get, "http://someserver.nl/fhir/Binary/4");
+            var data = new byte[] { 1, 2, 3, 4, 5 };
+            var when = DateTimeOffset.Now;
+
+            msg.Content = new ByteArrayContent(data);
+            msg.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/crap");
+            msg.Content.Headers.LastModified = when;
+            msg.SetSecurityContext("http://nu.nl");
+            msg.SetVersionFromETag("123");
+
+            var b = await msg.ReadBinaryDataFromMessage();
+
+            b.Content.Should().BeEquivalentTo(data);
+            b.Data.Should().BeEquivalentTo(data);
+            b.SecurityContext.Reference.Should().Be("http://nu.nl");
+            b.ContentType.Should().Be("application/crap");
+            b.Meta.VersionId.Should().Be("123");
+            b.Meta.LastUpdated.Should().Be(when);
+            b.Id.Should().Be("4");
         }
     }
 }
