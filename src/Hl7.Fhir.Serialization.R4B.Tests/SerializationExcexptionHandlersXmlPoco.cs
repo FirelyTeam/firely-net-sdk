@@ -368,11 +368,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual("XML112", oc.Issue[0].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient.name[1]", oc.Issue[1].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
                 Assert.AreEqual("XML104", oc.Issue[1].Details.Coding[0].Code);
 
                 Assert.AreEqual("Patient", oc.Issue[2].Expression.First());
-                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[2].Severity);
                 Assert.AreEqual("XML104", oc.Issue[2].Details.Coding[0].Code);
 
                 Assert.AreEqual(3, oc.Issue.Count);
