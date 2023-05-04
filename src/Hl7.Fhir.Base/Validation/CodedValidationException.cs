@@ -38,6 +38,7 @@ namespace Hl7.Fhir.Validation
         public const string INVALID_CODED_VALUE_CODE = "PVAL116";
         public const string CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE = "PVAL117";
         public const string CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE = "PVAL118";
+        public const string POSITIVEINT_LITERAL_INVALID_CODE = "PVAL119";
 
         internal static readonly COVE CHOICE_TYPE_NOT_ALLOWED = new(CHOICE_TYPE_NOT_ALLOWED_CODE, "Value is of type '{0}', which is not an allowed choice.");
         internal static readonly COVE INCORRECT_CARDINALITY_MIN = new(INCORRECT_CARDINALITY_MIN_CODE, "Element has {0} elements, but minium cardinality is {1}.");
@@ -51,6 +52,7 @@ namespace Hl7.Fhir.Validation
         internal static readonly COVE NARRATIVE_XML_IS_MALFORMED = new(NARRATIVE_XML_IS_MALFORMED_CODE, "Value is not well-formatted Xml: {0}");
         internal static readonly COVE NARRATIVE_XML_IS_INVALID = new(NARRATIVE_XML_IS_INVALID_CODE, "Value is not well-formed Xml adhering to the FHIR schema for Narrative: {0}");
         internal static readonly COVE OID_LITERAL_INVALID = new(OID_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for an oid.");
+        internal static readonly COVE POSITIVEINT_LITERAL_INVALID = new(POSITIVEINT_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for an positiveInt.");
         internal static readonly COVE TIME_LITERAL_INVALID = new(TIME_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for a time.");
         internal static readonly COVE URI_LITERAL_INVALID = new(URI_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for an uri.");
         internal static readonly COVE UUID_LITERAL_INVALID = new(UUID_LITERAL_INVALID_CODE, "'{0}' is not a correct literal for a uuid.");
