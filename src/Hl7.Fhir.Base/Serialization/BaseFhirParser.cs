@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
         }
 
         internal static PocoBuilderSettings BuildPocoBuilderSettings(ParserSettings ps) =>
-            new PocoBuilderSettings
+            new()
             {
                 AllowUnrecognizedEnums = ps.AllowUnrecognizedEnums,
                 IgnoreUnknownMembers = ps.AcceptUnknownMembers,
@@ -34,6 +34,21 @@ namespace Hl7.Fhir.Serialization
                 TruncateDateTimeToDate = ps.TruncateDateTimeToDate
 #pragma warning restore CS0618 // Type or member is obsolete
             };
+
+        internal static FhirXmlParsingSettings BuildXmlParsingSettings(ParserSettings settings) =>
+            new()
+            {
+                DisallowSchemaLocation = settings.DisallowXsiAttributesOnRoot,
+                PermissiveParsing = settings.PermissiveParsing,
+            };
+
+        internal static FhirJsonParsingSettings BuildJsonParserSettings(ParserSettings settings) =>
+            new()
+            {
+                AllowJsonComments = false,
+                PermissiveParsing = settings.PermissiveParsing
+            };
+
 
         public Base Parse(ITypedElement element) => element.ToPoco(_inspector, BuildPocoBuilderSettings(Settings));
 

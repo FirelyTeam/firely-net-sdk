@@ -10,6 +10,7 @@
 #if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Text.Json;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
@@ -44,6 +45,8 @@ namespace Hl7.Fhir.Serialization
         public const string UNKNOWN_RESOURCE_TYPE_CODE = "JSON116";
         public const string RESOURCE_TYPE_NOT_A_RESOURCE_CODE = "JSON117";
         public const string UNKNOWN_PROPERTY_FOUND_CODE = "JSON118";
+
+        [Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
         public const string RESOURCETYPE_UNEXPECTED_CODE = "JSON119";
         public const string OBJECTS_CANNOT_BE_EMPTY_CODE = "JSON120";
         public const string ARRAYS_CANNOT_BE_EMPTY_CODE = "JSON121";
@@ -55,6 +58,7 @@ namespace Hl7.Fhir.Serialization
 
         public const string PRIMITIVE_ARRAYS_ONLY_NULL_CODE = "JSON125";
         public const string INCOMPATIBLE_SIMPLE_VALUE_CODE = "JSON126";
+        public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
 
         // ==========================================
         // Unrecoverable Errors
@@ -78,6 +82,9 @@ namespace Hl7.Fhir.Serialization
         // The serialization contained a json null where it is not allowed, but a null does not contain data anyway.
         internal static FhirJsonException EXPECTED_PRIMITIVE_NOT_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, EXPECTED_PRIMITIVE_NOT_NULL_CODE, "Expected a primitive value, not a json null.", OO_Sev.Error, OO_Typ.Value);
 
+        // Encountered an empty property, which is illegal, but the empty text is maintained.
+        internal static FhirJsonException PROPERTY_MAY_NOT_BE_EMPTY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PROPERTY_MAY_NOT_BE_EMPTY_CODE, "Properties cannot be empty strings. Either they are absent, or they are present with at least one character of non-whitespace content.", OO_Sev.Error, OO_Typ.Value);
+
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
         internal static FhirJsonException INCORRECT_BASE64_DATA(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirJsonException STRING_ISNOTAN_INSTANT(ref Utf8JsonReader reader, string instancePath, string value) => Initialize(ref reader, instancePath, STRING_ISNOTAN_INSTANT_CODE, $"Literal string '{value}' cannot be parsed as an instant.", OO_Sev.Error, OO_Typ.Value);
@@ -95,6 +102,8 @@ namespace Hl7.Fhir.Serialization
         internal static FhirJsonException USE_OF_UNDERSCORE_ILLEGAL(ref Utf8JsonReader reader, string instancePath, string propertyNameMapped, string propertyName) => Initialize(ref reader, instancePath, USE_OF_UNDERSCORE_ILLEGAL_CODE, $"Element '{propertyNameMapped}' is not a FHIR primitive, so it should not use an underscore in the '{propertyName}' property.", OO_Sev.Warning, OO_Typ.Structure);
 
         // The serialization contained a superfluous 'resourceType' property, but we have read all data anyway.
+        // Note, this is no longer considered an error, since there are Resources using an element named "resourceType" (Subscription.filterBy for example).
+        [Obsolete("This issue is no longer raised as it is now allowed to use `resourceType` as the name of an element.")]
         internal static FhirJsonException RESOURCETYPE_UNEXPECTED(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, RESOURCETYPE_UNEXPECTED_CODE, "The 'resourceType' property should only be used in resources.", OO_Sev.Warning, OO_Typ.Structure);
 
         // Empty objects and arrays can be ignored without discarding data
@@ -107,6 +116,41 @@ namespace Hl7.Fhir.Serialization
 
         // This leaves the incorrect nulls in place, no change in data.
         internal static FhirJsonException PRIMITIVE_ARRAYS_ONLY_NULL(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, PRIMITIVE_ARRAYS_ONLY_NULL_CODE, "Arrays need to have at least one non-null element.", OO_Sev.Warning, OO_Typ.Structure);
+
+        /// <summary>
+        /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
+        /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
+        /// </summary>
+#pragma warning disable CS0618 // Type or member is obsolete
+        internal static bool IsRecoverableIssue(FhirJsonException e) =>
+            e.ErrorCode is EXPECTED_PRIMITIVE_NOT_NULL_CODE or
+            INCORRECT_BASE64_DATA_CODE or
+            STRING_ISNOTAN_INSTANT_CODE or
+            NUMBER_CANNOT_BE_PARSED_CODE or
+            UNEXPECTED_JSON_TOKEN_CODE or
+            LONG_CANNOT_BE_PARSED_CODE or
+            LONG_INCORRECT_FORMAT_CODE or
+            EXPECTED_START_OF_ARRAY_CODE or
+            USE_OF_UNDERSCORE_ILLEGAL_CODE or
+            RESOURCETYPE_UNEXPECTED_CODE or
+            OBJECTS_CANNOT_BE_EMPTY_CODE or
+            ARRAYS_CANNOT_BE_EMPTY_CODE or
+            PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE or
+            PRIMITIVE_ARRAYS_ONLY_NULL_CODE or
+            PROPERTY_MAY_NOT_BE_EMPTY_CODE;
+#pragma warning restore CS0618 // Type or member is obsolete
+
+        /// <summary>
+        /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
+        /// FHIR release. This means allowing unknown elements, codes and types in a choice element. Note that the POCO model cannot capture
+        /// these newer elements and data, so this means data loss may occur.
+        /// </summary>
+        internal static bool AllowedForBackwardsCompatibility(CodedException e) =>
+            e.ErrorCode is CodedValidationException.INVALID_CODED_VALUE_CODE or
+            //EXPECTED_PRIMITIVE_NOT_OBJECT_CODE or  
+            //EXPECTED_PRIMITIVE_NOT_ARRAY_CODE or
+            CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE or
+            UNKNOWN_PROPERTY_FOUND_CODE;
 
         public FhirJsonException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
         {

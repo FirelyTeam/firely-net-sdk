@@ -35,6 +35,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataTestMethod]
         [DataRow("<foo value =\"true\"/>", typeof(bool), true, null, DisplayName = "XmlBool1")]
         [DataRow("<foo value =\"1\"/>", typeof(bool), "1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool2")]
+        [DataRow("<foo value =\"treu\"/>", typeof(bool), "treu", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool3")]
         [DataRow("<foo value =\"2000-01-01\"/>", typeof(DateTimeOffset), "2000-01-01", null, DisplayName = "XmlInstant1")]
         [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInstant2")]
         [DataRow("<foo value =\"foo\"/>", typeof(byte[]), "foo", ERR.INCORRECT_BASE64_DATA_CODE, DisplayName = "XmlByteArray")]
@@ -442,6 +443,35 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
             resource.As<TestCodeSystem>().Concept[0].Code.Should().Be("foo");
             resource.As<TestCodeSystem>().Concept[0].Concept[0].Code.Should().Be("bar");
+        }
+
+        [TestMethod]
+        public void TryDeserializeDatatypeWithId()
+        {
+            var content =
+                """
+                    <Patient xmlns="http://hl7.org/fhir">
+                      <name id="f2">
+                          <use value="official" />
+                          <family id="a2" value="Van" />
+                          <given value="Karen" />
+                      </name>
+                      <birthDate id="314159" value="1932-09-24"/>
+                    </Patient>
+                """;
+
+            var reader = constructReader(content);
+            var deserializer = getTestDeserializer(new());
+            var resource = deserializer.DeserializeResource(reader);
+            resource.Should().NotBeNull();
+
+            resource.As<TestPatient>().BirthDateElement.ElementId.Should().Be("314159");
+            resource.As<TestPatient>().BirthDate.Should().Be("1932-09-24");
+
+            resource.As<TestPatient>().Name.Should().ContainSingle().Which.ElementId.Should().Be("f2");
+            resource.As<TestPatient>().Name[0].FamilyElement.ElementId.Should().Be("a2");
+            resource.As<TestPatient>().Name[0].Family.Should().Be("Van");
+
         }
 
         [TestMethod]

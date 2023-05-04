@@ -11,31 +11,10 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Serialization
 {
-    /// <summary>
-    /// Factory methods for creating the default implementation of <see cref="IFhirSerializationEngine"/>, as used by the
-    /// FhirClient.
-    /// </summary>
-    public static class FhirSerializationEngine
-    {
-        /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured whith defaults,
-        /// which uses the "old" TypedElement-based parser and serializer.
-        /// </summary>
-        public static IFhirSerializationEngine ElementModel(ModelInspector inspector, ParserSettings? settings) =>
-            new ElementModelSerializationEngine(inspector, settings);
-
-        /// <summary>
-        /// Create an implementation of <see cref="IFhirSerializationEngine"/> configured with defaults 
-        /// which uses the new Poco-based parser and serializer.
-        /// </summary>
-        /// <param name="inspector"></param>
-        /// <returns></returns>
-        public static IFhirSerializationEngine Poco(ModelInspector inspector) =>  new PocoSerializationEngine(inspector);
-    }
-
     /// <summary>
     /// Represents an object that can serialize/deserialize FHIR data from the supported
     /// serialization formats.
@@ -46,13 +25,14 @@ namespace Hl7.Fhir.Serialization
         /// Deserialize an XML string to a FHIR Resource POCO.
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Xml format.</exception>
-        public Resource? DeserializeFromXml(string data);
+        /// <returns>Null if the data did not contain a resource, but another FHIR datatype.</returns>
+        public Resource DeserializeFromXml(string data);
 
         /// <summary>
         /// Deserialize a Json string to a FHIR Resource POCO.
         /// </summary>
         /// <exception cref="DeserializationFailedException">Thrown when the deserializer encountered one or more errors in the FHIR Json format.</exception>
-        public Resource? DeserializeFromJson(string data);
+        public Resource DeserializeFromJson(string data);
 
         /// <summary>
         /// Serialize a FHIR Resource POCO into a string of Xml.

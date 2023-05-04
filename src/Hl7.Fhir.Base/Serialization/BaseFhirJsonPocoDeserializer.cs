@@ -16,7 +16,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
@@ -83,8 +82,10 @@ namespace Hl7.Fhir.Serialization
         /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
         /// </summary>
         /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public Resource DeserializeResource(ref Utf8JsonReader reader)
+        /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
+        /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
+        /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+        public bool TryDeserializeResource(ref Utf8JsonReader reader, out Resource? instance, out IEnumerable<CodedException> issues)
         {
             if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
                 throw new InvalidOperationException("The reader must be set to ignore or refuse comments.");
@@ -94,23 +95,10 @@ namespace Hl7.Fhir.Serialization
 
             FhirJsonPocoDeserializerState state = new();
 
-            var result = DeserializeResourceInternal(ref reader, state, stayOnLastToken: true);
+            instance = DeserializeResourceInternal(ref reader, state, stayOnLastToken: true);
+            issues = state.Errors;
 
-            return !state.Errors.HasExceptions
-                ? result!
-                : throw new DeserializationFailedException(result, state.Errors);
-        }
-
-        /// <summary>
-        /// Deserialize the FHIR Json from the reader and create a new POCO object containing the data from the reader.
-        /// </summary>
-        /// <param name="json">A string of json.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public Resource DeserializeResource(string json)
-        {
-            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(json), new() { CommentHandling = JsonCommentHandling.Skip });
-
-            return DeserializeResource(ref reader);
+            return !state.Errors.HasExceptions;
         }
 
         /// <summary>
@@ -118,8 +106,10 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="targetType">The type of POCO to construct and deserialize</param>
         /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public Base DeserializeObject(Type targetType, ref Utf8JsonReader reader)
+        /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
+        /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
+        /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+        public bool TryDeserializeObject(Type targetType, ref Utf8JsonReader reader, out Base? instance, out IEnumerable<CodedException> issues)
         {
             if (reader.CurrentState.Options.CommentHandling is not JsonCommentHandling.Skip and not JsonCommentHandling.Disallow)
                 throw new InvalidOperationException("The reader must be set to ignore or refuse comments.");
@@ -136,21 +126,14 @@ namespace Hl7.Fhir.Serialization
             {
                 var state = new FhirJsonPocoDeserializerState();
                 deserializeObjectInto(result, mapping, ref reader, DeserializedObjectKind.Complex, state, stayOnLastToken: true);
-                return !state.Errors.HasExceptions
-                    ? result
-                    : throw new DeserializationFailedException(result, state.Errors);
+
+                instance = result;
+                issues = state.Errors;
+                return !state.Errors.HasExceptions;
             }
             else
                 throw new ArgumentException($"Can only deserialize into subclasses of class {nameof(Base)}. " + reader.GenerateLocationMessage(), nameof(targetType));
         }
-
-        /// <summary>
-        /// Reads a (subtree) of serialzed FHIR Json data into a POCO object.
-        /// </summary>
-        /// <typeparam name="T">The type of POCO to construct and deserialize</typeparam>
-        /// <param name="reader">A json reader positioned on the first token of the object, or the beginning of the stream.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public T DeserializeObject<T>(ref Utf8JsonReader reader) where T : Base => (T)DeserializeObject(typeof(T), ref reader);
 
         internal Resource? DeserializeResourceInternal(ref Utf8JsonReader reader, FhirJsonPocoDeserializerState state, bool stayOnLastToken)
         {
@@ -242,7 +225,7 @@ namespace Hl7.Fhir.Serialization
         /// <param name="stayOnLastToken">Normally, the reader will be on the first token *after* the object, however,
         /// System.Text.Json converters expect the readers on the last token of the object. Since all logic
         /// in this class assumes the first case, we make a special case for the outermost call to this function
-        /// done by the <see cref="DeserializeObject(Type, ref Utf8JsonReader)"/> function, which is in its
+        /// done by the <see cref="TryDeserializeObject(Type, ref Utf8JsonReader, out Base?, out IEnumerable{CodedException})"/> function, which is in its
         /// turn called by System.Text.Json upon a <see cref="FhirJsonConverter{F}.Read(ref Utf8JsonReader, Type, JsonSerializerOptions)" /></param>.
         /// <remarks>Reader will be on the first token after the object upon return, but see <paramref name="stayOnLastToken"/>.</remarks>
         private void deserializeObjectInto<T>(
@@ -272,10 +255,11 @@ namespace Hl7.Fhir.Serialization
             {
                 var currentPropertyName = reader.GetString()!;
 
-                if (currentPropertyName == "resourceType")
+                // The resourceType property on the level of a resource is used to determine
+                // the type and should otherwise be skipped when processing a resource.
+                if (currentPropertyName == "resourceType" && kind is DeserializedObjectKind.Resource)
                 {
-                    if (kind != DeserializedObjectKind.Resource) state.Errors.Add(ERR.RESOURCETYPE_UNEXPECTED(ref reader, state.Path.GetInstancePath()));
-                    reader.SkipTo(JsonTokenType.PropertyName);  // skip to next property
+                    reader.SkipTo(JsonTokenType.PropertyName);
                     continue;
                 }
 
@@ -703,6 +687,7 @@ namespace Hl7.Fhir.Serialization
             (object? partial, FhirJsonException? error) result = reader.TokenType switch
             {
                 JsonTokenType.Null => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL(ref reader, pathStack.GetInstancePath())),
+                JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY(ref reader, pathStack.GetInstancePath())),
                 JsonTokenType.String when implementingType == typeof(string) => new(reader.GetString(), null),
                 JsonTokenType.String when implementingType == typeof(byte[]) =>
                                 !Settings.DisableBase64Decoding ? readBase64(ref reader, pathStack) : new(reader.GetString(), null),

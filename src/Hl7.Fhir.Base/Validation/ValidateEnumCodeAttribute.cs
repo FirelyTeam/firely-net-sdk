@@ -19,6 +19,7 @@ namespace Hl7.Fhir.Validation
     /// Validates a code value against the FHIR rules for code.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    [Obsolete("This is a duplicate of CodePatternAttribute and should not be used anymore.")]
     public class ValidateEnumCodeAttribute : ValidationAttribute
     {
         /// <inheritdoc/>

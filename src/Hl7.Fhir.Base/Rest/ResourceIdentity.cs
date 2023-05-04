@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Rest
 
                 if (uri.IsAbsoluteUri)
                 {
-                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/")).EnsureEndsWith("/"); ;
+                    var baseUri = url.Substring(0, url.IndexOf("/" + ResourceType + "/")).EnsureEndsWith("/");
                     BaseUri = new Uri(baseUri, UriKind.Absolute);
                 }
 

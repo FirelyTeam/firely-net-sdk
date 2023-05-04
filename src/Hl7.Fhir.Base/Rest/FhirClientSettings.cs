@@ -1,4 +1,12 @@
-﻿#nullable enable
+﻿/* 
+ * Copyright (c) 2014, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
+#nullable enable
 
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
@@ -115,6 +123,9 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public IFhirSerializationEngine? SerializationEngine = null;
 
+        /// <summary>
+        /// ParserSettings for the pre-5.0 SDK parsers. Are only used when <see cref="SerializationEngine"/> is not set.
+        /// </summary>
         public ParserSettings? ParserSettings = ParserSettings.CreateDefault();
 
         public FhirClientSettings() { }

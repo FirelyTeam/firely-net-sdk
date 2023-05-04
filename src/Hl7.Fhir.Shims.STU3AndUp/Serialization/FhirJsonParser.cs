@@ -32,26 +32,18 @@ namespace Hl7.Fhir.Serialization
         public async Tasks.Task<T> ParseAsync<T>(JsonReader reader) where T : Base
             => (T)await ParseAsync(reader, typeof(T)).ConfigureAwait(false);
 
-        private static FhirJsonParsingSettings buildNodeSettings(ParserSettings settings) =>
-                new FhirJsonParsingSettings
-                {
-                    // TODO: True for DSTU2, should be false in STU3
-                    AllowJsonComments = false,
-                    PermissiveParsing = settings.PermissiveParsing
-                };
-
         /// <inheritdoc cref="ParseAsync(string, Type)" />
         public Base Parse(string json, Type dataType = null)
         {
             var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
-            var jsonReader = FhirJsonNode.Parse(json, rootName, buildNodeSettings(Settings));
+            var jsonReader = FhirJsonNode.Parse(json, rootName, BuildJsonParserSettings(Settings));
             return Parse(jsonReader, dataType);
         }
 
         public async Tasks.Task<Base> ParseAsync(string json, Type dataType = null)
         {
             var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
-            var jsonReader = await FhirJsonNode.ParseAsync(json, rootName, buildNodeSettings(Settings)).ConfigureAwait(false);
+            var jsonReader = await FhirJsonNode.ParseAsync(json, rootName, BuildJsonParserSettings(Settings)).ConfigureAwait(false);
             return Parse(jsonReader, dataType);
         }
 
@@ -59,14 +51,14 @@ namespace Hl7.Fhir.Serialization
         public Base Parse(JsonReader reader, Type dataType = null)
         {
             var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
-            var jsonReader = FhirJsonNode.Read(reader, rootName, buildNodeSettings(Settings));
+            var jsonReader = FhirJsonNode.Read(reader, rootName, BuildJsonParserSettings(Settings));
             return Parse(jsonReader, dataType);
         }
 
         public async Tasks.Task<Base> ParseAsync(JsonReader reader, Type dataType = null)
         {
             var rootName = dataType != null ? ModelInfo.GetFhirTypeNameForType(dataType) : null;
-            var jsonReader = await FhirJsonNode.ReadAsync(reader, rootName, buildNodeSettings(Settings)).ConfigureAwait(false);
+            var jsonReader = await FhirJsonNode.ReadAsync(reader, rootName, BuildJsonParserSettings(Settings)).ConfigureAwait(false);
             return Parse(jsonReader, dataType);
         }
     }

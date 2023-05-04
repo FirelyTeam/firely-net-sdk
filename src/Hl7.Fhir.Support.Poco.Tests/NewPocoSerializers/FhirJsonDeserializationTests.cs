@@ -36,6 +36,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow("enumvalue", null, typeof(UriFormat), null, COVE.INVALID_CODED_VALUE_CODE)]
         [DataRow(true, "true", typeof(Enum), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
         [DataRow("hi!", "hi!", typeof(int), null, ERR.UNEXPECTED_JSON_TOKEN_CODE)]
+        [DataRow("", "", typeof(string), null, ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE)]
 
         [DataRow(3, 3, typeof(decimal), null, null)]
         [DataRow(3, 3, typeof(uint), null, null)]
@@ -206,6 +207,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataRow(4, typeof(Base64Binary), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4")]
 
         [DataRow("2007-04", typeof(FhirDateTime), null, "2007-04")]
+        [DataRow("", typeof(FhirDateTime), ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE, null)]
         [DataRow("2007-", typeof(FhirDateTime), COVE.DATETIME_LITERAL_INVALID_CODE, "2007-")]
         [DataRow(4.45, typeof(FhirDateTime), ERR.UNEXPECTED_JSON_TOKEN_CODE, "4.45")]
 
@@ -387,14 +389,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
             yield return data<Extension>(5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<Extension>(new[] { 2, 3 }, JsonTokenType.EndArray, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
-            yield return data<Extension>(new { resourceType = "Whatever" },
-                ERR.RESOURCETYPE_UNEXPECTED_CODE, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
             yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
             yield return data<Extension>(new { unknown = "test" }, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
             yield return data<Extension>(new { url = "test" });
             yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE);
-            yield return data<Extension>(new { resourceType = "whatever", unknown = "test", url = "test" },
-                    ERR.RESOURCETYPE_UNEXPECTED_CODE, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
+            yield return data<Extension>(new { unknown = "test", url = "test" },
+                    ERR.UNKNOWN_PROPERTY_FOUND_CODE);
             yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE);
             yield return data<Extension>(new { valueUnknown = "incorrect type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE);
             yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" }, JsonTokenType.EndObject);
@@ -588,7 +588,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 assertErrors(dfe.Exceptions, new string[]
                 {
                     ERR.STRING_ISNOTAN_INSTANT_CODE,
-                    ERR.RESOURCETYPE_UNEXPECTED_CODE,
+                    ERR.UNKNOWN_PROPERTY_FOUND_CODE, // resourceType at the non-root level                   
                     ERR.UNKNOWN_RESOURCE_TYPE_CODE,
                     ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE,
                     ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE,
@@ -597,7 +597,6 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.EXPECTED_START_OF_ARRAY_CODE,
                     ERR.UNKNOWN_PROPERTY_FOUND_CODE, // mother is not a property of HumanName
                     ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE, // family is not an array,
-                    //ERR.PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE, // given and _given not the same length
                     ERR.EXPECTED_PRIMITIVE_NOT_NULL_CODE, // telecom use cannot be null
                     ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE, // address.use is not an object
                     COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE, // address.line should not have a null at the same position in both arrays
@@ -616,6 +615,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                     ERR.NUMBER_CANNOT_BE_PARSED_CODE, // multipleBirthInteger should not be a float (3.14)
                     ERR.INCORRECT_BASE64_DATA_CODE,
                     ERR.ARRAYS_CANNOT_BE_EMPTY_CODE,
+                    ERR.PROPERTY_MAY_NOT_BE_EMPTY_CODE,
                     ERR.OBJECTS_CANNOT_BE_EMPTY_CODE
                 });
 

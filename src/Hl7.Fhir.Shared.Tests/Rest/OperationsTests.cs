@@ -1,6 +1,4 @@
-﻿#pragma warning disable CS0618 // Type or member is obsolete
-
-/*
+﻿/*
  * Copyright (c) 2014, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  *
@@ -13,183 +11,120 @@ using Hl7.Fhir.Rest;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
+using Task = System.Threading.Tasks.Task;
+using static Hl7.Fhir.Tests.Rest.FhirClientTests;
+using FluentAssertions;
 
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
     public class OperationsTests
     {
-        private readonly string testEndpoint = FhirClientTests.TestEndpoint.OriginalString;
+        private static readonly string TESTENDPOINT = TestEndpoint.OriginalString;
 
+        [Ignore("FS reports not implemented")]
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeTestPatientGetEverythingHttpClient()
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeTestPatientGetEverythingHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
-            {
-                patientGetEverything(client);
-            }
-        }
+            using var client = new FhirClient(TESTENDPOINT);
 
-        private void patientGetEverything(BaseFhirClient client)
-        {
             var start = new FhirDateTime(2014, 11, 1);
             var end = new FhirDateTime(2015, 1, 1);
             var par = new Parameters().Add("start", start).Add("end", end);
-            var bundle = (Bundle)client.InstanceOperation(ResourceIdentity.Build("Patient", "example"), "everything", par);
+            var bundle = await client.InstanceOperationAsync(ResourceIdentity.Build("Patient", PATIENTID), "everything", par) as Bundle;
             Assert.IsTrue(bundle.Entry.Any());
 
-            var bundle2 = client.FetchPatientRecord(ResourceIdentity.Build("Patient", "example"), start, end);
+            var bundle2 = await client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", PATIENTID), start, end);
             Assert.IsTrue(bundle2.Entry.Any());
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeExpandExistingValueSetHttpClient()
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeExpandExistingValueSetHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                expandExistingValueset(client);
-            };
-        }
+            using var client = new FhirClient(TerminologyEndpoint);
 
-        private static void expandExistingValueset(BaseFhirClient client)
-        {
             // expand via instance level operation
-            var vs = client.ExpandValueSet(ResourceIdentity.Build("ValueSet", "administrative-gender"));
+            var vs = await client.ExpandValueSetAsync(ResourceIdentity.Build("ValueSet", "administrative-gender"));
             Assert.IsTrue(vs.Expansion.Contains.Any());
 
             // expand via Canonical URI
-            vs = client.ExpandValueSet(new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender"));
+            vs = await client.ExpandValueSetAsync(new FhirUri("http://hl7.org/fhir/ValueSet/administrative-gender"));
             Assert.IsTrue(vs.Expansion.Contains.Any());
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeExpandParameterValueSetHttpClient()
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeExpandParameterValueSetHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                expandParameterValueSet(client);
-            }
-        }
+            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
 
-        private static void expandParameterValueSet(BaseFhirClient client)
-        {
-            var vs = client.Read<ValueSet>("ValueSet/administrative-gender");
-            var vsX = client.ExpandValueSet(vs);
+            var vs = await client.ReadAsync<ValueSet>("ValueSet/administrative-gender");
+            var vsX = await client.ExpandValueSetAsync(vs);
 
             Assert.IsTrue(vsX.Expansion.Contains.Any());
         }
 
-        // [WMR 20170927] Chris Munro
-        // https://chat.fhir.org/#narrow/stream/implementers/subject/How.20to.20expand.20ValueSets.20with.20the.20C.23.20FHIR.20API.3F
-        //[TestMethod]
-        //[TestCategory("IntegrationTest")]
-        //[Ignore]
-        //public void TestExpandValueSet()
-        //{
-        //    const string endpoint = @"https://stu3.simplifier.net/open/";
-        //    var location = new FhirUri("https://stu3.simplifier.net/open/ValueSet/043d233c-4ecf-4802-a4ac-75d82b4291c2");
-        //    var client = new FhirClient(endpoint);
-        //    var expandedValueSet = client.ExpandValueSet(location, null);
-        //}
-
-
-        [TestMethod] // Server returns internal server error
-        [TestCategory("IntegrationTest")]
-        public void InvokeLookupCodingHttpClient()
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeLookupCodingHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                lookupCoding(client);
-            }
-        }
+            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
 
-        private static void lookupCoding(BaseFhirClient client)
-        {
             var coding = new Coding("http://hl7.org/fhir/administrative-gender", "male");
 
-            var expansion = client.ConceptLookup(coding: coding);
+            var expansion = await client.ConceptLookupAsync(coding: coding);
 
             // Assert.AreEqual("AdministrativeGender", expansion.GetSingleValue<FhirString>("name").Value); // Returns empty currently on Grahame's server
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-
-        [TestMethod] // Server returns internal server error
-        [TestCategory("IntegrationTest")]
-        public void InvokeLookupCodeHttpClient()
+        [TestMethod]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeLookupCodeHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                lookUpCode(client);
-            };
-        }
-
-        private static void lookUpCode(BaseFhirClient client)
-        {
-            var expansion = client.ConceptLookup(code: new Code("male"), system: new FhirUri("http://hl7.org/fhir/administrative-gender"));
+            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
+            var expansion = await client.ConceptLookupAsync(code: new Code("male"), system: new FhirUri("http://hl7.org/fhir/administrative-gender"));
 
             //Assert.AreEqual("male", expansion.GetSingleValue<FhirString>("name").Value);  // Returns empty currently on Grahame's server
             Assert.AreEqual("Male", expansion.GetSingleValue<FhirString>("display").Value);
         }
 
-
         [TestMethod]
-        [TestCategory("IntegrationTest")]
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
         public void InvokeValidateCodeByIdHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                validateCodeById(client);
-            }
-        }
+            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
 
-        private static void validateCodeById(BaseFhirClient client)
-        {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
             var result = client.ValidateCode("c80-facilitycodes", coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
         }
 
-
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeByCanonicalHttpClient()
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeValidateCodeByCanonicalHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                validateCodeByCanonical(client);
-            }
-        }
+            using var client = new FhirClient(FhirClientTests.TerminologyEndpoint);
 
-
-        private static void validateCodeByCanonical(BaseFhirClient client)
-        {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var result = client.ValidateCode(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"),
+            var result = await client.ValidateCodeAsync(url: new FhirUri("http://hl7.org/fhir/ValueSet/c80-facilitycodes"),
                   coding: coding, @abstract: new FhirBoolean(false));
             Assert.IsTrue(result.Result?.Value == true);
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeValidateCodeWithVSHttpClient()
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeValidateCodeWithVSHttpClient()
         {
-            using (var client = new FhirClient(FhirClientTests.TerminologyEndpoint))
-            {
-                validateCodeWithVS(client);
-            };
-        }
+            using var client = new FhirClient(TerminologyEndpoint);
 
-        private static void validateCodeWithVS(BaseFhirClient client)
-        {
             var coding = new Coding("http://snomed.info/sct", "4322002");
 
-            var vs = client.Read<ValueSet>("ValueSet/c80-facilitycodes");
+            var vs = await client.ReadAsync<ValueSet>("ValueSet/c80-facilitycodes");
             Assert.IsNotNull(vs);
 
             var result = client.ValidateCode(valueSet: vs, coding: coding);
@@ -197,53 +132,71 @@ namespace Hl7.Fhir.Tests.Rest
         }
 
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public void InvokeResourceValidationHttpClient()
+        [TestCategory("FhirClient"), TestCategory("IntegrationTest")]
+        public async Task InvokeResourceValidationHttpClient()
         {
-            using (var client = new FhirClient(testEndpoint))
-            {
-                validateResource(client);
-            }
-        }
+            using var client = new FhirClient(TESTENDPOINT);
 
-        private static void validateResource(BaseFhirClient client)
-        {
-            var pat = client.Read<Patient>("Patient/pat1");
-            var vresult = client.ValidateResource(pat, null,
+            var pat = await client.ReadAsync<Patient>(PATIENTIDEP);
+            var vresult = await client.ValidateResourceAsync(pat, null,
                 new FhirUri("http://hl7.org/fhir/StructureDefinition/Patient"));
             Assert.IsTrue(vresult.Success);
         }
 
+#if R5
+    [Ignore("No R5 version of FS yet - this operation fails when run on R5.")]
+#endif
         [TestMethod]
-        [TestCategory("IntegrationTest")]
-        public async System.Threading.Tasks.Task InvokeTestPatientGetEverythingAsyncHttpClient()
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Task TestOperationEverythingHttpClient()
         {
-            string _endpoint = "https://api.hspconsortium.org/rpineda/open";
-            using (var client = new FhirClient(_endpoint))
+            using FhirClient client = new FhirClient(TestEndpoint);
+            // GET operation $everything without parameters
+            var uri = new Uri(PATIENTIDEP, UriKind.Relative);
+
+            var loc = await client.InstanceOperationAsync(uri, "everything", useGet: true);
+            Assert.IsNotNull(loc);
+        }
+
+
+        [Ignore("FS returns operation not implemented on these tests")]
+        [TestMethod]
+        [TestCategory("IntegrationTest"), TestCategory("FhirClient")]
+        public async Task TestOperationEverythingWithParamsHttpClient()
+        {
+            using FhirClient client = new FhirClient(TestEndpoint);
+            var uri = new Uri(PATIENTIDEP, UriKind.Relative);
+
+            // POST operation $everything without parameters
+            var loc = await client.InstanceOperationAsync(uri, "everything", useGet: false);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 primitive parameter
+            loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Date(2017, 11)), useGet: true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 primitive2token parameter
+            loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Identifier("", "example")), useGet: true);
+            Assert.IsNotNull(loc);
+
+            // GET operation $everything with 1 resource parameter
+            try
             {
-                await patientEverythingAsync(client).ConfigureAwait(false);
+                loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Patient()), useGet: true);
+                Assert.Fail("An InvalidOperationException was expected here");
             }
-        }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(InvalidOperationException), ex.Message);
+            }
 
-        private static async System.Threading.Tasks.Task patientEverythingAsync(BaseFhirClient client)
-        {
-            var start = new FhirDateTime(2014, 11, 1);
-            var end = new FhirDateTime(2020, 1, 1);
-            var par = new Parameters().Add("start", start).Add("end", end);
+            // GET operation $everything with 1 complex parameter
+            var act = () => client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Annotation() { Text = new Markdown("test") }), useGet: true);
+            await act.Should().ThrowAsync<InvalidOperationException>();
 
-            var bundleTask = client.InstanceOperationAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), "everything", par);
-            var bundle2Task = client.FetchPatientRecordAsync(ResourceIdentity.Build("Patient", "SMART-1288992"), start, end);
-
-            await bundleTask.ConfigureAwait(false);
-            await bundle2Task.ConfigureAwait(false);
-
-            var bundle = (Bundle)bundleTask.Result;
-            Assert.IsTrue(bundle.Entry.Any());
-
-            var bundle2 = (Bundle)bundle2Task.Result;
-            Assert.IsTrue(bundle2.Entry.Any());
-        }
+            // POST operation $everything with 1 parameter
+            loc = await client.InstanceOperationAsync(uri, "everything", new Parameters().Add("start", new Date(2017, 10)), useGet: false);
+            Assert.IsNotNull(loc);
+        }                
     }
 }
-
-#pragma warning restore CS0618 // Type or member is obsolete

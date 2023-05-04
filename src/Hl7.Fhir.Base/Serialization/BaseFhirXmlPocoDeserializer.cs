@@ -61,13 +61,15 @@ namespace Hl7.Fhir.Serialization
         public FhirXmlPocoDeserializerSettings Settings { get; }
 
         private readonly ModelInspector _inspector;
-
+     
         /// <summary>
         /// Deserialize the FHIR xml from the reader and create a new POCO resource containing the data from the reader.
         /// </summary>
         /// <param name="reader">An xml reader positioned on the first element, or the beginning of the stream.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public Resource DeserializeResource(XmlReader reader)
+        /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
+        /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
+        /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+        public bool TryDeserializeResource(XmlReader reader, out Resource? instance, out IEnumerable<CodedException> issues)
         {
             FhirXmlPocoDeserializerState state = new();
 
@@ -80,22 +82,10 @@ namespace Hl7.Fhir.Serialization
                 reader.Settings.DtdProcessing = DtdProcessing.Prohibit;
             }
 
-            var result = DeserializeResourceInternal(reader, state);
+            instance = DeserializeResourceInternal(reader, state);
+            issues = state.Errors;
 
-            return !state.Errors.HasExceptions
-                ? result!
-                : throw new DeserializationFailedException(result, state.Errors);
-        }
-
-        /// <summary>
-        /// Deserialize the FHIR xml from a string and create a new POCO resource containing the data from the reader.
-        /// </summary>
-        /// <param name="data">A string containing the XML from which to deserialize the resource.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public Resource DeserializeResource(string data)
-        {
-            var xmlReader = SerializationUtil.XmlReaderFromXmlText(data);
-            return DeserializeResource(xmlReader);
+            return !state.Errors.HasExceptions;
         }
 
         /// <summary>
@@ -103,8 +93,10 @@ namespace Hl7.Fhir.Serialization
         /// </summary>
         /// <param name="targetType">The type of POCO to construct and deserialize</param>
         /// <param name="reader">An xml reader positioned on the first element, or the beginning of the stream.</param>
-        /// <returns>A fully initialized POCO with the data from the reader.</returns>
-        public Base DeserializeElement(Type targetType, XmlReader reader)
+        /// <param name="instance">The result of deserialization. May be incomplete when there are issues.</param>
+        /// <param name="issues">Issues encountered while deserializing. Will be empty when the function returns true.</param>
+        /// <returns><c>false</c> if there are issues, <c>true</c> otherwise.</returns>
+        public bool TryDeserializeElement(Type targetType, XmlReader reader, out Base? instance, out IEnumerable<CodedException> issues)
         {
             FhirXmlPocoDeserializerState state = new();
 
@@ -114,17 +106,15 @@ namespace Hl7.Fhir.Serialization
                 reader.Settings.DtdProcessing = DtdProcessing.Prohibit;
             }
 
-            var result = DeserializeElementInternal(targetType, reader, state);
-
-            return !state.Errors.HasExceptions
-                ? result
-                : throw new DeserializationFailedException(result, state.Errors);
+            instance = DeserializeElementInternal(targetType, reader, state);
+            issues = state.Errors;
+            return !state.Errors.HasExceptions;
         }
 
         internal Resource? DeserializeResourceInternal(XmlReader reader, FhirXmlPocoDeserializerState state)
         {
             //check if we are actually on an opening element. 
-            VerifyOpeningElement(reader, state);
+            verifyOpeningElement(reader, state);
 
             (ClassMapping? resourceMapping, FhirXmlException? error) = DetermineClassMappingFromInstance(reader, _inspector, state.Path);
 
@@ -169,7 +159,7 @@ namespace Hl7.Fhir.Serialization
             }
         }
 
-        private static void VerifyOpeningElement(XmlReader reader, FhirXmlPocoDeserializerState state)
+        private static void verifyOpeningElement(XmlReader reader, FhirXmlPocoDeserializerState state)
         {
             //If not skip all non-content and check again.
             reader.MoveToContent();
@@ -213,7 +203,7 @@ namespace Hl7.Fhir.Serialization
                   $"therefore not be used for deserialization. " + reader.GenerateLocationMessage(), nameof(targetType));
 
             //check if we are at an opening element.
-            VerifyOpeningElement(reader, state);
+            verifyOpeningElement(reader, state);
 
             // If we have at least a mapping, let's try to continue               
             var newDatatype = (Base)mapping.Factory();
@@ -543,15 +533,15 @@ namespace Hl7.Fhir.Serialization
                     PocoDeserializationHelper.RunPropertyValidation(ref parsedValue, Settings.Validator, context, state.Errors);
                 }
 
-                if (target is PrimitiveType primitive)
+                if (target is PrimitiveType primitive && propMapping.Name == "value")
+                {
                     primitive.ObjectValue = parsedValue;
+                }
                 else
                 {
                     propMapping.SetValue(target, parsedValue);
                 }
             }
-
-
         }
 
         internal (object?, FhirXmlException?) ParsePrimitiveValue(XmlReader reader, Type implementingType, PathStack pathStack)
@@ -562,7 +552,6 @@ namespace Hl7.Fhir.Serialization
 
             if (!string.IsNullOrEmpty(trimmedValue))
             {
-
                 if (implementingType == typeof(string))
                     return (trimmedValue, null);
                 else if (implementingType == typeof(bool))

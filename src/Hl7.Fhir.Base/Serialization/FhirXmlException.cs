@@ -3,6 +3,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
+using Hl7.Fhir.Validation;
 using System;
 using System.Globalization;
 using System.Xml;
@@ -32,7 +33,9 @@ namespace Hl7.Fhir.Serialization
         public const string ELEMENT_NOT_IN_SEQUENCE_CODE = "XML116";
         public const string SCHEMALOCATION_DISALLOWED_CODE = "XML117";
         public const string EXPECTED_OPENING_ELEMENT_CODE = "XML118";
+        [Obsolete("This name contains a spelling mistake, use ENCOUNTERED_DTD_REFERENCES_CODE instead.")]
         public const string ENCOUNTERED_DTP_REFERENCES_CODE = "XML119";
+        public const string ENCOUNTERED_DTD_REFERENCES_CODE = "XML119";
         public const string ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE = "XML120";
         public const string INVALID_DUPLICATE_PROPERTY_CODE = "XML121";
 
@@ -40,13 +43,13 @@ namespace Hl7.Fhir.Serialization
         public const string VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE = "XML203";
 
         // ==========================================
-        // Unrecoverable Errors (or data loss)
+        // Unrecoverable Errors - when adding a new error, also add it to the appropriate error collections below.
         // ==========================================
         internal static FhirXmlException UNKNOWN_RESOURCE_TYPE(XmlReader reader, string instancePath, string typeName) => Initialize(reader, instancePath, UNKNOWN_RESOURCE_TYPE_CODE, $"Unknown type '{typeName}' found in root property.", OO_Sev.Fatal, OO_Typ.Structure);
         internal static FhirXmlException RESOURCE_TYPE_NOT_A_RESOURCE(XmlReader reader, string instancePath, string resourceType) => Initialize(reader, instancePath, RESOURCE_TYPE_NOT_A_RESOURCE_CODE, $"Data type '{resourceType}' in property 'resourceType' is not a type of resource.", OO_Sev.Fatal, OO_Typ.Structure);
 
         // ==========================================
-        // Recoverable Errors
+        // Recoverable Errors - when adding a new error, also add it to the appropriate error collections below.
         // ==========================================
         internal static FhirXmlException EMPTY_ELEMENT_NAMESPACE(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, EMPTY_ELEMENT_NAMESPACE_CODE, $"Element '{elementName}' has no namespace, expected the HL7 FHIR namespace ({XmlNs.FHIR})", OO_Sev.Error, OO_Typ.Structure); // Element namespace isn't fatal, but resource level is
         internal static FhirXmlException INCORRECT_ELEMENT_NAMESPACE(XmlReader reader, string instancePath, string elementName, string s1) => Initialize(reader, instancePath, INCORRECT_ELEMENT_NAMESPACE_CODE, $"Element '{elementName}' uses the namespace '{s1}', which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
@@ -66,7 +69,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException ATTRIBUTE_HAS_EMPTY_VALUE(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ATTRIBUTE_HAS_EMPTY_VALUE_CODE, "Attributes cannot be empty. Either they are absent, or they are present with at least one character of non - whitespace content", OO_Sev.Warning, OO_Typ.Structure);
         internal static FhirXmlException SCHEMALOCATION_DISALLOWED(XmlReader reader, string instancePath) => Initialize(reader, instancePath, SCHEMALOCATION_DISALLOWED_CODE, "The 'schemaLocation' attribute is disallowed.", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string openElementName) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Error, OO_Typ.Structure);
-        internal static FhirXmlException ENCOUNTERED_DTD_REFERENCES(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ENCOUNTERED_DTP_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)", OO_Sev.Error, OO_Typ.Structure);
+        internal static FhirXmlException ENCOUNTERED_DTD_REFERENCES(XmlReader reader, string instancePath) => Initialize(reader, instancePath, ENCOUNTERED_DTD_REFERENCES_CODE, "There SHALL be no DTD references in FHIR resources (because of the XXE security exploit)", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, $"Element '{elementName}' must have child elements and / or a value attribute", OO_Sev.Error, OO_Typ.Structure);
         internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
 
@@ -83,6 +86,35 @@ namespace Hl7.Fhir.Serialization
                 InstancePath = instancePath,
             };
         }
+
+        /// <summary>
+        /// Whether this issue leads to dataloss or not. Recoverable issues mean that all data present in the parsed data could be retrieved and
+        /// captured in the POCO model, even if the syntax or the data was not fully FHIR compliant.
+        /// </summary>
+        internal static bool IsRecoverableIssue(FhirXmlException e) =>
+            e.ErrorCode is EMPTY_ELEMENT_NAMESPACE_CODE or
+            INCORRECT_ELEMENT_NAMESPACE_CODE or
+            INCORRECT_XHTML_NAMESPACE_CODE or
+            INCORRECT_ATTRIBUTE_NAMESPACE_CODE or
+            INCORRECT_BASE64_DATA_CODE or
+            VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE or
+            ELEMENT_OUT_OF_ORDER_CODE or
+            ELEMENT_NOT_IN_SEQUENCE_CODE or
+            ATTRIBUTE_HAS_EMPTY_VALUE_CODE or
+            ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE or
+            SCHEMALOCATION_DISALLOWED_CODE or
+            ENCOUNTERED_DTD_REFERENCES_CODE;
+
+        /// <summary>
+        /// An issue is allowable for backwards compatibility if it could be caused because an older parser encounters data coming from a newer 
+        /// FHIR release. This means allowing unknown elements, attributes, codes and types in a choice element. Note that the POCO model cannot capture
+        /// these newer elements and data, so this means data loss may occur.
+        /// </summary>
+        internal static bool AllowedForBackwardsCompatibility(CodedException e) =>
+            e.ErrorCode is CodedValidationException.INVALID_CODED_VALUE_CODE or
+            UNKNOWN_ELEMENT_CODE or
+            CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE or
+            UNKNOWN_ATTRIBUTE_CODE;
 
         public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
         {

@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Rest
         {
             // [WMR 20160421] GetResourceNameForType is obsolete
             // return Search(q, ModelInfo.GetResourceNameForType(typeof(TResource)));
-            return SearchAsync(q, _inspector.GetFhirTypeNameForType(typeof(TResource)), ct);
+            return SearchAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource)), ct);
         }
 
         /// <summary>
@@ -107,13 +107,13 @@ namespace Hl7.Fhir.Rest
 
         public virtual Task<Bundle?> SearchUsingPostAsync<TResource>(SearchParams q, CancellationToken? ct = null) where TResource : Resource
         {
-            return SearchUsingPostAsync(q, _inspector.GetFhirTypeNameForType(typeof(TResource)), ct);
+            return SearchUsingPostAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource)), ct);
         }
 
         [Obsolete("Synchronous use of the FhirClient is strongly discouraged, use the asynchronous call instead.")]
         public virtual Bundle? SearchUsingPost<TResource>(SearchParams q) where TResource : Resource
         {
-            return SearchUsingPostAsync(q, _inspector.GetFhirTypeNameForType(typeof(TResource))).WaitResult();
+            return SearchUsingPostAsync(q, Inspector.GetFhirTypeNameForType(typeof(TResource))).WaitResult();
         }
 
         #endregion

@@ -81,11 +81,15 @@ namespace Hl7.Fhir.Serialization
                     // Note that some Value accessors (for Code<T>.Value for example) can throw, but there are
                     // no Cardinality constraints on those, so we don't have to worry about that now.
                     var propValue = propMapping.GetValue(instance);
-                    validationContext.MemberName = propMapping.Name;
 
                     if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
-                        errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, validationContext));
-                    validationContext.MemberName = null;
+                    {
+                        // Add the name of the property to the path, so we can display the correct name of the element,
+                        // even if it does not really contain any values.
+                        var nestedContext = validationContext.IntoPath(validationContext.ObjectInstance, propMapping.Name);
+
+                        errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, nestedContext));
+                    }
                 }
             }
 
@@ -107,7 +111,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             reportedErrors = errors?.ToArray();
-            return;           
+            return;
         }
 
         private IEnumerable<CodedValidationException>? add(IEnumerable<CodedValidationException>? errors, IEnumerable<CodedValidationException>? moreErrors)
@@ -133,7 +137,7 @@ namespace Hl7.Fhir.Serialization
                     if (vr is CodedValidationResult cvr)
                         errors = add(errors, new[] { cvr.ValidationException });
                     else
-                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");                  
+                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
                 }
             }
 

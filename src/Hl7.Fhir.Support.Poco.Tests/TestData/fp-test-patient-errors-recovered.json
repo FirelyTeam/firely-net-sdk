@@ -303,7 +303,7 @@
   ],
   "managingOrganization": {
     "reference": "Organization/1",
-    "display": "ACME Healthcare, Inc"
+    "display": ""
   },
   "link": [ {} ]
 }
