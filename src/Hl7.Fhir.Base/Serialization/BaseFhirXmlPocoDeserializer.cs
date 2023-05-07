@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Serialization
             var name = reader.LocalName;
 
             object? result = propMapping.IsCollection
-                ? createOrExpandList(target, incorrectOrder, propValueMapping!, propMapping, reader, state)
+                ? createOrExpandList(target, propValueMapping!, propMapping, reader, state)
                 : readSingleValue(propValueMapping!, propMapping, reader, state);
 
             if (!propMapping.IsCollection && propMapping.GetValue(target) != null)
@@ -355,27 +355,20 @@ namespace Hl7.Fhir.Serialization
         }
 
         //Will create a new list, or adds encountered values to an already existing list (and reports a user error).
-        private IList? createOrExpandList(Base target, bool expandCandidate, ClassMapping propValueMapping, PropertyMapping propMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
+        private IList? createOrExpandList(Base target, ClassMapping propValueMapping, PropertyMapping propMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
         {
-            //only check for previously created list if the element is in the incorrect place.
-            if (expandCandidate)
-            {
-                var currentList = (IList?)propMapping.GetValue(target);
+            var currentList = (IList?)propMapping.GetValue(target);
 
-                return (!currentList.IsNullOrEmpty()) ?
-                    expandCurrentList(currentList!, propValueMapping, propMapping, reader, state)
-                    : readList(propValueMapping!, propMapping, reader, state);
-            }
-            else
-            {
-                return readList(propValueMapping!, propMapping, reader, state);
-            }
+            return (!currentList.IsNullOrEmpty()) ?
+                expandCurrentList(currentList!, propValueMapping, propMapping, reader, state)
+                : readList(propValueMapping!, propMapping, reader, state);
         }
 
         //Retrieves previously created list, and add newly encountered values.
         private IList expandCurrentList(IList currentEntries, ClassMapping propValueMapping, PropertyMapping propMapping, XmlReader reader, FhirXmlPocoDeserializerState state)
         {
             //There was already a list created previously -> User error!
+            state.Path.IncrementIndex(currentEntries.Count);
             state.Errors.Add(ERR.ELEMENT_NOT_IN_SEQUENCE(reader, state.Path.GetInstancePath(), reader.LocalName));
 
             //But let's fix it, and expand the list with the newly encountered element(s).

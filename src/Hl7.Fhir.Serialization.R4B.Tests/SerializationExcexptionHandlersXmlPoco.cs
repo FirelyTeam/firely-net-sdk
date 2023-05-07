@@ -511,6 +511,57 @@ namespace Hl7.Fhir.Serialization.Tests
             }
         }
 
+        [TestMethod]
+        public void XMLInvalidDuplicateArray()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                <Patient xmlns="http://hl7.org/fhir">
+                    <id value="pat1"/>
+                    <name>
+                        <family value="Doe"/>
+                        <chicken value="rubbish prop"/>
+                    </name>
+                    <active value="true"/>
+                    <name>
+                        <family value="Doe2"/>
+                        <turkey value="rubbish prop"/>
+                    </name>
+                </Patient>
+                """;
+
+            try
+            {
+                var p = SerializeResource<Patient>(rawData);
+                DebugDump.OutputXml(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputXml(ex.PartialResult);
+
+                Assert.AreEqual("Patient.name[0]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
+                Assert.AreEqual("XML104", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.active", oc.Issue[1].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
+                Assert.AreEqual("XML109", oc.Issue[1].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.name[1]", oc.Issue[2].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual("XML116", oc.Issue[2].Details.Coding[0].Code);
+
+                Assert.AreEqual("Patient.name[1]", oc.Issue[3].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[3].Severity);
+                Assert.AreEqual("XML104", oc.Issue[3].Details.Coding[0].Code);
+
+                Assert.AreEqual(4, oc.Issue.Count);
+            }
+        }
 
         [TestMethod]
         public void XmlInvalidBundledResources()
