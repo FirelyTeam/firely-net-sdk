@@ -74,7 +74,10 @@ namespace Hl7.Fhir.Serialization
             }
             else
             {
-                _paths.Push(String.Empty);
+                if (name == "value")
+                    _paths.Push(String.Empty);
+                else
+                    _paths.Push(name);
             }
         }
 
@@ -100,12 +103,12 @@ namespace Hl7.Fhir.Serialization
             _paths.Pop();
         }
 
-        public void IncrementIndex()
+        public void IncrementIndex(int items = 1)
         {
             var prevVal = _paths.Pop();
             var name = prevVal.Substring(0, prevVal.IndexOf('['));
 
-            var val = _indexer.Pop()+1;
+            var val = _indexer.Pop() + items;
             _indexer.Push(val);
 
             _paths.Push($"{name}[{val}]");
