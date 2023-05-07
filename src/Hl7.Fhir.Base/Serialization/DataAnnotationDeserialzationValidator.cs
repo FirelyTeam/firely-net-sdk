@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
                 .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
                 .SetNarrativeValidationKind(NarrativeValidation)
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                .SetLocation(context.Path);
+                .SetLocation(context.PathStack);
 
             reportedErrors = runAttributeValidation(instance, context.ElementMapping.ValidationAttributes, validationContext);
         }
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
                 .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
                 .SetNarrativeValidationKind(NarrativeValidation)
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                .SetLocation(context.Path);
+                .SetLocation(context.PathStack);
 
             if (instance is null)
             {
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Serialization
                     {
                         // Add the name of the property to the path, so we can display the correct name of the element,
                         // even if it does not really contain any values.
-                        var nestedContext = validationContext.IntoPath(validationContext.ObjectInstance, propMapping.Name);
+                        var nestedContext = validationContext.IntoEmptyProperty(propMapping.Name);
 
                         errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, nestedContext));
                     }

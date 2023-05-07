@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Support.Tests
             public ExceptionNotificationHandler ExceptionHandler { get; set; }
 
 
-            public void Test(string message)
+            public void Test(string message, string location)
             {
                 ExceptionHandler.NotifyOrThrow(this, ExceptionNotification.Error(new FormatException(message)));
             }
@@ -31,14 +31,14 @@ namespace Hl7.Fhir.Support.Tests
                 ExceptionHandler = (o, a) => { }
             };
 
-            src.Test("Bla");
+            src.Test("Bla", "Patient.name[0].text");
             // should continue;
 
             src.ExceptionHandler = null;
 
             try
             {
-                src.Test("Fail!!!!");
+                src.Test("Fail!!!!", "Patient.name[0].text");
                 Assert.Fail("Should have thrown");
             }
             catch(FormatException)
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Support.Tests
                 ExceptionHandler = (o, a) => Received.Add(a)
             };
 
-            src.Test("Unintercepted");
+            src.Test("Unintercepted", "Patient.name[0].text");
             Assert.AreEqual(1, Received.Count());
             Assert.IsTrue(Received.All(r => r.Message == "Unintercepted"));
 
@@ -64,14 +64,14 @@ namespace Hl7.Fhir.Support.Tests
 
             using (src.Catch((_,args) => intercepted = args.Message))
             {
-                src.Test("Intercepted-true");
+                src.Test("Intercepted-true", "Patient.name[0].text");
             }
 
             Assert.AreEqual("Intercepted-true", intercepted);
             Assert.AreEqual(1, Received.Count());   // since we've intercepted
             Assert.IsFalse(Received.Any(r => r.Message == "Intercepted-true"));
 
-            src.Test("Unintercepted2");
+            src.Test("Unintercepted2", "Patient.name[0].text");
 
             Assert.AreEqual("Intercepted-true", intercepted);  // should not have intercepted anymore
             Assert.AreEqual(2, Received.Count());   // original sink remains active
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Support.Tests
 
             using (src.Catch((_,args) => intercepted = args.Message))
             {
-                src.Test("Intercepted-true");
+                src.Test("Intercepted-true", "Patient.name[0].text");
             }
 
             Assert.AreEqual("Intercepted-true", intercepted);
