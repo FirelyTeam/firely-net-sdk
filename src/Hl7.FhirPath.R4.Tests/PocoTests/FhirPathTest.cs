@@ -9,9 +9,12 @@
 // To introduce the DSTU2 FHIR specification
 // extern alias dstu2;
 
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.FhirPath;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Specification.Source;
+using Hl7.Fhir.Specification.Terminology;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -341,6 +344,94 @@ namespace Hl7.FhirPath.R4.Tests
 
             var result = bundle.Select("Bundle.entry.where(fullUrl = 'urn:uuid:555').resource.managingOrganization.resolve()");
             Assert.IsTrue(result.Any());
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(MemberOfTestData), DynamicDataSourceType.Method)]
+        public void MemberOfTests(Base poco, string expression, bool? expectedResult)
+        {
+            var context = FhirEvaluationContext.CreateDefault();
+            context.TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource());
+
+            var result = poco.Scalar(expression, context);
+
+            result.Should().Be(expectedResult);
+        }
+
+        public static IEnumerable<object[]> MemberOfTestData()
+        {
+            // memberOf with single Code objects
+            yield return new object[] { new Code("85353-1"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
+            yield return new object[] { new Code("unknown"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", false };
+            yield return new object[] { new Code("male"), "memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
+            yield return new object[] { new Code("female"), "memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
+            yield return new object[] { new Code("no-idea"), "memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", false };
+
+            // memberOf with single Coding objects
+            yield return new object[] { new Coding("http://loinc.org", "85353-1"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
+            yield return new object[] { new Coding("http://unknown.system", "85353-1"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", false };
+            yield return new object[] { new Coding("http://loinc.org", "unknown"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", false };
+
+            // memberOf with single CodeableConcept objects
+            yield return new object[] { new CodeableConcept("http://loinc.org", "85353-1"), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
+            yield return new object[] { new CodeableConcept()
+                                            {
+                                                Coding = new List<Coding>() {
+                                                    new Coding("http://loinc.org", "85353-1"),
+                                                    new Coding("http://unknown.system", "a-code")
+                                                }
+                                            }, "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
+
+            // memberOf with string objects
+            yield return new object[] { new FhirBoolean(), "'85353-1'.memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", true };
+            yield return new object[] { new FhirBoolean(), "'male'.memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
+            yield return new object[] { new FhirBoolean(), "'female'.memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", true };
+            yield return new object[] { new FhirBoolean(), "'no-idea'.memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", false };
+
+            // memberOf with illegal input datatype
+            yield return new object[] { new FhirDecimal(45.1m), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", null };
+            yield return new object[] { FhirDateTime.Now(), "memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult')", null };
+
+            // memberOf with unknown valueset
+            yield return new object[] { new Code("85353-1"), "memberOf('http://example.com/ValueSet/unknown')", null };
+        }
+
+        [TestMethod]
+        public void MemberOfTestsWithoutTerminologyService()
+        {
+            var context = FhirEvaluationContext.CreateDefault();
+
+            Action action = () => new Code("male").Scalar("memberOf('http://hl7.org/fhir/ValueSet/administrative-gender')", context);
+
+            action.Should().Throw<InvalidOperationException>();
+        }
+
+        [TestMethod]
+        public void MemberOfTestWithExampleFromSpecification()
+        {
+            var context = FhirEvaluationContext.CreateDefault();
+            context.TerminologyService = new LocalTerminologyService(resolver: ZipSource.CreateValidationSource());
+
+            Observation observation = new()
+            {
+                Component = new()
+                {
+                    new()
+                    {
+                        Code = new CodeableConcept("http://loinc.org", "2708-6")
+                    },
+                    new ()
+                    {
+                        Code = new CodeableConcept("http://example.com/other-system", "a-code")
+                    }
+                }
+            };
+
+            var result = observation.Select("component.where(code.memberOf('http://hl7.org/fhir/ValueSet/observation-vitalsignresult'))", context);
+
+            result.Should().ContainSingle().Subject
+                .Should().BeOfType<Observation.ComponentComponent>()
+                .Subject.Code.Should().BeEquivalentTo(new CodeableConcept("http://loinc.org", "2708-6"));
         }
     }
 }
