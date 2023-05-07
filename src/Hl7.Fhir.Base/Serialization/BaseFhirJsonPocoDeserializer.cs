@@ -345,12 +345,12 @@ namespace Hl7.Fhir.Serialization
             var oldErrorCount = state.Errors.Count;
             var (line, pos) = reader.CurrentState.GetLocation();
 
+            // There might be an existing value, since FhirPrimitives may be spread out over two properties
+            // (one with, and one without the '_')
+            var existingValue = propertyMapping.GetValue(target);
+
             if (propertyValueMapping.IsFhirPrimitive)
             {
-                // There might be an existing value, since FhirPrimitives may be spread out over two properties
-                // (one with, and one without the '_')
-                var existingValue = propertyMapping.GetValue(target);
-
                 var fhirType = propertyMapping.FhirType.FirstOrDefault();
 
                 // Note that the POCO model will always allocate a new list if the property had not been set before,
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Serialization
 
                 // Note that repeating simple elements (like Extension.url) do not currently exist in the FHIR serialization
                 result = propertyMapping.IsCollection
-                    ? deserializeNormalList(propertyValueMapping, ref reader, propertyMapping, state)
+                    ? deserializeNormalList((IList)existingValue!, propertyValueMapping, ref reader, propertyMapping, state)
                     : deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
             }
 
@@ -404,13 +404,20 @@ namespace Hl7.Fhir.Serialization
         /// other situations (e.g. repeating Extension.url's, if they would ever exist).
         /// </summary>
         private IList? deserializeNormalList(
+            IList? existingList,
             ClassMapping propertyValueMapping,
             ref Utf8JsonReader reader,
             PropertyMapping propertyMapping,
             FhirJsonPocoDeserializerState state)
         {
+            if (existingList?.Count > 0)
+            {
+                state.Path.IncrementIndex(existingList.Count);
+                state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+            }
+
             // Create a list of the type of this property's value.
-            var listInstance = propertyValueMapping.ListFactory();
+            IList listInstance = existingList ?? propertyValueMapping.ListFactory();
 
             // if true, we have encountered a single value where we expected an array.
             // we need to recover by creating an array with that single value.
@@ -524,6 +531,7 @@ namespace Hl7.Fhir.Serialization
                 }
 
                 elementIndex += 1;
+                state.Path.IncrementIndex();
 
                 if (oneshot) break;
             }

@@ -60,6 +60,8 @@ namespace Hl7.Fhir.Serialization
         public const string INCOMPATIBLE_SIMPLE_VALUE_CODE = "JSON126";
         public const string PROPERTY_MAY_NOT_BE_EMPTY_CODE = "JSON127";
 
+        public const string DUPLICATE_ARRAY_CODE = "JSON128";
+
         // ==========================================
         // Unrecoverable Errors
         // ==========================================
@@ -90,6 +92,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirJsonException STRING_ISNOTAN_INSTANT(ref Utf8JsonReader reader, string instancePath, string value) => Initialize(ref reader, instancePath, STRING_ISNOTAN_INSTANT_CODE, $"Literal string '{value}' cannot be parsed as an instant.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirJsonException NUMBER_CANNOT_BE_PARSED(ref Utf8JsonReader reader, string instancePath, string? value, string typeName) => Initialize(ref reader, instancePath, NUMBER_CANNOT_BE_PARSED_CODE, $"Json number '{value}' cannot be parsed as a {typeName}.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirJsonException UNEXPECTED_JSON_TOKEN(ref Utf8JsonReader reader, string instancePath, string expected, string actual, string? value) => Initialize(ref reader, instancePath, UNEXPECTED_JSON_TOKEN_CODE, $"Expecting a {expected}, but found a json {actual} with value '{value}'.", OO_Sev.Warning, OO_Typ.Value);
+        internal static FhirJsonException DUPLICATE_ARRAY(ref Utf8JsonReader reader, string instancePath) => Initialize(ref reader, instancePath, DUPLICATE_ARRAY_CODE, $"Duplicate array detected.", OO_Sev.Warning, OO_Typ.Value);
 
         // In R5 Integer64 (long) are serialized as string. So we would expect a string during parsing.
         internal static FhirJsonException LONG_CANNOT_BE_PARSED(ref Utf8JsonReader reader, string instancePath, string? s0, string typeName) => Initialize(ref reader, instancePath, LONG_CANNOT_BE_PARSED_CODE, $"Json string '{s0}' cannot be parsed as a {typeName}.", OO_Sev.Warning, OO_Typ.Value);
@@ -137,7 +140,8 @@ namespace Hl7.Fhir.Serialization
             ARRAYS_CANNOT_BE_EMPTY_CODE or
             PRIMITIVE_ARRAYS_INCOMPAT_SIZE_CODE or
             PRIMITIVE_ARRAYS_ONLY_NULL_CODE or
-            PROPERTY_MAY_NOT_BE_EMPTY_CODE;
+            PROPERTY_MAY_NOT_BE_EMPTY_CODE or
+            DUPLICATE_ARRAY_CODE;
 #pragma warning restore CS0618 // Type or member is obsolete
 
         /// <summary>

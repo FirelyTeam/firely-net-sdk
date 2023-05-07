@@ -575,6 +575,225 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void JsonInvalidElementId()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Patient",
+                  "id": "pat1",
+                  "name": [
+                    {
+                      "family": "Doe"
+                    }
+                  ],
+                  "_birthDate":{
+                    "id": true,
+                    "extension":[{
+                    "url":"http://example.org/canonical"
+                    }]
+                  },
+                  "birthDate": "1970-01"
+                }
+                """;
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Patient.birthDate.id", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON126", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual(1, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
+        public void JsonInvalidExtensionNonArray()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Patient",
+                  "id": "pat1",
+                  "name": [
+                    {
+                        "family": "Doe"
+                    }
+                  ],
+                  "_birthDate":{
+                    "id": "elem_id",
+                    "extension": { "url":"http://example.org/test" }
+                  },
+                  "birthDate": "1970-01"
+                }
+                """;
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON111", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual(1, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
+        public void JsonInvalidExtensionNonObjectInArray()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Patient",
+                  "id": "pat1",
+                  "name": [
+                    {
+                      "family": "Doe"
+                    }
+                  ],
+                  "_birthDate":{
+                    "id": "elem_id",
+                    "extension": [ "try this" ]
+                  },
+                  "birthDate": "1970-01"
+                }
+                """;
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Patient.birthDate.extension[0]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON101", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual(1, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
+        public void JsonInvalidDuplicateArray()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Patient",
+                  "id": "pat1",
+                  "name": [
+                    {
+                      "family": "Doe"
+                    },
+                    {
+                      "family": "Doe-1a"
+                    }
+                    ],
+                  "name": [
+                    {
+                      "family": "Doe2"
+                    }],
+                    "birthDate": "1970-02"
+                }
+                """;
+            // This feels like a breaking case and should be fatal if there are more than 1 name/_name
+
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Patient.name[2]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON128", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual(1, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
+        public void JsonInvalidElementIdArrayPath()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Patient",
+                  "id": "pat1",
+                  "name": [
+                    {
+                      "family": "Doe",
+                      "given":[ "Jane", "John" ],
+                      "_given":[null, { "id": true, "extension": [{"url": "http://expal"}, "string", {"valueString":"str"}] }]
+                    }
+                    ]
+                }
+                """;
+            // This feels like a breaking case and should be fatal if there are more than 1 name/_name
+
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON126", oc.Issue[0].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.name[0].given[1].id", oc.Issue[0].Expression.First());
+
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Fatal, oc.Issue[1].Severity);
+                Assert.AreEqual("JSON101", oc.Issue[1].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.name[0].given[1].extension[1]", oc.Issue[1].Expression.First());
+
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
+                Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
+                Assert.AreEqual("Patient.name[0].given[1].extension[2]", oc.Issue[2].Expression.First());
+
+                Assert.AreEqual(3, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
         public void JsonInvalidBundledResources()
         {
             // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
