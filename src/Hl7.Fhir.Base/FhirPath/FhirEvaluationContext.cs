@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.ElementModel;
+using Hl7.Fhir.Specification.Terminology;
 using Hl7.FhirPath;
 using System;
 
@@ -15,7 +16,7 @@ namespace Hl7.Fhir.FhirPath
     public class FhirEvaluationContext : EvaluationContext
     {
         /// <summary>Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
-        public static new FhirEvaluationContext CreateDefault() => new FhirEvaluationContext();
+        public static new FhirEvaluationContext CreateDefault() => new();
 
         /// <summary>Default constructor. Creates a new <see cref="FhirEvaluationContext"/> instance with default property values.</summary>
         public FhirEvaluationContext() : base()
@@ -41,6 +42,8 @@ namespace Hl7.Fhir.FhirPath
         {
             RootResource = Resource is ScopedNode sn ? sn.ResourceContext : node;
         }
+
+        public ITerminologyService TerminologyService { get; set; }
 
         private static ITypedElement toNearestResource(ScopedNode node)
         {

@@ -247,10 +247,11 @@ namespace Hl7.Fhir.Serialization
             {
                 var currentPropertyName = reader.GetString()!;
 
-                if (currentPropertyName == "resourceType")
+                // The resourceType property on the level of a resource is used to determine
+                // the type and should otherwise be skipped when processing a resource.
+                if (currentPropertyName == "resourceType" && kind is DeserializedObjectKind.Resource)
                 {
-                    if (kind != DeserializedObjectKind.Resource) state.Errors.Add(ERR.RESOURCETYPE_UNEXPECTED.With(ref reader));
-                    reader.SkipTo(JsonTokenType.PropertyName);  // skip to next property
+                    reader.SkipTo(JsonTokenType.PropertyName);
                     continue;
                 }
 
