@@ -11,6 +11,21 @@ namespace HL7.FhirPath.Tests.Functions
     public class StringFunctionsTests
     {
         [TestMethod]
+        public void StringSplit()
+        {
+            CollectionAssert.AreEqual(new[] { "A", "B", "C" }, StringOperators.FpSplit("A,B,C", ",").Select(r => r.Value.ToString()).ToArray());
+
+            // verify the empty string
+            CollectionAssert.AreEqual(new[] { "A", "", "C" }, StringOperators.FpSplit("A,,C", ",").Select(r => r.Value.ToString()).ToArray());
+
+            // Verify dups aren't removed
+            CollectionAssert.AreEqual(new[] { "A", "B", "C", "C" }, StringOperators.FpSplit("A,B,C,C", ",").Select(r => r.Value.ToString()).ToArray());
+
+            // The test from the spec
+            Assert.AreEqual(5, StringOperators.FpSplit("Peter,James,Jim,Peter,James", ",").Count());
+        }
+
+        [TestMethod]
         public void EncodeBase64()
         {
             StringOperators.EncodeBase64(null).Should().BeNull();
