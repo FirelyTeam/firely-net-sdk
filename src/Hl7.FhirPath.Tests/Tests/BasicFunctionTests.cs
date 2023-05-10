@@ -279,6 +279,11 @@ namespace Hl7.FhirPath.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual("This is one sentence.", result);
 
+            dummy = ElementNode.CreateList("a", "b", "c");
+            result = dummy.FpJoin();
+            Assert.IsNotNull(result);
+            Assert.AreEqual("abc", result);
+
             dummy = ElementNode.CreateList();
             result = dummy.FpJoin(string.Empty);
             Assert.AreEqual(string.Empty, result);
