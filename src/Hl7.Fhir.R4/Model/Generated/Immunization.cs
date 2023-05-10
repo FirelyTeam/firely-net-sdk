@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Performer", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Immunization.Performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -223,6 +224,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Education", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Immunization.Education")]
     public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -470,6 +472,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Reaction", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Immunization.Reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -661,6 +664,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#ProtocolApplied", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Immunization.ProtocolApplied")]
     public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

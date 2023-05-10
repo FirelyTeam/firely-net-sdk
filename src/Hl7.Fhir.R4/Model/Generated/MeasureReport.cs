@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Group", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -300,6 +301,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Population", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Population")]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -473,6 +475,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Stratifier", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier")]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -606,6 +609,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroup", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.StratifierGroup")]
     public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -783,6 +787,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Component", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.StratifierGroup.Component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -916,6 +921,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroupPopulation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.StratifierGroup.StratifierGroupPopulation")]
     public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

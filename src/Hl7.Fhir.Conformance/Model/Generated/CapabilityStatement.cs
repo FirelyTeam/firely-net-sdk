@@ -355,6 +355,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Software", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Software")]
     public partial class SoftwareComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -563,6 +564,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Implementation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Implementation")]
     public partial class ImplementationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -757,6 +759,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Rest", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest")]
     public partial class RestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1081,6 +1084,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Security", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest.Security")]
     public partial class SecurityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1271,6 +1275,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Resource", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest.Resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2036,6 +2041,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#ResourceInteraction", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest.Resource.ResourceInteraction")]
     public partial class ResourceInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2205,6 +2211,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#SearchParam", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest.Resource.SearchParam")]
     public partial class SearchParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2455,6 +2462,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Operation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest.Resource.Operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2664,6 +2672,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#SystemInteraction", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Rest.SystemInteraction")]
     public partial class SystemInteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2833,6 +2842,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Messaging", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Messaging")]
     public partial class MessagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3046,6 +3056,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Endpoint", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Messaging.Endpoint")]
     public partial class EndpointComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3197,6 +3208,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#SupportedMessage", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Messaging.SupportedMessage")]
     public partial class SupportedMessageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3367,6 +3379,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CapabilityStatement#Document", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CapabilityStatement.Document")]
     public partial class DocumentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

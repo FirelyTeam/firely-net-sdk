@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceRequest#Parameter", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceRequest.Parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

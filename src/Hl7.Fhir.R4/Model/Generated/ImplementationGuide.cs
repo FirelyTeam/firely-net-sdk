@@ -2251,6 +2251,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#DependsOn", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.DependsOn")]
     public partial class DependsOnComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2459,6 +2460,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Global", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Global")]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2629,6 +2631,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Definition", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Definition")]
     public partial class DefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2830,6 +2833,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Grouping", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Definition.Grouping")]
     public partial class GroupingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2998,6 +3002,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Definition.Resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3296,6 +3301,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Page", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Definition.Page")]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3515,6 +3521,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Parameter", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Definition.Parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3685,6 +3692,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Template", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Definition.Template")]
     public partial class TemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3894,6 +3902,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Manifest", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest")]
     public partial class ManifestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4149,6 +4158,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest.ManifestResource")]
     public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4325,6 +4335,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest.ManifestPage")]
     public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

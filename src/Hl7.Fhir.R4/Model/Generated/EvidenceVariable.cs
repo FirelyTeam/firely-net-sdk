@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EvidenceVariable.Characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

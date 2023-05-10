@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationAdministration#Performer", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationAdministration.Performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -247,6 +248,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationAdministration#Dosage", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationAdministration.Dosage")]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

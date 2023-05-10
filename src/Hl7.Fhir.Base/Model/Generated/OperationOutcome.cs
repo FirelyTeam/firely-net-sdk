@@ -309,6 +309,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationOutcome#Issue", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}OperationOutcome.Issue")]
     public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

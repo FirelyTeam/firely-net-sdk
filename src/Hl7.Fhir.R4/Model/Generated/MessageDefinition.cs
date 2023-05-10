@@ -84,11 +84,46 @@ namespace Hl7.Fhir.Model
     }
 
     /// <summary>
+    /// HL7-defined table of codes which identify conditions under which acknowledgments are required to be returned in response to a message.
+    /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
+    /// (system: http://hl7.org/fhir/messageheader-response-request)
+    /// </summary>
+    [FhirEnumeration("messageheader-response-request")]
+    public enum MessageheaderResponseRequest
+    {
+      /// <summary>
+      /// initiator expects a response for this message.
+      /// (system: http://hl7.org/fhir/messageheader-response-request)
+      /// </summary>
+      [EnumLiteral("always", "http://hl7.org/fhir/messageheader-response-request"), Description("Always")]
+      Always,
+      /// <summary>
+      /// initiator expects a response only if in error.
+      /// (system: http://hl7.org/fhir/messageheader-response-request)
+      /// </summary>
+      [EnumLiteral("on-error", "http://hl7.org/fhir/messageheader-response-request"), Description("Error/reject conditions only")]
+      OnError,
+      /// <summary>
+      /// initiator does not expect a response.
+      /// (system: http://hl7.org/fhir/messageheader-response-request)
+      /// </summary>
+      [EnumLiteral("never", "http://hl7.org/fhir/messageheader-response-request"), Description("Never")]
+      Never,
+      /// <summary>
+      /// initiator expects a response only if successful.
+      /// (system: http://hl7.org/fhir/messageheader-response-request)
+      /// </summary>
+      [EnumLiteral("on-success", "http://hl7.org/fhir/messageheader-response-request"), Description("Successful completion only")]
+      OnSuccess,
+    }
+
+    /// <summary>
     /// Resource(s) that are the subject of the event
     /// </summary>
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#Focus", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageDefinition.Focus")]
     public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -339,6 +374,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageDefinition.AllowedResponse")]
     public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1064,20 +1100,20 @@ namespace Hl7.Fhir.Model
     [FhirElement("responseRequired", Order=300)]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
-    public Code<Hl7.Fhir.Model.MessageheaderResponseRequest> ResponseRequiredElement
+    public Code<Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest> ResponseRequiredElement
     {
       get { return _ResponseRequiredElement; }
       set { _ResponseRequiredElement = value; OnPropertyChanged("ResponseRequiredElement"); }
     }
 
-    private Code<Hl7.Fhir.Model.MessageheaderResponseRequest> _ResponseRequiredElement;
+    private Code<Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest> _ResponseRequiredElement;
 
     /// <summary>
     /// always | on-error | never | on-success
     /// </summary>
     /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
     [IgnoreDataMember]
-    public Hl7.Fhir.Model.MessageheaderResponseRequest? ResponseRequired
+    public Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest? ResponseRequired
     {
       get { return ResponseRequiredElement != null ? ResponseRequiredElement.Value : null; }
       set
@@ -1085,7 +1121,7 @@ namespace Hl7.Fhir.Model
         if (value == null)
           ResponseRequiredElement = null;
         else
-          ResponseRequiredElement = new Code<Hl7.Fhir.Model.MessageheaderResponseRequest>(value);
+          ResponseRequiredElement = new Code<Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest>(value);
         OnPropertyChanged("ResponseRequired");
       }
     }
@@ -1167,7 +1203,7 @@ namespace Hl7.Fhir.Model
       if(Event != null) dest.Event = (Hl7.Fhir.Model.DataType)Event.DeepCopy();
       if(CategoryElement != null) dest.CategoryElement = (Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory>)CategoryElement.DeepCopy();
       if(Focus != null) dest.Focus = new List<Hl7.Fhir.Model.MessageDefinition.FocusComponent>(Focus.DeepCopy());
-      if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Code<Hl7.Fhir.Model.MessageheaderResponseRequest>)ResponseRequiredElement.DeepCopy();
+      if(ResponseRequiredElement != null) dest.ResponseRequiredElement = (Code<Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest>)ResponseRequiredElement.DeepCopy();
       if(AllowedResponse != null) dest.AllowedResponse = new List<Hl7.Fhir.Model.MessageDefinition.AllowedResponseComponent>(AllowedResponse.DeepCopy());
       if(GraphElement != null) dest.GraphElement = new List<Hl7.Fhir.Model.Canonical>(GraphElement.DeepCopy());
       return dest;

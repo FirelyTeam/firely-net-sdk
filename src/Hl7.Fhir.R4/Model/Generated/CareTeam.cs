@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CareTeam#Participant", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CareTeam.Participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

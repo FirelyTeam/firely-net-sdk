@@ -177,6 +177,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationRequest.DispenseRequest")]
     public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -438,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#InitialFill", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationRequest.DispenseRequest.InitialFill")]
     public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,6 +571,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationRequest.Substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

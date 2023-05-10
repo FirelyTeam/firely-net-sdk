@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceDefinition.UdiDeviceIdentifier")]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -271,6 +272,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceDefinition.DeviceName")]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -441,6 +443,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Specialization", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceDefinition.Specialization")]
     public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -609,6 +612,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Capability", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceDefinition.Capability")]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -742,6 +746,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Property", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceDefinition.Property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -898,6 +903,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Material", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DeviceDefinition.Material")]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

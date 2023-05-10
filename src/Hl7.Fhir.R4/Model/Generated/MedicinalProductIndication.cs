@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIndication#OtherTherapy", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductIndication.OtherTherapy")]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

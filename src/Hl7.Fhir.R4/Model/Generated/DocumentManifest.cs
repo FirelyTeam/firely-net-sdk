@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentManifest#Related", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DocumentManifest.Related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PractitionerRole#AvailableTime", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}PractitionerRole.AvailableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -310,6 +311,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PractitionerRole#NotAvailable", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}PractitionerRole.NotAvailable")]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

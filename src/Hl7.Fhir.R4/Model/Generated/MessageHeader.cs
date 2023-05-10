@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#MessageDestination", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageHeader.MessageDestination")]
     public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#MessageSource", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageHeader.MessageSource")]
     public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -575,6 +577,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#Response", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageHeader.Response")]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

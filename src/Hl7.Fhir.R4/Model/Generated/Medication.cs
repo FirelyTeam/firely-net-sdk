@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Ingredient", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Medication.Ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -264,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Batch", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Medication.Batch")]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

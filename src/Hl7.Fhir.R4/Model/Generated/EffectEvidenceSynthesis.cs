@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#SampleSize", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.SampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -290,6 +291,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#ResultsByExposure", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.ResultsByExposure")]
     public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -505,6 +507,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#EffectEstimate", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.EffectEstimate")]
     public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -761,6 +764,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.EffectEstimate.PrecisionEstimate")]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -990,6 +994,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#Certainty", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.Certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1146,6 +1151,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.Certainty.CertaintySubcomponent")]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

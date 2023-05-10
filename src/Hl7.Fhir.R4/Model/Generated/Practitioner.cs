@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Practitioner#Qualification", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Practitioner.Qualification")]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

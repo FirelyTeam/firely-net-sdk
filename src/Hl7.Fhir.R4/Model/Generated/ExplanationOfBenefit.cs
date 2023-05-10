@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#RelatedClaim", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.RelatedClaim")]
     public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -250,6 +251,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Payee", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Payee")]
     public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -383,6 +385,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#CareTeam", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.CareTeam")]
     public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -620,6 +623,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SupportingInformation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.SupportingInformation")]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -864,6 +868,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Diagnosis", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1085,6 +1090,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Procedure", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1327,6 +1333,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Insurance", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1521,6 +1528,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Accident", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Accident")]
     public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1695,6 +1703,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Item", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2437,6 +2446,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Adjudication", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Item.Adjudication")]
     public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2631,6 +2641,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Detail", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Item.Detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3090,6 +3101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SubDetail", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Item.Detail.SubDetail")]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3526,6 +3538,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItem", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddedItem")]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4117,6 +4130,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemDetail", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddedItem.AddedItemDetail")]
     public partial class AddedItemDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4443,6 +4457,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemDetailSubDetail", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddedItem.AddedItemDetail.AddedItemDetailSubDetail")]
     public partial class AddedItemDetailSubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4746,6 +4761,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Total", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Total")]
     public partial class TotalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4879,6 +4895,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Payment", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Payment")]
     public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5116,6 +5133,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Note", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Note")]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5346,6 +5364,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#BenefitBalance", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.BenefitBalance")]
     public partial class BenefitBalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5665,6 +5684,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Benefit", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.BenefitBalance.Benefit")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

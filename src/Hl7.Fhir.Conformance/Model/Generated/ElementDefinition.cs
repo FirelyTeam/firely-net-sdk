@@ -302,6 +302,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.Slicing")]
     public partial class SlicingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -534,6 +535,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.Slicing.Discriminator")]
     public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -704,6 +706,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Base", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.Base")]
     public partial class BaseComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -914,6 +917,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.TypeRef")]
     public partial class TypeRefComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1207,6 +1211,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Example", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.Example")]
     public partial class ExampleComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1358,6 +1363,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.Constraint")]
     public partial class ConstraintComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1772,6 +1778,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.ElementDefinitionBinding")]
     public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -2006,6 +2013,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Additional", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.ElementDefinitionBinding.Additional")]
     public partial class AdditionalComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -2319,6 +2327,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ElementDefinition.Mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Procedure#Performer", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Procedure.Performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -219,6 +220,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Procedure#FocalDevice", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Procedure.FocalDevice")]
     public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

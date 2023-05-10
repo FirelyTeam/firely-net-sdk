@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Characteristic", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Group.Characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Member", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Group.Member")]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

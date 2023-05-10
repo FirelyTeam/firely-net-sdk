@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Provenance#Agent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Provenance.Agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -282,6 +283,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Provenance#Entity", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Provenance.Entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

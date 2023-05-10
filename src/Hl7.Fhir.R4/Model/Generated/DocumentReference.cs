@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#RelatesTo", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DocumentReference.RelatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -215,6 +216,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Content", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DocumentReference.Content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -347,6 +349,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Context", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DocumentReference.Context")]
     public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

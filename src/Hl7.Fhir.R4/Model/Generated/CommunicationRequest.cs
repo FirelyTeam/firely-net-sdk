@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CommunicationRequest#Payload", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CommunicationRequest.Payload")]
     public partial class PayloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

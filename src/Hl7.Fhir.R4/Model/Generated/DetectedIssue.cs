@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DetectedIssue#Evidence", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DetectedIssue.Evidence")]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -224,6 +225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DetectedIssue.Mitigation")]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

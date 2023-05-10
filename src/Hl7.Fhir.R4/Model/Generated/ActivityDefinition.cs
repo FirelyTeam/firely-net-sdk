@@ -161,6 +161,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ActivityDefinition.Participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -312,6 +313,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ActivityDefinition.DynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

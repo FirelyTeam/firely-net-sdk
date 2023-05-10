@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPackaged#BatchIdentifier", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductPackaged.BatchIdentifier")]
     public partial class BatchIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPackaged#PackageItem", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductPackaged.PackageItem")]
     public partial class PackageItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

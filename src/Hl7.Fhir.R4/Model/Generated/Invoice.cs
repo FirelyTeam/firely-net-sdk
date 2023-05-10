@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#Participant", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Invoice.Participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +236,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#LineItem", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Invoice.LineItem")]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -411,6 +413,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#PriceComponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Invoice.LineItem.PriceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

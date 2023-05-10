@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Media", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DiagnosticReport.Media")]
     public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

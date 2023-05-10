@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RelatedPerson#Communication", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}RelatedPerson.Communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

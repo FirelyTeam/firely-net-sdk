@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ChargeItemDefinition.Applicability")]
     public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ChargeItemDefinition.PropertyGroup")]
     public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -401,6 +403,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ChargeItemDefinition.PropertyGroup.PriceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#PrimarySource", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}VerificationResult.PrimarySource")]
     public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -371,6 +372,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#Attestation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}VerificationResult.Attestation")]
     public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -692,6 +694,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#Validator", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}VerificationResult.Validator")]
     public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

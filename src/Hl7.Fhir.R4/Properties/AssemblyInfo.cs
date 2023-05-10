@@ -1,4 +1,5 @@
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -6,6 +7,7 @@ using System.Runtime.CompilerServices;
 // https://msdn.microsoft.com/en-us/library/ms235408(v=vs.90).aspx 
 [assembly: CLSCompliant(true)]
 [assembly: FhirModelAssembly(Hl7.Fhir.Specification.FhirRelease.R4)]
+[assembly: CqlModelAssembly("FHIR", "4.0.1", "http://hl7.org/fhir", typeof(Patient), nameof(Patient.BirthDateElement))]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("Hl7.FhirPath.R4.Tests")]

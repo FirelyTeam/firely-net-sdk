@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#Parameter", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}OperationDefinition.Parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -566,6 +567,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#Binding", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}OperationDefinition.Parameter.Binding")]
     public partial class BindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -736,6 +738,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#ReferencedFrom", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}OperationDefinition.Parameter.ReferencedFrom")]
     public partial class ReferencedFromComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -904,6 +907,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationDefinition#Overload", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}OperationDefinition.Overload")]
     public partial class OverloadComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

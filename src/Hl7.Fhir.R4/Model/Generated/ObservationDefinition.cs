@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#QuantitativeDetails", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ObservationDefinition.QuantitativeDetails")]
     public partial class QuantitativeDetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -376,6 +377,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#QualifiedInterval", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ObservationDefinition.QualifiedInterval")]
     public partial class QualifiedIntervalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
