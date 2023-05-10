@@ -10,18 +10,42 @@
 
 
 using Fhir.Metrics;
-using Hl7.Fhir.Utility;
-using P = Hl7.Fhir.ElementModel.Types;
+using System;
+using System.Collections.Generic;
+using M = Fhir.Metrics;
 
-namespace Hl7.Fhir.Base.ElementModel
+namespace Hl7.Fhir.ElementModel.Types
 {
     internal static class Ucum
     {
-        private static readonly SystemOfUnits SYSTEM = UCUM.Load();
+        private static readonly Lazy<SystemOfUnits> SYSTEM = new(() => UCUM.Load());
 
-        public static Result<int> Compare(P.Quantity quantity, P.Quantity other)
+        /// <summary>
+        /// Try to canonicalize the system type quantity to Umum base quantity. So a 1,000 cm will be 10 m. Or an inch will be converted to a meter.
+        /// </summary>
+        /// <param name="quantity">A system type Quantity of system Ucum</param>
+        /// <param name="canonicalizedQuantity">The converted system type Quantity when the conversion was a success.</param>
+        /// <returns><c>true</c> when the conversion succeeded. Or <c>false</c> otherwise.</returns>
+        internal static bool TryCanonicalize(this Quantity quantity, out Quantity? canonicalizedQuantity)
         {
-            return 0;
+            try
+            {
+                M.Quantity metricsQuantity = quantity.Value.toUnitsOfMeasureQuantity(quantity.Unit);
+                metricsQuantity = SYSTEM.Value.Canonical(metricsQuantity);
+                canonicalizedQuantity = new(metricsQuantity.Value.ToDecimal(), metricsQuantity.Metric.ToString(), QuantityUnitSystem.UCUM);
+                return true;
+            }
+            catch (Exception ex) when (ex is ArgumentException or InvalidCastException)
+            {
+                canonicalizedQuantity = null;
+                return false;
+            }
+        }
+
+        private static M.Quantity toUnitsOfMeasureQuantity(this decimal value, string unit)
+        {
+            Metric metric = (unit != null) ? SYSTEM.Value.Metric(unit) : new Metric(new List<Metric.Axis>());
+            return new M.Quantity(value, metric);
         }
     }
 }

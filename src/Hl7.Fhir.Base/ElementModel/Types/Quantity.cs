@@ -233,18 +233,26 @@ namespace Hl7.Fhir.ElementModel.Types
             if (other is null) return 1; // as defined by the .NET framework guidelines
             if (other is not Quantity otherQ) throw NotSameTypeComparison(this, other);
 
-            // Need to use our metrics library here, but for now, we'll just refuse to compare
-            // if the units are not the same.
-            // Throw NotSupported now, in the future we will need to turn this into a Fail()
-            // result for units that can really not be compared according to UCUM.
-            if (Unit != otherQ.Unit || System != otherQ.System)
+            if (IsDuration && otherQ.IsDuration) return doDurationComparison(otherQ, comparisonType);
+
+            if (System != QuantityUnitSystem.UCUM || otherQ.System != QuantityUnitSystem.UCUM)
             {
-                return IsDuration && otherQ.IsDuration
-                    ? doDurationComparison(otherQ, comparisonType)
-                    : Fail<int>(Error.NotSupported("Comparing quantities with different units is not yet supported"));
+                return Fail<int>(Error.NotSupported("Comparing quantities with system other than UCUM is not supported"));
             }
 
-            return decimal.Compare(Math.Round(Value, 8), Math.Round(otherQ.Value, 8));   // aligns with Decimal
+            Quantity? left = this;
+            Quantity? right = otherQ;
+
+            if (Unit != otherQ.Unit)
+            {
+                // align units with each other
+                if (!this.TryCanonicalize(out left)) left = this;
+                if (!otherQ.TryCanonicalize(out right)) right = otherQ;
+            }
+
+            return (left!.Unit == right!.Unit)
+                ? decimal.Compare(Math.Round(left.Value, 8), Math.Round(right.Value, 8))   // aligns with Decimal
+                : Fail<int>(Error.InvalidOperation($"UCUM quanties with unit '{left.Unit}' and '{right.Unit}' cannot be compared."));
         }
 
         private Result<int> doDurationComparison(Quantity other, QuantityComparison comparisonType)

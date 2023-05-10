@@ -1,44 +1,34 @@
-﻿using FluentAssertions;
-using Hl7.Fhir.Base.ElementModel;
+﻿#nullable enable 
+
+using FluentAssertions;
+using Hl7.Fhir.ElementModel.Types;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using P = Hl7.Fhir.ElementModel.Types;
+using System;
+
 namespace Hl7.Fhir.Support.Tests.ElementModel
 {
     [TestClass]
     public class UcumTests
     {
-        public enum MyEnum
-        {
-            smallerThan,
-            Equals,
-            greaterThan
-        }
-
         [DataTestMethod]
-        [DataRow(1.0f, "m", 1.0f, "m", MyEnum.Equals)]
-        //[DataRow(1.0f, "m", 1.0f, "in", MyEnum.greaterThan)]
-        //[DataRow(1.0f, "m", 1.0f, "in", MyEnum.greaterThan)]
-        //[DataRow(1.0f, "m", 1.0f, "in", MyEnum.greaterThan)]
-        public void MyTestMethod(decimal dLeft, string unitLeft, decimal dRight, string unitRight, MyEnum expectedResult)
+        [DataRow(1.0, "m", true, "m")]
+        [DataRow(1.0, "cm", true, "m")]
+        [DataRow(1.0, "mm", true, "m")]
+        [DataRow(1.0, "[in_i]", true, "m")]
+        [DataRow(1.0, "[stone_av]", true, "g")] //britisch stone
+        [DataRow(1.0, "m[H2O]", true, "g.m-1.s-2")] // meter of water column
+        [DataRow(1.0, "unknown", false, null)]
+        public void TryCanonicalizeTests(double val, string unit, bool exptectedResult, string? expectedUnit)
         {
+            var input = new Quantity(Convert.ToDecimal(val), unit);
 
-            var result = Ucum.Compare(new P.Quantity(dLeft, unitLeft), new P.Quantity(dRight, unitRight));
+            var result = input.TryCanonicalize(out var convertedQuantity);
 
-            result.Success.Should().BeTrue();
-            switch (expectedResult)
-            {
-                case MyEnum.smallerThan:
-                    result.ValueOrDefault().Should().BeNegative();
-                    break;
-                case MyEnum.Equals:
-                    result.ValueOrDefault().Should().Be(0);
-                    break;
-                case MyEnum.greaterThan:
-                    result.ValueOrDefault().Should().BePositive();
-                    break;
-            }
-
+            result.Should().Be(exptectedResult);
+            var u = convertedQuantity?.Unit;
+            u.Should().Be(expectedUnit);
         }
-
     }
 }
+
+#nullable restore
