@@ -17,6 +17,7 @@ name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
 - group: CodeSigning
+- group: APIKeys
 - template: build-variables.yml
 - template: pipeline-variables.yml
   
