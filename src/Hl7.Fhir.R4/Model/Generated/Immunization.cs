@@ -946,6 +946,7 @@ namespace Hl7.Fhir.Model
     /// Vaccine product administered
     /// </summary>
     [FhirElement("vaccineCode", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement("vaccineCode", IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode

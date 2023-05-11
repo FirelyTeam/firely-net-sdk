@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     /// Body site
     /// </summary>
     [FhirElement("location", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement("location", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Location
     {

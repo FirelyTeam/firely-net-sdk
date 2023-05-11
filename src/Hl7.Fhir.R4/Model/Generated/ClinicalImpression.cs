@@ -457,6 +457,7 @@ namespace Hl7.Fhir.Model
     /// Kind of assessment performed
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

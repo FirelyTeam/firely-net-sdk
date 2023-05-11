@@ -669,6 +669,7 @@ namespace Hl7.Fhir.Model
     /// Code that identifies the allergy or intolerance
     /// </summary>
     [FhirElement("code", InSummary=true, Order=150, FiveWs="FiveWs.what[x]")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

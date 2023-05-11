@@ -224,6 +224,7 @@ namespace Hl7.Fhir.Model
     /// Coded form of the unit
     /// </summary>
     [FhirElement("code", InSummary=true, Order=70)]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement
     {

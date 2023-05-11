@@ -291,6 +291,7 @@ namespace Hl7.Fhir.Model
     /// The kind of supply (central, non-stock, etc.)
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement("category", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {

@@ -1433,6 +1433,7 @@ namespace Hl7.Fhir.Model
     /// Name for this questionnaire (computer friendly)
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
+    [CqlElement("name", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {

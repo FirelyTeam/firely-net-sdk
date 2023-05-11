@@ -500,6 +500,7 @@ namespace Hl7.Fhir.Model
     /// Type/class  - e.g. specialist referral, disease management
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

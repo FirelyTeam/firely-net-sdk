@@ -373,6 +373,7 @@ namespace Hl7.Fhir.Model
     /// A code that identifies the charge, like a billing code
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

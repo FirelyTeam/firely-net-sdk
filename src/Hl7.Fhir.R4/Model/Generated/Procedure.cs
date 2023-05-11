@@ -522,6 +522,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the procedure
     /// </summary>
     [FhirElement("code", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

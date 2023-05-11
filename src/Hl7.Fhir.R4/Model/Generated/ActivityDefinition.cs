@@ -1015,6 +1015,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Education, Treatment, Assessment, etc.
     /// </summary>
     [FhirElement("topic", Order=300)]
+    [CqlElement("topic", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Topic

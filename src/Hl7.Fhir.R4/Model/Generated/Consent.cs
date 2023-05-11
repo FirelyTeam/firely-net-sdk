@@ -1231,6 +1231,7 @@ namespace Hl7.Fhir.Model
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [CqlElement("category", IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

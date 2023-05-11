@@ -1358,6 +1358,7 @@ namespace Hl7.Fhir.Model
     /// Specific type of encounter
     /// </summary>
     [FhirElement("type", InSummary=true, Order=140, FiveWs="FiveWs.class")]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

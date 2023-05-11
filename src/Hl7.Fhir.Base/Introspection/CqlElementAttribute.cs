@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  * Copyright (c) 2023, Firely (info@fire.ly) and contributors
  * See the file CONTRIBUTORS for details.
  * 
@@ -6,28 +6,27 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+
 using System;
 
 #nullable enable
 
 namespace Hl7.Fhir.Introspection
 {
-    /// <summary>
-    /// This attribute is applied to classes that represent CQL types.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
-    public sealed class CqlTypeAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
+    public sealed class CqlElementAttribute : Attribute
     {
-        public CqlTypeAttribute(string name)
+        public CqlElementAttribute(string name)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
-        /// The name of this type when used in CQL. For FHIR types, this name is normally
-        /// prefixed with the canonical for the model.
+        /// Whether this element is the primary code path for this type. This means
+        /// the element can implicitly be referred to in a retrieve statement.
         /// </summary>
-        public string Name { get; private set; }
+        public bool IsPrimaryCodePath { get; set; } = false;
+        public string Name { get; }
     }
 }
 

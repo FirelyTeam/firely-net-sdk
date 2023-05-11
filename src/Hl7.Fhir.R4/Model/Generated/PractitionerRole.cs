@@ -548,6 +548,7 @@ namespace Hl7.Fhir.Model
     /// Roles which this practitioner may perform
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140)]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code

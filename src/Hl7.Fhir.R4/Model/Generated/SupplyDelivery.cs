@@ -343,6 +343,7 @@ namespace Hl7.Fhir.Model
     /// Category of dispense event
     /// </summary>
     [FhirElement("type", Order=140)]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

@@ -413,6 +413,7 @@ namespace Hl7.Fhir.Model
     /// What the purpose of this list is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

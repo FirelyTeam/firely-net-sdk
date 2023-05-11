@@ -3291,6 +3291,7 @@ namespace Hl7.Fhir.Model
     /// Category or discipline
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type

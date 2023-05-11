@@ -345,6 +345,7 @@ namespace Hl7.Fhir.Model
     /// Message category
     /// </summary>
     [FhirElement("category", Order=170, FiveWs="FiveWs.class")]
+    [CqlElement("category", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

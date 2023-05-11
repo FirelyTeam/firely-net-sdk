@@ -326,6 +326,7 @@ namespace Hl7.Fhir.Model
     /// Type of team
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement("category", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

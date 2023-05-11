@@ -477,6 +477,7 @@ namespace Hl7.Fhir.Model
     /// Identity of metric, for example Heart Rate or PEEP Setting
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100, FiveWs="FiveWs.class")]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type

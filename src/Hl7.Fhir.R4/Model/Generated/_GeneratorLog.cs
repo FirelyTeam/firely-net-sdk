@@ -68,6 +68,9 @@
   // Used in model class (resource): Composition.status
   // Used in model class (resource): DocumentReference.docStatus
 
+// Generated Shared Enumeration: ConceptMapEquivalence (http://hl7.org/fhir/ValueSet/concept-map-equivalence)
+  // Used in model class (resource): ConceptMap.group.element.target.equivalence
+
 // Deferred generation of Shared Enumeration (will be generated in another subset): ConstraintSeverity (http://hl7.org/fhir/ValueSet/constraint-severity)
   // Used in model class (type): ElementDefinition.constraint.severity
 

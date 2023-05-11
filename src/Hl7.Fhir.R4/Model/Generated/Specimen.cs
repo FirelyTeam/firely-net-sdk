@@ -841,6 +841,7 @@ namespace Hl7.Fhir.Model
     /// Kind of material that forms the specimen
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

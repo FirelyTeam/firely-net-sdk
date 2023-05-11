@@ -965,6 +965,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("target", Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [CqlElement("target", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement

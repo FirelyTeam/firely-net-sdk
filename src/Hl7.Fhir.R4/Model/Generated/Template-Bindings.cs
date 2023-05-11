@@ -1733,6 +1733,76 @@ namespace Hl7.Fhir.Model
   }
 
   /// <summary>
+  /// The degree of equivalence between concepts.
+  /// (url: http://hl7.org/fhir/ValueSet/concept-map-equivalence)
+  /// (system: http://hl7.org/fhir/concept-map-equivalence)
+  /// </summary>
+  [FhirEnumeration("ConceptMapEquivalence")]
+  public enum ConceptMapEquivalence
+  {
+    /// <summary>
+    /// The concepts are related to each other, and have at least some overlap in meaning, but the exact relationship is not known.
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("relatedto", "http://hl7.org/fhir/concept-map-equivalence"), Description("Related To")]
+    Relatedto,
+    /// <summary>
+    /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equivalent")]
+    Equivalent,
+    /// <summary>
+    /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identical or irrelevant (i.e. intentionally identical).
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("equal", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equal")]
+    Equal,
+    /// <summary>
+    /// The target mapping is wider in meaning than the source concept.
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("wider", "http://hl7.org/fhir/concept-map-equivalence"), Description("Wider")]
+    Wider,
+    /// <summary>
+    /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target).
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("subsumes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Subsumes")]
+    Subsumes,
+    /// <summary>
+    /// The target mapping is narrower in meaning than the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-equivalence"), Description("Narrower")]
+    Narrower,
+    /// <summary>
+    /// The target mapping specializes the meaning of the source concept (e.g. the target is-a source).
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("specializes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Specializes")]
+    Specializes,
+    /// <summary>
+    /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is inexact SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("inexact", "http://hl7.org/fhir/concept-map-equivalence"), Description("Inexact")]
+    Inexact,
+    /// <summary>
+    /// There is no match for this concept in the target code system.
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("unmatched", "http://hl7.org/fhir/concept-map-equivalence"), Description("Unmatched")]
+    Unmatched,
+    /// <summary>
+    /// This is an explicit assertion that there is no mapping between the source and target concept.
+    /// (system: http://hl7.org/fhir/concept-map-equivalence)
+    /// </summary>
+    [EnumLiteral("disjoint", "http://hl7.org/fhir/concept-map-equivalence"), Description("Disjoint")]
+    Disjoint,
+  }
+
+  /// <summary>
   /// The days of the week.
   /// (url: http://hl7.org/fhir/ValueSet/days-of-week)
   /// (system: http://hl7.org/fhir/days-of-week)

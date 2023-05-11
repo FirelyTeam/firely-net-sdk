@@ -754,6 +754,7 @@ namespace Hl7.Fhir.Model
     /// Type of function performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=160, FiveWs="FiveWs.class")]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type

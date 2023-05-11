@@ -897,6 +897,7 @@ namespace Hl7.Fhir.Model
     /// Task Type
     /// </summary>
     [FhirElement("code", InSummary=true, Order=200, FiveWs="FiveWs.what[x]")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

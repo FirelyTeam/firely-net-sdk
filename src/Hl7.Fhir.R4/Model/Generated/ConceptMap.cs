@@ -56,76 +56,6 @@ namespace Hl7.Fhir.Model
     public override string TypeName { get { return "ConceptMap"; } }
 
     /// <summary>
-    /// The degree of equivalence between concepts.
-    /// (url: http://hl7.org/fhir/ValueSet/concept-map-equivalence)
-    /// (system: http://hl7.org/fhir/concept-map-equivalence)
-    /// </summary>
-    [FhirEnumeration("ConceptMapEquivalence")]
-    public enum ConceptMapEquivalence
-    {
-      /// <summary>
-      /// The concepts are related to each other, and have at least some overlap in meaning, but the exact relationship is not known.
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("relatedto", "http://hl7.org/fhir/concept-map-equivalence"), Description("Related To")]
-      Relatedto,
-      /// <summary>
-      /// The definitions of the concepts mean the same thing (including when structural implications of meaning are considered) (i.e. extensionally identical).
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equivalent")]
-      Equivalent,
-      /// <summary>
-      /// The definitions of the concepts are exactly the same (i.e. only grammatical differences) and structural implications of meaning are identical or irrelevant (i.e. intentionally identical).
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("equal", "http://hl7.org/fhir/concept-map-equivalence"), Description("Equal")]
-      Equal,
-      /// <summary>
-      /// The target mapping is wider in meaning than the source concept.
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("wider", "http://hl7.org/fhir/concept-map-equivalence"), Description("Wider")]
-      Wider,
-      /// <summary>
-      /// The target mapping subsumes the meaning of the source concept (e.g. the source is-a target).
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("subsumes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Subsumes")]
-      Subsumes,
-      /// <summary>
-      /// The target mapping is narrower in meaning than the source concept. The sense in which the mapping is narrower SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("narrower", "http://hl7.org/fhir/concept-map-equivalence"), Description("Narrower")]
-      Narrower,
-      /// <summary>
-      /// The target mapping specializes the meaning of the source concept (e.g. the target is-a source).
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("specializes", "http://hl7.org/fhir/concept-map-equivalence"), Description("Specializes")]
-      Specializes,
-      /// <summary>
-      /// The target mapping overlaps with the source concept, but both source and target cover additional meaning, or the definitions are imprecise and it is uncertain whether they have the same boundaries to their meaning. The sense in which the mapping is inexact SHALL be described in the comments in this case, and applications should be careful when attempting to use these mappings operationally.
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("inexact", "http://hl7.org/fhir/concept-map-equivalence"), Description("Inexact")]
-      Inexact,
-      /// <summary>
-      /// There is no match for this concept in the target code system.
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("unmatched", "http://hl7.org/fhir/concept-map-equivalence"), Description("Unmatched")]
-      Unmatched,
-      /// <summary>
-      /// This is an explicit assertion that there is no mapping between the source and target concept.
-      /// (system: http://hl7.org/fhir/concept-map-equivalence)
-      /// </summary>
-      [EnumLiteral("disjoint", "http://hl7.org/fhir/concept-map-equivalence"), Description("Disjoint")]
-      Disjoint,
-    }
-
-    /// <summary>
     /// Defines which action to take if there is no match in the group.
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
@@ -720,20 +650,20 @@ namespace Hl7.Fhir.Model
       [DeclaredType(Type = typeof(Code))]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
-      public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
+      public Code<Hl7.Fhir.Model.ConceptMapEquivalence> EquivalenceElement
       {
         get { return _EquivalenceElement; }
         set { _EquivalenceElement = value; OnPropertyChanged("EquivalenceElement"); }
       }
 
-      private Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> _EquivalenceElement;
+      private Code<Hl7.Fhir.Model.ConceptMapEquivalence> _EquivalenceElement;
 
       /// <summary>
       /// relatedto | equivalent | equal | wider | subsumes | narrower | specializes | inexact | unmatched | disjoint
       /// </summary>
       /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
       [IgnoreDataMember]
-      public Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence? Equivalence
+      public Hl7.Fhir.Model.ConceptMapEquivalence? Equivalence
       {
         get { return EquivalenceElement != null ? EquivalenceElement.Value : null; }
         set
@@ -741,7 +671,7 @@ namespace Hl7.Fhir.Model
           if (value == null)
             EquivalenceElement = null;
           else
-            EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>(value);
+            EquivalenceElement = new Code<Hl7.Fhir.Model.ConceptMapEquivalence>(value);
           OnPropertyChanged("Equivalence");
         }
       }
@@ -817,7 +747,7 @@ namespace Hl7.Fhir.Model
         base.CopyTo(dest);
         if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
         if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-        if(EquivalenceElement != null) dest.EquivalenceElement = (Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence>)EquivalenceElement.DeepCopy();
+        if(EquivalenceElement != null) dest.EquivalenceElement = (Code<Hl7.Fhir.Model.ConceptMapEquivalence>)EquivalenceElement.DeepCopy();
         if(CommentElement != null) dest.CommentElement = (Hl7.Fhir.Model.FhirString)CommentElement.DeepCopy();
         if(DependsOn != null) dest.DependsOn = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(DependsOn.DeepCopy());
         if(Product != null) dest.Product = new List<Hl7.Fhir.Model.ConceptMap.OtherElementComponent>(Product.DeepCopy());

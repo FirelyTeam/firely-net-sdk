@@ -547,6 +547,7 @@ namespace Hl7.Fhir.Model
     /// Type of the event itself in relation to the subject
     /// </summary>
     [FhirElement("event", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement("event", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Event
     {

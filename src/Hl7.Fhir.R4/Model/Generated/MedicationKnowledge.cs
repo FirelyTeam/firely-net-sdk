@@ -2437,6 +2437,7 @@ namespace Hl7.Fhir.Model
     /// Code that identifies this medication
     /// </summary>
     [FhirElement("code", InSummary=true, Order=90, FiveWs="FiveWs.class")]
+    [CqlElement("code", IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

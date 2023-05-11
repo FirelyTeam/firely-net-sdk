@@ -684,6 +684,7 @@ namespace Hl7.Fhir.Model
     /// Type of service that may be delivered or performed
     /// </summary>
     [FhirElement("type", InSummary=true, Order=130)]
+    [CqlElement("type", IsPrimaryCodePath = true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Type
