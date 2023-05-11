@@ -57,8 +57,8 @@ stages:
     - template: restore.yml@templates
       parameters:
         nuGetServiceConnections: GitHubPackageGetFeed
-        nuGetSources: --source https://www.myget.org/F/vonk/api/v3/index.json 
-
+        nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
+        
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
