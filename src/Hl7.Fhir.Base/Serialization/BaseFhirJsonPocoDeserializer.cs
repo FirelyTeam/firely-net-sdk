@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Serialization
             reader.Read();
 
             var empty = true;
-            var delayedValidations = new DelayedValidations();
+            var delayedValidations = new ObjectParsingState();
             var oldErrorCount = state.Errors.Count;
             var (line, pos) = reader.GetLocation();
 
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Serialization
             // postponed until after all properties have been seen (e.g. Instance and Property validations for
             // primitive properties, since they may be composed from two properties `name` and `_name` in json
             // and should only be validated when both have been processed, even if megabytes apart in the json file).
-            delayedValidations.Run();
+            delayedValidations.RunDelayedValidation();
 
             // read past object, unless this is the last EndObject in the top-level Deserialize call
             if (!stayOnLastToken) reader.Read();
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Serialization
             PropertyMapping propertyMapping,
             ClassMapping propertyValueMapping,
             ref Utf8JsonReader reader,
-            DelayedValidations delayedValidations,
+            ObjectParsingState delayedValidations,
             FhirJsonPocoDeserializerState state
             )
         {
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Serialization
                 // chance to encounter both the `name` and `_name` property.
                 if (delayedValidations is not null && propertyValueMapping.IsFhirPrimitive)
                 {
-                    delayedValidations.Schedule(
+                    delayedValidations.ScheduleDelayedValidation(
                         propertyMapping.Name + PROPERTY_VALIDATION_KEY_SUFFIX,
                         () => PocoDeserializationHelper.RunPropertyValidation(ref result, Settings.Validator!, deserializationContext, state.Errors));
                 }
@@ -454,11 +454,25 @@ namespace Hl7.Fhir.Serialization
             return listInstance;
         }
 
-        internal class DelayedValidations
+        internal class ObjectParsingState
         {
             private readonly Dictionary<string, Action> _validations = new();
+            private readonly Dictionary<string, int> _parsedPropValue = new();
 
-            public void Schedule(string key, Action validation)
+            public int ParsingPropertyValue(string memberName)
+            {
+                if (_parsedPropValue.ContainsKey(memberName))
+                    return _parsedPropValue[memberName];
+                _parsedPropValue.Add(memberName, 0);
+                return 0;
+            }
+
+            public void ParsedPropertyValue(string memberName, int count)
+            {
+                _parsedPropValue[memberName] = count;
+            }
+
+            public void ScheduleDelayedValidation(string key, Action validation)
             {
                 // Add or overwrite the entry for the given key.
                 if (_validations.ContainsKey(key)) _validations.Remove(key);
@@ -466,7 +480,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             //public CodedValidationException[] Run() => _validations.Values.SelectMany(delayed => delayed()).ToArray();
-            public void Run()
+            public void RunDelayedValidation()
             {
                 foreach (var validation in _validations.Values) validation();
             }
@@ -482,7 +496,7 @@ namespace Hl7.Fhir.Serialization
             ClassMapping propertyValueMapping,
             Type? fhirType,
             ref Utf8JsonReader reader,
-            DelayedValidations delayedValidations,
+            ObjectParsingState delayedValidations,
             FhirJsonPocoDeserializerState state
             )
         {
@@ -510,6 +524,12 @@ namespace Hl7.Fhir.Serialization
             // to simply create a list by Adding(). Not the fastest approach :-(
             int elementIndex = 0;
             bool? onlyNulls = null;
+            elementIndex = delayedValidations.ParsingPropertyValue(propertyName);
+            if (elementIndex > 0)
+            {
+                state.Path.IncrementIndex(elementIndex);
+                state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+            }
 
             while (reader.TokenType != JsonTokenType.EndArray)
             {
@@ -528,6 +548,8 @@ namespace Hl7.Fhir.Serialization
                     existingList[elementIndex] ??= propertyValueMapping.Factory();
                     onlyNulls = false;
                     _ = DeserializeFhirPrimitive((PrimitiveType)existingList[elementIndex]!, propertyName, propertyValueMapping, fhirType, ref reader, delayedValidations, state);
+                    
+                    delayedValidations.ParsedPropertyValue(propertyName, existingList.Count);
                 }
 
                 elementIndex += 1;
@@ -560,7 +582,7 @@ namespace Hl7.Fhir.Serialization
             ClassMapping propertyValueMapping,
             Type? fhirType,
             ref Utf8JsonReader reader,
-            DelayedValidations? delayedValidations,
+            ObjectParsingState? delayedValidations,
             FhirJsonPocoDeserializerState state
             )
         {
@@ -618,7 +640,7 @@ namespace Hl7.Fhir.Serialization
                 if (delayedValidations is null)
                     PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
                 else
-                    delayedValidations.Schedule(
+                    delayedValidations.ScheduleDelayedValidation(
                         propertyName.TrimStart('_') + INSTANCE_VALIDATION_KEY_SUFFIX,
                         () => {
                             context.PathStack.EnterElement(propertyName.TrimStart('_'), null, propertyValueMapping.IsPrimitive);
