@@ -17,6 +17,7 @@ name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
 - group: CodeSigning
+- group: APIKeys
 - template: build-variables.yml
 - template: pipeline-variables.yml
   
@@ -52,13 +53,12 @@ stages:
     - task: NuGetToolInstaller@1
       inputs:
         versionSpec: '6.4.0' 
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: ./Hl7.Fhir.sln
-        verbosityRestore: Minimal
-        arguments: --configuration $(buildConfiguration)
+
+    - template: restore.yml@templates
+      parameters:
+        nuGetServiceConnections: GitHubPackageGetFeed
+        nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
+        
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
