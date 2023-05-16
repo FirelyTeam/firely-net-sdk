@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reach goal on or before
       /// </summary>
-      [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("due", InSummary=true, Order=60, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Duration))]
       [DataMember]
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this goal
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | accepted | planned | in-progress | on-target | ahead-of-target | behind-target | sustaining | achieved | on-hold | cancelled | entered-in-error | rejected
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// high-priority | medium-priority | low-priority
     /// </summary>
-    [FhirElement("priority", InSummary=true, Order=120)]
+    [FhirElement("priority", InSummary=true, Order=120, FiveWs="grade")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Code or text describing goal
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=130)]
+    [FhirElement("description", InSummary=true, Order=130, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Description
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this goal is intended for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group","Organization")]
     [DataMember]
@@ -406,7 +406,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal pursuit begins
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("start", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.CodeableConcept))]
     [DataMember]
@@ -434,7 +434,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When goal status took effect
     /// </summary>
-    [FhirElement("statusDate", InSummary=true, Order=170)]
+    [FhirElement("statusDate", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Date StatusDateElement
     {
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who's responsible for creating Goal?
     /// </summary>
-    [FhirElement("expressedBy", InSummary=true, Order=190)]
+    [FhirElement("expressedBy", InSummary=true, Order=190, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson")]
     [DataMember]
@@ -511,7 +511,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Issues addressed by this goal
     /// </summary>
-    [FhirElement("addresses", Order=200)]
+    [FhirElement("addresses", Order=200, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation","MedicationStatement","NutritionOrder","ProcedureRequest","RiskAssessment")]
     [Cardinality(Min=0,Max=-1)]

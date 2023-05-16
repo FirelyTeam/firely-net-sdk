@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The primary coverage ID
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -639,7 +639,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -671,7 +671,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of coverage such as medical or accident
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -684,7 +684,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Owner of the policy
     /// </summary>
-    [FhirElement("policyHolder", InSummary=true, Order=120)]
+    [FhirElement("policyHolder", InSummary=true, Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson","Organization")]
     [DataMember]
@@ -699,7 +699,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subscriber to the policy
     /// </summary>
-    [FhirElement("subscriber", InSummary=true, Order=130)]
+    [FhirElement("subscriber", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","RelatedPerson")]
     [DataMember]
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ID assigned to the Subscriber
     /// </summary>
-    [FhirElement("subscriberId", InSummary=true, Order=140)]
+    [FhirElement("subscriberId", InSummary=true, Order=140, FiveWs="who.focus")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString SubscriberIdElement
     {
@@ -745,7 +745,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Plan Beneficiary
     /// </summary>
-    [FhirElement("beneficiary", InSummary=true, Order=150)]
+    [FhirElement("beneficiary", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coverage start and end dates
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=170)]
+    [FhirElement("period", InSummary=true, Order=170, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -786,7 +786,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for the plan or agreement issuer
     /// </summary>
-    [FhirElement("payor", InSummary=true, Order=180)]
+    [FhirElement("payor", InSummary=true, Order=180, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Organization","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]

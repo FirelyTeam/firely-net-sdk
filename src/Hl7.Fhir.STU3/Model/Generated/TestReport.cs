@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1648,7 +1648,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | in-progress | waiting | stopped | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1792,7 +1792,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the TestScript was executed and this TestReport was generated
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=160)]
+    [FhirElement("issued", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime IssuedElement
     {

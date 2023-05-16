@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The reference to the practitioner
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Identifiers for this procedure
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | suspended | aborted | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -489,7 +489,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the procedure
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=160)]
+    [FhirElement("category", InSummary=true, Order=160, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identification of the procedure
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=170)]
+    [FhirElement("code", InSummary=true, Order=170, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -515,7 +515,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the procedure was performed on
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=180)]
+    [FhirElement("subject", InSummary=true, Order=180, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -531,7 +531,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or episode associated with the procedure
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=190)]
+    [FhirElement("context", InSummary=true, Order=190, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -546,7 +546,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Period the procedure was performed
     /// </summary>
-    [FhirElement("performed", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("performed", InSummary=true, Order=200, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -575,7 +575,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the procedure happened
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=220)]
+    [FhirElement("location", InSummary=true, Order=220, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded reason procedure performed
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=230)]
+    [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition that is the reason the procedure performed
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=240)]
+    [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]

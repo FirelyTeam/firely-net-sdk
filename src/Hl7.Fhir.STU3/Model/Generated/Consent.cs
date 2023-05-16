@@ -1239,7 +1239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier for this record (external references)
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1252,7 +1252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | proposed | active | rejected | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1285,7 +1285,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of the consent statement - for indexing/retrieval
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -1299,7 +1299,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the consent applies to
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=120)]
+    [FhirElement("patient", InSummary=true, Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -1315,7 +1315,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period that this consent applies
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=130)]
+    [FhirElement("period", InSummary=true, Order=130, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -1328,7 +1328,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this Consent was created or indexed
     /// </summary>
-    [FhirElement("dateTime", InSummary=true, Order=140)]
+    [FhirElement("dateTime", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateTimeElement
     {
@@ -1359,7 +1359,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is agreeing to the policy and exceptions
     /// </summary>
-    [FhirElement("consentingParty", InSummary=true, Order=150)]
+    [FhirElement("consentingParty", InSummary=true, Order=150, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Organization","Patient","Practitioner","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
@@ -1375,7 +1375,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who|what controlled by this consent (or group, by role)
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=160)]
+    [FhirElement("actor", InSummary=true, Order=160, FiveWs="who.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Consent.ActorComponent> Actor
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Custodian of the consent
     /// </summary>
-    [FhirElement("organization", InSummary=true, Order=180)]
+    [FhirElement("organization", InSummary=true, Order=180, FiveWs="who.witness")]
     [CLSCompliant(false)]
     [References("Organization")]
     [Cardinality(Min=0,Max=-1)]

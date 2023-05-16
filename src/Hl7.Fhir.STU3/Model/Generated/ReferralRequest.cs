@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual making the request
       /// </summary>
-      [FhirElement("agent", InSummary=true, Order=40)]
+      [FhirElement("agent", InSummary=true, Order=40, FiveWs="who.author")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization","Patient","RelatedPerson","Device")]
       [Cardinality(Min=1,Max=1)]
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | suspended | cancelled | completed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order
     /// </summary>
-    [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
+    [FhirElement("intent", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Referral/Transition of care request type
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=160)]
+    [FhirElement("type", InSummary=true, Order=160, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Urgency of referral / transfer of care request
     /// </summary>
-    [FhirElement("priority", InSummary=true, Order=170)]
+    [FhirElement("priority", InSummary=true, Order=170, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actions requested as part of the referral
     /// </summary>
-    [FhirElement("serviceRequested", InSummary=true, Order=180)]
+    [FhirElement("serviceRequested", InSummary=true, Order=180, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceRequested
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient referred to care or transfer
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=190)]
+    [FhirElement("subject", InSummary=true, Order=190, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Originating encounter
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=200)]
+    [FhirElement("context", InSummary=true, Order=200, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the service(s) requested in the referral should occur
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=210, Choice=ChoiceType.DatatypeChoice, FiveWs="when.planned")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -440,7 +440,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date of creation/activation
     /// </summary>
-    [FhirElement("authoredOn", InSummary=true, Order=220)]
+    [FhirElement("authoredOn", InSummary=true, Order=220, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
     {
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Receiver of referral / transfer of care request
     /// </summary>
-    [FhirElement("recipient", InSummary=true, Order=250)]
+    [FhirElement("recipient", InSummary=true, Order=250, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization","HealthcareService")]
     [Cardinality(Min=0,Max=-1)]
@@ -513,7 +513,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for referral / transfer of care request
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=260)]
+    [FhirElement("reasonCode", InSummary=true, Order=260, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -527,7 +527,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why is service needed?
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=270)]
+    [FhirElement("reasonReference", InSummary=true, Order=270, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]

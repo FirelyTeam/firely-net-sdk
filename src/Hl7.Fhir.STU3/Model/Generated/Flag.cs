@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinical, administrative, etc.
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Coded or textual message to display to user
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=120)]
+    [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/What is flag about?
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Location","Group","Organization","Practitioner","PlanDefinition","Medication","Procedure")]
     [Cardinality(Min=1,Max=1)]
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period when flag is active
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=140)]
+    [FhirElement("period", InSummary=true, Order=140, FiveWs="context")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -189,7 +189,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Alert relevant during encounter
     /// </summary>
-    [FhirElement("encounter", InSummary=true, Order=150)]
+    [FhirElement("encounter", InSummary=true, Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Flag creator
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=160)]
+    [FhirElement("author", InSummary=true, Order=160, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner")]
     [DataMember]
