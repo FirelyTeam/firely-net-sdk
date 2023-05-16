@@ -345,6 +345,7 @@ Global
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{23ff0f97-3960-4994-8423-db39573652e1}*SharedItemsImports = 13
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{2a8f91bc-6449-4ca5-8145-5213bd18a528}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems*{343dbd3e-7795-4df9-a875-4ad92037b7c6}*SharedItemsImports = 13
+		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{37e47f34-d2d5-4d24-8f31-5753000bd439}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{3d696d26-c0ff-4c6c-b3b7-cffb4f74079f}*SharedItemsImports = 13
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{3fbbe610-4595-4213-9c0c-2a6af06e5f3c}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{437ec873-7d71-497b-a7e6-7e27c020af9e}*SharedItemsImports = 5
