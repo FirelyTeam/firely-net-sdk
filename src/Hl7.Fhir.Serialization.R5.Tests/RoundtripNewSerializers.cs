@@ -1,7 +1,6 @@
 ﻿#nullable enable
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Text.Json;
 using ERR = Hl7.Fhir.Serialization.FhirJsonException;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -10,22 +9,6 @@ namespace Hl7.Fhir.Serialization.Tests
     public partial class RoundTripNewSerializers
     {
         private readonly string _attachmentJson = "{\"size\":\"12\"}";
-
-        [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-        [DataTestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
-        {
-            doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
-        }
-
-        [DynamicData(nameof(prepareExampleZipFilesJson), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
-        [DataTestMethod]
-        [TestCategory("LongRunner")]
-        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
-        {
-            doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
-        }
 
         private static IEnumerable<object[]> attachmentSource()
         {

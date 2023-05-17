@@ -24,7 +24,21 @@ namespace Hl7.Fhir.Serialization.Tests
         private static readonly string intermediate1Folder = "intermediate1";
         private static readonly string intermediate2Folder = "intermediate2";
 
+        [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
+        [DataTestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesXmlNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        {
+            doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
+        }
 
+        [DynamicData(nameof(prepareExampleZipFilesJson), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
+        [DataTestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJsonNewSerializer(string file, string baseTestPath, FhirXmlPocoSerializer xmlSerializer, BaseFhirXmlPocoDeserializer xmlDeserializer, JsonSerializerOptions jsonOptions)
+        {
+            doRoundTrip(baseTestPath, file, xmlSerializer, xmlDeserializer, jsonOptions);
+        }
         private static IEnumerable<object[]> prepareExampleZipFilesXml()
         {
             return prepareExampleZipFiles("examples.zip", Path.Combine(Path.GetTempPath(), xmlTestFolder));
