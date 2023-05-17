@@ -13,9 +13,12 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
+using ERR = Hl7.Fhir.Serialization.FhirJsonException;
+
 
 namespace Hl7.Fhir.Serialization.Tests
 {
+    [TestClass]
     public partial class RoundTripNewSerializers
     {
         private static readonly string jsonTestFolder = "FHIRRoundTripTestJson";
@@ -23,6 +26,29 @@ namespace Hl7.Fhir.Serialization.Tests
         private static readonly string inputFolder = "input";
         private static readonly string intermediate1Folder = "intermediate1";
         private static readonly string intermediate2Folder = "intermediate2";
+
+#if R5
+        private readonly string _attachmentJson = "{\"size\":\"12\"}";
+
+        private static IEnumerable<object[]> attachmentSource()
+        {
+            yield return new object[] { "{\"size\":\"12\", \"title\": \"Correct Attachment\"}", 12L, null! };
+            yield return new object[] { "{\"size\":12, \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE };
+            yield return new object[] { "{\"size\":25.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE };
+            yield return new object[] { "{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_CANNOT_BE_PARSED_CODE };
+        }
+#else
+        private readonly string _attachmentJson = "{\"size\":12}";
+
+        private static IEnumerable<object[]> attachmentSource()
+        {
+            yield return new object[] { "{\"size\":12, \"title\": \"Correct Attachment\"}", 12L, null! };
+            yield return new object[] { "{\"size\":12.345, \"title\": \"An incorrect Attachment\"}", null!, ERR.NUMBER_CANNOT_BE_PARSED_CODE };
+            yield return new object[] { "{\"size\":\"12\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE };
+            yield return new object[] { "{\"size\":\"12.345\", \"title\": \"An incorrect Attachment\"}", null!, ERR.LONG_INCORRECT_FORMAT_CODE };
+        }
+#endif
+
 
         [DynamicData(nameof(prepareExampleZipFilesXml), DynamicDataSourceType.Method, DynamicDataDisplayName = nameof(GetTestDisplayNames))]
         [DataTestMethod]
