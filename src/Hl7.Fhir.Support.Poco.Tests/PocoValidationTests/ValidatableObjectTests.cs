@@ -35,24 +35,24 @@ namespace Hl7.Fhir.Support.Poco.Tests
             c.Value.Should().Be(FilterOperator.ChildOf);
 
             c.ObjectValue = "wrong";
-            assertValid(c, e: COVE.INVALID_CODED_VALUE);
+            assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
             Assert.ThrowsException<InvalidCastException>(() => c.Value);
 
             c.ObjectValue = 4;
-            assertValid(c, e: COVE.INVALID_CODED_VALUE);
+            assertValid(c, errorCode: COVE.INVALID_CODED_VALUE_CODE);
             Assert.ThrowsException<InvalidCastException>(() => c.Value);
         }
 
 
-        private static void assertValid(IValidatableObject o, CodedValidationException? e = null)
+        private static void assertValid(IValidatableObject o, string? errorCode = null)
         {
             var validationResult = o.Validate(new ValidationContext(o));
-            if (e is null)
+            if (errorCode is null)
                 validationResult.Should().BeEmpty();
             else
             {
                 validationResult.Should().AllBeOfType<CodedValidationResult>();
-                validationResult.Should().ContainSingle(vr => ((CodedValidationResult)vr).ValidationException.ErrorCode == e.ErrorCode);
+                validationResult.Should().ContainSingle(vr => ((CodedValidationResult)vr).ValidationException.ErrorCode == errorCode);
             }
         }
     }

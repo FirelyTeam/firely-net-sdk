@@ -78,6 +78,21 @@ namespace Hl7.Fhir.Validation
             return newContext;
         }
 
+        /// <summary>
+        /// This is very similar to IntoPath except that it doesn't walk into the actual property
+        /// as the property does not exist, but we do need to set the membername so that the error message
+        /// is created correctly identifies the location in the message (in the context of the location)
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <param name="elementName"></param>
+        /// <returns></returns>
+        internal static ValidationContext IntoEmptyProperty(this ValidationContext ctx, string elementName)
+        {
+            var newContext = new ValidationContext(ctx.ObjectInstance, ctx.Items);
+            newContext.MemberName = elementName;
+            return newContext;
+        }
+
         private static ValidationContext buildContext(bool recurse, NarrativeValidationKind kind, object instance)
         {
             ValidationContext newContext = new(instance);

@@ -139,12 +139,12 @@ namespace Hl7.Fhir.Serialization
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
-                state.Errors.Add(ERR.EXPECTED_START_OF_OBJECT.With(ref reader, reader.TokenType));
+                state.Errors.Add(ERR.EXPECTED_START_OF_OBJECT(ref reader, state.Path.GetInstancePath(), reader.TokenType));
                 reader.Recover();  // skip to the end of the construct encountered (value or array)
                 return null;
             }
 
-            (ClassMapping? resourceMapping, FhirJsonException? error) = DetermineClassMappingFromInstance(ref reader, _inspector);
+            (ClassMapping? resourceMapping, FhirJsonException? error) = DetermineClassMappingFromInstance(ref reader, _inspector, state.Path);
 
             if (resourceMapping is not null)
             {
@@ -154,15 +154,23 @@ namespace Hl7.Fhir.Serialization
                 try
                 {
                     state.Path.EnterResource(resourceMapping.Name);
+                    int nErrorCount = state.Errors.Count;
                     deserializeObjectInto(newResource, resourceMapping, ref reader, DeserializedObjectKind.Resource, state, stayOnLastToken);
 
                     if (!resourceMapping.IsResource)
                     {
-                        state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE.With(ref reader, resourceMapping.Name));
+                        state.Errors.Add(ERR.RESOURCE_TYPE_NOT_A_RESOURCE(ref reader, state.Path.GetInstancePath(), resourceMapping.Name));
                         return null;
                     }
                     else
+                    {
+                        if (Settings.AnnotateResourceParseExceptions && state.Errors.Count > nErrorCount)
+                        {
+                            List<CodedException> resourceErrs = state.Errors.Skip(nErrorCount).ToList();
+                            ((Resource)newResource).SetAnnotation(resourceErrs);
+                        }
                         return (Resource)newResource;
+                    }
                 }
                 finally
                 {
@@ -230,7 +238,7 @@ namespace Hl7.Fhir.Serialization
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
-                state.Errors.Add(ERR.EXPECTED_START_OF_OBJECT.With(ref reader, reader.TokenType));
+                state.Errors.Add(ERR.EXPECTED_START_OF_OBJECT(ref reader, state.Path.GetInstancePath(), reader.TokenType));
                 reader.Recover();  // skip to the end of the construct encountered (value or array)
                 return;
             }
@@ -258,7 +266,7 @@ namespace Hl7.Fhir.Serialization
                 empty = false;
 
                 // Lookup the metadata for this property by its name to determine the expected type of the value
-                var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, ref reader, currentPropertyName);
+                var (propMapping, propValueMapping, error) = tryGetMappedElementMetadata(_inspector, mapping, ref reader, state.Path, currentPropertyName);
 
                 if (error is not null)
                 {
@@ -275,7 +283,7 @@ namespace Hl7.Fhir.Serialization
 
                     try
                     {
-                        state.Path.EnterElement(propMapping!.Name);
+                        state.Path.EnterElement(propMapping!.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
                         deserializePropertyValueInto(target, currentPropertyName, propMapping, propValueMapping!, ref reader, delayedValidations, state);
                     }
                     finally
@@ -295,13 +303,13 @@ namespace Hl7.Fhir.Serialization
             if (!stayOnLastToken) reader.Read();
 
             // do not allow empty complex objects.
-            if (empty) state.Errors.Add(ERR.OBJECTS_CANNOT_BE_EMPTY.With(ref reader));
+            if (empty) state.Errors.Add(ERR.OBJECTS_CANNOT_BE_EMPTY(ref reader, state.Path.GetInstancePath()));
 
             // Only run instance validation when deserialization yielded no errors
             // to avoid spurious error messages.
-            if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && state.Errors.Count == oldErrorCount)
+            if (Settings.Validator is not null && kind != DeserializedObjectKind.FhirPrimitive && (Settings.ValidateOnFailedParse || state.Errors.Count == oldErrorCount))
             {
-                var context = new InstanceDeserializationContext(state.Path.GetPath(), line, pos, mapping);
+                var context = new InstanceDeserializationContext(state.Path, line, pos, mapping);
                 PocoDeserializationHelper.RunInstanceValidation(target, Settings.Validator, context, state.Errors);
             }
 
@@ -337,12 +345,12 @@ namespace Hl7.Fhir.Serialization
             var oldErrorCount = state.Errors.Count;
             var (line, pos) = reader.CurrentState.GetLocation();
 
+            // There might be an existing value, since FhirPrimitives may be spread out over two properties
+            // (one with, and one without the '_')
+            var existingValue = propertyMapping.GetValue(target);
+
             if (propertyValueMapping.IsFhirPrimitive)
             {
-                // There might be an existing value, since FhirPrimitives may be spread out over two properties
-                // (one with, and one without the '_')
-                var existingValue = propertyMapping.GetValue(target);
-
                 var fhirType = propertyMapping.FhirType.FirstOrDefault();
 
                 // Note that the POCO model will always allocate a new list if the property had not been set before,
@@ -355,20 +363,20 @@ namespace Hl7.Fhir.Serialization
             {
                 // This is not a FHIR primitive, so we should not be dealing with these weird _name members.
                 if (propertyName[0] == '_')
-                    state.Errors.Add(ERR.USE_OF_UNDERSCORE_ILLEGAL.With(ref reader, propertyMapping.Name, propertyName));
+                    state.Errors.Add(ERR.USE_OF_UNDERSCORE_ILLEGAL(ref reader, state.Path.GetInstancePath(), propertyMapping.Name, propertyName));
 
                 // Note that repeating simple elements (like Extension.url) do not currently exist in the FHIR serialization
                 result = propertyMapping.IsCollection
-                    ? deserializeNormalList(propertyValueMapping, ref reader, propertyMapping, state)
+                    ? deserializeNormalList((IList)existingValue!, propertyValueMapping, ref reader, propertyMapping, state)
                     : deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
             }
 
             // Only do validation when no parse errors were encountered, otherwise we'll just
             // produce spurious messages.
-            if (Settings.Validator is not null && oldErrorCount == state.Errors.Count)
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
             {
                 var deserializationContext = new PropertyDeserializationContext(
-                    state.Path.GetPath(),
+                    state.Path,
                     propertyName,
                     line, pos,
                     propertyMapping);
@@ -396,13 +404,20 @@ namespace Hl7.Fhir.Serialization
         /// other situations (e.g. repeating Extension.url's, if they would ever exist).
         /// </summary>
         private IList? deserializeNormalList(
+            IList? existingList,
             ClassMapping propertyValueMapping,
             ref Utf8JsonReader reader,
             PropertyMapping propertyMapping,
             FhirJsonPocoDeserializerState state)
         {
+            if (existingList?.Count > 0)
+            {
+                state.Path.IncrementIndex(existingList.Count);
+                state.Errors.Add(ERR.DUPLICATE_ARRAY(ref reader, state.Path.GetInstancePath()));
+            }
+
             // Create a list of the type of this property's value.
-            var listInstance = propertyValueMapping.ListFactory();
+            IList listInstance = existingList ?? propertyValueMapping.ListFactory();
 
             // if true, we have encountered a single value where we expected an array.
             // we need to recover by creating an array with that single value.
@@ -410,7 +425,7 @@ namespace Hl7.Fhir.Serialization
 
             if (reader.TokenType != JsonTokenType.StartArray)
             {
-                state.Errors.Add(ERR.EXPECTED_START_OF_ARRAY.With(ref reader));
+                state.Errors.Add(ERR.EXPECTED_START_OF_ARRAY(ref reader, state.Path.GetInstancePath()));
                 oneshot = true;
             }
             else
@@ -419,7 +434,7 @@ namespace Hl7.Fhir.Serialization
                 reader.Read();
 
                 if (reader.TokenType == JsonTokenType.EndArray)
-                    state.Errors.Add(ERR.ARRAYS_CANNOT_BE_EMPTY.With(ref reader));
+                    state.Errors.Add(ERR.ARRAYS_CANNOT_BE_EMPTY(ref reader, state.Path.GetInstancePath()));
             }
 
             // Can't make an iterator because of the ref readers struct, so need
@@ -428,6 +443,7 @@ namespace Hl7.Fhir.Serialization
             {
                 var result = deserializeSingleValue(ref reader, propertyValueMapping, propertyMapping, state);
                 listInstance.Add(result);
+                state.Path.IncrementIndex();
 
                 if (oneshot) break;
             }
@@ -476,7 +492,7 @@ namespace Hl7.Fhir.Serialization
 
             if (reader.TokenType != JsonTokenType.StartArray)
             {
-                state.Errors.Add(ERR.EXPECTED_START_OF_ARRAY.With(ref reader));
+                state.Errors.Add(ERR.EXPECTED_START_OF_ARRAY(ref reader, state.Path.GetInstancePath()));
                 oneshot = true;
             }
             else
@@ -485,7 +501,7 @@ namespace Hl7.Fhir.Serialization
                 reader.Read();
 
                 if (reader.TokenType == JsonTokenType.EndArray)
-                    state.Errors.Add(ERR.ARRAYS_CANNOT_BE_EMPTY.With(ref reader));
+                    state.Errors.Add(ERR.ARRAYS_CANNOT_BE_EMPTY(ref reader, state.Path.GetInstancePath()));
             }
 
             int originalSize = existingList.Count;
@@ -515,12 +531,13 @@ namespace Hl7.Fhir.Serialization
                 }
 
                 elementIndex += 1;
+                state.Path.IncrementIndex();
 
                 if (oneshot) break;
             }
 
             if (onlyNulls == true)
-                state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL.With(ref reader));
+                state.Errors.Add(ERR.PRIMITIVE_ARRAYS_ONLY_NULL(ref reader, state.Path.GetInstancePath()));
 
             //[EK 20221027] - According to the new R5 spec, these arrays need not be of the same size, and
             //we need to fill out missing elements with null values.
@@ -558,11 +575,11 @@ namespace Hl7.Fhir.Serialization
                     throw new InvalidOperationException($"All subclasses of {nameof(PrimitiveType)} should have a property representing the value element, " +
                         $"but {propertyValueMapping.Name} has not. " + reader.GenerateLocationMessage());
 
-                state.Path.EnterElement("value");
+                state.Path.EnterElement("value", 0, true);
                 try
                 {
 
-                    var (result, error) = DeserializePrimitiveValue(ref reader, primitiveValueProperty.ImplementingType, fhirType);
+                    var (result, error) = DeserializePrimitiveValue(ref reader, primitiveValueProperty.ImplementingType, fhirType, state.Path);
 
                     // Only do validation when no parse errors were encountered, otherwise we'll just
                     // produce spurious messages.
@@ -572,7 +589,7 @@ namespace Hl7.Fhir.Serialization
                     {
 
                         var propertyValueContext = new PropertyDeserializationContext(
-                            state.Path.GetPath(),
+                            state.Path,
                             "value",
                             line, pos,
                             primitiveValueProperty);
@@ -595,15 +612,19 @@ namespace Hl7.Fhir.Serialization
             // Only do validation on this instance when no parse errors were encountered, otherwise we'll just
             // produce spurious messages. Also, delay validation of this instance until we have processed both
             // the `name` and `_name` property.
-            if (Settings.Validator is not null && oldErrorCount == state.Errors.Count)
+            if (Settings.Validator is not null && (Settings.ValidateOnFailedParse || oldErrorCount == state.Errors.Count))
             {
-                var context = new InstanceDeserializationContext(state.Path.GetPath(), line, pos, propertyValueMapping);
+                var context = new InstanceDeserializationContext(state.Path, line, pos, propertyValueMapping);
                 if (delayedValidations is null)
                     PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
                 else
                     delayedValidations.Schedule(
                         propertyName.TrimStart('_') + INSTANCE_VALIDATION_KEY_SUFFIX,
-                        () => PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors));
+                        () => {
+                            context.PathStack.EnterElement(propertyName.TrimStart('_'), null, propertyValueMapping.IsPrimitive);
+                            PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
+                            context.PathStack.ExitElement();
+                        });
             }
 
             return targetPrimitive;
@@ -626,13 +647,13 @@ namespace Hl7.Fhir.Serialization
             // needs to handle PrimitiveType.ObjectValue & dual properties.
             else if (propertyValueMapping.IsPrimitive)
             {
-                var (result, error) = DeserializePrimitiveValue(ref reader, propertyValueMapping.NativeType, propertyMapping.FhirType.FirstOrDefault());
+                var (result, error) = DeserializePrimitiveValue(ref reader, propertyValueMapping.NativeType, propertyMapping.FhirType.FirstOrDefault(), state.Path);
 
                 if (error is not null && result is not null)
                 {
                     // Signal the fact that we're throwing away data here, as we cannot put
                     // "raw" data into a simple property like Id and Url.
-                    state.Errors.Add(ERR.INCOMPATIBLE_SIMPLE_VALUE.With(ref reader, error, error.Message));
+                    state.Errors.Add(ERR.INCOMPATIBLE_SIMPLE_VALUE(ref reader, state.Path.GetInstancePath(), error.Message, error));
                     return null;
                 }
                 else
@@ -658,14 +679,14 @@ namespace Hl7.Fhir.Serialization
         /// <returns>A value without an error if the data could be parsed to the required type, and a value with an error if the
         /// value could not be parsed - in which case the value returned is the raw value coming in from the reader.</returns>
         /// <remarks>Upon completion, the reader will be positioned on the token after the primitive.</remarks>
-        internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader, Type implementingType, Type? fhirType)
+        internal (object?, FhirJsonException?) DeserializePrimitiveValue(ref Utf8JsonReader reader, Type implementingType, Type? fhirType, PathStack pathStack)
         {
             // Check for unexpected non-value types.
             if (reader.TokenType is JsonTokenType.StartObject or JsonTokenType.StartArray)
             {
                 var exception = reader.TokenType == JsonTokenType.StartObject
-                    ? ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.With(ref reader)
-                    : ERR.EXPECTED_PRIMITIVE_NOT_ARRAY.With(ref reader);
+                    ? ERR.EXPECTED_PRIMITIVE_NOT_OBJECT(ref reader, pathStack.GetInstancePath())
+                    : ERR.EXPECTED_PRIMITIVE_NOT_ARRAY(ref reader, pathStack.GetInstancePath());
                 reader.Recover();
                 return (null, exception);
             }
@@ -673,19 +694,19 @@ namespace Hl7.Fhir.Serialization
             // Check for value types
             (object? partial, FhirJsonException? error) result = reader.TokenType switch
             {
-                JsonTokenType.Null => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL.With(ref reader)),
-                JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY.With(ref reader)),
+                JsonTokenType.Null => new(null, ERR.EXPECTED_PRIMITIVE_NOT_NULL(ref reader, pathStack.GetInstancePath())),
+                JsonTokenType.String when string.IsNullOrEmpty(reader.GetString()) => new(reader.GetString(), ERR.PROPERTY_MAY_NOT_BE_EMPTY(ref reader, pathStack.GetInstancePath())),
                 JsonTokenType.String when implementingType == typeof(string) => new(reader.GetString(), null),
                 JsonTokenType.String when implementingType == typeof(byte[]) =>
-                                !Settings.DisableBase64Decoding ? readBase64(ref reader) : new(reader.GetString(), null),
-                JsonTokenType.String when implementingType == typeof(DateTimeOffset) => readDateTimeOffset(ref reader),
+                                !Settings.DisableBase64Decoding ? readBase64(ref reader, pathStack) : new(reader.GetString(), null),
+                JsonTokenType.String when implementingType == typeof(DateTimeOffset) => readDateTimeOffset(ref reader, pathStack),
                 JsonTokenType.String when implementingType.IsEnum => new(reader.GetString(), null),
-                JsonTokenType.String when implementingType == typeof(long) => readLong(ref reader, fhirType),
+                JsonTokenType.String when implementingType == typeof(long) => readLong(ref reader, fhirType, pathStack),
                 //JsonTokenType.String when requiredType.IsEnum => readEnum(ref reader, requiredType),
-                JsonTokenType.String => unexpectedToken(ref reader, reader.GetString(), implementingType.Name, "string"),
-                JsonTokenType.Number => tryGetMatchingNumber(ref reader, implementingType, fhirType),
+                JsonTokenType.String => unexpectedToken(ref reader, pathStack.GetInstancePath(), reader.GetString(), implementingType.Name, "string"),
+                JsonTokenType.Number => tryGetMatchingNumber(ref reader, implementingType, fhirType, pathStack),
                 JsonTokenType.True or JsonTokenType.False when implementingType == typeof(bool) => new(reader.GetBoolean(), null),
-                JsonTokenType.True or JsonTokenType.False => unexpectedToken(ref reader, reader.GetRawText(), implementingType.Name, "boolean"),
+                JsonTokenType.True or JsonTokenType.False => unexpectedToken(ref reader, pathStack.GetInstancePath(), reader.GetRawText(), implementingType.Name, "boolean"),
 
                 _ =>
                     // This would be an internal logic error, since our callers should have made sure we're
@@ -705,21 +726,21 @@ namespace Hl7.Fhir.Serialization
 
             return result;
 
-            static (object?, FhirJsonException?) readBase64(ref Utf8JsonReader reader) =>
+            static (object?, FhirJsonException?) readBase64(ref Utf8JsonReader reader, PathStack pathStack) =>
                 reader.TryGetBytesFromBase64(out var bytesValue) ?
                     new(bytesValue, null) :
-                    new(reader.GetString(), ERR.INCORRECT_BASE64_DATA.With(ref reader));
+                    new(reader.GetString(), ERR.INCORRECT_BASE64_DATA(ref reader, pathStack.GetInstancePath()));
 
-            static (object?, FhirJsonException?) readDateTimeOffset(ref Utf8JsonReader reader)
+            static (object?, FhirJsonException?) readDateTimeOffset(ref Utf8JsonReader reader, PathStack pathStack)
             {
                 var contents = reader.GetString()!;
 
                 return ElementModel.Types.DateTime.TryParse(contents, out var parsed) ?
                     new(parsed.ToDateTimeOffset(TimeSpan.Zero), null) :
-                    new(contents, ERR.STRING_ISNOTAN_INSTANT.With(ref reader, contents));
+                    new(contents, ERR.STRING_ISNOTAN_INSTANT(ref reader, pathStack.GetInstancePath(), contents));
             }
 
-            static (object?, FhirJsonException?) readLong(ref Utf8JsonReader reader, Type? fhirType)
+            static (object?, FhirJsonException?) readLong(ref Utf8JsonReader reader, Type? fhirType, PathStack pathStack)
             {
                 // convert string in json to a long.
                 var contents = reader.GetString()!;
@@ -727,9 +748,9 @@ namespace Hl7.Fhir.Serialization
                 return long.TryParse(contents, out var parsed) switch
                 {
                     true when isInteger64() => new(parsed, null),
-                    true => new(parsed, ERR.LONG_INCORRECT_FORMAT.With(ref reader, "Json string", contents, typeName(), "Json number")),
-                    false when isInteger64() => new(contents, ERR.LONG_CANNOT_BE_PARSED.With(ref reader, contents, nameof(Integer64))),
-                    false => new(contents, ERR.LONG_INCORRECT_FORMAT.With(ref reader, "Json string", contents, typeName(), "Json number"))
+                    true => new(parsed, ERR.LONG_INCORRECT_FORMAT(ref reader, pathStack.GetInstancePath(), "Json string", contents, typeName(), "Json number")),
+                    false when isInteger64() => new(contents, ERR.LONG_CANNOT_BE_PARSED(ref reader, pathStack.GetInstancePath(), contents, nameof(Integer64))),
+                    false => new(contents, ERR.LONG_INCORRECT_FORMAT(ref reader, pathStack.GetInstancePath(), "Json string", contents, typeName(), "Json number"))
                 };
 
                 string typeName()
@@ -752,14 +773,14 @@ namespace Hl7.Fhir.Serialization
             //}
         }
 
-        private static (object?, FhirJsonException) unexpectedToken(ref Utf8JsonReader reader, string? value, string expected, string actual) =>
-            new(value, ERR.UNEXPECTED_JSON_TOKEN.With(ref reader, expected, actual, value));
+        private static (object?, FhirJsonException) unexpectedToken(ref Utf8JsonReader reader, string instancePath, string? value, string expected, string actual) =>
+            new(value, ERR.UNEXPECTED_JSON_TOKEN(ref reader, instancePath, expected, actual, value));
 
         /// <summary>
         /// This function tries to map from the json-format "generic" number to the kind of numeric type defined in the POCO.
         /// </summary>
         /// <remarks>Reader must be positioned on a number token. This function will not move the reader to the next token.</remarks>
-        private static (object?, FhirJsonException?) tryGetMatchingNumber(ref Utf8JsonReader reader, Type implementingType, Type? fhirType)
+        private static (object?, FhirJsonException?) tryGetMatchingNumber(ref Utf8JsonReader reader, Type implementingType, Type? fhirType, PathStack pathStack)
         {
             if (reader.TokenType != JsonTokenType.Number)
                 throw new InvalidOperationException($"Cannot read a numeric when reader is on a {reader.TokenType}. " +
@@ -785,20 +806,20 @@ namespace Hl7.Fhir.Serialization
             else
             {
                 var rawValue = reader.GetRawText();
-                return unexpectedToken(ref reader, rawValue, implementingType.Name, "number");
+                return unexpectedToken(ref reader, pathStack.GetInstancePath(), rawValue, implementingType.Name, "number");
             }
 
             // We expected a number, we found a json number, but they don't match (e.g. precision etc)
             if (success)
             {
                 return implementingType == typeof(long) && fhirType == typeof(Integer64)
-                    ? new(value, ERR.LONG_INCORRECT_FORMAT.With(ref reader, "Json number", reader.GetRawText(), nameof(Integer64), "Json string"))
+                    ? new(value, ERR.LONG_INCORRECT_FORMAT(ref reader, pathStack.GetInstancePath(), "Json number", reader.GetRawText(), nameof(Integer64), "Json string"))
                     : new(value, null);
             }
             else
             {
                 var rawValue = reader.GetRawText();
-                return new(rawValue, ERR.NUMBER_CANNOT_BE_PARSED.With(ref reader, rawValue, implementingType.Name));
+                return new(rawValue, ERR.NUMBER_CANNOT_BE_PARSED(ref reader, pathStack.GetInstancePath(), rawValue, implementingType.Name));
             }
         }
 
@@ -806,7 +827,7 @@ namespace Hl7.Fhir.Serialization
         /// Returns the <see cref="ClassMapping" /> for the object to be deserialized using the `resourceType` property.
         /// </summary>
         /// <remarks>Assumes the reader is on the start of an object.</remarks>
-        internal static (ClassMapping?, FhirJsonException?) DetermineClassMappingFromInstance(ref Utf8JsonReader reader, ModelInspector inspector)
+        internal static (ClassMapping?, FhirJsonException?) DetermineClassMappingFromInstance(ref Utf8JsonReader reader, ModelInspector inspector, PathStack path)
         {
             var (resourceType, error) = determineResourceType(ref reader);
 
@@ -816,7 +837,7 @@ namespace Hl7.Fhir.Serialization
 
                 return resourceMapping is not null ?
                     (new(resourceMapping, null)) :
-                    (new(null, ERR.UNKNOWN_RESOURCE_TYPE.With(ref reader, resourceType)));
+                    (new(null, ERR.UNKNOWN_RESOURCE_TYPE(ref reader, path.GetInstancePath(), resourceType)));
             }
             else
                 return new(null, error);
@@ -842,12 +863,12 @@ namespace Hl7.Fhir.Serialization
                             reader.Read();
                             return (reader.TokenType == JsonTokenType.String) ?
                                 new(reader.GetString()!, null) :
-                                new(null, ERR.RESOURCETYPE_SHOULD_BE_STRING.With(ref reader, reader.TokenType));
+                                new(null, ERR.RESOURCETYPE_SHOULD_BE_STRING(ref reader, "", reader.TokenType));
                         }
                     }
                 }
 
-                return new(null, ERR.NO_RESOURCETYPE_PROPERTY.With(ref reader));
+                return new(null, ERR.NO_RESOURCETYPE_PROPERTY(ref reader, ""));
             }
             finally
             {
@@ -867,6 +888,7 @@ namespace Hl7.Fhir.Serialization
             ModelInspector inspector,
             ClassMapping parentMapping,
             ref Utf8JsonReader reader,
+            PathStack path,
             string propertyName)
         {
             bool startsWithUnderscore = propertyName[0] == '_';
@@ -876,7 +898,7 @@ namespace Hl7.Fhir.Serialization
                 ?? parentMapping.FindMappedElementByChoiceName(elementName);
 
             if (propertyMapping is null)
-                return (null, null, ERR.UNKNOWN_PROPERTY_FOUND.With(ref reader, propertyName));
+                return (null, null, ERR.UNKNOWN_PROPERTY_FOUND(ref reader, path.GetInstancePath(), propertyName));
 
             (ClassMapping? propertyValueMapping, FhirJsonException? error) = propertyMapping.Choice switch
             {
@@ -895,10 +917,10 @@ namespace Hl7.Fhir.Serialization
                 string typeSuffix = elementName.Substring(propertyMapping.Name.Length);
 
                 return string.IsNullOrEmpty(typeSuffix)
-                    ? (null, ERR.CHOICE_ELEMENT_HAS_NO_TYPE.With(ref r, propertyMapping.Name))
+                    ? (null, ERR.CHOICE_ELEMENT_HAS_NO_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name))
                     : inspector.FindClassMapping(typeSuffix) is ClassMapping cm
                         ? (cm, null)
-                        : (default, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE.With(ref r, propertyMapping.Name, typeSuffix));
+                        : (default, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE(ref r, path.GetInstancePath(), propertyMapping.Name, typeSuffix));
             }
         }
     }

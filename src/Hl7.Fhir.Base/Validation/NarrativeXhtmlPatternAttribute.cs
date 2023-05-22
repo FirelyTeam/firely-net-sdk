@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Validation
                     NarrativeValidationKind.None => ValidationResult.Success,
                     NarrativeValidationKind.Xml => XHtml.IsValidXml(xml, out var error)
                             ? ValidationResult.Success
-                            : COVE.NARRATIVE_XML_IS_MALFORMED.AsResult(context, error),
+                            : COVE.NARRATIVE_XML_IS_MALFORMED(context, error).AsResult(context),
                     NarrativeValidationKind.FhirXhtml => runValidateXhtmlSchema(xml, context),
                     _ => throw new NotSupportedException($"Encountered unknown narrative validation kind {kind}.")
                 };
@@ -61,11 +61,11 @@ namespace Hl7.Fhir.Validation
 #else
                 var errors = SerializationUtil.RunFhirXhtmlSchemaValidation(doc);
 #endif
-                return errors.Any() ? COVE.NARRATIVE_XML_IS_INVALID.AsResult(context, string.Join(", ", errors)) : ValidationResult.Success!;
+                return errors.Any() ? COVE.NARRATIVE_XML_IS_INVALID(context, string.Join(", ", errors)).AsResult(context) : ValidationResult.Success!;
             }
             catch (FormatException fe)
             {
-                return COVE.NARRATIVE_XML_IS_MALFORMED.AsResult(context, fe.Message);
+                return COVE.NARRATIVE_XML_IS_MALFORMED(context, fe.Message).AsResult(context);
             }
         }
     }
