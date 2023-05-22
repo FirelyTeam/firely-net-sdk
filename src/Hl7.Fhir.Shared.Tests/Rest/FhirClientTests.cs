@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Tests.Rest
         //public static Uri testEndpoint = new Uri("http://localhost:4080");
         //public static Uri testEndpoint = new Uri("https://api.fhir.me");
         //public static Uri testEndpoint = new Uri("http://localhost:49911/fhir");
-        //public static Uri testEndpoint = new Uri("http://sqlonfhir-stu3.azurewebsites.net/fhir");
+        //public static Uri testEndpoint = new Uri("http://sqlonfhir-r4.azurewebsites.net/fhir");
 
 #if R3
         public static readonly Uri TestEndpoint = new Uri("https://server.fire.ly/r3");

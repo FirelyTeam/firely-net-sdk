@@ -85,12 +85,27 @@ namespace Hl7.Fhir.Validation
         }
 
         /// <summary>
+        /// Alters the ValidationContext to include the human-readable location for the validation errors to use.
+        /// </summary>
+        internal static ValidationContext SetLocation(this ValidationContext ctx, Hl7.Fhir.Serialization.PathStack location)
+        {
+            ctx.Items[LOCATION_ITEM_KEY] = location;
+            return ctx;
+        }
+
+        /// <summary>
         /// Gets the human-readable location for the validation errors from the ValidationContext.
         /// </summary>
-        public static string? GetLocation(this ValidationContext ctx) =>
-            ctx.Items.TryGetValue(LOCATION_ITEM_KEY, out var result) && result is string loc ?
-                    loc : null;
-
+        public static string? GetLocation(this ValidationContext ctx)
+        {
+            if (!ctx.Items.TryGetValue(LOCATION_ITEM_KEY, out var result))
+                return null;
+            if (result is Hl7.Fhir.Serialization.PathStack path)
+                return path.GetInstancePath();
+            if (result is string loc)
+                return loc;
+            return null;
+        }
     }
 }
 
