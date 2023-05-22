@@ -80,7 +80,7 @@ namespace HL7.FhirPath.Tests
                     ("10 > 5.0", true, false),
                     ("'abc' > 'ABC'", true, false),
                     ("8 'm' > 4 'm'", true, false),
-                    ("(4 'm' > 4 'cm').empty()", true, false),   // we do not support unit conversion at the moment
+                    ("(4 'm' > 4 'cm')", true, false),
                     ("@2018-03-01 > @2018-01-01", true, false),
                     ("(@2018-03 > @2018-03-01).empty()", true, false),
                     ("@2018-03-01T10:30:00 > @2018-03-01T10:00:00", true, false),
@@ -98,7 +98,7 @@ namespace HL7.FhirPath.Tests
                     ("10 < 5.0", false, false),
                     ("'abc' < 'ABC'", false, false),
                     ("8 'm' < 4 'm'", false, false),
-                    ("(4 'm' < 4 'cm').empty()", true, false),   // we do not support unit conversion at the moment
+                    ("(4 'm' < 4 'cm')", false, false),
                     ("@2018-03-01 < @2018-01-01", false, false),
                     ("(@2018-03 < @2018-03-01).empty()", true, false),
                     ("@2018-03-01T10:30:00 < @2018-03-01T10:00:00", false, false),
@@ -116,7 +116,7 @@ namespace HL7.FhirPath.Tests
                     ("10 <= 5.0", false, false),
                     ("'abc' <= 'ABC'", false, false),
                     ("8 'm' <= 4 'm'", false, false),
-                    ("(4 'm' <= 4 'cm').empty()", true, false),   // we do not support unit conversion at the moment
+                    ("(4 'm' <= 4 'cm')", false, false),
                     ("@2018-03-01 <= @2018-01-01", false, false),
                     ("(@2018-03 <= @2018-03-01).empty()", true, false),
                     ("@2018-03-01T10:30:00 <= @2018-03-01T10:00:00", false, false),
@@ -134,7 +134,7 @@ namespace HL7.FhirPath.Tests
                     ("10 >= 5.0", true, false),
                     ("'abc' >= 'ABC'", true, false),
                     ("8 'm' >= 4 'm'", true, false),
-                    ("(4 'm' >= 4 'cm').empty()", true, false),   // we do not support unit conversion at the moment
+                    ("(4 'm' >= 4 'cm')", true, false),
                     ("@2018-03-01 >= @2018-01-01", true, false),
                     ("(@2018-03 >= @2018-03-01).empty()", true, false),
                     ("@2018-03-01T10:30:00 >= @2018-03-01T10:00:00", true, false),
