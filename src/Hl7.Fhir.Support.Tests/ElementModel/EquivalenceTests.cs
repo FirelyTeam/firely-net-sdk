@@ -139,13 +139,14 @@ namespace Hl7.Fhir.ElementModel.Tests
                 (Quantity.Parse("24 'kg'"), Quantity.Parse("24.0 'kg'"), true),
                 (Quantity.Parse("24 'kg'"), Quantity.Parse("24.0 'kg'"), true),
                 (Quantity.Parse("24.0 'kg'"), Quantity.Parse("25.0 'kg'"), false),
-                //Until we actually implement UCUM, these tests cannot yet be run correctly
-                //(Quantity.Parse("1 year"), Quantity.Parse("1 'a'"), false),
-                //(Quantity.Parse("1 month"), Quantity.Parse("1 'mo'"), false),
-                //(Quantity.Parse("1 hour"), Quantity.Parse("1 'h'"), false),
-                //(Quantity.Parse("1 second"), Quantity.Parse("1 's'"), true),
-                //(Quantity.Parse("1 millisecond"), Quantity.Parse("1 'ms'"), true),
                 (Quantity.Parse("24.0 'kg'"), null, null),
+
+                (Quantity.Parse("1 year"), Quantity.Parse("1 'a'"), null),
+                (Quantity.Parse("1 month"), Quantity.Parse("1 'mo'"), null),
+                (Quantity.Parse("1 hour"), Quantity.Parse("1 'h'"), true),
+                (Quantity.Parse("1 second"), Quantity.Parse("1 's'"), true),
+                (Quantity.Parse("1 millisecond"), Quantity.Parse("1 'ms'"), true),
+
             }.Select(t => new[] { t.Item1, t.Item2, t.Item3 });
 
 
@@ -233,6 +234,7 @@ namespace Hl7.Fhir.ElementModel.Tests
                 (Quantity.Parse("24 'kg'"), Quantity.Parse("24.0 'kg'"), true),
                 (Quantity.Parse("24 'kg'"), Quantity.Parse("24.0 'kg'"), true),
                 (Quantity.Parse("24.0 'kg'"), Quantity.Parse("25.0 'kg'"), false),
+
                 (Quantity.Parse("1 year"), Quantity.Parse("1 'a'"), true),
                 (Quantity.Parse("1 month"), Quantity.Parse("1 'mo'"), true),
                 (Quantity.Parse("1 hour"), Quantity.Parse("1 'h'"), true),

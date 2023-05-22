@@ -17,6 +17,7 @@ name: $(date:yyyyMMdd)$(rev:.r)
 
 variables:
 - group: CodeSigning
+- group: APIKeys
 - template: build-variables.yml
 - template: pipeline-variables.yml
   
@@ -52,13 +53,12 @@ stages:
     - task: NuGetToolInstaller@1
       inputs:
         versionSpec: '6.4.0' 
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: ./Hl7.Fhir.sln
-        verbosityRestore: Minimal
-        arguments: --configuration $(buildConfiguration)
+
+    - template: restore.yml@templates
+      parameters:
+        nuGetServiceConnections: GitHubPackageGetFeed
+        nuGetSources: --source https://nuget.pkg.github.com/FirelyTeam/index.json
+        
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
@@ -131,6 +131,12 @@ stages:
       inputs:
         pathToPublish: $(Build.ArtifactStagingDirectory)
         ArtifactName: NuGetPackages
+    
+  - job: generateReleaseNotes
+    dependsOn: restoreAndBuild
+    condition: and(succeeded(), eq(variables.isTagBranch, true)) 
+    steps:
+    - checkout: self
     - bash: |
         version=$(Build.SourceBranchName)
         title_release="${version:1}"
@@ -139,6 +145,22 @@ stages:
         echo "##vso[task.setvariable variable=release_title;isOutput=true]$title_release"
       name: tagnames
       displayName: Determine release title
+    - task: GitHubRelease@1
+      displayName: 'GitHub release notes (create)'  
+      inputs:
+        gitHubConnection: 'GitHub Firely-net-sdk'
+        repositoryName: '$(Build.Repository.Name)'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: gitTag
+        tagPattern: 'v.*'
+        releaseNotesSource: filePath
+        releaseNotesFilePath: $(Build.SourcesDirectory)\release-notes.md
+        title: '$(release_title)'
+        isDraft: true
+        changeLogCompareToRelease: lastNonDraftRelease
+        changeLogType: issueBased
+        changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
 
 - stage: test
   displayName: Test
@@ -292,29 +314,3 @@ stages:
                 artifact: 'NuGetPackages'
                 source: https://api.nuget.org/v3/index.json
                 apiKey: $(NUGET_APIKEY)
-  - deployment: relNotes
-    displayName: Release Notes
-    environment: NuGet
-    variables:
-      - name: releaseTitle
-        value: $[ stageDependencies.build.restoreAndBuild.outputs['tagnames.release_title'] ]
-    strategy:
-      runOnce:
-        deploy:
-            steps:
-            - download: none
-            - task: GitHubRelease@1
-              displayName: 'GitHub release notes (create)'  
-              inputs:
-                gitHubConnection: 'GitHub Firely-net-sdk'
-                repositoryName: '$(Build.Repository.Name)'
-                action: 'create'
-                target: '$(Build.SourceVersion)'
-                tagSource: gitTag
-                tagPattern: 'v.*'
-                title: '$(releaseTitle)'
-                isDraft: true
-                changeLogCompareToRelease: lastNonDraftRelease
-                changeLogType: issueBased
-                changeLogLabels: '[{ "label" : "bug", "displayName" : "Bugfixes", "state" : "closed" },{ "label" : "enhancement", "displayName" : "New Functionality", "state" : "closed" }]'
-    
