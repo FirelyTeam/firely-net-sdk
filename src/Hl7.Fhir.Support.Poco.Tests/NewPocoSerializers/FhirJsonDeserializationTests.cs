@@ -8,6 +8,7 @@ using Hl7.Fhir.Validation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -62,7 +63,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.Read();
 
             var deserializer = getTestDeserializer(new());
-            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType);
+            var ps = new PathStack();
+            ps.EnterElement("Patient", 0, false);
+            var (result, error) = deserializer.DeserializePrimitiveValue(ref reader, expectedImplementingType, fhirType, ps);
 
             if (code is not null)
                 error?.ErrorCode.Should().Be(code);
@@ -83,8 +86,8 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 else
                     result.Should().Be(input);
             }
-            else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY.ErrorCode ||
-                code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode)
+            else if (code == ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE ||
+                code == ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE)
 #pragma warning disable CS0642 // Possible mistaken empty statement
                 ; // nothing to check
 #pragma warning restore CS0642 // Possible mistaken empty statement
@@ -135,7 +138,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 {
                     < 10 => (false, null),
                     < 20 => (true, null),
-                    < 30 => (originalValue, ERR.ARRAYS_CANNOT_BE_EMPTY),
+                    < 30 => (originalValue, ERR.ARRAYS_CANNOT_BE_EMPTY(ref reader, "Patient")),
                     < 40 => (null, originalException),
                     _ => throw new InvalidOperationException("Something")
                 };
@@ -145,14 +148,16 @@ namespace Hl7.Fhir.Support.Poco.Tests
             {
                 var reader = constructReader(number); reader.Read();
                 var deserializer = getTestDeserializer(new() { OnPrimitiveParseFailed = correctIntToBool });
-                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null);
+                var ps = new PathStack();
+                ps.EnterElement("Patient", 0, false);
+                return deserializer.DeserializePrimitiveValue(ref reader, typeof(bool), null, ps);
             }
         }
 
         [TestMethod]
         public void PrimitiveValueCannotBeComplex()
         {
-            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT.ErrorCode);
+            TryDeserializePrimitiveValue(new { bla = 4 }, null!, typeof(int), null, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
             TryDeserializePrimitiveValue(double.MaxValue, double.MaxValue.ToString(CultureInfo.InvariantCulture), typeof(decimal), null, FhirJsonException.NUMBER_CANNOT_BE_PARSED_CODE);
             TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(uint), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE);
             TryDeserializePrimitiveValue(long.MaxValue, long.MaxValue.ToString(), typeof(int), null, ERR.NUMBER_CANNOT_BE_PARSED_CODE);
@@ -186,7 +191,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 var reader = new Utf8JsonReader(jsonBytes);
                 reader.Read();
 
-                return BaseFhirJsonPocoDeserializer.DetermineClassMappingFromInstance(ref reader, inspector);
+                var ps = new PathStack();
+                ps.EnterElement("Patient", 0, false);
+                return BaseFhirJsonPocoDeserializer.DetermineClassMappingFromInstance(ref reader, inspector, ps);
             }
         }
 
@@ -295,7 +302,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [TestMethod]
         [DynamicData(nameof(TestDeserializeResourceData))]
         [DynamicData(nameof(TestDeserializeNestedResource))]
-        public void TestDeserializeResource(object testObject, JsonTokenType tokenAfterParsing, params CodedException[] errors)
+        public void TestDeserializeResource(object testObject, JsonTokenType tokenAfterParsing, params string[] errors)
         {
             var reader = constructReader(testObject);
             reader.Read();
@@ -303,7 +310,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
             var deserializer = new BaseFhirJsonPocoDeserializer(typeof(TestPatient).Assembly);
             var state = new FhirJsonPocoDeserializerState();
             _ = deserializer.DeserializeResourceInternal(ref reader, state, stayOnLastToken: false);
-            assertErrors(state.Errors, errors.Select(e => e.ErrorCode).ToArray());
+            assertErrors(state.Errors, errors);
             reader.TokenType.Should().Be(tokenAfterParsing);
         }
 
@@ -311,13 +318,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             get
             {
-                yield return new object[] { 5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT };
-                yield return new object[] { new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY };
-                yield return new object[] { new { resourceType = 4, crap = 4 }, JsonTokenType.EndObject, ERR.RESOURCETYPE_SHOULD_BE_STRING };
-                yield return new object[] { new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_RESOURCE_TYPE };
-                yield return new object[] { new { resourceType = nameof(OperationOutcome), crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_PROPERTY_FOUND };
+                yield return new object[] { 5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT_CODE };
+                yield return new object[] { new { }, JsonTokenType.EndObject, ERR.NO_RESOURCETYPE_PROPERTY_CODE };
+                yield return new object[] { new { resourceType = 4, crap = 4 }, JsonTokenType.EndObject, ERR.RESOURCETYPE_SHOULD_BE_STRING_CODE };
+                yield return new object[] { new { resourceType = "Doesnotexist", crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_RESOURCE_TYPE_CODE };
+                yield return new object[] { new { resourceType = nameof(OperationOutcome), crap = 5 }, JsonTokenType.EndObject, ERR.UNKNOWN_PROPERTY_FOUND_CODE };
                 yield return new object[] { new { resourceType = nameof(Meta) },
-                    JsonTokenType.EndObject, ERR.OBJECTS_CANNOT_BE_EMPTY, ERR.RESOURCE_TYPE_NOT_A_RESOURCE };
+                    JsonTokenType.EndObject, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE, ERR.RESOURCE_TYPE_NOT_A_RESOURCE_CODE };
                 yield return new object[] { new { resourceType = "Patient", deceasedDateTime = "2022-05" }, JsonTokenType.EndObject };
                 yield return new object[] { new { resourceType = "Patient", deceasedDateTime = "2022-05", _deceasedDateTime = new { extension = new object[] { new { url = "test", valueString = "Smile" } } } }, JsonTokenType.EndObject };
             }
@@ -354,13 +361,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DynamicData(nameof(TestNormalArrayData), DynamicDataSourceType.Method)]
         [DynamicData(nameof(TestPrimitiveData), DynamicDataSourceType.Method)]
         [DynamicData(nameof(TestValidatePrimitiveData), DynamicDataSourceType.Method)]
-        public void TestData(Type t, object testObject, JsonTokenType token, Action<object?>? verify, params CodedException[] expectedErrors)
+        public void TestData(Type t, object testObject, JsonTokenType token, Action<object?>? verify, params string[] expectedErrors)
         {
             // Enable full narrative validation so we can test for it
             var (result, errors) = deserializeComplex(t, testObject, out var readerState,
                 new() { Validator = new DataAnnotationDeserialzationValidator(narrativeValidation: Validation.NarrativeValidationKind.FhirXhtml) });
 
-            assertErrors(errors, expectedErrors.Select(e => e.ErrorCode).ToArray());
+            assertErrors(errors, expectedErrors);
             readerState.TokenType.Should().Be(token);
             var cdResult = result.Should().BeOfType(t);
             verify?.Invoke(result);
@@ -378,33 +385,33 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         public static IEnumerable<object?[]> CatchesIncorrectlyStructuredComplexData()
         {
-            yield return new object?[] { typeof(Extension), 5, JsonTokenType.Number, default(Action<object>), ERR.EXPECTED_START_OF_OBJECT };
-            yield return data<Extension>(5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT);
-            yield return data<Extension>(new[] { 2, 3 }, JsonTokenType.EndArray, ERR.EXPECTED_START_OF_OBJECT);
-            yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY);
-            yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY);
-            yield return data<Extension>(new { unknown = "test" }, ERR.UNKNOWN_PROPERTY_FOUND);
+            yield return new object?[] { typeof(Extension), 5, JsonTokenType.Number, default(Action<object>), ERR.EXPECTED_START_OF_OBJECT_CODE };
+            yield return data<Extension>(5, JsonTokenType.Number, ERR.EXPECTED_START_OF_OBJECT_CODE);
+            yield return data<Extension>(new[] { 2, 3 }, JsonTokenType.EndArray, ERR.EXPECTED_START_OF_OBJECT_CODE);
+            yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
+            yield return data<Extension>(new { }, ERR.OBJECTS_CANNOT_BE_EMPTY_CODE);
+            yield return data<Extension>(new { unknown = "test" }, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
             yield return data<Extension>(new { url = "test" });
-            yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL);
+            yield return data<Extension>(new { _url = "test" }, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE);
             yield return data<Extension>(new { unknown = "test", url = "test" },
-                    ERR.UNKNOWN_PROPERTY_FOUND);
-            yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_NO_TYPE);
-            yield return data<Extension>(new { valueUnknown = "incorrect type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE);
+                    ERR.UNKNOWN_PROPERTY_FOUND_CODE);
+            yield return data<Extension>(new { value = "no type suffix" }, ERR.CHOICE_ELEMENT_HAS_NO_TYPE_CODE);
+            yield return data<Extension>(new { valueUnknown = "incorrect type suffix" }, ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE);
             yield return data<Extension>(new { valueBoolean = true, url = "http://something.nl" }, JsonTokenType.EndObject);
             yield return data<Extension>(new { valueUnknown = "incorrect type suffix", unknown = "unknown" },
-                    ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE, ERR.UNKNOWN_PROPERTY_FOUND);
+                    ERR.CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
         }
 
         public static IEnumerable<object?[]> TestNormalArrayData()
         {
-            yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName, ERR.EXPECTED_START_OF_ARRAY, ERR.EXPECTED_START_OF_OBJECT);
+            yield return data<ContactDetail>(new { name = "Ewout", telecom = 4 }, checkName, ERR.EXPECTED_START_OF_ARRAY_CODE, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<ContactDetail>(new { name = "Ewout", telecom = Array.Empty<object>() }, checkName,
-                ERR.ARRAYS_CANNOT_BE_EMPTY);
+                ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
             yield return data<ContactDetail>(new { name = "Ewout", telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-                    checkData, ERR.UNKNOWN_PROPERTY_FOUND);
+                    checkData, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
             yield return data<ContactDetail>(new { name = "Ewout", _telecom = new object[] { new { system = "phone" }, new { systemX = "b" } } },
-                 checkData, ERR.USE_OF_UNDERSCORE_ILLEGAL, ERR.UNKNOWN_PROPERTY_FOUND);
-            yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY);
+                 checkData, ERR.USE_OF_UNDERSCORE_ILLEGAL_CODE, ERR.UNKNOWN_PROPERTY_FOUND_CODE);
+            yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
 
             static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.Name.Should().Be("Ewout");
 
@@ -421,13 +428,13 @@ namespace Hl7.Fhir.Support.Poco.Tests
 
         public static IEnumerable<object?[]> TestPrimitiveData()
         {
-            yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY);
-            yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT);
-            yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, ERR.EXPECTED_START_OF_OBJECT);
-            yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.EXPECTED_START_OF_OBJECT);
+            yield return data<ContactDetail>(new { name = new[] { "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_ARRAY_CODE);
+            yield return data<ContactDetail>(new { name = new { dummy = "Ewout" } }, ERR.EXPECTED_PRIMITIVE_NOT_OBJECT_CODE);
+            yield return data<ContactDetail>(new { _name = new[] { "Ewout" } }, ERR.EXPECTED_START_OF_OBJECT_CODE);
+            yield return data<ContactDetail>(new { _name = "Ewout" }, ERR.EXPECTED_START_OF_OBJECT_CODE);
             yield return data<ContactDetail>(new { name = "Ewout" }, checkName);
             yield return data<ContactDetail>(new { _name = new { id = "12345" } }, checkId);
-            yield return data<ContactDetail>(new { _name = new { id = true } }, ERR.INCOMPATIBLE_SIMPLE_VALUE);
+            yield return data<ContactDetail>(new { _name = new { id = true } }, ERR.INCOMPATIBLE_SIMPLE_VALUE_CODE);
             yield return data<ContactDetail>(new { name = "Ewout", _name = new { id = "12345" } }, checkAll);
 
             static void checkName(object parsed) => parsed.Should().BeOfType<ContactDetail>().Which.NameElement.Value.Should().Be("Ewout");
@@ -442,31 +449,31 @@ namespace Hl7.Fhir.Support.Poco.Tests
         public static IEnumerable<object?[]> TestValidatePrimitiveData()
         {
             yield return data<Narrative>(new { div = "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p>correct</p></div>", status = "additional" });
-            yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED);
-            yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID);
+            yield return data<Narrative>(new { div = "this isn't xml" }, COVE.NARRATIVE_XML_IS_MALFORMED_CODE);
+            yield return data<Narrative>(new { div = "<puinhoop />" }, COVE.NARRATIVE_XML_IS_INVALID_CODE);
 
             yield return data<TestAttachment>(new { url = "urn:oid:1.3.6.1.4.1.343" });
-            yield return data<TestAttachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID);
+            yield return data<TestAttachment>(new { url = "urn:oid:1" }, COVE.URI_LITERAL_INVALID_CODE);
         }
 
         public static IEnumerable<object?[]> TestPrimitiveArrayData()
         {
-            yield return data<TestAddress>(new { line = "hi!" }, ERR.EXPECTED_START_OF_ARRAY);
-            yield return data<TestAddress>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY);
-            yield return data<TestAddress>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY, ERR.ARRAYS_CANNOT_BE_EMPTY);
-            yield return data<TestAddress>(new { line = Array.Empty<string>(), _line = new string?[] { null } }, ERR.ARRAYS_CANNOT_BE_EMPTY, ERR.PRIMITIVE_ARRAYS_ONLY_NULL);
-            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL);
-            yield return data<TestAddress>(new { line = new[] { "Ewout" }, _line = new string?[] { null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL);
-            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new string?[] { null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL, ERR.PRIMITIVE_ARRAYS_ONLY_NULL);
-            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new string?[] { null, null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL, ERR.PRIMITIVE_ARRAYS_ONLY_NULL);
-            yield return data<TestAddress>(new { line = new string?[] { null, null }, _line = new string?[] { null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL, ERR.PRIMITIVE_ARRAYS_ONLY_NULL);
+            yield return data<TestAddress>(new { line = "hi!" }, ERR.EXPECTED_START_OF_ARRAY_CODE);
+            yield return data<TestAddress>(new { line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+            yield return data<TestAddress>(new { line = Array.Empty<string>(), _line = Array.Empty<string>() }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE);
+            yield return data<TestAddress>(new { line = Array.Empty<string>(), _line = new string?[] { null } }, ERR.ARRAYS_CANNOT_BE_EMPTY_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new[] { new { id = "1" } } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            yield return data<TestAddress>(new { line = new[] { "Ewout" }, _line = new string?[] { null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new string?[] { null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            yield return data<TestAddress>(new { line = new string?[] { null }, _line = new string?[] { null, null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
+            yield return data<TestAddress>(new { line = new string?[] { null, null }, _line = new string?[] { null } }, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE, ERR.PRIMITIVE_ARRAYS_ONLY_NULL_CODE);
             yield return data<TestAddress>(new { line = new[] { "Ewout", "Wouter" } }, checkName);
             yield return data<TestAddress>(new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" } } }, checkId1AndName);
             yield return data<TestAddress>(new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" }, null } }, checkId1AndName);
             yield return data<TestAddress>(new { line = new[] { "Ewout", "Wouter" }, _line = new[] { new { id = "1" }, new { id = "2" } } }, checkAll);
             yield return data<TestAddress>(new { line = new[] { "Ewout", null }, _line = new[] { null, new { id = "2" } } });
-            yield return data<TestAddress>(new { line = new[] { "Ewout", null }, _line = new[] { new { id = "1" }, null } }, checkId1, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL);
-            yield return data<TestAddress>(new { _line = new[] { new { id = "1" }, null } }, checkId1, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL);
+            yield return data<TestAddress>(new { line = new[] { "Ewout", null }, _line = new[] { new { id = "1" }, null } }, checkId1, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
+            yield return data<TestAddress>(new { _line = new[] { new { id = "1" }, null } }, checkId1, COVE.REPEATING_ELEMENT_CANNOT_CONTAIN_NULL_CODE);
             yield return data<TestAddress>(new { _line = new[] { new { id = "1" }, new { id = "2" } } }, checkIds);
 
             static void checkName(object parsed) => parsed.Should().BeOfType<TestAddress>().Which.Line.Should().BeEquivalentTo("Ewout", "Wouter");
@@ -662,7 +669,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 // deserialization of the FhirDateTime, validation will not be triggered!
                 if (f.Value.EndsWith("Z")) f.Value = f.Value.TrimEnd('Z') + "+00:00";
 
-                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID };
+                var validationContext = new ValidationContext(instance ?? new object())
+                    .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
+                    .SetLocation(context.PathStack);
+
+                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, context.PropertyName) };
             }
 
         }
@@ -691,7 +703,12 @@ namespace Hl7.Fhir.Support.Poco.Tests
                 {
                     instance = f.TrimEnd('Z') + "+00:00";
                 }
-                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID };
+
+                var validationContext = new ValidationContext(instance ?? new object())
+                    .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
+                    .SetLocation(context.PathStack);
+                reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, f) };
             }
 
         }
@@ -700,12 +717,17 @@ namespace Hl7.Fhir.Support.Poco.Tests
         {
             public void ValidateInstance(object? instance, in InstanceDeserializationContext context, out COVE[]? reportedErrors)
             {
+                var validationContext = new ValidationContext(instance ?? new object())
+                    .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
+                    .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
+                    .SetLocation(context.PathStack);
+
                 if (context.InstanceMapping.Name == "dateTime")
                 {
                     var dt = instance.Should().BeOfType<FhirDateTime>().Subject;
 
                     if (dt.Value.EndsWith("Z")) dt.Value = dt.Value.TrimEnd('Z') + "+00:00";
-                    reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID };
+                    reportedErrors = new[] { COVE.DATETIME_LITERAL_INVALID(validationContext, dt.Value) };
                 }
                 else
                 {

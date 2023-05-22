@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Serialization
                 return true;
             else if (nodeType == XmlNodeType.CDATA || nodeType == XmlNodeType.ProcessingInstruction || nodeType == XmlNodeType.DocumentType || nodeType == XmlNodeType.EntityReference)
             {
-                state.Errors.Add(ERR.UNALLOWED_NODE_TYPE.With(reader, nodeType.GetLiteral()));
+                state.Errors.Add(ERR.UNALLOWED_NODE_TYPE(reader, state.Path.GetInstancePath(), nodeType.GetLiteral()));
                 return true;
             }
             else
