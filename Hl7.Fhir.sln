@@ -345,6 +345,7 @@ Global
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{23ff0f97-3960-4994-8423-db39573652e1}*SharedItemsImports = 13
 		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{2a8f91bc-6449-4ca5-8145-5213bd18a528}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shared.Tests\Hl7.Fhir.Shared.Tests.projitems*{343dbd3e-7795-4df9-a875-4ad92037b7c6}*SharedItemsImports = 13
+		src\Hl7.Fhir.ElementModel.Shared.Tests\Hl7.Fhir.ElementModel.Shared.Tests.projitems*{37e47f34-d2d5-4d24-8f31-5753000bd439}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{3d696d26-c0ff-4c6c-b3b7-cffb4f74079f}*SharedItemsImports = 13
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{3fbbe610-4595-4213-9c0c-2a6af06e5f3c}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{437ec873-7d71-497b-a7e6-7e27c020af9e}*SharedItemsImports = 5
@@ -362,6 +363,7 @@ Global
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{c1652fe8-b037-4df2-8588-aac5827af7c7}*SharedItemsImports = 13
 		src\Hl7.Fhir.Shims.R4AndUp\Hl7.Fhir.Shims.R4AndUp.projitems*{db787709-8943-4ca7-b5f1-83efcbc205a1}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{db787709-8943-4ca7-b5f1-83efcbc205a1}*SharedItemsImports = 5
+		src\Hl7.Fhir.Serialization.Shared.Tests\Hl7.Fhir.Serialization.Shared.Tests.projitems*{eb078a3d-56e1-4871-81a2-3c9151a21240}*SharedItemsImports = 5
 		src\Hl7.Fhir.Specification.Shared.Tests\Hl7.Fhir.Specification.Shared.Tests.projitems*{f75bd8a0-1741-4756-ba74-920e46a60efa}*SharedItemsImports = 5
 		src\Hl7.Fhir.Shims.STU3AndUp\Hl7.Fhir.Shims.STU3AndUp.projitems*{fdcba2fe-ed46-4b83-9e5d-a5d48b84b92e}*SharedItemsImports = 5
 	EndGlobalSection
