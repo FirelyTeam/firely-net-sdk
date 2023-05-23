@@ -18,6 +18,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using T = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Terminology
@@ -225,7 +226,6 @@ namespace Hl7.Fhir.Specification.Terminology
 
         private async T.Task<Parameters> validateCodeVS(ValueSet vs, string? code, string? system, string? display, bool? abstractAllowed)
         {
-
             if (code is null)
             {
                 var resultParam = new Parameters
@@ -260,7 +260,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (component is null)
             {
-                messages.AppendLine($"{codeLabel} does not exist in the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
+                await messageForCodeNotFound(vs, system, codeLabel, messages).ConfigureAwait(false);
                 success = false;
             }
             else
@@ -286,6 +286,24 @@ namespace Hl7.Fhir.Specification.Terminology
             if (messages.Length > 0)
                 result.Add("message", new FhirString(messages.ToString().TrimEnd()));
             return result;
+        }
+
+        private async Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel, StringBuilder messages)
+        {
+            if (system is not null && await isValueSet(system).ConfigureAwait(false))
+            {
+                messages.AppendLine($"The Coding references a value set, not a code system ('{system}')");
+            }
+            else
+            {
+                messages.AppendLine($"{codeLabel} does not exist in the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
+            }
+
+            async Task<bool> isValueSet(string system)
+            {
+                // First, conduct a quick initial check, and if that fails, proceed with a more comprehensive approach.
+                return (system.Contains(@"/ValueSet/") || await _resolver.FindValueSetAsync(system).ConfigureAwait(false) is not null);
+            }
         }
     }
 }
