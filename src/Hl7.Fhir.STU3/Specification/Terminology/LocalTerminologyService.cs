@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (component is null)
             {
-                messages.AppendLine($"{codeLabel} does not exist in valueset '{vs.Url}'");
+                messages.AppendLine($"{codeLabel} does not exist in the value set '{vs.Title ?? vs.Name}' ({vs.Url})");
                 success = false;
             }
             else
