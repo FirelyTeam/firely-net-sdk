@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifiers for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this healthcareservice is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Broad category of service being performed or delivered
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -558,7 +558,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Location(s) where service may be provided
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=150)]
+    [FhirElement("location", InSummary=true, Order=150, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]

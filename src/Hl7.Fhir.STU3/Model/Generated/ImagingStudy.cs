@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who performed the series
       /// </summary>
-      [FhirElement("performer", InSummary=true, Order=140)]
+      [FhirElement("performer", InSummary=true, Order=140, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner")]
       [Cardinality(Min=0,Max=-1)]
@@ -810,7 +810,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Formal DICOM identifier for the study
     /// </summary>
-    [FhirElement("uid", InSummary=true, Order=90)]
+    [FhirElement("uid", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Oid UidElement
@@ -842,7 +842,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Related workflow identifier ("Accession Number")
     /// </summary>
-    [FhirElement("accession", InSummary=true, Order=100)]
+    [FhirElement("accession", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Accession
     {
@@ -855,7 +855,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other identifiers for the study
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=110)]
+    [FhirElement("identifier", InSummary=true, Order=110, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -869,7 +869,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// ONLINE | OFFLINE | NEARLINE | UNAVAILABLE
     /// </summary>
-    [FhirElement("availability", InSummary=true, Order=120)]
+    [FhirElement("availability", InSummary=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
@@ -901,7 +901,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// All series modality if actual acquisition modalities
     /// </summary>
-    [FhirElement("modalityList", InSummary=true, Order=130)]
+    [FhirElement("modalityList", InSummary=true, Order=130, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> ModalityList
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the images are of
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Originating context
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=150)]
+    [FhirElement("context", InSummary=true, Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the study was started
     /// </summary>
-    [FhirElement("started", InSummary=true, Order=160)]
+    [FhirElement("started", InSummary=true, Order=160, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime StartedElement
     {
@@ -977,7 +977,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request fulfilled
     /// </summary>
-    [FhirElement("basedOn", InSummary=true, Order=170)]
+    [FhirElement("basedOn", InSummary=true, Order=170, FiveWs="who.cause")]
     [CLSCompliant(false)]
     [References("ReferralRequest","CarePlan","ProcedureRequest")]
     [Cardinality(Min=0,Max=-1)]
@@ -993,7 +993,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Referring physician
     /// </summary>
-    [FhirElement("referrer", InSummary=true, Order=180)]
+    [FhirElement("referrer", InSummary=true, Order=180, FiveWs="who.cause")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -1008,7 +1008,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who interpreted images
     /// </summary>
-    [FhirElement("interpreter", InSummary=true, Order=190)]
+    [FhirElement("interpreter", InSummary=true, Order=190, FiveWs="who.witness")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [Cardinality(Min=0,Max=-1)]
@@ -1132,7 +1132,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the study was requested
     /// </summary>
-    [FhirElement("reason", InSummary=true, Order=250)]
+    [FhirElement("reason", InSummary=true, Order=250, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {

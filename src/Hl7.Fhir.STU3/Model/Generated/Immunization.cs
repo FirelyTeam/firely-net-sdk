@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual who was performing
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner")]
       [Cardinality(Min=1,Max=1)]
@@ -877,7 +877,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// completed | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Flag for whether immunization was given
     /// </summary>
-    [FhirElement("notGiven", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("notGiven", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean NotGivenElement
@@ -956,7 +956,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccine product administered
     /// </summary>
-    [FhirElement("vaccineCode", Order=120)]
+    [FhirElement("vaccineCode", Order=120, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept VaccineCode
@@ -970,7 +970,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who was immunized
     /// </summary>
-    [FhirElement("patient", Order=130)]
+    [FhirElement("patient", Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter administered as part of
     /// </summary>
-    [FhirElement("encounter", Order=140)]
+    [FhirElement("encounter", Order=140, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -1001,7 +1001,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Vaccination administration date
     /// </summary>
-    [FhirElement("date", Order=150)]
+    [FhirElement("date", Order=150, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1032,7 +1032,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates context the data was recorded in
     /// </summary>
-    [FhirElement("primarySource", Order=160)]
+    [FhirElement("primarySource", Order=160, FiveWs="who.source")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean PrimarySourceElement
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Indicates the source of a secondarily reported record
     /// </summary>
-    [FhirElement("reportOrigin", Order=170)]
+    [FhirElement("reportOrigin", Order=170, FiveWs="who.source")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ReportOrigin
     {
@@ -1077,7 +1077,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where vaccination occurred
     /// </summary>
-    [FhirElement("location", Order=180)]
+    [FhirElement("location", Order=180, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
