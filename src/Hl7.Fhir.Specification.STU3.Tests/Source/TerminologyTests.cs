@@ -373,7 +373,7 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await validateCodedValue(svc, "http://hl7.org/fhir/ValueSet/administrative-gender", code: "test", context: "Partient.gender");
 
             isSuccess(result).Should().BeFalse();
-            getMessage(result).Should().Contain("does not exist in valueset");
+            getMessage(result).Should().Contain("does not exist in the value set");
         }
 
 
