@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Agent role in the event
       /// </summary>
-      [FhirElement("role", Order=40)]
+      [FhirElement("role", Order=40, FiveWs="who")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> Role
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Direct reference to resource
       /// </summary>
-      [FhirElement("reference", InSummary=true, Order=50)]
+      [FhirElement("reference", InSummary=true, Order=50, FiveWs="who")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
       [DataMember]
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Unique identifier for the user
       /// </summary>
-      [FhirElement("userId", InSummary=true, Order=60)]
+      [FhirElement("userId", InSummary=true, Order=60, FiveWs="who")]
       [DataMember]
       public Hl7.Fhir.Model.Identifier UserId
       {
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Alternative User id e.g. authentication
       /// </summary>
-      [FhirElement("altId", Order=70)]
+      [FhirElement("altId", Order=70, FiveWs="who")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AltIdElement
       {
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Human-meaningful name for the agent
       /// </summary>
-      [FhirElement("name", Order=80)]
+      [FhirElement("name", Order=80, FiveWs="who")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Whether user is initiator
       /// </summary>
-      [FhirElement("requestor", Order=90)]
+      [FhirElement("requestor", Order=90, FiveWs="who")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirBoolean RequestorElement
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Where
       /// </summary>
-      [FhirElement("location", Order=100)]
+      [FhirElement("location", Order=100, FiveWs="where")]
       [CLSCompliant(false)]
       [References("Location")]
       [DataMember]
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Policy that authorized event
       /// </summary>
-      [FhirElement("policy", Order=110)]
+      [FhirElement("policy", Order=110, FiveWs="why")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.FhirUri> PolicyElement
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of media
       /// </summary>
-      [FhirElement("media", Order=120)]
+      [FhirElement("media", Order=120, FiveWs="where")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Media
       {
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Logical network location for application activity
       /// </summary>
-      [FhirElement("network", Order=130)]
+      [FhirElement("network", Order=130, FiveWs="where")]
       [DataMember]
       public Hl7.Fhir.Model.AuditEvent.NetworkComponent Network
       {
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Reason given for this user
       /// </summary>
-      [FhirElement("purposeOfUse", Order=140)]
+      [FhirElement("purposeOfUse", Order=140, FiveWs="why")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfUse
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Identifier for the network access point of the user device
       /// </summary>
-      [FhirElement("address", Order=40)]
+      [FhirElement("address", Order=40, FiveWs="where")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString AddressElement
       {
@@ -625,7 +625,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of network access point
       /// </summary>
-      [FhirElement("type", Order=50)]
+      [FhirElement("type", Order=50, FiveWs="where")]
       [DeclaredType(Type = typeof(Code))]
       [DataMember]
       public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> TypeElement
@@ -762,7 +762,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Logical source location within the enterprise
       /// </summary>
-      [FhirElement("site", Order=40)]
+      [FhirElement("site", Order=40, FiveWs="who.witness")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString SiteElement
       {
@@ -793,7 +793,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The identity of source detecting the event
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=50)]
+      [FhirElement("identifier", InSummary=true, Order=50, FiveWs="who.witness")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Identifier Identifier
@@ -807,7 +807,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The type of source where event originated
       /// </summary>
-      [FhirElement("type", Order=60)]
+      [FhirElement("type", Order=60, FiveWs="who.witness")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> Type
@@ -935,7 +935,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific instance of object
       /// </summary>
-      [FhirElement("identifier", InSummary=true, Order=40)]
+      [FhirElement("identifier", InSummary=true, Order=40, FiveWs="what")]
       [DataMember]
       public Hl7.Fhir.Model.Identifier Identifier
       {
@@ -948,7 +948,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Specific instance of resource
       /// </summary>
-      [FhirElement("reference", InSummary=true, Order=50)]
+      [FhirElement("reference", InSummary=true, Order=50, FiveWs="what")]
       [CLSCompliant(false)]
       [References("Resource")]
       [DataMember]
@@ -963,7 +963,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of entity involved
       /// </summary>
-      [FhirElement("type", Order=60)]
+      [FhirElement("type", Order=60, FiveWs="what")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Type
       {
@@ -976,7 +976,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// What role the entity played
       /// </summary>
-      [FhirElement("role", Order=70)]
+      [FhirElement("role", Order=70, FiveWs="context")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Role
       {
@@ -989,7 +989,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Life-cycle stage for the entity
       /// </summary>
-      [FhirElement("lifecycle", Order=80)]
+      [FhirElement("lifecycle", Order=80, FiveWs="context")]
       [DataMember]
       public Hl7.Fhir.Model.Coding Lifecycle
       {
@@ -1002,7 +1002,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Security labels on the entity
       /// </summary>
-      [FhirElement("securityLabel", Order=90)]
+      [FhirElement("securityLabel", Order=90, FiveWs="context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.Coding> SecurityLabel
@@ -1016,7 +1016,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Descriptor for entity
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=100)]
+      [FhirElement("name", InSummary=true, Order=100, FiveWs="context")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -1047,7 +1047,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Descriptive text
       /// </summary>
-      [FhirElement("description", Order=110)]
+      [FhirElement("description", Order=110, FiveWs="context")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DescriptionElement
       {
@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Query parameters
       /// </summary>
-      [FhirElement("query", InSummary=true, Order=120)]
+      [FhirElement("query", InSummary=true, Order=120, FiveWs="context")]
       [DataMember]
       public Hl7.Fhir.Model.Base64Binary QueryElement
       {
@@ -1109,7 +1109,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Additional Information about the entity
       /// </summary>
-      [FhirElement("detail", Order=130)]
+      [FhirElement("detail", Order=130, FiveWs="context")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Hl7.Fhir.Model.AuditEvent.DetailComponent> Detail
@@ -1300,7 +1300,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Name of the property
       /// </summary>
-      [FhirElement("type", Order=40)]
+      [FhirElement("type", Order=40, FiveWs="context")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString TypeElement
@@ -1332,7 +1332,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Property value
       /// </summary>
-      [FhirElement("value", Order=50)]
+      [FhirElement("value", Order=50, FiveWs="context")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.Base64Binary ValueElement
@@ -1456,7 +1456,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type/identifier of event
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=90)]
+    [FhirElement("type", InSummary=true, Order=90, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding Type
@@ -1470,7 +1470,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// More specific type/id for the event
     /// </summary>
-    [FhirElement("subtype", InSummary=true, Order=100)]
+    [FhirElement("subtype", InSummary=true, Order=100, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Subtype
@@ -1484,7 +1484,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of action performed during the event
     /// </summary>
-    [FhirElement("action", InSummary=true, Order=110)]
+    [FhirElement("action", InSummary=true, Order=110, FiveWs="what")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
@@ -1516,7 +1516,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time when the event occurred on source
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=120)]
+    [FhirElement("recorded", InSummary=true, Order=120, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant RecordedElement
@@ -1548,7 +1548,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether the event succeeded or failed
     /// </summary>
-    [FhirElement("outcome", InSummary=true, Order=130)]
+    [FhirElement("outcome", InSummary=true, Order=130, FiveWs="what")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
@@ -1580,7 +1580,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Description of the event outcome
     /// </summary>
-    [FhirElement("outcomeDesc", InSummary=true, Order=140)]
+    [FhirElement("outcomeDesc", InSummary=true, Order=140, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString OutcomeDescElement
     {
@@ -1611,7 +1611,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The purposeOfUse of the event
     /// </summary>
-    [FhirElement("purposeOfEvent", InSummary=true, Order=150)]
+    [FhirElement("purposeOfEvent", InSummary=true, Order=150, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PurposeOfEvent
@@ -1625,7 +1625,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved in the event
     /// </summary>
-    [FhirElement("agent", Order=160)]
+    [FhirElement("agent", Order=160, FiveWs="who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.AgentComponent> Agent
@@ -1639,7 +1639,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Audit Event Reporter
     /// </summary>
-    [FhirElement("source", Order=170)]
+    [FhirElement("source", Order=170, FiveWs="who.witness")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.AuditEvent.SourceComponent Source
@@ -1653,7 +1653,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Data or objects used
     /// </summary>
-    [FhirElement("entity", Order=180)]
+    [FhirElement("entity", Order=180, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.AuditEvent.EntityComponent> Entity

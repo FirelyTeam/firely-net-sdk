@@ -94,7 +94,6 @@
 // Generated Shared Enumeration: EventStatus (http://hl7.org/fhir/ValueSet/event-status)
   // Used in model class (resource): Communication.status
   // Used in model class (resource): Procedure.status
-  // Used in model class (resource): Event.status
 
 // Deferred generation of Shared Enumeration (will be generated in another subset): FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
   // Used in model class (resource): CodeSystem.filter.operator
@@ -164,8 +163,6 @@
   // Used in model class (resource): StructureMap.status
   // Used in model class (resource): TestScript.status
   // Used in model class (resource): ValueSet.status
-  // Used in model class (resource): Definition.status
-  // Used in model class (resource): MetadataResource.status
 
 // Generated Shared Enumeration: ClaimProcessingCodes (http://hl7.org/fhir/ValueSet/remittance-outcome)
   // Used in model class (resource): ClaimResponse.outcome
@@ -180,7 +177,6 @@
   // Used in model class (resource): ReferralRequest.intent
   // Used in model class (resource): RequestGroup.intent
   // Used in model class (resource): Task.intent
-  // Used in model class (resource): Request.intent
 
 // Generated Shared Enumeration: RequestPriority (http://hl7.org/fhir/ValueSet/request-priority)
   // Used in model class (resource): CommunicationRequest.priority
@@ -190,7 +186,6 @@
   // Used in model class (resource): RequestGroup.priority
   // Used in model class (resource): SupplyRequest.priority
   // Used in model class (resource): Task.priority
-  // Used in model class (resource): Request.priority
 
 // Generated Shared Enumeration: RequestStatus (http://hl7.org/fhir/ValueSet/request-status)
   // Used in model class (resource): CommunicationRequest.status
@@ -198,7 +193,6 @@
   // Used in model class (resource): ProcedureRequest.status
   // Used in model class (resource): ReferralRequest.status
   // Used in model class (resource): RequestGroup.status
-  // Used in model class (resource): Request.status
 
 // Generated Shared Enumeration: ResourceType (http://hl7.org/fhir/ValueSet/resource-types)
   // Used in model class (resource): ActivityDefinition.kind
