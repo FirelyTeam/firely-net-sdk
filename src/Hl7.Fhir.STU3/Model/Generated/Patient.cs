@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// An identifier for this patient
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -828,7 +828,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this patient's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {

@@ -2028,7 +2028,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this Contract was issued
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=110)]
+    [FhirElement("issued", InSummary=true, Order=110, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime IssuedElement
     {
@@ -2072,7 +2072,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Contract Target Entity
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]

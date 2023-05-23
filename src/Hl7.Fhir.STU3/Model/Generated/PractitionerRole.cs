@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifiers that are specific to a role/location
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this practitioner's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -502,7 +502,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The period during which the practitioner is authorized to perform in these role(s)
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=110)]
+    [FhirElement("period", InSummary=true, Order=110, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The location(s) at which this practitioner provides care
     /// </summary>
-    [FhirElement("location", InSummary=true, Order=160)]
+    [FhirElement("location", InSummary=true, Order=160, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [Cardinality(Min=0,Max=-1)]

@@ -42,6 +42,8 @@ namespace Hl7.Fhir.Model
 {
     public partial class ModelInfo
     {
+        public readonly record struct SearchParamComponent(string Definition, string Expression);
+
         [System.Diagnostics.DebuggerDisplay(@"\{{DebuggerDisplay,nq}}")] // http://blogs.msdn.com/b/jaredpar/archive/2011/03/18/debuggerdisplay-attribute-best-practices.aspx
         public class SearchParamDefinition
         {
@@ -63,8 +65,10 @@ namespace Hl7.Fhir.Model
 
             /// <summary>
             /// If this search parameter is a Composite, this array contains 
-            /// the list of search parameters the param is a combination of
+            /// the list of search parameters the param is a combination of <seealso cref="Component"/>
             /// </summary>
+            [Obsolete("Use the property Component instead. " +
+                "Obsolete since 2023-05-16. Will be removed in the next major release.")]
             public string[]? CompositeParams { get; set; }
 
             /// <summary>
@@ -89,6 +93,11 @@ namespace Hl7.Fhir.Model
             /// parameters references to
             /// </summary>
             public ResourceType[]? Target { get; set; }
+
+            /// <summary>
+            /// Used to define the parts of a composite search parameter.
+            /// </summary>
+            public SearchParamComponent[]? Component { get; set; }
         }
 
         #region FHIRAllType functions

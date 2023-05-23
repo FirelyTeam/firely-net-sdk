@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error | intended | stopped | on-hold
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of medication usage
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=140)]
+    [FhirElement("category", InSummary=true, Order=140, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What medication was taken
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the medication was taken
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -277,7 +277,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the statement was asserted?
     /// </summary>
-    [FhirElement("dateAsserted", InSummary=true, Order=170)]
+    [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
     {
@@ -308,7 +308,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the taking of this medication
     /// </summary>
-    [FhirElement("informationSource", Order=180)]
+    [FhirElement("informationSource", Order=180, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson","Organization")]
     [DataMember]
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was taking  the medication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=190)]
+    [FhirElement("subject", InSummary=true, Order=190, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the medication is being/was taken
     /// </summary>
-    [FhirElement("reasonCode", Order=230)]
+    [FhirElement("reasonCode", Order=230, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition or observation that supports why the medication is being/was taken
     /// </summary>
-    [FhirElement("reasonReference", Order=240)]
+    [FhirElement("reasonReference", Order=240, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
