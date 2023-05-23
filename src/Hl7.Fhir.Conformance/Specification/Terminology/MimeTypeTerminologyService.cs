@@ -15,9 +15,6 @@ namespace Hl7.Fhir.Conformance.Specification.Terminology
         private const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
         private const string MIMETYPE_VALUESET = "http://hl7.org/fhir/ValueSet/mimetypes";
 
-        private readonly string _codeAttribute = "code";
-        private readonly string _systemAttribute = "system";
-        private readonly string _contextAttribute = "context";
 
         public T.Task<Resource> Closure(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
         public T.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false) => throw new NotImplementedException();
@@ -29,28 +26,12 @@ namespace Hl7.Fhir.Conformance.Specification.Terminology
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
 
-            //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.TryGetDuplicates(out var duplicates) == true)
-            {
-                //422 Unproccesable Entity
-                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}", (HttpStatusCode)422);
-            }
-            //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
-                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
-            {
-                //422 Unproccesable Entity
-                throw new FhirOperationException($"If a code is provided, a system or a context must be provided", (HttpStatusCode)422);
-            }
+            parameters.checkForValidityOfValidateCodeParams();
 
             var validCodeParams = new ValidateCodeParameters(parameters);
 
-            if (validCodeParams.Url is null)
-                //422 Unproccesable Entity
-                throw new FhirOperationException("Have to supply canonical url.", (HttpStatusCode)422);
-            else if (validCodeParams.Url.Value != MIMETYPE_VALUESET)
-            {
-                // 404 not found
+            if (validCodeParams?.Url?.Value != MIMETYPE_VALUESET)
+            {   // 404 not found
                 throw new FhirOperationException($"Cannot validate mimetypes using valueset '{validCodeParams.Url.Value}'", HttpStatusCode.NotFound);
             }
 
