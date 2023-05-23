@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for research subject
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// candidate | enrolled | active | suspended | withdrawn | completed
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end of participation
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=110)]
+    [FhirElement("period", InSummary=true, Order=110, FiveWs="when.planned")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
