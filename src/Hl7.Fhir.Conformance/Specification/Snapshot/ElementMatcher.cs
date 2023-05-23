@@ -642,7 +642,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty,
                     // [WMR 20170308] If this is a recursive call (e.g. named slice with slicing component = reslice),
                     // then explicitly override default base with specified slice base element
-                    SliceBase = isExtension ? initSliceBase(snapNav, false) : sliceBase,
+                    // [#2466] except when it is an extension header element and then the slicing component should not be cleared!
+                    SliceBase = isExtension ? initSliceBase(snapNav, false) : sliceBase
                 });
 
                 // Skip any existing slicing entry in the differential; below we process the actual slices

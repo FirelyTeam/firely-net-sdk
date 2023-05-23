@@ -2183,13 +2183,10 @@ namespace Hl7.Fhir.Specification.Tests
                     {
                         new ElementDefinition(path)
                         {
-                            Min = 0
                         },
                         new ElementDefinition(path)
                         {
                             SliceName = sliceName,
-                            Min = 0,
-                            IsModifier = false,
                             Type = new List<ElementDefinition.TypeRefComponent>()
                             {
                                 new ElementDefinition.TypeRefComponent()
