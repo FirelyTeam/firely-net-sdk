@@ -698,49 +698,33 @@ namespace Hl7.Fhir.Serialization.Tests
                   <entry>
                     <fullUrl value="https://example.org/Questionnaire/obs-comp" />
                     <resource>
-                      <Observation>
-                        <id value="obs-int" />
-                        <status value="final" />
-                        <code>
-                          <text value="Integer Testing Observation" />
-                        </code>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                      <Parameters>
+                        <id value="pars-int" />
+                        <parameter>
+                          <name value="int-one" />
                           <valueInteger value="1" />
-                        </component>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                        </parameter>
+                        <parameter>
+                          <name value="int-two" />
                           <valueInteger value="2" />
-                        </component>
-                      </Observation>
+                        </parameter>
+                      </Parameters>
                     </resource>
                   </entry>
                   <entry>
                     <fullUrl value="https://example.org/Questionnaire/obs-comp" />
                     <resource>
-                      <Observation>
-                        <id value="obs-bool" />
-                        <status value="final" />
-                        <code>
-                          <text value="Boolean Testing Observation" />
-                        </code>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                      <Parameters>
+                        <id value="pars-bool" />
+                        <parameter>
+                          <name value="int-one" />
                           <valueBoolean value="true" />
-                        </component>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                        </parameter>
+                        <parameter>
+                          <name value="int-bool" />
                           <valueBoolean value="false" />
-                        </component>
-                      </Observation>
+                        </parameter>
+                      </Parameters>
                     </resource>
                   </entry>
                   <entry>

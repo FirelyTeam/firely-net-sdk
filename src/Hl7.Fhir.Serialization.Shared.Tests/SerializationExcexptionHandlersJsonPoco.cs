@@ -414,23 +414,15 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             string rawData = """
                 {
-                  "resourceType": "Observation",
-                  "id": "obs-int",
-                  "status": "final",
-                  "code": {
-                    "text": "Integer Testing Observation"
-                  },
-                  "component": [
+                  "resourceType": "Parameters",
+                  "id": "pars-bool",
+                  "parameter": [
                     {
-                      "code": {
-                        "text": "Component"
-                      },
+                      "name": "correct",
                       "valueInteger": 1
                     },
                     {
-                      "code": {
-                        "text": "Component"
-                      },
+                      "name": "incorrect",
                       "valueInteger": "2"
                     }
                   ]
@@ -439,7 +431,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = serializeResource<Observation>(rawData);
+                var p = serializeResource<Parameters>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -450,7 +442,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("Observation.component[1].value", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
                 Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
 
@@ -463,23 +455,15 @@ namespace Hl7.Fhir.Serialization.Tests
         {
             string rawData = """
                 {
-                  "resourceType": "Observation",
-                  "id": "obs-bool",
-                  "status": "final",
-                  "code": {
-                    "text": "Boolean Testing Observation"
-                  },
-                  "component": [
+                  "resourceType": "Parameters",
+                  "id": "pars-bool",
+                  "parameter": [
                     {
-                      "code": {
-                        "text": "Component"
-                      },
+                      "name": "correct",
                       "valueBoolean": true
                     },
                     {
-                      "code": {
-                        "text": "Component"
-                      },
+                      "name": "incorrect",
                       "valueBoolean": "false"
                     }
                   ]
@@ -488,7 +472,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
             try
             {
-                var p = serializeResource<Observation>(rawData);
+                var p = serializeResource<Parameters>(rawData);
                 DebugDump.OutputJson(p);
                 Assert.Fail("Expected to throw parsing");
             }
@@ -499,7 +483,7 @@ namespace Hl7.Fhir.Serialization.Tests
                 DebugDump.OutputXml(oc);
                 DebugDump.OutputJson(ex.PartialResult);
 
-                Assert.AreEqual("Observation.component[1].value", oc.Issue[0].Expression.First());
+                Assert.AreEqual("Parameters.parameter[1].value", oc.Issue[0].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
                 Assert.AreEqual("JSON110", oc.Issue[0].Details.Coding[0].Code);
 
@@ -937,48 +921,33 @@ namespace Hl7.Fhir.Serialization.Tests
                     {
                         "fullUrl": "https://example.org/Questionnaire/obs-comp",
                         "resource": {
-                          "resourceType": "Observation",
-                          "id": "obs-int",
-                          "status": "final",
-                          "code": {
-                            "text": "Integer Testing Observation"
-                          },
-                          "component": [
+                          "resourceType": "Parameters",
+                          "id": "pars-bool",
+                          "parameter": [
                             {
-                              "code": {
-                                "text": "Component"
-                              },
+                              "name": "correct-int",
                               "valueInteger": 1
                             },
                             {
-                              "code": {
-                                "text": "Component"
-                              },
+                              "name": "incorrect-int",
                               "valueInteger": "2"
                             }
                           ]
-                        }
+                         }
+                
                     },
                     {
-                        "fullUrl": "https://example.org/Questionnaire/obs-comp",
+                        "fullUrl": "https://example.org/Questionnaire/pars-comp",
                         "resource": {
-                          "resourceType": "Observation",
-                          "id": "obs-bool",
-                          "status": "final",
-                          "code": {
-                            "text": "Boolean Testing Observation"
-                          },
-                          "component": [
+                          "resourceType": "Parameters",
+                          "id": "pars-bool",
+                          "parameter": [
                             {
-                              "code": {
-                                "text": "Component"
-                              },
+                              "name": "correct-bool",
                               "valueBoolean": true
                             },
                             {
-                              "code": {
-                                "text": "Component"
-                              },
+                              "name": "incorrect-bool",
                               "valueBoolean": "false"
                             }
                           ]
