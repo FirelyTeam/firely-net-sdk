@@ -40,8 +40,8 @@ namespace Hl7.Fhir.Specification.Tests
         }
 
         [DataTestMethod]
-        [DataRow("http://hl7.org/fhir/ValueSet/basic-resource-type", "132037003", "http://hl7.org/fhir/ValueSet/account-type", "Pineywoods pig breed")]
-        [DataRow("http://hl7.org/fhir/ValueSet/basic-resource-type", "132037003", "http://example.com/an-exotic-valuset", "Pineywoods pig breed")]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "not-human", "http://hl7.org/fhir/ValueSet/account-type", "Not existing code for gender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "not-human", "http://example.com/an-exotic-valuset", "Not existing code for gender")]
         public async Task CodingWithValuesetAsSystem(string valueset, string code, string system, string display)
         {
             var parameters = new ValidateCodeParameters()
