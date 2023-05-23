@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -392,7 +392,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// This person's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=170)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=170, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {

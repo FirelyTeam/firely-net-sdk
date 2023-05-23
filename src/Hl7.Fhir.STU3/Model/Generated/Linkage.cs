@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this linkage assertion is active or not
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=90)]
+    [FhirElement("active", InSummary=true, Order=90, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for linkages
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=100)]
+    [FhirElement("author", InSummary=true, Order=100, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization")]
     [DataMember]

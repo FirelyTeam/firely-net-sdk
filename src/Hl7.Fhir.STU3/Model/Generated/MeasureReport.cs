@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the Report
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -1036,7 +1036,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | pending | error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1069,7 +1069,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// individual | patient-list | summary
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -1102,7 +1102,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What measure was evaluated
     /// </summary>
-    [FhirElement("measure", InSummary=true, Order=120)]
+    [FhirElement("measure", InSummary=true, Order=120, FiveWs="what")]
     [CLSCompliant(false)]
     [References("Measure")]
     [Cardinality(Min=1,Max=1)]
@@ -1118,7 +1118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What patient the report is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=130)]
+    [FhirElement("patient", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -1133,7 +1133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the report was generated
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1164,7 +1164,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is reporting the data
     /// </summary>
-    [FhirElement("reportingOrganization", InSummary=true, Order=150)]
+    [FhirElement("reportingOrganization", InSummary=true, Order=150, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

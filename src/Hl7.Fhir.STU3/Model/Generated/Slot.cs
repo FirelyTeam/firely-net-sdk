@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A broad categorisation of the service that is to be performed during this appointment
     /// </summary>
-    [FhirElement("serviceCategory", InSummary=true, Order=100)]
+    [FhirElement("serviceCategory", InSummary=true, Order=100, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept ServiceCategory
     {
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The type of appointments that can be booked into this slot (ideally this would be an identifiable service - which is at a location, rather than the location itself). If provided then this overrides the value provided on the availability resource
     /// </summary>
-    [FhirElement("serviceType", InSummary=true, Order=110)]
+    [FhirElement("serviceType", InSummary=true, Order=110, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=120)]
+    [FhirElement("specialty", InSummary=true, Order=120, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The style of appointment or patient that may be booked in the slot (not service type)
     /// </summary>
-    [FhirElement("appointmentType", InSummary=true, Order=130)]
+    [FhirElement("appointmentType", InSummary=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept AppointmentType
     {
@@ -215,7 +215,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time that the slot is to begin
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=160)]
+    [FhirElement("start", InSummary=true, Order=160, FiveWs="when.planned")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant StartElement
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time that the slot is to conclude
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=170)]
+    [FhirElement("end", InSummary=true, Order=170, FiveWs="when.planned")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
