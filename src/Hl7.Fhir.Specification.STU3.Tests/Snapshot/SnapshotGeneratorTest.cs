@@ -1806,9 +1806,7 @@ namespace Hl7.Fhir.Specification.Tests
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use";
 
-                    // [WMR 20170713] Changed
-                    // Assert.AreEqual(isConstrained, hasConstraints);
-                    Assert.AreEqual(isConstrained || elem.IsExtension(), hasConstraints);
+                    Assert.AreEqual(isConstrained, hasConstraints);
 
                     var elemHasChanges = hasChanges(elem);
                     Assert.AreEqual(isConstrained, elemHasChanges);
@@ -2027,6 +2025,86 @@ namespace Hl7.Fhir.Specification.Tests
                 Assert.IsFalse(elem.ShortElement.IsConstrainedByDiff());
                 Assert.AreEqual(baseElem.Definition, elem.Definition);    // Verify that definition property is inherited
                 Assert.IsFalse(elem.DefinitionElement.IsConstrainedByDiff());
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
+        [TestMethod]
+        public async T.Task TestBaseAnnotations_StructureDefinition_ExtensionHeaderSlicingElement()
+        {
+            const string url = @"https://example.org/fhir/StructureDefinition/MyPatient";
+            const string urlExtension = @"http://hl7.org/fhir/StructureDefinition/cqf-initialValue";
+            const string sliceName = "initialValue";
+            const string path = "Patient.active.extension";
+
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyPatient",
+                Url = url,
+                Abstract = false,
+                FhirVersion = "3.0.2",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition(path)
+                        {
+                        },
+                        new ElementDefinition(path)
+                        {
+                            SliceName = sliceName,
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = "Extension",
+                                    ProfileElement = new FhirUri(urlExtension)
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var source = new CachedResolver(new MultiResolver(_zipSource, new InMemoryProfileResolver(sd)));
+
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+                var expanded = await _generator.GenerateAsync(sd);
+                dumpOutcome(_generator.Outcome);
+                assertBaseDefs(expanded, settings);
+
+                var header = expanded.Single(e => e.Path == path && e.SliceName == null);
+                var extension = expanded.Single(e => e.Path == path && e.SliceName == sliceName);
+
+                Assert.IsTrue(header.TryGetAnnotation<BaseDefAnnotation>(out var annoHeader));
+                Assert.IsTrue(extension.TryGetAnnotation<BaseDefAnnotation>(out var annoExtension));
+
+                Assert.IsTrue(header.Slicing != null);
+                Assert.IsTrue(extension.Slicing == null);
+
+                Assert.IsTrue(annoHeader.BaseElementDefinition.Slicing != null);
+                Assert.IsTrue(annoExtension.BaseElementDefinition.Slicing == null);
             }
             finally
             {
