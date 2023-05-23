@@ -104,7 +104,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier for this record
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient using device
     /// </summary>
-    [FhirElement("subject", Order=110)]
+    [FhirElement("subject", Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period device was used
     /// </summary>
-    [FhirElement("whenUsed", Order=120)]
+    [FhirElement("whenUsed", Order=120, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period WhenUsed
     {
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How often  the device was used
     /// </summary>
-    [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When statement was recorded
     /// </summary>
-    [FhirElement("recordedOn", Order=140)]
+    [FhirElement("recordedOn", Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
     {
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who made the statement
     /// </summary>
-    [FhirElement("source", Order=150)]
+    [FhirElement("source", Order=150, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson")]
     [DataMember]
@@ -241,7 +241,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to device used
     /// </summary>
-    [FhirElement("device", Order=160)]
+    [FhirElement("device", Order=160, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why device was used
     /// </summary>
-    [FhirElement("indication", Order=170)]
+    [FhirElement("indication", Order=170, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Indication

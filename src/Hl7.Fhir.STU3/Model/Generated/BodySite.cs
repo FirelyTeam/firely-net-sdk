@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Bodysite identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this body site record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Named anatomical location
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=110)]
+    [FhirElement("code", InSummary=true, Order=110, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Modification to location code
     /// </summary>
-    [FhirElement("qualifier", Order=120)]
+    [FhirElement("qualifier", Order=120, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Qualifier
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Anatomical location description
     /// </summary>
-    [FhirElement("description", InSummary=true, Order=130)]
+    [FhirElement("description", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString DescriptionElement
     {
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Attached images
     /// </summary>
-    [FhirElement("image", Order=140)]
+    [FhirElement("image", Order=140, FiveWs="what")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Attachment> Image
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this is about
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=150)]
+    [FhirElement("patient", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]

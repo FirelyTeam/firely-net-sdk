@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Id(s) for this record
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// partial | completed | entered-in-error | health-unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -378,7 +378,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient history is about
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When history was captured/updated
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -578,7 +578,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=230)]
+    [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -592,7 +592,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=240)]
+    [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse")]
     [Cardinality(Min=0,Max=-1)]

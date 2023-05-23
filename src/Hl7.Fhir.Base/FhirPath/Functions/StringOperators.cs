@@ -49,7 +49,7 @@ namespace Hl7.FhirPath.Functions
 
         public static IEnumerable<ITypedElement> FpSplit(this string me, string seperator)
         {
-            var results = me.Split(new[] { seperator }, StringSplitOptions.RemoveEmptyEntries);
+            var results = me.Split(new[] { seperator }, StringSplitOptions.None);
             return results.Select(s => ElementNode.ForPrimitive(s));
         }
 

@@ -305,7 +305,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance id assigned by the software stack
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
@@ -319,7 +319,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What kind of component it is
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100)]
+    [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Recent system change timestamp
     /// </summary>
-    [FhirElement("lastSystemChange", InSummary=true, Order=110)]
+    [FhirElement("lastSystemChange", InSummary=true, Order=110, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant LastSystemChangeElement
     {

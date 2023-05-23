@@ -12,28 +12,24 @@ namespace Hl7.Fhir.Specification.Tests
     {
         private readonly LocalTerminologyService _service = new(ZipSource.CreateValidationSource());
 
-        [TestMethod]
-        public async Task CodeNotFoundMessageTest()
+        [DataTestMethod]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", "context", null, "AdministrativeGender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", null, "theSystem", "AdministrativeGender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", "context", null, "Common UCUM Codes for Age")]
+        [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", null, "theSystem", "Common UCUM Codes for Age")]
+        public async Task CodeNotFoundMessageTest(string valueset, string code, string context, string system, string valuesetTitle)
         {
-            var valueset = "http://hl7.org/fhir/ValueSet/administrative-gender";
             var parameters = new ValidateCodeParameters()
-                   .WithValueSet(valueset)
-                   .WithCode(code: "invalid", context: "context")
-                   .Build();
+                   .WithValueSet(valueset);
 
-            var result = await _service.ValueSetValidateCode(parameters);
+            parameters = !string.IsNullOrEmpty(context)
+                ? parameters.WithCode(code: code, context: context)
+                : parameters.WithCode(code: code, system: system);
+
+            var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
+            var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code 'invalid' does not exist in valueset '{valueset}'"));
-
-
-            parameters = new ValidateCodeParameters()
-                   .WithValueSet(valueset)
-                   .WithCode(code: "invalid", system: "theSystem")
-                   .Build();
-            result = await _service.ValueSetValidateCode(parameters);
-            result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code 'invalid' from system 'theSystem' does not exist in valueset '{valueset}'"));
-
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"));
         }
     }
 }
