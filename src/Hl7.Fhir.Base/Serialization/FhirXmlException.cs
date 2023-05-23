@@ -1,13 +1,10 @@
 ﻿#nullable enable
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
-using System.Globalization;
 using System.Xml;
-using System.Xml.Linq;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
 
@@ -80,15 +77,10 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(string instancePath, int lineNumber, int position, string? locationMessage, string? localName)
         {
             var message = $"Element '{localName}' must have child elements and / or a value attribute";
-            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirXmlException(ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, messageWithLocation, OO_Sev.Error, OO_Typ.Structure)
-            {
-                BaseErrorMessage = message,
-                LineNumber = lineNumber,
-                Position = position,
-                InstancePath = instancePath,
-            };
+            return new FhirXmlException(
+                ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
+                message, instancePath, lineNumber, position, OO_Sev.Error, OO_Typ.Structure);
         }
 
         // Xml paraphernalia that do not contain data so they can be safely skipped.
@@ -124,27 +116,50 @@ namespace Hl7.Fhir.Serialization
             CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE or
             UNKNOWN_ATTRIBUTE_CODE;
 
-        public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
+        public FhirXmlException(string code, string message)
+        : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
         {
+            // Nothing
         }
 
-        public FhirXmlException(string code, string message, Exception? innerException, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType, innerException)
+        public FhirXmlException(string code, string message, Exception? innerException)
+            : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown, innerException)
         {
+            // Nothing
+        }
+
+        public FhirXmlException(
+            string errorCode,
+            string baseMessage,
+            string? instancePath,
+            long? lineNumber,
+            long? position,
+            OperationOutcome.IssueSeverity issueSeverity,
+            OperationOutcome.IssueType issueType,
+            Exception? innerException = null) :
+                base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType, innerException)
+        {
+            // Nothing
         }
 
         internal static FhirXmlException Initialize(XmlReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, FhirXmlException? innerException = null)
         {
             var (lineNumber, position) = reader.GenerateLineInfo();
-            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirXmlException(code, messageWithLocation, innerException, issueSeverity, issueType)
-            {
-                BaseErrorMessage = message,
-                LineNumber = lineNumber,
-                Position = position,
-                InstancePath = instancePath,
-            };
+            return new FhirXmlException(
+                code,
+                message,
+                instancePath,
+                lineNumber,
+                position,
+                issueSeverity,
+                issueType,
+                innerException);
         }
+
+        public FhirXmlException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType) =>
+           new FhirXmlException(ErrorCode, baseMessage, InstancePath, LineNumber, Position,
+                   issueSeverity, issueType);
     }
 }
 

@@ -156,40 +156,51 @@ namespace Hl7.Fhir.Serialization
             CHOICE_ELEMENT_HAS_UNKOWN_TYPE_CODE or
             UNKNOWN_PROPERTY_FOUND_CODE;
 
-        public FhirJsonException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
+        public FhirJsonException(string code, string message)
+            : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
         {
+            // Nothing
         }
 
-        public FhirJsonException(string code, string message, Exception? innerException, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType, innerException)
+        public FhirJsonException(string code, string message, Exception? innerException)
+            : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown, innerException)
         {
+            // Nothing
         }
+
+        public FhirJsonException(
+            string errorCode,
+            string baseMessage,
+            string? instancePath,
+            long? lineNumber,
+            long? position,
+            OperationOutcome.IssueSeverity issueSeverity,
+            OperationOutcome.IssueType issueType,
+            Exception? innerException = null) :
+                base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType, innerException)
+        {
+            // Nothing
+        }
+
 
         internal static FhirJsonException Initialize(ref Utf8JsonReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException = null)
         {
             var (lineNumber, position) = reader.GetLocation();
-            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirJsonException(code, messageWithLocation, innerException, issueSeverity, issueType)
-            {
-                BaseErrorMessage = message,
-                LineNumber = lineNumber,
-                Position = position,
-                InstancePath = instancePath,
-            };
+            return new FhirJsonException(
+                code,
+                message,
+                instancePath,
+                lineNumber,
+                position,
+                issueSeverity,
+                issueType,
+                innerException);
         }
 
-        public FhirJsonException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType)
-        {
-            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(baseMessage, this.InstancePath, LineNumber, Position);
-
-            return new FhirJsonException(ErrorCode, messageWithLocation, InnerException, issueSeverity, issueType)
-            {
-                BaseErrorMessage = baseMessage,
-                LineNumber = this.LineNumber,
-                Position = this.Position,
-                InstancePath = this.InstancePath,
-            };
-        }
+        public FhirJsonException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType) =>
+            new(ErrorCode, baseMessage, InstancePath, LineNumber, Position,
+                    issueSeverity, issueType);
     }
 }
 

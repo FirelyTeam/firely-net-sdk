@@ -9,7 +9,6 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using COVE = Hl7.Fhir.Validation.CodedValidationException;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
@@ -61,41 +60,49 @@ namespace Hl7.Fhir.Validation
         // internal static COVE CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE(ValidationContext context) => Initialize(context, CONTAINED_RESOURCE_CANNOT_HAVE_NARRATIVE_CODE, "Resource has contained resources with narrative, which is not allowed.", OO_Sev.Error, OO_Typ.Structure);
         internal static COVE CONTAINED_RESOURCES_CANNOT_BE_NESTED(ValidationContext context) => Initialize(context, CONTAINED_RESOURCES_CANNOT_BE_NESTED_CODE, "It is not allowed for a resource to contain resources which themselves contain resources.", OO_Sev.Error, OO_Typ.Structure);
 
-        public CodedValidationException(string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(code, message, issueSeverity, issueType)
+        public CodedValidationException(string code, string message)
+            : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
         {
+            // Nothing
+        }
+
+        public CodedValidationException(
+          string errorCode,
+          string baseMessage,
+          string? instancePath,
+          long? lineNumber,
+          long? position,
+          OperationOutcome.IssueSeverity issueSeverity,
+          OperationOutcome.IssueType issueType) :
+              base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType)
+        {
+            // Nothing
         }
 
         internal static CodedValidationException Initialize(ValidationContext context, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType)
         {
-            string? location = null;
-            string? path = context.GetLocation() as string;
-            var pi = context.GetPositionInfo() as IPositionInfo;
+            var path = context.GetLocation() as string;
 
-            if (pi != null)
-                location = $"line {pi.LineNumber}, position {pi.LinePosition}";
-
-            if (context.GetLocation() is string loc)
+            if (path is not null)
             {
                 // Bit of a hack. The location returned by GetLocation() will be different depending on
                 // whether this validation is run within the deserializer or the DataAnnotations.Validator.
-                // In the latter case, the MemberName will be set, and the location will be the GetLocation()
+                // In the latter case, the MemberName will be set, and GetLocation()
                 // will return the parent, so we need to add the MemberName.
                 if (context.MemberName is not null)
                 {
-                    loc = $"{loc}.{context.MemberName}";
+                    path = $"{path}.{context.MemberName}";
                 }
-                location = location is null ? loc : $"{loc}, {location}";
             }
 
-            var messageWithLocation = $"{message} At {location}.";
+            var pi = context.GetPositionInfo() as IPositionInfo;
 
-            var codedException = new CodedValidationException(code, messageWithLocation, issueSeverity, issueType)
-            {
-                BaseErrorMessage = message,
-                LineNumber = pi?.LineNumber,
-                Position = pi?.LinePosition,
-                InstancePath = path
-            };
+            var codedException = new CodedValidationException(
+                code,
+                message,
+                path,
+                pi?.LineNumber,
+                pi?.LinePosition, issueSeverity, issueType);
 
             return codedException;
         }

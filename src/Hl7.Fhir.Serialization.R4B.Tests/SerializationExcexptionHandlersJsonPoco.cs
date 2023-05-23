@@ -1,11 +1,8 @@
 ﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 
@@ -112,11 +109,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
                 Assert.AreEqual("JSON120", oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation", oc.Issue[1].Expression.First());
+                Assert.AreEqual("Observation.status", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation", oc.Issue[2].Expression.First());
+                Assert.AreEqual("Observation.code", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
 
@@ -172,12 +169,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation", oc.Issue[2].Expression.First());
+                Assert.AreEqual("Observation.status", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[2].Details.Text.Contains("status"));
 
-                Assert.AreEqual("Observation", oc.Issue[3].Expression.First());
+                Assert.AreEqual("Observation.code", oc.Issue[3].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[3].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[3].Details.Text.Contains("code"));
@@ -787,7 +784,7 @@ namespace Hl7.Fhir.Serialization.Tests
 
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
-                Assert.AreEqual("Patient.name[0].given[1].extension[2]", oc.Issue[2].Expression.First());
+                Assert.AreEqual("Patient.name[0].given[1].extension[2].url", oc.Issue[2].Expression.First());
 
                 Assert.AreEqual(3, oc.Issue.Count);
             }
