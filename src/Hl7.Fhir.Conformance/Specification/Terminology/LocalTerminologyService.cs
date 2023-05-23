@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private async Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel, StringBuilder messages)
+        private async T.Task messageForCodeNotFound(ValueSet vs, string? system, string codeLabel, StringBuilder messages)
         {
             if (system is not null && await isValueSet(system).ConfigureAwait(false))
             {

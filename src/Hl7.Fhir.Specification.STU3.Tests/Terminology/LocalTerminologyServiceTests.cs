@@ -10,7 +10,14 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class LocalTerminologyServiceTests
     {
-        private readonly LocalTerminologyService _service = new(ZipSource.CreateValidationSource());
+        private readonly LocalTerminologyService _service = new(
+            new CachedResolver(
+                new MultiResolver(
+                    ZipSource.CreateValidationSource(),
+                    new InMemoryResourceResolver(new ValueSet() { Url = "http://example.com/an-exotic-valuset" })
+                )
+            )
+        );
 
         [DataTestMethod]
         [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", "context", null, "AdministrativeGender")]
@@ -30,6 +37,20 @@ namespace Hl7.Fhir.Specification.Tests
             var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
                 .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"));
+        }
+
+        [DataTestMethod]
+        [DataRow("http://hl7.org/fhir/ValueSet/basic-resource-type", "132037003", "http://hl7.org/fhir/ValueSet/account-type", "Pineywoods pig breed")]
+        [DataRow("http://hl7.org/fhir/ValueSet/basic-resource-type", "132037003", "http://example.com/an-exotic-valuset", "Pineywoods pig breed")]
+        public async Task CodingWithValuesetAsSystem(string valueset, string code, string system, string display)
+        {
+            var parameters = new ValidateCodeParameters()
+                   .WithValueSet(valueset)
+                   .WithCoding(new Coding(system, code, display));
+
+            var result = await _service.ValueSetValidateCode(parameters.Build());
+            result.Parameter.Should().Contain(p => p.Name == "message")
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"The Coding references a value set, not a code system ('{system}')"));
         }
     }
 }
