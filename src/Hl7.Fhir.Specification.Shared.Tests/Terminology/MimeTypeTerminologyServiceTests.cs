@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Hl7.Fhir.Conformance.Specification.Terminology;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Specification.Terminology;
