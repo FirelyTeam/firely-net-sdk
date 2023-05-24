@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Specification.Terminology
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
         {
 
-            parameters.checkForValidityOfValidateCodeParams();
+            parameters.CheckForValidityOfValidateCodeParams();
 
             var validCodeParams = new ValidateCodeParameters(parameters);
 

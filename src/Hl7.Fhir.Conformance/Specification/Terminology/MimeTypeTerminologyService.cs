@@ -1,4 +1,6 @@
-﻿using Hl7.Fhir.Model;
+﻿#nullable enable
+
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using System;
 using System.Linq;
@@ -21,33 +23,33 @@ namespace Hl7.Fhir.Specification.Terminology
         ///<inheritdoc />
         public T.Task<Resource> Closure(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
         ///<inheritdoc />
-        public T.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string id = null, bool useGet = false) => throw new NotImplementedException();
+        public T.Task<Parameters> CodeSystemValidateCode(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
         ///<inheritdoc />
-        public T.Task<Resource> Expand(Parameters parameters, string id = null, bool useGet = false) => throw new NotImplementedException();
+        public T.Task<Resource> Expand(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
         ///<inheritdoc />
         public T.Task<Parameters> Lookup(Parameters parameters, bool useGet = false) => throw new NotImplementedException();
         ///<inheritdoc />
-        public T.Task<Parameters> Subsumes(Parameters parameters, string id = null, bool useGet = false) => throw new NotImplementedException();
+        public T.Task<Parameters> Subsumes(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
 
         ///<inheritdoc />
-        public T.Task<Parameters> Translate(Parameters parameters, string id = null, bool useGet = false) => throw new NotImplementedException();
+        public T.Task<Parameters> Translate(Parameters parameters, string? id = null, bool useGet = false) => throw new NotImplementedException();
 
         ///<inheritdoc />
-        public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false)
+        public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
         {
 
-            parameters.checkForValidityOfValidateCodeParams();
+            parameters.CheckForValidityOfValidateCodeParams();
 
             var validCodeParams = new ValidateCodeParameters(parameters);
 
-            if (validCodeParams?.Url?.Value != MIMETYPE_VALUESET)
+            if (validCodeParams?.Url?.Value is not null && validCodeParams?.Url?.Value != MIMETYPE_VALUESET)
             {   // 404 not found
-                throw new FhirOperationException($"Cannot validate mimetypes using valueset '{validCodeParams.Url.Value}'", HttpStatusCode.NotFound);
+                throw new FhirOperationException($"Cannot validate mimetypes using valueset '{validCodeParams!.Url.Value}'", HttpStatusCode.NotFound);
             }
 
             try
             {
-                if (validCodeParams.CodeableConcept is { })
+                if (validCodeParams!.CodeableConcept is { })
                     return await validateCodeVS(validCodeParams.CodeableConcept).ConfigureAwait(false);
                 else if (validCodeParams.Coding is { })
                     return await validateCodeVS(validCodeParams.Coding).ConfigureAwait(false);
@@ -109,7 +111,7 @@ namespace Hl7.Fhir.Specification.Terminology
             return result;
         }
 
-        private static Task<Parameters> validateCodeVS(string code, string system)
+        private static Task<Parameters> validateCodeVS(string? code, string? system)
         {
             var result = new Parameters();
 
@@ -149,4 +151,6 @@ namespace Hl7.Fhir.Specification.Terminology
         }
     }
 }
+
+#nullable restore
 

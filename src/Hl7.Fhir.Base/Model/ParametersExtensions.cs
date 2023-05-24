@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Model
             return duplicates?.Any() == true;
         }
 
-        public static void checkForValidityOfValidateCodeParams(this Parameters parameters)
+        internal static void CheckForValidityOfValidateCodeParams(this Parameters parameters)
         {
 
             //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
