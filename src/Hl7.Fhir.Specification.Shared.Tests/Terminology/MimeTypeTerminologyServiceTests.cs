@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Specification.Tests
         private const string ADMINGENDERVS = "http://hl7.org/fhir/ValueSet/administrative-gender";
 
         [TestMethod]
-        public async Task CodeNotFoundMessageTest()
+        public async Task MimeTypeValidationTest()
         {
             var parameters = new ValidateCodeParameters()
                    .WithValueSet(MIMETYPEVS)
