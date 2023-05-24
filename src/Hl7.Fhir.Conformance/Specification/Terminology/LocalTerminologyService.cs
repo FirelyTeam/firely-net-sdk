@@ -77,20 +77,7 @@ namespace Hl7.Fhir.Specification.Terminology
         ///<inheritdoc />
         public async T.Task<Parameters> ValueSetValidateCode(Parameters parameters, string? id = null, bool useGet = false)
         {
-
-            //No duplicate parameters allowed (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.TryGetDuplicates(out var duplicates) == true)
-            {
-                //422 Unproccesable Entity
-                throw new FhirOperationException($"List of input parameters contains the following duplicates: {string.Join(", ", duplicates)}", (HttpStatusCode)422);
-            }
-            //If a code is provided, a system or a context must be provided (http://hl7.org/fhir/valueset-operation-validate-code.html)
-            if (parameters.Parameter.Any(p => p.Name == _codeAttribute) && !(parameters.Parameter.Any(p => p.Name == _systemAttribute) ||
-                                                                                    parameters.Parameter.Any(p => p.Name == _contextAttribute)))
-            {
-                //422 Unproccesable Entity
-                throw new FhirOperationException($"If a code is provided, a system or a context must be provided", (HttpStatusCode)422);
-            }
+            parameters.CheckForValidityOfValidateCodeParams();
 
             var validCodeParams = new ValidateCodeParameters(parameters);
 
