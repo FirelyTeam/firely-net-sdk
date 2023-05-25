@@ -30,10 +30,6 @@ namespace Hl7.Fhir.Specification.Terminology
         private readonly IAsyncResourceResolver _resolver;
         private readonly ValueSetExpander _expander;
 
-        private readonly string _codeAttribute = "code";
-        private readonly string _systemAttribute = "system";
-        private readonly string _contextAttribute = "context";
-
         public LocalTerminologyService(IAsyncResourceResolver resolver, ValueSetExpanderSettings? expanderSettings = null)
         {
             _resolver = resolver ?? throw Error.ArgumentNull(nameof(resolver));
