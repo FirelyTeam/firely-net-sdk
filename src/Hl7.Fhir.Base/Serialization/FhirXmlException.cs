@@ -52,6 +52,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Element '{elementName}' has a contained resource and therefore should not have attributes.", OO_Sev.Fatal, OO_Typ.Structure);
         internal static FhirXmlException UNALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, UNALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
         internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string openElementName) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Fatal, OO_Typ.Structure);
+        internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
 
         // ==========================================
         // Recoverable Errors - when adding a new error, also add it to the appropriate error collections below.
@@ -65,7 +66,6 @@ namespace Hl7.Fhir.Serialization
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
         internal static FhirXmlException INCORRECT_BASE64_DATA(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
-        internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
 
         // An incorrect order does not mean we cannot parse the data safely
         internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order ", OO_Sev.Error, OO_Typ.Structure);

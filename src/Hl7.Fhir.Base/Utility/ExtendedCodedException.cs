@@ -21,41 +21,6 @@ namespace Hl7.Fhir.Utility
     /// for this subclass, providing a list of codes used by that module.</remarks>
     public class ExtendedCodedException : CodedException
     {
-        //protected ExtendedCodedException(
-        //   string errorCode,
-        //   string baseMessage,
-        //   string formattedMessage,
-        //   string? instancePath,
-        //   long? lineNumber,
-        //   long? position,
-        //   OperationOutcome.IssueSeverity issueSeverity,
-        //   OperationOutcome.IssueType issueType,
-        //   Exception? innerException) :
-        //   base(errorCode, formattedMessage, innerException)
-        //{
-        //    IssueSeverity = issueSeverity;
-        //    IssueType = issueType;
-        //    BaseErrorMessage = baseMessage;
-        //    InstancePath = instancePath;
-        //    LineNumber = lineNumber;
-        //    Position = position;
-        //}
-
-        //public ExtendedCodedException(
-        //    string errorCode,
-        //    string baseMessage,
-        //    string? instancePath,
-        //    long? lineNumber,
-        //    long? position,
-        //    OperationOutcome.IssueSeverity issueSeverity,
-        //    OperationOutcome.IssueType issueType,
-        //    Exception? innerException = null) :
-        //    this(errorCode, baseMessage, formatLocationMessage(baseMessage, instancePath, lineNumber, position), instancePath, lineNumber, position, issueSeverity, issueType, innerException)
-        //{
-        //    // Nothing
-        //}
-
-
         public ExtendedCodedException(
             string errorCode,
             string baseMessage,
