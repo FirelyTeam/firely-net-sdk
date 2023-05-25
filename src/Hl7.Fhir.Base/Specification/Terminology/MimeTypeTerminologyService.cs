@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (validCodeParams?.Url?.Value is not null && validCodeParams?.Url?.Value != MIMETYPE_VALUESET)
             {   // 404 not found
-                throw new FhirOperationException($"Cannot validate mimetypes using valueset '{validCodeParams!.Url.Value}'", HttpStatusCode.NotFound);
+                throw new FhirOperationException($"Cannot find valueset '{validCodeParams!.Url.Value}'", HttpStatusCode.NotFound);
             }
 
             try
@@ -132,13 +132,13 @@ namespace Hl7.Fhir.Specification.Terminology
                 else
                 {
                     result.Add("result", new FhirBoolean(false))
-                          .Add("message", new FhirString("Invalid mimetype specified"));
+                          .Add("message", new FhirString($"'{code}' is not a valid MIME type."));
                 }
             }
             else
             {
                 result.Add("result", new FhirBoolean(false))
-                      .Add("message", new FhirString($"Unknown system {system} encountered, cannot validate mime-type"));
+                      .Add("message", new FhirString($"Unknown system {system} encountered, cannot validate code."));
             }
             return Task.FromResult(result);
         }

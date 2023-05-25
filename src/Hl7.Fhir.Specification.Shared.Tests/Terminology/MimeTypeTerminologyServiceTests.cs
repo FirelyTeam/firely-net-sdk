@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Specification.Tests
 
             var result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Invalid mimetype specified"));
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"'invalid' is not a valid MIME type."));
 
 
             parameters = new ValidateCodeParameters()
@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Specification.Tests
                    .Build();
 
             Func<Task> validateCode = async () => await _service.ValueSetValidateCode(parameters);
-            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage($"Cannot validate mimetypes using valueset '{ADMINGENDERVS}'");
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage($"Cannot find valueset '{ADMINGENDERVS}'");
 
             parameters = new ValidateCodeParameters()
                   .WithCode(code: "application/json")
