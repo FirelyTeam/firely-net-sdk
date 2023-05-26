@@ -77,8 +77,6 @@ namespace Hl7.Fhir.Specification.Terminology
             }
 
             throw new InvalidOperationException("We should never have come here");
-
-
         }
     }
 }
