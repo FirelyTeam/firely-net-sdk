@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual who was performing
       /// </summary>
-      [FhirElement("actor", Order=50)]
+      [FhirElement("actor", Order=50, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization","Patient","Device","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -244,7 +244,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// planned | billable | not-billable | aborted | billed | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A code that identifies the charge, like a billing code
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual service was done for/to
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter / Episode associated with event
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=150)]
+    [FhirElement("context", InSummary=true, Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -383,7 +383,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the charged service was applied
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.Timing))]
     [DataMember]
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Individual who was entering
     /// </summary>
-    [FhirElement("enterer", InSummary=true, Order=250)]
+    [FhirElement("enterer", InSummary=true, Order=250, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization","Patient","Device","RelatedPerson")]
     [DataMember]
@@ -590,7 +590,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was the charged  service rendered?
     /// </summary>
-    [FhirElement("reason", Order=270)]
+    [FhirElement("reason", Order=270, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Reason
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Which rendered service is being charged?
     /// </summary>
-    [FhirElement("service", Order=280)]
+    [FhirElement("service", Order=280, FiveWs="why")]
     [CLSCompliant(false)]
     [References("DiagnosticReport","ImagingStudy","Immunization","MedicationAdministration","MedicationDispense","Observation","Procedure","SupplyDelivery")]
     [Cardinality(Min=0,Max=-1)]

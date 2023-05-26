@@ -61,8 +61,8 @@ namespace Hl7.Fhir.Validation
         private ValidationResult? validateValue(object? item, ValidationContext context) =>
             item is null || IsAllowedType(item.GetType())
                 ? ValidationResult.Success
-                : COVE.CHOICE_TYPE_NOT_ALLOWED
-                    .AsResult(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name);
+                : COVE.CHOICE_TYPE_NOT_ALLOWED(context, ModelInspector.GetClassMappingForType(item.GetType())?.Name ?? item.GetType().Name)
+                    .AsResult(context);
 
         /// <summary>
         /// Determine whether the given type is allowed according to this attribute.

@@ -9,6 +9,7 @@
     <Import_RootNamespace>Hl7.Fhir.Serialization.Shared.Tests</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)DebugDump.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientJsonTyped.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ParseDemoPatientJsonUntyped.cs" />
@@ -18,12 +19,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripBinarySerialization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripNewSerializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersXmlPoco.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializePartialTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamJsonResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamXmlResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SummaryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersJsonPoco.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)TestData\all-xml-features.xml">
@@ -33,9 +38,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)TestData\BundleWithOneEntry.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)TestData\json-edge-cases.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="$(MSBuildThisFileDirectory)TestData\json-edge-cases.xml">

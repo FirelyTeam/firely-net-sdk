@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The unique identifier
       /// </summary>
-      [FhirElement("value", Order=50)]
+      [FhirElement("value", Order=50, FiveWs="id")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -424,7 +424,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// codesystem | identifier | root
     /// </summary>
-    [FhirElement("kind", Order=110)]
+    [FhirElement("kind", Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -490,7 +490,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=120)]
+    [FhirElement("date", InSummary=true, Order=120, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=130)]
+    [FhirElement("publisher", InSummary=true, Order=130, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who maintains system namespace?
     /// </summary>
-    [FhirElement("responsible", Order=150)]
+    [FhirElement("responsible", Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ResponsibleElement
     {

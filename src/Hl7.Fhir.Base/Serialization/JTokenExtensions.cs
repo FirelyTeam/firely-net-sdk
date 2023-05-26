@@ -13,11 +13,17 @@ namespace Hl7.Fhir.Serialization
 {
     internal static class JTokenExtensions
     {
-        public static JProperty GetResourceTypePropertyFromObject(this JObject o, string myName) =>
-            !(o.Property(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) is JProperty type) ?
-                null
-                : type.Value.Type == JTokenType.String && myName != "instance" ? type : null;
-        // Hack to support R4 ExampleScenario.instance.resourceType element
+        public static JProperty GetResourceTypePropertyFromObject(this JObject o, string myName)
+        {
+            return o.Property(JsonSerializationDetails.RESOURCETYPE_MEMBER_NAME) switch
+            {
+                JProperty { Value.Type: JTokenType.String } stringProp when !isException(myName) => stringProp,
+                _ => null
+            };
+
+            // Hack to support R4 ExampleScenario.instance.resourceType and R5 Subscription.filterBy.resourceType element
+            static bool isException(string myName) => myName is "filterBy" or "instance";
+        }
     }
 }
 

@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
     /// AE | PAE 
     /// An adverse event is an event that caused harm to a patient,  an adverse reaction is a something that is a subject-specific event that is a result of an exposure to a medication, food, device or environmental substance, a potential adverse event is something that occurred and that could have caused harm to a patient but did not
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=100)]
+    [FhirElement("category", InSummary=true, Order=100, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory> CategoryElement
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// actual | potential
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -491,7 +491,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Subject or group impacted by event
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=120)]
+    [FhirElement("subject", InSummary=true, Order=120, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Patient","ResearchSubject","Medication","Device")]
     [DataMember]
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the event occurred
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=130)]
+    [FhirElement("date", InSummary=true, Order=130, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who recorded the adverse event
     /// </summary>
-    [FhirElement("recorder", InSummary=true, Order=180)]
+    [FhirElement("recorder", InSummary=true, Order=180, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson")]
     [DataMember]

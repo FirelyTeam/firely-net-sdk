@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Type of component observation (code / type)
       /// </summary>
-      [FhirElement("code", InSummary=true, Order=40)]
+      [FhirElement("code", InSummary=true, Order=40, FiveWs="what")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.CodeableConcept Code
@@ -696,7 +696,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier for observation
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
@@ -759,7 +759,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Classification of  type of observation
     /// </summary>
-    [FhirElement("category", Order=120)]
+    [FhirElement("category", Order=120, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -773,7 +773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of observation (code / type)
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what this is about
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
@@ -802,7 +802,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this observation is made
     /// </summary>
-    [FhirElement("context", Order=150)]
+    [FhirElement("context", Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -817,7 +817,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinically relevant time/time-period for observation
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date/Time this was made available
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=170)]
+    [FhirElement("issued", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -863,7 +863,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is responsible for the observation
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=180)]
+    [FhirElement("performer", InSummary=true, Order=180, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]

@@ -6,25 +6,26 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+#nullable enable
+
+using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Utility;
 
 namespace Hl7.Fhir.Model
 {
     public partial class ValueSet : Hl7.Fhir.Model.DomainResource
     {
         [Obsolete("This property was renamed in DSTU2 to CodeSystem, and in DSTU3 out of the class entirely to the CodeSystem resource", true)]
-        public string Define { get; set; }
+        public string? Define { get; set; }
 
         [NotMapped]
         public bool HasExpansion => Expansion != null;
 
-        public bool CodeInExpansion(String code, string system = null)
+        public bool CodeInExpansion(String code, string? system = null)
         {
             ensureExpansion();
 
@@ -42,7 +43,7 @@ namespace Hl7.Fhir.Model
                 return null;
         }
 
-        public ValueSet.ContainsComponent FindInExpansion(String code, string system = null)
+        public ValueSet.ContainsComponent FindInExpansion(String code, string? system = null)
         {
             ensureExpansion();
 
@@ -69,7 +70,7 @@ namespace Hl7.Fhir.Model
 
             combinedExpansion.Parameter.AddRange(other.Expansion.Parameter);
             combinedExpansion.Contains.AddRange(other.Expansion.Contains);
-            combinedExpansion.Total += other.Expansion?.Total ?? other.Expansion.Contains.CountConcepts();
+            combinedExpansion.Total += other.Expansion!.Total ?? other.Expansion.Contains.CountConcepts();
 
             Expansion = combinedExpansion;
         }
@@ -105,3 +106,4 @@ namespace Hl7.Fhir.Model
 
     }
 }
+#nullable restore

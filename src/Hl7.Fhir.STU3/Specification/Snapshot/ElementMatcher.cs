@@ -344,9 +344,12 @@ namespace Hl7.Fhir.Specification.Snapshot
         // However for sliced elements, we need to initialize the slice entry and all following named slices from the same base element.
         // Therefore we first clone the original, unmerged base element and it's children (recursively).
         // Now each slice match return a reference to the associated original base element, unaffected by further processing.
-        private static ElementDefinitionNavigator initSliceBase(ElementDefinitionNavigator snapNav)
+        private static ElementDefinitionNavigator initSliceBase(ElementDefinitionNavigator snapNav, bool clearSlicing = true)
         {
             var sliceBase = snapNav.CloneSubtree();
+
+            if (!clearSlicing)
+                return sliceBase;
 
             // Named slices never inherit a slicing component
             sliceBase.Current.Slicing = null;
@@ -401,7 +404,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                     DiffBookmark = diffIsSliced ? diffNav.Bookmark() : Bookmark.Empty,
                     // [WMR 20170308] If this is a recursive call (e.g. named slice with slicing component = reslice),
                     // then explicitly override default base with specified slice base element
-                    SliceBase = sliceBase
+                    // [#2466] except when it is an extension header element and then the slicing component should not be cleared!
+                    SliceBase = isExtension ? initSliceBase(snapNav, false) : sliceBase
                 });
 
                 // Skip any existing slicing entry in the differential; below we process the actual slices

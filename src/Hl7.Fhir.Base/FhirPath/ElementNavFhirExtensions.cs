@@ -1,5 +1,18 @@
+/* 
+ * Copyright (c) 2023, Firely (info@fire.ly) and contributors
+ * See the file CONTRIBUTORS for details.
+ * 
+ * This file is licensed under the BSD 3-Clause license
+ * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
+ */
+
+#nullable enable
+
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Rest;
+using Hl7.Fhir.Specification.Terminology;
+using Hl7.Fhir.Utility;
 using Hl7.FhirPath;
 using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Functions;
@@ -29,7 +42,7 @@ namespace Hl7.Fhir.FhirPath
             t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
             t.Add("resolve", (ITypedElement f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
 
-            t.Add("memberOf", (Func<object, string, bool>)memberOf, doNullProp: false);
+            t.Add("memberOf", (ITypedElement input, string valueset, EvaluationContext ctx) => MemberOf(input, valueset, ctx), doNullProp: false);
 
             // Pre-normative this function was called htmlchecks, normative is htmlChecks
             // lets keep both to keep everyone happy.
@@ -55,14 +68,11 @@ namespace Hl7.Fhir.FhirPath
 
             return t;
 
-            static ITypedElement resolver(ITypedElement f, EvaluationContext ctx)
+            static ITypedElement? resolver(ITypedElement f, EvaluationContext ctx)
             {
                 return ctx is FhirEvaluationContext fctx ? f.Resolve(fctx.ElementResolver) : f.Resolve();
             }
-
-            static bool memberOf(object focus, string valueset) => throw new NotImplementedException("Terminology functions in FhirPath are unsupported in the .NET FhirPath engine.");
         }
-
 
 
         /// <summary>
@@ -82,10 +92,10 @@ namespace Hl7.Fhir.FhirPath
             if (focus?.Value is null) return false;
 
             // Perform the checking of the content for valid html content
-            return XHtml.IsValidNarrativeXhtml(focus.Value.ToString());
+            return XHtml.IsValidNarrativeXhtml(focus.Value.ToString()!);
         }
 
-        public static IEnumerable<Base> ToFhirValues(this IEnumerable<ITypedElement> results)
+        public static IEnumerable<Base?> ToFhirValues(this IEnumerable<ITypedElement> results)
         {
             return results.Select(r =>
             {
@@ -142,7 +152,7 @@ namespace Hl7.Fhir.FhirPath
         private static decimal substract(decimal operand1, decimal operand2) => operand1 - operand2;
         private static decimal add(decimal operand1, decimal operand2) => operand1 + operand2;
 
-        internal static P.Any LowBoundary(P.Any input, long? precision)
+        internal static P.Any? LowBoundary(P.Any input, long? precision)
         {
             return input switch
             {
@@ -154,7 +164,7 @@ namespace Hl7.Fhir.FhirPath
             };
         }
 
-        internal static P.Any HighBoundary(P.Any input, long? precision)
+        internal static P.Any? HighBoundary(P.Any input, long? precision)
         {
             return input switch
             {
@@ -170,22 +180,24 @@ namespace Hl7.Fhir.FhirPath
         {
             var value = AdjustBoundaryDecimal(input.Value, precision, op);
 
-            return new P.Quantity(value.Value, input.Unit, input.System);
+            return (value is null)
+                ? throw new ArgumentException($"Invalid input element: {input}")
+                : new P.Quantity(value.Value, input.Unit, input.System);
         }
 
         internal static P.Any BoundaryDateTime(P.DateTime dt, long? precision, int months, int days, int hours, int minutes, int seconds, int milliseconds)
         {
-            TimeSpan offset = dt.HasOffset ? dt.Offset.Value : TimeSpan.Zero;
+            TimeSpan offset = dt.HasOffset ? dt.Offset!.Value : TimeSpan.Zero;
 
             DateTimeOffset dto = dt.Precision switch
             {
-                P.DateTimePrecision.Year => new(dt.Years.Value, months, days, hours, minutes, seconds, milliseconds, offset),
-                P.DateTimePrecision.Month => new(dt.Years.Value, dt.Months.Value, days == 1 ? days : DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), hours, minutes, seconds, milliseconds, offset),
-                P.DateTimePrecision.Day => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, hours, minutes, seconds, milliseconds, offset),
-                P.DateTimePrecision.Hour => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, minutes, seconds, milliseconds, offset),
-                P.DateTimePrecision.Minute => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, seconds, milliseconds, offset),
-                P.DateTimePrecision.Second => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, dt.Seconds.Value, milliseconds, offset),
-                P.DateTimePrecision.Fraction => new(dt.Years.Value, dt.Months.Value, dt.Days.Value, dt.Hours.Value, dt.Minutes.Value, dt.Seconds.Value, dt.Millis.Value, offset),
+                P.DateTimePrecision.Year => new(dt.Years!.Value, months, days, hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Month => new(dt.Years!.Value, dt.Months!.Value, days == 1 ? days : DateTime.DaysInMonth(dt.Years.Value, dt.Months.Value), hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Day => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, hours, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Hour => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Minute => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, dt.Minutes!.Value, seconds, milliseconds, offset),
+                P.DateTimePrecision.Second => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, dt.Minutes!.Value, dt.Seconds!.Value, milliseconds, offset),
+                P.DateTimePrecision.Fraction => new(dt.Years!.Value, dt.Months!.Value, dt.Days!.Value, dt.Hours!.Value, dt.Minutes!.Value, dt.Seconds!.Value, dt.Millis!.Value, offset),
                 _ => throw new ArgumentException("Unexpected DateTime precision found")
             };
 
@@ -211,14 +223,14 @@ namespace Hl7.Fhir.FhirPath
             const int defaultMonth = 1;
             const int defaultDay = 1;
 
-            TimeSpan offset = time.HasOffset ? time.Offset.Value : TimeSpan.Zero;
+            TimeSpan offset = time.HasOffset ? time.Offset!.Value : TimeSpan.Zero;
 
             DateTimeOffset dto = time.Precision switch
             {
-                P.DateTimePrecision.Hour => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, minutes, seconds, milliseconds, offset),
-                P.DateTimePrecision.Minute => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, time.Minutes.Value, seconds, milliseconds, offset),
-                P.DateTimePrecision.Second => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, time.Minutes.Value, time.Seconds.Value, milliseconds, offset),
-                P.DateTimePrecision.Fraction => new(defaultYear, defaultMonth, defaultDay, time.Hours.Value, time.Minutes.Value, time.Seconds.Value, time.Millis.Value, offset),
+                P.DateTimePrecision.Hour => new(defaultYear, defaultMonth, defaultDay, time.Hours!.Value, minutes, seconds, milliseconds, offset),
+                P.DateTimePrecision.Minute => new(defaultYear, defaultMonth, defaultDay, time.Hours!.Value, time.Minutes!.Value, seconds, milliseconds, offset),
+                P.DateTimePrecision.Second => new(defaultYear, defaultMonth, defaultDay, time.Hours!.Value, time.Minutes!.Value, time.Seconds!.Value, milliseconds, offset),
+                P.DateTimePrecision.Fraction => new(defaultYear, defaultMonth, defaultDay, time.Hours!.Value, time.Minutes!.Value, time.Seconds!.Value, time.Millis!.Value, offset),
                 _ => throw new ArgumentException("Unexpected Time precision found")
             };
 
@@ -243,5 +255,54 @@ namespace Hl7.Fhir.FhirPath
         /// <param name="r"></param>
         /// <returns></returns>
         internal static bool Comparable(P.Quantity l, P.Quantity r) => l.TryCompareTo(r).Success;
+
+        /// <summary>
+        /// When invoked on a single code-valued element, returns true if the code is a member of the given valueset. 
+        /// When invoked on a single concept-valued element, returns true if any code in the concept is a member of the given valueset. 
+        /// When invoked on a single string, returns true if the string is equal to a code in the valueset, so long as the valueset only contains one codesystem. 
+        /// If the valueset in this case contains more than one codesystem, the return value is empty.
+        /// 
+        /// If the valueset cannot be resolved as a uri to a value set, or the input is empty or has more than one value, the return value is empty.
+        /// </summary>
+        /// <param name="input">The input element for the function 'memberOf()'</param>
+        /// <param name="valueset">The valueset</param>
+        /// <param name="ctx">EvaluationContext of the FhirPath compiler</param>
+        /// <returns>See summary</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        internal static bool? MemberOf(ITypedElement input, string valueset, EvaluationContext ctx)
+        {
+            var service = (ctx is FhirEvaluationContext fctx ? fctx.TerminologyService : null)
+                ?? throw new ArgumentNullException("The 'memberOf' function cannot be executed because the FhirEvaluationContext does not include a TerminologyService.");
+
+            ValidateCodeParameters? inParams = new ValidateCodeParameters()
+                        .WithValueSet(valueset);
+
+            inParams = input.InstanceType switch
+            {
+                "code" when input is ScopedNode sn => inParams.WithCode(code: sn.Value as string, context: sn.LocalLocation),
+                "Coding" => inParams.WithCoding(input.ParseCoding()),
+                "CodeableConcept" => inParams.WithCodeableConcept(input.ParseCodeableConcept()),
+                "System.String" => inParams.WithCode(code: input.Value as string, context: "No context available"),
+                _ => null,
+            };
+
+            if (inParams is null)
+            {
+                // the memberOf function has an invalid input element
+                return null;
+            }
+
+            try
+            {
+                var outParams = TaskHelper.Await(() => service.ValueSetValidateCode(inParams.Build()));
+                return outParams.GetSingleValue<FhirBoolean>("result")?.Value ?? false;
+            }
+            catch (FhirOperationException)
+            {
+                // something happened in the service, like ValueSet was not found, or duplicate parameters, etc. Then return null (undefined)
+                return null;
+            }
+        }
     }
 }
+#nullable restore
