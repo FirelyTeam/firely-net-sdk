@@ -1,10 +1,8 @@
 ﻿using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Hl7.Fhir.Serialization.Tests
@@ -162,12 +160,12 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("PVAL116", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation", oc.Issue[2].Expression.First());
+                Assert.AreEqual("Observation.status", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[2].Details.Text.Contains("status"));
 
-                Assert.AreEqual("Observation", oc.Issue[3].Expression.First());
+                Assert.AreEqual("Observation.code", oc.Issue[3].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[3].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[3].Details.Coding[0].Code);
                 Assert.IsTrue(oc.Issue[3].Details.Text.Contains("code"));
@@ -405,11 +403,11 @@ namespace Hl7.Fhir.Serialization.Tests
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[0].Severity);
                 Assert.AreEqual("XML120", oc.Issue[0].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation", oc.Issue[1].Expression.First());
+                Assert.AreEqual("Observation.status", oc.Issue[1].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[1].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[1].Details.Coding[0].Code);
 
-                Assert.AreEqual("Observation", oc.Issue[2].Expression.First());
+                Assert.AreEqual("Observation.code", oc.Issue[2].Expression.First());
                 Assert.AreEqual(OperationOutcome.IssueSeverity.Error, oc.Issue[2].Severity);
                 Assert.AreEqual("PVAL105", oc.Issue[2].Details.Coding[0].Code);
 
@@ -700,49 +698,33 @@ namespace Hl7.Fhir.Serialization.Tests
                   <entry>
                     <fullUrl value="https://example.org/Questionnaire/obs-comp" />
                     <resource>
-                      <Observation>
-                        <id value="obs-int" />
-                        <status value="final" />
-                        <code>
-                          <text value="Integer Testing Observation" />
-                        </code>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                      <Parameters>
+                        <id value="pars-int" />
+                        <parameter>
+                          <name value="int-one" />
                           <valueInteger value="1" />
-                        </component>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                        </parameter>
+                        <parameter>
+                          <name value="int-two" />
                           <valueInteger value="2" />
-                        </component>
-                      </Observation>
+                        </parameter>
+                      </Parameters>
                     </resource>
                   </entry>
                   <entry>
                     <fullUrl value="https://example.org/Questionnaire/obs-comp" />
                     <resource>
-                      <Observation>
-                        <id value="obs-bool" />
-                        <status value="final" />
-                        <code>
-                          <text value="Boolean Testing Observation" />
-                        </code>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                      <Parameters>
+                        <id value="pars-bool" />
+                        <parameter>
+                          <name value="int-one" />
                           <valueBoolean value="true" />
-                        </component>
-                        <component>
-                          <code>
-                            <text value="Component" />
-                          </code>
+                        </parameter>
+                        <parameter>
+                          <name value="int-bool" />
                           <valueBoolean value="false" />
-                        </component>
-                      </Observation>
+                        </parameter>
+                      </Parameters>
                     </resource>
                   </entry>
                   <entry>
