@@ -39,7 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)StructureDefinitionSummaryProviderTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StructureDefinitionWalkerTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Terminology\LocalTerminologyServiceTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Terminology\MimeTypeTerminologyServiceTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestDataHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TimingSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)xUnitBug.cs" />
