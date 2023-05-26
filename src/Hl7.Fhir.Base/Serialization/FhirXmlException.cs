@@ -1,13 +1,10 @@
 ﻿#nullable enable
 
 using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
 using System;
-using System.Globalization;
 using System.Xml;
-using System.Xml.Linq;
 using OO_Sev = Hl7.Fhir.Model.OperationOutcome.IssueSeverity;
 using OO_Typ = Hl7.Fhir.Model.OperationOutcome.IssueType;
 
@@ -55,6 +52,7 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, NO_ATTRIBUTES_ALLOWED_ON_RESOURCE_CONTAINER_CODE, $"Element '{elementName}' has a contained resource and therefore should not have attributes.", OO_Sev.Fatal, OO_Typ.Structure);
         internal static FhirXmlException UNALLOWED_NODE_TYPE(XmlReader reader, string instancePath, string s0) => Initialize(reader, instancePath, UNALLOWED_NODE_TYPE_CODE, $"Xml node of type '{s0}' is unexpected at this point", OO_Sev.Fatal, OO_Typ.Structure);
         internal static FhirXmlException EXPECTED_OPENING_ELEMENT(XmlReader reader, string instancePath, string openElementName) => Initialize(reader, instancePath, EXPECTED_OPENING_ELEMENT_CODE, $"Expected opening element, but found {openElementName}.", OO_Sev.Fatal, OO_Typ.Structure);
+        internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
 
         // ==========================================
         // Recoverable Errors - when adding a new error, also add it to the appropriate error collections below.
@@ -68,7 +66,6 @@ namespace Hl7.Fhir.Serialization
         // These errors signal parsing errors, but the original raw data is retained in the POCO so no data is lost.
         internal static FhirXmlException INCORRECT_BASE64_DATA(XmlReader reader, string instancePath) => Initialize(reader, instancePath, INCORRECT_BASE64_DATA_CODE, "Encountered incorrectly encoded base64 data.", OO_Sev.Error, OO_Typ.Value);
         internal static FhirXmlException VALUE_IS_NOT_OF_EXPECTED_TYPE(XmlReader reader, string instancePath, string trimmedValue, string typeName) => Initialize(reader, instancePath, VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, $"Literal string '{trimmedValue}' cannot be parsed as a '{typeName}'.", OO_Sev.Error, OO_Typ.Structure);
-        internal static FhirXmlException INVALID_DUPLICATE_PROPERTY(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, INVALID_DUPLICATE_PROPERTY_CODE, $"Element '{elementName}' is not permitted to repeat", OO_Sev.Error, OO_Typ.Structure);
 
         // An incorrect order does not mean we cannot parse the data safely
         internal static FhirXmlException ELEMENT_OUT_OF_ORDER(XmlReader reader, string instancePath, string elementName) => Initialize(reader, instancePath, ELEMENT_OUT_OF_ORDER_CODE, $"Element '{elementName}' is not in the correct order ", OO_Sev.Error, OO_Typ.Structure);
@@ -80,15 +77,10 @@ namespace Hl7.Fhir.Serialization
         internal static FhirXmlException ELEMENT_HAS_NO_VALUE_OR_CHILDREN(string instancePath, int lineNumber, int position, string? locationMessage, string? localName)
         {
             var message = $"Element '{localName}' must have child elements and / or a value attribute";
-            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirXmlException(ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE, messageWithLocation, OO_Sev.Error, OO_Typ.Structure)
-            {
-                BaseErrorMessage = message,
-                LineNumber = lineNumber,
-                Position = position,
-                InstancePath = instancePath,
-            };
+            return new FhirXmlException(
+                ELEMENT_HAS_NO_VALUE_OR_CHILDREN_CODE,
+                message, instancePath, lineNumber, position, OO_Sev.Error, OO_Typ.Structure);
         }
 
         // Xml paraphernalia that do not contain data so they can be safely skipped.
@@ -124,27 +116,50 @@ namespace Hl7.Fhir.Serialization
             CHOICE_ELEMENT_HAS_UNKNOWN_TYPE_CODE or
             UNKNOWN_ATTRIBUTE_CODE;
 
-        public FhirXmlException(string code, string message, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType)
+        public FhirXmlException(string code, string message)
+        : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown)
         {
+            // Nothing
         }
 
-        public FhirXmlException(string code, string message, Exception? innerException, OperationOutcome.IssueSeverity issueSeverity = OO_Sev.Error, OperationOutcome.IssueType issueType = OO_Typ.Unknown) : base(code, message, issueSeverity, issueType, innerException)
+        public FhirXmlException(string code, string message, Exception? innerException)
+            : base(code, message, null, null, null, OO_Sev.Error, OO_Typ.Unknown, innerException)
         {
+            // Nothing
+        }
+
+        public FhirXmlException(
+            string errorCode,
+            string baseMessage,
+            string? instancePath,
+            long? lineNumber,
+            long? position,
+            OperationOutcome.IssueSeverity issueSeverity,
+            OperationOutcome.IssueType issueType,
+            Exception? innerException = null) :
+                base(errorCode, baseMessage, instancePath, lineNumber, position, issueSeverity, issueType, innerException)
+        {
+            // Nothing
         }
 
         internal static FhirXmlException Initialize(XmlReader reader, string instancePath, string code, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, FhirXmlException? innerException = null)
         {
             var (lineNumber, position) = reader.GenerateLineInfo();
-            string messageWithLocation = ExtendedCodedException.FormatLocationMessage(message, instancePath, lineNumber, position);
 
-            return new FhirXmlException(code, messageWithLocation, innerException, issueSeverity, issueType)
-            {
-                BaseErrorMessage = message,
-                LineNumber = lineNumber,
-                Position = position,
-                InstancePath = instancePath,
-            };
+            return new FhirXmlException(
+                code,
+                message,
+                instancePath,
+                lineNumber,
+                position,
+                issueSeverity,
+                issueType,
+                innerException);
         }
+
+        public FhirXmlException? CloneWith(string baseMessage, OO_Sev issueSeverity, OO_Typ issueType) =>
+           new FhirXmlException(ErrorCode, baseMessage, InstancePath, LineNumber, Position,
+                   issueSeverity, issueType);
     }
 }
 

@@ -1,8 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Utility;
 using Hl7.Fhir.Validation;
-using System;
-using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
@@ -20,11 +18,12 @@ namespace Hl7.Fhir.Serialization
             foreach (var e in ex.Exceptions)
             {
                 var issue =
-                new OperationOutcome.IssueComponent()
-                {
-                    Severity = OperationOutcome.IssueSeverity.Error,
-                    Code = OperationOutcome.IssueType.Invalid
-                };
+                    new OperationOutcome.IssueComponent()
+                    {
+                        Severity = OperationOutcome.IssueSeverity.Error,
+                        Code = OperationOutcome.IssueType.Invalid
+                    };
+
                 if (e is ExtendedCodedException ecl)
                 {
                     issue = ecl.ToIssue();
