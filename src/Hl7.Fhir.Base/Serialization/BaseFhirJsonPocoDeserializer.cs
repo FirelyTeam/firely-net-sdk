@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Serialization
             reader.Read();
 
             var empty = true;
-            var delayedValidations = new ObjectParsingState();
+            var objectParsingState = new ObjectParsingState();
             var oldErrorCount = state.Errors.Count;
             var (line, pos) = reader.GetLocation();
 
@@ -284,7 +284,7 @@ namespace Hl7.Fhir.Serialization
                     try
                     {
                         state.Path.EnterElement(propMapping!.Name, !propMapping.IsCollection ? null : 0, propMapping.IsPrimitive);
-                        deserializePropertyValueInto(target, currentPropertyName, propMapping, propValueMapping!, ref reader, delayedValidations, state);
+                        deserializePropertyValueInto(target, currentPropertyName, propMapping, propValueMapping!, ref reader, objectParsingState, state);
                     }
                     finally
                     {
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Serialization
             // postponed until after all properties have been seen (e.g. Instance and Property validations for
             // primitive properties, since they may be composed from two properties `name` and `_name` in json
             // and should only be validated when both have been processed, even if megabytes apart in the json file).
-            delayedValidations.RunDelayedValidation();
+            objectParsingState.RunDelayedValidation();
 
             // read past object, unless this is the last EndObject in the top-level Deserialize call
             if (!stayOnLastToken) reader.Read();
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Serialization
             private readonly Dictionary<string, Action> _validations = new();
             private readonly Dictionary<string, int> _parsedPropValue = new();
 
-            public int ParsingPropertyValue(string memberName)
+            public int GetPropertyIndex(string memberName)
             {
                 if (_parsedPropValue.ContainsKey(memberName))
                     return _parsedPropValue[memberName];
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Serialization
                 return 0;
             }
 
-            public void ParsedPropertyValue(string memberName, int count)
+            public void SetPropertyIndex(string memberName, int count)
             {
                 _parsedPropValue[memberName] = count;
             }
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Serialization
             // to simply create a list by Adding(). Not the fastest approach :-(
             int elementIndex = 0;
             bool? onlyNulls = null;
-            elementIndex = delayedValidations.ParsingPropertyValue(propertyName);
+            elementIndex = delayedValidations.GetPropertyIndex(propertyName);
             if (elementIndex > 0)
             {
                 state.Path.IncrementIndex(elementIndex);
@@ -548,8 +548,8 @@ namespace Hl7.Fhir.Serialization
                     existingList[elementIndex] ??= propertyValueMapping.Factory();
                     onlyNulls = false;
                     _ = DeserializeFhirPrimitive((PrimitiveType)existingList[elementIndex]!, propertyName, propertyValueMapping, fhirType, ref reader, delayedValidations, state);
-                    
-                    delayedValidations.ParsedPropertyValue(propertyName, existingList.Count);
+
+                    delayedValidations.SetPropertyIndex(propertyName, existingList.Count);
                 }
 
                 elementIndex += 1;
@@ -642,7 +642,8 @@ namespace Hl7.Fhir.Serialization
                 else
                     delayedValidations.ScheduleDelayedValidation(
                         propertyName.TrimStart('_') + INSTANCE_VALIDATION_KEY_SUFFIX,
-                        () => {
+                        () =>
+                        {
                             context.PathStack.EnterElement(propertyName.TrimStart('_'), null, propertyValueMapping.IsPrimitive);
                             PocoDeserializationHelper.RunInstanceValidation(targetPrimitive, Settings.Validator, context, state.Errors);
                             context.PathStack.ExitElement();
