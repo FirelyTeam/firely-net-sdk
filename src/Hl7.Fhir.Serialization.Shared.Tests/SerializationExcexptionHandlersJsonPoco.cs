@@ -727,6 +727,47 @@ namespace Hl7.Fhir.Serialization.Tests
         }
 
         [TestMethod]
+        public void JsonInvalidDuplicateArrayExtension()
+        {
+            // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
+            string rawData = """
+                {
+                  "resourceType": "Patient",
+                  "id": "pat1",
+                  "name": [
+                    {
+                      "_given": [ null, { "id": "e1" }],
+                      "given": [ "Jane", "John" ],
+                      "given": [ "Rita", true ],
+                      "_given": [ null, { "id": "e2" }]
+                    }
+                    ]
+                }
+                """;
+            // This feels like a breaking case and should be fatal if there are more than 1 name/_name
+
+            try
+            {
+                var p = serializeResource<Patient>(rawData);
+                DebugDump.OutputJson(p);
+                Assert.Fail("Expected to throw parsing");
+            }
+            catch (DeserializationFailedException ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"{ex.Message}");
+                OperationOutcome oc = ex.ToOperationOutcome();
+                DebugDump.OutputXml(oc);
+                DebugDump.OutputJson(ex.PartialResult);
+
+                Assert.AreEqual("Patient.name[0].given[2]", oc.Issue[0].Expression.First());
+                Assert.AreEqual(OperationOutcome.IssueSeverity.Warning, oc.Issue[0].Severity);
+                Assert.AreEqual("JSON128", oc.Issue[0].Details.Coding[0].Code);
+
+                Assert.AreEqual(3, oc.Issue.Count);
+            }
+        }
+
+        [TestMethod]
         public void JsonInvalidElementIdArrayPath()
         {
             // string containing a FHIR Patient with name John Doe, 17 Jan 1970, an invalid gender and an invalid date of birth
