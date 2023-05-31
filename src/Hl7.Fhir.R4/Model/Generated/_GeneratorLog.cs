@@ -71,9 +71,6 @@
 // Generated Shared Enumeration: ConceptMapEquivalence (http://hl7.org/fhir/ValueSet/concept-map-equivalence)
   // Used in model class (resource): ConceptMap.group.element.target.equivalence
 
-// Deferred generation of Shared Enumeration (will be generated in another subset): ConstraintSeverity (http://hl7.org/fhir/ValueSet/constraint-severity)
-  // Used in model class (type): ElementDefinition.constraint.severity
-
 // Generated Shared Enumeration: DaysOfWeek (http://hl7.org/fhir/ValueSet/days-of-week)
   // Used in model class (type): Timing.repeat.dayOfWeek
   // Used in model class (resource): HealthcareService.availableTime.daysOfWeek
@@ -141,6 +138,9 @@
 // Generated Shared Enumeration: MeasureImprovementNotation (http://hl7.org/fhir/ValueSet/measure-improvement-notation)
   // Used in model class (resource): Measure.improvementNotation
   // Used in model class (resource): MeasureReport.improvementNotation
+
+// Generated Shared Enumeration: MessageheaderResponseRequest (http://hl7.org/fhir/ValueSet/messageheader-response-request)
+  // Used in model class (resource): MessageDefinition.responseRequired
 
 // Generated Shared Enumeration: NoteType (http://hl7.org/fhir/ValueSet/note-type)
   // Used in model class (resource): ClaimResponse.processNote.type

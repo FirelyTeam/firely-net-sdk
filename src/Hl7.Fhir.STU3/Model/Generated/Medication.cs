@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes that identify this medication
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=90)]
+    [FhirElement("code", InSummary=true, Order=90, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -763,7 +763,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if a brand
     /// </summary>
-    [FhirElement("isBrand", InSummary=true, Order=110)]
+    [FhirElement("isBrand", InSummary=true, Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean IsBrandElement
     {
@@ -794,7 +794,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if medication does not require a prescription
     /// </summary>
-    [FhirElement("isOverTheCounter", InSummary=true, Order=120)]
+    [FhirElement("isOverTheCounter", InSummary=true, Order=120, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean IsOverTheCounterElement
     {
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=130)]
+    [FhirElement("manufacturer", InSummary=true, Order=130, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

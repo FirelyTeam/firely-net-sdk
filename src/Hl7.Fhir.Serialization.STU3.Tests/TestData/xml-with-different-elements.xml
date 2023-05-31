@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ClinicalDocument>
-    <example1>TestValue1</example1>
-    <example2 value="TestValue2"/>
-</ClinicalDocument>
