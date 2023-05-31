@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/FHIR-version)
   /// (system: http://hl7.org/fhir/FHIR-version)
   /// </summary>
-  [FhirEnumeration("FHIRVersion")]
+  [FhirEnumeration("FHIRVersion", "http://hl7.org/fhir/ValueSet/FHIR-version")]
   public enum FHIRVersion
   {
     /// <summary>
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/filter-operator)
   /// (system: http://hl7.org/fhir/filter-operator)
   /// </summary>
-  [FhirEnumeration("FilterOperator")]
+  [FhirEnumeration("FilterOperator", "http://hl7.org/fhir/ValueSet/filter-operator")]
   public enum FilterOperator
   {
     /// <summary>
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/publication-status)
   /// (system: http://hl7.org/fhir/publication-status)
   /// </summary>
-  [FhirEnumeration("PublicationStatus")]
+  [FhirEnumeration("PublicationStatus", "http://hl7.org/fhir/ValueSet/publication-status")]
   public enum PublicationStatus
   {
     /// <summary>

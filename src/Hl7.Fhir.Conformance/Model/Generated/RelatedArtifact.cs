@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/related-artifact-type)
     /// (system: http://hl7.org/fhir/related-artifact-type)
     /// </summary>
-    [FhirEnumeration("RelatedArtifactType")]
+    [FhirEnumeration("RelatedArtifactType", "http://hl7.org/fhir/ValueSet/related-artifact-type")]
     public enum RelatedArtifactType
     {
       /// <summary>

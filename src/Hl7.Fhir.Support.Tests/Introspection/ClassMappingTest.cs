@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,6 +18,37 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
+    [TestClass]
+    public class EnumMappingTest
+    {
+        private enum Random
+        {
+            Eight,
+            Five,
+            Three
+        }
+
+        [TestMethod]
+        public void TestEnumMappingCreation()
+        {
+            EnumMapping.TryCreate(typeof(EnumMappingTest), out var _).Should().BeFalse();
+            EnumMapping.TryCreate(typeof(FilterOperator), out var mapping).Should().BeTrue();
+
+            mapping.Canonical.Should().Be("http://hl7.org/fhir/ValueSet/filter-operator");
+            mapping.Name.Should().Be("FilterOperator");
+
+            var names = Enum.GetNames<FilterOperator>();
+            mapping.Members.Should().HaveCount(names.Length);
+            mapping.Members.Keys.Should().BeEquivalentTo(names);
+
+            var equals = mapping.Members["="];
+            equals.Code.Should().Be("=");
+            equals.Value.Should().Be(FilterOperator.Equal);
+            equals.Description.Should().Be("Equals");
+            equals.System.Should().Be("http://hl7.org/fhir/filter-operator");
+        }
+    }
+
     [TestClass]
     public class ClassMappingTest
     {

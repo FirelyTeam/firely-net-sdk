@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning)
     /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
     /// </summary>
-    [FhirEnumeration("CodeSystemHierarchyMeaning")]
+    [FhirEnumeration("CodeSystemHierarchyMeaning", "http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning")]
     public enum CodeSystemHierarchyMeaning
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-property-type)
     /// (system: http://hl7.org/fhir/concept-property-type)
     /// </summary>
-    [FhirEnumeration("PropertyType")]
+    [FhirEnumeration("PropertyType", "http://hl7.org/fhir/ValueSet/concept-property-type")]
     public enum PropertyType
     {
       /// <summary>

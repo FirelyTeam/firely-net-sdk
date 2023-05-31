@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/property-representation)
     /// (system: http://hl7.org/fhir/property-representation)
     /// </summary>
-    [FhirEnumeration("PropertyRepresentation")]
+    [FhirEnumeration("PropertyRepresentation", "http://hl7.org/fhir/ValueSet/property-representation")]
     public enum PropertyRepresentation
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-slicing-rules)
     /// (system: http://hl7.org/fhir/resource-slicing-rules)
     /// </summary>
-    [FhirEnumeration("SlicingRules")]
+    [FhirEnumeration("SlicingRules", "http://hl7.org/fhir/ValueSet/resource-slicing-rules")]
     public enum SlicingRules
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/discriminator-type)
     /// (system: http://hl7.org/fhir/discriminator-type)
     /// </summary>
-    [FhirEnumeration("DiscriminatorType")]
+    [FhirEnumeration("DiscriminatorType", "http://hl7.org/fhir/ValueSet/discriminator-type")]
     public enum DiscriminatorType
     {
       /// <summary>
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-aggregation-mode)
     /// (system: http://hl7.org/fhir/resource-aggregation-mode)
     /// </summary>
-    [FhirEnumeration("AggregationMode")]
+    [FhirEnumeration("AggregationMode", "http://hl7.org/fhir/ValueSet/resource-aggregation-mode")]
     public enum AggregationMode
     {
       /// <summary>
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-version-rules)
     /// (system: http://hl7.org/fhir/reference-version-rules)
     /// </summary>
-    [FhirEnumeration("ReferenceVersionRules")]
+    [FhirEnumeration("ReferenceVersionRules", "http://hl7.org/fhir/ValueSet/reference-version-rules")]
     public enum ReferenceVersionRules
     {
       /// <summary>
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/additional-binding-purpose)
     /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
     /// </summary>
-    [FhirEnumeration("AdditionalBindingPurposeVS")]
+    [FhirEnumeration("AdditionalBindingPurposeVS", "http://hl7.org/fhir/ValueSet/additional-binding-purpose")]
     public enum AdditionalBindingPurposeVS
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/issue-severity)
     /// (system: http://hl7.org/fhir/issue-severity)
     /// </summary>
-    [FhirEnumeration("IssueSeverity")]
+    [FhirEnumeration("IssueSeverity", "http://hl7.org/fhir/ValueSet/issue-severity")]
     public enum IssueSeverity
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/issue-type)
     /// (system: http://hl7.org/fhir/issue-type)
     /// </summary>
-    [FhirEnumeration("IssueType")]
+    [FhirEnumeration("IssueType", "http://hl7.org/fhir/ValueSet/issue-type")]
     public enum IssueType
     {
       /// <summary>

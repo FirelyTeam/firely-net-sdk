@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// (url: http://hl7.org/fhir/ValueSet/narrative-status)
         /// (system: http://hl7.org/fhir/narrative-status)
         /// </summary>
-        [FhirEnumeration("NarrativeStatus")]
+        [FhirEnumeration("NarrativeStatus", "http://hl7.org/fhir/ValueSet/narrative-status")]
         public enum NarrativeStatus
         {
             /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/restful-capability-mode)
     /// (system: http://hl7.org/fhir/restful-capability-mode)
     /// </summary>
-    [FhirEnumeration("RestfulCapabilityMode")]
+    [FhirEnumeration("RestfulCapabilityMode", "http://hl7.org/fhir/ValueSet/restful-capability-mode")]
     public enum RestfulCapabilityMode
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/versioning-policy)
     /// (system: http://hl7.org/fhir/versioning-policy)
     /// </summary>
-    [FhirEnumeration("ResourceVersionPolicy")]
+    [FhirEnumeration("ResourceVersionPolicy", "http://hl7.org/fhir/ValueSet/versioning-policy")]
     public enum ResourceVersionPolicy
     {
       /// <summary>
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-read-status)
     /// (system: http://hl7.org/fhir/conditional-read-status)
     /// </summary>
-    [FhirEnumeration("ConditionalReadStatus")]
+    [FhirEnumeration("ConditionalReadStatus", "http://hl7.org/fhir/ValueSet/conditional-read-status")]
     public enum ConditionalReadStatus
     {
       /// <summary>
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-delete-status)
     /// (system: http://hl7.org/fhir/conditional-delete-status)
     /// </summary>
-    [FhirEnumeration("ConditionalDeleteStatus")]
+    [FhirEnumeration("ConditionalDeleteStatus", "http://hl7.org/fhir/ValueSet/conditional-delete-status")]
     public enum ConditionalDeleteStatus
     {
       /// <summary>
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-handling-policy)
     /// (system: http://hl7.org/fhir/reference-handling-policy)
     /// </summary>
-    [FhirEnumeration("ReferenceHandlingPolicy")]
+    [FhirEnumeration("ReferenceHandlingPolicy", "http://hl7.org/fhir/ValueSet/reference-handling-policy")]
     public enum ReferenceHandlingPolicy
     {
       /// <summary>
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("TypeRestfulInteraction")]
+    [FhirEnumeration("TypeRestfulInteraction", "http://hl7.org/fhir/ValueSet/type-restful-interaction")]
     public enum TypeRestfulInteraction
     {
       /// <summary>
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("SystemRestfulInteraction")]
+    [FhirEnumeration("SystemRestfulInteraction", "http://hl7.org/fhir/ValueSet/system-restful-interaction")]
     public enum SystemRestfulInteraction
     {
       /// <summary>
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-capability-mode)
     /// (system: http://hl7.org/fhir/event-capability-mode)
     /// </summary>
-    [FhirEnumeration("EventCapabilityMode")]
+    [FhirEnumeration("EventCapabilityMode", "http://hl7.org/fhir/ValueSet/event-capability-mode")]
     public enum EventCapabilityMode
     {
       /// <summary>
@@ -332,7 +332,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-mode)
     /// (system: http://hl7.org/fhir/document-mode)
     /// </summary>
-    [FhirEnumeration("DocumentMode")]
+    [FhirEnumeration("DocumentMode", "http://hl7.org/fhir/ValueSet/document-mode")]
     public enum DocumentMode
     {
       /// <summary>

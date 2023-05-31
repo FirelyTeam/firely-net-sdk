@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quantity-comparator)
     /// (system: http://hl7.org/fhir/quantity-comparator)
     /// </summary>
-    [FhirEnumeration("QuantityComparator")]
+    [FhirEnumeration("QuantityComparator", "http://hl7.org/fhir/ValueSet/quantity-comparator")]
     public enum QuantityComparator
     {
       /// <summary>

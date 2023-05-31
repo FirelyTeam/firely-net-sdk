@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/bundle-type)
     /// (system: http://hl7.org/fhir/bundle-type)
     /// </summary>
-    [FhirEnumeration("BundleType")]
+    [FhirEnumeration("BundleType", "http://hl7.org/fhir/ValueSet/bundle-type")]
     public enum BundleType
     {
       /// <summary>
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/iana-link-relations)
     /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
     /// </summary>
-    [FhirEnumeration("LinkRelationTypes")]
+    [FhirEnumeration("LinkRelationTypes", "http://hl7.org/fhir/ValueSet/iana-link-relations")]
     public enum LinkRelationTypes
     {
       /// <summary>
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-entry-mode)
     /// (system: http://hl7.org/fhir/search-entry-mode)
     /// </summary>
-    [FhirEnumeration("SearchEntryMode")]
+    [FhirEnumeration("SearchEntryMode", "http://hl7.org/fhir/ValueSet/search-entry-mode")]
     public enum SearchEntryMode
     {
       /// <summary>
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/http-verb)
     /// (system: http://hl7.org/fhir/http-verb)
     /// </summary>
-    [FhirEnumeration("HTTPVerb")]
+    [FhirEnumeration("HTTPVerb", "http://hl7.org/fhir/ValueSet/http-verb")]
     public enum HTTPVerb
     {
       /// <summary>

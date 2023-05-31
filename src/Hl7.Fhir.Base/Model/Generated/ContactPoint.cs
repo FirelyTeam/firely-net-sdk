@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contact-point-system)
     /// (system: http://hl7.org/fhir/contact-point-system)
     /// </summary>
-    [FhirEnumeration("ContactPointSystem")]
+    [FhirEnumeration("ContactPointSystem", "http://hl7.org/fhir/ValueSet/contact-point-system")]
     public enum ContactPointSystem
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contact-point-use)
     /// (system: http://hl7.org/fhir/contact-point-use)
     /// </summary>
-    [FhirEnumeration("ContactPointUse")]
+    [FhirEnumeration("ContactPointUse", "http://hl7.org/fhir/ValueSet/contact-point-use")]
     public enum ContactPointUse
     {
       /// <summary>
