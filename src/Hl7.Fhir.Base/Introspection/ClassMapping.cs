@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Introspection
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
-                CqlTypeSpecifier = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release)?.Name ?? "{http://hl7.org/fhir/}" + type.Name
+                CqlTypeSpecifier = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release)?.Name ?? "{http://hl7.org/fhir}" + type.Name
 ,
             };
 
