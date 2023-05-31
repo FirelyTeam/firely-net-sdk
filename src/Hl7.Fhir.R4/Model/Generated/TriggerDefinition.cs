@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/trigger-type)
     /// (system: http://hl7.org/fhir/trigger-type)
     /// </summary>
-    [FhirEnumeration("TriggerType")]
+    [FhirEnumeration("TriggerType", "http://hl7.org/fhir/ValueSet/trigger-type")]
     public enum TriggerType
     {
       /// <summary>

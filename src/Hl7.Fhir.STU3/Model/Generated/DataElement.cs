@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/dataelement-stringency)
     /// (system: http://hl7.org/fhir/dataelement-stringency)
     /// </summary>
-    [FhirEnumeration("DataElementStringency")]
+    [FhirEnumeration("DataElementStringency", "http://hl7.org/fhir/ValueSet/dataelement-stringency")]
     public enum DataElementStringency
     {
       /// <summary>

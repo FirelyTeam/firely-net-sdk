@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contract-status)
     /// (system: http://hl7.org/fhir/contract-status)
     /// </summary>
-    [FhirEnumeration("ContractResourceStatusCodes")]
+    [FhirEnumeration("ContractResourceStatusCodes", "http://hl7.org/fhir/ValueSet/contract-status")]
     public enum ContractResourceStatusCodes
     {
       /// <summary>

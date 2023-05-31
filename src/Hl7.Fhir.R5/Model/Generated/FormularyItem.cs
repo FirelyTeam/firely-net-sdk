@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/formularyitem-status)
     /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
     /// </summary>
-    [FhirEnumeration("FormularyItemStatusCodes")]
+    [FhirEnumeration("FormularyItemStatusCodes", "http://hl7.org/fhir/ValueSet/formularyitem-status")]
     public enum FormularyItemStatusCodes
     {
       /// <summary>

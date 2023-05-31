@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-precondition-type)
     /// (system: http://hl7.org/fhir/condition-precondition-type)
     /// </summary>
-    [FhirEnumeration("ConditionPreconditionType")]
+    [FhirEnumeration("ConditionPreconditionType", "http://hl7.org/fhir/ValueSet/condition-precondition-type")]
     public enum ConditionPreconditionType
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose)
     /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
     /// </summary>
-    [FhirEnumeration("ConditionQuestionnairePurpose")]
+    [FhirEnumeration("ConditionQuestionnairePurpose", "http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose")]
     public enum ConditionQuestionnairePurpose
     {
       /// <summary>

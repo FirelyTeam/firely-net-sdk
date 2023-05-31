@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("AdverseEventStatus")]
+    [FhirEnumeration("AdverseEventStatus", "http://hl7.org/fhir/ValueSet/adverse-event-status")]
     public enum AdverseEventStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
     /// (system: http://hl7.org/fhir/adverse-event-actuality)
     /// </summary>
-    [FhirEnumeration("AdverseEventActuality")]
+    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality")]
     public enum AdverseEventActuality
     {
       /// <summary>

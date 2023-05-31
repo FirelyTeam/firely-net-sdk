@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-status-codes)
     /// (system: http://hl7.org/fhir/report-status-codes)
     /// </summary>
-    [FhirEnumeration("TestReportStatus")]
+    [FhirEnumeration("TestReportStatus", "http://hl7.org/fhir/ValueSet/report-status-codes")]
     public enum TestReportStatus
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-result-codes)
     /// (system: http://hl7.org/fhir/report-result-codes)
     /// </summary>
-    [FhirEnumeration("TestReportResult")]
+    [FhirEnumeration("TestReportResult", "http://hl7.org/fhir/ValueSet/report-result-codes")]
     public enum TestReportResult
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-participant-type)
     /// (system: http://hl7.org/fhir/report-participant-type)
     /// </summary>
-    [FhirEnumeration("TestReportParticipantType")]
+    [FhirEnumeration("TestReportParticipantType", "http://hl7.org/fhir/ValueSet/report-participant-type")]
     public enum TestReportParticipantType
     {
       /// <summary>
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-action-result-codes)
     /// (system: http://hl7.org/fhir/report-action-result-codes)
     /// </summary>
-    [FhirEnumeration("TestReportActionResult")]
+    [FhirEnumeration("TestReportActionResult", "http://hl7.org/fhir/ValueSet/report-action-result-codes")]
     public enum TestReportActionResult
     {
       /// <summary>

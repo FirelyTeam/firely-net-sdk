@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-contained-preference)
     /// (system: http://hl7.org/fhir/specimen-contained-preference)
     /// </summary>
-    [FhirEnumeration("SpecimenContainedPreference")]
+    [FhirEnumeration("SpecimenContainedPreference", "http://hl7.org/fhir/ValueSet/specimen-contained-preference")]
     public enum SpecimenContainedPreference
     {
       /// <summary>

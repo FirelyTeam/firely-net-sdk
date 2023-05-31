@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryreport-status)
     /// (system: http://hl7.org/fhir/inventoryreport-status)
     /// </summary>
-    [FhirEnumeration("InventoryReportStatus")]
+    [FhirEnumeration("InventoryReportStatus", "http://hl7.org/fhir/ValueSet/inventoryreport-status")]
     public enum InventoryReportStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryreport-counttype)
     /// (system: http://hl7.org/fhir/inventoryreport-counttype)
     /// </summary>
-    [FhirEnumeration("InventoryCountType")]
+    [FhirEnumeration("InventoryCountType", "http://hl7.org/fhir/ValueSet/inventoryreport-counttype")]
     public enum InventoryCountType
     {
       /// <summary>

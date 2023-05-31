@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/operation-kind)
     /// (system: http://hl7.org/fhir/operation-kind)
     /// </summary>
-    [FhirEnumeration("OperationKind")]
+    [FhirEnumeration("OperationKind", "http://hl7.org/fhir/ValueSet/operation-kind")]
     public enum OperationKind
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/operation-parameter-scope)
     /// (system: http://hl7.org/fhir/operation-parameter-scope)
     /// </summary>
-    [FhirEnumeration("OperationParameterScope")]
+    [FhirEnumeration("OperationParameterScope", "http://hl7.org/fhir/ValueSet/operation-parameter-scope")]
     public enum OperationParameterScope
     {
       /// <summary>

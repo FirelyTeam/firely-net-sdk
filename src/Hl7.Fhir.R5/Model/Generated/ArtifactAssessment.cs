@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status)
     /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
     /// </summary>
-    [FhirEnumeration("ArtifactAssessmentWorkflowStatus")]
+    [FhirEnumeration("ArtifactAssessmentWorkflowStatus", "http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status")]
     public enum ArtifactAssessmentWorkflowStatus
     {
       /// <summary>
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/artifactassessment-disposition)
     /// (system: http://hl7.org/fhir/artifactassessment-disposition)
     /// </summary>
-    [FhirEnumeration("ArtifactAssessmentDisposition")]
+    [FhirEnumeration("ArtifactAssessmentDisposition", "http://hl7.org/fhir/ValueSet/artifactassessment-disposition")]
     public enum ArtifactAssessmentDisposition
     {
       /// <summary>
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/artifactassessment-information-type)
     /// (system: http://hl7.org/fhir/artifactassessment-information-type)
     /// </summary>
-    [FhirEnumeration("ArtifactAssessmentInformationType")]
+    [FhirEnumeration("ArtifactAssessmentInformationType", "http://hl7.org/fhir/ValueSet/artifactassessment-information-type")]
     public enum ArtifactAssessmentInformationType
     {
       /// <summary>

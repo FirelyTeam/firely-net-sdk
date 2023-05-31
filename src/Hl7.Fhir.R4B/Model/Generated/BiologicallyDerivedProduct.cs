@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-category)
     /// (system: http://hl7.org/fhir/product-category)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductCategory")]
+    [FhirEnumeration("BiologicallyDerivedProductCategory", "http://hl7.org/fhir/ValueSet/product-category")]
     public enum BiologicallyDerivedProductCategory
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-status)
     /// (system: http://hl7.org/fhir/product-status)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductStatus")]
+    [FhirEnumeration("BiologicallyDerivedProductStatus", "http://hl7.org/fhir/ValueSet/product-status")]
     public enum BiologicallyDerivedProductStatus
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-storage-scale)
     /// (system: http://hl7.org/fhir/product-storage-scale)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductStorageScale")]
+    [FhirEnumeration("BiologicallyDerivedProductStorageScale", "http://hl7.org/fhir/ValueSet/product-storage-scale")]
     public enum BiologicallyDerivedProductStorageScale
     {
       /// <summary>

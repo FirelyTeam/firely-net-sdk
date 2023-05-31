@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/relation-type)
     /// (system: http://hl7.org/fhir/relation-type)
     /// </summary>
-    [FhirEnumeration("CatalogEntryRelationType")]
+    [FhirEnumeration("CatalogEntryRelationType", "http://hl7.org/fhir/ValueSet/relation-type")]
     public enum CatalogEntryRelationType
     {
       /// <summary>

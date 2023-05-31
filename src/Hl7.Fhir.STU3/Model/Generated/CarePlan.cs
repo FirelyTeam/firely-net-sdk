@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-status)
     /// (system: http://hl7.org/fhir/care-plan-status)
     /// </summary>
-    [FhirEnumeration("CarePlanStatus")]
+    [FhirEnumeration("CarePlanStatus", "http://hl7.org/fhir/ValueSet/care-plan-status")]
     public enum CarePlanStatus
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-intent)
     /// (system: http://hl7.org/fhir/care-plan-intent)
     /// </summary>
-    [FhirEnumeration("CarePlanIntent")]
+    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent")]
     public enum CarePlanIntent
     {
       /// <summary>
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-activity-status)
     /// (system: http://hl7.org/fhir/care-plan-activity-status)
     /// </summary>
-    [FhirEnumeration("CarePlanActivityStatus")]
+    [FhirEnumeration("CarePlanActivityStatus", "http://hl7.org/fhir/ValueSet/care-plan-activity-status")]
     public enum CarePlanActivityStatus
     {
       /// <summary>

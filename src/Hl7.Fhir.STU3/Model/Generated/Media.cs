@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/digital-media-type)
     /// (system: http://hl7.org/fhir/digital-media-type)
     /// </summary>
-    [FhirEnumeration("DigitalMediaType")]
+    [FhirEnumeration("DigitalMediaType", "http://hl7.org/fhir/ValueSet/digital-media-type")]
     public enum DigitalMediaType
     {
       /// <summary>

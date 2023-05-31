@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/provenance-entity-role)
     /// (system: http://hl7.org/fhir/provenance-entity-role)
     /// </summary>
-    [FhirEnumeration("ProvenanceEntityRole")]
+    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role")]
     public enum ProvenanceEntityRole
     {
       /// <summary>

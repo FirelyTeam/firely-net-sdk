@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permitted-data-type)
     /// (system: http://hl7.org/fhir/permitted-data-type)
     /// </summary>
-    [FhirEnumeration("ObservationDataType")]
+    [FhirEnumeration("ObservationDataType", "http://hl7.org/fhir/ValueSet/permitted-data-type")]
     public enum ObservationDataType
     {
       /// <summary>
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-range-category)
     /// (system: http://hl7.org/fhir/observation-range-category)
     /// </summary>
-    [FhirEnumeration("ObservationRangeCategory")]
+    [FhirEnumeration("ObservationRangeCategory", "http://hl7.org/fhir/ValueSet/observation-range-category")]
     public enum ObservationRangeCategory
     {
       /// <summary>

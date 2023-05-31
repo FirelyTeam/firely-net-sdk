@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
     /// (system: http://hl7.org/fhir/observation-relationshiptypes)
     /// </summary>
-    [FhirEnumeration("ObservationRelationshipType")]
+    [FhirEnumeration("ObservationRelationshipType", "http://hl7.org/fhir/ValueSet/observation-relationshiptypes")]
     public enum ObservationRelationshipType
     {
       /// <summary>

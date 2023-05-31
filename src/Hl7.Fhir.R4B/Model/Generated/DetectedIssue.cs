@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
     /// (system: http://hl7.org/fhir/detectedissue-severity)
     /// </summary>
-    [FhirEnumeration("DetectedIssueSeverity")]
+    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity")]
     public enum DetectedIssueSeverity
     {
       /// <summary>

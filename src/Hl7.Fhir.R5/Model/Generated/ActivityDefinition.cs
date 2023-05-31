@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/request-resource-types)
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [FhirEnumeration("RequestResourceTypes")]
+    [FhirEnumeration("RequestResourceTypes", "http://hl7.org/fhir/ValueSet/request-resource-types")]
     public enum RequestResourceTypes
     {
       /// <summary>

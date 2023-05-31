@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conformance-expectation)
     /// (system: http://hl7.org/fhir/conformance-expectation)
     /// </summary>
-    [FhirEnumeration("ConformanceExpectation")]
+    [FhirEnumeration("ConformanceExpectation", "http://hl7.org/fhir/ValueSet/conformance-expectation")]
     public enum ConformanceExpectation
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-version-processing-mode)
     /// (system: http://hl7.org/fhir/system-version-processing-mode)
     /// </summary>
-    [FhirEnumeration("SystemVersionProcessingMode")]
+    [FhirEnumeration("SystemVersionProcessingMode", "http://hl7.org/fhir/ValueSet/system-version-processing-mode")]
     public enum SystemVersionProcessingMode
     {
       /// <summary>

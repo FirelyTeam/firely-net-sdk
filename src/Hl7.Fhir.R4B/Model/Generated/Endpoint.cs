@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/endpoint-status)
     /// (system: http://hl7.org/fhir/endpoint-status)
     /// </summary>
-    [FhirEnumeration("EndpointStatus")]
+    [FhirEnumeration("EndpointStatus", "http://hl7.org/fhir/ValueSet/endpoint-status")]
     public enum EndpointStatus
     {
       /// <summary>

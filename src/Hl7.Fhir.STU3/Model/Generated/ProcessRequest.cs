@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/actionlist)
     /// (system: http://hl7.org/fhir/actionlist)
     /// </summary>
-    [FhirEnumeration("ActionList")]
+    [FhirEnumeration("ActionList", "http://hl7.org/fhir/ValueSet/actionlist")]
     public enum ActionList
     {
       /// <summary>

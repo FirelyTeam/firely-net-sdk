@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/item-type)
     /// (system: http://hl7.org/fhir/item-type)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemType")]
+    [FhirEnumeration("QuestionnaireItemType", "http://hl7.org/fhir/ValueSet/item-type")]
     public enum QuestionnaireItemType
     {
       /// <summary>

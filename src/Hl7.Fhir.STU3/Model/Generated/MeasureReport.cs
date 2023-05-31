@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
     /// (system: http://hl7.org/fhir/measure-report-status)
     /// </summary>
-    [FhirEnumeration("MeasureReportStatus")]
+    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status")]
     public enum MeasureReportStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
     /// (system: http://hl7.org/fhir/measure-report-type)
     /// </summary>
-    [FhirEnumeration("MeasureReportType")]
+    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type")]
     public enum MeasureReportType
     {
       /// <summary>

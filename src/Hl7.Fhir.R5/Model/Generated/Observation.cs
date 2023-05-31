@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-triggeredbytype)
     /// (system: http://hl7.org/fhir/observation-triggeredbytype)
     /// </summary>
-    [FhirEnumeration("TriggeredBytype")]
+    [FhirEnumeration("TriggeredBytype", "http://hl7.org/fhir/ValueSet/observation-triggeredbytype")]
     public enum TriggeredBytype
     {
       /// <summary>

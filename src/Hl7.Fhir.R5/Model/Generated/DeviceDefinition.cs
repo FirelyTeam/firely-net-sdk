@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-productidentifierinudi)
     /// (system: http://hl7.org/fhir/device-productidentifierinudi)
     /// </summary>
-    [FhirEnumeration("DeviceProductionIdentifierInUDI")]
+    [FhirEnumeration("DeviceProductionIdentifierInUDI", "http://hl7.org/fhir/ValueSet/device-productidentifierinudi")]
     public enum DeviceProductionIdentifierInUDI
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type)
     /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
     /// </summary>
-    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType")]
+    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType", "http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type")]
     public enum DeviceDefinitionRegulatoryIdentifierType
     {
       /// <summary>
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-correctiveactionscope)
     /// (system: http://hl7.org/fhir/device-correctiveactionscope)
     /// </summary>
-    [FhirEnumeration("DeviceCorrectiveActionScope")]
+    [FhirEnumeration("DeviceCorrectiveActionScope", "http://hl7.org/fhir/ValueSet/device-correctiveactionscope")]
     public enum DeviceCorrectiveActionScope
     {
       /// <summary>

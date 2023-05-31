@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/price-component-type)
     /// (system: http://hl7.org/fhir/price-component-type)
     /// </summary>
-    [FhirEnumeration("PriceComponentType")]
+    [FhirEnumeration("PriceComponentType", "http://hl7.org/fhir/ValueSet/price-component-type")]
     public enum PriceComponentType
     {
       /// <summary>

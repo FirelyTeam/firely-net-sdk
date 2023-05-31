@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentstatus)
     /// (system: http://hl7.org/fhir/appointmentstatus)
     /// </summary>
-    [FhirEnumeration("AppointmentStatus")]
+    [FhirEnumeration("AppointmentStatus", "http://hl7.org/fhir/ValueSet/appointmentstatus")]
     public enum AppointmentStatus
     {
       /// <summary>
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/participantrequired)
     /// (system: http://hl7.org/fhir/participantrequired)
     /// </summary>
-    [FhirEnumeration("ParticipantRequired")]
+    [FhirEnumeration("ParticipantRequired", "http://hl7.org/fhir/ValueSet/participantrequired")]
     public enum ParticipantRequired
     {
       /// <summary>

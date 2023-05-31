@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/payment-outcome)
     /// (system: http://hl7.org/fhir/payment-outcome)
     /// </summary>
-    [FhirEnumeration("PaymentOutcome")]
+    [FhirEnumeration("PaymentOutcome", "http://hl7.org/fhir/ValueSet/payment-outcome")]
     public enum PaymentOutcome
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-channel-type)
     /// (system: http://hl7.org/fhir/subscription-channel-type)
     /// </summary>
-    [FhirEnumeration("SubscriptionChannelType")]
+    [FhirEnumeration("SubscriptionChannelType", "http://hl7.org/fhir/ValueSet/subscription-channel-type")]
     public enum SubscriptionChannelType
     {
       /// <summary>

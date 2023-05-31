@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-type)
     /// (system: http://hl7.org/fhir/group-type)
     /// </summary>
-    [FhirEnumeration("GroupType")]
+    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type")]
     public enum GroupType
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentresponse-status)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("AppointmentResponseStatus")]
+    [FhirEnumeration("AppointmentResponseStatus", "http://hl7.org/fhir/ValueSet/appointmentresponse-status")]
     public enum AppointmentResponseStatus
     {
       /// <summary>

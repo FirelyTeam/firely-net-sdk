@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>

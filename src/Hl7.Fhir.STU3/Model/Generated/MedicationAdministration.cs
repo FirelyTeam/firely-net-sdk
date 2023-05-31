@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-admin-status)
     /// (system: http://hl7.org/fhir/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("MedicationAdministrationStatus")]
+    [FhirEnumeration("MedicationAdministrationStatus", "http://hl7.org/fhir/ValueSet/medication-admin-status")]
     public enum MedicationAdministrationStatus
     {
       /// <summary>

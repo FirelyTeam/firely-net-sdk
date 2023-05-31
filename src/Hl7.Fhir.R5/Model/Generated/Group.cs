@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-type)
     /// (system: http://hl7.org/fhir/group-type)
     /// </summary>
-    [FhirEnumeration("GroupType")]
+    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type")]
     public enum GroupType
     {
       /// <summary>
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-membership-basis)
     /// (system: http://hl7.org/fhir/group-membership-basis)
     /// </summary>
-    [FhirEnumeration("GroupMembershipBasis")]
+    [FhirEnumeration("GroupMembershipBasis", "http://hl7.org/fhir/ValueSet/group-membership-basis")]
     public enum GroupMembershipBasis
     {
       /// <summary>

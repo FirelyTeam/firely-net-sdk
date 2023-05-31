@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-property-type)
     /// (system: http://hl7.org/fhir/conceptmap-property-type)
     /// </summary>
-    [FhirEnumeration("ConceptMapPropertyType")]
+    [FhirEnumeration("ConceptMapPropertyType", "http://hl7.org/fhir/ValueSet/conceptmap-property-type")]
     public enum ConceptMapPropertyType
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-attribute-type)
     /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
     /// </summary>
-    [FhirEnumeration("ConceptMapAttributeType")]
+    [FhirEnumeration("ConceptMapAttributeType", "http://hl7.org/fhir/ValueSet/conceptmap-attribute-type")]
     public enum ConceptMapAttributeType
     {
       /// <summary>
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-map-relationship)
     /// (system: http://hl7.org/fhir/concept-map-relationship)
     /// </summary>
-    [FhirEnumeration("ConceptMapRelationship")]
+    [FhirEnumeration("ConceptMapRelationship", "http://hl7.org/fhir/ValueSet/concept-map-relationship")]
     public enum ConceptMapRelationship
     {
       /// <summary>
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>

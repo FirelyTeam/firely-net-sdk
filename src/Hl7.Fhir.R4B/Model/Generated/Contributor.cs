@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contributor-type)
     /// (system: http://hl7.org/fhir/contributor-type)
     /// </summary>
-    [FhirEnumeration("ContributorType")]
+    [FhirEnumeration("ContributorType", "http://hl7.org/fhir/ValueSet/contributor-type")]
     public enum ContributorType
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
-    [FhirEnumeration("SequenceType")]
+    [FhirEnumeration("SequenceType", "http://hl7.org/fhir/ValueSet/sequence-type")]
     public enum SequenceType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
-    [FhirEnumeration("OrientationType")]
+    [FhirEnumeration("OrientationType", "http://hl7.org/fhir/ValueSet/orientation-type")]
     public enum OrientationType
     {
       /// <summary>
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/strand-type)
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
-    [FhirEnumeration("StrandType")]
+    [FhirEnumeration("StrandType", "http://hl7.org/fhir/ValueSet/strand-type")]
     public enum StrandType
     {
       /// <summary>

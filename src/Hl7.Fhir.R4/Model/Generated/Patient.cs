@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/link-type)
     /// (system: http://hl7.org/fhir/link-type)
     /// </summary>
-    [FhirEnumeration("LinkType")]
+    [FhirEnumeration("LinkType", "http://hl7.org/fhir/ValueSet/link-type")]
     public enum LinkType
     {
       /// <summary>

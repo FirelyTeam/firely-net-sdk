@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-status)
     /// (system: http://hl7.org/fhir/imagingselection-status)
     /// </summary>
-    [FhirEnumeration("ImagingSelectionStatus")]
+    [FhirEnumeration("ImagingSelectionStatus", "http://hl7.org/fhir/ValueSet/imagingselection-status")]
     public enum ImagingSelectionStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype)
     /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
     /// </summary>
-    [FhirEnumeration("ImagingSelection2DGraphicType")]
+    [FhirEnumeration("ImagingSelection2DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype")]
     public enum ImagingSelection2DGraphicType
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype)
     /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
     /// </summary>
-    [FhirEnumeration("ImagingSelection3DGraphicType")]
+    [FhirEnumeration("ImagingSelection3DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype")]
     public enum ImagingSelection3DGraphicType
     {
       /// <summary>

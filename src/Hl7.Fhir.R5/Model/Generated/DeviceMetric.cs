@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-operational-status)
     /// (system: http://hl7.org/fhir/metric-operational-status)
     /// </summary>
-    [FhirEnumeration("DeviceMetricOperationalStatus")]
+    [FhirEnumeration("DeviceMetricOperationalStatus", "http://hl7.org/fhir/ValueSet/metric-operational-status")]
     public enum DeviceMetricOperationalStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-category)
     /// (system: http://hl7.org/fhir/metric-category)
     /// </summary>
-    [FhirEnumeration("DeviceMetricCategory")]
+    [FhirEnumeration("DeviceMetricCategory", "http://hl7.org/fhir/ValueSet/metric-category")]
     public enum DeviceMetricCategory
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-calibration-type)
     /// (system: http://hl7.org/fhir/metric-calibration-type)
     /// </summary>
-    [FhirEnumeration("DeviceMetricCalibrationType")]
+    [FhirEnumeration("DeviceMetricCalibrationType", "http://hl7.org/fhir/ValueSet/metric-calibration-type")]
     public enum DeviceMetricCalibrationType
     {
       /// <summary>
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-calibration-state)
     /// (system: http://hl7.org/fhir/metric-calibration-state)
     /// </summary>
-    [FhirEnumeration("DeviceMetricCalibrationState")]
+    [FhirEnumeration("DeviceMetricCalibrationState", "http://hl7.org/fhir/ValueSet/metric-calibration-state")]
     public enum DeviceMetricCalibrationState
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-category)
     /// (system: http://hl7.org/fhir/adverse-event-category)
     /// </summary>
-    [FhirEnumeration("AdverseEventCategory")]
+    [FhirEnumeration("AdverseEventCategory", "http://hl7.org/fhir/ValueSet/adverse-event-category")]
     public enum AdverseEventCategory
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-outcome)
     /// (system: http://hl7.org/fhir/adverse-event-outcome)
     /// </summary>
-    [FhirEnumeration("AdverseEventOutcome")]
+    [FhirEnumeration("AdverseEventOutcome", "http://hl7.org/fhir/ValueSet/adverse-event-outcome")]
     public enum AdverseEventOutcome
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-causality)
     /// (system: http://hl7.org/fhir/adverse-event-causality)
     /// </summary>
-    [FhirEnumeration("AdverseEventCausality")]
+    [FhirEnumeration("AdverseEventCausality", "http://hl7.org/fhir/ValueSet/adverse-event-causality")]
     public enum AdverseEventCausality
     {
       /// <summary>

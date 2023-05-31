@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
     /// (system: http://hl7.org/fhir/condition-clinical)
     /// </summary>
-    [FhirEnumeration("ConditionClinicalStatusCodes")]
+    [FhirEnumeration("ConditionClinicalStatusCodes", "http://hl7.org/fhir/ValueSet/condition-clinical")]
     public enum ConditionClinicalStatusCodes
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
     /// (system: http://hl7.org/fhir/condition-ver-status)
     /// </summary>
-    [FhirEnumeration("ConditionVerificationStatus")]
+    [FhirEnumeration("ConditionVerificationStatus", "http://hl7.org/fhir/ValueSet/condition-ver-status")]
     public enum ConditionVerificationStatus
     {
       /// <summary>

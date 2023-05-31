@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-model-mode)
     /// (system: http://hl7.org/fhir/map-model-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapModelMode")]
+    [FhirEnumeration("StructureMapModelMode", "http://hl7.org/fhir/ValueSet/map-model-mode")]
     public enum StructureMapModelMode
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-group-type-mode)
     /// (system: http://hl7.org/fhir/map-group-type-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapGroupTypeMode")]
+    [FhirEnumeration("StructureMapGroupTypeMode", "http://hl7.org/fhir/ValueSet/map-group-type-mode")]
     public enum StructureMapGroupTypeMode
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-input-mode)
     /// (system: http://hl7.org/fhir/map-input-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapInputMode")]
+    [FhirEnumeration("StructureMapInputMode", "http://hl7.org/fhir/ValueSet/map-input-mode")]
     public enum StructureMapInputMode
     {
       /// <summary>
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-source-list-mode)
     /// (system: http://hl7.org/fhir/map-source-list-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapSourceListMode")]
+    [FhirEnumeration("StructureMapSourceListMode", "http://hl7.org/fhir/ValueSet/map-source-list-mode")]
     public enum StructureMapSourceListMode
     {
       /// <summary>
@@ -184,7 +184,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-context-type)
     /// (system: http://hl7.org/fhir/map-context-type)
     /// </summary>
-    [FhirEnumeration("StructureMapContextType")]
+    [FhirEnumeration("StructureMapContextType", "http://hl7.org/fhir/ValueSet/map-context-type")]
     public enum StructureMapContextType
     {
       /// <summary>
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-target-list-mode)
     /// (system: http://hl7.org/fhir/map-target-list-mode)
     /// </summary>
-    [FhirEnumeration("StructureMapTargetListMode")]
+    [FhirEnumeration("StructureMapTargetListMode", "http://hl7.org/fhir/ValueSet/map-target-list-mode")]
     public enum StructureMapTargetListMode
     {
       /// <summary>
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/map-transform)
     /// (system: http://hl7.org/fhir/map-transform)
     /// </summary>
-    [FhirEnumeration("StructureMapTransform")]
+    [FhirEnumeration("StructureMapTransform", "http://hl7.org/fhir/ValueSet/map-transform")]
     public enum StructureMapTransform
     {
       /// <summary>

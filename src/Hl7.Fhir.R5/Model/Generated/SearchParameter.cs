@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-processingmode)
     /// (system: http://hl7.org/fhir/search-processingmode)
     /// </summary>
-    [FhirEnumeration("SearchProcessingModeType")]
+    [FhirEnumeration("SearchProcessingModeType", "http://hl7.org/fhir/ValueSet/search-processingmode")]
     public enum SearchProcessingModeType
     {
       /// <summary>

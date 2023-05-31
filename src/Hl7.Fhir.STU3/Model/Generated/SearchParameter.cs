@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-xpath-usage)
     /// (system: http://hl7.org/fhir/search-xpath-usage)
     /// </summary>
-    [FhirEnumeration("XPathUsageType")]
+    [FhirEnumeration("XPathUsageType", "http://hl7.org/fhir/ValueSet/search-xpath-usage")]
     public enum XPathUsageType
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("SearchComparator")]
+    [FhirEnumeration("SearchComparator", "http://hl7.org/fhir/ValueSet/search-comparator")]
     public enum SearchComparator
     {
       /// <summary>
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-modifier-code)
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [FhirEnumeration("SearchModifierCode")]
+    [FhirEnumeration("SearchModifierCode", "http://hl7.org/fhir/ValueSet/search-modifier-code")]
     public enum SearchModifierCode
     {
       /// <summary>

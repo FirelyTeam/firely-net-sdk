@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role)
     /// (system: http://hl7.org/fhir/ingredient-manufacturer-role)
     /// </summary>
-    [FhirEnumeration("IngredientManufacturerRole")]
+    [FhirEnumeration("IngredientManufacturerRole", "http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role")]
     public enum IngredientManufacturerRole
     {
       /// <summary>

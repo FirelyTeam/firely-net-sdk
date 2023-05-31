@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/genomicstudy-status)
     /// (system: http://hl7.org/fhir/genomicstudy-status)
     /// </summary>
-    [FhirEnumeration("GenomicStudyStatus")]
+    [FhirEnumeration("GenomicStudyStatus", "http://hl7.org/fhir/ValueSet/genomicstudy-status")]
     public enum GenomicStudyStatus
     {
       /// <summary>

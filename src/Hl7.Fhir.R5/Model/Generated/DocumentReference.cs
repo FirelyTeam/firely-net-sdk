@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
     /// (system: http://hl7.org/fhir/document-reference-status)
     /// </summary>
-    [FhirEnumeration("DocumentReferenceStatus")]
+    [FhirEnumeration("DocumentReferenceStatus", "http://hl7.org/fhir/ValueSet/document-reference-status")]
     public enum DocumentReferenceStatus
     {
       /// <summary>

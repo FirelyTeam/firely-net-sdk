@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-type)
     /// (system: http://hl7.org/fhir/namingsystem-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemType")]
+    [FhirEnumeration("NamingSystemType", "http://hl7.org/fhir/ValueSet/namingsystem-type")]
     public enum NamingSystemType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-identifier-type)
     /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemIdentifierType")]
+    [FhirEnumeration("NamingSystemIdentifierType", "http://hl7.org/fhir/ValueSet/namingsystem-identifier-type")]
     public enum NamingSystemIdentifierType
     {
       /// <summary>

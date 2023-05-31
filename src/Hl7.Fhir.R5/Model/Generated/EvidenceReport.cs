@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-relation-type)
     /// (system: http://hl7.org/fhir/report-relation-type)
     /// </summary>
-    [FhirEnumeration("ReportRelationshipType")]
+    [FhirEnumeration("ReportRelationshipType", "http://hl7.org/fhir/ValueSet/report-relation-type")]
     public enum ReportRelationshipType
     {
       /// <summary>

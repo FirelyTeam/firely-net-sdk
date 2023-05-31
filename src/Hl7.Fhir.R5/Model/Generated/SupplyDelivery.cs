@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-status)
     /// (system: http://hl7.org/fhir/supplydelivery-status)
     /// </summary>
-    [FhirEnumeration("SupplyDeliveryStatus")]
+    [FhirEnumeration("SupplyDeliveryStatus", "http://hl7.org/fhir/ValueSet/supplydelivery-status")]
     public enum SupplyDeliveryStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-supplyitemtype)
     /// (system: http://hl7.org/fhir/supplydelivery-supplyitemtype)
     /// </summary>
-    [FhirEnumeration("SupplyDeliverySupplyItemType")]
+    [FhirEnumeration("SupplyDeliverySupplyItemType", "http://hl7.org/fhir/ValueSet/supplydelivery-supplyitemtype")]
     public enum SupplyDeliverySupplyItemType
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/address-use)
     /// (system: http://hl7.org/fhir/address-use)
     /// </summary>
-    [FhirEnumeration("AddressUse")]
+    [FhirEnumeration("AddressUse", "http://hl7.org/fhir/ValueSet/address-use")]
     public enum AddressUse
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/address-type)
     /// (system: http://hl7.org/fhir/address-type)
     /// </summary>
-    [FhirEnumeration("AddressType")]
+    [FhirEnumeration("AddressType", "http://hl7.org/fhir/ValueSet/address-type")]
     public enum AddressType
     {
       /// <summary>

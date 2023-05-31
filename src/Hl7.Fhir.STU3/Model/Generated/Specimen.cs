@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
     /// (system: http://hl7.org/fhir/specimen-status)
     /// </summary>
-    [FhirEnumeration("SpecimenStatus")]
+    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status")]
     public enum SpecimenStatus
     {
       /// <summary>

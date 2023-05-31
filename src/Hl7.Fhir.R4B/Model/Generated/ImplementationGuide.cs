@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/spdx-license)
     /// (system: http://hl7.org/fhir/spdx-license)
     /// </summary>
-    [FhirEnumeration("SPDXLicense")]
+    [FhirEnumeration("SPDXLicense", "http://hl7.org/fhir/ValueSet/spdx-license")]
     public enum SPDXLicense
     {
       /// <summary>
@@ -2146,7 +2146,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-page-generation)
     /// (system: http://hl7.org/fhir/guide-page-generation)
     /// </summary>
-    [FhirEnumeration("GuidePageGeneration")]
+    [FhirEnumeration("GuidePageGeneration", "http://hl7.org/fhir/ValueSet/guide-page-generation")]
     public enum GuidePageGeneration
     {
       /// <summary>
@@ -2180,7 +2180,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-parameter-code)
     /// (system: http://hl7.org/fhir/guide-parameter-code)
     /// </summary>
-    [FhirEnumeration("GuideParameterCode")]
+    [FhirEnumeration("GuideParameterCode", "http://hl7.org/fhir/ValueSet/guide-parameter-code")]
     public enum GuideParameterCode
     {
       /// <summary>

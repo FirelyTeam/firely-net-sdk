@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/instance-availability)
     /// (system: http://dicom.nema.org/resources/ontology/DCM)
     /// </summary>
-    [FhirEnumeration("InstanceAvailability")]
+    [FhirEnumeration("InstanceAvailability", "http://hl7.org/fhir/ValueSet/instance-availability")]
     public enum InstanceAvailability
     {
       /// <summary>

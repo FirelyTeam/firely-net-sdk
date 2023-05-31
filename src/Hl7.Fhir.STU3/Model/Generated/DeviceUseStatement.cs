@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-statement-status)
     /// (system: http://hl7.org/fhir/device-statement-status)
     /// </summary>
-    [FhirEnumeration("DeviceUseStatementStatus")]
+    [FhirEnumeration("DeviceUseStatementStatus", "http://hl7.org/fhir/ValueSet/device-statement-status")]
     public enum DeviceUseStatementStatus
     {
       /// <summary>

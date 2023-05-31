@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/name-use)
     /// (system: http://hl7.org/fhir/name-use)
     /// </summary>
-    [FhirEnumeration("NameUse")]
+    [FhirEnumeration("NameUse", "http://hl7.org/fhir/ValueSet/name-use")]
     public enum NameUse
     {
       /// <summary>

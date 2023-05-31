@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-rule)
     /// (system: http://hl7.org/fhir/graph-compartment-rule)
     /// </summary>
-    [FhirEnumeration("GraphCompartmentRule")]
+    [FhirEnumeration("GraphCompartmentRule", "http://hl7.org/fhir/ValueSet/graph-compartment-rule")]
     public enum GraphCompartmentRule
     {
       /// <summary>

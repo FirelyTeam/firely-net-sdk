@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
-    [FhirEnumeration("sequenceType")]
+    [FhirEnumeration("sequenceType", "http://hl7.org/fhir/ValueSet/sequence-type")]
     public enum SequenceType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
-    [FhirEnumeration("orientationType")]
+    [FhirEnumeration("orientationType", "http://hl7.org/fhir/ValueSet/orientation-type")]
     public enum OrientationType
     {
       /// <summary>
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/strand-type)
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
-    [FhirEnumeration("strandType")]
+    [FhirEnumeration("strandType", "http://hl7.org/fhir/ValueSet/strand-type")]
     public enum StrandType
     {
       /// <summary>
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
-    [FhirEnumeration("qualityType")]
+    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type")]
     public enum QualityType
     {
       /// <summary>
@@ -160,7 +160,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/repository-type)
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
-    [FhirEnumeration("repositoryType")]
+    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type")]
     public enum RepositoryType
     {
       /// <summary>

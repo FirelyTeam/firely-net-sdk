@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/coverage-kind)
     /// (system: http://hl7.org/fhir/coverage-kind)
     /// </summary>
-    [FhirEnumeration("Kind")]
+    [FhirEnumeration("Kind", "http://hl7.org/fhir/ValueSet/coverage-kind")]
     public enum CoverageKindCode
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-status)
     /// (system: http://hl7.org/fhir/device-status)
     /// </summary>
-    [FhirEnumeration("FHIRDeviceStatus")]
+    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status")]
     public enum FHIRDeviceStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
     /// (system: http://hl7.org/fhir/udi-entry-type)
     /// </summary>
-    [FhirEnumeration("UDIEntryType")]
+    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type")]
     public enum UDIEntryType
     {
       /// <summary>

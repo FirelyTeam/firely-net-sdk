@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplyrequest-status)
     /// (system: http://hl7.org/fhir/supplyrequest-status)
     /// </summary>
-    [FhirEnumeration("SupplyRequestStatus")]
+    [FhirEnumeration("SupplyRequestStatus", "http://hl7.org/fhir/ValueSet/supplyrequest-status")]
     public enum SupplyRequestStatus
     {
       /// <summary>

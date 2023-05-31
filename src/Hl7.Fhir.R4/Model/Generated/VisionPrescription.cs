@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
     /// (system: http://hl7.org/fhir/vision-eye-codes)
     /// </summary>
-    [FhirEnumeration("VisionEyes")]
+    [FhirEnumeration("VisionEyes", "http://hl7.org/fhir/ValueSet/vision-eye-codes")]
     public enum VisionEyes
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
     /// (system: http://hl7.org/fhir/vision-base-codes)
     /// </summary>
-    [FhirEnumeration("VisionBase")]
+    [FhirEnumeration("VisionBase", "http://hl7.org/fhir/ValueSet/vision-base-codes")]
     public enum VisionBase
     {
       /// <summary>

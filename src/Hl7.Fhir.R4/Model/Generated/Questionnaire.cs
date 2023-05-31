@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/item-type)
     /// (system: http://hl7.org/fhir/item-type)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemType")]
+    [FhirEnumeration("QuestionnaireItemType", "http://hl7.org/fhir/ValueSet/item-type")]
     public enum QuestionnaireItemType
     {
       /// <summary>
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior)
     /// (system: http://hl7.org/fhir/questionnaire-enable-behavior)
     /// </summary>
-    [FhirEnumeration("EnableWhenBehavior")]
+    [FhirEnumeration("EnableWhenBehavior", "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior")]
     public enum EnableWhenBehavior
     {
       /// <summary>
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-enable-operator)
     /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemOperator")]
+    [FhirEnumeration("QuestionnaireItemOperator", "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator")]
     public enum QuestionnaireItemOperator
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-clinical-status)
     /// (system: http://hl7.org/fhir/allergy-clinical-status)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceClinicalStatus")]
+    [FhirEnumeration("AllergyIntoleranceClinicalStatus", "http://hl7.org/fhir/ValueSet/allergy-clinical-status")]
     public enum AllergyIntoleranceClinicalStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-verification-status)
     /// (system: http://hl7.org/fhir/allergy-verification-status)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceVerificationStatus")]
+    [FhirEnumeration("AllergyIntoleranceVerificationStatus", "http://hl7.org/fhir/ValueSet/allergy-verification-status")]
     public enum AllergyIntoleranceVerificationStatus
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-type)
     /// (system: http://hl7.org/fhir/allergy-intolerance-type)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceType")]
+    [FhirEnumeration("AllergyIntoleranceType", "http://hl7.org/fhir/ValueSet/allergy-intolerance-type")]
     public enum AllergyIntoleranceType
     {
       /// <summary>
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-category)
     /// (system: http://hl7.org/fhir/allergy-intolerance-category)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceCategory")]
+    [FhirEnumeration("AllergyIntoleranceCategory", "http://hl7.org/fhir/ValueSet/allergy-intolerance-category")]
     public enum AllergyIntoleranceCategory
     {
       /// <summary>
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
     /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceCriticality")]
+    [FhirEnumeration("AllergyIntoleranceCriticality", "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality")]
     public enum AllergyIntoleranceCriticality
     {
       /// <summary>
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reaction-event-severity)
     /// (system: http://hl7.org/fhir/reaction-event-severity)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceSeverity")]
+    [FhirEnumeration("AllergyIntoleranceSeverity", "http://hl7.org/fhir/ValueSet/reaction-event-severity")]
     public enum AllergyIntoleranceSeverity
     {
       /// <summary>

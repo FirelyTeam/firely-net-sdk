@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-intent)
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [FhirEnumeration("CarePlanIntent")]
+    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent")]
     public enum CarePlanIntent
     {
       /// <summary>

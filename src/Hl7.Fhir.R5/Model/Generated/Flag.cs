@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/flag-status)
     /// (system: http://hl7.org/fhir/flag-status)
     /// </summary>
-    [FhirEnumeration("FlagStatus")]
+    [FhirEnumeration("FlagStatus", "http://hl7.org/fhir/ValueSet/flag-status")]
     public enum FlagStatus
     {
       /// <summary>

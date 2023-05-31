@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/claim-use)
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
-    [FhirEnumeration("Use")]
+    [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use")]
     public enum ClaimUseCode
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/operation-kind)
     /// (system: http://hl7.org/fhir/operation-kind)
     /// </summary>
-    [FhirEnumeration("OperationKind")]
+    [FhirEnumeration("OperationKind", "http://hl7.org/fhir/ValueSet/operation-kind")]
     public enum OperationKind
     {
       /// <summary>

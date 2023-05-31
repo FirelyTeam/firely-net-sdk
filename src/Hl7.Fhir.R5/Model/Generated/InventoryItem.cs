@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryitem-status)
     /// (system: http://hl7.org/fhir/inventoryitem-status)
     /// </summary>
-    [FhirEnumeration("InventoryItemStatusCodes")]
+    [FhirEnumeration("InventoryItemStatusCodes", "http://hl7.org/fhir/ValueSet/inventoryitem-status")]
     public enum InventoryItemStatusCodes
     {
       /// <summary>

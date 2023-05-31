@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinicalimpression-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("ClinicalImpressionStatus")]
+    [FhirEnumeration("ClinicalImpressionStatus", "http://hl7.org/fhir/ValueSet/clinicalimpression-status")]
     public enum ClinicalImpressionStatus
     {
       /// <summary>

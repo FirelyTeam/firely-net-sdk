@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/insuranceplan-applicability)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("BenefitCostApplicability")]
+    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability")]
     public enum BenefitCostApplicability
     {
       /// <summary>

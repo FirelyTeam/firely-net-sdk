@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/deviceassociation-status)
     /// (system: http://hl7.org/fhir/deviceassociation-status)
     /// </summary>
-    [FhirEnumeration("DeviceAssociationCodes")]
+    [FhirEnumeration("DeviceAssociationCodes", "http://hl7.org/fhir/ValueSet/deviceassociation-status")]
     public enum DeviceAssociationCodes
     {
       /// <summary>

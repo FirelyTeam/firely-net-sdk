@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/value-filter-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("ValueFilterComparator")]
+    [FhirEnumeration("ValueFilterComparator", "http://hl7.org/fhir/ValueSet/value-filter-comparator")]
     public enum ValueFilterComparator
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
     /// (system: http://hl7.org/fhir/sort-direction)
     /// </summary>
-    [FhirEnumeration("SortDirection")]
+    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction")]
     public enum SortDirection
     {
       /// <summary>

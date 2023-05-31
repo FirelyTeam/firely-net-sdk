@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-element-type)
     /// (system: http://hl7.org/fhir/research-element-type)
     /// </summary>
-    [FhirEnumeration("ResearchElementType")]
+    [FhirEnumeration("ResearchElementType", "http://hl7.org/fhir/ValueSet/research-element-type")]
     public enum ResearchElementType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/variable-type)
     /// (system: http://hl7.org/fhir/variable-type)
     /// </summary>
-    [FhirEnumeration("VariableType")]
+    [FhirEnumeration("VariableType", "http://hl7.org/fhir/ValueSet/variable-type")]
     public enum VariableTypeCode
     {
       /// <summary>

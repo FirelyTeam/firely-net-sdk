@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/transport-status)
     /// (system: http://hl7.org/fhir/transport-status)
     /// </summary>
-    [FhirEnumeration("TransportStatus")]
+    [FhirEnumeration("TransportStatus", "http://hl7.org/fhir/ValueSet/transport-status")]
     public enum TransportStatus
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/transport-intent)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("TransportIntent")]
+    [FhirEnumeration("TransportIntent", "http://hl7.org/fhir/ValueSet/transport-intent")]
     public enum TransportIntent
     {
       /// <summary>

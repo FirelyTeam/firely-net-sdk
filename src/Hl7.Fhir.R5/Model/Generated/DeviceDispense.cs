@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedispense-status)
     /// (system: http://hl7.org/fhir/devicedispense-status)
     /// </summary>
-    [FhirEnumeration("DeviceDispenseStatusCodes")]
+    [FhirEnumeration("DeviceDispenseStatusCodes", "http://hl7.org/fhir/ValueSet/devicedispense-status")]
     public enum DeviceDispenseStatusCodes
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permission-status)
     /// (system: http://hl7.org/fhir/permission-status)
     /// </summary>
-    [FhirEnumeration("PermissionStatus")]
+    [FhirEnumeration("PermissionStatus", "http://hl7.org/fhir/ValueSet/permission-status")]
     public enum PermissionStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permission-rule-combining)
     /// (system: http://hl7.org/fhir/permission-rule-combining)
     /// </summary>
-    [FhirEnumeration("PermissionRuleCombining")]
+    [FhirEnumeration("PermissionRuleCombining", "http://hl7.org/fhir/ValueSet/permission-rule-combining")]
     public enum PermissionRuleCombining
     {
       /// <summary>

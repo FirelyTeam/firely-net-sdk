@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-payload-content)
     /// (system: http://hl7.org/fhir/subscription-payload-content)
     /// </summary>
-    [FhirEnumeration("SubscriptionPayloadContent")]
+    [FhirEnumeration("SubscriptionPayloadContent", "http://hl7.org/fhir/ValueSet/subscription-payload-content")]
     public enum SubscriptionPayloadContent
     {
       /// <summary>

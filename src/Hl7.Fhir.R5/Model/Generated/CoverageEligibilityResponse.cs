@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose)
     /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
     /// </summary>
-    [FhirEnumeration("EligibilityResponsePurpose")]
+    [FhirEnumeration("EligibilityResponsePurpose", "http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose")]
     public enum EligibilityResponsePurpose
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibility-outcome)
     /// (system: http://hl7.org/fhir/eligibility-outcome)
     /// </summary>
-    [FhirEnumeration("EligibilityOutcome")]
+    [FhirEnumeration("EligibilityOutcome", "http://hl7.org/fhir/ValueSet/eligibility-outcome")]
     public enum EligibilityOutcome
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/code-search-support)
     /// (system: http://hl7.org/fhir/code-search-support)
     /// </summary>
-    [FhirEnumeration("CodeSearchSupport")]
+    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support")]
     public enum CodeSearchSupport
     {
       /// <summary>

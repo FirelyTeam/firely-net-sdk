@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/characteristic-combination)
     /// (system: http://hl7.org/fhir/characteristic-combination)
     /// </summary>
-    [FhirEnumeration("CharacteristicCombination")]
+    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination")]
     public enum CharacteristicCombinationCode
     {
       /// <summary>

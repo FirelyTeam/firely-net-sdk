@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinical-use-definition-type)
     /// (system: http://hl7.org/fhir/clinical-use-definition-type)
     /// </summary>
-    [FhirEnumeration("ClinicalUseDefinitionType")]
+    [FhirEnumeration("ClinicalUseDefinitionType", "http://hl7.org/fhir/ValueSet/clinical-use-definition-type")]
     public enum ClinicalUseDefinitionType
     {
       /// <summary>

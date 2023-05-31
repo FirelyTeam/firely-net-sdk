@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/linkage-type)
     /// (system: http://hl7.org/fhir/linkage-type)
     /// </summary>
-    [FhirEnumeration("LinkageType")]
+    [FhirEnumeration("LinkageType", "http://hl7.org/fhir/ValueSet/linkage-type")]
     public enum LinkageType
     {
       /// <summary>

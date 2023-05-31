@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-action)
     /// (system: http://hl7.org/fhir/audit-event-action)
     /// </summary>
-    [FhirEnumeration("AuditEventAction")]
+    [FhirEnumeration("AuditEventAction", "http://hl7.org/fhir/ValueSet/audit-event-action")]
     public enum AuditEventAction
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-outcome)
     /// (system: http://hl7.org/fhir/audit-event-outcome)
     /// </summary>
-    [FhirEnumeration("AuditEventOutcome")]
+    [FhirEnumeration("AuditEventOutcome", "http://hl7.org/fhir/ValueSet/audit-event-outcome")]
     public enum AuditEventOutcome
     {
       /// <summary>
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/network-type)
     /// (system: http://hl7.org/fhir/network-type)
     /// </summary>
-    [FhirEnumeration("AuditEventAgentNetworkType")]
+    [FhirEnumeration("AuditEventAgentNetworkType", "http://hl7.org/fhir/ValueSet/network-type")]
     public enum AuditEventAgentNetworkType
     {
       /// <summary>

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/units-of-time)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("UnitsOfTime")]
+    [FhirEnumeration("UnitsOfTime", "http://hl7.org/fhir/ValueSet/units-of-time")]
     public enum UnitsOfTime
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-timing)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("EventTiming")]
+    [FhirEnumeration("EventTiming", "http://hl7.org/fhir/ValueSet/event-timing")]
     public enum EventTiming
     {
       /// <summary>

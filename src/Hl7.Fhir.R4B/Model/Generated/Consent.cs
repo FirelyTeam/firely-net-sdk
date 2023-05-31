@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
     /// (system: http://hl7.org/fhir/consent-state-codes)
     /// </summary>
-    [FhirEnumeration("ConsentState")]
+    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes")]
     public enum ConsentState
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
     /// (system: http://hl7.org/fhir/consent-provision-type)
     /// </summary>
-    [FhirEnumeration("ConsentProvisionType")]
+    [FhirEnumeration("ConsentProvisionType", "http://hl7.org/fhir/ValueSet/consent-provision-type")]
     public enum ConsentProvisionType
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [FhirEnumeration("ConsentDataMeaning")]
+    [FhirEnumeration("ConsentDataMeaning", "http://hl7.org/fhir/ValueSet/consent-data-meaning")]
     public enum ConsentDataMeaning
     {
       /// <summary>

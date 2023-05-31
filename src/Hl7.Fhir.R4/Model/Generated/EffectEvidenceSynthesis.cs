@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/exposure-state)
     /// (system: http://hl7.org/fhir/exposure-state)
     /// </summary>
-    [FhirEnumeration("ExposureState")]
+    [FhirEnumeration("ExposureState", "http://hl7.org/fhir/ValueSet/exposure-state")]
     public enum ExposureStateCode
     {
       /// <summary>

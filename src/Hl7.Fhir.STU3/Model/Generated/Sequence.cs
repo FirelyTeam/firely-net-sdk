@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
-    [FhirEnumeration("qualityType")]
+    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type")]
     public enum QualityType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/repository-type)
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
-    [FhirEnumeration("repositoryType")]
+    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type")]
     public enum RepositoryType
     {
       /// <summary>

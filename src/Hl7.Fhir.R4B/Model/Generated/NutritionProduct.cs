@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/nutritionproduct-status)
     /// (system: http://hl7.org/fhir/nutritionproduct-status)
     /// </summary>
-    [FhirEnumeration("NutritionProductStatus")]
+    [FhirEnumeration("NutritionProductStatus", "http://hl7.org/fhir/ValueSet/nutritionproduct-status")]
     public enum NutritionProductStatus
     {
       /// <summary>

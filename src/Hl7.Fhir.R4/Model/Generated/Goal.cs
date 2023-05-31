@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/goal-status)
     /// (system: http://hl7.org/fhir/goal-status)
     /// </summary>
-    [FhirEnumeration("GoalLifecycleStatus")]
+    [FhirEnumeration("GoalLifecycleStatus", "http://hl7.org/fhir/ValueSet/goal-status")]
     public enum GoalLifecycleStatus
     {
       /// <summary>

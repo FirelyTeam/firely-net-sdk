@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guidance-response-status)
     /// (system: http://hl7.org/fhir/guidance-response-status)
     /// </summary>
-    [FhirEnumeration("GuidanceResponseStatus")]
+    [FhirEnumeration("GuidanceResponseStatus", "http://hl7.org/fhir/ValueSet/guidance-response-status")]
     public enum GuidanceResponseStatus
     {
       /// <summary>

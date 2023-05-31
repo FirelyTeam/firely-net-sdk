@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
     /// (system: http://hl7.org/fhir/CodeSystem/status)
     /// </summary>
-    [FhirEnumeration("status")]
+    [FhirEnumeration("status", "http://hl7.org/fhir/ValueSet/verificationresult-status")]
     public enum StatusCode
     {
       /// <summary>

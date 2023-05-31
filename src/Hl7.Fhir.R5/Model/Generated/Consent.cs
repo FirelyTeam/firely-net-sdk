@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
     /// (system: http://hl7.org/fhir/consent-state-codes)
     /// </summary>
-    [FhirEnumeration("ConsentState")]
+    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes")]
     public enum ConsentState
     {
       /// <summary>

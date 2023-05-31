@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/interaction-trigger)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("InteractionTrigger")]
+    [FhirEnumeration("InteractionTrigger", "http://hl7.org/fhir/ValueSet/interaction-trigger")]
     public enum InteractionTrigger
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior)
     /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
     /// </summary>
-    [FhirEnumeration("CriteriaNotExistsBehavior")]
+    [FhirEnumeration("CriteriaNotExistsBehavior", "http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior")]
     public enum CriteriaNotExistsBehavior
     {
       /// <summary>
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-search-modifier)
     /// (system: http://terminology.hl7.org/CodeSystem/subscription-search-modifier)
     /// </summary>
-    [FhirEnumeration("SubscriptionSearchModifier")]
+    [FhirEnumeration("SubscriptionSearchModifier", "http://hl7.org/fhir/ValueSet/subscription-search-modifier")]
     public enum SubscriptionSearchModifier
     {
       /// <summary>

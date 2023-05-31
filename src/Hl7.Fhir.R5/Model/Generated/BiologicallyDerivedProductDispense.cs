@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status)
     /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductDispenseCodes")]
+    [FhirEnumeration("BiologicallyDerivedProductDispenseCodes", "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status")]
     public enum BiologicallyDerivedProductDispenseCodes
     {
       /// <summary>

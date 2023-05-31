@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-subject-state)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ResearchSubjectState")]
+    [FhirEnumeration("ResearchSubjectState", "http://hl7.org/fhir/ValueSet/research-subject-state")]
     public enum ResearchSubjectState
     {
       /// <summary>

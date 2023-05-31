@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/explanationofbenefit-status)
     /// (system: http://hl7.org/fhir/explanationofbenefit-status)
     /// </summary>
-    [FhirEnumeration("ExplanationOfBenefitStatus")]
+    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status")]
     public enum ExplanationOfBenefitStatus
     {
       /// <summary>

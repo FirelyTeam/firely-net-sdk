@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/examplescenario-actor-type)
     /// (system: http://hl7.org/fhir/examplescenario-actor-type)
     /// </summary>
-    [FhirEnumeration("ExampleScenarioActorType")]
+    [FhirEnumeration("ExampleScenarioActorType", "http://hl7.org/fhir/ValueSet/examplescenario-actor-type")]
     public enum ExampleScenarioActorType
     {
       /// <summary>

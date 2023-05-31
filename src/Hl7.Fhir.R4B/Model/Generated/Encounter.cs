@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/encounter-status)
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [FhirEnumeration("EncounterStatus")]
+    [FhirEnumeration("EncounterStatus", "http://hl7.org/fhir/ValueSet/encounter-status")]
     public enum EncounterStatus
     {
       /// <summary>
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/encounter-location-status)
     /// (system: http://hl7.org/fhir/encounter-location-status)
     /// </summary>
-    [FhirEnumeration("EncounterLocationStatus")]
+    [FhirEnumeration("EncounterLocationStatus", "http://hl7.org/fhir/ValueSet/encounter-location-status")]
     public enum EncounterLocationStatus
     {
       /// <summary>

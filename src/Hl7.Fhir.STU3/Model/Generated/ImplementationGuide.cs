@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-dependency-type)
     /// (system: http://hl7.org/fhir/guide-dependency-type)
     /// </summary>
-    [FhirEnumeration("GuideDependencyType")]
+    [FhirEnumeration("GuideDependencyType", "http://hl7.org/fhir/ValueSet/guide-dependency-type")]
     public enum GuideDependencyType
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-page-kind)
     /// (system: http://hl7.org/fhir/guide-page-kind)
     /// </summary>
-    [FhirEnumeration("GuidePageKind")]
+    [FhirEnumeration("GuidePageKind", "http://hl7.org/fhir/ValueSet/guide-page-kind")]
     public enum GuidePageKind
     {
       /// <summary>

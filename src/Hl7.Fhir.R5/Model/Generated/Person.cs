@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/identity-assuranceLevel)
     /// (system: http://hl7.org/fhir/identity-assuranceLevel)
     /// </summary>
-    [FhirEnumeration("IdentityAssuranceLevel")]
+    [FhirEnumeration("IdentityAssuranceLevel", "http://hl7.org/fhir/ValueSet/identity-assuranceLevel")]
     public enum IdentityAssuranceLevel
     {
       /// <summary>

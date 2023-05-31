@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://terminology.hl7.org/ValueSet/v3-Confidentiality)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("Confidentiality")]
+    [FhirEnumeration("Confidentiality", "http://terminology.hl7.org/ValueSet/v3-Confidentiality")]
     public enum ConfidentialityCode
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/composition-attestation-mode)
     /// (system: http://hl7.org/fhir/composition-attestation-mode)
     /// </summary>
-    [FhirEnumeration("CompositionAttestationMode")]
+    [FhirEnumeration("CompositionAttestationMode", "http://hl7.org/fhir/ValueSet/composition-attestation-mode")]
     public enum CompositionAttestationMode
     {
       /// <summary>

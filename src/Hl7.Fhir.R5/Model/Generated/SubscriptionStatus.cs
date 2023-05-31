@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-notification-type)
     /// (system: http://hl7.org/fhir/subscription-notification-type)
     /// </summary>
-    [FhirEnumeration("SubscriptionNotificationType")]
+    [FhirEnumeration("SubscriptionNotificationType", "http://hl7.org/fhir/ValueSet/subscription-notification-type")]
     public enum SubscriptionNotificationType
     {
       /// <summary>

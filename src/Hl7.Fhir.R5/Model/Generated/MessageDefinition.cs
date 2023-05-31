@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
     /// (system: http://hl7.org/fhir/message-significance-category)
     /// </summary>
-    [FhirEnumeration("MessageSignificanceCategory")]
+    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category")]
     public enum MessageSignificanceCategory
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
     /// (system: http://hl7.org/fhir/messageheader-response-request)
     /// </summary>
-    [FhirEnumeration("MessageheaderResponseRequest")]
+    [FhirEnumeration("MessageheaderResponseRequest", "http://hl7.org/fhir/ValueSet/messageheader-response-request")]
     public enum MessageheaderResponseRequest
     {
       /// <summary>
