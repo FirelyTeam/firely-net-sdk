@@ -97,14 +97,23 @@ namespace Hl7.Fhir.Introspection
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
-                CqlTypeSpecifier = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release)?.Name ?? "{http://hl7.org/fhir}" + type.Name
-,
+                CqlTypeSpecifier = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release)?.Name ?? "{http://hl7.org/fhir}" + type.Name,
+                _birthDatePropertyName = getPatientBirtDataMapping(type)
             };
 
             newMapping._mappingInitializer = () => inspectProperties(type, newMapping, release);
             result = newMapping;
 
             return true;
+        }
+
+        private string? _birthDatePropertyName;
+
+        private static string? getPatientBirtDataMapping(Type type)
+        {
+            var isPatient = type.IsEquivalentTo(type.GetCustomAttribute<CqlModelAssemblyAttribute>()?.PatientClass);
+
+            return isPatient ? type.GetCustomAttribute<CqlModelAssemblyAttribute>()?.BirthdatePropertyName : null;
         }
 
         private ClassMapping(string name, Type nativeType, FhirRelease release)
@@ -218,6 +227,8 @@ namespace Hl7.Fhir.Introspection
         public PropertyMapping? PrimitiveValueProperty => PropertyMappings.SingleOrDefault(pm => pm.RepresentsValueElement);
 
         public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.CqlPrimaryCodePath);
+
+        public PropertyMapping? PatientBirthDateMapping => PropertyMappings.SingleOrDefault(pm => pm.Name == _birthDatePropertyName);
 
         /// <summary>
         /// Whether the reflected type has a member that represent a primitive value.
