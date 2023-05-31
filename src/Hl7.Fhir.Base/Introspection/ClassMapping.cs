@@ -96,7 +96,9 @@ namespace Hl7.Fhir.Introspection
                 IsNestedType = typeAttribute.IsNestedType,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
-                ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray()
+                ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
+                CqlTypeSpecifier = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release)?.Name ?? "{http://hl7.org/fhir/}" + type.Name
+,
             };
 
             newMapping._mappingInitializer = () => inspectProperties(type, newMapping, release);
@@ -179,6 +181,9 @@ namespace Hl7.Fhir.Introspection
         public string? Canonical { get; private set; }
 
 
+        public string? CqlTypeSpecifier { get; private set; }
+
+
         // This list is created lazily. This not only improves initial startup time of 
         // applications but also ensures circular references between types will not cause loops.
         private PropertyMappingCollection propertyMappings
@@ -211,6 +216,8 @@ namespace Hl7.Fhir.Introspection
         /// no such property, it is null. 
         /// </summary>
         public PropertyMapping? PrimitiveValueProperty => PropertyMappings.SingleOrDefault(pm => pm.RepresentsValueElement);
+
+        public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.CqlPrimaryCodePath);
 
         /// <summary>
         /// Whether the reflected type has a member that represent a primitive value.
@@ -256,6 +263,8 @@ namespace Hl7.Fhir.Introspection
                 return null;
             }
         }
+
+
 
         internal static T? GetAttribute<T>(MemberInfo t, FhirRelease version) where T : Attribute => GetAttributes<T>(t, version).LastOrDefault();
 
