@@ -297,6 +297,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SupplyDeliveryStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
     {

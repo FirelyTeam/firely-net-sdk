@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DigitalMediaType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Media.DigitalMediaType> TypeElement

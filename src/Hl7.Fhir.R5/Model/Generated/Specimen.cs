@@ -943,6 +943,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SpecimenStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {
@@ -1066,6 +1067,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("combined", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenCombined> CombinedElement
     {

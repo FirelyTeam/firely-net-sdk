@@ -466,6 +466,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("orientationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> OrientationElement
       {
@@ -498,6 +499,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("strandType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.StrandType> StrandElement
       {
@@ -928,6 +930,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("sequenceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> TypeElement
     {

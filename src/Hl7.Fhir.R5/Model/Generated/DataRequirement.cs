@@ -630,6 +630,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ValueFilterComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator> ComparatorElement
       {
@@ -832,6 +833,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
@@ -957,6 +959,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement

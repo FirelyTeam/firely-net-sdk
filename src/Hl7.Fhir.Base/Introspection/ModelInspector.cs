@@ -130,8 +130,6 @@ namespace Hl7.Fhir.Introspection
         /// reflects on a satellite assembly.</remarks>
         public string? FhirVersion { get; private set; }
 
-        private readonly ClassMappingCollection _classMappings = new();
-
         private readonly EnumMappingCollection _enumMappings = new();
 
         private const string MODELINFO_CLASSNAME = "ModelInfo";
@@ -183,8 +181,12 @@ namespace Hl7.Fhir.Introspection
 
             _classMappings.Add(mapping!);
 
-            var nestedEnums = type.GetNestedTypes(BindingFlags.Public).Where(t => t.IsEnum);
+            var nestedTypes = type.GetNestedTypes(BindingFlags.Public);
+            var nestedEnums = nestedTypes.Where(t => t.IsEnum);
             extractFromEnums(nestedEnums);
+
+            var nestedClasses = nestedTypes.Where(t => t.IsClass && !t.IsEnum);
+            extractBackbonesFromClasses(nestedClasses);
 
             return mapping;
         }
@@ -195,6 +197,15 @@ namespace Hl7.Fhir.Introspection
             {
                 var success = EnumMapping.TryGetMappingForEnum(enumType, FhirRelease, out var mapping);
                 if (success) _enumMappings.Add(mapping!);
+            }
+        }
+
+        private void extractBackbonesFromClasses(IEnumerable<Type> classTypes)
+        {
+            foreach (var classType in classTypes)
+            {
+                var success = ClassMapping.TryGetMappingForType(classType, FhirRelease, out var mapping);
+                if (success) _backboneClassMappings.Add(mapping!);
             }
         }
 
@@ -258,6 +269,14 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public ICollection<ClassMapping> ClassMappings => _classMappings.ByName.Values.ToList();
 
+        private readonly ClassMappingCollection _classMappings = new();
+
+        /// <summary>
+        /// List of ClassMappings for the nested types generated for backbone elements.
+        /// </summary>
+        public ICollection<ClassMapping> BackboneClassMappings => _backboneClassMappings.ByName.Values.ToList();
+
+        private readonly ClassMappingCollection _backboneClassMappings = new();
         /// <summary>
         /// List of EnumMappings registered with the inspector.
         /// </summary>

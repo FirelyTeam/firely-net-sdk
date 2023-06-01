@@ -2455,6 +2455,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClaimResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {

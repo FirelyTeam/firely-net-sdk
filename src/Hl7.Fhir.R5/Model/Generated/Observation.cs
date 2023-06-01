@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TriggeredByType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.TriggeredBytype> TypeElement
@@ -821,6 +822,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement

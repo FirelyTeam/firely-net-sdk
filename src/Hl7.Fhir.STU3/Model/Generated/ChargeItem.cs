@@ -291,6 +291,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ChargeItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus> StatusElement

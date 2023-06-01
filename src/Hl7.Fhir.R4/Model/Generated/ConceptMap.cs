@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#SourceElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.SourceElement")]
+    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Element")]
     public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#TargetElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.SourceElement.TargetElement")]
+    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Element.Target")]
     public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -648,6 +648,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("equivalence", IsModifier=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapEquivalence")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMapEquivalence> EquivalenceElement
@@ -869,7 +870,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#OtherElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.SourceElement.TargetElement.OtherElement")]
+    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Element.Target.DependsOn")]
     public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1132,6 +1133,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -1505,6 +1507,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

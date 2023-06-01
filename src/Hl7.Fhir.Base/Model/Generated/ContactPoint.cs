@@ -152,6 +152,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("system", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ContactPointSystem")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointSystem> SystemElement
     {
@@ -215,6 +216,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=50)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ContactPointUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ContactPoint.ContactPointUse> UseElement
     {

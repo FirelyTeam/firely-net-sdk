@@ -335,6 +335,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rules", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SlicingRules")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules> RulesElement
@@ -491,6 +492,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DiscriminatorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType> TypeElement
@@ -965,6 +967,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("aggregation", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AggregationMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
@@ -998,6 +1001,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("versioning", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ReferenceVersionRules")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
       {
@@ -1380,6 +1384,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConstraintSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity> SeverityElement
@@ -1690,6 +1695,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
@@ -1917,6 +1923,7 @@ namespace Hl7.Fhir.Model
       /// Computable language of mapping
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -2156,6 +2163,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PropertyRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement

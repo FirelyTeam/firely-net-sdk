@@ -271,6 +271,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ReferralRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -304,6 +305,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ReferralCategory")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -350,6 +352,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ReferralPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

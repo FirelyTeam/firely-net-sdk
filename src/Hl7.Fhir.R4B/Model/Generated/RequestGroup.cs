@@ -197,6 +197,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("priority", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RequestPriority")]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
       {
@@ -329,6 +330,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupingBehavior", Order=160)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionGroupingBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
       {
@@ -361,6 +363,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("selectionBehavior", Order=170)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionSelectionBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
       {
@@ -393,6 +396,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requiredBehavior", Order=180)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRequiredBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
       {
@@ -425,6 +429,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("precheckBehavior", Order=190)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionPrecheckBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
       {
@@ -457,6 +462,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=200)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionCardinalityBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
       {
@@ -776,6 +782,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionConditionKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
@@ -959,6 +966,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
@@ -1231,6 +1239,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -1264,6 +1273,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -1297,6 +1307,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=170, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

@@ -317,6 +317,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement

@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> CodeElement
@@ -725,6 +726,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1097,6 +1099,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=300)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MessageSignificanceCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory> CategoryElement
     {
@@ -1143,6 +1146,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("responseRequired", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("messageheader-response-request")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageDefinition.MessageheaderResponseRequest> ResponseRequiredElement
     {

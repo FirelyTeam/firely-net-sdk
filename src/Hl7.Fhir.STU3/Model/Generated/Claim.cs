@@ -3213,6 +3213,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClaimStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -3272,6 +3273,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", Order=130, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("Use")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Claim.ClaimUseCode> UseElement
     {

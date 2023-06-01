@@ -337,6 +337,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AllergyIntoleranceSeverity")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> SeverityElement
       {
@@ -573,6 +574,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> TypeElement
     {
@@ -605,6 +607,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> CategoryElement
@@ -638,6 +641,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("criticality", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceCriticality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> CriticalityElement
     {

@@ -174,6 +174,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EncounterStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement
@@ -1102,6 +1103,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EncounterLocationStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
       {
@@ -1284,6 +1286,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Encounter.EncounterStatus> StatusElement

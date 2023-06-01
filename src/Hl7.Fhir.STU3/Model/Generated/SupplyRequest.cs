@@ -396,6 +396,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SupplyRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> StatusElement
     {
@@ -441,6 +442,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=120, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

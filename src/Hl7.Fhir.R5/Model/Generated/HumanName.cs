@@ -112,6 +112,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NameUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.HumanName.NameUse> UseElement
     {

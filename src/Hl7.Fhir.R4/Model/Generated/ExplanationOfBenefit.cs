@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#RelatedClaim", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.RelatedClaim")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Related")]
     public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SupportingInformation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.SupportingInformation")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.SupportingInfo")]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3538,7 +3538,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItem", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddedItem")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddItem")]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4130,7 +4130,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemDetail", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddedItem.AddedItemDetail")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddItem.Detail")]
     public partial class AddedItemDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4457,7 +4457,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemDetailSubDetail", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddedItem.AddedItemDetail.AddedItemDetailSubDetail")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.AddItem.Detail.SubDetail")]
     public partial class AddedItemDetailSubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5133,7 +5133,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Note", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.Note")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.ProcessNote")]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5177,6 +5177,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NoteType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
       {
@@ -5684,7 +5685,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Benefit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.BenefitBalance.Benefit")]
+    [CqlType("{http://hl7.org/fhir}ExplanationOfBenefit.BenefitBalance.Financial")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5856,6 +5857,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ExplanationOfBenefitStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus> StatusElement
@@ -5917,6 +5919,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("Use")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimUseCode> UseElement
@@ -6214,6 +6217,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RemittanceOutcome")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement

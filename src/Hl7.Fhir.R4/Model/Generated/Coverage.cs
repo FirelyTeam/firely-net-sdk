@@ -411,7 +411,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#Exemption", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Coverage.CostToBeneficiary.Exemption")]
+    [CqlType("{http://hl7.org/fhir}Coverage.CostToBeneficiary.Exception")]
     public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -557,6 +557,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CoverageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement

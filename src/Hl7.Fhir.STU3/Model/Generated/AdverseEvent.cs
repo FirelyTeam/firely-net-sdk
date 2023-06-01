@@ -179,6 +179,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("causality", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdverseEventCausality")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCausality> CausalityElement
       {
@@ -447,6 +448,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=100, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventCategory> CategoryElement
     {

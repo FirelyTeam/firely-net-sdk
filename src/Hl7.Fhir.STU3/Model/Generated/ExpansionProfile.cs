@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SystemVersionProcessingMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ExpansionProfile.SystemVersionProcessingMode> ModeElement
@@ -720,6 +721,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation to be included
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -979,6 +981,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation to be excluded
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1222,6 +1225,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1646,6 +1650,7 @@ namespace Hl7.Fhir.Model
     /// Specify the language for the display element of codes in the value set expansion
     /// </summary>
     [FhirElement("displayLanguage", InSummary=true, Order=300)]
+    [Binding("Language")]
     [DataMember]
     public Hl7.Fhir.Model.Code DisplayLanguageElement
     {

@@ -229,6 +229,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("informationType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("InformationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentInformationType> InformationTypeElement
       {
@@ -818,6 +819,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("workflowStatus", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("WorkflowStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentWorkflowStatus> WorkflowStatusElement
     {
@@ -850,6 +852,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("disposition", InSummary=true, Order=190)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("Disposition")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ArtifactAssessment.ArtifactAssessmentDisposition> DispositionElement
     {

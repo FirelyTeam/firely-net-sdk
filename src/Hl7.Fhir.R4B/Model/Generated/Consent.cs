@@ -534,6 +534,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentProvisionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
       {
@@ -1025,6 +1026,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -1180,6 +1182,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement

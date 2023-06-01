@@ -423,6 +423,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasmntPrinciple")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
     {

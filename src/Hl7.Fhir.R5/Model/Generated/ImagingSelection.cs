@@ -597,6 +597,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("regionType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ImagingSelection2DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType> RegionTypeElement
@@ -767,6 +768,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("regionType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ImagingSelection3DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType> RegionTypeElement
@@ -938,6 +940,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImagingSelectionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus> StatusElement

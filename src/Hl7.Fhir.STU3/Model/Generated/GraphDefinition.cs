@@ -418,6 +418,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -633,6 +634,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CompartmentCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
@@ -666,6 +668,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rule", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GraphCompartmentRule")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule> RuleElement
@@ -965,6 +968,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1195,6 +1199,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", Order=210)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType> StartElement

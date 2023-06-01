@@ -101,6 +101,9 @@ namespace Hl7.Fhir.Introspection
 
         private readonly Lazy<IReadOnlyDictionary<string, EnumMemberMapping>> _mappings;
 
+        public string CqlTypeSpecifier => "{http://hl7.org/fhir}" + Name;
+
+
         private IReadOnlyDictionary<string, EnumMemberMapping> mappingInitializer()
         {
             var result = new Dictionary<string, EnumMemberMapping>();

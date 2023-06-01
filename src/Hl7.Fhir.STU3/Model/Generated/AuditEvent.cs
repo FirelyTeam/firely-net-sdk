@@ -627,6 +627,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="where")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AuditEventAgentNetworkType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> TypeElement
       {
@@ -1486,6 +1487,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="what")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
     {
@@ -1550,6 +1552,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=130, FiveWs="what")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
     {

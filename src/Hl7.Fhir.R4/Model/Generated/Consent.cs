@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provision", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.provision")]
+    [CqlType("{http://hl7.org/fhir}Consent.Provision")]
     public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -537,6 +537,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentProvisionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentProvisionType> TypeElement
       {
@@ -881,7 +882,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provisionActor", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.provision.provisionActor")]
+    [CqlType("{http://hl7.org/fhir}Consent.Provision.Actor")]
     public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1017,7 +1018,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provisionData", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.provision.provisionData")]
+    [CqlType("{http://hl7.org/fhir}Consent.Provision.Data")]
     public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1030,6 +1031,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -1185,6 +1187,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement

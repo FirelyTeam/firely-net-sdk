@@ -181,6 +181,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement

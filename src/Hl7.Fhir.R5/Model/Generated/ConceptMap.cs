@@ -327,6 +327,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapPropertyType> TypeElement
@@ -617,6 +618,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapmapAttributeType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapAttributeType> TypeElement
@@ -1348,6 +1350,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", IsModifier=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapRelationship")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement
@@ -1958,6 +1961,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -2084,6 +2088,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", IsModifier=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnmappedConceptMapRelationship")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement
       {
@@ -2428,6 +2433,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

@@ -210,6 +210,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestReportParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType> TypeElement
@@ -519,7 +520,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestReport#SetupAction", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}TestReport.Setup.SetupAction")]
+    [CqlType("{http://hl7.org/fhir}TestReport.Setup.Action")]
     public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -651,7 +652,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestReport#Operation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}TestReport.Setup.SetupAction.Operation")]
+    [CqlType("{http://hl7.org/fhir}TestReport.Setup.Action.Operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -664,6 +665,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("result", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
@@ -861,7 +863,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestReport#Assert", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}TestReport.Setup.SetupAction.Assert")]
+    [CqlType("{http://hl7.org/fhir}TestReport.Setup.Action.Assert")]
     public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -874,6 +876,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("result", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
@@ -1262,7 +1265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestReport#TestAction", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}TestReport.Test.TestAction")]
+    [CqlType("{http://hl7.org/fhir}TestReport.Test.Action")]
     public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1505,7 +1508,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestReport#TeardownAction", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}TestReport.Teardown.TeardownAction")]
+    [CqlType("{http://hl7.org/fhir}TestReport.Teardown.Action")]
     public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1659,6 +1662,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TestReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TestReport.TestReportStatus> StatusElement
@@ -1708,6 +1712,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("result", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TestReportResult")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TestReport.TestReportResult> ResultElement

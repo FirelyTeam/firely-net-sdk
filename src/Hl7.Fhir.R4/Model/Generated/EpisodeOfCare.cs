@@ -126,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EpisodeOfCareStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
@@ -454,6 +455,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EpisodeOfCareStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement

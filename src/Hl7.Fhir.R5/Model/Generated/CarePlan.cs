@@ -383,6 +383,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -416,6 +417,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> IntentElement

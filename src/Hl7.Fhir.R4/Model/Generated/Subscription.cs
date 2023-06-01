@@ -148,6 +148,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SubscriptionChannelType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType> TypeElement
@@ -211,6 +212,7 @@ namespace Hl7.Fhir.Model
       /// MIME type to send, or omit for no payload
       /// </summary>
       [FhirElement("payload", InSummary=true, Order=60)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code PayloadElement
       {
@@ -385,6 +387,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement

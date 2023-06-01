@@ -385,6 +385,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionPreconditionType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionPreconditionType> TypeElement
@@ -561,6 +562,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("purpose", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionQuestionnairePurpose")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionQuestionnairePurpose> PurposeElement
@@ -1020,6 +1022,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

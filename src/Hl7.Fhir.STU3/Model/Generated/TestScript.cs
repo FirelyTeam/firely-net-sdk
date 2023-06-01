@@ -2900,6 +2900,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRDefinedType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
@@ -2994,6 +2995,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("accept", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContentType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> AcceptElement
       {
@@ -3026,6 +3028,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("contentType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContentType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> ContentTypeElement
       {
@@ -3813,6 +3816,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionDirectionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType> DirectionElement
       {
@@ -3938,6 +3942,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("contentType", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContentType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> ContentTypeElement
       {
@@ -4094,6 +4099,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", Order=150)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionOperatorType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> OperatorElement
       {
@@ -4157,6 +4163,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requestMethod", Order=170)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestScriptRequestMethodCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> RequestMethodElement
       {
@@ -4220,6 +4227,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", Order=190)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRDefinedType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
@@ -4252,6 +4260,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("response", Order=200)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionResponseTypes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
       {
@@ -6226,6 +6235,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

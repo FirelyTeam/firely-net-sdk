@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Items", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CoverageEligibilityResponse.Insurance.Items")]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityResponse.Insurance.Item")]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -784,7 +784,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Benefit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CoverageEligibilityResponse.Insurance.Items.Benefit")]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityResponse.Insurance.Item.Benefit")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -943,7 +943,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Errors", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CoverageEligibilityResponse.Errors")]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityResponse.Error")]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1067,6 +1067,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -1100,6 +1101,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityResponsePurpose")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityResponse.EligibilityResponsePurpose>> PurposeElement
@@ -1227,6 +1229,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RemittanceOutcome")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClaimProcessingCodes> OutcomeElement

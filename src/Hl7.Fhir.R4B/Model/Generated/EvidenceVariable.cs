@@ -215,6 +215,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> GroupMeasureElement
       {
@@ -929,6 +930,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1198,6 +1200,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("characteristicCombination", Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CharacteristicCombination")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode> CharacteristicCombinationElement
     {
@@ -1244,6 +1247,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("handling", InSummary=true, Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EvidenceVariableHandling")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
     {

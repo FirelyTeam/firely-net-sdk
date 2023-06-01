@@ -250,6 +250,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
@@ -532,6 +533,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CodeSystem.PropertyType> TypeElement
@@ -964,6 +966,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1432,6 +1435,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1755,6 +1759,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("hierarchyMeaning", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSystemHierarchyMeaning")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> HierarchyMeaningElement
     {
@@ -1849,6 +1854,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("content", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSystemContentMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemContentMode> ContentElement

@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement

@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
         [Cardinality(Min = 1, Max = 1)]
         [DeclaredType(Type = typeof(Code))]
         [DataMember]
+        [Binding("NarrativeStatus")]
         public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
         {
             get { return _StatusElement; }

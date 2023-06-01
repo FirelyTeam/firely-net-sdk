@@ -595,6 +595,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResponseType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement

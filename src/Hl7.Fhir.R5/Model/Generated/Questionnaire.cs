@@ -442,6 +442,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> TypeElement
@@ -489,6 +490,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("enableBehavior", Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EnableWhenBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.EnableWhenBehavior> EnableBehaviorElement
       {
@@ -521,6 +523,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("disabledDisplay", Order=120)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DisabledDisplay")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemDisabledDisplay> DisabledDisplayElement
       {
@@ -677,6 +680,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("answerConstraint", Order=170)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireAnswerConstraint")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireAnswerConstraint> AnswerConstraintElement
       {
@@ -1063,6 +1067,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemOperator")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemOperator> OperatorElement
@@ -1665,6 +1670,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1729,6 +1735,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("subjectType", InSummary=true, Order=180, FiveWs="FiveWs.who")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement

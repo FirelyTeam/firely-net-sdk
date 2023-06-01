@@ -128,6 +128,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AddressUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
     {
@@ -160,6 +161,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AddressType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressType> TypeElement
     {

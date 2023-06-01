@@ -186,6 +186,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("supportedInteraction", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("MethodCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
@@ -426,6 +427,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForCreateElement
       {
@@ -489,6 +491,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForDeleteElement
       {
@@ -1000,6 +1003,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchComparator")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
@@ -1033,6 +1037,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("modifier", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchModifierCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
@@ -1590,6 +1595,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

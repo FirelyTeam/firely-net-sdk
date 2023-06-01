@@ -2473,6 +2473,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -3031,6 +3032,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("fhirVersion", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRVersion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
@@ -3363,6 +3365,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("generation", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuidePageGeneration")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageGeneration> GenerationElement
@@ -3534,6 +3537,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuideParameterCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuideParameterCode> CodeElement
@@ -4158,7 +4162,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#ManifestResource", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest.ManifestResource")]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest.Resource")]
     public partial class ManifestResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4335,7 +4339,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#ManifestPage", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest.ManifestPage")]
+    [CqlType("{http://hl7.org/fhir}ImplementationGuide.Manifest.Page")]
     public partial class ManifestPageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4670,6 +4674,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -4932,6 +4937,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("license", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SPDXLicense")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense> LicenseElement
     {
@@ -4964,6 +4970,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=240)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRVersion")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement

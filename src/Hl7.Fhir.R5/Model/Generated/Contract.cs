@@ -346,6 +346,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("publicationStatus", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContractPublicationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Contract.ContractResourcePublicationStatusCodes> PublicationStatusElement
@@ -4313,6 +4314,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ContractStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes> StatusElement
     {

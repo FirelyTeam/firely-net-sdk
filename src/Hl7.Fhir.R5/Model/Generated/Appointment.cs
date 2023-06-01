@@ -3115,6 +3115,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> StatusElement
@@ -4429,6 +4430,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement

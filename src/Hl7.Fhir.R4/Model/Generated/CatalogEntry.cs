@@ -96,6 +96,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationtype", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CatalogEntryRelationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType> RelationtypeElement
@@ -340,6 +341,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

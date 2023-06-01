@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Parameter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Task.Parameter")]
+    [CqlType("{http://hl7.org/fhir}Task.Input")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -774,6 +774,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskStatus> StatusElement
@@ -833,6 +834,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=180, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskIntent> IntentElement
@@ -866,6 +868,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=190, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

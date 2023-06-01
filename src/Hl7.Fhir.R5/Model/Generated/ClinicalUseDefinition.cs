@@ -1355,6 +1355,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClinicalUseDefinitionType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType> TypeElement

@@ -460,6 +460,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Medication.MedicationStatusCodes> StatusElement
     {

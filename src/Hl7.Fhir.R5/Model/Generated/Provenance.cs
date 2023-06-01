@@ -294,6 +294,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ProvenanceEntityRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement

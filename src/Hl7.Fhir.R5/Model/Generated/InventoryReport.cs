@@ -481,6 +481,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> StatusElement
@@ -514,6 +515,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("countType", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryCountType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> CountTypeElement

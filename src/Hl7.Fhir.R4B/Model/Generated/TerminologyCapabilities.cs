@@ -2034,6 +2034,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2296,6 +2297,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
@@ -2413,6 +2415,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("codeSearch", Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSearchSupport")]
     [DataMember]
     public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport> CodeSearchElement
     {

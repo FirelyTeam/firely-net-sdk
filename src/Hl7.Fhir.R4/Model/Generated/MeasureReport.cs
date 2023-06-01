@@ -609,7 +609,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroup", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.StratifierGroup")]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.Stratum")]
     public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Component", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.StratifierGroup.Component")]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.Stratum.Component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroupPopulation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.StratifierGroup.StratifierGroupPopulation")]
+    [CqlType("{http://hl7.org/fhir}MeasureReport.Group.Stratifier.Stratum.Population")]
     public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1108,6 +1108,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
@@ -1141,6 +1142,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement

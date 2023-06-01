@@ -209,6 +209,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestReportParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportParticipantType> TypeElement
@@ -660,6 +661,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("result", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
@@ -869,6 +871,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("result", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestReportActionResult")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestReport.TestReportActionResult> ResultElement
@@ -1650,6 +1653,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TestReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TestReport.TestReportStatus> StatusElement
@@ -1699,6 +1703,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("result", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TestReportResult")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TestReport.TestReportResult> ResultElement

@@ -222,6 +222,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement

@@ -425,7 +425,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#CoverageBenefit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}InsurancePlan.Coverage.CoverageBenefit")]
+    [CqlType("{http://hl7.org/fhir}InsurancePlan.Coverage.Benefit")]
     public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Limit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}InsurancePlan.Coverage.CoverageBenefit.Limit")]
+    [CqlType("{http://hl7.org/fhir}InsurancePlan.Coverage.Benefit.Limit")]
     public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1306,7 +1306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#PlanBenefit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}InsurancePlan.Plan.SpecificCost.PlanBenefit")]
+    [CqlType("{http://hl7.org/fhir}InsurancePlan.Plan.SpecificCost.Benefit")]
     public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1440,7 +1440,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Cost", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}InsurancePlan.Plan.SpecificCost.PlanBenefit.Cost")]
+    [CqlType("{http://hl7.org/fhir}InsurancePlan.Plan.SpecificCost.Benefit.Cost")]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1631,6 +1631,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

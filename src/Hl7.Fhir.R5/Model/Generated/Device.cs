@@ -310,6 +310,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("entryType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UDIEntryType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType> EntryTypeElement
       {
@@ -515,6 +516,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -1271,6 +1273,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRDeviceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
     {

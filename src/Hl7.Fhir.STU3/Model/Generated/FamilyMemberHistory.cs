@@ -303,6 +303,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement
@@ -472,6 +473,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

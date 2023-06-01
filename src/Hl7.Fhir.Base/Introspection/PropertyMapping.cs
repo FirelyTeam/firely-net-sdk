@@ -173,6 +173,11 @@ namespace Hl7.Fhir.Introspection
         public bool IsPatientBirthDate;
 
         /// <summary>
+        /// For a bound element, this is the name of the binding.
+        /// </summary>
+        public string? BindingName { get; private set; }
+
+        /// <summary>
         /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
         /// </summary>
         /// <remarks>There should generally be no reason to call this method, as you can easily get the required PropertyMapping via
@@ -225,7 +230,7 @@ namespace Hl7.Fhir.Introspection
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
-            CqlElementAttribute? cqlElementAttribute = ClassMapping.GetAttribute<CqlElementAttribute>(prop, release);
+            var cqlElementAttribute = ClassMapping.GetAttribute<CqlElementAttribute>(prop, release);
             var isCqlPrimaryCodePath = cqlElementAttribute?.IsPrimaryCodePath == true;
             var isBirthDate = cqlElementAttribute?.IsBirthDate == true;
 
@@ -244,6 +249,7 @@ namespace Hl7.Fhir.Introspection
                 FiveWs = elementAttr.FiveWs,
                 IsPrimaryCodePath = isCqlPrimaryCodePath,
                 IsPatientBirthDate = isBirthDate,
+                BindingName = ClassMapping.GetAttribute<BindingAttribute>(prop, release)?.Name
             };
 
             return true;

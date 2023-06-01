@@ -204,6 +204,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gender", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -293,6 +294,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rangeCategory", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationRangeCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> RangeCategoryElement
       {
@@ -671,6 +673,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("permittedDataType", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationDataType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
@@ -994,6 +997,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1480,6 +1484,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("permittedDataType", Order=350)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement

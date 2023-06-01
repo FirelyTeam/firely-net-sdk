@@ -407,6 +407,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ExtensionContextType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContextType> TypeElement
@@ -941,6 +942,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1247,6 +1249,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=270)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRVersion")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRVersion> FhirVersionElement
     {
@@ -1293,6 +1296,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("StructureDefinitionKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind> KindElement
@@ -1467,6 +1471,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("derivation", InSummary=true, Order=350)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TypeDerivationRule")]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule> DerivationElement
     {

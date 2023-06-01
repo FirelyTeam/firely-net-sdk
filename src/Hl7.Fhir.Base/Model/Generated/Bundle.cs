@@ -1454,6 +1454,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchEntryMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
       {
@@ -1623,6 +1624,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("HTTPVerb")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.HTTPVerb> MethodElement
@@ -2226,6 +2228,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BundleType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Bundle.BundleType> TypeElement

@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comparator", InSummary=true, IsModifier=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("QuantityComparator")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
     {

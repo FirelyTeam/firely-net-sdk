@@ -429,6 +429,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConditionClinicalStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> ClinicalStatusElement
     {
@@ -461,6 +462,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConditionVerificationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
     {

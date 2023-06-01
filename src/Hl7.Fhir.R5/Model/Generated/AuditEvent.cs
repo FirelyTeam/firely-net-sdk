@@ -1165,6 +1165,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
     {
@@ -1197,6 +1198,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity> SeverityElement
     {
