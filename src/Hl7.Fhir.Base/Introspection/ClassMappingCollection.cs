@@ -14,25 +14,24 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Introspection
 {
-    internal class EnumMappingCollection
+    internal class ClassMappingCollection
     {
-        public EnumMappingCollection()
+        public ClassMappingCollection()
         {
             // Nothing
         }
 
-        public EnumMappingCollection(IEnumerable<EnumMapping> mappings)
+        public ClassMappingCollection(IEnumerable<ClassMapping> mappings)
         {
             AddRange(mappings);
         }
 
         /// <summary>
-        /// Adds the mapped valueset enum to the collection, updating the indexed
+        /// Adds the mapped type to the collection, updating the indexed
         /// collections. Note: a newer mapping for the same canonical/name will overwrite
         /// the old one. This way, it is possible to substitute mappings if necessary.
         /// </summary>
-        /// <param name="mapping"></param>
-        public void Add(EnumMapping mapping)
+        public void Add(ClassMapping mapping)
         {
             var propKey = mapping.Name;
             _byName[propKey] = mapping;
@@ -44,29 +43,29 @@ namespace Hl7.Fhir.Introspection
                 _byCanonical[canonical] = mapping;
         }
 
-        public void AddRange(IEnumerable<EnumMapping> mappings)
+        public void AddRange(IEnumerable<ClassMapping> mappings)
         {
             foreach (var mapping in mappings)
                 Add(mapping);
         }
 
         /// <summary>
-        /// List of the enumerations, keyed by name.
+        /// List of the class mappings, keyed by name.
         /// </summary>
-        public IReadOnlyDictionary<string, EnumMapping> ByName => _byName;
-        private readonly ConcurrentDictionary<string, EnumMapping> _byName = new(StringComparer.OrdinalIgnoreCase);
+        public IReadOnlyDictionary<string, ClassMapping> ByName => _byName;
+        private readonly ConcurrentDictionary<string, ClassMapping> _byName = new(StringComparer.OrdinalIgnoreCase);
 
         /// <summary>
-        /// List of the enums, keyed by canonical.
+        /// List of the class mappings, keyed by canonical.
         /// </summary>
-        public IReadOnlyDictionary<string, EnumMapping> ByCanonical => _byCanonical;
-        private readonly ConcurrentDictionary<string, EnumMapping> _byCanonical = new();
+        public IReadOnlyDictionary<string, ClassMapping> ByCanonical => _byCanonical;
+        private readonly ConcurrentDictionary<string, ClassMapping> _byCanonical = new();
 
         /// <summary>
-        /// List of the enums, keyed by canonical.
+        /// List of the class mappings, keyed by canonical.
         /// </summary>
-        public IReadOnlyDictionary<Type, EnumMapping> ByType => _byType;
-        public readonly ConcurrentDictionary<Type, EnumMapping> _byType = new();
+        public IReadOnlyDictionary<Type, ClassMapping> ByType => _byType;
+        public readonly ConcurrentDictionary<Type, ClassMapping> _byType = new();
     }
 }
 

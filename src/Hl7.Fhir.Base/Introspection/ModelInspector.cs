@@ -135,24 +135,16 @@ namespace Hl7.Fhir.Introspection
         /// reflects on a satellite assembly.</remarks>
         public string? FhirVersion { get; private set; }
 
-        // Index for easy lookup of datatypes.
-        private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByName =
-            new(StringComparer.OrdinalIgnoreCase);
+        private readonly ClassMappingCollection _classMappings = new();
 
-        private readonly ConcurrentDictionary<Type, ClassMapping> _classMappingsByType = new();
-
-        private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByCanonical = new();
-
-        private readonly ConcurrentDictionary<string, EnumMapping> _enumMappingsByCanonical = new();
-        private readonly ConcurrentDictionary<string, EnumMapping> _enumMappingsByName = new();
-        private readonly ConcurrentDictionary<string, EnumMapping> _enumMappingsByType = new();
+        private readonly EnumMappingCollection _enumMappings = new();
 
         private const string MODELINFO_CLASSNAME = "ModelInfo";
         private const string MODELINFO_VERSION_MEMBER = "Version";
 
         /// <summary>
-        /// Locates all types in the assembly representing FHIR metadata and extracts
-        /// the data as <see cref="ClassMapping"/>s.
+        /// Locates all types and enums in the assembly representing FHIR metadata and extracts
+        /// the data into <see cref="ClassMapping"/> and <see cref="EnumMapping"/>
         /// </summary>
         public IReadOnlyList<ClassMapping> Import(Assembly assembly)
         {
@@ -168,32 +160,42 @@ namespace Hl7.Fhir.Introspection
                 FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
             }
 
-            return exportedTypes.Select(t => ImportType(t))
+            // Find and extract all EnumMappings
+            var exportedEnums = exportedTypes.Where(et => et.IsEnum);
+            extractFromEnums(exportedEnums);
+
+            // Find and extract all ClassMappings
+            var exportedClasses = exportedTypes.Where(et => et.IsClass && !et.IsEnum);
+            return exportedClasses.Select(t => ImportType(t))
                 .Where(cm => cm is not null)
                 .ToList()!;
         }
 
         /// <summary>
-        /// Extracts the FHIR metadata from a <see cref="Type"/> into a <see cref="ClassMapping"/>.
+        /// Extracts the FHIR metadata from a <see cref="Type"/> into a <see cref="ClassMapping"/> and
+        /// possibly multiple <see cref="EnumMappings"/>. 
         /// </summary>
+        /// <returns>The created ClassMapping.</returns>
         public ClassMapping? ImportType(Type type)
         {
-            // When explicitly importing a (newer?) class mapping for the same
-            // model type name, overwrite the old entry.            
             if (!ClassMapping.TryGetMappingForType(type, FhirRelease, out var mapping))
                 return null;
 
-            RegisterTypeMapping(type, mapping!);
+            _classMappings.Add(mapping!);
+
+            var nestedEnums = type.GetNestedTypes(BindingFlags.Public).Where(t => t.IsEnum);
+            extractFromEnums(nestedEnums);
+
             return mapping;
         }
 
-        internal void RegisterTypeMapping(Type t, ClassMapping mapping)
+        private void extractFromEnums(IEnumerable<Type> enumTypes)
         {
-            _classMappingsByName[mapping!.Name] = mapping;
-            _classMappingsByType[t] = mapping;
-
-            if (mapping.Canonical is not null)
-                _classMappingsByCanonical[mapping.Canonical] = mapping;
+            foreach (var enumType in enumTypes)
+            {
+                var success = EnumMapping.TryGetMappingForEnum(enumType, FhirRelease, out var mapping);
+                if (success) _enumMappings.Add(mapping!);
+            }
         }
 
         /// <summary>
@@ -209,26 +211,49 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>The search for the mapping by namem is case-insensitive.</remarks>
         public ClassMapping? FindClassMapping(string fhirTypeName) =>
-            _classMappingsByName.TryGetValue(fhirTypeName, out var entry) ? entry : null;
+            _classMappings.ByName.TryGetValue(fhirTypeName, out var entry) ? entry : null;
 
         /// <summary>
         /// Retrieves an already imported <see cref="ClassMapping" /> given a Type.
         /// </summary>
         public ClassMapping? FindClassMapping(Type t) =>
-            _classMappingsByType.TryGetValue(t, out var entry) ? entry : null;
+            _classMappings.ByType.TryGetValue(t, out var entry) ? entry : null;
 
         /// <summary>
         /// Retrieves an already imported <see cref="ClassMapping" /> given a canonical.
         /// </summary>
         public ClassMapping? FindClassMappingByCanonical(string canonical) =>
-            _classMappingsByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+            _classMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+
+        /// <summary>
+        /// Retrieves an already imported <see cref="EnumMapping"/>, given the name of the valueset.
+        /// </summary>
+        public EnumMapping? FindEnumMapping(string valuesetName) =>
+            _enumMappings.ByName.TryGetValue(valuesetName, out var entry) ? entry : null;
+
+        /// <summary>
+        /// Retrieves an already imported <see cref="EnumMapping" /> given the enum Type.
+        /// </summary>
+        public EnumMapping? FindEnumMapping(Type t) =>
+            _enumMappings.ByType.TryGetValue(t, out var entry) ? entry : null;
+
+        /// <summary>
+        /// Retrieves an already imported <see cref="EnumMapping" /> given the valueset canonical.
+        /// </summary>
+        public EnumMapping? FindEnumMappingByCanonical(string canonical) =>
+            _enumMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
 
         public ClassMapping? PatientMapping => (_patientMapping is not null) ? FindClassMapping(_patientMapping) : null;
 
         /// <summary>
-        /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
+        /// List of ClassMappings registered with the inspector.
         /// </summary>
-        public ICollection<ClassMapping> ClassMappings => _classMappingsByName.Values;
+        public ICollection<ClassMapping> ClassMappings => _classMappings.ByName.Values.ToList();
+
+        /// <summary>
+        /// List of EnumMappings registered with the inspector.
+        /// </summary>
+        public IEnumerable<EnumMapping> EnumMappings => _enumMappings.ByName.Values;
 
         /// <inheritdoc cref="IStructureDefinitionSummaryProvider.Provide(string)"/>
         public IStructureDefinitionSummary? Provide(string canonical) =>

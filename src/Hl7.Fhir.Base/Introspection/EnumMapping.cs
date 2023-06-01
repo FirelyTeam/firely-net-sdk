@@ -31,7 +31,7 @@ namespace Hl7.Fhir.Introspection
         /// times for the same type and release will return the same <see cref="EnumMapping"/>.
         /// </summary>
         /// <returns>true if the mapping was found or false if the type did not represent a FHIR valueset.</returns>
-        /// <remarks>For classes shared across FHIR versions, there may be metadata present for different versions
+        /// <remarks>For enums shared across FHIR versions, there may be metadata present for different versions
         /// of FHIR, the <paramref name="release"/> is used to select which subset of metadata to extract. </remarks>
         /// <seealso cref="TryCreate(Type, out EnumMapping?, FhirRelease)"/>
         public static bool TryGetMappingForEnum(Type t, FhirRelease release, out EnumMapping? mapping)
