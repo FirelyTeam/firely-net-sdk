@@ -70,6 +70,18 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.STU3));
         }
 
+        [TestMethod]
+        public void TestCqlInformation()
+        {
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
+
+            Assert.IsTrue(mapping.CqlTypeSpecifier == "{http://hl7.org/fhir}Way");
+            Assert.IsTrue(mapping.IsPatientClass);
+            Assert.IsTrue(mapping.PatientBirthDateMapping.Name == "member");
+            Assert.IsTrue(mapping.PrimaryCodePath?.Name == "code");
+
+        }
+
 
         /// <summary>
         /// Test for issue 556 (https://github.com/FirelyTeam/firely-net-sdk/issues/556) 
@@ -142,10 +154,20 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType("Way")]
     [Test("One")]
     [Test("Two")]
+    [CqlType("{http://hl7.org/fhir}Way", IsPatientClass = true)]
+
     public class Way : Resource
     {
         [Test("AttrA")]
+        [FhirElement("member")]
+        [CqlElement(IsBirthDate = true)]
         public string Member { get; set; }
+
+        [Test("AttrB")]
+        [FhirElement("code")]
+        [CqlElement(IsPrimaryCodePath = true)]
+        public string Code { get; set; }
+
         public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
     }
 
