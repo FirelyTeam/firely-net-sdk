@@ -80,6 +80,12 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsTrue(mapping.PatientBirthDateMapping.Name == "member");
             Assert.IsTrue(mapping.PrimaryCodePath?.Name == "code");
 
+            var inspector = new ModelInspector(Specification.FhirRelease.STU3);
+            inspector.ImportType(typeof(Way));
+            inspector.ImportType(typeof(Way2));
+
+            Assert.IsTrue(inspector.PatientMapping.Name == "Way");
+
         }
 
 
