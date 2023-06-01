@@ -46,6 +46,8 @@ namespace Hl7.Fhir.Introspection
         public static ClassMapping? GetClassMappingForType(Type t) =>
             ForAssembly(t.GetTypeInfo().Assembly).FindOrImportClassMapping(t);
 
+        private static Type? _patientMapping;
+
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
         /// FHIR metadata contents of the given assembly. Calling this function repeatedly for
@@ -66,6 +68,9 @@ namespace Hl7.Fhir.Introspection
 
                 var newInspector = new ModelInspector(modelAssemblyAttr.Since);
                 newInspector.Import(a);
+
+                if (a.GetCustomAttribute<CqlModelAssemblyAttribute>().PatientClass != null)
+                    _patientMapping = a.GetCustomAttribute<CqlModelAssemblyAttribute>().PatientClass;
 
                 // Make sure we always include the types from the base assembly too. 
                 var baseAssembly = typeof(Resource).GetTypeInfo().Assembly;
@@ -217,6 +222,8 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public ClassMapping? FindClassMappingByCanonical(string canonical) =>
             _classMappingsByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
+
+        public ClassMapping? PatientMapping => (_patientMapping is not null) ? FindClassMapping(_patientMapping) : null;
 
         /// <summary>
         /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.

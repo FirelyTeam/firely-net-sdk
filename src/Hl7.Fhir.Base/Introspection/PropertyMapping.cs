@@ -162,6 +162,8 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public readonly FhirRelease Release;
 
+        public bool CqlPrimaryCodePath;
+
         /// <summary>
         /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
         /// </summary>
@@ -215,6 +217,8 @@ namespace Hl7.Fhir.Introspection
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
+            var cqlPrimaryCodePath = ClassMapping.GetAttribute<CqlElementAttribute>(prop, release)?.IsPrimaryCodePath == true;
+
             result = new PropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping!, fhirTypes, release)
             {
                 InSummary = elementAttr.InSummary,
@@ -227,7 +231,8 @@ namespace Hl7.Fhir.Introspection
                 IsPrimitive = isPrimitive,
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
                 ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
-                FiveWs = elementAttr.FiveWs
+                FiveWs = elementAttr.FiveWs,
+                CqlPrimaryCodePath = cqlPrimaryCodePath
             };
 
             return true;
