@@ -138,6 +138,10 @@ namespace Hl7.Fhir.Introspection
 
         private readonly ConcurrentDictionary<string, ClassMapping> _classMappingsByCanonical = new();
 
+        private readonly ConcurrentDictionary<string, EnumMapping> _enumMappingsByCanonical = new();
+        private readonly ConcurrentDictionary<string, EnumMapping> _enumMappingsByName = new();
+        private readonly ConcurrentDictionary<string, EnumMapping> _enumMappingsByType = new();
+
         private const string MODELINFO_CLASSNAME = "ModelInfo";
         private const string MODELINFO_VERSION_MEMBER = "Version";
 

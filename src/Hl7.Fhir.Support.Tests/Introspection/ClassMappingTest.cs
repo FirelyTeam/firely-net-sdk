@@ -37,9 +37,9 @@ namespace Hl7.Fhir.Tests.Introspection
             mapping.Canonical.Should().Be("http://hl7.org/fhir/ValueSet/filter-operator");
             mapping.Name.Should().Be("FilterOperator");
 
-            var names = Enum.GetNames<FilterOperator>();
-            mapping.Members.Should().HaveCount(names.Length);
-            mapping.Members.Keys.Should().BeEquivalentTo(names);
+            var values = Enum.GetValues<FilterOperator>();
+            mapping.Members.Should().HaveCount(values.Length);
+            mapping.Members.Select(kvp => kvp.Value.Value).Should().BeEquivalentTo(values);
 
             var equals = mapping.Members["="];
             equals.Code.Should().Be("=");

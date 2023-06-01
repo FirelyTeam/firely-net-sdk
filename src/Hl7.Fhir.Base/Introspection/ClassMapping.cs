@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Introspection
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
             if (GetAttribute<FhirTypeAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
-            var newMapping = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
+            result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
                 IsResource = typeAttribute.IsResource || type.CanBeTreatedAsType(typeof(Resource)),
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
@@ -99,9 +99,6 @@ namespace Hl7.Fhir.Introspection
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray()
             };
 
-            newMapping._mappingInitializer = () => inspectProperties(type, newMapping, release);
-            result = newMapping;
-
             return true;
         }
 
@@ -110,7 +107,6 @@ namespace Hl7.Fhir.Introspection
             Name = name;
             NativeType = nativeType;
             Release = release;
-            _mappingInitializer = () => new PropertyMappingCollection();
         }
 
         /// <summary>
@@ -118,7 +114,7 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>The mapping will contain the metadata that applies to this version (or older), using the
         /// newest metadata when multiple exist.</remarks>
-        public FhirRelease? Release { get; }
+        public FhirRelease Release { get; }
 
         /// <summary>
         /// Name of the mapping.
@@ -181,29 +177,26 @@ namespace Hl7.Fhir.Introspection
 
         // This list is created lazily. This not only improves initial startup time of 
         // applications but also ensures circular references between types will not cause loops.
+        private PropertyMappingCollection? _mappings;
         private PropertyMappingCollection propertyMappings
         {
             get
             {
-                LazyInitializer.EnsureInitialized(ref _mappings, _mappingInitializer);
+                LazyInitializer.EnsureInitialized(ref _mappings, inspectProperties);
                 return _mappings!;
             }
         }
+
+        /// <summary>
+        /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
+        /// </summary>
+        public IReadOnlyList<PropertyMapping> PropertyMappings => propertyMappings.ByOrder;
 
         /// <summary>
         /// The collection of zero or more <see cref="ValidationAttribute"/> (or subclasses) declared
         /// on this class.
         /// </summary>
         public ValidationAttribute[] ValidationAttributes { get; private set; } = Array.Empty<ValidationAttribute>();
-
-
-        private PropertyMappingCollection? _mappings;
-        private Func<PropertyMappingCollection> _mappingInitializer;
-
-        /// <summary>
-        /// List of PropertyMappings for this class, in the order of listing in the FHIR specification.
-        /// </summary>
-        public IReadOnlyList<PropertyMapping> PropertyMappings => propertyMappings.ByOrder;
 
         /// <summary>
         /// Holds a reference to a property that represents the value of a FHIR Primitive. This
@@ -308,23 +301,18 @@ namespace Hl7.Fhir.Introspection
 
         // Enumerate this class' properties using reflection, create PropertyMappings
         // for them and add them to the PropertyMappings.
-        private static PropertyMappingCollection inspectProperties(Type nativeType, ClassMapping declaringClass, FhirRelease fhirVersion)
+        private PropertyMappingCollection inspectProperties()
         {
-            var byName = new Dictionary<string, PropertyMapping>(StringComparer.OrdinalIgnoreCase);
+            return new PropertyMappingCollection(map());
 
-            foreach (var property in ReflectionHelper.FindPublicProperties(nativeType))
+            IEnumerable<PropertyMapping> map()
             {
-                if (!PropertyMapping.TryCreate(property, out var propMapping, declaringClass, fhirVersion)) continue;
-
-                var propKey = propMapping!.Name;
-
-                if (byName.ContainsKey(propKey))
-                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique.");
-
-                byName.Add(propKey, propMapping);
+                foreach (var property in ReflectionHelper.FindPublicProperties(NativeType))
+                {
+                    if (!PropertyMapping.TryCreate(property, out var propMapping, this, Release)) continue;
+                    yield return propMapping!;
+                }
             }
-
-            return new PropertyMappingCollection(byName);
         }
 
         private static string collectTypeName(FhirTypeAttribute attr, Type type)
