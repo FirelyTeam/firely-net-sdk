@@ -594,7 +594,7 @@ namespace Hl7.Fhir.Model
     /// Type of observation (code / type)
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
-    [CqlElement("code", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

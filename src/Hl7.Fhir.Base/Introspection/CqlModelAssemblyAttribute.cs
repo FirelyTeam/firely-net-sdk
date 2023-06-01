@@ -17,13 +17,11 @@ namespace Hl7.Fhir.Introspection
     [AttributeUsage(AttributeTargets.Assembly, Inherited = false, AllowMultiple = true)]
     public sealed class CqlModelAssemblyAttribute : Attribute
     {
-        public CqlModelAssemblyAttribute(string name, string version, string url, Type patientClass, string birthdatePropertyName)
+        public CqlModelAssemblyAttribute(string name, string version, string url)
         {
             Name = name;
             Version = version;
             Url = url;
-            PatientClass = patientClass;
-            BirthdatePropertyName = birthdatePropertyName;
         }
 
         /// <summary>
@@ -40,16 +38,5 @@ namespace Hl7.Fhir.Introspection
         /// The url that uniquely identifies this namespace.
         /// </summary>
         public string Url { get; }
-
-        /// <summary>
-        /// The class in this model that serves as the Patient class in the Patient context.
-        /// </summary>
-        public Type PatientClass { get; }
-
-        /// <summary>
-        /// The property within the Patient class that contains the birthdate. Used to
-        /// implement the <c>Age()</c> related functions.
-        /// </summary>
-        public string BirthdatePropertyName { get; }
     }
 }

@@ -46,8 +46,6 @@ namespace Hl7.Fhir.Introspection
         public static ClassMapping? GetClassMappingForType(Type t) =>
             ForAssembly(t.GetTypeInfo().Assembly).FindOrImportClassMapping(t);
 
-        private static Type? _patientMapping;
-
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
         /// FHIR metadata contents of the given assembly. Calling this function repeatedly for
@@ -68,9 +66,6 @@ namespace Hl7.Fhir.Introspection
 
                 var newInspector = new ModelInspector(modelAssemblyAttr.Since);
                 newInspector.Import(a);
-
-                if (a.GetCustomAttribute<CqlModelAssemblyAttribute>().PatientClass != null)
-                    _patientMapping = a.GetCustomAttribute<CqlModelAssemblyAttribute>().PatientClass;
 
                 // Make sure we always include the types from the base assembly too. 
                 var baseAssembly = typeof(Resource).GetTypeInfo().Assembly;
@@ -160,6 +155,11 @@ namespace Hl7.Fhir.Introspection
                 FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
             }
 
+            if (assembly.GetCustomAttribute<CqlModelAssemblyAttribute>() is { } cmaa)
+            {
+                CqlNamespace = cmaa.Url;
+            }
+
             // Find and extract all EnumMappings
             var exportedEnums = exportedTypes.Where(et => et.IsEnum);
             extractFromEnums(exportedEnums);
@@ -243,7 +243,15 @@ namespace Hl7.Fhir.Introspection
         public EnumMapping? FindEnumMappingByCanonical(string canonical) =>
             _enumMappings.ByCanonical.TryGetValue(canonical, out var entry) ? entry : null;
 
-        public ClassMapping? PatientMapping => (_patientMapping is not null) ? FindClassMapping(_patientMapping) : null;
+        /// <summary>
+        /// The class mapping representing the Cql Patient type for the inspected model.
+        /// </summary>
+        public ClassMapping? PatientMapping => ClassMappings.FirstOrDefault(cm => cm.IsPatientClass);
+
+        /// <summary>
+        /// The namespace used to prefix the types in this model with to get the full ELM type specifier.
+        /// </summary>
+        internal string? CqlNamespace { get; private set; }
 
         /// <summary>
         /// List of ClassMappings registered with the inspector.

@@ -48,6 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
+  [CqlType("{http://hl7.org/fhir}Patient", IsPatientClass=true)]
   public partial class Patient : Hl7.Fhir.Model.DomainResource
   {
     /// <summary>
@@ -769,6 +770,7 @@ namespace Hl7.Fhir.Model
     /// The date of birth for the individual
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=140)]
+    [CqlElement(IsBirthDate=true)]
     [DataMember]
     public Hl7.Fhir.Model.Date BirthDateElement
     {

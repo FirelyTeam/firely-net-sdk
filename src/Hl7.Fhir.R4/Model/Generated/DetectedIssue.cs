@@ -445,7 +445,7 @@ namespace Hl7.Fhir.Model
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [CqlElement("code", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

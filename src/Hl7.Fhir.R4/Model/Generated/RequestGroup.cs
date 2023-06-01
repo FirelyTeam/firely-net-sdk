@@ -1331,7 +1331,7 @@ namespace Hl7.Fhir.Model
     /// What's being requested/ordered
     /// </summary>
     [FhirElement("code", InSummary=true, Order=180, FiveWs="FiveWs.what[x]")]
-    [CqlElement("code", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

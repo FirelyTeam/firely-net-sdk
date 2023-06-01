@@ -16,9 +16,8 @@ namespace Hl7.Fhir.Introspection
     [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = true)]
     public sealed class CqlElementAttribute : Attribute
     {
-        public CqlElementAttribute(string name)
+        public CqlElementAttribute()
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
@@ -26,7 +25,11 @@ namespace Hl7.Fhir.Introspection
         /// the element can implicitly be referred to in a retrieve statement.
         /// </summary>
         public bool IsPrimaryCodePath { get; set; } = false;
-        public string Name { get; }
+
+        /// <summary>
+        /// Whether this element represents the CQL birthdate property
+        /// </summary>
+        public bool IsBirthDate { get; set; } = false;
     }
 }
 

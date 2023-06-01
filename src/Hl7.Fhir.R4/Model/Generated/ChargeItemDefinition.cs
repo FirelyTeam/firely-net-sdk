@@ -1124,7 +1124,7 @@ namespace Hl7.Fhir.Model
     /// Billing codes or product types this definition applies to
     /// </summary>
     [FhirElement("code", InSummary=true, Order=280)]
-    [CqlElement("code", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

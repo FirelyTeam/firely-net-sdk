@@ -472,7 +472,7 @@ namespace Hl7.Fhir.Model
     /// The specific service that is to be performed during this appointment
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=130)]
-    [CqlElement("serviceType", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType

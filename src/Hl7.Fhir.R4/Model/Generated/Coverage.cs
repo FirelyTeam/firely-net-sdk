@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
     /// Coverage category such as medical or accident
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
-    [CqlElement("type", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

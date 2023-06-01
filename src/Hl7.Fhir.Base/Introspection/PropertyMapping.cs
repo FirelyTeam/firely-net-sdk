@@ -162,7 +162,15 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public readonly FhirRelease Release;
 
-        public bool CqlPrimaryCodePath;
+        /// <summary>
+        /// In Cql, this indicates that this property is the default filter in a retrieve statement.
+        /// </summary>
+        public bool IsPrimaryCodePath;
+
+        /// <summary>
+        /// In Cql, this indicates that this property represents the patient's birthdate.
+        /// </summary>
+        public bool IsPatientBirthDate;
 
         /// <summary>
         /// Inspects the given PropertyInfo, extracting metadata from its attributes and creating a new <see cref="PropertyMapping"/>.
@@ -217,7 +225,9 @@ namespace Hl7.Fhir.Introspection
 
             var isPrimitive = isAllowedNativeTypeForDataTypeValue(implementingType);
 
-            var cqlPrimaryCodePath = ClassMapping.GetAttribute<CqlElementAttribute>(prop, release)?.IsPrimaryCodePath == true;
+            CqlElementAttribute? cqlElementAttribute = ClassMapping.GetAttribute<CqlElementAttribute>(prop, release);
+            var isCqlPrimaryCodePath = cqlElementAttribute?.IsPrimaryCodePath == true;
+            var isBirthDate = cqlElementAttribute?.IsBirthDate == true;
 
             result = new PropertyMapping(elementAttr.Name, declaringClass, prop, implementingType, propertyTypeMapping!, fhirTypes, release)
             {
@@ -232,7 +242,8 @@ namespace Hl7.Fhir.Introspection
                 RepresentsValueElement = isPrimitive && isPrimitiveValueElement(elementAttr, prop),
                 ValidationAttributes = ClassMapping.GetAttributes<ValidationAttribute>(prop, release).ToArray(),
                 FiveWs = elementAttr.FiveWs,
-                CqlPrimaryCodePath = cqlPrimaryCodePath
+                IsPrimaryCodePath = isCqlPrimaryCodePath,
+                IsPatientBirthDate = isBirthDate,
             };
 
             return true;

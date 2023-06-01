@@ -28,6 +28,8 @@ namespace Hl7.Fhir.Introspection
         /// prefixed with the canonical for the model.
         /// </summary>
         public string Name { get; private set; }
+
+        public bool IsPatientClass { get; set; }
     }
 }
 

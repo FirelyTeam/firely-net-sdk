@@ -1204,7 +1204,7 @@ namespace Hl7.Fhir.Model
     /// Type of plan
     /// </summary>
     [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
-    [CqlElement("category", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

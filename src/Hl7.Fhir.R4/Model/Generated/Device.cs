@@ -1471,7 +1471,7 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=230)]
-    [CqlElement("type", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

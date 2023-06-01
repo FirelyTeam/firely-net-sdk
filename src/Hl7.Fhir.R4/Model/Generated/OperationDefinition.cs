@@ -1493,7 +1493,7 @@ namespace Hl7.Fhir.Model
     /// Name used to invoke the operation
     /// </summary>
     [FhirElement("code", InSummary=true, Order=240)]
-    [CqlElement("code", IsPrimaryCodePath = true)]
+    [CqlElement(IsPrimaryCodePath = true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement

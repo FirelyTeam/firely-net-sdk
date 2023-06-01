@@ -87,6 +87,8 @@ namespace Hl7.Fhir.Introspection
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
             if (GetAttribute<FhirTypeAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
+            var cqlTypeAttribute = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release);
+
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
                 IsResource = typeAttribute.IsResource || type.CanBeTreatedAsType(typeof(Resource)),
@@ -97,20 +99,11 @@ namespace Hl7.Fhir.Introspection
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
-                CqlTypeSpecifier = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release)?.Name ?? "{http://hl7.org/fhir}" + type.Name,
-                _birthDatePropertyName = getPatientBirtDataMapping(type)
+                CqlTypeSpecifier = cqlTypeAttribute?.Name ?? "{http://hl7.org/fhir}" + type.Name,
+                IsPatientClass = cqlTypeAttribute?.IsPatientClass == true
             };
 
             return true;
-        }
-
-        private string? _birthDatePropertyName;
-
-        private static string? getPatientBirtDataMapping(Type type)
-        {
-            var isPatient = type.IsEquivalentTo(type.GetCustomAttribute<CqlModelAssemblyAttribute>()?.PatientClass);
-
-            return isPatient ? type.GetCustomAttribute<CqlModelAssemblyAttribute>()?.BirthdatePropertyName : null;
         }
 
         private ClassMapping(string name, Type nativeType, FhirRelease release)
@@ -219,9 +212,21 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public PropertyMapping? PrimitiveValueProperty => PropertyMappings.SingleOrDefault(pm => pm.RepresentsValueElement);
 
-        public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.CqlPrimaryCodePath);
+        /// <summary>
+        /// In Cql, this indicates the property within this class that is the default filter in a retrieve statement.
+        /// </summary>
+        public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.IsPrimaryCodePath);
 
-        public PropertyMapping? PatientBirthDateMapping => PropertyMappings.SingleOrDefault(pm => pm.Name == _birthDatePropertyName);
+        /// <summary>
+        /// In Cql, this indicates the property on the model's Patient class that represents the patient's birthdate.
+        /// </summary>
+        public PropertyMapping? PatientBirthDateMapping => PropertyMappings.SingleOrDefault(pm => pm.IsPatientBirthDate);
+
+
+        /// <summary>
+        /// In Cql, this indicates that this class is representing the Patient data.
+        /// </summary>
+        public bool IsPatientClass { get; private set; }
 
         /// <summary>
         /// Whether the reflected type has a member that represent a primitive value.
