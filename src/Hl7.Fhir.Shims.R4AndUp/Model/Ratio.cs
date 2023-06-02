@@ -32,13 +32,18 @@
 
 namespace Hl7.Fhir.Model
 {
-
-    public partial class Time
+    public partial class Ratio
     {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Time.TryParse(value, out var parsed) && !parsed.HasOffset;
+        public Ratio()
+        {
+            // Nothing
+        }
+
+        public Ratio(Quantity numerator, Quantity denominator)
+        {
+            Numerator = numerator;
+            Denominator = denominator;
+        }
     }
 }
 

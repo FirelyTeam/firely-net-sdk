@@ -33,12 +33,18 @@
 namespace Hl7.Fhir.Model
 {
 
-    public partial class Time
+    public partial class Range
     {
-        /// <summary>
-        /// Checks whether the given literal is correctly formatted.
-        /// </summary>
-        public static bool IsValidValue(string value) => ElementModel.Types.Time.TryParse(value, out var parsed) && !parsed.HasOffset;
+        public Range()
+        {
+            // Nothing
+        }
+
+        public Range(Quantity low, Quantity high)
+        {
+            Low = low;
+            High = high;
+        }
     }
 }
 
