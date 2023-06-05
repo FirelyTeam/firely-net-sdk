@@ -39,29 +39,29 @@ namespace Hl7.Fhir.Serialization
         private static readonly string[] _dateFormats = new[]
         {
             "yyyy",
-            "yyyy'-'MM",
-            "yyyy'-'MM'-'dd"
+            "yyyy-MM",
+            "yyyy-MM-dd"
         };
 
         private static readonly string[] _utcFormats = new[]
         {
-                "yyyy'-'MM'-'dd'T'HH':'mm'Z'",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'FFFFFFF'Z'",
+                "yyyy-MM-ddTHH:mmZ",
+                "yyyy-MM-ddTHH:mm:ssZ",
+                "yyyy-MM-ddTHH:mm:ss.FFFFFFFZ",
         };
 
         private static readonly string[] _timeZoneFormats = new[]
         {
-                "yyyy'-'MM'-'dd'T'HH':'mmzzz",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'sszzz",
-                "yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'FFFFFFFzzz",
+                "yyyy-MM-ddTHH:mmzzz",
+                "yyyy-MM-ddTHH:mm:sszzz",
+                "yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz",
         };
 
         private static readonly string[] _timeFormats = new[]
         {
-                "HH':'mm",
-                "HH':'mm':'ss",
-                "HH':'mm':'ss'.'FFFFFFF",
+                "HH:mm",
+                "HH:mm:ss",
+                "HH:mm:ss.FFFFFFF",
         };
     }
 }
