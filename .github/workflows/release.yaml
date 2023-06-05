@@ -1,5 +1,6 @@
 on:
   workflow_dispatch:
+  pull_request: # temporary for working on the workflow
   release:
     types: [published]
       
