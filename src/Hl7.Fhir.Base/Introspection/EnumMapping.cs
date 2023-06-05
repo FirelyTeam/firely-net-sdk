@@ -55,16 +55,18 @@ namespace Hl7.Fhir.Introspection
 
             if (ClassMapping.GetAttribute<FhirEnumerationAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
-            result = new EnumMapping(typeAttribute.BindingName, typeAttribute.Valueset, type, release);
+            result = new EnumMapping(typeAttribute.BindingName, typeAttribute.Valueset, type, release, typeAttribute.DefaultCodeSystem);
             return true;
         }
 
-        private EnumMapping(string name, string? canonical, Type nativeType, FhirRelease release)
+        private EnumMapping(string name, string? canonical, Type nativeType, FhirRelease release, string? defaultCodeSystem)
         {
             Name = name;
             Canonical = canonical;
             NativeType = nativeType;
             Release = release;
+            DefaultCodeSystem = defaultCodeSystem;
+
 
             _mappings = new(valueFactory: mappingInitializer);
         }
@@ -90,6 +92,11 @@ namespace Hl7.Fhir.Introspection
         public string? Canonical { get; }
 
         /// <summary>
+        /// The code system of most of the member of the ValueSet
+        /// </summary>
+        public string? DefaultCodeSystem { get; }
+
+        /// <summary>
         /// The .NET class that implements the FHIR datatype/resource
         /// </summary>
         public Type NativeType { get; private set; }
@@ -110,7 +117,7 @@ namespace Hl7.Fhir.Introspection
 
             foreach (var member in ReflectionHelper.FindEnumFields(NativeType))
             {
-                var success = EnumMemberMapping.TryCreate(member, out var mapping);
+                var success = EnumMemberMapping.TryCreate(member, out var mapping, (FhirRelease)int.MaxValue, DefaultCodeSystem);
 
                 if (success) result.Add(mapping!.Code, mapping);
             }

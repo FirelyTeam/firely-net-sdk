@@ -20,10 +20,10 @@ namespace Hl7.Fhir.Introspection
     /// </summary>
     public class EnumMemberMapping
     {
-        private EnumMemberMapping(FieldInfo fieldInfo, string code, string? system, object value, string? description)
+        private EnumMemberMapping(FieldInfo fieldInfo, string code, string? system, object value, string? description, string? defaultSystem)
         {
             Code = code;
-            System = system;
+            System = system ?? defaultSystem;
             Description = description;
             Value = value;
             NativeField = fieldInfo;
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// Inspects the given enum member, extracting metadata from its attributes and creating a new <see cref="EnumMemberMapping"/>.
         /// </summary>
-        public static bool TryCreate(FieldInfo member, out EnumMemberMapping? result, FhirRelease release = (FhirRelease)int.MaxValue)
+        public static bool TryCreate(FieldInfo member, out EnumMemberMapping? result, FhirRelease release = (FhirRelease)int.MaxValue, string? defaultSystem = null)
         {
             result = null;
             if (ClassMapping.GetAttribute<EnumLiteralAttribute>(member, release) is not { } ela) return false;
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Introspection
             var value = (Enum)member.GetValue(null)!;
             var desc = ClassMapping.GetAttribute<DescriptionAttribute>(member, release)?.Description;
 
-            result = new EnumMemberMapping(member, code, ela.System, value, desc);
+            result = new EnumMemberMapping(member, code, ela.System, value, desc, defaultSystem);
             return true;
         }
     }
