@@ -1,0 +1,26 @@
+on:
+  workflow_dispatch:
+  release:
+    - published
+      
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ github.head_ref }}
+        fetch-depth: 0
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: build and publish
+      run: dotnet publish -c Release ./src/Hl7.Fhir.sln
+     
+      
