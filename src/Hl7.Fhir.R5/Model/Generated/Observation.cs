@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-triggeredbytype)
     /// (system: http://hl7.org/fhir/observation-triggeredbytype)
     /// </summary>
-    [FhirEnumeration("TriggeredBytype", "http://hl7.org/fhir/ValueSet/observation-triggeredbytype")]
+    [FhirEnumeration("TriggeredBytype", "http://hl7.org/fhir/ValueSet/observation-triggeredbytype", "http://hl7.org/fhir/observation-triggeredbytype")]
     public enum TriggeredBytype
     {
       /// <summary>
       /// Performance of one or more other tests depending on the results of the initial test.  This may include collection of additional specimen. While a new ServiceRequest is not required to perform the additional test, where it is still needed (e.g., requesting another laboratory to perform the reflex test), the Observation.basedOn would reference the new ServiceRequest that requested the additional test to be performed as well as the original ServiceRequest to reflect the one that provided the authorization.
       /// (system: http://hl7.org/fhir/observation-triggeredbytype)
       /// </summary>
-      [EnumLiteral("reflex", "http://hl7.org/fhir/observation-triggeredbytype"), Description("Reflex")]
+      [EnumLiteral("reflex"), Description("Reflex")]
       Reflex,
       /// <summary>
       /// Performance of the same test again with the same parameters/settings/solution.
       /// (system: http://hl7.org/fhir/observation-triggeredbytype)
       /// </summary>
-      [EnumLiteral("repeat", "http://hl7.org/fhir/observation-triggeredbytype"), Description("Repeat (per policy)")]
+      [EnumLiteral("repeat"), Description("Repeat (per policy)")]
       Repeat,
       /// <summary>
       /// Performance of the same test but with different parameters/settings/solution.
       /// (system: http://hl7.org/fhir/observation-triggeredbytype)
       /// </summary>
-      [EnumLiteral("re-run", "http://hl7.org/fhir/observation-triggeredbytype"), Description("Re-run (per policy)")]
+      [EnumLiteral("re-run"), Description("Re-run (per policy)")]
       ReRun,
     }
 

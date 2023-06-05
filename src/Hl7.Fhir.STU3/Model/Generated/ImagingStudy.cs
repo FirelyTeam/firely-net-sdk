@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/instance-availability)
     /// (system: http://dicom.nema.org/resources/ontology/DCM)
     /// </summary>
-    [FhirEnumeration("InstanceAvailability", "http://hl7.org/fhir/ValueSet/instance-availability")]
+    [FhirEnumeration("InstanceAvailability", "http://hl7.org/fhir/ValueSet/instance-availability", "http://dicom.nema.org/resources/ontology/DCM")]
     public enum InstanceAvailability
     {
       /// <summary>
       /// Instances are immediately available
       /// (system: http://dicom.nema.org/resources/ontology/DCM)
       /// </summary>
-      [EnumLiteral("ONLINE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Online")]
+      [EnumLiteral("ONLINE"), Description("Online")]
       ONLINE,
       /// <summary>
       /// Instances need to be retrieved by manual intervention
       /// (system: http://dicom.nema.org/resources/ontology/DCM)
       /// </summary>
-      [EnumLiteral("OFFLINE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Offline")]
+      [EnumLiteral("OFFLINE"), Description("Offline")]
       OFFLINE,
       /// <summary>
       /// Instances need to be retrieved from relatively slow media such as optical disk or tape
       /// (system: http://dicom.nema.org/resources/ontology/DCM)
       /// </summary>
-      [EnumLiteral("NEARLINE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Nearline")]
+      [EnumLiteral("NEARLINE"), Description("Nearline")]
       NEARLINE,
       /// <summary>
       /// Instances cannot be retrieved
       /// (system: http://dicom.nema.org/resources/ontology/DCM)
       /// </summary>
-      [EnumLiteral("UNAVAILABLE", "http://dicom.nema.org/resources/ontology/DCM"), Description("Unavailable")]
+      [EnumLiteral("UNAVAILABLE"), Description("Unavailable")]
       UNAVAILABLE,
     }
 

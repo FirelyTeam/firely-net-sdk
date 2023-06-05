@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-payload-content)
     /// (system: http://hl7.org/fhir/subscription-payload-content)
     /// </summary>
-    [FhirEnumeration("SubscriptionPayloadContent", "http://hl7.org/fhir/ValueSet/subscription-payload-content")]
+    [FhirEnumeration("SubscriptionPayloadContent", "http://hl7.org/fhir/ValueSet/subscription-payload-content", "http://hl7.org/fhir/subscription-payload-content")]
     public enum SubscriptionPayloadContent
     {
       /// <summary>
       /// No resource content is transacted in the notification payload.
       /// (system: http://hl7.org/fhir/subscription-payload-content)
       /// </summary>
-      [EnumLiteral("empty", "http://hl7.org/fhir/subscription-payload-content"), Description("Empty")]
+      [EnumLiteral("empty"), Description("Empty")]
       Empty,
       /// <summary>
       /// Only the resource id is transacted in the notification payload.
       /// (system: http://hl7.org/fhir/subscription-payload-content)
       /// </summary>
-      [EnumLiteral("id-only", "http://hl7.org/fhir/subscription-payload-content"), Description("Id-only")]
+      [EnumLiteral("id-only"), Description("Id-only")]
       IdOnly,
       /// <summary>
       /// The entire resource is transacted in the notification payload.
       /// (system: http://hl7.org/fhir/subscription-payload-content)
       /// </summary>
-      [EnumLiteral("full-resource", "http://hl7.org/fhir/subscription-payload-content"), Description("Full-resource")]
+      [EnumLiteral("full-resource"), Description("Full-resource")]
       FullResource,
     }
 

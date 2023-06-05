@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/nutritionproduct-status)
     /// (system: http://hl7.org/fhir/nutritionproduct-status)
     /// </summary>
-    [FhirEnumeration("NutritionProductStatus", "http://hl7.org/fhir/ValueSet/nutritionproduct-status")]
+    [FhirEnumeration("NutritionProductStatus", "http://hl7.org/fhir/ValueSet/nutritionproduct-status", "http://hl7.org/fhir/nutritionproduct-status")]
     public enum NutritionProductStatus
     {
       /// <summary>
       /// The product can be used.
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/nutritionproduct-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The product is not expected or allowed to be used.
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/nutritionproduct-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/nutritionproduct-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/nutritionproduct-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 

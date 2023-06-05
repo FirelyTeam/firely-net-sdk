@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status)
     /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductDispenseCodes", "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status")]
+    [FhirEnumeration("BiologicallyDerivedProductDispenseCodes", "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status", "http://hl7.org/fhir/biologicallyderivedproductdispense-status")]
     public enum BiologicallyDerivedProductDispenseCodes
     {
       /// <summary>
       /// The dispense process has started but not yet completed.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("preparation", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Preparation")]
+      [EnumLiteral("preparation"), Description("Preparation")]
       Preparation,
       /// <summary>
       /// The dispense process is in progress.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The requested product has been allocated and is ready for transport.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("allocated", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Allocated")]
+      [EnumLiteral("allocated"), Description("Allocated")]
       Allocated,
       /// <summary>
       /// The dispensed product has been picked up.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("issued", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Issued")]
+      [EnumLiteral("issued"), Description("Issued")]
       Issued,
       /// <summary>
       /// The dispense could not be completed.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("unfulfilled", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Unfulfilled")]
+      [EnumLiteral("unfulfilled"), Description("Unfulfilled")]
       Unfulfilled,
       /// <summary>
       /// The dispensed product was returned.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("returned", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Returned")]
+      [EnumLiteral("returned"), Description("Returned")]
       Returned,
       /// <summary>
       /// The dispense was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The authoring system does not know which of the status values applies for this dispense. Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/biologicallyderivedproductdispense-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

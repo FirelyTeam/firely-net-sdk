@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/transport-status)
     /// (system: http://hl7.org/fhir/transport-status)
     /// </summary>
-    [FhirEnumeration("TransportStatus", "http://hl7.org/fhir/ValueSet/transport-status")]
+    [FhirEnumeration("TransportStatus", "http://hl7.org/fhir/ValueSet/transport-status", "http://hl7.org/fhir/transport-status")]
     public enum TransportStatus
     {
       /// <summary>
       /// Transport has started but not completed.
       /// (system: http://hl7.org/fhir/transport-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/transport-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Transport has been completed.
       /// (system: http://hl7.org/fhir/transport-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/transport-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// Transport was started but not completed.
       /// (system: http://hl7.org/fhir/transport-status)
       /// </summary>
-      [EnumLiteral("abandoned", "http://hl7.org/fhir/transport-status"), Description("Abandoned")]
+      [EnumLiteral("abandoned"), Description("Abandoned")]
       Abandoned,
       /// <summary>
       /// Transport was cancelled before started.
       /// (system: http://hl7.org/fhir/transport-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/transport-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Planned transport that is not yet requested.
       /// (system: http://hl7.org/fhir/transport-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/transport-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/transport-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/transport-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/transport-intent)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("TransportIntent", "http://hl7.org/fhir/ValueSet/transport-intent")]
+    [FhirEnumeration("TransportIntent", "http://hl7.org/fhir/ValueSet/transport-intent", "http://hl7.org/fhir/request-intent")]
     public enum TransportIntent
     {
       /// <summary>
@@ -119,49 +119,49 @@ namespace Hl7.Fhir.Model
       /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The request represents a request/demand and authorization for action by the requestor.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The request represents an original authorization for action.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("original-order", "http://hl7.org/fhir/request-intent"), Description("Original Order")]
+      [EnumLiteral("original-order"), Description("Original Order")]
       OriginalOrder,
       /// <summary>
       /// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("reflex-order", "http://hl7.org/fhir/request-intent"), Description("Reflex Order")]
+      [EnumLiteral("reflex-order"), Description("Reflex Order")]
       ReflexOrder,
       /// <summary>
       /// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("filler-order", "http://hl7.org/fhir/request-intent"), Description("Filler Order")]
+      [EnumLiteral("filler-order"), Description("Filler Order")]
       FillerOrder,
       /// <summary>
       /// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("instance-order", "http://hl7.org/fhir/request-intent"), Description("Instance Order")]
+      [EnumLiteral("instance-order"), Description("Instance Order")]
       InstanceOrder,
       /// <summary>
       /// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
+      [EnumLiteral("option"), Description("Option")]
       Option,
     }
 

@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/explanationofbenefit-status)
     /// (system: http://hl7.org/fhir/explanationofbenefit-status)
     /// </summary>
-    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status")]
+    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status", "http://hl7.org/fhir/explanationofbenefit-status")]
     public enum ExplanationOfBenefitStatus
     {
       /// <summary>
       /// The resource instance is currently in-force.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The resource instance is withdrawn, rescinded or reversed.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// A new resource instance the contents of which is not complete.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The resource instance was entered in error.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -94,32 +94,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-type-link)
     /// (system: http://hl7.org/fhir/resource-type-link)
     /// </summary>
-    [FhirEnumeration("PayeeResourceType", "http://hl7.org/fhir/ValueSet/resource-type-link")]
+    [FhirEnumeration("PayeeResourceType", "http://hl7.org/fhir/ValueSet/resource-type-link", "http://hl7.org/fhir/resource-type-link")]
     public enum PayeeResourceType
     {
       /// <summary>
       /// Organization resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("organization", "http://hl7.org/fhir/resource-type-link"), Description("Organization")]
+      [EnumLiteral("organization"), Description("Organization")]
       Organization,
       /// <summary>
       /// Patient resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("patient", "http://hl7.org/fhir/resource-type-link"), Description("Patient")]
+      [EnumLiteral("patient"), Description("Patient")]
       Patient,
       /// <summary>
       /// Practitioner resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("practitioner", "http://hl7.org/fhir/resource-type-link"), Description("Practitioner")]
+      [EnumLiteral("practitioner"), Description("Practitioner")]
       Practitioner,
       /// <summary>
       /// RelatedPerson resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("relatedperson", "http://hl7.org/fhir/resource-type-link"), Description("RelatedPerson")]
+      [EnumLiteral("relatedperson"), Description("RelatedPerson")]
       Relatedperson,
     }
 
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode)
     /// (system: http://hl7.org/fhir/v3/ActCode)
     /// </summary>
-    [FhirEnumeration("ActInvoiceGroupCode", "http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode")]
+    [FhirEnumeration("ActInvoiceGroupCode", "http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode", "http://hl7.org/fhir/v3/ActCode")]
     public enum ActInvoiceGroupCode
     {
       /// <summary>
@@ -139,49 +139,49 @@ namespace Hl7.Fhir.Model
       ///                         The domain is only specified for an intermediate invoice element group (non-root or non-top level) for an Invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("_ActInvoiceInterGroupCode", "http://hl7.org/fhir/v3/ActCode"), Description("ActInvoiceInterGroupCode")]
+      [EnumLiteral("_ActInvoiceInterGroupCode"), Description("ActInvoiceInterGroupCode")]
       ActInvoiceInterGroupCode,
       /// <summary>
       /// A grouping of invoice element groups and details including the ones specifying the compound ingredients being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPNDDRGING", "http://hl7.org/fhir/v3/ActCode"), Description("compound drug invoice group")]
+      [EnumLiteral("CPNDDRGING"), Description("compound drug invoice group")]
       CPNDDRGING,
       /// <summary>
       /// A grouping of invoice element details including the one specifying an ingredient drug being invoiced. It may also contain generic detail items such as tax or markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPNDINDING", "http://hl7.org/fhir/v3/ActCode"), Description("compound ingredient invoice group")]
+      [EnumLiteral("CPNDINDING"), Description("compound ingredient invoice group")]
       CPNDINDING,
       /// <summary>
       /// A grouping of invoice element groups and details including the ones specifying the compound supplies being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPNDSUPING", "http://hl7.org/fhir/v3/ActCode"), Description("compound supply invoice group")]
+      [EnumLiteral("CPNDSUPING"), Description("compound supply invoice group")]
       CPNDSUPING,
       /// <summary>
       /// A grouping of invoice element details including the one specifying the drug being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("DRUGING", "http://hl7.org/fhir/v3/ActCode"), Description("drug invoice group")]
+      [EnumLiteral("DRUGING"), Description("drug invoice group")]
       DRUGING,
       /// <summary>
       /// A grouping of invoice element details including the ones specifying the frame fee and the frame dispensing cost that are being invoiced.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("FRAMEING", "http://hl7.org/fhir/v3/ActCode"), Description("frame invoice group")]
+      [EnumLiteral("FRAMEING"), Description("frame invoice group")]
       FRAMEING,
       /// <summary>
       /// A grouping of invoice element details including the ones specifying the lens fee and the lens dispensing cost that are being invoiced.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("LENSING", "http://hl7.org/fhir/v3/ActCode"), Description("lens invoice group")]
+      [EnumLiteral("LENSING"), Description("lens invoice group")]
       LENSING,
       /// <summary>
       /// A grouping of invoice element details including the one specifying the product (good or supply) being invoiced. It may also contain generic detail items such as tax or discount.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("PRDING", "http://hl7.org/fhir/v3/ActCode"), Description("product invoice group")]
+      [EnumLiteral("PRDING"), Description("product invoice group")]
       PRDING,
       /// <summary>
       /// Type of invoice element that is used to assist in describing an Invoice that is either submitted for adjudication or for which is returned on adjudication results.
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
       ///                         Codes from this domain reflect the type of Invoice such as Pharmacy Dispense, Clinical Service and Clinical Product.  The domain is only specified for the root (top level) invoice element group for an Invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("_ActInvoiceRootGroupCode", "http://hl7.org/fhir/v3/ActCode"), Description("ActInvoiceRootGroupCode")]
+      [EnumLiteral("_ActInvoiceRootGroupCode"), Description("ActInvoiceRootGroupCode")]
       ActInvoiceRootGroupCode,
       /// <summary>
       /// Clinical product invoice where the Invoice Grouping contains one or more billable item and is supported by clinical product(s).
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
       ///                         For example, a crutch or a wheelchair.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPINV", "http://hl7.org/fhir/v3/ActCode"), Description("clinical product invoice")]
+      [EnumLiteral("CPINV"), Description("clinical product invoice")]
       CPINV,
       /// <summary>
       /// Clinical Services Invoice which can be used to describe a single service, multiple services or repeated services.
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
       ///                         For example, the same Chiropractic adjustment (service or treatment) delivered on 3 separate occasions over a period of time at the discretion of the provider (e.g. month).
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CSINV", "http://hl7.org/fhir/v3/ActCode"), Description("clinical service invoice")]
+      [EnumLiteral("CSINV"), Description("clinical service invoice")]
       CSINV,
       /// <summary>
       /// A clinical Invoice Grouping consisting of one or more services and one or more product.  Billing for these service(s) and product(s) are supported by multiple clinical billable events (acts).
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       ///                         For example , a brace (product) invoiced together with the fitting (service).
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CSPINV", "http://hl7.org/fhir/v3/ActCode"), Description("clinical service and product")]
+      [EnumLiteral("CSPINV"), Description("clinical service and product")]
       CSPINV,
       /// <summary>
       /// Invoice Grouping without clinical justification.  These will not require identification of participants and associations from a clinical context such as patient and provider.
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       ///                         Examples are interest charges and mileage.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("FININV", "http://hl7.org/fhir/v3/ActCode"), Description("financial invoice")]
+      [EnumLiteral("FININV"), Description("financial invoice")]
       FININV,
       /// <summary>
       /// A clinical Invoice Grouping consisting of one or more oral health services. Billing for these service(s) are supported by multiple clinical billable events (acts).
@@ -243,37 +243,37 @@ namespace Hl7.Fhir.Model
       ///                         All items in the Invoice Grouping must be adjudicated together to be acceptable to the Adjudicator.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("OHSINV", "http://hl7.org/fhir/v3/ActCode"), Description("oral health service")]
+      [EnumLiteral("OHSINV"), Description("oral health service")]
       OHSINV,
       /// <summary>
       /// HealthCare facility preferred accommodation invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("PAINV", "http://hl7.org/fhir/v3/ActCode"), Description("preferred accommodation invoice")]
+      [EnumLiteral("PAINV"), Description("preferred accommodation invoice")]
       PAINV,
       /// <summary>
       /// Pharmacy dispense invoice for a compound.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("RXCINV", "http://hl7.org/fhir/v3/ActCode"), Description("Rx compound invoice")]
+      [EnumLiteral("RXCINV"), Description("Rx compound invoice")]
       RXCINV,
       /// <summary>
       /// Pharmacy dispense invoice not involving a compound
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("RXDINV", "http://hl7.org/fhir/v3/ActCode"), Description("Rx dispense invoice")]
+      [EnumLiteral("RXDINV"), Description("Rx dispense invoice")]
       RXDINV,
       /// <summary>
       /// Clinical services invoice where the Invoice Group contains one billable item for multiple clinical services in one or more sessions.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("SBFINV", "http://hl7.org/fhir/v3/ActCode"), Description("sessional or block fee invoice")]
+      [EnumLiteral("SBFINV"), Description("sessional or block fee invoice")]
       SBFINV,
       /// <summary>
       /// Vision dispense invoice for up to 2 lens (left and right), frame and optional discount.  Eye exams are invoiced as a clinical service invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("VRXINV", "http://hl7.org/fhir/v3/ActCode"), Description("vision dispense invoice")]
+      [EnumLiteral("VRXINV"), Description("vision dispense invoice")]
       VRXINV,
     }
 

@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-productidentifierinudi)
     /// (system: http://hl7.org/fhir/device-productidentifierinudi)
     /// </summary>
-    [FhirEnumeration("DeviceProductionIdentifierInUDI", "http://hl7.org/fhir/ValueSet/device-productidentifierinudi")]
+    [FhirEnumeration("DeviceProductionIdentifierInUDI", "http://hl7.org/fhir/ValueSet/device-productidentifierinudi", "http://hl7.org/fhir/device-productidentifierinudi")]
     public enum DeviceProductionIdentifierInUDI
     {
       /// <summary>
       /// The label includes the lot number.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("lot-number", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Lot Number")]
+      [EnumLiteral("lot-number"), Description("Lot Number")]
       LotNumber,
       /// <summary>
       /// The label includes the manufacture date.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("manufactured-date", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Manufactured date")]
+      [EnumLiteral("manufactured-date"), Description("Manufactured date")]
       ManufacturedDate,
       /// <summary>
       /// The label includes the serial number.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("serial-number", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Serial Number")]
+      [EnumLiteral("serial-number"), Description("Serial Number")]
       SerialNumber,
       /// <summary>
       /// The label includes the expiration date.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("expiration-date", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Expiration date")]
+      [EnumLiteral("expiration-date"), Description("Expiration date")]
       ExpirationDate,
       /// <summary>
       /// The label includes the biological source identifier.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("biological-source", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Biological source")]
+      [EnumLiteral("biological-source"), Description("Biological source")]
       BiologicalSource,
       /// <summary>
       /// The label includes the software version.
       /// (system: http://hl7.org/fhir/device-productidentifierinudi)
       /// </summary>
-      [EnumLiteral("software-version", "http://hl7.org/fhir/device-productidentifierinudi"), Description("Software Version")]
+      [EnumLiteral("software-version"), Description("Software Version")]
       SoftwareVersion,
     }
 
@@ -106,26 +106,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type)
     /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
     /// </summary>
-    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType", "http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type")]
+    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType", "http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type")]
     public enum DeviceDefinitionRegulatoryIdentifierType
     {
       /// <summary>
       /// EUDAMED's basic UDI-DI identifier.
       /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
       /// </summary>
-      [EnumLiteral("basic", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type"), Description("Basic")]
+      [EnumLiteral("basic"), Description("Basic")]
       Basic,
       /// <summary>
       /// EUDAMED's master UDI-DI identifier.
       /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
       /// </summary>
-      [EnumLiteral("master", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type"), Description("Master")]
+      [EnumLiteral("master"), Description("Master")]
       Master,
       /// <summary>
       /// The identifier is a license number.
       /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
       /// </summary>
-      [EnumLiteral("license", "http://hl7.org/fhir/devicedefinition-regulatory-identifier-type"), Description("License")]
+      [EnumLiteral("license"), Description("License")]
       License,
     }
 
@@ -134,26 +134,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-correctiveactionscope)
     /// (system: http://hl7.org/fhir/device-correctiveactionscope)
     /// </summary>
-    [FhirEnumeration("DeviceCorrectiveActionScope", "http://hl7.org/fhir/ValueSet/device-correctiveactionscope")]
+    [FhirEnumeration("DeviceCorrectiveActionScope", "http://hl7.org/fhir/ValueSet/device-correctiveactionscope", "http://hl7.org/fhir/device-correctiveactionscope")]
     public enum DeviceCorrectiveActionScope
     {
       /// <summary>
       /// The corrective action was intended for all units of the same model.
       /// (system: http://hl7.org/fhir/device-correctiveactionscope)
       /// </summary>
-      [EnumLiteral("model", "http://hl7.org/fhir/device-correctiveactionscope"), Description("Model")]
+      [EnumLiteral("model"), Description("Model")]
       Model,
       /// <summary>
       /// The corrective action was intended for a specific batch of units identified by a lot number.
       /// (system: http://hl7.org/fhir/device-correctiveactionscope)
       /// </summary>
-      [EnumLiteral("lot-numbers", "http://hl7.org/fhir/device-correctiveactionscope"), Description("Lot Numbers")]
+      [EnumLiteral("lot-numbers"), Description("Lot Numbers")]
       LotNumbers,
       /// <summary>
       /// The corrective action was intended for an individual unit (or a set of units) individually identified by serial number.
       /// (system: http://hl7.org/fhir/device-correctiveactionscope)
       /// </summary>
-      [EnumLiteral("serial-numbers", "http://hl7.org/fhir/device-correctiveactionscope"), Description("Serial Numbers")]
+      [EnumLiteral("serial-numbers"), Description("Serial Numbers")]
       SerialNumbers,
     }
 

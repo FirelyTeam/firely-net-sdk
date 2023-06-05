@@ -60,86 +60,86 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-subject-state)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ResearchSubjectState", "http://hl7.org/fhir/ValueSet/research-subject-state")]
+    [FhirEnumeration("ResearchSubjectState", "http://hl7.org/fhir/ValueSet/research-subject-state", "http://terminology.hl7.org/CodeSystem/research-subject-state")]
     public enum ResearchSubjectState
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("candidate", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Candidate")]
+      [EnumLiteral("candidate"), Description("Candidate")]
       Candidate,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("eligible", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Eligible")]
+      [EnumLiteral("eligible"), Description("Eligible")]
       Eligible,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("follow-up", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Follow-up")]
+      [EnumLiteral("follow-up"), Description("Follow-up")]
       FollowUp,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("ineligible", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Ineligible")]
+      [EnumLiteral("ineligible"), Description("Ineligible")]
       Ineligible,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("not-registered", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Not Registered")]
+      [EnumLiteral("not-registered"), Description("Not Registered")]
       NotRegistered,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("off-study", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Off-study")]
+      [EnumLiteral("off-study"), Description("Off-study")]
       OffStudy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("on-study", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("On-study")]
+      [EnumLiteral("on-study"), Description("On-study")]
       OnStudy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("on-study-intervention", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("On-study-intervention")]
+      [EnumLiteral("on-study-intervention"), Description("On-study-intervention")]
       OnStudyIntervention,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("on-study-observation", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("On-study-observation")]
+      [EnumLiteral("on-study-observation"), Description("On-study-observation")]
       OnStudyObservation,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("pending-on-study", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Pending on-study")]
+      [EnumLiteral("pending-on-study"), Description("Pending on-study")]
       PendingOnStudy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("potential-candidate", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Potential Candidate")]
+      [EnumLiteral("potential-candidate"), Description("Potential Candidate")]
       PotentialCandidate,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("screening", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Screening")]
+      [EnumLiteral("screening"), Description("Screening")]
       Screening,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/research-subject-state)
       /// </summary>
-      [EnumLiteral("withdrawn", "http://terminology.hl7.org/CodeSystem/research-subject-state"), Description("Withdrawn")]
+      [EnumLiteral("withdrawn"), Description("Withdrawn")]
       Withdrawn,
     }
 

@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/code-search-support)
     /// (system: http://hl7.org/fhir/code-search-support)
     /// </summary>
-    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support")]
+    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support", "http://hl7.org/fhir/code-search-support")]
     public enum CodeSearchSupport
     {
       /// <summary>
       /// The search for code on ValueSet only includes codes explicitly detailed on includes or expansions.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("explicit", "http://hl7.org/fhir/code-search-support"), Description("Explicit Codes")]
+      [EnumLiteral("explicit"), Description("Explicit Codes")]
       Explicit,
       /// <summary>
       /// The search for code on ValueSet only includes all codes based on the expansion of the value set.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("all", "http://hl7.org/fhir/code-search-support"), Description("Implicit Codes")]
+      [EnumLiteral("all"), Description("Implicit Codes")]
       All,
     }
 

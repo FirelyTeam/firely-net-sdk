@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-status)
     /// (system: http://hl7.org/fhir/device-status)
     /// </summary>
-    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status")]
+    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status", "http://hl7.org/fhir/device-status")]
     public enum FHIRDeviceStatus
     {
       /// <summary>
       /// The device record is current and is appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The device record is not current and is not appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/device-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The device record is not current and is not appropriate for reference in new instances.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -88,50 +88,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
     /// (system: http://hl7.org/fhir/udi-entry-type)
     /// </summary>
-    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type")]
+    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type", "http://hl7.org/fhir/udi-entry-type")]
     public enum UDIEntryType
     {
       /// <summary>
       /// a barcodescanner captured the data from the device label.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("barcode", "http://hl7.org/fhir/udi-entry-type"), Description("Barcode")]
+      [EnumLiteral("barcode"), Description("Barcode")]
       Barcode,
       /// <summary>
       /// An RFID chip reader captured the data from the device label.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("rfid", "http://hl7.org/fhir/udi-entry-type"), Description("RFID")]
+      [EnumLiteral("rfid"), Description("RFID")]
       Rfid,
       /// <summary>
       /// The data was read from the label by a person and manually entered. (e.g.  via a keyboard).
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("manual", "http://hl7.org/fhir/udi-entry-type"), Description("Manual")]
+      [EnumLiteral("manual"), Description("Manual")]
       Manual,
       /// <summary>
       /// The data originated from a patient's implant card and was read by an operator.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("card", "http://hl7.org/fhir/udi-entry-type"), Description("Card")]
+      [EnumLiteral("card"), Description("Card")]
       Card,
       /// <summary>
       /// The data originated from a patient source and was not directly scanned or read from a label or card.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
+      [EnumLiteral("self-reported"), Description("Self Reported")]
       SelfReported,
       /// <summary>
       /// The UDI information was received electronically from the device through a communication protocol, such as the IEEE 11073 20601 version 4 exchange protocol over Bluetooth or USB.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("electronic-transmission", "http://hl7.org/fhir/udi-entry-type"), Description("Electronic Transmission")]
+      [EnumLiteral("electronic-transmission"), Description("Electronic Transmission")]
       ElectronicTransmission,
       /// <summary>
       /// The method of data capture has not been determined.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/udi-entry-type"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/claim-use)
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
-    [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use")]
+    [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use", "http://hl7.org/fhir/claim-use")]
     public enum ClaimUseCode
     {
       /// <summary>
       /// The treatment is complete and this represents a Claim for the services.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/claim-use"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
       /// <summary>
       /// The treatment is proposed and this represents a Pre-authorization for the services.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// The treatment is proposed and this represents a Pre-determination for the services.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use"), Description("Exploratory")]
+      [EnumLiteral("exploratory"), Description("Exploratory")]
       Exploratory,
       /// <summary>
       /// A locally defined or otherwise resolved status.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/claim-use"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 

@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-answers-status)
     /// (system: http://hl7.org/fhir/questionnaire-answers-status)
     /// </summary>
-    [FhirEnumeration("QuestionnaireResponseStatus", "http://hl7.org/fhir/ValueSet/questionnaire-answers-status")]
+    [FhirEnumeration("QuestionnaireResponseStatus", "http://hl7.org/fhir/ValueSet/questionnaire-answers-status", "http://hl7.org/fhir/questionnaire-answers-status")]
     public enum QuestionnaireResponseStatus
     {
       /// <summary>
       /// This QuestionnaireResponse has been partially filled out with answers but changes or additions are still expected to be made to it.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/questionnaire-answers-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// This QuestionnaireResponse has been filled out with answers and the current content is regarded as definitive.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This QuestionnaireResponse has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("amended", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Amended")]
+      [EnumLiteral("amended"), Description("Amended")]
       Amended,
       /// <summary>
       /// This QuestionnaireResponse was entered in error and voided.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// This QuestionnaireResponse has been partially filled out with answers but has been abandoned. It is unknown whether changes or additions are expected to be made to it.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
     }
 

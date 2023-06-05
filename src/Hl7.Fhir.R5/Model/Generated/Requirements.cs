@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conformance-expectation)
     /// (system: http://hl7.org/fhir/conformance-expectation)
     /// </summary>
-    [FhirEnumeration("ConformanceExpectation", "http://hl7.org/fhir/ValueSet/conformance-expectation")]
+    [FhirEnumeration("ConformanceExpectation", "http://hl7.org/fhir/ValueSet/conformance-expectation", "http://hl7.org/fhir/conformance-expectation")]
     public enum ConformanceExpectation
     {
       /// <summary>
       /// Support for the specified capability is required to be considered conformant.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("SHALL", "http://hl7.org/fhir/conformance-expectation"), Description("SHALL")]
+      [EnumLiteral("SHALL"), Description("SHALL")]
       SHALL,
       /// <summary>
       /// Support for the specified capability is strongly encouraged, and failure to support it should only occur after careful consideration.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("SHOULD", "http://hl7.org/fhir/conformance-expectation"), Description("SHOULD")]
+      [EnumLiteral("SHOULD"), Description("SHOULD")]
       SHOULD,
       /// <summary>
       /// Support for the specified capability is not necessary to be considered conformant, and the requirement should be considered strictly optional.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("MAY", "http://hl7.org/fhir/conformance-expectation"), Description("MAY")]
+      [EnumLiteral("MAY"), Description("MAY")]
       MAY,
       /// <summary>
       /// Support for the specified capability is strongly discouraged and should occur only after careful consideration.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("SHOULD-NOT", "http://hl7.org/fhir/conformance-expectation"), Description("SHOULD-NOT")]
+      [EnumLiteral("SHOULD-NOT"), Description("SHOULD-NOT")]
       SHOULDNOT,
     }
 

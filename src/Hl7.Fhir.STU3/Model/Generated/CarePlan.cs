@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-status)
     /// (system: http://hl7.org/fhir/care-plan-status)
     /// </summary>
-    [FhirEnumeration("CarePlanStatus", "http://hl7.org/fhir/ValueSet/care-plan-status")]
+    [FhirEnumeration("CarePlanStatus", "http://hl7.org/fhir/ValueSet/care-plan-status", "http://hl7.org/fhir/care-plan-status")]
     public enum CarePlanStatus
     {
       /// <summary>
       /// The plan is in development or awaiting use but is not yet intended to be acted upon.
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/care-plan-status"), Description("Pending")]
+      [EnumLiteral("draft"), Description("Pending")]
       Draft,
       /// <summary>
       /// The plan is intended to be followed and used as part of patient care.
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/care-plan-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The plan has been temporarily stopped but is expected to resume in the future.
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/care-plan-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The plan is no longer in use and is not expected to be followed or used in patient care.
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/care-plan-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The plan was entered in error and voided.
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/care-plan-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
       /// <summary>
       /// The plan has been terminated prior to reaching completion (though it may have been replaced by a new plan).
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/care-plan-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The authoring system doesn't know the current state of the care plan.
       /// (system: http://hl7.org/fhir/care-plan-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/care-plan-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -112,33 +112,33 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-intent)
     /// (system: http://hl7.org/fhir/care-plan-intent)
     /// </summary>
-    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent")]
+    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent", "http://hl7.org/fhir/care-plan-intent")]
     public enum CarePlanIntent
     {
       /// <summary>
       /// The care plan is a suggestion made by someone/something that doesn't have an intention to ensure it occurs and without providing an authorization to act
       /// (system: http://hl7.org/fhir/care-plan-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/care-plan-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The care plan represents an intention to ensure something occurs without providing an authorization for others to act
       /// (system: http://hl7.org/fhir/care-plan-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/care-plan-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The care plan represents a request/demand and authorization for action
       /// (system: http://hl7.org/fhir/care-plan-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/care-plan-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The care plan represents a component or option for a RequestGroup that establishes timing, conditionality and/or other constraints among a set of requests.
       /// Refer to [[[RequestGroup]]] for additional information on how this status is used
       /// (system: http://hl7.org/fhir/care-plan-intent)
       /// </summary>
-      [EnumLiteral("option", "http://hl7.org/fhir/care-plan-intent"), Description("Option")]
+      [EnumLiteral("option"), Description("Option")]
       Option,
     }
 
@@ -147,50 +147,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-activity-status)
     /// (system: http://hl7.org/fhir/care-plan-activity-status)
     /// </summary>
-    [FhirEnumeration("CarePlanActivityStatus", "http://hl7.org/fhir/ValueSet/care-plan-activity-status")]
+    [FhirEnumeration("CarePlanActivityStatus", "http://hl7.org/fhir/ValueSet/care-plan-activity-status", "http://hl7.org/fhir/care-plan-activity-status")]
     public enum CarePlanActivityStatus
     {
       /// <summary>
       /// Activity is planned but no action has yet been taken.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("not-started", "http://hl7.org/fhir/care-plan-activity-status"), Description("Not Started")]
+      [EnumLiteral("not-started"), Description("Not Started")]
       NotStarted,
       /// <summary>
       /// Appointment or other booking has occurred but activity has not yet begun.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("scheduled", "http://hl7.org/fhir/care-plan-activity-status"), Description("Scheduled")]
+      [EnumLiteral("scheduled"), Description("Scheduled")]
       Scheduled,
       /// <summary>
       /// Activity has been started but is not yet complete.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/care-plan-activity-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Activity was started but has temporarily ceased with an expectation of resumption at a future time.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/care-plan-activity-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The activities have been completed (more or less) as planned.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/care-plan-activity-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The activities have been ended prior to completion (perhaps even before they were started).
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/care-plan-activity-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The authoring system doesn't know the current state of the activity.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/care-plan-activity-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

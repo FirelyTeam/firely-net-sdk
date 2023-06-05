@@ -39,20 +39,20 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
   /// (system: http://hl7.org/fhir/action-cardinality-behavior)
   /// </summary>
-  [FhirEnumeration("ActionCardinalityBehavior", "http://hl7.org/fhir/ValueSet/action-cardinality-behavior")]
+  [FhirEnumeration("ActionCardinalityBehavior", "http://hl7.org/fhir/ValueSet/action-cardinality-behavior", "http://hl7.org/fhir/action-cardinality-behavior")]
   public enum ActionCardinalityBehavior
   {
     /// <summary>
     /// The action may only be selected one time.
     /// (system: http://hl7.org/fhir/action-cardinality-behavior)
     /// </summary>
-    [EnumLiteral("single", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Single")]
+    [EnumLiteral("single"), Description("Single")]
     Single,
     /// <summary>
     /// The action may be selected multiple times.
     /// (system: http://hl7.org/fhir/action-cardinality-behavior)
     /// </summary>
-    [EnumLiteral("multiple", "http://hl7.org/fhir/action-cardinality-behavior"), Description("Multiple")]
+    [EnumLiteral("multiple"), Description("Multiple")]
     Multiple,
   }
 
@@ -61,26 +61,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-condition-kind)
   /// (system: http://hl7.org/fhir/action-condition-kind)
   /// </summary>
-  [FhirEnumeration("ActionConditionKind", "http://hl7.org/fhir/ValueSet/action-condition-kind")]
+  [FhirEnumeration("ActionConditionKind", "http://hl7.org/fhir/ValueSet/action-condition-kind", "http://hl7.org/fhir/action-condition-kind")]
   public enum ActionConditionKind
   {
     /// <summary>
     /// The condition describes whether or not a given action is applicable.
     /// (system: http://hl7.org/fhir/action-condition-kind)
     /// </summary>
-    [EnumLiteral("applicability", "http://hl7.org/fhir/action-condition-kind"), Description("Applicability")]
+    [EnumLiteral("applicability"), Description("Applicability")]
     Applicability,
     /// <summary>
     /// The condition is a starting condition for the action.
     /// (system: http://hl7.org/fhir/action-condition-kind)
     /// </summary>
-    [EnumLiteral("start", "http://hl7.org/fhir/action-condition-kind"), Description("Start")]
+    [EnumLiteral("start"), Description("Start")]
     Start,
     /// <summary>
     /// The condition is a stop, or exit condition for the action.
     /// (system: http://hl7.org/fhir/action-condition-kind)
     /// </summary>
-    [EnumLiteral("stop", "http://hl7.org/fhir/action-condition-kind"), Description("Stop")]
+    [EnumLiteral("stop"), Description("Stop")]
     Stop,
   }
 
@@ -89,26 +89,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
   /// (system: http://hl7.org/fhir/action-grouping-behavior)
   /// </summary>
-  [FhirEnumeration("ActionGroupingBehavior", "http://hl7.org/fhir/ValueSet/action-grouping-behavior")]
+  [FhirEnumeration("ActionGroupingBehavior", "http://hl7.org/fhir/ValueSet/action-grouping-behavior", "http://hl7.org/fhir/action-grouping-behavior")]
   public enum ActionGroupingBehavior
   {
     /// <summary>
     /// Any group marked with this behavior should be displayed as a visual group to the end user.
     /// (system: http://hl7.org/fhir/action-grouping-behavior)
     /// </summary>
-    [EnumLiteral("visual-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Visual Group")]
+    [EnumLiteral("visual-group"), Description("Visual Group")]
     VisualGroup,
     /// <summary>
     /// A group with this behavior logically groups its sub-elements, and may be shown as a visual group to the end user, but it is not required to do so.
     /// (system: http://hl7.org/fhir/action-grouping-behavior)
     /// </summary>
-    [EnumLiteral("logical-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Logical Group")]
+    [EnumLiteral("logical-group"), Description("Logical Group")]
     LogicalGroup,
     /// <summary>
     /// A group of related alternative actions is a sentence group if the target referenced by the action is the same in all the actions and each action simply constitutes a different variation on how to specify the details for the target. For example, two actions that could be in a SentenceGroup are "aspirin, 500 mg, 2 times per day" and "aspirin, 300 mg, 3 times per day". In both cases, aspirin is the target referenced by the action, and the two actions represent different options for how aspirin might be ordered for the patient. Note that a SentenceGroup would almost always have an associated selection behavior of "AtMostOne", unless it's a required action, in which case, it would be "ExactlyOne".
     /// (system: http://hl7.org/fhir/action-grouping-behavior)
     /// </summary>
-    [EnumLiteral("sentence-group", "http://hl7.org/fhir/action-grouping-behavior"), Description("Sentence Group")]
+    [EnumLiteral("sentence-group"), Description("Sentence Group")]
     SentenceGroup,
   }
 
@@ -117,68 +117,68 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
   /// (system: http://hl7.org/fhir/action-participant-type)
   /// </summary>
-  [FhirEnumeration("ActionParticipantType", "http://hl7.org/fhir/ValueSet/action-participant-type")]
+  [FhirEnumeration("ActionParticipantType", "http://hl7.org/fhir/ValueSet/action-participant-type", "http://hl7.org/fhir/action-participant-type")]
   public enum ActionParticipantType
   {
     /// <summary>
     /// The participant is a care team caring for the patient under evaluation.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("careteam", "http://hl7.org/fhir/action-participant-type"), Description("CareTeam")]
+    [EnumLiteral("careteam"), Description("CareTeam")]
     Careteam,
     /// <summary>
     /// The participant is a system or device used in the care of the patient.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("device", "http://hl7.org/fhir/action-participant-type"), Description("Device")]
+    [EnumLiteral("device"), Description("Device")]
     Device,
     /// <summary>
     /// The participant is a group of participants involved in the care of the patient.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("group", "http://hl7.org/fhir/action-participant-type"), Description("Group")]
+    [EnumLiteral("group"), Description("Group")]
     Group,
     /// <summary>
     /// The participant is an institution that can provide the given healthcare service used in the care of the patient.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("healthcareservice", "http://hl7.org/fhir/action-participant-type"), Description("HealthcareService")]
+    [EnumLiteral("healthcareservice"), Description("HealthcareService")]
     Healthcareservice,
     /// <summary>
     /// The participant is a location involved in the care of the patient.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("location", "http://hl7.org/fhir/action-participant-type"), Description("Location")]
+    [EnumLiteral("location"), Description("Location")]
     Location,
     /// <summary>
     /// The participant is an organization involved in the care of the patient.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("organization", "http://hl7.org/fhir/action-participant-type"), Description("Organization")]
+    [EnumLiteral("organization"), Description("Organization")]
     Organization,
     /// <summary>
     /// The participant is the patient under evaluation.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("patient", "http://hl7.org/fhir/action-participant-type"), Description("Patient")]
+    [EnumLiteral("patient"), Description("Patient")]
     Patient,
     /// <summary>
     /// The participant is a practitioner involved in the patient's care.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("practitioner", "http://hl7.org/fhir/action-participant-type"), Description("Practitioner")]
+    [EnumLiteral("practitioner"), Description("Practitioner")]
     Practitioner,
     /// <summary>
     /// The participant is a particular practitioner role involved in the patient's care.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("practitionerrole", "http://hl7.org/fhir/action-participant-type"), Description("PractitionerRole")]
+    [EnumLiteral("practitionerrole"), Description("PractitionerRole")]
     Practitionerrole,
     /// <summary>
     /// The participant is a person related to the patient.
     /// (system: http://hl7.org/fhir/action-participant-type)
     /// </summary>
-    [EnumLiteral("relatedperson", "http://hl7.org/fhir/action-participant-type"), Description("RelatedPerson")]
+    [EnumLiteral("relatedperson"), Description("RelatedPerson")]
     Relatedperson,
   }
 
@@ -187,20 +187,20 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
   /// (system: http://hl7.org/fhir/action-precheck-behavior)
   /// </summary>
-  [FhirEnumeration("ActionPrecheckBehavior", "http://hl7.org/fhir/ValueSet/action-precheck-behavior")]
+  [FhirEnumeration("ActionPrecheckBehavior", "http://hl7.org/fhir/ValueSet/action-precheck-behavior", "http://hl7.org/fhir/action-precheck-behavior")]
   public enum ActionPrecheckBehavior
   {
     /// <summary>
     /// An action with this behavior is one of the most frequent action that is, or should be, included by an end user, for the particular context in which the action occurs. The system displaying the action to the end user should consider "pre-checking" such an action as a convenience for the user.
     /// (system: http://hl7.org/fhir/action-precheck-behavior)
     /// </summary>
-    [EnumLiteral("yes", "http://hl7.org/fhir/action-precheck-behavior"), Description("Yes")]
+    [EnumLiteral("yes"), Description("Yes")]
     Yes,
     /// <summary>
     /// An action with this behavior is one of the less frequent actions included by the end user, for the particular context in which the action occurs. The system displaying the actions to the end user would typically not "pre-check" such an action.
     /// (system: http://hl7.org/fhir/action-precheck-behavior)
     /// </summary>
-    [EnumLiteral("no", "http://hl7.org/fhir/action-precheck-behavior"), Description("No")]
+    [EnumLiteral("no"), Description("No")]
     No,
   }
 
@@ -209,62 +209,62 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
   /// (system: http://hl7.org/fhir/action-relationship-type)
   /// </summary>
-  [FhirEnumeration("ActionRelationshipType", "http://hl7.org/fhir/ValueSet/action-relationship-type")]
+  [FhirEnumeration("ActionRelationshipType", "http://hl7.org/fhir/ValueSet/action-relationship-type", "http://hl7.org/fhir/action-relationship-type")]
   public enum ActionRelationshipType
   {
     /// <summary>
     /// The action must be performed before the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("before", "http://hl7.org/fhir/action-relationship-type"), Description("Before")]
+    [EnumLiteral("before"), Description("Before")]
     Before,
     /// <summary>
     /// The action must be performed before the start of the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("before-start", "http://hl7.org/fhir/action-relationship-type"), Description("Before Start")]
+    [EnumLiteral("before-start"), Description("Before Start")]
     BeforeStart,
     /// <summary>
     /// The action must be performed before the end of the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("before-end", "http://hl7.org/fhir/action-relationship-type"), Description("Before End")]
+    [EnumLiteral("before-end"), Description("Before End")]
     BeforeEnd,
     /// <summary>
     /// The action must be performed concurrent with the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("concurrent", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent")]
+    [EnumLiteral("concurrent"), Description("Concurrent")]
     Concurrent,
     /// <summary>
     /// The action must be performed concurrent with the start of the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("concurrent-with-start", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent With Start")]
+    [EnumLiteral("concurrent-with-start"), Description("Concurrent With Start")]
     ConcurrentWithStart,
     /// <summary>
     /// The action must be performed concurrent with the end of the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("concurrent-with-end", "http://hl7.org/fhir/action-relationship-type"), Description("Concurrent With End")]
+    [EnumLiteral("concurrent-with-end"), Description("Concurrent With End")]
     ConcurrentWithEnd,
     /// <summary>
     /// The action must be performed after the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("after", "http://hl7.org/fhir/action-relationship-type"), Description("After")]
+    [EnumLiteral("after"), Description("After")]
     After,
     /// <summary>
     /// The action must be performed after the start of the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("after-start", "http://hl7.org/fhir/action-relationship-type"), Description("After Start")]
+    [EnumLiteral("after-start"), Description("After Start")]
     AfterStart,
     /// <summary>
     /// The action must be performed after the end of the related action.
     /// (system: http://hl7.org/fhir/action-relationship-type)
     /// </summary>
-    [EnumLiteral("after-end", "http://hl7.org/fhir/action-relationship-type"), Description("After End")]
+    [EnumLiteral("after-end"), Description("After End")]
     AfterEnd,
   }
 
@@ -273,26 +273,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-required-behavior)
   /// (system: http://hl7.org/fhir/action-required-behavior)
   /// </summary>
-  [FhirEnumeration("ActionRequiredBehavior", "http://hl7.org/fhir/ValueSet/action-required-behavior")]
+  [FhirEnumeration("ActionRequiredBehavior", "http://hl7.org/fhir/ValueSet/action-required-behavior", "http://hl7.org/fhir/action-required-behavior")]
   public enum ActionRequiredBehavior
   {
     /// <summary>
     /// An action with this behavior must be included in the actions processed by the end user; the end user SHALL NOT choose not to include this action.
     /// (system: http://hl7.org/fhir/action-required-behavior)
     /// </summary>
-    [EnumLiteral("must", "http://hl7.org/fhir/action-required-behavior"), Description("Must")]
+    [EnumLiteral("must"), Description("Must")]
     Must,
     /// <summary>
     /// An action with this behavior may be included in the set of actions processed by the end user.
     /// (system: http://hl7.org/fhir/action-required-behavior)
     /// </summary>
-    [EnumLiteral("could", "http://hl7.org/fhir/action-required-behavior"), Description("Could")]
+    [EnumLiteral("could"), Description("Could")]
     Could,
     /// <summary>
     /// An action with this behavior must be included in the set of actions processed by the end user, unless the end user provides documentation as to why the action was not included.
     /// (system: http://hl7.org/fhir/action-required-behavior)
     /// </summary>
-    [EnumLiteral("must-unless-documented", "http://hl7.org/fhir/action-required-behavior"), Description("Must Unless Documented")]
+    [EnumLiteral("must-unless-documented"), Description("Must Unless Documented")]
     MustUnlessDocumented,
   }
 
@@ -301,44 +301,44 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
   /// (system: http://hl7.org/fhir/action-selection-behavior)
   /// </summary>
-  [FhirEnumeration("ActionSelectionBehavior", "http://hl7.org/fhir/ValueSet/action-selection-behavior")]
+  [FhirEnumeration("ActionSelectionBehavior", "http://hl7.org/fhir/ValueSet/action-selection-behavior", "http://hl7.org/fhir/action-selection-behavior")]
   public enum ActionSelectionBehavior
   {
     /// <summary>
     /// Any number of the actions in the group may be chosen, from zero to all.
     /// (system: http://hl7.org/fhir/action-selection-behavior)
     /// </summary>
-    [EnumLiteral("any", "http://hl7.org/fhir/action-selection-behavior"), Description("Any")]
+    [EnumLiteral("any"), Description("Any")]
     Any,
     /// <summary>
     /// All the actions in the group must be selected as a single unit.
     /// (system: http://hl7.org/fhir/action-selection-behavior)
     /// </summary>
-    [EnumLiteral("all", "http://hl7.org/fhir/action-selection-behavior"), Description("All")]
+    [EnumLiteral("all"), Description("All")]
     All,
     /// <summary>
     /// All the actions in the group are meant to be chosen as a single unit: either all must be selected by the end user, or none may be selected.
     /// (system: http://hl7.org/fhir/action-selection-behavior)
     /// </summary>
-    [EnumLiteral("all-or-none", "http://hl7.org/fhir/action-selection-behavior"), Description("All Or None")]
+    [EnumLiteral("all-or-none"), Description("All Or None")]
     AllOrNone,
     /// <summary>
     /// The end user must choose one and only one of the selectable actions in the group. The user SHALL NOT choose none of the actions in the group.
     /// (system: http://hl7.org/fhir/action-selection-behavior)
     /// </summary>
-    [EnumLiteral("exactly-one", "http://hl7.org/fhir/action-selection-behavior"), Description("Exactly One")]
+    [EnumLiteral("exactly-one"), Description("Exactly One")]
     ExactlyOne,
     /// <summary>
     /// The end user may choose zero or at most one of the actions in the group.
     /// (system: http://hl7.org/fhir/action-selection-behavior)
     /// </summary>
-    [EnumLiteral("at-most-one", "http://hl7.org/fhir/action-selection-behavior"), Description("At Most One")]
+    [EnumLiteral("at-most-one"), Description("At Most One")]
     AtMostOne,
     /// <summary>
     /// The end user must choose a minimum of one, and as many additional as desired.
     /// (system: http://hl7.org/fhir/action-selection-behavior)
     /// </summary>
-    [EnumLiteral("one-or-more", "http://hl7.org/fhir/action-selection-behavior"), Description("One Or More")]
+    [EnumLiteral("one-or-more"), Description("One Or More")]
     OneOrMore,
   }
 
@@ -347,32 +347,32 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
   /// (system: http://hl7.org/fhir/administrative-gender)
   /// </summary>
-  [FhirEnumeration("AdministrativeGender", "http://hl7.org/fhir/ValueSet/administrative-gender")]
+  [FhirEnumeration("AdministrativeGender", "http://hl7.org/fhir/ValueSet/administrative-gender", "http://hl7.org/fhir/administrative-gender")]
   public enum AdministrativeGender
   {
     /// <summary>
     /// Male.
     /// (system: http://hl7.org/fhir/administrative-gender)
     /// </summary>
-    [EnumLiteral("male", "http://hl7.org/fhir/administrative-gender"), Description("Male")]
+    [EnumLiteral("male"), Description("Male")]
     Male,
     /// <summary>
     /// Female.
     /// (system: http://hl7.org/fhir/administrative-gender)
     /// </summary>
-    [EnumLiteral("female", "http://hl7.org/fhir/administrative-gender"), Description("Female")]
+    [EnumLiteral("female"), Description("Female")]
     Female,
     /// <summary>
     /// Other.
     /// (system: http://hl7.org/fhir/administrative-gender)
     /// </summary>
-    [EnumLiteral("other", "http://hl7.org/fhir/administrative-gender"), Description("Other")]
+    [EnumLiteral("other"), Description("Other")]
     Other,
     /// <summary>
     /// Unknown.
     /// (system: http://hl7.org/fhir/administrative-gender)
     /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/administrative-gender"), Description("Unknown")]
+    [EnumLiteral("unknown"), Description("Unknown")]
     Unknown,
   }
 
@@ -381,32 +381,32 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/claim-outcome)
   /// (system: http://hl7.org/fhir/claim-outcome)
   /// </summary>
-  [FhirEnumeration("ClaimProcessingCodes", "http://hl7.org/fhir/ValueSet/claim-outcome")]
+  [FhirEnumeration("ClaimProcessingCodes", "http://hl7.org/fhir/ValueSet/claim-outcome", "http://hl7.org/fhir/claim-outcome")]
   public enum ClaimProcessingCodes
   {
     /// <summary>
     /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
     /// (system: http://hl7.org/fhir/claim-outcome)
     /// </summary>
-    [EnumLiteral("queued", "http://hl7.org/fhir/claim-outcome"), Description("Queued")]
+    [EnumLiteral("queued"), Description("Queued")]
     Queued,
     /// <summary>
     /// The processing has completed without errors
     /// (system: http://hl7.org/fhir/claim-outcome)
     /// </summary>
-    [EnumLiteral("complete", "http://hl7.org/fhir/claim-outcome"), Description("Processing Complete")]
+    [EnumLiteral("complete"), Description("Processing Complete")]
     Complete,
     /// <summary>
     /// One or more errors have been detected in the Claim
     /// (system: http://hl7.org/fhir/claim-outcome)
     /// </summary>
-    [EnumLiteral("error", "http://hl7.org/fhir/claim-outcome"), Description("Error")]
+    [EnumLiteral("error"), Description("Error")]
     Error,
     /// <summary>
     /// No errors have been detected in the Claim and some of the adjudication has been performed.
     /// (system: http://hl7.org/fhir/claim-outcome)
     /// </summary>
-    [EnumLiteral("partial", "http://hl7.org/fhir/claim-outcome"), Description("Partial Processing")]
+    [EnumLiteral("partial"), Description("Partial Processing")]
     Partial,
   }
 
@@ -415,26 +415,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/claim-use)
   /// (system: http://hl7.org/fhir/claim-use)
   /// </summary>
-  [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use")]
+  [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use", "http://hl7.org/fhir/claim-use")]
   public enum ClaimUseCode
   {
     /// <summary>
     /// The treatment is complete and this represents a Claim for the services.
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
-    [EnumLiteral("claim", "http://hl7.org/fhir/claim-use"), Description("Claim")]
+    [EnumLiteral("claim"), Description("Claim")]
     Claim,
     /// <summary>
     /// The treatment is proposed and this represents a Pre-authorization for the services.
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
-    [EnumLiteral("preauthorization", "http://hl7.org/fhir/claim-use"), Description("Preauthorization")]
+    [EnumLiteral("preauthorization"), Description("Preauthorization")]
     Preauthorization,
     /// <summary>
     /// The treatment is proposed and this represents a Pre-determination for the services.
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
-    [EnumLiteral("predetermination", "http://hl7.org/fhir/claim-use"), Description("Predetermination")]
+    [EnumLiteral("predetermination"), Description("Predetermination")]
     Predetermination,
   }
 
@@ -443,44 +443,44 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
   /// (system: http://hl7.org/fhir/compartment-type)
   /// </summary>
-  [FhirEnumeration("CompartmentType", "http://hl7.org/fhir/ValueSet/compartment-type")]
+  [FhirEnumeration("CompartmentType", "http://hl7.org/fhir/ValueSet/compartment-type", "http://hl7.org/fhir/compartment-type")]
   public enum CompartmentType
   {
     /// <summary>
     /// The compartment definition is for the patient compartment.
     /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("Patient", "http://hl7.org/fhir/compartment-type"), Description("Patient")]
+    [EnumLiteral("Patient"), Description("Patient")]
     Patient,
     /// <summary>
     /// The compartment definition is for the encounter compartment.
     /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("Encounter", "http://hl7.org/fhir/compartment-type"), Description("Encounter")]
+    [EnumLiteral("Encounter"), Description("Encounter")]
     Encounter,
     /// <summary>
     /// The compartment definition is for the related-person compartment.
     /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/compartment-type"), Description("RelatedPerson")]
+    [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
     /// The compartment definition is for the practitioner compartment.
     /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("Practitioner", "http://hl7.org/fhir/compartment-type"), Description("Practitioner")]
+    [EnumLiteral("Practitioner"), Description("Practitioner")]
     Practitioner,
     /// <summary>
     /// The compartment definition is for the device compartment.
     /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("Device", "http://hl7.org/fhir/compartment-type"), Description("Device")]
+    [EnumLiteral("Device"), Description("Device")]
     Device,
     /// <summary>
     /// The compartment definition is for the episodeofcare compartment.
     /// (system: http://hl7.org/fhir/compartment-type)
     /// </summary>
-    [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/compartment-type"), Description("EpisodeOfCare")]
+    [EnumLiteral("EpisodeOfCare"), Description("EpisodeOfCare")]
     EpisodeOfCare,
   }
 
@@ -489,74 +489,74 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/composition-status)
   /// (system: http://hl7.org/fhir/composition-status)
   /// </summary>
-  [FhirEnumeration("CompositionStatus", "http://hl7.org/fhir/ValueSet/composition-status")]
+  [FhirEnumeration("CompositionStatus", "http://hl7.org/fhir/ValueSet/composition-status", "http://hl7.org/fhir/composition-status")]
   public enum CompositionStatus
   {
     /// <summary>
     /// The existence of the composition is registered, but there is nothing yet available.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("registered", "http://hl7.org/fhir/composition-status"), Description("Registered")]
+    [EnumLiteral("registered"), Description("Registered")]
     Registered,
     /// <summary>
     /// This is a partial (e.g. initial, interim or preliminary) composition: data in the composition may be incomplete or unverified.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("partial", "http://hl7.org/fhir/composition-status"), Description("Partial")]
+    [EnumLiteral("partial"), Description("Partial")]
     Partial,
     /// <summary>
     /// Verified early results are available, but not all results are final.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("preliminary", "http://hl7.org/fhir/composition-status"), Description("Preliminary")]
+    [EnumLiteral("preliminary"), Description("Preliminary")]
     Preliminary,
     /// <summary>
     /// This version of the composition is complete and verified by an appropriate person and no further work is planned. Any subsequent updates would be on a new version of the composition.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("final", "http://hl7.org/fhir/composition-status"), Description("Final")]
+    [EnumLiteral("final"), Description("Final")]
     Final,
     /// <summary>
     /// The composition content or the referenced resources have been modified (edited or added to) subsequent to being released as "final" and the composition is complete and verified by an authorized person.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("amended", "http://hl7.org/fhir/composition-status"), Description("Amended")]
+    [EnumLiteral("amended"), Description("Amended")]
     Amended,
     /// <summary>
     /// Subsequent to being final, the composition content has been modified to correct an error in the composition or referenced results.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("corrected", "http://hl7.org/fhir/composition-status"), Description("Corrected")]
+    [EnumLiteral("corrected"), Description("Corrected")]
     Corrected,
     /// <summary>
     /// Subsequent to being final, the composition content has been modified by adding new content. The existing content is unchanged.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("appended", "http://hl7.org/fhir/composition-status"), Description("Appended")]
+    [EnumLiteral("appended"), Description("Appended")]
     Appended,
     /// <summary>
     /// The composition is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("cancelled", "http://hl7.org/fhir/composition-status"), Description("Cancelled")]
+    [EnumLiteral("cancelled"), Description("Cancelled")]
     Cancelled,
     /// <summary>
     /// The composition or document was originally created/issued in error, and this is an amendment that marks that the entire series should not be considered as valid.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/composition-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
     /// This composition has been withdrawn or superseded and should no longer be used.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("deprecated", "http://hl7.org/fhir/composition-status"), Description("Deprecated")]
+    [EnumLiteral("deprecated"), Description("Deprecated")]
     Deprecated,
     /// <summary>
     /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/composition-status)
     /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/composition-status"), Description("Unknown")]
+    [EnumLiteral("unknown"), Description("Unknown")]
     Unknown,
   }
 
@@ -565,32 +565,32 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
   /// (system: http://hl7.org/fhir/consent-data-meaning)
   /// </summary>
-  [FhirEnumeration("ConsentDataMeaning", "http://hl7.org/fhir/ValueSet/consent-data-meaning")]
+  [FhirEnumeration("ConsentDataMeaning", "http://hl7.org/fhir/ValueSet/consent-data-meaning", "http://hl7.org/fhir/consent-data-meaning")]
   public enum ConsentDataMeaning
   {
     /// <summary>
     /// The consent applies directly to the instance of the resource.
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [EnumLiteral("instance", "http://hl7.org/fhir/consent-data-meaning"), Description("Instance")]
+    [EnumLiteral("instance"), Description("Instance")]
     Instance,
     /// <summary>
     /// The consent applies directly to the instance of the resource and instances it refers to.
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [EnumLiteral("related", "http://hl7.org/fhir/consent-data-meaning"), Description("Related")]
+    [EnumLiteral("related"), Description("Related")]
     Related,
     /// <summary>
     /// The consent applies directly to the instance of the resource and instances that refer to it.
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [EnumLiteral("dependents", "http://hl7.org/fhir/consent-data-meaning"), Description("Dependents")]
+    [EnumLiteral("dependents"), Description("Dependents")]
     Dependents,
     /// <summary>
     /// The consent applies to instances of resources that are authored by.
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [EnumLiteral("authoredby", "http://hl7.org/fhir/consent-data-meaning"), Description("AuthoredBy")]
+    [EnumLiteral("authoredby"), Description("AuthoredBy")]
     Authoredby,
   }
 
@@ -599,20 +599,20 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/consent-provision-type)
   /// (system: http://hl7.org/fhir/consent-provision-type)
   /// </summary>
-  [FhirEnumeration("ConsentProvisionType", "http://hl7.org/fhir/ValueSet/consent-provision-type")]
+  [FhirEnumeration("ConsentProvisionType", "http://hl7.org/fhir/ValueSet/consent-provision-type", "http://hl7.org/fhir/consent-provision-type")]
   public enum ConsentProvisionType
   {
     /// <summary>
     /// Consent is denied for actions meeting these rules.
     /// (system: http://hl7.org/fhir/consent-provision-type)
     /// </summary>
-    [EnumLiteral("deny", "http://hl7.org/fhir/consent-provision-type"), Description("Deny")]
+    [EnumLiteral("deny"), Description("Deny")]
     Deny,
     /// <summary>
     /// Consent is provided for actions meeting these rules.
     /// (system: http://hl7.org/fhir/consent-provision-type)
     /// </summary>
-    [EnumLiteral("permit", "http://hl7.org/fhir/consent-provision-type"), Description("Permit")]
+    [EnumLiteral("permit"), Description("Permit")]
     Permit,
   }
 
@@ -623,4490 +623,4490 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/country)
   /// (systems: 0)
   /// </summary>
-  [FhirEnumeration("CountryValueSet", "http://hl7.org/fhir/ValueSet/country")]
+  [FhirEnumeration("CountryValueSet", "http://hl7.org/fhir/ValueSet/country", "urn:iso:std:iso:3166")]
   public enum CountryValueSet
   {
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AD", "urn:iso:std:iso:3166"), Description("Andorra")]
+    [EnumLiteral("AD"), Description("Andorra")]
     AD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AE", "urn:iso:std:iso:3166"), Description("United Arab Emirates")]
+    [EnumLiteral("AE"), Description("United Arab Emirates")]
     AE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AF", "urn:iso:std:iso:3166"), Description("Afghanistan")]
+    [EnumLiteral("AF"), Description("Afghanistan")]
     AF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AG", "urn:iso:std:iso:3166"), Description("Antigua and Barbuda")]
+    [EnumLiteral("AG"), Description("Antigua and Barbuda")]
     AG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AI", "urn:iso:std:iso:3166"), Description("Anguilla")]
+    [EnumLiteral("AI"), Description("Anguilla")]
     AI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AL", "urn:iso:std:iso:3166"), Description("Albania")]
+    [EnumLiteral("AL"), Description("Albania")]
     AL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AM", "urn:iso:std:iso:3166"), Description("Armenia")]
+    [EnumLiteral("AM"), Description("Armenia")]
     AM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AO", "urn:iso:std:iso:3166"), Description("Angola")]
+    [EnumLiteral("AO"), Description("Angola")]
     AO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AQ", "urn:iso:std:iso:3166"), Description("Antarctica")]
+    [EnumLiteral("AQ"), Description("Antarctica")]
     AQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AR", "urn:iso:std:iso:3166"), Description("Argentina")]
+    [EnumLiteral("AR"), Description("Argentina")]
     AR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AS", "urn:iso:std:iso:3166"), Description("American Samoa")]
+    [EnumLiteral("AS"), Description("American Samoa")]
     AS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AT", "urn:iso:std:iso:3166"), Description("Austria")]
+    [EnumLiteral("AT"), Description("Austria")]
     AT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AU", "urn:iso:std:iso:3166"), Description("Australia")]
+    [EnumLiteral("AU"), Description("Australia")]
     AU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AW", "urn:iso:std:iso:3166"), Description("Aruba")]
+    [EnumLiteral("AW"), Description("Aruba")]
     AW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AX", "urn:iso:std:iso:3166"), Description("Eland Islands")]
+    [EnumLiteral("AX"), Description("Eland Islands")]
     AX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AZ", "urn:iso:std:iso:3166"), Description("Azerbaijan")]
+    [EnumLiteral("AZ"), Description("Azerbaijan")]
     AZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BA", "urn:iso:std:iso:3166"), Description("Bosnia and Herzegovina")]
+    [EnumLiteral("BA"), Description("Bosnia and Herzegovina")]
     BA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BB", "urn:iso:std:iso:3166"), Description("Barbados")]
+    [EnumLiteral("BB"), Description("Barbados")]
     BB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BD", "urn:iso:std:iso:3166"), Description("Bangladesh")]
+    [EnumLiteral("BD"), Description("Bangladesh")]
     BD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BE", "urn:iso:std:iso:3166"), Description("Belgium")]
+    [EnumLiteral("BE"), Description("Belgium")]
     BE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BF", "urn:iso:std:iso:3166"), Description("Burkina Faso")]
+    [EnumLiteral("BF"), Description("Burkina Faso")]
     BF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BG", "urn:iso:std:iso:3166"), Description("Bulgaria")]
+    [EnumLiteral("BG"), Description("Bulgaria")]
     BG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BH", "urn:iso:std:iso:3166"), Description("Bahrain")]
+    [EnumLiteral("BH"), Description("Bahrain")]
     BH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BI", "urn:iso:std:iso:3166"), Description("Burundi")]
+    [EnumLiteral("BI"), Description("Burundi")]
     BI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BJ", "urn:iso:std:iso:3166"), Description("Benin")]
+    [EnumLiteral("BJ"), Description("Benin")]
     BJ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BL", "urn:iso:std:iso:3166"), Description("Saint Barthilemy")]
+    [EnumLiteral("BL"), Description("Saint Barthilemy")]
     BL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BM", "urn:iso:std:iso:3166"), Description("Bermuda")]
+    [EnumLiteral("BM"), Description("Bermuda")]
     BM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BN", "urn:iso:std:iso:3166"), Description("Brunei Darussalam")]
+    [EnumLiteral("BN"), Description("Brunei Darussalam")]
     BN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BO", "urn:iso:std:iso:3166"), Description("Bolivia, Plurinational State of")]
+    [EnumLiteral("BO"), Description("Bolivia, Plurinational State of")]
     BO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BQ", "urn:iso:std:iso:3166"), Description("Bonaire, Sint Eustatius and Saba")]
+    [EnumLiteral("BQ"), Description("Bonaire, Sint Eustatius and Saba")]
     BQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BR", "urn:iso:std:iso:3166"), Description("Brazil")]
+    [EnumLiteral("BR"), Description("Brazil")]
     BR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BS", "urn:iso:std:iso:3166"), Description("Bahamas")]
+    [EnumLiteral("BS"), Description("Bahamas")]
     BS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BT", "urn:iso:std:iso:3166"), Description("Bhutan")]
+    [EnumLiteral("BT"), Description("Bhutan")]
     BT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BV", "urn:iso:std:iso:3166"), Description("Bouvet Island")]
+    [EnumLiteral("BV"), Description("Bouvet Island")]
     BV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BW", "urn:iso:std:iso:3166"), Description("Botswana")]
+    [EnumLiteral("BW"), Description("Botswana")]
     BW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BY", "urn:iso:std:iso:3166"), Description("Belarus")]
+    [EnumLiteral("BY"), Description("Belarus")]
     BY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BZ", "urn:iso:std:iso:3166"), Description("Belize")]
+    [EnumLiteral("BZ"), Description("Belize")]
     BZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CA", "urn:iso:std:iso:3166"), Description("Canada")]
+    [EnumLiteral("CA"), Description("Canada")]
     CA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CC", "urn:iso:std:iso:3166"), Description("Cocos (Keeling) Islands")]
+    [EnumLiteral("CC"), Description("Cocos (Keeling) Islands")]
     CC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CD", "urn:iso:std:iso:3166"), Description("Congo, the Democratic Republic of the")]
+    [EnumLiteral("CD"), Description("Congo, the Democratic Republic of the")]
     CD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CF", "urn:iso:std:iso:3166"), Description("Central African Republic")]
+    [EnumLiteral("CF"), Description("Central African Republic")]
     CF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CG", "urn:iso:std:iso:3166"), Description("Congo")]
+    [EnumLiteral("CG"), Description("Congo")]
     CG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CH", "urn:iso:std:iso:3166"), Description("Switzerland")]
+    [EnumLiteral("CH"), Description("Switzerland")]
     CH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CI", "urn:iso:std:iso:3166"), Description("Ctte d'Ivoire")]
+    [EnumLiteral("CI"), Description("Ctte d'Ivoire")]
     CI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CK", "urn:iso:std:iso:3166"), Description("Cook Islands")]
+    [EnumLiteral("CK"), Description("Cook Islands")]
     CK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CL", "urn:iso:std:iso:3166"), Description("Chile")]
+    [EnumLiteral("CL"), Description("Chile")]
     CL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CM", "urn:iso:std:iso:3166"), Description("Cameroon")]
+    [EnumLiteral("CM"), Description("Cameroon")]
     CM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CN", "urn:iso:std:iso:3166"), Description("China")]
+    [EnumLiteral("CN"), Description("China")]
     CN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CO", "urn:iso:std:iso:3166"), Description("Colombia")]
+    [EnumLiteral("CO"), Description("Colombia")]
     CO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CR", "urn:iso:std:iso:3166"), Description("Costa Rica")]
+    [EnumLiteral("CR"), Description("Costa Rica")]
     CR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CU", "urn:iso:std:iso:3166"), Description("Cuba")]
+    [EnumLiteral("CU"), Description("Cuba")]
     CU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CV", "urn:iso:std:iso:3166"), Description("Cabo Verde")]
+    [EnumLiteral("CV"), Description("Cabo Verde")]
     CV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CW", "urn:iso:std:iso:3166"), Description("Curagao")]
+    [EnumLiteral("CW"), Description("Curagao")]
     CW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CX", "urn:iso:std:iso:3166"), Description("Christmas Island")]
+    [EnumLiteral("CX"), Description("Christmas Island")]
     CX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CY", "urn:iso:std:iso:3166"), Description("Cyprus")]
+    [EnumLiteral("CY"), Description("Cyprus")]
     CY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CZ", "urn:iso:std:iso:3166"), Description("Czechia")]
+    [EnumLiteral("CZ"), Description("Czechia")]
     CZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DE", "urn:iso:std:iso:3166"), Description("Germany")]
+    [EnumLiteral("DE"), Description("Germany")]
     DE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DJ", "urn:iso:std:iso:3166"), Description("Djibouti")]
+    [EnumLiteral("DJ"), Description("Djibouti")]
     DJ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DK", "urn:iso:std:iso:3166"), Description("Denmark")]
+    [EnumLiteral("DK"), Description("Denmark")]
     DK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DM", "urn:iso:std:iso:3166"), Description("Dominica")]
+    [EnumLiteral("DM"), Description("Dominica")]
     DM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DO", "urn:iso:std:iso:3166"), Description("Dominican Republic")]
+    [EnumLiteral("DO"), Description("Dominican Republic")]
     DO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DZ", "urn:iso:std:iso:3166"), Description("Algeria")]
+    [EnumLiteral("DZ"), Description("Algeria")]
     DZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("EC", "urn:iso:std:iso:3166"), Description("Ecuador")]
+    [EnumLiteral("EC"), Description("Ecuador")]
     EC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("EE", "urn:iso:std:iso:3166"), Description("Estonia")]
+    [EnumLiteral("EE"), Description("Estonia")]
     EE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("EG", "urn:iso:std:iso:3166"), Description("Egypt")]
+    [EnumLiteral("EG"), Description("Egypt")]
     EG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("EH", "urn:iso:std:iso:3166"), Description("Western Sahara")]
+    [EnumLiteral("EH"), Description("Western Sahara")]
     EH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ER", "urn:iso:std:iso:3166"), Description("Eritrea")]
+    [EnumLiteral("ER"), Description("Eritrea")]
     ER,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ES", "urn:iso:std:iso:3166"), Description("Spain")]
+    [EnumLiteral("ES"), Description("Spain")]
     ES,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ET", "urn:iso:std:iso:3166"), Description("Ethiopia")]
+    [EnumLiteral("ET"), Description("Ethiopia")]
     ET,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FI", "urn:iso:std:iso:3166"), Description("Finland")]
+    [EnumLiteral("FI"), Description("Finland")]
     FI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FJ", "urn:iso:std:iso:3166"), Description("Fiji")]
+    [EnumLiteral("FJ"), Description("Fiji")]
     FJ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FK", "urn:iso:std:iso:3166"), Description("Falkland Islands (Malvinas)")]
+    [EnumLiteral("FK"), Description("Falkland Islands (Malvinas)")]
     FK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FM", "urn:iso:std:iso:3166"), Description("Micronesia, Federated States of")]
+    [EnumLiteral("FM"), Description("Micronesia, Federated States of")]
     FM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FO", "urn:iso:std:iso:3166"), Description("Faroe Islands")]
+    [EnumLiteral("FO"), Description("Faroe Islands")]
     FO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FR", "urn:iso:std:iso:3166"), Description("France")]
+    [EnumLiteral("FR"), Description("France")]
     FR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GA", "urn:iso:std:iso:3166"), Description("Gabon")]
+    [EnumLiteral("GA"), Description("Gabon")]
     GA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GB", "urn:iso:std:iso:3166"), Description("United Kingdom of Great Britain and Northern Ireland")]
+    [EnumLiteral("GB"), Description("United Kingdom of Great Britain and Northern Ireland")]
     GB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GD", "urn:iso:std:iso:3166"), Description("Grenada")]
+    [EnumLiteral("GD"), Description("Grenada")]
     GD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GE", "urn:iso:std:iso:3166"), Description("Georgia")]
+    [EnumLiteral("GE"), Description("Georgia")]
     GE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GF", "urn:iso:std:iso:3166"), Description("French Guiana")]
+    [EnumLiteral("GF"), Description("French Guiana")]
     GF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GG", "urn:iso:std:iso:3166"), Description("Guernsey")]
+    [EnumLiteral("GG"), Description("Guernsey")]
     GG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GH", "urn:iso:std:iso:3166"), Description("Ghana")]
+    [EnumLiteral("GH"), Description("Ghana")]
     GH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GI", "urn:iso:std:iso:3166"), Description("Gibraltar")]
+    [EnumLiteral("GI"), Description("Gibraltar")]
     GI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GL", "urn:iso:std:iso:3166"), Description("Greenland")]
+    [EnumLiteral("GL"), Description("Greenland")]
     GL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GM", "urn:iso:std:iso:3166"), Description("Gambia")]
+    [EnumLiteral("GM"), Description("Gambia")]
     GM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GN", "urn:iso:std:iso:3166"), Description("Guinea")]
+    [EnumLiteral("GN"), Description("Guinea")]
     GN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GP", "urn:iso:std:iso:3166"), Description("Guadeloupe")]
+    [EnumLiteral("GP"), Description("Guadeloupe")]
     GP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GQ", "urn:iso:std:iso:3166"), Description("Equatorial Guinea")]
+    [EnumLiteral("GQ"), Description("Equatorial Guinea")]
     GQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GR", "urn:iso:std:iso:3166"), Description("Greece")]
+    [EnumLiteral("GR"), Description("Greece")]
     GR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GS", "urn:iso:std:iso:3166"), Description("South Georgia and the South Sandwich Islands")]
+    [EnumLiteral("GS"), Description("South Georgia and the South Sandwich Islands")]
     GS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GT", "urn:iso:std:iso:3166"), Description("Guatemala")]
+    [EnumLiteral("GT"), Description("Guatemala")]
     GT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GU", "urn:iso:std:iso:3166"), Description("Guam")]
+    [EnumLiteral("GU"), Description("Guam")]
     GU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GW", "urn:iso:std:iso:3166"), Description("Guinea-Bissau")]
+    [EnumLiteral("GW"), Description("Guinea-Bissau")]
     GW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GY", "urn:iso:std:iso:3166"), Description("Guyana")]
+    [EnumLiteral("GY"), Description("Guyana")]
     GY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HK", "urn:iso:std:iso:3166"), Description("Hong Kong")]
+    [EnumLiteral("HK"), Description("Hong Kong")]
     HK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HM", "urn:iso:std:iso:3166"), Description("Heard Island and McDonald Islands")]
+    [EnumLiteral("HM"), Description("Heard Island and McDonald Islands")]
     HM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HN", "urn:iso:std:iso:3166"), Description("Honduras")]
+    [EnumLiteral("HN"), Description("Honduras")]
     HN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HR", "urn:iso:std:iso:3166"), Description("Croatia")]
+    [EnumLiteral("HR"), Description("Croatia")]
     HR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HT", "urn:iso:std:iso:3166"), Description("Haiti")]
+    [EnumLiteral("HT"), Description("Haiti")]
     HT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HU", "urn:iso:std:iso:3166"), Description("Hungary")]
+    [EnumLiteral("HU"), Description("Hungary")]
     HU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ID", "urn:iso:std:iso:3166"), Description("Indonesia")]
+    [EnumLiteral("ID"), Description("Indonesia")]
     ID,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IE", "urn:iso:std:iso:3166"), Description("Ireland")]
+    [EnumLiteral("IE"), Description("Ireland")]
     IE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IL", "urn:iso:std:iso:3166"), Description("Israel")]
+    [EnumLiteral("IL"), Description("Israel")]
     IL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IM", "urn:iso:std:iso:3166"), Description("Isle of Man")]
+    [EnumLiteral("IM"), Description("Isle of Man")]
     IM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IN", "urn:iso:std:iso:3166"), Description("India")]
+    [EnumLiteral("IN"), Description("India")]
     IN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IO", "urn:iso:std:iso:3166"), Description("British Indian Ocean Territory")]
+    [EnumLiteral("IO"), Description("British Indian Ocean Territory")]
     IO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IQ", "urn:iso:std:iso:3166"), Description("Iraq")]
+    [EnumLiteral("IQ"), Description("Iraq")]
     IQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IR", "urn:iso:std:iso:3166"), Description("Iran, Islamic Republic of")]
+    [EnumLiteral("IR"), Description("Iran, Islamic Republic of")]
     IR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IS", "urn:iso:std:iso:3166"), Description("Iceland")]
+    [EnumLiteral("IS"), Description("Iceland")]
     IS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IT", "urn:iso:std:iso:3166"), Description("Italy")]
+    [EnumLiteral("IT"), Description("Italy")]
     IT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JE", "urn:iso:std:iso:3166"), Description("Jersey")]
+    [EnumLiteral("JE"), Description("Jersey")]
     JE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JM", "urn:iso:std:iso:3166"), Description("Jamaica")]
+    [EnumLiteral("JM"), Description("Jamaica")]
     JM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JO", "urn:iso:std:iso:3166"), Description("Jordan")]
+    [EnumLiteral("JO"), Description("Jordan")]
     JO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JP", "urn:iso:std:iso:3166"), Description("Japan")]
+    [EnumLiteral("JP"), Description("Japan")]
     JP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KE", "urn:iso:std:iso:3166"), Description("Kenya")]
+    [EnumLiteral("KE"), Description("Kenya")]
     KE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KG", "urn:iso:std:iso:3166"), Description("Kyrgyzstan")]
+    [EnumLiteral("KG"), Description("Kyrgyzstan")]
     KG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KH", "urn:iso:std:iso:3166"), Description("Cambodia")]
+    [EnumLiteral("KH"), Description("Cambodia")]
     KH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KI", "urn:iso:std:iso:3166"), Description("Kiribati")]
+    [EnumLiteral("KI"), Description("Kiribati")]
     KI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KM", "urn:iso:std:iso:3166"), Description("Comoros")]
+    [EnumLiteral("KM"), Description("Comoros")]
     KM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KN", "urn:iso:std:iso:3166"), Description("Saint Kitts and Nevis")]
+    [EnumLiteral("KN"), Description("Saint Kitts and Nevis")]
     KN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KP", "urn:iso:std:iso:3166"), Description("Korea, Democratic People's Republic of")]
+    [EnumLiteral("KP"), Description("Korea, Democratic People's Republic of")]
     KP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KR", "urn:iso:std:iso:3166"), Description("Korea, Republic of")]
+    [EnumLiteral("KR"), Description("Korea, Republic of")]
     KR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KW", "urn:iso:std:iso:3166"), Description("Kuwait")]
+    [EnumLiteral("KW"), Description("Kuwait")]
     KW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KY", "urn:iso:std:iso:3166"), Description("Cayman Islands")]
+    [EnumLiteral("KY"), Description("Cayman Islands")]
     KY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KZ", "urn:iso:std:iso:3166"), Description("Kazakhstan")]
+    [EnumLiteral("KZ"), Description("Kazakhstan")]
     KZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LA", "urn:iso:std:iso:3166"), Description("Lao People's Democratic Republic")]
+    [EnumLiteral("LA"), Description("Lao People's Democratic Republic")]
     LA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LB", "urn:iso:std:iso:3166"), Description("Lebanon")]
+    [EnumLiteral("LB"), Description("Lebanon")]
     LB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LC", "urn:iso:std:iso:3166"), Description("Saint Lucia")]
+    [EnumLiteral("LC"), Description("Saint Lucia")]
     LC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LI", "urn:iso:std:iso:3166"), Description("Liechtenstein")]
+    [EnumLiteral("LI"), Description("Liechtenstein")]
     LI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LK", "urn:iso:std:iso:3166"), Description("Sri Lanka")]
+    [EnumLiteral("LK"), Description("Sri Lanka")]
     LK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LR", "urn:iso:std:iso:3166"), Description("Liberia")]
+    [EnumLiteral("LR"), Description("Liberia")]
     LR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LS", "urn:iso:std:iso:3166"), Description("Lesotho")]
+    [EnumLiteral("LS"), Description("Lesotho")]
     LS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LT", "urn:iso:std:iso:3166"), Description("Lithuania")]
+    [EnumLiteral("LT"), Description("Lithuania")]
     LT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LU", "urn:iso:std:iso:3166"), Description("Luxembourg")]
+    [EnumLiteral("LU"), Description("Luxembourg")]
     LU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LV", "urn:iso:std:iso:3166"), Description("Latvia")]
+    [EnumLiteral("LV"), Description("Latvia")]
     LV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LY", "urn:iso:std:iso:3166"), Description("Libya")]
+    [EnumLiteral("LY"), Description("Libya")]
     LY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MA", "urn:iso:std:iso:3166"), Description("Morocco")]
+    [EnumLiteral("MA"), Description("Morocco")]
     MA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MC", "urn:iso:std:iso:3166"), Description("Monaco")]
+    [EnumLiteral("MC"), Description("Monaco")]
     MC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MD", "urn:iso:std:iso:3166"), Description("Moldova, Republic of")]
+    [EnumLiteral("MD"), Description("Moldova, Republic of")]
     MD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ME", "urn:iso:std:iso:3166"), Description("Montenegro")]
+    [EnumLiteral("ME"), Description("Montenegro")]
     ME,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MF", "urn:iso:std:iso:3166"), Description("Saint Martin (French part)")]
+    [EnumLiteral("MF"), Description("Saint Martin (French part)")]
     MF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MG", "urn:iso:std:iso:3166"), Description("Madagascar")]
+    [EnumLiteral("MG"), Description("Madagascar")]
     MG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MH", "urn:iso:std:iso:3166"), Description("Marshall Islands")]
+    [EnumLiteral("MH"), Description("Marshall Islands")]
     MH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MK", "urn:iso:std:iso:3166"), Description("Macedonia, the former Yugoslav Republic of")]
+    [EnumLiteral("MK"), Description("Macedonia, the former Yugoslav Republic of")]
     MK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ML", "urn:iso:std:iso:3166"), Description("Mali")]
+    [EnumLiteral("ML"), Description("Mali")]
     ML,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MM", "urn:iso:std:iso:3166"), Description("Myanmar")]
+    [EnumLiteral("MM"), Description("Myanmar")]
     MM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MN", "urn:iso:std:iso:3166"), Description("Mongolia")]
+    [EnumLiteral("MN"), Description("Mongolia")]
     MN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MO", "urn:iso:std:iso:3166"), Description("Macao")]
+    [EnumLiteral("MO"), Description("Macao")]
     MO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MP", "urn:iso:std:iso:3166"), Description("Northern Mariana Islands")]
+    [EnumLiteral("MP"), Description("Northern Mariana Islands")]
     MP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MQ", "urn:iso:std:iso:3166"), Description("Martinique")]
+    [EnumLiteral("MQ"), Description("Martinique")]
     MQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MR", "urn:iso:std:iso:3166"), Description("Mauritania")]
+    [EnumLiteral("MR"), Description("Mauritania")]
     MR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MS", "urn:iso:std:iso:3166"), Description("Montserrat")]
+    [EnumLiteral("MS"), Description("Montserrat")]
     MS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MT", "urn:iso:std:iso:3166"), Description("Malta")]
+    [EnumLiteral("MT"), Description("Malta")]
     MT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MU", "urn:iso:std:iso:3166"), Description("Mauritius")]
+    [EnumLiteral("MU"), Description("Mauritius")]
     MU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MV", "urn:iso:std:iso:3166"), Description("Maldives")]
+    [EnumLiteral("MV"), Description("Maldives")]
     MV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MW", "urn:iso:std:iso:3166"), Description("Malawi")]
+    [EnumLiteral("MW"), Description("Malawi")]
     MW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MX", "urn:iso:std:iso:3166"), Description("Mexico")]
+    [EnumLiteral("MX"), Description("Mexico")]
     MX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MY", "urn:iso:std:iso:3166"), Description("Malaysia")]
+    [EnumLiteral("MY"), Description("Malaysia")]
     MY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MZ", "urn:iso:std:iso:3166"), Description("Mozambique")]
+    [EnumLiteral("MZ"), Description("Mozambique")]
     MZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NA", "urn:iso:std:iso:3166"), Description("Namibia")]
+    [EnumLiteral("NA"), Description("Namibia")]
     NA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NC", "urn:iso:std:iso:3166"), Description("New Caledonia")]
+    [EnumLiteral("NC"), Description("New Caledonia")]
     NC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NE", "urn:iso:std:iso:3166"), Description("Niger")]
+    [EnumLiteral("NE"), Description("Niger")]
     NE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NF", "urn:iso:std:iso:3166"), Description("Norfolk Island")]
+    [EnumLiteral("NF"), Description("Norfolk Island")]
     NF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NG", "urn:iso:std:iso:3166"), Description("Nigeria")]
+    [EnumLiteral("NG"), Description("Nigeria")]
     NG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NI", "urn:iso:std:iso:3166"), Description("Nicaragua")]
+    [EnumLiteral("NI"), Description("Nicaragua")]
     NI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NL", "urn:iso:std:iso:3166"), Description("Netherlands")]
+    [EnumLiteral("NL"), Description("Netherlands")]
     NL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NO", "urn:iso:std:iso:3166"), Description("Norway")]
+    [EnumLiteral("NO"), Description("Norway")]
     NO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NP", "urn:iso:std:iso:3166"), Description("Nepal")]
+    [EnumLiteral("NP"), Description("Nepal")]
     NP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NR", "urn:iso:std:iso:3166"), Description("Nauru")]
+    [EnumLiteral("NR"), Description("Nauru")]
     NR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NU", "urn:iso:std:iso:3166"), Description("Niue")]
+    [EnumLiteral("NU"), Description("Niue")]
     NU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NZ", "urn:iso:std:iso:3166"), Description("New Zealand")]
+    [EnumLiteral("NZ"), Description("New Zealand")]
     NZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("OM", "urn:iso:std:iso:3166"), Description("Oman")]
+    [EnumLiteral("OM"), Description("Oman")]
     OM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PA", "urn:iso:std:iso:3166"), Description("Panama")]
+    [EnumLiteral("PA"), Description("Panama")]
     PA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PE", "urn:iso:std:iso:3166"), Description("Peru")]
+    [EnumLiteral("PE"), Description("Peru")]
     PE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PF", "urn:iso:std:iso:3166"), Description("French Polynesia")]
+    [EnumLiteral("PF"), Description("French Polynesia")]
     PF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PG", "urn:iso:std:iso:3166"), Description("Papua New Guinea")]
+    [EnumLiteral("PG"), Description("Papua New Guinea")]
     PG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PH", "urn:iso:std:iso:3166"), Description("Philippines")]
+    [EnumLiteral("PH"), Description("Philippines")]
     PH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PK", "urn:iso:std:iso:3166"), Description("Pakistan")]
+    [EnumLiteral("PK"), Description("Pakistan")]
     PK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PL", "urn:iso:std:iso:3166"), Description("Poland")]
+    [EnumLiteral("PL"), Description("Poland")]
     PL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PM", "urn:iso:std:iso:3166"), Description("Saint Pierre and Miquelon")]
+    [EnumLiteral("PM"), Description("Saint Pierre and Miquelon")]
     PM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PN", "urn:iso:std:iso:3166"), Description("Pitcairn")]
+    [EnumLiteral("PN"), Description("Pitcairn")]
     PN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PR", "urn:iso:std:iso:3166"), Description("Puerto Rico")]
+    [EnumLiteral("PR"), Description("Puerto Rico")]
     PR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PS", "urn:iso:std:iso:3166"), Description("Palestine, State of")]
+    [EnumLiteral("PS"), Description("Palestine, State of")]
     PS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PT", "urn:iso:std:iso:3166"), Description("Portugal")]
+    [EnumLiteral("PT"), Description("Portugal")]
     PT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PW", "urn:iso:std:iso:3166"), Description("Palau")]
+    [EnumLiteral("PW"), Description("Palau")]
     PW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PY", "urn:iso:std:iso:3166"), Description("Paraguay")]
+    [EnumLiteral("PY"), Description("Paraguay")]
     PY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("QA", "urn:iso:std:iso:3166"), Description("Qatar")]
+    [EnumLiteral("QA"), Description("Qatar")]
     QA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RE", "urn:iso:std:iso:3166"), Description("Riunion")]
+    [EnumLiteral("RE"), Description("Riunion")]
     RE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RO", "urn:iso:std:iso:3166"), Description("Romania")]
+    [EnumLiteral("RO"), Description("Romania")]
     RO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RS", "urn:iso:std:iso:3166"), Description("Serbia")]
+    [EnumLiteral("RS"), Description("Serbia")]
     RS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RU", "urn:iso:std:iso:3166"), Description("Russian Federation")]
+    [EnumLiteral("RU"), Description("Russian Federation")]
     RU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RW", "urn:iso:std:iso:3166"), Description("Rwanda")]
+    [EnumLiteral("RW"), Description("Rwanda")]
     RW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SA", "urn:iso:std:iso:3166"), Description("Saudi Arabia")]
+    [EnumLiteral("SA"), Description("Saudi Arabia")]
     SA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SB", "urn:iso:std:iso:3166"), Description("Solomon Islands")]
+    [EnumLiteral("SB"), Description("Solomon Islands")]
     SB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SC", "urn:iso:std:iso:3166"), Description("Seychelles")]
+    [EnumLiteral("SC"), Description("Seychelles")]
     SC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SD", "urn:iso:std:iso:3166"), Description("Sudan")]
+    [EnumLiteral("SD"), Description("Sudan")]
     SD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SE", "urn:iso:std:iso:3166"), Description("Sweden")]
+    [EnumLiteral("SE"), Description("Sweden")]
     SE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SG", "urn:iso:std:iso:3166"), Description("Singapore")]
+    [EnumLiteral("SG"), Description("Singapore")]
     SG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SH", "urn:iso:std:iso:3166"), Description("Saint Helena, Ascension and Tristan da Cunha")]
+    [EnumLiteral("SH"), Description("Saint Helena, Ascension and Tristan da Cunha")]
     SH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SI", "urn:iso:std:iso:3166"), Description("Slovenia")]
+    [EnumLiteral("SI"), Description("Slovenia")]
     SI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SJ", "urn:iso:std:iso:3166"), Description("Svalbard and Jan Mayen")]
+    [EnumLiteral("SJ"), Description("Svalbard and Jan Mayen")]
     SJ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SK", "urn:iso:std:iso:3166"), Description("Slovakia")]
+    [EnumLiteral("SK"), Description("Slovakia")]
     SK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SL", "urn:iso:std:iso:3166"), Description("Sierra Leone")]
+    [EnumLiteral("SL"), Description("Sierra Leone")]
     SL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SM", "urn:iso:std:iso:3166"), Description("San Marino")]
+    [EnumLiteral("SM"), Description("San Marino")]
     SM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SN", "urn:iso:std:iso:3166"), Description("Senegal")]
+    [EnumLiteral("SN"), Description("Senegal")]
     SN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SO", "urn:iso:std:iso:3166"), Description("Somalia")]
+    [EnumLiteral("SO"), Description("Somalia")]
     SO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SR", "urn:iso:std:iso:3166"), Description("Suriname")]
+    [EnumLiteral("SR"), Description("Suriname")]
     SR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SS", "urn:iso:std:iso:3166"), Description("South Sudan")]
+    [EnumLiteral("SS"), Description("South Sudan")]
     SS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ST", "urn:iso:std:iso:3166"), Description("Sao Tome and Principe")]
+    [EnumLiteral("ST"), Description("Sao Tome and Principe")]
     ST,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SV", "urn:iso:std:iso:3166"), Description("El Salvador")]
+    [EnumLiteral("SV"), Description("El Salvador")]
     SV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SX", "urn:iso:std:iso:3166"), Description("Sint Maarten (Dutch part)")]
+    [EnumLiteral("SX"), Description("Sint Maarten (Dutch part)")]
     SX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SY", "urn:iso:std:iso:3166"), Description("Syrian Arab Republic")]
+    [EnumLiteral("SY"), Description("Syrian Arab Republic")]
     SY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SZ", "urn:iso:std:iso:3166"), Description("Swaziland")]
+    [EnumLiteral("SZ"), Description("Swaziland")]
     SZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TC", "urn:iso:std:iso:3166"), Description("Turks and Caicos Islands")]
+    [EnumLiteral("TC"), Description("Turks and Caicos Islands")]
     TC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TD", "urn:iso:std:iso:3166"), Description("Chad")]
+    [EnumLiteral("TD"), Description("Chad")]
     TD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TF", "urn:iso:std:iso:3166"), Description("French Southern Territories")]
+    [EnumLiteral("TF"), Description("French Southern Territories")]
     TF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TG", "urn:iso:std:iso:3166"), Description("Togo")]
+    [EnumLiteral("TG"), Description("Togo")]
     TG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TH", "urn:iso:std:iso:3166"), Description("Thailand")]
+    [EnumLiteral("TH"), Description("Thailand")]
     TH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TJ", "urn:iso:std:iso:3166"), Description("Tajikistan")]
+    [EnumLiteral("TJ"), Description("Tajikistan")]
     TJ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TK", "urn:iso:std:iso:3166"), Description("Tokelau")]
+    [EnumLiteral("TK"), Description("Tokelau")]
     TK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TL", "urn:iso:std:iso:3166"), Description("Timor-Leste")]
+    [EnumLiteral("TL"), Description("Timor-Leste")]
     TL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TM", "urn:iso:std:iso:3166"), Description("Turkmenistan")]
+    [EnumLiteral("TM"), Description("Turkmenistan")]
     TM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TN", "urn:iso:std:iso:3166"), Description("Tunisia")]
+    [EnumLiteral("TN"), Description("Tunisia")]
     TN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TO", "urn:iso:std:iso:3166"), Description("Tonga")]
+    [EnumLiteral("TO"), Description("Tonga")]
     TO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TR", "urn:iso:std:iso:3166"), Description("Turkey")]
+    [EnumLiteral("TR"), Description("Turkey")]
     TR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TT", "urn:iso:std:iso:3166"), Description("Trinidad and Tobago")]
+    [EnumLiteral("TT"), Description("Trinidad and Tobago")]
     TT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TV", "urn:iso:std:iso:3166"), Description("Tuvalu")]
+    [EnumLiteral("TV"), Description("Tuvalu")]
     TV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TW", "urn:iso:std:iso:3166"), Description("Taiwan, Province of China")]
+    [EnumLiteral("TW"), Description("Taiwan, Province of China")]
     TW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TZ", "urn:iso:std:iso:3166"), Description("Tanzania, United Republic of")]
+    [EnumLiteral("TZ"), Description("Tanzania, United Republic of")]
     TZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UA", "urn:iso:std:iso:3166"), Description("Ukraine")]
+    [EnumLiteral("UA"), Description("Ukraine")]
     UA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UG", "urn:iso:std:iso:3166"), Description("Uganda")]
+    [EnumLiteral("UG"), Description("Uganda")]
     UG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UM", "urn:iso:std:iso:3166"), Description("United States Minor Outlying Islands")]
+    [EnumLiteral("UM"), Description("United States Minor Outlying Islands")]
     UM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("US", "urn:iso:std:iso:3166"), Description("United States of America")]
+    [EnumLiteral("US"), Description("United States of America")]
     US,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UY", "urn:iso:std:iso:3166"), Description("Uruguay")]
+    [EnumLiteral("UY"), Description("Uruguay")]
     UY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UZ", "urn:iso:std:iso:3166"), Description("Uzbekistan")]
+    [EnumLiteral("UZ"), Description("Uzbekistan")]
     UZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VA", "urn:iso:std:iso:3166"), Description("Holy See")]
+    [EnumLiteral("VA"), Description("Holy See")]
     VA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VC", "urn:iso:std:iso:3166"), Description("Saint Vincent and the Grenadines")]
+    [EnumLiteral("VC"), Description("Saint Vincent and the Grenadines")]
     VC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VE", "urn:iso:std:iso:3166"), Description("Venezuela, Bolivarian Republic of")]
+    [EnumLiteral("VE"), Description("Venezuela, Bolivarian Republic of")]
     VE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VG", "urn:iso:std:iso:3166"), Description("Virgin Islands, British")]
+    [EnumLiteral("VG"), Description("Virgin Islands, British")]
     VG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VI", "urn:iso:std:iso:3166"), Description("Virgin Islands,")]
+    [EnumLiteral("VI"), Description("Virgin Islands,")]
     VI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VN", "urn:iso:std:iso:3166"), Description("Viet Nam")]
+    [EnumLiteral("VN"), Description("Viet Nam")]
     VN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VU", "urn:iso:std:iso:3166"), Description("Vanuatu")]
+    [EnumLiteral("VU"), Description("Vanuatu")]
     VU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("WF", "urn:iso:std:iso:3166"), Description("Wallis and Futuna")]
+    [EnumLiteral("WF"), Description("Wallis and Futuna")]
     WF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("WS", "urn:iso:std:iso:3166"), Description("Samoa")]
+    [EnumLiteral("WS"), Description("Samoa")]
     WS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("YE", "urn:iso:std:iso:3166"), Description("Yemen")]
+    [EnumLiteral("YE"), Description("Yemen")]
     YE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("YT", "urn:iso:std:iso:3166"), Description("Mayotte")]
+    [EnumLiteral("YT"), Description("Mayotte")]
     YT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ZA", "urn:iso:std:iso:3166"), Description("South Africa")]
+    [EnumLiteral("ZA"), Description("South Africa")]
     ZA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ZM", "urn:iso:std:iso:3166"), Description("Zambia")]
+    [EnumLiteral("ZM"), Description("Zambia")]
     ZM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ZW", "urn:iso:std:iso:3166"), Description("Zimbabwe")]
+    [EnumLiteral("ZW"), Description("Zimbabwe")]
     ZW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ABW", "urn:iso:std:iso:3166"), Description("Aruba")]
+    [EnumLiteral("ABW"), Description("Aruba")]
     ABW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AFG", "urn:iso:std:iso:3166"), Description("Afghanistan")]
+    [EnumLiteral("AFG"), Description("Afghanistan")]
     AFG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AGO", "urn:iso:std:iso:3166"), Description("Angola")]
+    [EnumLiteral("AGO"), Description("Angola")]
     AGO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AIA", "urn:iso:std:iso:3166"), Description("Anguilla")]
+    [EnumLiteral("AIA"), Description("Anguilla")]
     AIA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ALA", "urn:iso:std:iso:3166"), Description("Eland Islands")]
+    [EnumLiteral("ALA"), Description("Eland Islands")]
     ALA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ALB", "urn:iso:std:iso:3166"), Description("Albania")]
+    [EnumLiteral("ALB"), Description("Albania")]
     ALB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AND", "urn:iso:std:iso:3166"), Description("Andorra")]
+    [EnumLiteral("AND"), Description("Andorra")]
     AND,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ARE", "urn:iso:std:iso:3166"), Description("United Arab Emirates")]
+    [EnumLiteral("ARE"), Description("United Arab Emirates")]
     ARE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ARG", "urn:iso:std:iso:3166"), Description("Argentina")]
+    [EnumLiteral("ARG"), Description("Argentina")]
     ARG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ARM", "urn:iso:std:iso:3166"), Description("Armenia")]
+    [EnumLiteral("ARM"), Description("Armenia")]
     ARM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ASM", "urn:iso:std:iso:3166"), Description("American Samoa")]
+    [EnumLiteral("ASM"), Description("American Samoa")]
     ASM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ATA", "urn:iso:std:iso:3166"), Description("Antarctica")]
+    [EnumLiteral("ATA"), Description("Antarctica")]
     ATA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ATF", "urn:iso:std:iso:3166"), Description("French Southern Territories")]
+    [EnumLiteral("ATF"), Description("French Southern Territories")]
     ATF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ATG", "urn:iso:std:iso:3166"), Description("Antigua and Barbuda")]
+    [EnumLiteral("ATG"), Description("Antigua and Barbuda")]
     ATG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AUS", "urn:iso:std:iso:3166"), Description("Australia")]
+    [EnumLiteral("AUS"), Description("Australia")]
     AUS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AUT", "urn:iso:std:iso:3166"), Description("Austria")]
+    [EnumLiteral("AUT"), Description("Austria")]
     AUT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("AZE", "urn:iso:std:iso:3166"), Description("Azerbaijan")]
+    [EnumLiteral("AZE"), Description("Azerbaijan")]
     AZE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BDI", "urn:iso:std:iso:3166"), Description("Burundi")]
+    [EnumLiteral("BDI"), Description("Burundi")]
     BDI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BEL", "urn:iso:std:iso:3166"), Description("Belgium")]
+    [EnumLiteral("BEL"), Description("Belgium")]
     BEL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BEN", "urn:iso:std:iso:3166"), Description("Benin")]
+    [EnumLiteral("BEN"), Description("Benin")]
     BEN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BES", "urn:iso:std:iso:3166"), Description("Bonaire, Sint Eustatius and Saba")]
+    [EnumLiteral("BES"), Description("Bonaire, Sint Eustatius and Saba")]
     BES,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BFA", "urn:iso:std:iso:3166"), Description("Burkina Faso")]
+    [EnumLiteral("BFA"), Description("Burkina Faso")]
     BFA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BGD", "urn:iso:std:iso:3166"), Description("Bangladesh")]
+    [EnumLiteral("BGD"), Description("Bangladesh")]
     BGD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BGR", "urn:iso:std:iso:3166"), Description("Bulgaria")]
+    [EnumLiteral("BGR"), Description("Bulgaria")]
     BGR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BHR", "urn:iso:std:iso:3166"), Description("Bahrain")]
+    [EnumLiteral("BHR"), Description("Bahrain")]
     BHR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BHS", "urn:iso:std:iso:3166"), Description("Bahamas")]
+    [EnumLiteral("BHS"), Description("Bahamas")]
     BHS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BIH", "urn:iso:std:iso:3166"), Description("Bosnia and Herzegovina")]
+    [EnumLiteral("BIH"), Description("Bosnia and Herzegovina")]
     BIH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BLM", "urn:iso:std:iso:3166"), Description("Saint Barthilemy")]
+    [EnumLiteral("BLM"), Description("Saint Barthilemy")]
     BLM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BLR", "urn:iso:std:iso:3166"), Description("Belarus")]
+    [EnumLiteral("BLR"), Description("Belarus")]
     BLR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BLZ", "urn:iso:std:iso:3166"), Description("Belize")]
+    [EnumLiteral("BLZ"), Description("Belize")]
     BLZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BMU", "urn:iso:std:iso:3166"), Description("Bermuda")]
+    [EnumLiteral("BMU"), Description("Bermuda")]
     BMU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BOL", "urn:iso:std:iso:3166"), Description("Bolivia, Plurinational State of")]
+    [EnumLiteral("BOL"), Description("Bolivia, Plurinational State of")]
     BOL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BRA", "urn:iso:std:iso:3166"), Description("Brazil")]
+    [EnumLiteral("BRA"), Description("Brazil")]
     BRA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BRB", "urn:iso:std:iso:3166"), Description("Barbados")]
+    [EnumLiteral("BRB"), Description("Barbados")]
     BRB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BRN", "urn:iso:std:iso:3166"), Description("Brunei Darussalam")]
+    [EnumLiteral("BRN"), Description("Brunei Darussalam")]
     BRN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BTN", "urn:iso:std:iso:3166"), Description("Bhutan")]
+    [EnumLiteral("BTN"), Description("Bhutan")]
     BTN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BVT", "urn:iso:std:iso:3166"), Description("Bouvet Island")]
+    [EnumLiteral("BVT"), Description("Bouvet Island")]
     BVT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("BWA", "urn:iso:std:iso:3166"), Description("Botswana")]
+    [EnumLiteral("BWA"), Description("Botswana")]
     BWA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CAF", "urn:iso:std:iso:3166"), Description("Central African Republic")]
+    [EnumLiteral("CAF"), Description("Central African Republic")]
     CAF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CAN", "urn:iso:std:iso:3166"), Description("Canada")]
+    [EnumLiteral("CAN"), Description("Canada")]
     CAN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CCK", "urn:iso:std:iso:3166"), Description("Cocos (Keeling) Islands")]
+    [EnumLiteral("CCK"), Description("Cocos (Keeling) Islands")]
     CCK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CHE", "urn:iso:std:iso:3166"), Description("Switzerland")]
+    [EnumLiteral("CHE"), Description("Switzerland")]
     CHE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CHL", "urn:iso:std:iso:3166"), Description("Chile")]
+    [EnumLiteral("CHL"), Description("Chile")]
     CHL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CHN", "urn:iso:std:iso:3166"), Description("China")]
+    [EnumLiteral("CHN"), Description("China")]
     CHN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CIV", "urn:iso:std:iso:3166"), Description("Ctte d'Ivoire")]
+    [EnumLiteral("CIV"), Description("Ctte d'Ivoire")]
     CIV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CMR", "urn:iso:std:iso:3166"), Description("Cameroon")]
+    [EnumLiteral("CMR"), Description("Cameroon")]
     CMR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("COD", "urn:iso:std:iso:3166"), Description("Congo, the Democratic Republic of the")]
+    [EnumLiteral("COD"), Description("Congo, the Democratic Republic of the")]
     COD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("COG", "urn:iso:std:iso:3166"), Description("Congo")]
+    [EnumLiteral("COG"), Description("Congo")]
     COG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("COK", "urn:iso:std:iso:3166"), Description("Cook Islands")]
+    [EnumLiteral("COK"), Description("Cook Islands")]
     COK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("COL", "urn:iso:std:iso:3166"), Description("Colombia")]
+    [EnumLiteral("COL"), Description("Colombia")]
     COL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("COM", "urn:iso:std:iso:3166"), Description("Comoros")]
+    [EnumLiteral("COM"), Description("Comoros")]
     COM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CPV", "urn:iso:std:iso:3166"), Description("Cabo Verde")]
+    [EnumLiteral("CPV"), Description("Cabo Verde")]
     CPV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CRI", "urn:iso:std:iso:3166"), Description("Costa Rica")]
+    [EnumLiteral("CRI"), Description("Costa Rica")]
     CRI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CUB", "urn:iso:std:iso:3166"), Description("Cuba")]
+    [EnumLiteral("CUB"), Description("Cuba")]
     CUB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CUW", "urn:iso:std:iso:3166"), Description("Curagao")]
+    [EnumLiteral("CUW"), Description("Curagao")]
     CUW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CXR", "urn:iso:std:iso:3166"), Description("Christmas Island")]
+    [EnumLiteral("CXR"), Description("Christmas Island")]
     CXR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CYM", "urn:iso:std:iso:3166"), Description("Cayman Islands")]
+    [EnumLiteral("CYM"), Description("Cayman Islands")]
     CYM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CYP", "urn:iso:std:iso:3166"), Description("Cyprus")]
+    [EnumLiteral("CYP"), Description("Cyprus")]
     CYP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("CZE", "urn:iso:std:iso:3166"), Description("Czechia")]
+    [EnumLiteral("CZE"), Description("Czechia")]
     CZE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DEU", "urn:iso:std:iso:3166"), Description("Germany")]
+    [EnumLiteral("DEU"), Description("Germany")]
     DEU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DJI", "urn:iso:std:iso:3166"), Description("Djibouti")]
+    [EnumLiteral("DJI"), Description("Djibouti")]
     DJI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DMA", "urn:iso:std:iso:3166"), Description("Dominica")]
+    [EnumLiteral("DMA"), Description("Dominica")]
     DMA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DNK", "urn:iso:std:iso:3166"), Description("Denmark")]
+    [EnumLiteral("DNK"), Description("Denmark")]
     DNK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DOM", "urn:iso:std:iso:3166"), Description("Dominican Republic")]
+    [EnumLiteral("DOM"), Description("Dominican Republic")]
     DOM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("DZA", "urn:iso:std:iso:3166"), Description("Algeria")]
+    [EnumLiteral("DZA"), Description("Algeria")]
     DZA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ECU", "urn:iso:std:iso:3166"), Description("Ecuador")]
+    [EnumLiteral("ECU"), Description("Ecuador")]
     ECU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("EGY", "urn:iso:std:iso:3166"), Description("Egypt")]
+    [EnumLiteral("EGY"), Description("Egypt")]
     EGY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ERI", "urn:iso:std:iso:3166"), Description("Eritrea")]
+    [EnumLiteral("ERI"), Description("Eritrea")]
     ERI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ESH", "urn:iso:std:iso:3166"), Description("Western Sahara")]
+    [EnumLiteral("ESH"), Description("Western Sahara")]
     ESH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ESP", "urn:iso:std:iso:3166"), Description("Spain")]
+    [EnumLiteral("ESP"), Description("Spain")]
     ESP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("EST", "urn:iso:std:iso:3166"), Description("Estonia")]
+    [EnumLiteral("EST"), Description("Estonia")]
     EST,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ETH", "urn:iso:std:iso:3166"), Description("Ethiopia")]
+    [EnumLiteral("ETH"), Description("Ethiopia")]
     ETH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FIN", "urn:iso:std:iso:3166"), Description("Finland")]
+    [EnumLiteral("FIN"), Description("Finland")]
     FIN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FJI", "urn:iso:std:iso:3166"), Description("Fiji")]
+    [EnumLiteral("FJI"), Description("Fiji")]
     FJI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FLK", "urn:iso:std:iso:3166"), Description("Falkland Islands (Malvinas)")]
+    [EnumLiteral("FLK"), Description("Falkland Islands (Malvinas)")]
     FLK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FRA", "urn:iso:std:iso:3166"), Description("France")]
+    [EnumLiteral("FRA"), Description("France")]
     FRA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FRO", "urn:iso:std:iso:3166"), Description("Faroe Islands")]
+    [EnumLiteral("FRO"), Description("Faroe Islands")]
     FRO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("FSM", "urn:iso:std:iso:3166"), Description("Micronesia, Federated States of")]
+    [EnumLiteral("FSM"), Description("Micronesia, Federated States of")]
     FSM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GAB", "urn:iso:std:iso:3166"), Description("Gabon")]
+    [EnumLiteral("GAB"), Description("Gabon")]
     GAB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GBR", "urn:iso:std:iso:3166"), Description("United Kingdom")]
+    [EnumLiteral("GBR"), Description("United Kingdom")]
     GBR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GEO", "urn:iso:std:iso:3166"), Description("Georgia")]
+    [EnumLiteral("GEO"), Description("Georgia")]
     GEO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GGY", "urn:iso:std:iso:3166"), Description("Guernsey")]
+    [EnumLiteral("GGY"), Description("Guernsey")]
     GGY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GHA", "urn:iso:std:iso:3166"), Description("Ghana")]
+    [EnumLiteral("GHA"), Description("Ghana")]
     GHA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GIB", "urn:iso:std:iso:3166"), Description("Gibraltar")]
+    [EnumLiteral("GIB"), Description("Gibraltar")]
     GIB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GIN", "urn:iso:std:iso:3166"), Description("Guinea")]
+    [EnumLiteral("GIN"), Description("Guinea")]
     GIN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GLP", "urn:iso:std:iso:3166"), Description("Guadeloupe")]
+    [EnumLiteral("GLP"), Description("Guadeloupe")]
     GLP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GMB", "urn:iso:std:iso:3166"), Description("Gambia")]
+    [EnumLiteral("GMB"), Description("Gambia")]
     GMB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GNB", "urn:iso:std:iso:3166"), Description("Guinea-Bissau")]
+    [EnumLiteral("GNB"), Description("Guinea-Bissau")]
     GNB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GNQ", "urn:iso:std:iso:3166"), Description("Equatorial Guinea")]
+    [EnumLiteral("GNQ"), Description("Equatorial Guinea")]
     GNQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GRC", "urn:iso:std:iso:3166"), Description("Greece")]
+    [EnumLiteral("GRC"), Description("Greece")]
     GRC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GRD", "urn:iso:std:iso:3166"), Description("Grenada")]
+    [EnumLiteral("GRD"), Description("Grenada")]
     GRD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GRL", "urn:iso:std:iso:3166"), Description("Greenland")]
+    [EnumLiteral("GRL"), Description("Greenland")]
     GRL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GTM", "urn:iso:std:iso:3166"), Description("Guatemala")]
+    [EnumLiteral("GTM"), Description("Guatemala")]
     GTM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GUF", "urn:iso:std:iso:3166"), Description("French Guiana")]
+    [EnumLiteral("GUF"), Description("French Guiana")]
     GUF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GUM", "urn:iso:std:iso:3166"), Description("Guam")]
+    [EnumLiteral("GUM"), Description("Guam")]
     GUM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("GUY", "urn:iso:std:iso:3166"), Description("Guyana")]
+    [EnumLiteral("GUY"), Description("Guyana")]
     GUY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HKG", "urn:iso:std:iso:3166"), Description("Hong Kong")]
+    [EnumLiteral("HKG"), Description("Hong Kong")]
     HKG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HMD", "urn:iso:std:iso:3166"), Description("Heard Island and McDonald Islands")]
+    [EnumLiteral("HMD"), Description("Heard Island and McDonald Islands")]
     HMD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HND", "urn:iso:std:iso:3166"), Description("Honduras")]
+    [EnumLiteral("HND"), Description("Honduras")]
     HND,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HRV", "urn:iso:std:iso:3166"), Description("Croatia")]
+    [EnumLiteral("HRV"), Description("Croatia")]
     HRV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HTI", "urn:iso:std:iso:3166"), Description("Haiti")]
+    [EnumLiteral("HTI"), Description("Haiti")]
     HTI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("HUN", "urn:iso:std:iso:3166"), Description("Hungary")]
+    [EnumLiteral("HUN"), Description("Hungary")]
     HUN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IDN", "urn:iso:std:iso:3166"), Description("Indonesia")]
+    [EnumLiteral("IDN"), Description("Indonesia")]
     IDN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IMN", "urn:iso:std:iso:3166"), Description("Isle of Man")]
+    [EnumLiteral("IMN"), Description("Isle of Man")]
     IMN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IND", "urn:iso:std:iso:3166"), Description("India")]
+    [EnumLiteral("IND"), Description("India")]
     IND,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IOT", "urn:iso:std:iso:3166"), Description("British Indian Ocean Territory")]
+    [EnumLiteral("IOT"), Description("British Indian Ocean Territory")]
     IOT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IRL", "urn:iso:std:iso:3166"), Description("Ireland")]
+    [EnumLiteral("IRL"), Description("Ireland")]
     IRL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IRN", "urn:iso:std:iso:3166"), Description("Iran, Islamic Republic of")]
+    [EnumLiteral("IRN"), Description("Iran, Islamic Republic of")]
     IRN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("IRQ", "urn:iso:std:iso:3166"), Description("Iraq")]
+    [EnumLiteral("IRQ"), Description("Iraq")]
     IRQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ISL", "urn:iso:std:iso:3166"), Description("Iceland")]
+    [EnumLiteral("ISL"), Description("Iceland")]
     ISL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ISR", "urn:iso:std:iso:3166"), Description("Israel")]
+    [EnumLiteral("ISR"), Description("Israel")]
     ISR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ITA", "urn:iso:std:iso:3166"), Description("Italy")]
+    [EnumLiteral("ITA"), Description("Italy")]
     ITA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JAM", "urn:iso:std:iso:3166"), Description("Jamaica")]
+    [EnumLiteral("JAM"), Description("Jamaica")]
     JAM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JEY", "urn:iso:std:iso:3166"), Description("Jersey")]
+    [EnumLiteral("JEY"), Description("Jersey")]
     JEY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JOR", "urn:iso:std:iso:3166"), Description("Jordan")]
+    [EnumLiteral("JOR"), Description("Jordan")]
     JOR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("JPN", "urn:iso:std:iso:3166"), Description("Japan")]
+    [EnumLiteral("JPN"), Description("Japan")]
     JPN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KAZ", "urn:iso:std:iso:3166"), Description("Kazakhstan")]
+    [EnumLiteral("KAZ"), Description("Kazakhstan")]
     KAZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KEN", "urn:iso:std:iso:3166"), Description("Kenya")]
+    [EnumLiteral("KEN"), Description("Kenya")]
     KEN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KGZ", "urn:iso:std:iso:3166"), Description("Kyrgyzstan")]
+    [EnumLiteral("KGZ"), Description("Kyrgyzstan")]
     KGZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KHM", "urn:iso:std:iso:3166"), Description("Cambodia")]
+    [EnumLiteral("KHM"), Description("Cambodia")]
     KHM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KIR", "urn:iso:std:iso:3166"), Description("Kiribati")]
+    [EnumLiteral("KIR"), Description("Kiribati")]
     KIR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KNA", "urn:iso:std:iso:3166"), Description("Saint Kitts and Nevis")]
+    [EnumLiteral("KNA"), Description("Saint Kitts and Nevis")]
     KNA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KOR", "urn:iso:std:iso:3166"), Description("Korea, Republic of")]
+    [EnumLiteral("KOR"), Description("Korea, Republic of")]
     KOR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("KWT", "urn:iso:std:iso:3166"), Description("Kuwait")]
+    [EnumLiteral("KWT"), Description("Kuwait")]
     KWT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LAO", "urn:iso:std:iso:3166"), Description("Lao People's Democratic Republic")]
+    [EnumLiteral("LAO"), Description("Lao People's Democratic Republic")]
     LAO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LBN", "urn:iso:std:iso:3166"), Description("Lebanon")]
+    [EnumLiteral("LBN"), Description("Lebanon")]
     LBN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LBR", "urn:iso:std:iso:3166"), Description("Liberia")]
+    [EnumLiteral("LBR"), Description("Liberia")]
     LBR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LBY", "urn:iso:std:iso:3166"), Description("Libya")]
+    [EnumLiteral("LBY"), Description("Libya")]
     LBY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LCA", "urn:iso:std:iso:3166"), Description("Saint Lucia")]
+    [EnumLiteral("LCA"), Description("Saint Lucia")]
     LCA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LIE", "urn:iso:std:iso:3166"), Description("Liechtenstein")]
+    [EnumLiteral("LIE"), Description("Liechtenstein")]
     LIE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LKA", "urn:iso:std:iso:3166"), Description("Sri Lanka")]
+    [EnumLiteral("LKA"), Description("Sri Lanka")]
     LKA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LSO", "urn:iso:std:iso:3166"), Description("Lesotho")]
+    [EnumLiteral("LSO"), Description("Lesotho")]
     LSO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LTU", "urn:iso:std:iso:3166"), Description("Lithuania")]
+    [EnumLiteral("LTU"), Description("Lithuania")]
     LTU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LUX", "urn:iso:std:iso:3166"), Description("Luxembourg")]
+    [EnumLiteral("LUX"), Description("Luxembourg")]
     LUX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("LVA", "urn:iso:std:iso:3166"), Description("Latvia")]
+    [EnumLiteral("LVA"), Description("Latvia")]
     LVA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MAC", "urn:iso:std:iso:3166"), Description("Macao")]
+    [EnumLiteral("MAC"), Description("Macao")]
     MAC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MAF", "urn:iso:std:iso:3166"), Description("Saint Martin (French part)")]
+    [EnumLiteral("MAF"), Description("Saint Martin (French part)")]
     MAF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MAR", "urn:iso:std:iso:3166"), Description("Morocco")]
+    [EnumLiteral("MAR"), Description("Morocco")]
     MAR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MCO", "urn:iso:std:iso:3166"), Description("Monaco")]
+    [EnumLiteral("MCO"), Description("Monaco")]
     MCO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MDA", "urn:iso:std:iso:3166"), Description("Moldova, Republic of")]
+    [EnumLiteral("MDA"), Description("Moldova, Republic of")]
     MDA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MDG", "urn:iso:std:iso:3166"), Description("Madagascar")]
+    [EnumLiteral("MDG"), Description("Madagascar")]
     MDG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MDV", "urn:iso:std:iso:3166"), Description("Maldives")]
+    [EnumLiteral("MDV"), Description("Maldives")]
     MDV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MEX", "urn:iso:std:iso:3166"), Description("Mexico")]
+    [EnumLiteral("MEX"), Description("Mexico")]
     MEX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MHL", "urn:iso:std:iso:3166"), Description("Marshall Islands")]
+    [EnumLiteral("MHL"), Description("Marshall Islands")]
     MHL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MKD", "urn:iso:std:iso:3166"), Description("Macedonia, the former Yugoslav Republic of")]
+    [EnumLiteral("MKD"), Description("Macedonia, the former Yugoslav Republic of")]
     MKD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MLI", "urn:iso:std:iso:3166"), Description("Mali")]
+    [EnumLiteral("MLI"), Description("Mali")]
     MLI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MLT", "urn:iso:std:iso:3166"), Description("Malta")]
+    [EnumLiteral("MLT"), Description("Malta")]
     MLT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MMR", "urn:iso:std:iso:3166"), Description("Myanmar")]
+    [EnumLiteral("MMR"), Description("Myanmar")]
     MMR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MNE", "urn:iso:std:iso:3166"), Description("Montenegro")]
+    [EnumLiteral("MNE"), Description("Montenegro")]
     MNE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MNG", "urn:iso:std:iso:3166"), Description("Mongolia")]
+    [EnumLiteral("MNG"), Description("Mongolia")]
     MNG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MNP", "urn:iso:std:iso:3166"), Description("Northern Mariana Islands")]
+    [EnumLiteral("MNP"), Description("Northern Mariana Islands")]
     MNP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MOZ", "urn:iso:std:iso:3166"), Description("Mozambique")]
+    [EnumLiteral("MOZ"), Description("Mozambique")]
     MOZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MRT", "urn:iso:std:iso:3166"), Description("Mauritania")]
+    [EnumLiteral("MRT"), Description("Mauritania")]
     MRT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MSR", "urn:iso:std:iso:3166"), Description("Montserrat")]
+    [EnumLiteral("MSR"), Description("Montserrat")]
     MSR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MTQ", "urn:iso:std:iso:3166"), Description("Martinique")]
+    [EnumLiteral("MTQ"), Description("Martinique")]
     MTQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MUS", "urn:iso:std:iso:3166"), Description("Mauritius")]
+    [EnumLiteral("MUS"), Description("Mauritius")]
     MUS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MWI", "urn:iso:std:iso:3166"), Description("Malawi")]
+    [EnumLiteral("MWI"), Description("Malawi")]
     MWI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MYS", "urn:iso:std:iso:3166"), Description("Malaysia")]
+    [EnumLiteral("MYS"), Description("Malaysia")]
     MYS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("MYT", "urn:iso:std:iso:3166"), Description("Mayotte")]
+    [EnumLiteral("MYT"), Description("Mayotte")]
     MYT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NAM", "urn:iso:std:iso:3166"), Description("Namibia")]
+    [EnumLiteral("NAM"), Description("Namibia")]
     NAM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NCL", "urn:iso:std:iso:3166"), Description("New Caledonia")]
+    [EnumLiteral("NCL"), Description("New Caledonia")]
     NCL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NER", "urn:iso:std:iso:3166"), Description("Niger")]
+    [EnumLiteral("NER"), Description("Niger")]
     NER,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NFK", "urn:iso:std:iso:3166"), Description("Norfolk Island")]
+    [EnumLiteral("NFK"), Description("Norfolk Island")]
     NFK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NGA", "urn:iso:std:iso:3166"), Description("Nigeria")]
+    [EnumLiteral("NGA"), Description("Nigeria")]
     NGA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NIC", "urn:iso:std:iso:3166"), Description("Nicaragua")]
+    [EnumLiteral("NIC"), Description("Nicaragua")]
     NIC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NIU", "urn:iso:std:iso:3166"), Description("Niue")]
+    [EnumLiteral("NIU"), Description("Niue")]
     NIU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NLD", "urn:iso:std:iso:3166"), Description("Netherlands")]
+    [EnumLiteral("NLD"), Description("Netherlands")]
     NLD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NOR", "urn:iso:std:iso:3166"), Description("Norway")]
+    [EnumLiteral("NOR"), Description("Norway")]
     NOR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NPL", "urn:iso:std:iso:3166"), Description("Nepal")]
+    [EnumLiteral("NPL"), Description("Nepal")]
     NPL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NRU", "urn:iso:std:iso:3166"), Description("Nauru")]
+    [EnumLiteral("NRU"), Description("Nauru")]
     NRU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("NZL", "urn:iso:std:iso:3166"), Description("New Zealand")]
+    [EnumLiteral("NZL"), Description("New Zealand")]
     NZL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("OMN", "urn:iso:std:iso:3166"), Description("Oman")]
+    [EnumLiteral("OMN"), Description("Oman")]
     OMN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PAK", "urn:iso:std:iso:3166"), Description("Pakistan")]
+    [EnumLiteral("PAK"), Description("Pakistan")]
     PAK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PAN", "urn:iso:std:iso:3166"), Description("Panama")]
+    [EnumLiteral("PAN"), Description("Panama")]
     PAN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PCN", "urn:iso:std:iso:3166"), Description("Pitcairn")]
+    [EnumLiteral("PCN"), Description("Pitcairn")]
     PCN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PER", "urn:iso:std:iso:3166"), Description("Peru")]
+    [EnumLiteral("PER"), Description("Peru")]
     PER,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PHL", "urn:iso:std:iso:3166"), Description("Philippines")]
+    [EnumLiteral("PHL"), Description("Philippines")]
     PHL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PLW", "urn:iso:std:iso:3166"), Description("Palau")]
+    [EnumLiteral("PLW"), Description("Palau")]
     PLW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PNG", "urn:iso:std:iso:3166"), Description("Papua New Guinea")]
+    [EnumLiteral("PNG"), Description("Papua New Guinea")]
     PNG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("POL", "urn:iso:std:iso:3166"), Description("Poland")]
+    [EnumLiteral("POL"), Description("Poland")]
     POL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PRI", "urn:iso:std:iso:3166"), Description("Puerto Rico")]
+    [EnumLiteral("PRI"), Description("Puerto Rico")]
     PRI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PRK", "urn:iso:std:iso:3166"), Description("Korea, Democratic People's Republic of")]
+    [EnumLiteral("PRK"), Description("Korea, Democratic People's Republic of")]
     PRK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PRT", "urn:iso:std:iso:3166"), Description("Portugal")]
+    [EnumLiteral("PRT"), Description("Portugal")]
     PRT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PRY", "urn:iso:std:iso:3166"), Description("Paraguay")]
+    [EnumLiteral("PRY"), Description("Paraguay")]
     PRY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PSE", "urn:iso:std:iso:3166"), Description("Palestine, State of")]
+    [EnumLiteral("PSE"), Description("Palestine, State of")]
     PSE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("PYF", "urn:iso:std:iso:3166"), Description("French Polynesia")]
+    [EnumLiteral("PYF"), Description("French Polynesia")]
     PYF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("QAT", "urn:iso:std:iso:3166"), Description("Qatar")]
+    [EnumLiteral("QAT"), Description("Qatar")]
     QAT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("REU", "urn:iso:std:iso:3166"), Description("Riunion")]
+    [EnumLiteral("REU"), Description("Riunion")]
     REU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ROU", "urn:iso:std:iso:3166"), Description("Romania")]
+    [EnumLiteral("ROU"), Description("Romania")]
     ROU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RUS", "urn:iso:std:iso:3166"), Description("Russian Federation")]
+    [EnumLiteral("RUS"), Description("Russian Federation")]
     RUS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("RWA", "urn:iso:std:iso:3166"), Description("Rwanda")]
+    [EnumLiteral("RWA"), Description("Rwanda")]
     RWA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SAU", "urn:iso:std:iso:3166"), Description("Saudi Arabia")]
+    [EnumLiteral("SAU"), Description("Saudi Arabia")]
     SAU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SDN", "urn:iso:std:iso:3166"), Description("Sudan")]
+    [EnumLiteral("SDN"), Description("Sudan")]
     SDN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SEN", "urn:iso:std:iso:3166"), Description("Senegal")]
+    [EnumLiteral("SEN"), Description("Senegal")]
     SEN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SGP", "urn:iso:std:iso:3166"), Description("Singapore")]
+    [EnumLiteral("SGP"), Description("Singapore")]
     SGP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SGS", "urn:iso:std:iso:3166"), Description("South Georgia and the South Sandwich Islands")]
+    [EnumLiteral("SGS"), Description("South Georgia and the South Sandwich Islands")]
     SGS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SHN", "urn:iso:std:iso:3166"), Description("Saint Helena, Ascension and Tristan da Cunha")]
+    [EnumLiteral("SHN"), Description("Saint Helena, Ascension and Tristan da Cunha")]
     SHN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SJM", "urn:iso:std:iso:3166"), Description("Svalbard and Jan Mayen")]
+    [EnumLiteral("SJM"), Description("Svalbard and Jan Mayen")]
     SJM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SLB", "urn:iso:std:iso:3166"), Description("Solomon Islands")]
+    [EnumLiteral("SLB"), Description("Solomon Islands")]
     SLB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SLE", "urn:iso:std:iso:3166"), Description("Sierra Leone")]
+    [EnumLiteral("SLE"), Description("Sierra Leone")]
     SLE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SLV", "urn:iso:std:iso:3166"), Description("El Salvador")]
+    [EnumLiteral("SLV"), Description("El Salvador")]
     SLV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SMR", "urn:iso:std:iso:3166"), Description("San Marino")]
+    [EnumLiteral("SMR"), Description("San Marino")]
     SMR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SOM", "urn:iso:std:iso:3166"), Description("Somalia")]
+    [EnumLiteral("SOM"), Description("Somalia")]
     SOM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SPM", "urn:iso:std:iso:3166"), Description("Saint Pierre and Miquelon")]
+    [EnumLiteral("SPM"), Description("Saint Pierre and Miquelon")]
     SPM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SRB", "urn:iso:std:iso:3166"), Description("Serbia")]
+    [EnumLiteral("SRB"), Description("Serbia")]
     SRB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SSD", "urn:iso:std:iso:3166"), Description("South Sudan")]
+    [EnumLiteral("SSD"), Description("South Sudan")]
     SSD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("STP", "urn:iso:std:iso:3166"), Description("Sao Tome and Principe")]
+    [EnumLiteral("STP"), Description("Sao Tome and Principe")]
     STP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SUR", "urn:iso:std:iso:3166"), Description("Suriname")]
+    [EnumLiteral("SUR"), Description("Suriname")]
     SUR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SVK", "urn:iso:std:iso:3166"), Description("Slovakia")]
+    [EnumLiteral("SVK"), Description("Slovakia")]
     SVK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SVN", "urn:iso:std:iso:3166"), Description("Slovenia")]
+    [EnumLiteral("SVN"), Description("Slovenia")]
     SVN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SWE", "urn:iso:std:iso:3166"), Description("Sweden")]
+    [EnumLiteral("SWE"), Description("Sweden")]
     SWE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SWZ", "urn:iso:std:iso:3166"), Description("Swaziland")]
+    [EnumLiteral("SWZ"), Description("Swaziland")]
     SWZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SXM", "urn:iso:std:iso:3166"), Description("Sint Maarten (Dutch part)")]
+    [EnumLiteral("SXM"), Description("Sint Maarten (Dutch part)")]
     SXM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SYC", "urn:iso:std:iso:3166"), Description("Seychelles")]
+    [EnumLiteral("SYC"), Description("Seychelles")]
     SYC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("SYR", "urn:iso:std:iso:3166"), Description("Syrian Arab Republic")]
+    [EnumLiteral("SYR"), Description("Syrian Arab Republic")]
     SYR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TCA", "urn:iso:std:iso:3166"), Description("Turks and Caicos Islands")]
+    [EnumLiteral("TCA"), Description("Turks and Caicos Islands")]
     TCA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TCD", "urn:iso:std:iso:3166"), Description("Chad")]
+    [EnumLiteral("TCD"), Description("Chad")]
     TCD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TGO", "urn:iso:std:iso:3166"), Description("Togo")]
+    [EnumLiteral("TGO"), Description("Togo")]
     TGO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("THA", "urn:iso:std:iso:3166"), Description("Thailand")]
+    [EnumLiteral("THA"), Description("Thailand")]
     THA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TJK", "urn:iso:std:iso:3166"), Description("Tajikistan")]
+    [EnumLiteral("TJK"), Description("Tajikistan")]
     TJK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TKL", "urn:iso:std:iso:3166"), Description("Tokelau")]
+    [EnumLiteral("TKL"), Description("Tokelau")]
     TKL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TKM", "urn:iso:std:iso:3166"), Description("Turkmenistan")]
+    [EnumLiteral("TKM"), Description("Turkmenistan")]
     TKM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TLS", "urn:iso:std:iso:3166"), Description("Timor-Leste")]
+    [EnumLiteral("TLS"), Description("Timor-Leste")]
     TLS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TON", "urn:iso:std:iso:3166"), Description("Tonga")]
+    [EnumLiteral("TON"), Description("Tonga")]
     TON,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TTO", "urn:iso:std:iso:3166"), Description("Trinidad and Tobago")]
+    [EnumLiteral("TTO"), Description("Trinidad and Tobago")]
     TTO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TUN", "urn:iso:std:iso:3166"), Description("Tunisia")]
+    [EnumLiteral("TUN"), Description("Tunisia")]
     TUN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TUR", "urn:iso:std:iso:3166"), Description("Turkey")]
+    [EnumLiteral("TUR"), Description("Turkey")]
     TUR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TUV", "urn:iso:std:iso:3166"), Description("Tuvalu")]
+    [EnumLiteral("TUV"), Description("Tuvalu")]
     TUV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TWN", "urn:iso:std:iso:3166"), Description("Taiwan, Province of China")]
+    [EnumLiteral("TWN"), Description("Taiwan, Province of China")]
     TWN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("TZA", "urn:iso:std:iso:3166"), Description("Tanzania, United Republic of")]
+    [EnumLiteral("TZA"), Description("Tanzania, United Republic of")]
     TZA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UGA", "urn:iso:std:iso:3166"), Description("Uganda")]
+    [EnumLiteral("UGA"), Description("Uganda")]
     UGA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UKR", "urn:iso:std:iso:3166"), Description("Ukraine")]
+    [EnumLiteral("UKR"), Description("Ukraine")]
     UKR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UMI", "urn:iso:std:iso:3166"), Description("United States Minor Outlying Islands")]
+    [EnumLiteral("UMI"), Description("United States Minor Outlying Islands")]
     UMI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("URY", "urn:iso:std:iso:3166"), Description("Uruguay")]
+    [EnumLiteral("URY"), Description("Uruguay")]
     URY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("USA", "urn:iso:std:iso:3166"), Description("United States of America")]
+    [EnumLiteral("USA"), Description("United States of America")]
     USA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("UZB", "urn:iso:std:iso:3166"), Description("Uzbekistan")]
+    [EnumLiteral("UZB"), Description("Uzbekistan")]
     UZB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VAT", "urn:iso:std:iso:3166"), Description("Holy See")]
+    [EnumLiteral("VAT"), Description("Holy See")]
     VAT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VCT", "urn:iso:std:iso:3166"), Description("Saint Vincent and the Grenadines")]
+    [EnumLiteral("VCT"), Description("Saint Vincent and the Grenadines")]
     VCT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VEN", "urn:iso:std:iso:3166"), Description("Venezuela, Bolivarian Republic of")]
+    [EnumLiteral("VEN"), Description("Venezuela, Bolivarian Republic of")]
     VEN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VGB", "urn:iso:std:iso:3166"), Description("Virgin Islands, British")]
+    [EnumLiteral("VGB"), Description("Virgin Islands, British")]
     VGB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VIR", "urn:iso:std:iso:3166"), Description("Virgin Islands, U.S.")]
+    [EnumLiteral("VIR"), Description("Virgin Islands, U.S.")]
     VIR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VNM", "urn:iso:std:iso:3166"), Description("Viet Nam")]
+    [EnumLiteral("VNM"), Description("Viet Nam")]
     VNM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("VUT", "urn:iso:std:iso:3166"), Description("Vanuatu")]
+    [EnumLiteral("VUT"), Description("Vanuatu")]
     VUT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("WLF", "urn:iso:std:iso:3166"), Description("Wallis and Futuna")]
+    [EnumLiteral("WLF"), Description("Wallis and Futuna")]
     WLF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("WSM", "urn:iso:std:iso:3166"), Description("Samoa")]
+    [EnumLiteral("WSM"), Description("Samoa")]
     WSM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("YEM", "urn:iso:std:iso:3166"), Description("Yemen")]
+    [EnumLiteral("YEM"), Description("Yemen")]
     YEM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ZAF", "urn:iso:std:iso:3166"), Description("South Africa")]
+    [EnumLiteral("ZAF"), Description("South Africa")]
     ZAF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ZMB", "urn:iso:std:iso:3166"), Description("Zambia")]
+    [EnumLiteral("ZMB"), Description("Zambia")]
     ZMB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("ZWE", "urn:iso:std:iso:3166"), Description("Zimbabwe")]
+    [EnumLiteral("ZWE"), Description("Zimbabwe")]
     ZWE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("004", "urn:iso:std:iso:3166"), Description("Afghanistan")]
+    [EnumLiteral("004"), Description("Afghanistan")]
     N004,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("008", "urn:iso:std:iso:3166"), Description("Albania")]
+    [EnumLiteral("008"), Description("Albania")]
     N008,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("010", "urn:iso:std:iso:3166"), Description("Antarctica")]
+    [EnumLiteral("010"), Description("Antarctica")]
     N010,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("012", "urn:iso:std:iso:3166"), Description("Algeria")]
+    [EnumLiteral("012"), Description("Algeria")]
     N012,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("016", "urn:iso:std:iso:3166"), Description("American Samoa")]
+    [EnumLiteral("016"), Description("American Samoa")]
     N016,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("020", "urn:iso:std:iso:3166"), Description("Andorra")]
+    [EnumLiteral("020"), Description("Andorra")]
     N020,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("024", "urn:iso:std:iso:3166"), Description("Angola")]
+    [EnumLiteral("024"), Description("Angola")]
     N024,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("028", "urn:iso:std:iso:3166"), Description("Antigua and Barbuda")]
+    [EnumLiteral("028"), Description("Antigua and Barbuda")]
     N028,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("031", "urn:iso:std:iso:3166"), Description("Azerbaijan")]
+    [EnumLiteral("031"), Description("Azerbaijan")]
     N031,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("032", "urn:iso:std:iso:3166"), Description("Argentina")]
+    [EnumLiteral("032"), Description("Argentina")]
     N032,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("036", "urn:iso:std:iso:3166"), Description("Australia")]
+    [EnumLiteral("036"), Description("Australia")]
     N036,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("040", "urn:iso:std:iso:3166"), Description("Austria")]
+    [EnumLiteral("040"), Description("Austria")]
     N040,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("044", "urn:iso:std:iso:3166"), Description("Bahamas")]
+    [EnumLiteral("044"), Description("Bahamas")]
     N044,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("048", "urn:iso:std:iso:3166"), Description("Bahrain")]
+    [EnumLiteral("048"), Description("Bahrain")]
     N048,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("050", "urn:iso:std:iso:3166"), Description("Bangladesh")]
+    [EnumLiteral("050"), Description("Bangladesh")]
     N050,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("051", "urn:iso:std:iso:3166"), Description("Armenia")]
+    [EnumLiteral("051"), Description("Armenia")]
     N051,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("052", "urn:iso:std:iso:3166"), Description("Barbados")]
+    [EnumLiteral("052"), Description("Barbados")]
     N052,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("056", "urn:iso:std:iso:3166"), Description("Belgium")]
+    [EnumLiteral("056"), Description("Belgium")]
     N056,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("060", "urn:iso:std:iso:3166"), Description("Bermuda")]
+    [EnumLiteral("060"), Description("Bermuda")]
     N060,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("064", "urn:iso:std:iso:3166"), Description("Bhutan")]
+    [EnumLiteral("064"), Description("Bhutan")]
     N064,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("068", "urn:iso:std:iso:3166"), Description("Bolivia, Plurinational State of")]
+    [EnumLiteral("068"), Description("Bolivia, Plurinational State of")]
     N068,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("070", "urn:iso:std:iso:3166"), Description("Bosnia and Herzegovina")]
+    [EnumLiteral("070"), Description("Bosnia and Herzegovina")]
     N070,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("072", "urn:iso:std:iso:3166"), Description("Botswana")]
+    [EnumLiteral("072"), Description("Botswana")]
     N072,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("074", "urn:iso:std:iso:3166"), Description("Bouvet Island")]
+    [EnumLiteral("074"), Description("Bouvet Island")]
     N074,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("076", "urn:iso:std:iso:3166"), Description("Brazil")]
+    [EnumLiteral("076"), Description("Brazil")]
     N076,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("084", "urn:iso:std:iso:3166"), Description("Belize")]
+    [EnumLiteral("084"), Description("Belize")]
     N084,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("086", "urn:iso:std:iso:3166"), Description("British Indian Ocean Territory")]
+    [EnumLiteral("086"), Description("British Indian Ocean Territory")]
     N086,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("090", "urn:iso:std:iso:3166"), Description("Solomon Islands")]
+    [EnumLiteral("090"), Description("Solomon Islands")]
     N090,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("092", "urn:iso:std:iso:3166"), Description("Virgin Islands, British")]
+    [EnumLiteral("092"), Description("Virgin Islands, British")]
     N092,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("096", "urn:iso:std:iso:3166"), Description("Brunei Darussalam")]
+    [EnumLiteral("096"), Description("Brunei Darussalam")]
     N096,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("100", "urn:iso:std:iso:3166"), Description("Bulgaria")]
+    [EnumLiteral("100"), Description("Bulgaria")]
     N100,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("104", "urn:iso:std:iso:3166"), Description("Myanmar")]
+    [EnumLiteral("104"), Description("Myanmar")]
     N104,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("108", "urn:iso:std:iso:3166"), Description("Burundi")]
+    [EnumLiteral("108"), Description("Burundi")]
     N108,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("112", "urn:iso:std:iso:3166"), Description("Belarus")]
+    [EnumLiteral("112"), Description("Belarus")]
     N112,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("116", "urn:iso:std:iso:3166"), Description("Cambodia")]
+    [EnumLiteral("116"), Description("Cambodia")]
     N116,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("120", "urn:iso:std:iso:3166"), Description("Cameroon")]
+    [EnumLiteral("120"), Description("Cameroon")]
     N120,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("124", "urn:iso:std:iso:3166"), Description("Canada")]
+    [EnumLiteral("124"), Description("Canada")]
     N124,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("132", "urn:iso:std:iso:3166"), Description("Cabo Verde")]
+    [EnumLiteral("132"), Description("Cabo Verde")]
     N132,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("136", "urn:iso:std:iso:3166"), Description("Cayman Islands")]
+    [EnumLiteral("136"), Description("Cayman Islands")]
     N136,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("140", "urn:iso:std:iso:3166"), Description("Central African Republic")]
+    [EnumLiteral("140"), Description("Central African Republic")]
     N140,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("144", "urn:iso:std:iso:3166"), Description("Sri Lanka")]
+    [EnumLiteral("144"), Description("Sri Lanka")]
     N144,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("148", "urn:iso:std:iso:3166"), Description("Chad")]
+    [EnumLiteral("148"), Description("Chad")]
     N148,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("152", "urn:iso:std:iso:3166"), Description("Chile")]
+    [EnumLiteral("152"), Description("Chile")]
     N152,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("156", "urn:iso:std:iso:3166"), Description("China")]
+    [EnumLiteral("156"), Description("China")]
     N156,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("158", "urn:iso:std:iso:3166"), Description("Taiwan, Province of China")]
+    [EnumLiteral("158"), Description("Taiwan, Province of China")]
     N158,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("162", "urn:iso:std:iso:3166"), Description("Christmas Island")]
+    [EnumLiteral("162"), Description("Christmas Island")]
     N162,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("166", "urn:iso:std:iso:3166"), Description("Cocos (Keeling) Islands")]
+    [EnumLiteral("166"), Description("Cocos (Keeling) Islands")]
     N166,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("170", "urn:iso:std:iso:3166"), Description("Colombia")]
+    [EnumLiteral("170"), Description("Colombia")]
     N170,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("174", "urn:iso:std:iso:3166"), Description("Comoros")]
+    [EnumLiteral("174"), Description("Comoros")]
     N174,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("175", "urn:iso:std:iso:3166"), Description("Mayotte")]
+    [EnumLiteral("175"), Description("Mayotte")]
     N175,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("178", "urn:iso:std:iso:3166"), Description("Congo")]
+    [EnumLiteral("178"), Description("Congo")]
     N178,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("180", "urn:iso:std:iso:3166"), Description("Congo, the Democratic Republic of the")]
+    [EnumLiteral("180"), Description("Congo, the Democratic Republic of the")]
     N180,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("184", "urn:iso:std:iso:3166"), Description("Cook Islands")]
+    [EnumLiteral("184"), Description("Cook Islands")]
     N184,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("188", "urn:iso:std:iso:3166"), Description("Costa Rica")]
+    [EnumLiteral("188"), Description("Costa Rica")]
     N188,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("191", "urn:iso:std:iso:3166"), Description("Croatia")]
+    [EnumLiteral("191"), Description("Croatia")]
     N191,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("192", "urn:iso:std:iso:3166"), Description("Cuba")]
+    [EnumLiteral("192"), Description("Cuba")]
     N192,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("196", "urn:iso:std:iso:3166"), Description("Cyprus")]
+    [EnumLiteral("196"), Description("Cyprus")]
     N196,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("203", "urn:iso:std:iso:3166"), Description("Czechia")]
+    [EnumLiteral("203"), Description("Czechia")]
     N203,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("204", "urn:iso:std:iso:3166"), Description("Benin")]
+    [EnumLiteral("204"), Description("Benin")]
     N204,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("208", "urn:iso:std:iso:3166"), Description("Denmark")]
+    [EnumLiteral("208"), Description("Denmark")]
     N208,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("212", "urn:iso:std:iso:3166"), Description("Dominica")]
+    [EnumLiteral("212"), Description("Dominica")]
     N212,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("214", "urn:iso:std:iso:3166"), Description("Dominican Republic")]
+    [EnumLiteral("214"), Description("Dominican Republic")]
     N214,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("218", "urn:iso:std:iso:3166"), Description("Ecuador")]
+    [EnumLiteral("218"), Description("Ecuador")]
     N218,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("222", "urn:iso:std:iso:3166"), Description("El Salvador")]
+    [EnumLiteral("222"), Description("El Salvador")]
     N222,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("226", "urn:iso:std:iso:3166"), Description("Equatorial Guinea")]
+    [EnumLiteral("226"), Description("Equatorial Guinea")]
     N226,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("231", "urn:iso:std:iso:3166"), Description("Ethiopia")]
+    [EnumLiteral("231"), Description("Ethiopia")]
     N231,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("232", "urn:iso:std:iso:3166"), Description("Eritrea")]
+    [EnumLiteral("232"), Description("Eritrea")]
     N232,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("233", "urn:iso:std:iso:3166"), Description("Estonia")]
+    [EnumLiteral("233"), Description("Estonia")]
     N233,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("234", "urn:iso:std:iso:3166"), Description("Faroe Islands")]
+    [EnumLiteral("234"), Description("Faroe Islands")]
     N234,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("238", "urn:iso:std:iso:3166"), Description("Falkland Islands (Malvinas)")]
+    [EnumLiteral("238"), Description("Falkland Islands (Malvinas)")]
     N238,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("239", "urn:iso:std:iso:3166"), Description("South Georgia and the South Sandwich Islands")]
+    [EnumLiteral("239"), Description("South Georgia and the South Sandwich Islands")]
     N239,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("242", "urn:iso:std:iso:3166"), Description("Fiji")]
+    [EnumLiteral("242"), Description("Fiji")]
     N242,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("246", "urn:iso:std:iso:3166"), Description("Finland")]
+    [EnumLiteral("246"), Description("Finland")]
     N246,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("248", "urn:iso:std:iso:3166"), Description("Eland Islands")]
+    [EnumLiteral("248"), Description("Eland Islands")]
     N248,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("250", "urn:iso:std:iso:3166"), Description("France")]
+    [EnumLiteral("250"), Description("France")]
     N250,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("254", "urn:iso:std:iso:3166"), Description("French Guiana")]
+    [EnumLiteral("254"), Description("French Guiana")]
     N254,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("258", "urn:iso:std:iso:3166"), Description("French Polynesia")]
+    [EnumLiteral("258"), Description("French Polynesia")]
     N258,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("260", "urn:iso:std:iso:3166"), Description("French Southern Territories")]
+    [EnumLiteral("260"), Description("French Southern Territories")]
     N260,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("262", "urn:iso:std:iso:3166"), Description("Djibouti")]
+    [EnumLiteral("262"), Description("Djibouti")]
     N262,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("266", "urn:iso:std:iso:3166"), Description("Gabon")]
+    [EnumLiteral("266"), Description("Gabon")]
     N266,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("268", "urn:iso:std:iso:3166"), Description("Georgia")]
+    [EnumLiteral("268"), Description("Georgia")]
     N268,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("270", "urn:iso:std:iso:3166"), Description("Gambia")]
+    [EnumLiteral("270"), Description("Gambia")]
     N270,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("275", "urn:iso:std:iso:3166"), Description("Palestine, State of")]
+    [EnumLiteral("275"), Description("Palestine, State of")]
     N275,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("276", "urn:iso:std:iso:3166"), Description("Germany")]
+    [EnumLiteral("276"), Description("Germany")]
     N276,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("288", "urn:iso:std:iso:3166"), Description("Ghana")]
+    [EnumLiteral("288"), Description("Ghana")]
     N288,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("292", "urn:iso:std:iso:3166"), Description("Gibraltar")]
+    [EnumLiteral("292"), Description("Gibraltar")]
     N292,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("296", "urn:iso:std:iso:3166"), Description("Kiribati")]
+    [EnumLiteral("296"), Description("Kiribati")]
     N296,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("300", "urn:iso:std:iso:3166"), Description("Greece")]
+    [EnumLiteral("300"), Description("Greece")]
     N300,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("304", "urn:iso:std:iso:3166"), Description("Greenland")]
+    [EnumLiteral("304"), Description("Greenland")]
     N304,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("308", "urn:iso:std:iso:3166"), Description("Grenada")]
+    [EnumLiteral("308"), Description("Grenada")]
     N308,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("312", "urn:iso:std:iso:3166"), Description("Guadeloupe")]
+    [EnumLiteral("312"), Description("Guadeloupe")]
     N312,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("316", "urn:iso:std:iso:3166"), Description("Guam")]
+    [EnumLiteral("316"), Description("Guam")]
     N316,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("320", "urn:iso:std:iso:3166"), Description("Guatemala")]
+    [EnumLiteral("320"), Description("Guatemala")]
     N320,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("324", "urn:iso:std:iso:3166"), Description("Guinea")]
+    [EnumLiteral("324"), Description("Guinea")]
     N324,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("328", "urn:iso:std:iso:3166"), Description("Guyana")]
+    [EnumLiteral("328"), Description("Guyana")]
     N328,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("332", "urn:iso:std:iso:3166"), Description("Haiti")]
+    [EnumLiteral("332"), Description("Haiti")]
     N332,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("334", "urn:iso:std:iso:3166"), Description("Heard Island and McDonald Islands")]
+    [EnumLiteral("334"), Description("Heard Island and McDonald Islands")]
     N334,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("336", "urn:iso:std:iso:3166"), Description("Holy See")]
+    [EnumLiteral("336"), Description("Holy See")]
     N336,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("340", "urn:iso:std:iso:3166"), Description("Honduras")]
+    [EnumLiteral("340"), Description("Honduras")]
     N340,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("344", "urn:iso:std:iso:3166"), Description("Hong Kong")]
+    [EnumLiteral("344"), Description("Hong Kong")]
     N344,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("348", "urn:iso:std:iso:3166"), Description("Hungary")]
+    [EnumLiteral("348"), Description("Hungary")]
     N348,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("352", "urn:iso:std:iso:3166"), Description("Iceland")]
+    [EnumLiteral("352"), Description("Iceland")]
     N352,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("356", "urn:iso:std:iso:3166"), Description("India")]
+    [EnumLiteral("356"), Description("India")]
     N356,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("360", "urn:iso:std:iso:3166"), Description("Indonesia")]
+    [EnumLiteral("360"), Description("Indonesia")]
     N360,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("364", "urn:iso:std:iso:3166"), Description("Iran, Islamic Republic of")]
+    [EnumLiteral("364"), Description("Iran, Islamic Republic of")]
     N364,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("368", "urn:iso:std:iso:3166"), Description("Iraq")]
+    [EnumLiteral("368"), Description("Iraq")]
     N368,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("372", "urn:iso:std:iso:3166"), Description("Ireland")]
+    [EnumLiteral("372"), Description("Ireland")]
     N372,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("376", "urn:iso:std:iso:3166"), Description("Israel")]
+    [EnumLiteral("376"), Description("Israel")]
     N376,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("380", "urn:iso:std:iso:3166"), Description("Italy")]
+    [EnumLiteral("380"), Description("Italy")]
     N380,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("384", "urn:iso:std:iso:3166"), Description("Ctte d'Ivoire")]
+    [EnumLiteral("384"), Description("Ctte d'Ivoire")]
     N384,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("388", "urn:iso:std:iso:3166"), Description("Jamaica")]
+    [EnumLiteral("388"), Description("Jamaica")]
     N388,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("392", "urn:iso:std:iso:3166"), Description("Japan")]
+    [EnumLiteral("392"), Description("Japan")]
     N392,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("398", "urn:iso:std:iso:3166"), Description("Kazakhstan")]
+    [EnumLiteral("398"), Description("Kazakhstan")]
     N398,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("400", "urn:iso:std:iso:3166"), Description("Jordan")]
+    [EnumLiteral("400"), Description("Jordan")]
     N400,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("404", "urn:iso:std:iso:3166"), Description("Kenya")]
+    [EnumLiteral("404"), Description("Kenya")]
     N404,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("408", "urn:iso:std:iso:3166"), Description("Korea, Democratic People's Republic of")]
+    [EnumLiteral("408"), Description("Korea, Democratic People's Republic of")]
     N408,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("410", "urn:iso:std:iso:3166"), Description("Korea, Republic of")]
+    [EnumLiteral("410"), Description("Korea, Republic of")]
     N410,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("414", "urn:iso:std:iso:3166"), Description("Kuwait")]
+    [EnumLiteral("414"), Description("Kuwait")]
     N414,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("417", "urn:iso:std:iso:3166"), Description("Kyrgyzstan")]
+    [EnumLiteral("417"), Description("Kyrgyzstan")]
     N417,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("418", "urn:iso:std:iso:3166"), Description("Lao People's Democratic Republic")]
+    [EnumLiteral("418"), Description("Lao People's Democratic Republic")]
     N418,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("422", "urn:iso:std:iso:3166"), Description("Lebanon")]
+    [EnumLiteral("422"), Description("Lebanon")]
     N422,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("426", "urn:iso:std:iso:3166"), Description("Lesotho")]
+    [EnumLiteral("426"), Description("Lesotho")]
     N426,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("428", "urn:iso:std:iso:3166"), Description("Latvia")]
+    [EnumLiteral("428"), Description("Latvia")]
     N428,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("430", "urn:iso:std:iso:3166"), Description("Liberia")]
+    [EnumLiteral("430"), Description("Liberia")]
     N430,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("434", "urn:iso:std:iso:3166"), Description("Libya")]
+    [EnumLiteral("434"), Description("Libya")]
     N434,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("438", "urn:iso:std:iso:3166"), Description("Liechtenstein")]
+    [EnumLiteral("438"), Description("Liechtenstein")]
     N438,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("440", "urn:iso:std:iso:3166"), Description("Lithuania")]
+    [EnumLiteral("440"), Description("Lithuania")]
     N440,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("442", "urn:iso:std:iso:3166"), Description("Luxembourg")]
+    [EnumLiteral("442"), Description("Luxembourg")]
     N442,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("446", "urn:iso:std:iso:3166"), Description("Macao")]
+    [EnumLiteral("446"), Description("Macao")]
     N446,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("450", "urn:iso:std:iso:3166"), Description("Madagascar")]
+    [EnumLiteral("450"), Description("Madagascar")]
     N450,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("454", "urn:iso:std:iso:3166"), Description("Malawi")]
+    [EnumLiteral("454"), Description("Malawi")]
     N454,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("458", "urn:iso:std:iso:3166"), Description("Malaysia")]
+    [EnumLiteral("458"), Description("Malaysia")]
     N458,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("462", "urn:iso:std:iso:3166"), Description("Maldives")]
+    [EnumLiteral("462"), Description("Maldives")]
     N462,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("466", "urn:iso:std:iso:3166"), Description("Mali")]
+    [EnumLiteral("466"), Description("Mali")]
     N466,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("470", "urn:iso:std:iso:3166"), Description("Malta")]
+    [EnumLiteral("470"), Description("Malta")]
     N470,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("474", "urn:iso:std:iso:3166"), Description("Martinique")]
+    [EnumLiteral("474"), Description("Martinique")]
     N474,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("478", "urn:iso:std:iso:3166"), Description("Mauritania")]
+    [EnumLiteral("478"), Description("Mauritania")]
     N478,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("480", "urn:iso:std:iso:3166"), Description("Mauritius")]
+    [EnumLiteral("480"), Description("Mauritius")]
     N480,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("484", "urn:iso:std:iso:3166"), Description("Mexico")]
+    [EnumLiteral("484"), Description("Mexico")]
     N484,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("492", "urn:iso:std:iso:3166"), Description("Monaco")]
+    [EnumLiteral("492"), Description("Monaco")]
     N492,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("496", "urn:iso:std:iso:3166"), Description("Mongolia")]
+    [EnumLiteral("496"), Description("Mongolia")]
     N496,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("498", "urn:iso:std:iso:3166"), Description("Moldova, Republic of")]
+    [EnumLiteral("498"), Description("Moldova, Republic of")]
     N498,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("499", "urn:iso:std:iso:3166"), Description("Montenegro")]
+    [EnumLiteral("499"), Description("Montenegro")]
     N499,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("500", "urn:iso:std:iso:3166"), Description("Montserrat")]
+    [EnumLiteral("500"), Description("Montserrat")]
     N500,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("504", "urn:iso:std:iso:3166"), Description("Morocco")]
+    [EnumLiteral("504"), Description("Morocco")]
     N504,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("508", "urn:iso:std:iso:3166"), Description("Mozambique")]
+    [EnumLiteral("508"), Description("Mozambique")]
     N508,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("512", "urn:iso:std:iso:3166"), Description("Oman")]
+    [EnumLiteral("512"), Description("Oman")]
     N512,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("516", "urn:iso:std:iso:3166"), Description("Namibia")]
+    [EnumLiteral("516"), Description("Namibia")]
     N516,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("520", "urn:iso:std:iso:3166"), Description("Nauru")]
+    [EnumLiteral("520"), Description("Nauru")]
     N520,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("524", "urn:iso:std:iso:3166"), Description("Nepal")]
+    [EnumLiteral("524"), Description("Nepal")]
     N524,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("528", "urn:iso:std:iso:3166"), Description("Netherlands")]
+    [EnumLiteral("528"), Description("Netherlands")]
     N528,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("531", "urn:iso:std:iso:3166"), Description("Curagao")]
+    [EnumLiteral("531"), Description("Curagao")]
     N531,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("533", "urn:iso:std:iso:3166"), Description("Aruba")]
+    [EnumLiteral("533"), Description("Aruba")]
     N533,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("534", "urn:iso:std:iso:3166"), Description("Sint Maarten (Dutch part)")]
+    [EnumLiteral("534"), Description("Sint Maarten (Dutch part)")]
     N534,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("535", "urn:iso:std:iso:3166"), Description("Bonaire, Sint Eustatius and Saba")]
+    [EnumLiteral("535"), Description("Bonaire, Sint Eustatius and Saba")]
     N535,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("540", "urn:iso:std:iso:3166"), Description("New Caledonia")]
+    [EnumLiteral("540"), Description("New Caledonia")]
     N540,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("548", "urn:iso:std:iso:3166"), Description("Vanuatu")]
+    [EnumLiteral("548"), Description("Vanuatu")]
     N548,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("554", "urn:iso:std:iso:3166"), Description("New Zealand")]
+    [EnumLiteral("554"), Description("New Zealand")]
     N554,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("558", "urn:iso:std:iso:3166"), Description("Nicaragua")]
+    [EnumLiteral("558"), Description("Nicaragua")]
     N558,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("562", "urn:iso:std:iso:3166"), Description("Niger")]
+    [EnumLiteral("562"), Description("Niger")]
     N562,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("566", "urn:iso:std:iso:3166"), Description("Nigeria")]
+    [EnumLiteral("566"), Description("Nigeria")]
     N566,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("570", "urn:iso:std:iso:3166"), Description("Niue")]
+    [EnumLiteral("570"), Description("Niue")]
     N570,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("574", "urn:iso:std:iso:3166"), Description("Norfolk Island")]
+    [EnumLiteral("574"), Description("Norfolk Island")]
     N574,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("578", "urn:iso:std:iso:3166"), Description("Norway")]
+    [EnumLiteral("578"), Description("Norway")]
     N578,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("580", "urn:iso:std:iso:3166"), Description("Northern Mariana Islands")]
+    [EnumLiteral("580"), Description("Northern Mariana Islands")]
     N580,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("581", "urn:iso:std:iso:3166"), Description("United States Minor Outlying Islands")]
+    [EnumLiteral("581"), Description("United States Minor Outlying Islands")]
     N581,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("583", "urn:iso:std:iso:3166"), Description("Micronesia, Federated States of")]
+    [EnumLiteral("583"), Description("Micronesia, Federated States of")]
     N583,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("584", "urn:iso:std:iso:3166"), Description("Marshall Islands")]
+    [EnumLiteral("584"), Description("Marshall Islands")]
     N584,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("585", "urn:iso:std:iso:3166"), Description("Palau")]
+    [EnumLiteral("585"), Description("Palau")]
     N585,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("586", "urn:iso:std:iso:3166"), Description("Pakistan")]
+    [EnumLiteral("586"), Description("Pakistan")]
     N586,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("591", "urn:iso:std:iso:3166"), Description("Panama")]
+    [EnumLiteral("591"), Description("Panama")]
     N591,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("598", "urn:iso:std:iso:3166"), Description("Papua New Guinea")]
+    [EnumLiteral("598"), Description("Papua New Guinea")]
     N598,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("600", "urn:iso:std:iso:3166"), Description("Paraguay")]
+    [EnumLiteral("600"), Description("Paraguay")]
     N600,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("604", "urn:iso:std:iso:3166"), Description("Peru")]
+    [EnumLiteral("604"), Description("Peru")]
     N604,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("608", "urn:iso:std:iso:3166"), Description("Philippines")]
+    [EnumLiteral("608"), Description("Philippines")]
     N608,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("612", "urn:iso:std:iso:3166"), Description("Pitcairn")]
+    [EnumLiteral("612"), Description("Pitcairn")]
     N612,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("616", "urn:iso:std:iso:3166"), Description("Poland")]
+    [EnumLiteral("616"), Description("Poland")]
     N616,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("620", "urn:iso:std:iso:3166"), Description("Portugal")]
+    [EnumLiteral("620"), Description("Portugal")]
     N620,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("624", "urn:iso:std:iso:3166"), Description("Guinea-Bissau")]
+    [EnumLiteral("624"), Description("Guinea-Bissau")]
     N624,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("626", "urn:iso:std:iso:3166"), Description("Timor-Leste")]
+    [EnumLiteral("626"), Description("Timor-Leste")]
     N626,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("630", "urn:iso:std:iso:3166"), Description("Puerto Rico")]
+    [EnumLiteral("630"), Description("Puerto Rico")]
     N630,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("634", "urn:iso:std:iso:3166"), Description("Qatar")]
+    [EnumLiteral("634"), Description("Qatar")]
     N634,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("638", "urn:iso:std:iso:3166"), Description("Riunion")]
+    [EnumLiteral("638"), Description("Riunion")]
     N638,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("642", "urn:iso:std:iso:3166"), Description("Romania")]
+    [EnumLiteral("642"), Description("Romania")]
     N642,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("643", "urn:iso:std:iso:3166"), Description("Russian Federation")]
+    [EnumLiteral("643"), Description("Russian Federation")]
     N643,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("646", "urn:iso:std:iso:3166"), Description("Rwanda")]
+    [EnumLiteral("646"), Description("Rwanda")]
     N646,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("652", "urn:iso:std:iso:3166"), Description("Saint Barthilemy")]
+    [EnumLiteral("652"), Description("Saint Barthilemy")]
     N652,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("654", "urn:iso:std:iso:3166"), Description("Saint Helena, Ascension and Tristan da Cunha")]
+    [EnumLiteral("654"), Description("Saint Helena, Ascension and Tristan da Cunha")]
     N654,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("659", "urn:iso:std:iso:3166"), Description("Saint Kitts and Nevis")]
+    [EnumLiteral("659"), Description("Saint Kitts and Nevis")]
     N659,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("660", "urn:iso:std:iso:3166"), Description("Anguilla")]
+    [EnumLiteral("660"), Description("Anguilla")]
     N660,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("662", "urn:iso:std:iso:3166"), Description("Saint Lucia")]
+    [EnumLiteral("662"), Description("Saint Lucia")]
     N662,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("663", "urn:iso:std:iso:3166"), Description("Saint Martin (French part)")]
+    [EnumLiteral("663"), Description("Saint Martin (French part)")]
     N663,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("666", "urn:iso:std:iso:3166"), Description("Saint Pierre and Miquelon")]
+    [EnumLiteral("666"), Description("Saint Pierre and Miquelon")]
     N666,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("670", "urn:iso:std:iso:3166"), Description("Saint Vincent and the Grenadines")]
+    [EnumLiteral("670"), Description("Saint Vincent and the Grenadines")]
     N670,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("674", "urn:iso:std:iso:3166"), Description("San Marino")]
+    [EnumLiteral("674"), Description("San Marino")]
     N674,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("678", "urn:iso:std:iso:3166"), Description("Sao Tome and Principe")]
+    [EnumLiteral("678"), Description("Sao Tome and Principe")]
     N678,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("682", "urn:iso:std:iso:3166"), Description("Saudi Arabia")]
+    [EnumLiteral("682"), Description("Saudi Arabia")]
     N682,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("686", "urn:iso:std:iso:3166"), Description("Senegal")]
+    [EnumLiteral("686"), Description("Senegal")]
     N686,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("688", "urn:iso:std:iso:3166"), Description("Serbia")]
+    [EnumLiteral("688"), Description("Serbia")]
     N688,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("690", "urn:iso:std:iso:3166"), Description("Seychelles")]
+    [EnumLiteral("690"), Description("Seychelles")]
     N690,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("694", "urn:iso:std:iso:3166"), Description("Sierra Leone")]
+    [EnumLiteral("694"), Description("Sierra Leone")]
     N694,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("702", "urn:iso:std:iso:3166"), Description("Singapore")]
+    [EnumLiteral("702"), Description("Singapore")]
     N702,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("703", "urn:iso:std:iso:3166"), Description("Slovakia")]
+    [EnumLiteral("703"), Description("Slovakia")]
     N703,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("704", "urn:iso:std:iso:3166"), Description("Viet Nam")]
+    [EnumLiteral("704"), Description("Viet Nam")]
     N704,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("705", "urn:iso:std:iso:3166"), Description("Slovenia")]
+    [EnumLiteral("705"), Description("Slovenia")]
     N705,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("706", "urn:iso:std:iso:3166"), Description("Somalia")]
+    [EnumLiteral("706"), Description("Somalia")]
     N706,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("710", "urn:iso:std:iso:3166"), Description("South Africa")]
+    [EnumLiteral("710"), Description("South Africa")]
     N710,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("716", "urn:iso:std:iso:3166"), Description("Zimbabwe")]
+    [EnumLiteral("716"), Description("Zimbabwe")]
     N716,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("724", "urn:iso:std:iso:3166"), Description("Spain")]
+    [EnumLiteral("724"), Description("Spain")]
     N724,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("728", "urn:iso:std:iso:3166"), Description("South Sudan")]
+    [EnumLiteral("728"), Description("South Sudan")]
     N728,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("729", "urn:iso:std:iso:3166"), Description("Sudan")]
+    [EnumLiteral("729"), Description("Sudan")]
     N729,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("732", "urn:iso:std:iso:3166"), Description("Western Sahara")]
+    [EnumLiteral("732"), Description("Western Sahara")]
     N732,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("740", "urn:iso:std:iso:3166"), Description("Suriname")]
+    [EnumLiteral("740"), Description("Suriname")]
     N740,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("744", "urn:iso:std:iso:3166"), Description("Svalbard and Jan Mayen")]
+    [EnumLiteral("744"), Description("Svalbard and Jan Mayen")]
     N744,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("748", "urn:iso:std:iso:3166"), Description("Swaziland")]
+    [EnumLiteral("748"), Description("Swaziland")]
     N748,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("752", "urn:iso:std:iso:3166"), Description("Sweden")]
+    [EnumLiteral("752"), Description("Sweden")]
     N752,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("756", "urn:iso:std:iso:3166"), Description("Switzerland")]
+    [EnumLiteral("756"), Description("Switzerland")]
     N756,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("760", "urn:iso:std:iso:3166"), Description("Syrian Arab Republic")]
+    [EnumLiteral("760"), Description("Syrian Arab Republic")]
     N760,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("762", "urn:iso:std:iso:3166"), Description("Tajikistan")]
+    [EnumLiteral("762"), Description("Tajikistan")]
     N762,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("764", "urn:iso:std:iso:3166"), Description("Thailand")]
+    [EnumLiteral("764"), Description("Thailand")]
     N764,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("768", "urn:iso:std:iso:3166"), Description("Togo")]
+    [EnumLiteral("768"), Description("Togo")]
     N768,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("772", "urn:iso:std:iso:3166"), Description("Tokelau")]
+    [EnumLiteral("772"), Description("Tokelau")]
     N772,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("776", "urn:iso:std:iso:3166"), Description("Tonga")]
+    [EnumLiteral("776"), Description("Tonga")]
     N776,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("780", "urn:iso:std:iso:3166"), Description("Trinidad and Tobago")]
+    [EnumLiteral("780"), Description("Trinidad and Tobago")]
     N780,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("784", "urn:iso:std:iso:3166"), Description("United Arab Emirates")]
+    [EnumLiteral("784"), Description("United Arab Emirates")]
     N784,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("788", "urn:iso:std:iso:3166"), Description("Tunisia")]
+    [EnumLiteral("788"), Description("Tunisia")]
     N788,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("792", "urn:iso:std:iso:3166"), Description("Turkey")]
+    [EnumLiteral("792"), Description("Turkey")]
     N792,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("795", "urn:iso:std:iso:3166"), Description("Turkmenistan")]
+    [EnumLiteral("795"), Description("Turkmenistan")]
     N795,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("796", "urn:iso:std:iso:3166"), Description("Turks and Caicos Islands")]
+    [EnumLiteral("796"), Description("Turks and Caicos Islands")]
     N796,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("798", "urn:iso:std:iso:3166"), Description("Tuvalu")]
+    [EnumLiteral("798"), Description("Tuvalu")]
     N798,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("800", "urn:iso:std:iso:3166"), Description("Uganda")]
+    [EnumLiteral("800"), Description("Uganda")]
     N800,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("804", "urn:iso:std:iso:3166"), Description("Ukraine")]
+    [EnumLiteral("804"), Description("Ukraine")]
     N804,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("807", "urn:iso:std:iso:3166"), Description("Macedonia, the former Yugoslav Republic of")]
+    [EnumLiteral("807"), Description("Macedonia, the former Yugoslav Republic of")]
     N807,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("818", "urn:iso:std:iso:3166"), Description("Egypt")]
+    [EnumLiteral("818"), Description("Egypt")]
     N818,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("826", "urn:iso:std:iso:3166"), Description("United Kingdom")]
+    [EnumLiteral("826"), Description("United Kingdom")]
     N826,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("831", "urn:iso:std:iso:3166"), Description("Guernsey")]
+    [EnumLiteral("831"), Description("Guernsey")]
     N831,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("832", "urn:iso:std:iso:3166"), Description("Jersey")]
+    [EnumLiteral("832"), Description("Jersey")]
     N832,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("833", "urn:iso:std:iso:3166"), Description("Isle of Man")]
+    [EnumLiteral("833"), Description("Isle of Man")]
     N833,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("834", "urn:iso:std:iso:3166"), Description("Tanzania, United Republic of")]
+    [EnumLiteral("834"), Description("Tanzania, United Republic of")]
     N834,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("840", "urn:iso:std:iso:3166"), Description("United States of America")]
+    [EnumLiteral("840"), Description("United States of America")]
     N840,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("850", "urn:iso:std:iso:3166"), Description("Virgin Islands, U.S.")]
+    [EnumLiteral("850"), Description("Virgin Islands, U.S.")]
     N850,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("854", "urn:iso:std:iso:3166"), Description("Burkina Faso")]
+    [EnumLiteral("854"), Description("Burkina Faso")]
     N854,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("858", "urn:iso:std:iso:3166"), Description("Uruguay")]
+    [EnumLiteral("858"), Description("Uruguay")]
     N858,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("860", "urn:iso:std:iso:3166"), Description("Uzbekistan")]
+    [EnumLiteral("860"), Description("Uzbekistan")]
     N860,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("862", "urn:iso:std:iso:3166"), Description("Venezuela, Bolivarian Republic of")]
+    [EnumLiteral("862"), Description("Venezuela, Bolivarian Republic of")]
     N862,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("876", "urn:iso:std:iso:3166"), Description("Wallis and Futuna")]
+    [EnumLiteral("876"), Description("Wallis and Futuna")]
     N876,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("882", "urn:iso:std:iso:3166"), Description("Samoa")]
+    [EnumLiteral("882"), Description("Samoa")]
     N882,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("887", "urn:iso:std:iso:3166"), Description("Yemen")]
+    [EnumLiteral("887"), Description("Yemen")]
     N887,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:3166)
     /// </summary>
-    [EnumLiteral("894", "urn:iso:std:iso:3166"), Description("Zambia")]
+    [EnumLiteral("894"), Description("Zambia")]
     N894,
   }
 
@@ -5115,1100 +5115,1100 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/currencies)
   /// (systems: 0)
   /// </summary>
-  [FhirEnumeration("Currencies", "http://hl7.org/fhir/ValueSet/currencies")]
+  [FhirEnumeration("Currencies", "http://hl7.org/fhir/ValueSet/currencies", "urn:iso:std:iso:4217")]
   public enum Currencies
   {
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AED", "urn:iso:std:iso:4217"), Description("United Arab Emirates dirham")]
+    [EnumLiteral("AED"), Description("United Arab Emirates dirham")]
     AED,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AFN", "urn:iso:std:iso:4217"), Description("Afghan afghani")]
+    [EnumLiteral("AFN"), Description("Afghan afghani")]
     AFN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ALL", "urn:iso:std:iso:4217"), Description("Albanian lek")]
+    [EnumLiteral("ALL"), Description("Albanian lek")]
     ALL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AMD", "urn:iso:std:iso:4217"), Description("Armenian dram")]
+    [EnumLiteral("AMD"), Description("Armenian dram")]
     AMD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ANG", "urn:iso:std:iso:4217"), Description("Netherlands Antillean guilder")]
+    [EnumLiteral("ANG"), Description("Netherlands Antillean guilder")]
     ANG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AOA", "urn:iso:std:iso:4217"), Description("Angolan kwanza")]
+    [EnumLiteral("AOA"), Description("Angolan kwanza")]
     AOA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ARS", "urn:iso:std:iso:4217"), Description("Argentine peso")]
+    [EnumLiteral("ARS"), Description("Argentine peso")]
     ARS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AUD", "urn:iso:std:iso:4217"), Description("Australian dollar")]
+    [EnumLiteral("AUD"), Description("Australian dollar")]
     AUD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AWG", "urn:iso:std:iso:4217"), Description("Aruban florin")]
+    [EnumLiteral("AWG"), Description("Aruban florin")]
     AWG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("AZN", "urn:iso:std:iso:4217"), Description("Azerbaijani manat")]
+    [EnumLiteral("AZN"), Description("Azerbaijani manat")]
     AZN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BAM", "urn:iso:std:iso:4217"), Description("Bosnia and Herzegovina convertible mark")]
+    [EnumLiteral("BAM"), Description("Bosnia and Herzegovina convertible mark")]
     BAM,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BBD", "urn:iso:std:iso:4217"), Description("Barbados dollar")]
+    [EnumLiteral("BBD"), Description("Barbados dollar")]
     BBD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BDT", "urn:iso:std:iso:4217"), Description("Bangladeshi taka")]
+    [EnumLiteral("BDT"), Description("Bangladeshi taka")]
     BDT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BGN", "urn:iso:std:iso:4217"), Description("Bulgarian lev")]
+    [EnumLiteral("BGN"), Description("Bulgarian lev")]
     BGN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BHD", "urn:iso:std:iso:4217"), Description("Bahraini dinar")]
+    [EnumLiteral("BHD"), Description("Bahraini dinar")]
     BHD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BIF", "urn:iso:std:iso:4217"), Description("Burundian franc")]
+    [EnumLiteral("BIF"), Description("Burundian franc")]
     BIF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BMD", "urn:iso:std:iso:4217"), Description("Bermudian dollar")]
+    [EnumLiteral("BMD"), Description("Bermudian dollar")]
     BMD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BND", "urn:iso:std:iso:4217"), Description("Brunei dollar")]
+    [EnumLiteral("BND"), Description("Brunei dollar")]
     BND,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BOB", "urn:iso:std:iso:4217"), Description("Boliviano")]
+    [EnumLiteral("BOB"), Description("Boliviano")]
     BOB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BOV", "urn:iso:std:iso:4217"), Description("Bolivian Mvdol (funds code)")]
+    [EnumLiteral("BOV"), Description("Bolivian Mvdol (funds code)")]
     BOV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BRL", "urn:iso:std:iso:4217"), Description("Brazilian real")]
+    [EnumLiteral("BRL"), Description("Brazilian real")]
     BRL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BSD", "urn:iso:std:iso:4217"), Description("Bahamian dollar")]
+    [EnumLiteral("BSD"), Description("Bahamian dollar")]
     BSD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BTN", "urn:iso:std:iso:4217"), Description("Bhutanese ngultrum")]
+    [EnumLiteral("BTN"), Description("Bhutanese ngultrum")]
     BTN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BWP", "urn:iso:std:iso:4217"), Description("Botswana pula")]
+    [EnumLiteral("BWP"), Description("Botswana pula")]
     BWP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BYN", "urn:iso:std:iso:4217"), Description("Belarusian ruble")]
+    [EnumLiteral("BYN"), Description("Belarusian ruble")]
     BYN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("BZD", "urn:iso:std:iso:4217"), Description("Belize dollar")]
+    [EnumLiteral("BZD"), Description("Belize dollar")]
     BZD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CAD", "urn:iso:std:iso:4217"), Description("Canadian dollar")]
+    [EnumLiteral("CAD"), Description("Canadian dollar")]
     CAD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CDF", "urn:iso:std:iso:4217"), Description("Congolese franc")]
+    [EnumLiteral("CDF"), Description("Congolese franc")]
     CDF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CHE", "urn:iso:std:iso:4217"), Description("WIR Euro (complementary currency)")]
+    [EnumLiteral("CHE"), Description("WIR Euro (complementary currency)")]
     CHE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CHF", "urn:iso:std:iso:4217"), Description("Swiss franc")]
+    [EnumLiteral("CHF"), Description("Swiss franc")]
     CHF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CHW", "urn:iso:std:iso:4217"), Description("WIR Franc (complementary currency)")]
+    [EnumLiteral("CHW"), Description("WIR Franc (complementary currency)")]
     CHW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CLF", "urn:iso:std:iso:4217"), Description("Unidad de Fomento (funds code)")]
+    [EnumLiteral("CLF"), Description("Unidad de Fomento (funds code)")]
     CLF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CLP", "urn:iso:std:iso:4217"), Description("Chilean peso")]
+    [EnumLiteral("CLP"), Description("Chilean peso")]
     CLP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CNY", "urn:iso:std:iso:4217"), Description("Renminbi (Chinese) yuan[8]")]
+    [EnumLiteral("CNY"), Description("Renminbi (Chinese) yuan[8]")]
     CNY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("COP", "urn:iso:std:iso:4217"), Description("Colombian peso")]
+    [EnumLiteral("COP"), Description("Colombian peso")]
     COP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("COU", "urn:iso:std:iso:4217"), Description("Unidad de Valor Real (UVR) (funds code)[9]")]
+    [EnumLiteral("COU"), Description("Unidad de Valor Real (UVR) (funds code)[9]")]
     COU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CRC", "urn:iso:std:iso:4217"), Description("Costa Rican colon")]
+    [EnumLiteral("CRC"), Description("Costa Rican colon")]
     CRC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CUC", "urn:iso:std:iso:4217"), Description("Cuban convertible peso")]
+    [EnumLiteral("CUC"), Description("Cuban convertible peso")]
     CUC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CUP", "urn:iso:std:iso:4217"), Description("Cuban peso")]
+    [EnumLiteral("CUP"), Description("Cuban peso")]
     CUP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CVE", "urn:iso:std:iso:4217"), Description("Cape Verde escudo")]
+    [EnumLiteral("CVE"), Description("Cape Verde escudo")]
     CVE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("CZK", "urn:iso:std:iso:4217"), Description("Czech koruna")]
+    [EnumLiteral("CZK"), Description("Czech koruna")]
     CZK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("DJF", "urn:iso:std:iso:4217"), Description("Djiboutian franc")]
+    [EnumLiteral("DJF"), Description("Djiboutian franc")]
     DJF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("DKK", "urn:iso:std:iso:4217"), Description("Danish krone")]
+    [EnumLiteral("DKK"), Description("Danish krone")]
     DKK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("DOP", "urn:iso:std:iso:4217"), Description("Dominican peso")]
+    [EnumLiteral("DOP"), Description("Dominican peso")]
     DOP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("DZD", "urn:iso:std:iso:4217"), Description("Algerian dinar")]
+    [EnumLiteral("DZD"), Description("Algerian dinar")]
     DZD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("EGP", "urn:iso:std:iso:4217"), Description("Egyptian pound")]
+    [EnumLiteral("EGP"), Description("Egyptian pound")]
     EGP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ERN", "urn:iso:std:iso:4217"), Description("Eritrean nakfa")]
+    [EnumLiteral("ERN"), Description("Eritrean nakfa")]
     ERN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ETB", "urn:iso:std:iso:4217"), Description("Ethiopian birr")]
+    [EnumLiteral("ETB"), Description("Ethiopian birr")]
     ETB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("EUR", "urn:iso:std:iso:4217"), Description("Euro")]
+    [EnumLiteral("EUR"), Description("Euro")]
     EUR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("FJD", "urn:iso:std:iso:4217"), Description("Fiji dollar")]
+    [EnumLiteral("FJD"), Description("Fiji dollar")]
     FJD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("FKP", "urn:iso:std:iso:4217"), Description("Falkland Islands pound")]
+    [EnumLiteral("FKP"), Description("Falkland Islands pound")]
     FKP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GBP", "urn:iso:std:iso:4217"), Description("Pound sterling")]
+    [EnumLiteral("GBP"), Description("Pound sterling")]
     GBP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GEL", "urn:iso:std:iso:4217"), Description("Georgian lari")]
+    [EnumLiteral("GEL"), Description("Georgian lari")]
     GEL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GGP", "urn:iso:std:iso:4217"), Description("Guernsey Pound")]
+    [EnumLiteral("GGP"), Description("Guernsey Pound")]
     GGP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GHS", "urn:iso:std:iso:4217"), Description("Ghanaian cedi")]
+    [EnumLiteral("GHS"), Description("Ghanaian cedi")]
     GHS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GIP", "urn:iso:std:iso:4217"), Description("Gibraltar pound")]
+    [EnumLiteral("GIP"), Description("Gibraltar pound")]
     GIP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GMD", "urn:iso:std:iso:4217"), Description("Gambian dalasi")]
+    [EnumLiteral("GMD"), Description("Gambian dalasi")]
     GMD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GNF", "urn:iso:std:iso:4217"), Description("Guinean franc")]
+    [EnumLiteral("GNF"), Description("Guinean franc")]
     GNF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GTQ", "urn:iso:std:iso:4217"), Description("Guatemalan quetzal")]
+    [EnumLiteral("GTQ"), Description("Guatemalan quetzal")]
     GTQ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("GYD", "urn:iso:std:iso:4217"), Description("Guyanese dollar")]
+    [EnumLiteral("GYD"), Description("Guyanese dollar")]
     GYD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("HKD", "urn:iso:std:iso:4217"), Description("Hong Kong dollar")]
+    [EnumLiteral("HKD"), Description("Hong Kong dollar")]
     HKD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("HNL", "urn:iso:std:iso:4217"), Description("Honduran lempira")]
+    [EnumLiteral("HNL"), Description("Honduran lempira")]
     HNL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("HRK", "urn:iso:std:iso:4217"), Description("Croatian kuna")]
+    [EnumLiteral("HRK"), Description("Croatian kuna")]
     HRK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("HTG", "urn:iso:std:iso:4217"), Description("Haitian gourde")]
+    [EnumLiteral("HTG"), Description("Haitian gourde")]
     HTG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("HUF", "urn:iso:std:iso:4217"), Description("Hungarian forint")]
+    [EnumLiteral("HUF"), Description("Hungarian forint")]
     HUF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("IDR", "urn:iso:std:iso:4217"), Description("Indonesian rupiah")]
+    [EnumLiteral("IDR"), Description("Indonesian rupiah")]
     IDR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ILS", "urn:iso:std:iso:4217"), Description("Israeli new shekel")]
+    [EnumLiteral("ILS"), Description("Israeli new shekel")]
     ILS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("IMP", "urn:iso:std:iso:4217"), Description("Isle of Man Pound")]
+    [EnumLiteral("IMP"), Description("Isle of Man Pound")]
     IMP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("INR", "urn:iso:std:iso:4217"), Description("Indian rupee")]
+    [EnumLiteral("INR"), Description("Indian rupee")]
     INR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("IQD", "urn:iso:std:iso:4217"), Description("Iraqi dinar")]
+    [EnumLiteral("IQD"), Description("Iraqi dinar")]
     IQD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("IRR", "urn:iso:std:iso:4217"), Description("Iranian rial")]
+    [EnumLiteral("IRR"), Description("Iranian rial")]
     IRR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ISK", "urn:iso:std:iso:4217"), Description("Icelandic króna")]
+    [EnumLiteral("ISK"), Description("Icelandic króna")]
     ISK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("JEP", "urn:iso:std:iso:4217"), Description("Jersey Pound")]
+    [EnumLiteral("JEP"), Description("Jersey Pound")]
     JEP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("JMD", "urn:iso:std:iso:4217"), Description("Jamaican dollar")]
+    [EnumLiteral("JMD"), Description("Jamaican dollar")]
     JMD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("JOD", "urn:iso:std:iso:4217"), Description("Jordanian dinar")]
+    [EnumLiteral("JOD"), Description("Jordanian dinar")]
     JOD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("JPY", "urn:iso:std:iso:4217"), Description("Japanese yen")]
+    [EnumLiteral("JPY"), Description("Japanese yen")]
     JPY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KES", "urn:iso:std:iso:4217"), Description("Kenyan shilling")]
+    [EnumLiteral("KES"), Description("Kenyan shilling")]
     KES,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KGS", "urn:iso:std:iso:4217"), Description("Kyrgyzstani som")]
+    [EnumLiteral("KGS"), Description("Kyrgyzstani som")]
     KGS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KHR", "urn:iso:std:iso:4217"), Description("Cambodian riel")]
+    [EnumLiteral("KHR"), Description("Cambodian riel")]
     KHR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KMF", "urn:iso:std:iso:4217"), Description("Comoro franc")]
+    [EnumLiteral("KMF"), Description("Comoro franc")]
     KMF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KPW", "urn:iso:std:iso:4217"), Description("North Korean won")]
+    [EnumLiteral("KPW"), Description("North Korean won")]
     KPW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KRW", "urn:iso:std:iso:4217"), Description("South Korean won")]
+    [EnumLiteral("KRW"), Description("South Korean won")]
     KRW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KWD", "urn:iso:std:iso:4217"), Description("Kuwaiti dinar")]
+    [EnumLiteral("KWD"), Description("Kuwaiti dinar")]
     KWD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KYD", "urn:iso:std:iso:4217"), Description("Cayman Islands dollar")]
+    [EnumLiteral("KYD"), Description("Cayman Islands dollar")]
     KYD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("KZT", "urn:iso:std:iso:4217"), Description("Kazakhstani tenge")]
+    [EnumLiteral("KZT"), Description("Kazakhstani tenge")]
     KZT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("LAK", "urn:iso:std:iso:4217"), Description("Lao kip")]
+    [EnumLiteral("LAK"), Description("Lao kip")]
     LAK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("LBP", "urn:iso:std:iso:4217"), Description("Lebanese pound")]
+    [EnumLiteral("LBP"), Description("Lebanese pound")]
     LBP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("LKR", "urn:iso:std:iso:4217"), Description("Sri Lankan rupee")]
+    [EnumLiteral("LKR"), Description("Sri Lankan rupee")]
     LKR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("LRD", "urn:iso:std:iso:4217"), Description("Liberian dollar")]
+    [EnumLiteral("LRD"), Description("Liberian dollar")]
     LRD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("LSL", "urn:iso:std:iso:4217"), Description("Lesotho loti")]
+    [EnumLiteral("LSL"), Description("Lesotho loti")]
     LSL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("LYD", "urn:iso:std:iso:4217"), Description("Libyan dinar")]
+    [EnumLiteral("LYD"), Description("Libyan dinar")]
     LYD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MAD", "urn:iso:std:iso:4217"), Description("Moroccan dirham")]
+    [EnumLiteral("MAD"), Description("Moroccan dirham")]
     MAD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MDL", "urn:iso:std:iso:4217"), Description("Moldovan leu")]
+    [EnumLiteral("MDL"), Description("Moldovan leu")]
     MDL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MGA", "urn:iso:std:iso:4217"), Description("Malagasy ariary")]
+    [EnumLiteral("MGA"), Description("Malagasy ariary")]
     MGA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MKD", "urn:iso:std:iso:4217"), Description("Macedonian denar")]
+    [EnumLiteral("MKD"), Description("Macedonian denar")]
     MKD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MMK", "urn:iso:std:iso:4217"), Description("Myanmar kyat")]
+    [EnumLiteral("MMK"), Description("Myanmar kyat")]
     MMK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MNT", "urn:iso:std:iso:4217"), Description("Mongolian tögrög")]
+    [EnumLiteral("MNT"), Description("Mongolian tögrög")]
     MNT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MOP", "urn:iso:std:iso:4217"), Description("Macanese pataca")]
+    [EnumLiteral("MOP"), Description("Macanese pataca")]
     MOP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MRU", "urn:iso:std:iso:4217"), Description("Mauritanian ouguiya")]
+    [EnumLiteral("MRU"), Description("Mauritanian ouguiya")]
     MRU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MUR", "urn:iso:std:iso:4217"), Description("Mauritian rupee")]
+    [EnumLiteral("MUR"), Description("Mauritian rupee")]
     MUR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MVR", "urn:iso:std:iso:4217"), Description("Maldivian rufiyaa")]
+    [EnumLiteral("MVR"), Description("Maldivian rufiyaa")]
     MVR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MWK", "urn:iso:std:iso:4217"), Description("Malawian kwacha")]
+    [EnumLiteral("MWK"), Description("Malawian kwacha")]
     MWK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MXN", "urn:iso:std:iso:4217"), Description("Mexican peso")]
+    [EnumLiteral("MXN"), Description("Mexican peso")]
     MXN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MXV", "urn:iso:std:iso:4217"), Description("Mexican Unidad de Inversion (UDI) (funds code)")]
+    [EnumLiteral("MXV"), Description("Mexican Unidad de Inversion (UDI) (funds code)")]
     MXV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MYR", "urn:iso:std:iso:4217"), Description("Malaysian ringgit")]
+    [EnumLiteral("MYR"), Description("Malaysian ringgit")]
     MYR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("MZN", "urn:iso:std:iso:4217"), Description("Mozambican metical")]
+    [EnumLiteral("MZN"), Description("Mozambican metical")]
     MZN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("NAD", "urn:iso:std:iso:4217"), Description("Namibian dollar")]
+    [EnumLiteral("NAD"), Description("Namibian dollar")]
     NAD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("NGN", "urn:iso:std:iso:4217"), Description("Nigerian naira")]
+    [EnumLiteral("NGN"), Description("Nigerian naira")]
     NGN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("NIO", "urn:iso:std:iso:4217"), Description("Nicaraguan córdoba")]
+    [EnumLiteral("NIO"), Description("Nicaraguan córdoba")]
     NIO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("NOK", "urn:iso:std:iso:4217"), Description("Norwegian krone")]
+    [EnumLiteral("NOK"), Description("Norwegian krone")]
     NOK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("NPR", "urn:iso:std:iso:4217"), Description("Nepalese rupee")]
+    [EnumLiteral("NPR"), Description("Nepalese rupee")]
     NPR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("NZD", "urn:iso:std:iso:4217"), Description("New Zealand dollar")]
+    [EnumLiteral("NZD"), Description("New Zealand dollar")]
     NZD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("OMR", "urn:iso:std:iso:4217"), Description("Omani rial")]
+    [EnumLiteral("OMR"), Description("Omani rial")]
     OMR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PAB", "urn:iso:std:iso:4217"), Description("Panamanian balboa")]
+    [EnumLiteral("PAB"), Description("Panamanian balboa")]
     PAB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PEN", "urn:iso:std:iso:4217"), Description("Peruvian Sol")]
+    [EnumLiteral("PEN"), Description("Peruvian Sol")]
     PEN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PGK", "urn:iso:std:iso:4217"), Description("Papua New Guinean kina")]
+    [EnumLiteral("PGK"), Description("Papua New Guinean kina")]
     PGK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PHP", "urn:iso:std:iso:4217"), Description("Philippine piso[13]")]
+    [EnumLiteral("PHP"), Description("Philippine piso[13]")]
     PHP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PKR", "urn:iso:std:iso:4217"), Description("Pakistani rupee")]
+    [EnumLiteral("PKR"), Description("Pakistani rupee")]
     PKR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PLN", "urn:iso:std:iso:4217"), Description("Polish złoty")]
+    [EnumLiteral("PLN"), Description("Polish złoty")]
     PLN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("PYG", "urn:iso:std:iso:4217"), Description("Paraguayan guaraní")]
+    [EnumLiteral("PYG"), Description("Paraguayan guaraní")]
     PYG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("QAR", "urn:iso:std:iso:4217"), Description("Qatari riyal")]
+    [EnumLiteral("QAR"), Description("Qatari riyal")]
     QAR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("RON", "urn:iso:std:iso:4217"), Description("Romanian leu")]
+    [EnumLiteral("RON"), Description("Romanian leu")]
     RON,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("RSD", "urn:iso:std:iso:4217"), Description("Serbian dinar")]
+    [EnumLiteral("RSD"), Description("Serbian dinar")]
     RSD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("RUB", "urn:iso:std:iso:4217"), Description("Russian ruble")]
+    [EnumLiteral("RUB"), Description("Russian ruble")]
     RUB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("RWF", "urn:iso:std:iso:4217"), Description("Rwandan franc")]
+    [EnumLiteral("RWF"), Description("Rwandan franc")]
     RWF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SAR", "urn:iso:std:iso:4217"), Description("Saudi riyal")]
+    [EnumLiteral("SAR"), Description("Saudi riyal")]
     SAR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SBD", "urn:iso:std:iso:4217"), Description("Solomon Islands dollar")]
+    [EnumLiteral("SBD"), Description("Solomon Islands dollar")]
     SBD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SCR", "urn:iso:std:iso:4217"), Description("Seychelles rupee")]
+    [EnumLiteral("SCR"), Description("Seychelles rupee")]
     SCR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SDG", "urn:iso:std:iso:4217"), Description("Sudanese pound")]
+    [EnumLiteral("SDG"), Description("Sudanese pound")]
     SDG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SEK", "urn:iso:std:iso:4217"), Description("Swedish krona/kronor")]
+    [EnumLiteral("SEK"), Description("Swedish krona/kronor")]
     SEK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SGD", "urn:iso:std:iso:4217"), Description("Singapore dollar")]
+    [EnumLiteral("SGD"), Description("Singapore dollar")]
     SGD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SHP", "urn:iso:std:iso:4217"), Description("Saint Helena pound")]
+    [EnumLiteral("SHP"), Description("Saint Helena pound")]
     SHP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SLL", "urn:iso:std:iso:4217"), Description("Sierra Leonean leone")]
+    [EnumLiteral("SLL"), Description("Sierra Leonean leone")]
     SLL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SOS", "urn:iso:std:iso:4217"), Description("Somali shilling")]
+    [EnumLiteral("SOS"), Description("Somali shilling")]
     SOS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SRD", "urn:iso:std:iso:4217"), Description("Surinamese dollar")]
+    [EnumLiteral("SRD"), Description("Surinamese dollar")]
     SRD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SSP", "urn:iso:std:iso:4217"), Description("South Sudanese pound")]
+    [EnumLiteral("SSP"), Description("South Sudanese pound")]
     SSP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("STN", "urn:iso:std:iso:4217"), Description("São Tomé and Príncipe dobra")]
+    [EnumLiteral("STN"), Description("São Tomé and Príncipe dobra")]
     STN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SVC", "urn:iso:std:iso:4217"), Description("Salvadoran colón")]
+    [EnumLiteral("SVC"), Description("Salvadoran colón")]
     SVC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SYP", "urn:iso:std:iso:4217"), Description("Syrian pound")]
+    [EnumLiteral("SYP"), Description("Syrian pound")]
     SYP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("SZL", "urn:iso:std:iso:4217"), Description("Swazi lilangeni")]
+    [EnumLiteral("SZL"), Description("Swazi lilangeni")]
     SZL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("THB", "urn:iso:std:iso:4217"), Description("Thai baht")]
+    [EnumLiteral("THB"), Description("Thai baht")]
     THB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TJS", "urn:iso:std:iso:4217"), Description("Tajikistani somoni")]
+    [EnumLiteral("TJS"), Description("Tajikistani somoni")]
     TJS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TMT", "urn:iso:std:iso:4217"), Description("Turkmenistan manat")]
+    [EnumLiteral("TMT"), Description("Turkmenistan manat")]
     TMT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TND", "urn:iso:std:iso:4217"), Description("Tunisian dinar")]
+    [EnumLiteral("TND"), Description("Tunisian dinar")]
     TND,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TOP", "urn:iso:std:iso:4217"), Description("Tongan paʻanga")]
+    [EnumLiteral("TOP"), Description("Tongan paʻanga")]
     TOP,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TRY", "urn:iso:std:iso:4217"), Description("Turkish lira")]
+    [EnumLiteral("TRY"), Description("Turkish lira")]
     TRY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TTD", "urn:iso:std:iso:4217"), Description("Trinidad and Tobago dollar")]
+    [EnumLiteral("TTD"), Description("Trinidad and Tobago dollar")]
     TTD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TVD", "urn:iso:std:iso:4217"), Description("Tuvalu Dollar")]
+    [EnumLiteral("TVD"), Description("Tuvalu Dollar")]
     TVD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TWD", "urn:iso:std:iso:4217"), Description("New Taiwan dollar")]
+    [EnumLiteral("TWD"), Description("New Taiwan dollar")]
     TWD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("TZS", "urn:iso:std:iso:4217"), Description("Tanzanian shilling")]
+    [EnumLiteral("TZS"), Description("Tanzanian shilling")]
     TZS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("UAH", "urn:iso:std:iso:4217"), Description("Ukrainian hryvnia")]
+    [EnumLiteral("UAH"), Description("Ukrainian hryvnia")]
     UAH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("UGX", "urn:iso:std:iso:4217"), Description("Ugandan shilling")]
+    [EnumLiteral("UGX"), Description("Ugandan shilling")]
     UGX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("USD", "urn:iso:std:iso:4217"), Description("United States dollar")]
+    [EnumLiteral("USD"), Description("United States dollar")]
     USD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("USN", "urn:iso:std:iso:4217"), Description("United States dollar (next day) (funds code)")]
+    [EnumLiteral("USN"), Description("United States dollar (next day) (funds code)")]
     USN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("UYI", "urn:iso:std:iso:4217"), Description("Uruguay Peso en Unidades Indexadas (URUIURUI) (funds code)")]
+    [EnumLiteral("UYI"), Description("Uruguay Peso en Unidades Indexadas (URUIURUI) (funds code)")]
     UYI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("UYU", "urn:iso:std:iso:4217"), Description("Uruguayan peso")]
+    [EnumLiteral("UYU"), Description("Uruguayan peso")]
     UYU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("UZS", "urn:iso:std:iso:4217"), Description("Uzbekistan som")]
+    [EnumLiteral("UZS"), Description("Uzbekistan som")]
     UZS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("VEF", "urn:iso:std:iso:4217"), Description("Venezuelan bolívar")]
+    [EnumLiteral("VEF"), Description("Venezuelan bolívar")]
     VEF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("VND", "urn:iso:std:iso:4217"), Description("Vietnamese đồng")]
+    [EnumLiteral("VND"), Description("Vietnamese đồng")]
     VND,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("VUV", "urn:iso:std:iso:4217"), Description("Vanuatu vatu")]
+    [EnumLiteral("VUV"), Description("Vanuatu vatu")]
     VUV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("WST", "urn:iso:std:iso:4217"), Description("Samoan tala")]
+    [EnumLiteral("WST"), Description("Samoan tala")]
     WST,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XAF", "urn:iso:std:iso:4217"), Description("CFA franc BEAC")]
+    [EnumLiteral("XAF"), Description("CFA franc BEAC")]
     XAF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XAG", "urn:iso:std:iso:4217"), Description("Silver (one troy ounce)")]
+    [EnumLiteral("XAG"), Description("Silver (one troy ounce)")]
     XAG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XAU", "urn:iso:std:iso:4217"), Description("Gold (one troy ounce)")]
+    [EnumLiteral("XAU"), Description("Gold (one troy ounce)")]
     XAU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XBA", "urn:iso:std:iso:4217"), Description("European Composite Unit (EURCO) (bond market unit)")]
+    [EnumLiteral("XBA"), Description("European Composite Unit (EURCO) (bond market unit)")]
     XBA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XBB", "urn:iso:std:iso:4217"), Description("European Monetary Unit (E.M.U.-6) (bond market unit)")]
+    [EnumLiteral("XBB"), Description("European Monetary Unit (E.M.U.-6) (bond market unit)")]
     XBB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XBC", "urn:iso:std:iso:4217"), Description("European Unit of Account 9 (E.U.A.-9) (bond market unit)")]
+    [EnumLiteral("XBC"), Description("European Unit of Account 9 (E.U.A.-9) (bond market unit)")]
     XBC,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XBD", "urn:iso:std:iso:4217"), Description("European Unit of Account 17 (E.U.A.-17) (bond market unit)")]
+    [EnumLiteral("XBD"), Description("European Unit of Account 17 (E.U.A.-17) (bond market unit)")]
     XBD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XCD", "urn:iso:std:iso:4217"), Description("East Caribbean dollar")]
+    [EnumLiteral("XCD"), Description("East Caribbean dollar")]
     XCD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XDR", "urn:iso:std:iso:4217"), Description("Special drawing rights")]
+    [EnumLiteral("XDR"), Description("Special drawing rights")]
     XDR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XOF", "urn:iso:std:iso:4217"), Description("CFA franc BCEAO")]
+    [EnumLiteral("XOF"), Description("CFA franc BCEAO")]
     XOF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XPD", "urn:iso:std:iso:4217"), Description("Palladium (one troy ounce)")]
+    [EnumLiteral("XPD"), Description("Palladium (one troy ounce)")]
     XPD,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XPF", "urn:iso:std:iso:4217"), Description("CFP franc (franc Pacifique)")]
+    [EnumLiteral("XPF"), Description("CFP franc (franc Pacifique)")]
     XPF,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XPT", "urn:iso:std:iso:4217"), Description("Platinum (one troy ounce)")]
+    [EnumLiteral("XPT"), Description("Platinum (one troy ounce)")]
     XPT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XSU", "urn:iso:std:iso:4217"), Description("SUCRE")]
+    [EnumLiteral("XSU"), Description("SUCRE")]
     XSU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XTS", "urn:iso:std:iso:4217"), Description("Code reserved for testing purposes")]
+    [EnumLiteral("XTS"), Description("Code reserved for testing purposes")]
     XTS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XUA", "urn:iso:std:iso:4217"), Description("ADB Unit of Account")]
+    [EnumLiteral("XUA"), Description("ADB Unit of Account")]
     XUA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("XXX", "urn:iso:std:iso:4217"), Description("No currency")]
+    [EnumLiteral("XXX"), Description("No currency")]
     XXX,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("YER", "urn:iso:std:iso:4217"), Description("Yemeni rial")]
+    [EnumLiteral("YER"), Description("Yemeni rial")]
     YER,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ZAR", "urn:iso:std:iso:4217"), Description("South African rand")]
+    [EnumLiteral("ZAR"), Description("South African rand")]
     ZAR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ZMW", "urn:iso:std:iso:4217"), Description("Zambian kwacha")]
+    [EnumLiteral("ZMW"), Description("Zambian kwacha")]
     ZMW,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:iso:std:iso:4217)
     /// </summary>
-    [EnumLiteral("ZWL", "urn:iso:std:iso:4217"), Description("Zimbabwean dollar A/10")]
+    [EnumLiteral("ZWL"), Description("Zimbabwean dollar A/10")]
     ZWL,
   }
 
@@ -6217,50 +6217,50 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/days-of-week)
   /// (system: http://hl7.org/fhir/days-of-week)
   /// </summary>
-  [FhirEnumeration("DaysOfWeek", "http://hl7.org/fhir/ValueSet/days-of-week")]
+  [FhirEnumeration("DaysOfWeek", "http://hl7.org/fhir/ValueSet/days-of-week", "http://hl7.org/fhir/days-of-week")]
   public enum DaysOfWeek
   {
     /// <summary>
     /// Monday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("mon", "http://hl7.org/fhir/days-of-week"), Description("Monday")]
+    [EnumLiteral("mon"), Description("Monday")]
     Mon,
     /// <summary>
     /// Tuesday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("tue", "http://hl7.org/fhir/days-of-week"), Description("Tuesday")]
+    [EnumLiteral("tue"), Description("Tuesday")]
     Tue,
     /// <summary>
     /// Wednesday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("wed", "http://hl7.org/fhir/days-of-week"), Description("Wednesday")]
+    [EnumLiteral("wed"), Description("Wednesday")]
     Wed,
     /// <summary>
     /// Thursday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("thu", "http://hl7.org/fhir/days-of-week"), Description("Thursday")]
+    [EnumLiteral("thu"), Description("Thursday")]
     Thu,
     /// <summary>
     /// Friday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("fri", "http://hl7.org/fhir/days-of-week"), Description("Friday")]
+    [EnumLiteral("fri"), Description("Friday")]
     Fri,
     /// <summary>
     /// Saturday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("sat", "http://hl7.org/fhir/days-of-week"), Description("Saturday")]
+    [EnumLiteral("sat"), Description("Saturday")]
     Sat,
     /// <summary>
     /// Sunday.
     /// (system: http://hl7.org/fhir/days-of-week)
     /// </summary>
-    [EnumLiteral("sun", "http://hl7.org/fhir/days-of-week"), Description("Sunday")]
+    [EnumLiteral("sun"), Description("Sunday")]
     Sun,
   }
 
@@ -6269,26 +6269,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/device-nametype)
   /// (system: http://hl7.org/fhir/device-nametype)
   /// </summary>
-  [FhirEnumeration("DeviceNameType", "http://hl7.org/fhir/ValueSet/device-nametype")]
+  [FhirEnumeration("DeviceNameType", "http://hl7.org/fhir/ValueSet/device-nametype", "http://hl7.org/fhir/device-nametype")]
   public enum DeviceNameType
   {
     /// <summary>
     /// The term assigned to a medical device by the entity who registers or submits information about it to a jurisdiction or its databases. This may be considered the manufacturer assigned name (e.g., brand name assigned by the labeler or manufacturer in US, or device name assigned by the manufacturer in EU) and may also be synonymous with proprietary name or trade name of the device.
     /// (system: http://hl7.org/fhir/device-nametype)
     /// </summary>
-    [EnumLiteral("registered-name", "http://hl7.org/fhir/device-nametype"), Description("Registered name")]
+    [EnumLiteral("registered-name"), Description("Registered name")]
     RegisteredName,
     /// <summary>
     /// The term that generically describes the device by a name as assigned by the manufacturer that is recognized by lay person.  This common or generic name may be printed on the package it came in or some combination of that name with the model number, serial number, or other attribute that makes the name easy to understand for the user of that device. It is often exposed in communicating devices transport protocols. It is provided to help users identify the device when reported in discovery operations.
     /// (system: http://hl7.org/fhir/device-nametype)
     /// </summary>
-    [EnumLiteral("user-friendly-name", "http://hl7.org/fhir/device-nametype"), Description("User Friendly name")]
+    [EnumLiteral("user-friendly-name"), Description("User Friendly name")]
     UserFriendlyName,
     /// <summary>
     /// the term used by the patient associated with the device when describing the device, for example 'knee implant', when documented as a self-reported device.
     /// (system: http://hl7.org/fhir/device-nametype)
     /// </summary>
-    [EnumLiteral("patient-reported-name", "http://hl7.org/fhir/device-nametype"), Description("Patient Reported name")]
+    [EnumLiteral("patient-reported-name"), Description("Patient Reported name")]
     PatientReportedName,
   }
 
@@ -6297,62 +6297,62 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/encounter-status)
   /// (system: http://hl7.org/fhir/encounter-status)
   /// </summary>
-  [FhirEnumeration("EncounterStatus", "http://hl7.org/fhir/ValueSet/encounter-status")]
+  [FhirEnumeration("EncounterStatus", "http://hl7.org/fhir/ValueSet/encounter-status", "http://hl7.org/fhir/encounter-status")]
   public enum EncounterStatus
   {
     /// <summary>
     /// The Encounter has not yet started.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("planned", "http://hl7.org/fhir/encounter-status"), Description("Planned")]
+    [EnumLiteral("planned"), Description("Planned")]
     Planned,
     /// <summary>
     /// The Encounter has begun and the patient is present / the practitioner and the patient are meeting.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("in-progress", "http://hl7.org/fhir/encounter-status"), Description("In Progress")]
+    [EnumLiteral("in-progress"), Description("In Progress")]
     InProgress,
     /// <summary>
     /// The Encounter has begun, but is currently on hold, e.g. because the patient is temporarily on leave.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("on-hold", "http://hl7.org/fhir/encounter-status"), Description("On Hold")]
+    [EnumLiteral("on-hold"), Description("On Hold")]
     OnHold,
     /// <summary>
     /// The Encounter has been clinically completed, the patient has been discharged from the facility or the visit has ended, and the patient may have departed (refer to subjectStatus). While the encounter is in this status, administrative activities are usually performed, collating all required documentation and charge information before being released for billing, at which point the status will move to completed.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("discharged", "http://hl7.org/fhir/encounter-status"), Description("Discharged")]
+    [EnumLiteral("discharged"), Description("Discharged")]
     Discharged,
     /// <summary>
     /// The Encounter has ended.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("completed", "http://hl7.org/fhir/encounter-status"), Description("Completed")]
+    [EnumLiteral("completed"), Description("Completed")]
     Completed,
     /// <summary>
     /// The Encounter has ended before it has begun.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("cancelled", "http://hl7.org/fhir/encounter-status"), Description("Cancelled")]
+    [EnumLiteral("cancelled"), Description("Cancelled")]
     Cancelled,
     /// <summary>
     /// The Encounter has started, but was not able to be completed. Further action may need to be performed, such as rescheduling appointments related to this encounter.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("discontinued", "http://hl7.org/fhir/encounter-status"), Description("Discontinued")]
+    [EnumLiteral("discontinued"), Description("Discontinued")]
     Discontinued,
     /// <summary>
     /// This instance should not have been part of this patient's medical record.
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/encounter-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
     /// The encounter status is unknown. Note that "unknown" is a value of last resort and every attempt should be made to provide a meaningful value other than "unknown".
     /// (system: http://hl7.org/fhir/encounter-status)
     /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/encounter-status"), Description("Unknown")]
+    [EnumLiteral("unknown"), Description("Unknown")]
     Unknown,
   }
 
@@ -6361,56 +6361,56 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/event-status)
   /// (system: http://hl7.org/fhir/event-status)
   /// </summary>
-  [FhirEnumeration("EventStatus", "http://hl7.org/fhir/ValueSet/event-status")]
+  [FhirEnumeration("EventStatus", "http://hl7.org/fhir/ValueSet/event-status", "http://hl7.org/fhir/event-status")]
   public enum EventStatus
   {
     /// <summary>
     /// The core event has not started yet, but some staging activities have begun (e.g. surgical suite preparation).  Preparation stages may be tracked for billing purposes.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("preparation", "http://hl7.org/fhir/event-status"), Description("Preparation")]
+    [EnumLiteral("preparation"), Description("Preparation")]
     Preparation,
     /// <summary>
     /// The event is currently occurring.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("in-progress", "http://hl7.org/fhir/event-status"), Description("In Progress")]
+    [EnumLiteral("in-progress"), Description("In Progress")]
     InProgress,
     /// <summary>
     /// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("not-done", "http://hl7.org/fhir/event-status"), Description("Not Done")]
+    [EnumLiteral("not-done"), Description("Not Done")]
     NotDone,
     /// <summary>
     /// The event has been temporarily stopped but is expected to resume in the future.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("on-hold", "http://hl7.org/fhir/event-status"), Description("On Hold")]
+    [EnumLiteral("on-hold"), Description("On Hold")]
     OnHold,
     /// <summary>
     /// The event was terminated prior to the full completion of the intended activity but after at least some of the 'main' activity (beyond preparation) has occurred.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("stopped", "http://hl7.org/fhir/event-status"), Description("Stopped")]
+    [EnumLiteral("stopped"), Description("Stopped")]
     Stopped,
     /// <summary>
     /// The event has now concluded.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+    [EnumLiteral("completed"), Description("Completed")]
     Completed,
     /// <summary>
     /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
     /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/event-status"), Description("Unknown")]
+    [EnumLiteral("unknown"), Description("Unknown")]
     Unknown,
   }
 
@@ -6419,20 +6419,20 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/examplescenario-actor-type)
   /// (system: http://hl7.org/fhir/examplescenario-actor-type)
   /// </summary>
-  [FhirEnumeration("ExampleScenarioActorType", "http://hl7.org/fhir/ValueSet/examplescenario-actor-type")]
+  [FhirEnumeration("ExampleScenarioActorType", "http://hl7.org/fhir/ValueSet/examplescenario-actor-type", "http://hl7.org/fhir/examplescenario-actor-type")]
   public enum ExampleScenarioActorType
   {
     /// <summary>
     /// A human actor
     /// (system: http://hl7.org/fhir/examplescenario-actor-type)
     /// </summary>
-    [EnumLiteral("person", "http://hl7.org/fhir/examplescenario-actor-type"), Description("Person")]
+    [EnumLiteral("person"), Description("Person")]
     Person,
     /// <summary>
     /// A software application or other system
     /// (system: http://hl7.org/fhir/examplescenario-actor-type)
     /// </summary>
-    [EnumLiteral("system", "http://hl7.org/fhir/examplescenario-actor-type"), Description("System")]
+    [EnumLiteral("system"), Description("System")]
     System,
   }
 
@@ -6441,1396 +6441,1396 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/fhir-types)
   /// (system: http://hl7.org/fhir/fhir-types)
   /// </summary>
-  [FhirEnumeration("FHIRTypes", "http://hl7.org/fhir/ValueSet/fhir-types")]
+  [FhirEnumeration("FHIRTypes", "http://hl7.org/fhir/ValueSet/fhir-types", "http://hl7.org/fhir/fhir-types")]
   public enum FHIRAllTypes
   {
     /// <summary>
     /// Base Type: Base definition for all types defined in FHIR type system.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Base", "http://hl7.org/fhir/fhir-types"), Description("Base")]
+    [EnumLiteral("Base"), Description("Base")]
     Base,
     /// <summary>
     /// Element Type: Base definition for all elements in a resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Element", "http://hl7.org/fhir/fhir-types"), Description("Element")]
+    [EnumLiteral("Element"), Description("Element")]
     Element,
     /// <summary>
     /// BackboneElement Type: Base definition for all elements that are defined inside a resource - but not those in a data type.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BackboneElement", "http://hl7.org/fhir/fhir-types"), Description("BackboneElement")]
+    [EnumLiteral("BackboneElement"), Description("BackboneElement")]
     BackboneElement,
     /// <summary>
     /// DataType Type: The base class for all re-useable types defined as part of the FHIR Specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DataType", "http://hl7.org/fhir/fhir-types"), Description("DataType")]
+    [EnumLiteral("DataType"), Description("DataType")]
     DataType,
     /// <summary>
     /// Address Type: An address expressed using postal conventions (as opposed to GPS or other location definition formats).  This data type may be used to convey addresses for use in delivering mail as well as for visiting locations which might not be valid for mail delivery.  There are a variety of postal address formats defined around the world.
     /// The ISO21090-codedString may be used to provide a coded representation of the contents of strings in an Address.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Address", "http://hl7.org/fhir/fhir-types"), Description("Address")]
+    [EnumLiteral("Address"), Description("Address")]
     Address,
     /// <summary>
     /// Annotation Type: A  text note which also  contains information about who made the statement and when.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Annotation", "http://hl7.org/fhir/fhir-types"), Description("Annotation")]
+    [EnumLiteral("Annotation"), Description("Annotation")]
     Annotation,
     /// <summary>
     /// Attachment Type: For referring to data content defined in other formats.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Attachment", "http://hl7.org/fhir/fhir-types"), Description("Attachment")]
+    [EnumLiteral("Attachment"), Description("Attachment")]
     Attachment,
     /// <summary>
     /// Availability Type: Availability data for an {item}.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Availability", "http://hl7.org/fhir/fhir-types"), Description("Availability")]
+    [EnumLiteral("Availability"), Description("Availability")]
     Availability,
     /// <summary>
     /// BackboneType Type: Base definition for the few data types that are allowed to carry modifier extensions.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BackboneType", "http://hl7.org/fhir/fhir-types"), Description("BackboneType")]
+    [EnumLiteral("BackboneType"), Description("BackboneType")]
     BackboneType,
     /// <summary>
     /// Dosage Type: Indicates how the medication is/was taken or should be taken by the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Dosage", "http://hl7.org/fhir/fhir-types"), Description("Dosage")]
+    [EnumLiteral("Dosage"), Description("Dosage")]
     Dosage,
     /// <summary>
     /// ElementDefinition Type: Captures constraints on each element within the resource, profile, or extension.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ElementDefinition", "http://hl7.org/fhir/fhir-types"), Description("ElementDefinition")]
+    [EnumLiteral("ElementDefinition"), Description("ElementDefinition")]
     ElementDefinition,
     /// <summary>
     /// MarketingStatus Type: The marketing status describes the date when a medicinal product is actually put on the market or the date as of which it is no longer available.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MarketingStatus", "http://hl7.org/fhir/fhir-types"), Description("MarketingStatus")]
+    [EnumLiteral("MarketingStatus"), Description("MarketingStatus")]
     MarketingStatus,
     /// <summary>
     /// ProductShelfLife Type: The shelf-life and storage information for a medicinal product item or container can be described using this class.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ProductShelfLife", "http://hl7.org/fhir/fhir-types"), Description("ProductShelfLife")]
+    [EnumLiteral("ProductShelfLife"), Description("ProductShelfLife")]
     ProductShelfLife,
     /// <summary>
     /// Timing Type: Specifies an event that may occur multiple times. Timing schedules are used to record when things are planned, expected or requested to occur. The most common usage is in dosage instructions for medications. They are also used when planning care of various kinds, and may be used for reporting the schedule to which past regular activities were carried out.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Timing", "http://hl7.org/fhir/fhir-types"), Description("Timing")]
+    [EnumLiteral("Timing"), Description("Timing")]
     Timing,
     /// <summary>
     /// CodeableConcept Type: A concept that may be defined by a formal reference to a terminology or ontology or may be provided by text.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CodeableConcept", "http://hl7.org/fhir/fhir-types"), Description("CodeableConcept")]
+    [EnumLiteral("CodeableConcept"), Description("CodeableConcept")]
     CodeableConcept,
     /// <summary>
     /// CodeableReference Type: A reference to a resource (by instance), or instead, a reference to a concept defined in a terminology or ontology (by class).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CodeableReference", "http://hl7.org/fhir/fhir-types"), Description("CodeableReference")]
+    [EnumLiteral("CodeableReference"), Description("CodeableReference")]
     CodeableReference,
     /// <summary>
     /// Coding Type: A reference to a code defined by a terminology system.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Coding", "http://hl7.org/fhir/fhir-types"), Description("Coding")]
+    [EnumLiteral("Coding"), Description("Coding")]
     Coding,
     /// <summary>
     /// ContactDetail Type: Specifies contact information for a person or organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ContactDetail", "http://hl7.org/fhir/fhir-types"), Description("ContactDetail")]
+    [EnumLiteral("ContactDetail"), Description("ContactDetail")]
     ContactDetail,
     /// <summary>
     /// ContactPoint Type: Details for all kinds of technology mediated contact points for a person or organization, including telephone, email, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ContactPoint", "http://hl7.org/fhir/fhir-types"), Description("ContactPoint")]
+    [EnumLiteral("ContactPoint"), Description("ContactPoint")]
     ContactPoint,
     /// <summary>
     /// Contributor Type: A contributor to the content of a knowledge asset, including authors, editors, reviewers, and endorsers.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Contributor", "http://hl7.org/fhir/fhir-types"), Description("Contributor")]
+    [EnumLiteral("Contributor"), Description("Contributor")]
     Contributor,
     /// <summary>
     /// DataRequirement Type: Describes a required data item for evaluation in terms of the type of data, and optional code or date-based filters of the data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DataRequirement", "http://hl7.org/fhir/fhir-types"), Description("DataRequirement")]
+    [EnumLiteral("DataRequirement"), Description("DataRequirement")]
     DataRequirement,
     /// <summary>
     /// Expression Type: A expression that is evaluated in a specified context and returns a value. The context of use of the expression must specify the context in which the expression is evaluated, and how the result of the expression is used.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Expression", "http://hl7.org/fhir/fhir-types"), Description("Expression")]
+    [EnumLiteral("Expression"), Description("Expression")]
     Expression,
     /// <summary>
     /// ExtendedContactDetail Type: Specifies contact information for a specific purpose over a period of time, might be handled/monitored by a specific named person or organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExtendedContactDetail", "http://hl7.org/fhir/fhir-types"), Description("ExtendedContactDetail")]
+    [EnumLiteral("ExtendedContactDetail"), Description("ExtendedContactDetail")]
     ExtendedContactDetail,
     /// <summary>
     /// Extension Type: Optional Extension Element - found in all resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Extension", "http://hl7.org/fhir/fhir-types"), Description("Extension")]
+    [EnumLiteral("Extension"), Description("Extension")]
     Extension,
     /// <summary>
     /// HumanName Type: A name, normally of a human, that can be used for other living entities (e.g. animals but not organizations) that have been assigned names by a human and may need the use of name parts or the need for usage information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("HumanName", "http://hl7.org/fhir/fhir-types"), Description("HumanName")]
+    [EnumLiteral("HumanName"), Description("HumanName")]
     HumanName,
     /// <summary>
     /// Identifier Type: An identifier - identifies some entity uniquely and unambiguously. Typically this is used for business identifiers.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Identifier", "http://hl7.org/fhir/fhir-types"), Description("Identifier")]
+    [EnumLiteral("Identifier"), Description("Identifier")]
     Identifier,
     /// <summary>
     /// Meta Type: The metadata about a resource. This is content in the resource that is maintained by the infrastructure. Changes to the content might not always be associated with version changes to the resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Meta", "http://hl7.org/fhir/fhir-types"), Description("Meta")]
+    [EnumLiteral("Meta"), Description("Meta")]
     Meta,
     /// <summary>
     /// MonetaryComponent Type: Availability data for an {item}.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MonetaryComponent", "http://hl7.org/fhir/fhir-types"), Description("MonetaryComponent")]
+    [EnumLiteral("MonetaryComponent"), Description("MonetaryComponent")]
     MonetaryComponent,
     /// <summary>
     /// Money Type: An amount of economic utility in some recognized currency.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Money", "http://hl7.org/fhir/fhir-types"), Description("Money")]
+    [EnumLiteral("Money"), Description("Money")]
     Money,
     /// <summary>
     /// Narrative Type: A human-readable summary of the resource conveying the essential clinical and business information for the resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Narrative", "http://hl7.org/fhir/fhir-types"), Description("Narrative")]
+    [EnumLiteral("Narrative"), Description("Narrative")]
     Narrative,
     /// <summary>
     /// ParameterDefinition Type: The parameters to the module. This collection specifies both the input and output parameters. Input parameters are provided by the caller as part of the $evaluate operation. Output parameters are included in the GuidanceResponse.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ParameterDefinition", "http://hl7.org/fhir/fhir-types"), Description("ParameterDefinition")]
+    [EnumLiteral("ParameterDefinition"), Description("ParameterDefinition")]
     ParameterDefinition,
     /// <summary>
     /// Period Type: A time period defined by a start and end date and optionally time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Period", "http://hl7.org/fhir/fhir-types"), Description("Period")]
+    [EnumLiteral("Period"), Description("Period")]
     Period,
     /// <summary>
     /// PrimitiveType Type: The base type for all re-useable types defined that have a simple property.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PrimitiveType", "http://hl7.org/fhir/fhir-types"), Description("PrimitiveType")]
+    [EnumLiteral("PrimitiveType"), Description("PrimitiveType")]
     PrimitiveType,
     /// <summary>
     /// base64Binary Type: A stream of bytes
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("base64Binary", "http://hl7.org/fhir/fhir-types"), Description("base64Binary")]
+    [EnumLiteral("base64Binary"), Description("base64Binary")]
     Base64Binary,
     /// <summary>
     /// boolean Type: Value of "true" or "false"
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("boolean", "http://hl7.org/fhir/fhir-types"), Description("boolean")]
+    [EnumLiteral("boolean"), Description("boolean")]
     Boolean,
     /// <summary>
     /// date Type: A date or partial date (e.g. just year or year + month). There is no UTC offset. The format is a union of the schema types gYear, gYearMonth and date.  Dates SHALL be valid dates.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("date", "http://hl7.org/fhir/fhir-types"), Description("date")]
+    [EnumLiteral("date"), Description("date")]
     Date,
     /// <summary>
     /// dateTime Type: A date, date-time or partial date (e.g. just year or year + month).  If hours and minutes are specified, a UTC offset SHALL be populated. The format is a union of the schema types gYear, gYearMonth, date and dateTime. Seconds must be provided due to schema type constraints but may be zero-filled and may be ignored.                 Dates SHALL be valid dates.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("dateTime", "http://hl7.org/fhir/fhir-types"), Description("dateTime")]
+    [EnumLiteral("dateTime"), Description("dateTime")]
     DateTime,
     /// <summary>
     /// decimal Type: A rational number with implicit precision
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("decimal", "http://hl7.org/fhir/fhir-types"), Description("decimal")]
+    [EnumLiteral("decimal"), Description("decimal")]
     Decimal,
     /// <summary>
     /// instant Type: An instant in time - known at least to the second
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("instant", "http://hl7.org/fhir/fhir-types"), Description("instant")]
+    [EnumLiteral("instant"), Description("instant")]
     Instant,
     /// <summary>
     /// integer Type: A whole number
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("integer", "http://hl7.org/fhir/fhir-types"), Description("integer")]
+    [EnumLiteral("integer"), Description("integer")]
     Integer,
     /// <summary>
     /// positiveInt type: An integer with a value that is positive (e.g. &gt;0)
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("positiveInt", "http://hl7.org/fhir/fhir-types"), Description("positiveInt")]
+    [EnumLiteral("positiveInt"), Description("positiveInt")]
     PositiveInt,
     /// <summary>
     /// unsignedInt type: An integer with a value that is not negative (e.g. &gt;= 0)
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("unsignedInt", "http://hl7.org/fhir/fhir-types"), Description("unsignedInt")]
+    [EnumLiteral("unsignedInt"), Description("unsignedInt")]
     UnsignedInt,
     /// <summary>
     /// integer64 Type: A very large whole number
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("integer64", "http://hl7.org/fhir/fhir-types"), Description("integer64")]
+    [EnumLiteral("integer64"), Description("integer64")]
     Integer64,
     /// <summary>
     /// string Type: A sequence of Unicode characters
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("string", "http://hl7.org/fhir/fhir-types"), Description("string")]
+    [EnumLiteral("string"), Description("string")]
     String,
     /// <summary>
     /// code type: A string which has at least one character and no leading or trailing whitespace and where there is no whitespace other than single spaces in the contents
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("code", "http://hl7.org/fhir/fhir-types"), Description("code")]
+    [EnumLiteral("code"), Description("code")]
     Code,
     /// <summary>
     /// id type: Any combination of letters, numerals, "-" and ".", with a length limit of 64 characters.  (This might be an integer, an unprefixed OID, UUID or any other identifier pattern that meets these constraints.)  Ids are case-insensitive.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("id", "http://hl7.org/fhir/fhir-types"), Description("id")]
+    [EnumLiteral("id"), Description("id")]
     Id,
     /// <summary>
     /// markdown type: A string that may contain Github Flavored Markdown syntax for optional processing by a mark down presentation engine
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("markdown", "http://hl7.org/fhir/fhir-types"), Description("markdown")]
+    [EnumLiteral("markdown"), Description("markdown")]
     Markdown,
     /// <summary>
     /// time Type: A time during the day, with no date specified
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("time", "http://hl7.org/fhir/fhir-types"), Description("time")]
+    [EnumLiteral("time"), Description("time")]
     Time,
     /// <summary>
     /// uri Type: String of characters used to identify a name or a resource
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("uri", "http://hl7.org/fhir/fhir-types"), Description("uri")]
+    [EnumLiteral("uri"), Description("uri")]
     Uri,
     /// <summary>
     /// canonical type: A URI that is a reference to a canonical URL on a FHIR resource
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("canonical", "http://hl7.org/fhir/fhir-types"), Description("canonical")]
+    [EnumLiteral("canonical"), Description("canonical")]
     Canonical,
     /// <summary>
     /// oid type: An OID represented as a URI
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("oid", "http://hl7.org/fhir/fhir-types"), Description("oid")]
+    [EnumLiteral("oid"), Description("oid")]
     Oid,
     /// <summary>
     /// url type: A URI that is a literal reference
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("url", "http://hl7.org/fhir/fhir-types"), Description("url")]
+    [EnumLiteral("url"), Description("url")]
     Url,
     /// <summary>
     /// uuid type: A UUID, represented as a URI
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("uuid", "http://hl7.org/fhir/fhir-types"), Description("uuid")]
+    [EnumLiteral("uuid"), Description("uuid")]
     Uuid,
     /// <summary>
     /// Quantity Type: A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Quantity", "http://hl7.org/fhir/fhir-types"), Description("Quantity")]
+    [EnumLiteral("Quantity"), Description("Quantity")]
     Quantity,
     /// <summary>
     /// Age Type: A duration of time during which an organism (or a process) has existed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Age", "http://hl7.org/fhir/fhir-types"), Description("Age")]
+    [EnumLiteral("Age"), Description("Age")]
     Age,
     /// <summary>
     /// Count Type: A measured amount (or an amount that can potentially be measured). Note that measured amounts include amounts that are not precisely quantified, including amounts involving arbitrary units and floating currencies.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Count", "http://hl7.org/fhir/fhir-types"), Description("Count")]
+    [EnumLiteral("Count"), Description("Count")]
     Count,
     /// <summary>
     /// Distance Type: A length - a value with a unit that is a physical distance.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Distance", "http://hl7.org/fhir/fhir-types"), Description("Distance")]
+    [EnumLiteral("Distance"), Description("Distance")]
     Distance,
     /// <summary>
     /// Duration Type: A length of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Duration", "http://hl7.org/fhir/fhir-types"), Description("Duration")]
+    [EnumLiteral("Duration"), Description("Duration")]
     Duration,
     /// <summary>
     /// Range Type: A set of ordered Quantities defined by a low and high limit.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Range", "http://hl7.org/fhir/fhir-types"), Description("Range")]
+    [EnumLiteral("Range"), Description("Range")]
     Range,
     /// <summary>
     /// Ratio Type: A relationship of two Quantity values - expressed as a numerator and a denominator.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Ratio", "http://hl7.org/fhir/fhir-types"), Description("Ratio")]
+    [EnumLiteral("Ratio"), Description("Ratio")]
     Ratio,
     /// <summary>
     /// RatioRange Type: A range of ratios expressed as a low and high numerator and a denominator.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RatioRange", "http://hl7.org/fhir/fhir-types"), Description("RatioRange")]
+    [EnumLiteral("RatioRange"), Description("RatioRange")]
     RatioRange,
     /// <summary>
     /// Reference Type: A reference from one resource to another.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Reference", "http://hl7.org/fhir/fhir-types"), Description("Reference")]
+    [EnumLiteral("Reference"), Description("Reference")]
     Reference,
     /// <summary>
     /// RelatedArtifact Type: Related artifacts such as additional documentation, justification, or bibliographic references.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RelatedArtifact", "http://hl7.org/fhir/fhir-types"), Description("RelatedArtifact")]
+    [EnumLiteral("RelatedArtifact"), Description("RelatedArtifact")]
     RelatedArtifact,
     /// <summary>
     /// SampledData Type: A series of measurements taken by a device, with upper and lower limits. There may be more than one dimension in the data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SampledData", "http://hl7.org/fhir/fhir-types"), Description("SampledData")]
+    [EnumLiteral("SampledData"), Description("SampledData")]
     SampledData,
     /// <summary>
     /// Signature Type: A signature along with supporting context. The signature may be a digital signature that is cryptographic in nature, or some other signature acceptable to the domain. This other signature may be as simple as a graphical image representing a hand-written signature, or a signature ceremony Different signature approaches have different utilities.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Signature", "http://hl7.org/fhir/fhir-types"), Description("Signature")]
+    [EnumLiteral("Signature"), Description("Signature")]
     Signature,
     /// <summary>
     /// TriggerDefinition Type: A description of a triggering event. Triggering events can be named events, data events, or periodic, as determined by the type element.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TriggerDefinition", "http://hl7.org/fhir/fhir-types"), Description("TriggerDefinition")]
+    [EnumLiteral("TriggerDefinition"), Description("TriggerDefinition")]
     TriggerDefinition,
     /// <summary>
     /// UsageContext Type: Specifies clinical/business/etc. metadata that can be used to retrieve, index and/or categorize an artifact. This metadata can either be specific to the applicable population (e.g., age category, DRG) or the specific context of care (e.g., venue, care setting, provider of care).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("UsageContext", "http://hl7.org/fhir/fhir-types"), Description("UsageContext")]
+    [EnumLiteral("UsageContext"), Description("UsageContext")]
     UsageContext,
     /// <summary>
     /// VirtualServiceDetail Type: Virtual Service Contact Details.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VirtualServiceDetail", "http://hl7.org/fhir/fhir-types"), Description("VirtualServiceDetail")]
+    [EnumLiteral("VirtualServiceDetail"), Description("VirtualServiceDetail")]
     VirtualServiceDetail,
     /// <summary>
     /// xhtml Type definition
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("xhtml", "http://hl7.org/fhir/fhir-types"), Description("xhtml")]
+    [EnumLiteral("xhtml"), Description("xhtml")]
     Xhtml,
     /// <summary>
     /// This is the base resource type for everything.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Resource", "http://hl7.org/fhir/fhir-types"), Description("Resource")]
+    [EnumLiteral("Resource"), Description("Resource")]
     Resource,
     /// <summary>
     /// A resource that represents the data of a single raw artifact as digital content accessible in its native format.  A Binary resource can contain any content, whether text, image, pdf, zip archive, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Binary", "http://hl7.org/fhir/fhir-types"), Description("Binary")]
+    [EnumLiteral("Binary"), Description("Binary")]
     Binary,
     /// <summary>
     /// A container for a collection of resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Bundle", "http://hl7.org/fhir/fhir-types"), Description("Bundle")]
+    [EnumLiteral("Bundle"), Description("Bundle")]
     Bundle,
     /// <summary>
     /// A resource that includes narrative, extensions, and contained resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DomainResource", "http://hl7.org/fhir/fhir-types"), Description("DomainResource")]
+    [EnumLiteral("DomainResource"), Description("DomainResource")]
     DomainResource,
     /// <summary>
     /// A financial tool for tracking value accrued for a particular purpose.  In the healthcare field, used to track charges for a patient, cost centers, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Account", "http://hl7.org/fhir/fhir-types"), Description("Account")]
+    [EnumLiteral("Account"), Description("Account")]
     Account,
     /// <summary>
     /// This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ActivityDefinition", "http://hl7.org/fhir/fhir-types"), Description("ActivityDefinition")]
+    [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
     ActivityDefinition,
     /// <summary>
     /// The ActorDefinition resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ActorDefinition", "http://hl7.org/fhir/fhir-types"), Description("ActorDefinition")]
+    [EnumLiteral("ActorDefinition"), Description("ActorDefinition")]
     ActorDefinition,
     /// <summary>
     /// A medicinal product in the final form which is suitable for administering to a patient (after any mixing of multiple components, dissolution etc. has been performed).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AdministrableProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("AdministrableProductDefinition")]
+    [EnumLiteral("AdministrableProductDefinition"), Description("AdministrableProductDefinition")]
     AdministrableProductDefinition,
     /// <summary>
     /// An event (i.e. any change to current patient status) that may be related to unintended effects on a patient or research participant. The unintended effects may require additional monitoring, treatment, hospitalization, or may result in death. The AdverseEvent resource also extends to potential or avoided events that could have had such effects. There are two major domains where the AdverseEvent resource is expected to be used. One is in clinical care reported adverse events and the other is in reporting adverse events in clinical  research trial management.  Adverse events can be reported by healthcare providers, patients, caregivers or by medical products manufacturers.  Given the differences between these two concepts, we recommend consulting the domain specific implementation guides when implementing the AdverseEvent Resource. The implementation guides include specific extensions, value sets and constraints.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AdverseEvent", "http://hl7.org/fhir/fhir-types"), Description("AdverseEvent")]
+    [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
     AdverseEvent,
     /// <summary>
     /// Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AllergyIntolerance", "http://hl7.org/fhir/fhir-types"), Description("AllergyIntolerance")]
+    [EnumLiteral("AllergyIntolerance"), Description("AllergyIntolerance")]
     AllergyIntolerance,
     /// <summary>
     /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Appointment", "http://hl7.org/fhir/fhir-types"), Description("Appointment")]
+    [EnumLiteral("Appointment"), Description("Appointment")]
     Appointment,
     /// <summary>
     /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/fhir-types"), Description("AppointmentResponse")]
+    [EnumLiteral("AppointmentResponse"), Description("AppointmentResponse")]
     AppointmentResponse,
     /// <summary>
     /// This Resource provides one or more comments, classifiers or ratings about a Resource and supports attribution and rights management metadata for the added content.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ArtifactAssessment", "http://hl7.org/fhir/fhir-types"), Description("ArtifactAssessment")]
+    [EnumLiteral("ArtifactAssessment"), Description("ArtifactAssessment")]
     ArtifactAssessment,
     /// <summary>
     /// A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AuditEvent", "http://hl7.org/fhir/fhir-types"), Description("AuditEvent")]
+    [EnumLiteral("AuditEvent"), Description("AuditEvent")]
     AuditEvent,
     /// <summary>
     /// Basic is used for handling concepts not yet defined in FHIR, narrative-only resources that don't map to an existing resource, and custom resources not appropriate for inclusion in the FHIR specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Basic", "http://hl7.org/fhir/fhir-types"), Description("Basic")]
+    [EnumLiteral("Basic"), Description("Basic")]
     Basic,
     /// <summary>
     /// A biological material originating from a biological entity intended to be transplanted or infused into another (possibly the same) biological entity.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BiologicallyDerivedProduct", "http://hl7.org/fhir/fhir-types"), Description("BiologicallyDerivedProduct")]
+    [EnumLiteral("BiologicallyDerivedProduct"), Description("BiologicallyDerivedProduct")]
     BiologicallyDerivedProduct,
     /// <summary>
     /// A record of dispensation of a biologically derived product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BiologicallyDerivedProductDispense", "http://hl7.org/fhir/fhir-types"), Description("BiologicallyDerivedProductDispense")]
+    [EnumLiteral("BiologicallyDerivedProductDispense"), Description("BiologicallyDerivedProductDispense")]
     BiologicallyDerivedProductDispense,
     /// <summary>
     /// Record details about an anatomical structure.  This resource may be used when a coded concept does not provide the necessary detail needed for the use case.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BodyStructure", "http://hl7.org/fhir/fhir-types"), Description("BodyStructure")]
+    [EnumLiteral("BodyStructure"), Description("BodyStructure")]
     BodyStructure,
     /// <summary>
     /// Common Interface declaration for conformance and knowledge artifact resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CanonicalResource", "http://hl7.org/fhir/fhir-types"), Description("CanonicalResource")]
+    [EnumLiteral("CanonicalResource"), Description("CanonicalResource")]
     CanonicalResource,
     /// <summary>
     /// A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server or Client for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CapabilityStatement", "http://hl7.org/fhir/fhir-types"), Description("CapabilityStatement")]
+    [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
     CapabilityStatement,
     /// <summary>
     /// Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CarePlan", "http://hl7.org/fhir/fhir-types"), Description("CarePlan")]
+    [EnumLiteral("CarePlan"), Description("CarePlan")]
     CarePlan,
     /// <summary>
     /// The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CareTeam", "http://hl7.org/fhir/fhir-types"), Description("CareTeam")]
+    [EnumLiteral("CareTeam"), Description("CareTeam")]
     CareTeam,
     /// <summary>
     /// The resource ChargeItem describes the provision of healthcare provider products for a certain patient, therefore referring not only to the product, but containing in addition details of the provision, like date, time, amounts and participating organizations and persons. Main Usage of the ChargeItem is to enable the billing process and internal cost allocation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ChargeItem", "http://hl7.org/fhir/fhir-types"), Description("ChargeItem")]
+    [EnumLiteral("ChargeItem"), Description("ChargeItem")]
     ChargeItem,
     /// <summary>
     /// The ChargeItemDefinition resource provides the properties that apply to the (billing) codes necessary to calculate costs and prices. The properties may differ largely depending on type and realm, therefore this resource gives only a rough structure and requires profiling for each type of billing code system.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ChargeItemDefinition", "http://hl7.org/fhir/fhir-types"), Description("ChargeItemDefinition")]
+    [EnumLiteral("ChargeItemDefinition"), Description("ChargeItemDefinition")]
     ChargeItemDefinition,
     /// <summary>
     /// The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Citation", "http://hl7.org/fhir/fhir-types"), Description("Citation")]
+    [EnumLiteral("Citation"), Description("Citation")]
     Citation,
     /// <summary>
     /// A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Claim", "http://hl7.org/fhir/fhir-types"), Description("Claim")]
+    [EnumLiteral("Claim"), Description("Claim")]
     Claim,
     /// <summary>
     /// This resource provides the adjudication details from the processing of a Claim resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClaimResponse", "http://hl7.org/fhir/fhir-types"), Description("ClaimResponse")]
+    [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
     ClaimResponse,
     /// <summary>
     /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClinicalImpression", "http://hl7.org/fhir/fhir-types"), Description("ClinicalImpression")]
+    [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
     ClinicalImpression,
     /// <summary>
     /// A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClinicalUseDefinition", "http://hl7.org/fhir/fhir-types"), Description("ClinicalUseDefinition")]
+    [EnumLiteral("ClinicalUseDefinition"), Description("ClinicalUseDefinition")]
     ClinicalUseDefinition,
     /// <summary>
     /// The CodeSystem resource is used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CodeSystem", "http://hl7.org/fhir/fhir-types"), Description("CodeSystem")]
+    [EnumLiteral("CodeSystem"), Description("CodeSystem")]
     CodeSystem,
     /// <summary>
     /// A clinical or business level record of information being transmitted or shared; e.g. an alert that was sent to a responsible provider, a public health agency communication to a provider/reporter in response to a case report for a reportable condition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Communication", "http://hl7.org/fhir/fhir-types"), Description("Communication")]
+    [EnumLiteral("Communication"), Description("Communication")]
     Communication,
     /// <summary>
     /// A request to convey information; e.g. the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/fhir-types"), Description("CommunicationRequest")]
+    [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
     CommunicationRequest,
     /// <summary>
     /// A compartment definition that defines how resources are accessed on a server.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CompartmentDefinition", "http://hl7.org/fhir/fhir-types"), Description("CompartmentDefinition")]
+    [EnumLiteral("CompartmentDefinition"), Description("CompartmentDefinition")]
     CompartmentDefinition,
     /// <summary>
     /// A set of healthcare-related information that is assembled together into a single logical package that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement. A Composition defines the structure and narrative content necessary for a document. However, a Composition alone does not constitute a document. Rather, the Composition must be the first entry in a Bundle where Bundle.type=document, and any other resources referenced from Composition must be included as subsequent entries in the Bundle (for example Patient, Practitioner, Encounter, etc.).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Composition", "http://hl7.org/fhir/fhir-types"), Description("Composition")]
+    [EnumLiteral("Composition"), Description("Composition")]
     Composition,
     /// <summary>
     /// A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ConceptMap", "http://hl7.org/fhir/fhir-types"), Description("ConceptMap")]
+    [EnumLiteral("ConceptMap"), Description("ConceptMap")]
     ConceptMap,
     /// <summary>
     /// A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Condition", "http://hl7.org/fhir/fhir-types"), Description("Condition")]
+    [EnumLiteral("Condition"), Description("Condition")]
     Condition,
     /// <summary>
     /// A definition of a condition and information relevant to managing it.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ConditionDefinition", "http://hl7.org/fhir/fhir-types"), Description("ConditionDefinition")]
+    [EnumLiteral("ConditionDefinition"), Description("ConditionDefinition")]
     ConditionDefinition,
     /// <summary>
     /// A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Consent", "http://hl7.org/fhir/fhir-types"), Description("Consent")]
+    [EnumLiteral("Consent"), Description("Consent")]
     Consent,
     /// <summary>
     /// Legally enforceable, formally recorded unilateral or bilateral directive i.e., a policy or agreement.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Contract", "http://hl7.org/fhir/fhir-types"), Description("Contract")]
+    [EnumLiteral("Contract"), Description("Contract")]
     Contract,
     /// <summary>
     /// Financial instrument which may be used to reimburse or pay for health care products and services. Includes both insurance and self-payment.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Coverage", "http://hl7.org/fhir/fhir-types"), Description("Coverage")]
+    [EnumLiteral("Coverage"), Description("Coverage")]
     Coverage,
     /// <summary>
     /// The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CoverageEligibilityRequest", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityRequest")]
+    [EnumLiteral("CoverageEligibilityRequest"), Description("CoverageEligibilityRequest")]
     CoverageEligibilityRequest,
     /// <summary>
     /// This resource provides eligibility and plan details from the processing of an CoverageEligibilityRequest resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CoverageEligibilityResponse", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityResponse")]
+    [EnumLiteral("CoverageEligibilityResponse"), Description("CoverageEligibilityResponse")]
     CoverageEligibilityResponse,
     /// <summary>
     /// Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g. Drug-drug interaction, Ineffective treatment frequency, Procedure-condition conflict, gaps in care, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DetectedIssue", "http://hl7.org/fhir/fhir-types"), Description("DetectedIssue")]
+    [EnumLiteral("DetectedIssue"), Description("DetectedIssue")]
     DetectedIssue,
     /// <summary>
     /// This resource describes the properties (regulated, has real time clock, etc.), adminstrative (manufacturer name, model number, serial number, firmware, etc.), and type (knee replacement, blood pressure cuff, MRI, etc.) of a physical unit (these values do not change much within a given module, for example the serail number, manufacturer name, and model number). An actual unit may consist of several modules in a distinct hierarchy and these are represented by multiple Device resources and bound through the 'parent' element.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Device", "http://hl7.org/fhir/fhir-types"), Description("Device")]
+    [EnumLiteral("Device"), Description("Device")]
     Device,
     /// <summary>
     /// A record of association of a device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceAssociation", "http://hl7.org/fhir/fhir-types"), Description("DeviceAssociation")]
+    [EnumLiteral("DeviceAssociation"), Description("DeviceAssociation")]
     DeviceAssociation,
     /// <summary>
     /// This is a specialized resource that defines the characteristics and capabilities of a device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceDefinition", "http://hl7.org/fhir/fhir-types"), Description("DeviceDefinition")]
+    [EnumLiteral("DeviceDefinition"), Description("DeviceDefinition")]
     DeviceDefinition,
     /// <summary>
     /// Indicates that a device is to be or has been dispensed for a named person/patient.  This includes a description of the product (supply) provided and the instructions for using the device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceDispense", "http://hl7.org/fhir/fhir-types"), Description("DeviceDispense")]
+    [EnumLiteral("DeviceDispense"), Description("DeviceDispense")]
     DeviceDispense,
     /// <summary>
     /// Describes a measurement, calculation or setting capability of a device.  The DeviceMetric resource is derived from the ISO/IEEE 11073-10201 Domain Information Model standard, but is more widely applicable. 
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceMetric", "http://hl7.org/fhir/fhir-types"), Description("DeviceMetric")]
+    [EnumLiteral("DeviceMetric"), Description("DeviceMetric")]
     DeviceMetric,
     /// <summary>
     /// Represents a request a device to be provided to a specific patient. The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/fhir-types"), Description("DeviceRequest")]
+    [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
     DeviceRequest,
     /// <summary>
     /// A record of a device being used by a patient where the record is the result of a report from the patient or a clinician.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceUsage", "http://hl7.org/fhir/fhir-types"), Description("DeviceUsage")]
+    [EnumLiteral("DeviceUsage"), Description("DeviceUsage")]
     DeviceUsage,
     /// <summary>
     /// The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports. The report also includes non-clinical context such as batch analysis and stability reporting of products and substances.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DiagnosticReport", "http://hl7.org/fhir/fhir-types"), Description("DiagnosticReport")]
+    [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
     DiagnosticReport,
     /// <summary>
     /// A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this “document” encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DocumentReference", "http://hl7.org/fhir/fhir-types"), Description("DocumentReference")]
+    [EnumLiteral("DocumentReference"), Description("DocumentReference")]
     DocumentReference,
     /// <summary>
     /// An interaction between healthcare provider(s), and/or patient(s) for the purpose of providing healthcare service(s) or assessing the health status of patient(s).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Encounter", "http://hl7.org/fhir/fhir-types"), Description("Encounter")]
+    [EnumLiteral("Encounter"), Description("Encounter")]
     Encounter,
     /// <summary>
     /// A record of significant events/milestones key data throughout the history of an Encounter
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EncounterHistory", "http://hl7.org/fhir/fhir-types"), Description("EncounterHistory")]
+    [EnumLiteral("EncounterHistory"), Description("EncounterHistory")]
     EncounterHistory,
     /// <summary>
     /// The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b, a REST endpoint for another FHIR server, or a s/Mime email address. This may include any security context information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Endpoint", "http://hl7.org/fhir/fhir-types"), Description("Endpoint")]
+    [EnumLiteral("Endpoint"), Description("Endpoint")]
     Endpoint,
     /// <summary>
     /// This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentRequest")]
+    [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
     EnrollmentRequest,
     /// <summary>
     /// This resource provides enrollment and plan details from the processing of an EnrollmentRequest resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EnrollmentResponse", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentResponse")]
+    [EnumLiteral("EnrollmentResponse"), Description("EnrollmentResponse")]
     EnrollmentResponse,
     /// <summary>
     /// An association between a patient and an organization / healthcare provider(s) during which time encounters may occur. The managing organization assumes a level of responsibility for the patient during this time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/fhir-types"), Description("EpisodeOfCare")]
+    [EnumLiteral("EpisodeOfCare"), Description("EpisodeOfCare")]
     EpisodeOfCare,
     /// <summary>
     /// The EventDefinition resource provides a reusable description of when a particular event can occur.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EventDefinition", "http://hl7.org/fhir/fhir-types"), Description("EventDefinition")]
+    [EnumLiteral("EventDefinition"), Description("EventDefinition")]
     EventDefinition,
     /// <summary>
     /// The Evidence Resource provides a machine-interpretable expression of an evidence concept including the evidence variables (e.g., population, exposures/interventions, comparators, outcomes, measured variables, confounding variables), the statistics, and the certainty of this evidence.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Evidence", "http://hl7.org/fhir/fhir-types"), Description("Evidence")]
+    [EnumLiteral("Evidence"), Description("Evidence")]
     Evidence,
     /// <summary>
     /// The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EvidenceReport", "http://hl7.org/fhir/fhir-types"), Description("EvidenceReport")]
+    [EnumLiteral("EvidenceReport"), Description("EvidenceReport")]
     EvidenceReport,
     /// <summary>
     /// The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EvidenceVariable", "http://hl7.org/fhir/fhir-types"), Description("EvidenceVariable")]
+    [EnumLiteral("EvidenceVariable"), Description("EvidenceVariable")]
     EvidenceVariable,
     /// <summary>
     /// A walkthrough of a workflow showing the interaction between systems and the instances shared, possibly including the evolution of instances over time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExampleScenario", "http://hl7.org/fhir/fhir-types"), Description("ExampleScenario")]
+    [EnumLiteral("ExampleScenario"), Description("ExampleScenario")]
     ExampleScenario,
     /// <summary>
     /// This resource provides: the claim details; adjudication details from the processing of a Claim; and optionally account balance information, for informing the subscriber of the benefits provided.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExplanationOfBenefit", "http://hl7.org/fhir/fhir-types"), Description("ExplanationOfBenefit")]
+    [EnumLiteral("ExplanationOfBenefit"), Description("ExplanationOfBenefit")]
     ExplanationOfBenefit,
     /// <summary>
     /// Significant health conditions for a person related to the patient relevant in the context of care for the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("FamilyMemberHistory", "http://hl7.org/fhir/fhir-types"), Description("FamilyMemberHistory")]
+    [EnumLiteral("FamilyMemberHistory"), Description("FamilyMemberHistory")]
     FamilyMemberHistory,
     /// <summary>
     /// Prospective warnings of potential issues when providing care to the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Flag", "http://hl7.org/fhir/fhir-types"), Description("Flag")]
+    [EnumLiteral("Flag"), Description("Flag")]
     Flag,
     /// <summary>
     /// This resource describes a product or service that is available through a program and includes the conditions and constraints of availability.  All of the information in this resource is specific to the inclusion of the item in the formulary and is not inherent to the item itself.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("FormularyItem", "http://hl7.org/fhir/fhir-types"), Description("FormularyItem")]
+    [EnumLiteral("FormularyItem"), Description("FormularyItem")]
     FormularyItem,
     /// <summary>
     /// A set of analyses performed to analyze and generate genomic data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GenomicStudy", "http://hl7.org/fhir/fhir-types"), Description("GenomicStudy")]
+    [EnumLiteral("GenomicStudy"), Description("GenomicStudy")]
     GenomicStudy,
     /// <summary>
     /// Describes the intended objective(s) for a patient, group or organization care, for example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Goal", "http://hl7.org/fhir/fhir-types"), Description("Goal")]
+    [EnumLiteral("Goal"), Description("Goal")]
     Goal,
     /// <summary>
     /// A formal computable definition of a graph of resources - that is, a coherent set of resources that form a graph by following references. The Graph Definition resource defines a set and makes rules about the set.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GraphDefinition", "http://hl7.org/fhir/fhir-types"), Description("GraphDefinition")]
+    [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
     GraphDefinition,
     /// <summary>
     /// Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Group", "http://hl7.org/fhir/fhir-types"), Description("Group")]
+    [EnumLiteral("Group"), Description("Group")]
     Group,
     /// <summary>
     /// A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GuidanceResponse", "http://hl7.org/fhir/fhir-types"), Description("GuidanceResponse")]
+    [EnumLiteral("GuidanceResponse"), Description("GuidanceResponse")]
     GuidanceResponse,
     /// <summary>
     /// The details of a healthcare service available at a location or in a catalog.  In the case where there is a hierarchy of services (for example, Lab -&gt; Pathology -&gt; Wound Cultures), this can be represented using a set of linked HealthcareServices.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("HealthcareService", "http://hl7.org/fhir/fhir-types"), Description("HealthcareService")]
+    [EnumLiteral("HealthcareService"), Description("HealthcareService")]
     HealthcareService,
     /// <summary>
     /// A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImagingSelection", "http://hl7.org/fhir/fhir-types"), Description("ImagingSelection")]
+    [EnumLiteral("ImagingSelection"), Description("ImagingSelection")]
     ImagingSelection,
     /// <summary>
     /// Representation of the content produced in a DICOM imaging study. A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImagingStudy", "http://hl7.org/fhir/fhir-types"), Description("ImagingStudy")]
+    [EnumLiteral("ImagingStudy"), Description("ImagingStudy")]
     ImagingStudy,
     /// <summary>
     /// Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Immunization", "http://hl7.org/fhir/fhir-types"), Description("Immunization")]
+    [EnumLiteral("Immunization"), Description("Immunization")]
     Immunization,
     /// <summary>
     /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImmunizationEvaluation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationEvaluation")]
+    [EnumLiteral("ImmunizationEvaluation"), Description("ImmunizationEvaluation")]
     ImmunizationEvaluation,
     /// <summary>
     /// A patient's point-in-time set of recommendations (i.e. forecasting) according to a published schedule with optional supporting justification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationRecommendation")]
+    [EnumLiteral("ImmunizationRecommendation"), Description("ImmunizationRecommendation")]
     ImmunizationRecommendation,
     /// <summary>
     /// A set of rules of how a particular interoperability or standards problem is solved - typically through the use of FHIR resources. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImplementationGuide", "http://hl7.org/fhir/fhir-types"), Description("ImplementationGuide")]
+    [EnumLiteral("ImplementationGuide"), Description("ImplementationGuide")]
     ImplementationGuide,
     /// <summary>
     /// An ingredient of a manufactured item or pharmaceutical product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Ingredient", "http://hl7.org/fhir/fhir-types"), Description("Ingredient")]
+    [EnumLiteral("Ingredient"), Description("Ingredient")]
     Ingredient,
     /// <summary>
     /// Details of a Health Insurance product/plan provided by an organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InsurancePlan", "http://hl7.org/fhir/fhir-types"), Description("InsurancePlan")]
+    [EnumLiteral("InsurancePlan"), Description("InsurancePlan")]
     InsurancePlan,
     /// <summary>
     /// functional description of an inventory item used in inventory and supply-related workflows.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InventoryItem", "http://hl7.org/fhir/fhir-types"), Description("InventoryItem")]
+    [EnumLiteral("InventoryItem"), Description("InventoryItem")]
     InventoryItem,
     /// <summary>
     /// A report of inventory or stock items.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InventoryReport", "http://hl7.org/fhir/fhir-types"), Description("InventoryReport")]
+    [EnumLiteral("InventoryReport"), Description("InventoryReport")]
     InventoryReport,
     /// <summary>
     /// Invoice containing collected ChargeItems from an Account with calculated individual and total price for Billing purpose.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Invoice", "http://hl7.org/fhir/fhir-types"), Description("Invoice")]
+    [EnumLiteral("Invoice"), Description("Invoice")]
     Invoice,
     /// <summary>
     /// The Library resource is a general-purpose container for knowledge asset definitions. It can be used to describe and expose existing knowledge assets such as logic libraries and information model descriptions, as well as to describe a collection of knowledge assets.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Library", "http://hl7.org/fhir/fhir-types"), Description("Library")]
+    [EnumLiteral("Library"), Description("Library")]
     Library,
     /// <summary>
     /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Linkage", "http://hl7.org/fhir/fhir-types"), Description("Linkage")]
+    [EnumLiteral("Linkage"), Description("Linkage")]
     Linkage,
     /// <summary>
     /// A List is a curated collection of resources, for things such as problem lists, allergy lists, facility list, organization list, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("List", "http://hl7.org/fhir/fhir-types"), Description("List")]
+    [EnumLiteral("List"), Description("List")]
     List,
     /// <summary>
     /// Details and position information for a place where services are provided and resources and participants may be stored, found, contained, or accommodated.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Location", "http://hl7.org/fhir/fhir-types"), Description("Location")]
+    [EnumLiteral("Location"), Description("Location")]
     Location,
     /// <summary>
     /// The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ManufacturedItemDefinition", "http://hl7.org/fhir/fhir-types"), Description("ManufacturedItemDefinition")]
+    [EnumLiteral("ManufacturedItemDefinition"), Description("ManufacturedItemDefinition")]
     ManufacturedItemDefinition,
     /// <summary>
     /// The Measure resource provides the definition of a quality measure.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Measure", "http://hl7.org/fhir/fhir-types"), Description("Measure")]
+    [EnumLiteral("Measure"), Description("Measure")]
     Measure,
     /// <summary>
     /// The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MeasureReport", "http://hl7.org/fhir/fhir-types"), Description("MeasureReport")]
+    [EnumLiteral("MeasureReport"), Description("MeasureReport")]
     MeasureReport,
     /// <summary>
     /// This resource is primarily used for the identification and definition of a medication, including ingredients, for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Medication", "http://hl7.org/fhir/fhir-types"), Description("Medication")]
+    [EnumLiteral("Medication"), Description("Medication")]
     Medication,
     /// <summary>
     /// Describes the event of a patient consuming or otherwise being administered a medication.  This may be as simple as swallowing a tablet or it may be a long running infusion. Related resources tie this event to the authorizing prescription, and the specific encounter between patient and health care practitioner. This event can also be used to record waste using a status of not-done and the appropriate statusReason.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationAdministration", "http://hl7.org/fhir/fhir-types"), Description("MedicationAdministration")]
+    [EnumLiteral("MedicationAdministration"), Description("MedicationAdministration")]
     MedicationAdministration,
     /// <summary>
     /// Indicates that a medication product is to be or has been dispensed for a named person/patient.  This includes a description of the medication product (supply) provided and the instructions for administering the medication.  The medication dispense is the result of a pharmacy system responding to a medication order.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationDispense", "http://hl7.org/fhir/fhir-types"), Description("MedicationDispense")]
+    [EnumLiteral("MedicationDispense"), Description("MedicationDispense")]
     MedicationDispense,
     /// <summary>
     /// Information about a medication that is used to support knowledge.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationKnowledge", "http://hl7.org/fhir/fhir-types"), Description("MedicationKnowledge")]
+    [EnumLiteral("MedicationKnowledge"), Description("MedicationKnowledge")]
     MedicationKnowledge,
     /// <summary>
     /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/fhir-types"), Description("MedicationRequest")]
+    [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
     MedicationRequest,
     /// <summary>
     /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
     /// The primary difference between a medicationstatement and a medicationadministration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medicationstatement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the Medication Statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationStatement", "http://hl7.org/fhir/fhir-types"), Description("MedicationStatement")]
+    [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
     MedicationStatement,
     /// <summary>
     /// Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use, drug catalogs, to support prescribing, adverse events management etc.).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicinalProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("MedicinalProductDefinition")]
+    [EnumLiteral("MedicinalProductDefinition"), Description("MedicinalProductDefinition")]
     MedicinalProductDefinition,
     /// <summary>
     /// Defines the characteristics of a message that can be shared between systems, including the type of event that initiates the message, the content to be transmitted and what response(s), if any, are permitted.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MessageDefinition", "http://hl7.org/fhir/fhir-types"), Description("MessageDefinition")]
+    [EnumLiteral("MessageDefinition"), Description("MessageDefinition")]
     MessageDefinition,
     /// <summary>
     /// The header for a message exchange that is either requesting or responding to an action.  The reference(s) that are the subject of the action as well as other information related to the action are typically transmitted in a bundle in which the MessageHeader resource instance is the first resource in the bundle.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MessageHeader", "http://hl7.org/fhir/fhir-types"), Description("MessageHeader")]
+    [EnumLiteral("MessageHeader"), Description("MessageHeader")]
     MessageHeader,
     /// <summary>
     /// Common Interface declaration for conformance and knowledge artifact resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MetadataResource", "http://hl7.org/fhir/fhir-types"), Description("MetadataResource")]
+    [EnumLiteral("MetadataResource"), Description("MetadataResource")]
     MetadataResource,
     /// <summary>
     /// Representation of a molecular sequence.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MolecularSequence", "http://hl7.org/fhir/fhir-types"), Description("MolecularSequence")]
+    [EnumLiteral("MolecularSequence"), Description("MolecularSequence")]
     MolecularSequence,
     /// <summary>
     /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NamingSystem", "http://hl7.org/fhir/fhir-types"), Description("NamingSystem")]
+    [EnumLiteral("NamingSystem"), Description("NamingSystem")]
     NamingSystem,
     /// <summary>
     /// A record of food or fluid that is being consumed by a patient.  A NutritionIntake may indicate that the patient may be consuming the food or fluid now or has consumed the food or fluid in the past.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay or through an app that tracks food or fluids consumed.   The consumption information may come from sources such as the patient's memory, from a nutrition label,  or from a clinician documenting observed intake.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionIntake", "http://hl7.org/fhir/fhir-types"), Description("NutritionIntake")]
+    [EnumLiteral("NutritionIntake"), Description("NutritionIntake")]
     NutritionIntake,
     /// <summary>
     /// A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/fhir-types"), Description("NutritionOrder")]
+    [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
     NutritionOrder,
     /// <summary>
     /// A food or supplement that is consumed by patients.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/fhir-types"), Description("NutritionProduct")]
+    [EnumLiteral("NutritionProduct"), Description("NutritionProduct")]
     NutritionProduct,
     /// <summary>
     /// Measurements and simple assertions made about a patient, device or other subject.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Observation", "http://hl7.org/fhir/fhir-types"), Description("Observation")]
+    [EnumLiteral("Observation"), Description("Observation")]
     Observation,
     /// <summary>
     /// Set of definitional characteristics for a kind of observation or measurement produced or consumed by an orderable health care service.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ObservationDefinition", "http://hl7.org/fhir/fhir-types"), Description("ObservationDefinition")]
+    [EnumLiteral("ObservationDefinition"), Description("ObservationDefinition")]
     ObservationDefinition,
     /// <summary>
     /// A formal computable definition of an operation (on the RESTful interface) or a named query (using the search interaction).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OperationDefinition", "http://hl7.org/fhir/fhir-types"), Description("OperationDefinition")]
+    [EnumLiteral("OperationDefinition"), Description("OperationDefinition")]
     OperationDefinition,
     /// <summary>
     /// A collection of error, warning, or information messages that result from a system action.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OperationOutcome", "http://hl7.org/fhir/fhir-types"), Description("OperationOutcome")]
+    [EnumLiteral("OperationOutcome"), Description("OperationOutcome")]
     OperationOutcome,
     /// <summary>
     /// A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action.  Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Organization", "http://hl7.org/fhir/fhir-types"), Description("Organization")]
+    [EnumLiteral("Organization"), Description("Organization")]
     Organization,
     /// <summary>
     /// Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OrganizationAffiliation", "http://hl7.org/fhir/fhir-types"), Description("OrganizationAffiliation")]
+    [EnumLiteral("OrganizationAffiliation"), Description("OrganizationAffiliation")]
     OrganizationAffiliation,
     /// <summary>
     /// A medically related item or items, in a container or package.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PackagedProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("PackagedProductDefinition")]
+    [EnumLiteral("PackagedProductDefinition"), Description("PackagedProductDefinition")]
     PackagedProductDefinition,
     /// <summary>
     /// Demographics and other administrative information about an individual or animal receiving care or other health-related services.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Patient", "http://hl7.org/fhir/fhir-types"), Description("Patient")]
+    [EnumLiteral("Patient"), Description("Patient")]
     Patient,
     /// <summary>
     /// This resource provides the status of the payment for goods and services rendered, and the request and response resource references.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PaymentNotice", "http://hl7.org/fhir/fhir-types"), Description("PaymentNotice")]
+    [EnumLiteral("PaymentNotice"), Description("PaymentNotice")]
     PaymentNotice,
     /// <summary>
     /// This resource provides the details including amount of a payment and allocates the payment items being paid.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/fhir-types"), Description("PaymentReconciliation")]
+    [EnumLiteral("PaymentReconciliation"), Description("PaymentReconciliation")]
     PaymentReconciliation,
     /// <summary>
     /// Permission resource holds access rules for a given data and context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Permission", "http://hl7.org/fhir/fhir-types"), Description("Permission")]
+    [EnumLiteral("Permission"), Description("Permission")]
     Permission,
     /// <summary>
     /// Demographics and administrative information about a person independent of a specific health-related context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Person", "http://hl7.org/fhir/fhir-types"), Description("Person")]
+    [EnumLiteral("Person"), Description("Person")]
     Person,
     /// <summary>
     /// This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PlanDefinition", "http://hl7.org/fhir/fhir-types"), Description("PlanDefinition")]
+    [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
     PlanDefinition,
     /// <summary>
     /// A person who is directly or indirectly involved in the provisioning of healthcare or related services.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Practitioner", "http://hl7.org/fhir/fhir-types"), Description("Practitioner")]
+    [EnumLiteral("Practitioner"), Description("Practitioner")]
     Practitioner,
     /// <summary>
     /// A specific set of Roles/Locations/specialties/services that a practitioner may perform, or has performed at an organization during a period of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PractitionerRole", "http://hl7.org/fhir/fhir-types"), Description("PractitionerRole")]
+    [EnumLiteral("PractitionerRole"), Description("PractitionerRole")]
     PractitionerRole,
     /// <summary>
     /// An action that is or was performed on or for a patient, practitioner, device, organization, or location. For example, this can be a physical intervention on a patient like an operation, or less invasive like long term services, counseling, or hypnotherapy.  This can be a quality or safety inspection for a location, organization, or device.  This can be an accreditation procedure on a practitioner for licensing.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Procedure", "http://hl7.org/fhir/fhir-types"), Description("Procedure")]
+    [EnumLiteral("Procedure"), Description("Procedure")]
     Procedure,
     /// <summary>
     /// Provenance of a resource is a record that describes entities and processes involved in producing and delivering or otherwise influencing that resource. Provenance provides a critical foundation for assessing authenticity, enabling trust, and allowing reproducibility. Provenance assertions are a form of contextual metadata and can themselves become important records with their own provenance. Provenance statement indicates clinical significance in terms of confidence in authenticity, reliability, and trustworthiness, integrity, and stage in lifecycle (e.g. Document Completion - has the artifact been legally authenticated), all of which may impact security, privacy, and trust policies.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Provenance", "http://hl7.org/fhir/fhir-types"), Description("Provenance")]
+    [EnumLiteral("Provenance"), Description("Provenance")]
     Provenance,
     /// <summary>
     /// A structured set of questions intended to guide the collection of answers from end-users. Questionnaires provide detailed control over order, presentation, phraseology and grouping to allow coherent, consistent data collection.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Questionnaire", "http://hl7.org/fhir/fhir-types"), Description("Questionnaire")]
+    [EnumLiteral("Questionnaire"), Description("Questionnaire")]
     Questionnaire,
     /// <summary>
     /// A structured set of questions and their answers. The questions are ordered and grouped into coherent subsets, corresponding to the structure of the grouping of the questionnaire being responded to.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("QuestionnaireResponse", "http://hl7.org/fhir/fhir-types"), Description("QuestionnaireResponse")]
+    [EnumLiteral("QuestionnaireResponse"), Description("QuestionnaireResponse")]
     QuestionnaireResponse,
     /// <summary>
     /// Regulatory approval, clearance or licencing related to a regulated product, treatment, facility or activity that is cited in a guidance, regulation, rule or legislative act. An example is Market Authorization relating to a Medicinal Product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RegulatedAuthorization", "http://hl7.org/fhir/fhir-types"), Description("RegulatedAuthorization")]
+    [EnumLiteral("RegulatedAuthorization"), Description("RegulatedAuthorization")]
     RegulatedAuthorization,
     /// <summary>
     /// Information about a person that is involved in a patient's health or the care for a patient, but who is not the target of healthcare, nor has a formal responsibility in the care process.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/fhir-types"), Description("RelatedPerson")]
+    [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
     /// A set of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RequestOrchestration", "http://hl7.org/fhir/fhir-types"), Description("RequestOrchestration")]
+    [EnumLiteral("RequestOrchestration"), Description("RequestOrchestration")]
     RequestOrchestration,
     /// <summary>
     /// The Requirements resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Requirements", "http://hl7.org/fhir/fhir-types"), Description("Requirements")]
+    [EnumLiteral("Requirements"), Description("Requirements")]
     Requirements,
     /// <summary>
     /// A scientific study of nature that sometimes includes processes involved in health and disease. For example, clinical trials are research studies that involve people. These studies may be related to new ways to screen, prevent, diagnose, and treat disease. They may also study certain outcomes and certain groups of people by looking at data collected in the past or future.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ResearchStudy", "http://hl7.org/fhir/fhir-types"), Description("ResearchStudy")]
+    [EnumLiteral("ResearchStudy"), Description("ResearchStudy")]
     ResearchStudy,
     /// <summary>
     /// A ResearchSubject is a participant or object which is the recipient of investigative activities in a research study.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ResearchSubject", "http://hl7.org/fhir/fhir-types"), Description("ResearchSubject")]
+    [EnumLiteral("ResearchSubject"), Description("ResearchSubject")]
     ResearchSubject,
     /// <summary>
     /// An assessment of the likely outcome(s) for a patient or other subject as well as the likelihood of each outcome.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RiskAssessment", "http://hl7.org/fhir/fhir-types"), Description("RiskAssessment")]
+    [EnumLiteral("RiskAssessment"), Description("RiskAssessment")]
     RiskAssessment,
     /// <summary>
     /// A container for slots of time that may be available for booking appointments.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Schedule", "http://hl7.org/fhir/fhir-types"), Description("Schedule")]
+    [EnumLiteral("Schedule"), Description("Schedule")]
     Schedule,
     /// <summary>
     /// A search parameter that defines a named search item that can be used to search/filter on a resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SearchParameter", "http://hl7.org/fhir/fhir-types"), Description("SearchParameter")]
+    [EnumLiteral("SearchParameter"), Description("SearchParameter")]
     SearchParameter,
     /// <summary>
     /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/fhir-types"), Description("ServiceRequest")]
+    [EnumLiteral("ServiceRequest"), Description("ServiceRequest")]
     ServiceRequest,
     /// <summary>
     /// A slot of time on a schedule that may be available for booking appointments.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Slot", "http://hl7.org/fhir/fhir-types"), Description("Slot")]
+    [EnumLiteral("Slot"), Description("Slot")]
     Slot,
     /// <summary>
     /// A sample to be used for analysis.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Specimen", "http://hl7.org/fhir/fhir-types"), Description("Specimen")]
+    [EnumLiteral("Specimen"), Description("Specimen")]
     Specimen,
     /// <summary>
     /// A kind of specimen with associated set of requirements.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SpecimenDefinition", "http://hl7.org/fhir/fhir-types"), Description("SpecimenDefinition")]
+    [EnumLiteral("SpecimenDefinition"), Description("SpecimenDefinition")]
     SpecimenDefinition,
     /// <summary>
     /// A definition of a FHIR structure. This resource is used to describe the underlying resources, data types defined in FHIR, and also for describing extensions and constraints on resources and data types.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("StructureDefinition", "http://hl7.org/fhir/fhir-types"), Description("StructureDefinition")]
+    [EnumLiteral("StructureDefinition"), Description("StructureDefinition")]
     StructureDefinition,
     /// <summary>
     /// A Map of relationships between 2 structures that can be used to transform data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("StructureMap", "http://hl7.org/fhir/fhir-types"), Description("StructureMap")]
+    [EnumLiteral("StructureMap"), Description("StructureMap")]
     StructureMap,
     /// <summary>
     /// The subscription resource describes a particular client's request to be notified about a SubscriptionTopic.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Subscription", "http://hl7.org/fhir/fhir-types"), Description("Subscription")]
+    [EnumLiteral("Subscription"), Description("Subscription")]
     Subscription,
     /// <summary>
     /// The SubscriptionStatus resource describes the state of a Subscription during notifications. It is not persisted.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/fhir-types"), Description("SubscriptionStatus")]
+    [EnumLiteral("SubscriptionStatus"), Description("SubscriptionStatus")]
     SubscriptionStatus,
     /// <summary>
     /// Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/fhir-types"), Description("SubscriptionTopic")]
+    [EnumLiteral("SubscriptionTopic"), Description("SubscriptionTopic")]
     SubscriptionTopic,
     /// <summary>
     /// A homogeneous material with a definite composition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Substance", "http://hl7.org/fhir/fhir-types"), Description("Substance")]
+    [EnumLiteral("Substance"), Description("Substance")]
     Substance,
     /// <summary>
     /// The detailed description of a substance, typically at a level beyond what is used for prescribing.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceDefinition", "http://hl7.org/fhir/fhir-types"), Description("SubstanceDefinition")]
+    [EnumLiteral("SubstanceDefinition"), Description("SubstanceDefinition")]
     SubstanceDefinition,
     /// <summary>
     /// Nucleic acids are defined by three distinct elements: the base, sugar and linkage. Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceNucleicAcid", "http://hl7.org/fhir/fhir-types"), Description("SubstanceNucleicAcid")]
+    [EnumLiteral("SubstanceNucleicAcid"), Description("SubstanceNucleicAcid")]
     SubstanceNucleicAcid,
     /// <summary>
     /// Properties of a substance specific to it being a polymer.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstancePolymer", "http://hl7.org/fhir/fhir-types"), Description("SubstancePolymer")]
+    [EnumLiteral("SubstancePolymer"), Description("SubstancePolymer")]
     SubstancePolymer,
     /// <summary>
     /// A SubstanceProtein is defined as a single unit of a linear amino acid sequence, or a combination of subunits that are either covalently linked or have a defined invariant stoichiometric relationship. This includes all synthetic, recombinant and purified SubstanceProteins of defined sequence, whether the use is therapeutic or prophylactic. This set of elements will be used to describe albumins, coagulation factors, cytokines, growth factors, peptide/SubstanceProtein hormones, enzymes, toxins, toxoids, recombinant vaccines, and immunomodulators.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceProtein", "http://hl7.org/fhir/fhir-types"), Description("SubstanceProtein")]
+    [EnumLiteral("SubstanceProtein"), Description("SubstanceProtein")]
     SubstanceProtein,
     /// <summary>
     /// Todo.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceReferenceInformation", "http://hl7.org/fhir/fhir-types"), Description("SubstanceReferenceInformation")]
+    [EnumLiteral("SubstanceReferenceInformation"), Description("SubstanceReferenceInformation")]
     SubstanceReferenceInformation,
     /// <summary>
     /// Source material shall capture information on the taxonomic and anatomical origins as well as the fraction of a material that can result in or can be modified to form a substance. This set of data elements shall be used to define polymer substances isolated from biological matrices. Taxonomic and anatomical origins shall be described using a controlled vocabulary as required. This information is captured for naturally derived polymers ( . starch) and structurally diverse substances. For Organisms belonging to the Kingdom Plantae the Substance level defines the fresh material of a single species or infraspecies, the Herbal Drug and the Herbal preparation. For Herbal preparations, the fraction information will be captured at the Substance information level and additional information for herbal extracts will be captured at the Specified Substance Group 1 information level. See for further explanation the Substance Class: Structurally Diverse and the herbal annex.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceSourceMaterial", "http://hl7.org/fhir/fhir-types"), Description("SubstanceSourceMaterial")]
+    [EnumLiteral("SubstanceSourceMaterial"), Description("SubstanceSourceMaterial")]
     SubstanceSourceMaterial,
     /// <summary>
     /// Record of delivery of what is supplied.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SupplyDelivery", "http://hl7.org/fhir/fhir-types"), Description("SupplyDelivery")]
+    [EnumLiteral("SupplyDelivery"), Description("SupplyDelivery")]
     SupplyDelivery,
     /// <summary>
     /// A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/fhir-types"), Description("SupplyRequest")]
+    [EnumLiteral("SupplyRequest"), Description("SupplyRequest")]
     SupplyRequest,
     /// <summary>
     /// A task to be performed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Task", "http://hl7.org/fhir/fhir-types"), Description("Task")]
+    [EnumLiteral("Task"), Description("Task")]
     Task,
     /// <summary>
     /// A TerminologyCapabilities resource documents a set of capabilities (behaviors) of a FHIR Terminology Server that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TerminologyCapabilities", "http://hl7.org/fhir/fhir-types"), Description("TerminologyCapabilities")]
+    [EnumLiteral("TerminologyCapabilities"), Description("TerminologyCapabilities")]
     TerminologyCapabilities,
     /// <summary>
     /// A plan for executing testing on an artifact or specifications
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestPlan", "http://hl7.org/fhir/fhir-types"), Description("TestPlan")]
+    [EnumLiteral("TestPlan"), Description("TestPlan")]
     TestPlan,
     /// <summary>
     /// A summary of information based on the results of executing a TestScript.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestReport", "http://hl7.org/fhir/fhir-types"), Description("TestReport")]
+    [EnumLiteral("TestReport"), Description("TestReport")]
     TestReport,
     /// <summary>
     /// A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestScript", "http://hl7.org/fhir/fhir-types"), Description("TestScript")]
+    [EnumLiteral("TestScript"), Description("TestScript")]
     TestScript,
     /// <summary>
     /// Record of transport.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Transport", "http://hl7.org/fhir/fhir-types"), Description("Transport")]
+    [EnumLiteral("Transport"), Description("Transport")]
     Transport,
     /// <summary>
     /// A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ValueSet", "http://hl7.org/fhir/fhir-types"), Description("ValueSet")]
+    [EnumLiteral("ValueSet"), Description("ValueSet")]
     ValueSet,
     /// <summary>
     /// Describes validation requirements, source(s), status and dates for one or more elements.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VerificationResult", "http://hl7.org/fhir/fhir-types"), Description("VerificationResult")]
+    [EnumLiteral("VerificationResult"), Description("VerificationResult")]
     VerificationResult,
     /// <summary>
     /// An authorization for the provision of glasses and/or contact lenses to a patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/fhir-types"), Description("VisionPrescription")]
+    [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
     VisionPrescription,
     /// <summary>
     /// This resource is used to pass information into and back from an operation (whether invoked directly from REST or within a messaging environment).  It is not persisted or allowed to be referenced by other resources except as described in the definition of the Parameters resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Parameters", "http://hl7.org/fhir/fhir-types"), Description("Parameters")]
+    [EnumLiteral("Parameters"), Description("Parameters")]
     Parameters,
   }
 
@@ -7839,32 +7839,32 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/fm-status)
   /// (system: http://hl7.org/fhir/fm-status)
   /// </summary>
-  [FhirEnumeration("FinancialResourceStatusCodes", "http://hl7.org/fhir/ValueSet/fm-status")]
+  [FhirEnumeration("FinancialResourceStatusCodes", "http://hl7.org/fhir/ValueSet/fm-status", "http://hl7.org/fhir/fm-status")]
   public enum FinancialResourceStatusCodes
   {
     /// <summary>
     /// The instance is currently in-force.
     /// (system: http://hl7.org/fhir/fm-status)
     /// </summary>
-    [EnumLiteral("active", "http://hl7.org/fhir/fm-status"), Description("Active")]
+    [EnumLiteral("active"), Description("Active")]
     Active,
     /// <summary>
     /// The instance is withdrawn, rescinded or reversed.
     /// (system: http://hl7.org/fhir/fm-status)
     /// </summary>
-    [EnumLiteral("cancelled", "http://hl7.org/fhir/fm-status"), Description("Cancelled")]
+    [EnumLiteral("cancelled"), Description("Cancelled")]
     Cancelled,
     /// <summary>
     /// A new instance the contents of which is not complete.
     /// (system: http://hl7.org/fhir/fm-status)
     /// </summary>
-    [EnumLiteral("draft", "http://hl7.org/fhir/fm-status"), Description("Draft")]
+    [EnumLiteral("draft"), Description("Draft")]
     Draft,
     /// <summary>
     /// The instance was entered in error.
     /// (system: http://hl7.org/fhir/fm-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/fm-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
   }
 
@@ -7873,500 +7873,500 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/languages)
   /// (systems: 0)
   /// </summary>
-  [FhirEnumeration("CommonLanguages", "http://hl7.org/fhir/ValueSet/languages")]
+  [FhirEnumeration("CommonLanguages", "http://hl7.org/fhir/ValueSet/languages", "urn:ietf:bcp:47")]
   public enum CommonLanguages
   {
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ar", "urn:ietf:bcp:47"), Description("Arabic")]
+    [EnumLiteral("ar"), Description("Arabic")]
     Ar,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("bg", "urn:ietf:bcp:47"), Description("Bulgarian")]
+    [EnumLiteral("bg"), Description("Bulgarian")]
     Bg,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("bg-BG", "urn:ietf:bcp:47"), Description("Bulgarian (Bulgaria)")]
+    [EnumLiteral("bg-BG"), Description("Bulgarian (Bulgaria)")]
     BgBG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("bn", "urn:ietf:bcp:47"), Description("Bengali")]
+    [EnumLiteral("bn"), Description("Bengali")]
     Bn,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("cs", "urn:ietf:bcp:47"), Description("Czech")]
+    [EnumLiteral("cs"), Description("Czech")]
     Cs,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("cs-CZ", "urn:ietf:bcp:47"), Description("Czech (Czechia)")]
+    [EnumLiteral("cs-CZ"), Description("Czech (Czechia)")]
     CsCZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("bs", "urn:ietf:bcp:47"), Description("Bosnian")]
+    [EnumLiteral("bs"), Description("Bosnian")]
     Bs,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("bs-BA", "urn:ietf:bcp:47"), Description("Bosnian (Bosnia and Herzegovina)")]
+    [EnumLiteral("bs-BA"), Description("Bosnian (Bosnia and Herzegovina)")]
     BsBA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("da", "urn:ietf:bcp:47"), Description("Danish")]
+    [EnumLiteral("da"), Description("Danish")]
     Da,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("da-DK", "urn:ietf:bcp:47"), Description("Danish (Denmark)")]
+    [EnumLiteral("da-DK"), Description("Danish (Denmark)")]
     DaDK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("de", "urn:ietf:bcp:47"), Description("German")]
+    [EnumLiteral("de"), Description("German")]
     De,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("de-AT", "urn:ietf:bcp:47"), Description("German (Austria)")]
+    [EnumLiteral("de-AT"), Description("German (Austria)")]
     DeAT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("de-CH", "urn:ietf:bcp:47"), Description("German (Switzerland)")]
+    [EnumLiteral("de-CH"), Description("German (Switzerland)")]
     DeCH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("de-DE", "urn:ietf:bcp:47"), Description("German (Germany)")]
+    [EnumLiteral("de-DE"), Description("German (Germany)")]
     DeDE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("el", "urn:ietf:bcp:47"), Description("Greek")]
+    [EnumLiteral("el"), Description("Greek")]
     El,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("el-GR", "urn:ietf:bcp:47"), Description("Greek (Greece)")]
+    [EnumLiteral("el-GR"), Description("Greek (Greece)")]
     ElGR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en", "urn:ietf:bcp:47"), Description("English")]
+    [EnumLiteral("en"), Description("English")]
     En,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-AU", "urn:ietf:bcp:47"), Description("English (Australia)")]
+    [EnumLiteral("en-AU"), Description("English (Australia)")]
     EnAU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-CA", "urn:ietf:bcp:47"), Description("English (Canada)")]
+    [EnumLiteral("en-CA"), Description("English (Canada)")]
     EnCA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-GB", "urn:ietf:bcp:47"), Description("English (Great Britain)")]
+    [EnumLiteral("en-GB"), Description("English (Great Britain)")]
     EnGB,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-IN", "urn:ietf:bcp:47"), Description("English (India)")]
+    [EnumLiteral("en-IN"), Description("English (India)")]
     EnIN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-NZ", "urn:ietf:bcp:47"), Description("English (New Zealand)")]
+    [EnumLiteral("en-NZ"), Description("English (New Zealand)")]
     EnNZ,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-SG", "urn:ietf:bcp:47"), Description("English (Singapore)")]
+    [EnumLiteral("en-SG"), Description("English (Singapore)")]
     EnSG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("en-US", "urn:ietf:bcp:47"), Description("English (United States)")]
+    [EnumLiteral("en-US"), Description("English (United States)")]
     EnUS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("es", "urn:ietf:bcp:47"), Description("Spanish")]
+    [EnumLiteral("es"), Description("Spanish")]
     Es,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("es-AR", "urn:ietf:bcp:47"), Description("Spanish (Argentina)")]
+    [EnumLiteral("es-AR"), Description("Spanish (Argentina)")]
     EsAR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("es-ES", "urn:ietf:bcp:47"), Description("Spanish (Spain)")]
+    [EnumLiteral("es-ES"), Description("Spanish (Spain)")]
     EsES,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("es-UY", "urn:ietf:bcp:47"), Description("Spanish (Uruguay)")]
+    [EnumLiteral("es-UY"), Description("Spanish (Uruguay)")]
     EsUY,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("et", "urn:ietf:bcp:47"), Description("Estonian")]
+    [EnumLiteral("et"), Description("Estonian")]
     Et,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("et-EE", "urn:ietf:bcp:47"), Description("Estonian (Estonia)")]
+    [EnumLiteral("et-EE"), Description("Estonian (Estonia)")]
     EtEE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fi", "urn:ietf:bcp:47"), Description("Finnish")]
+    [EnumLiteral("fi"), Description("Finnish")]
     Fi,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fr", "urn:ietf:bcp:47"), Description("French")]
+    [EnumLiteral("fr"), Description("French")]
     Fr,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fr-BE", "urn:ietf:bcp:47"), Description("French (Belgium)")]
+    [EnumLiteral("fr-BE"), Description("French (Belgium)")]
     FrBE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fr-CH", "urn:ietf:bcp:47"), Description("French (Switzerland)")]
+    [EnumLiteral("fr-CH"), Description("French (Switzerland)")]
     FrCH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fr-FR", "urn:ietf:bcp:47"), Description("French (France)")]
+    [EnumLiteral("fr-FR"), Description("French (France)")]
     FrFR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fi-FI", "urn:ietf:bcp:47"), Description("Finnish (Finland)")]
+    [EnumLiteral("fi-FI"), Description("Finnish (Finland)")]
     FiFI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fr-CA", "urn:ietf:bcp:47"), Description("French (Canada)")]
+    [EnumLiteral("fr-CA"), Description("French (Canada)")]
     FrCA,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fy", "urn:ietf:bcp:47"), Description("Frisian")]
+    [EnumLiteral("fy"), Description("Frisian")]
     Fy,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("fy-NL", "urn:ietf:bcp:47"), Description("Frisian (Netherlands)")]
+    [EnumLiteral("fy-NL"), Description("Frisian (Netherlands)")]
     FyNL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("hi", "urn:ietf:bcp:47"), Description("Hindi")]
+    [EnumLiteral("hi"), Description("Hindi")]
     Hi,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("hr", "urn:ietf:bcp:47"), Description("Croatian")]
+    [EnumLiteral("hr"), Description("Croatian")]
     Hr,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("hr-HR", "urn:ietf:bcp:47"), Description("Croatian (Croatia)")]
+    [EnumLiteral("hr-HR"), Description("Croatian (Croatia)")]
     HrHR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("is", "urn:ietf:bcp:47"), Description("Icelandic")]
+    [EnumLiteral("is"), Description("Icelandic")]
     Is,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("is-IS", "urn:ietf:bcp:47"), Description("Icelandic (Iceland)")]
+    [EnumLiteral("is-IS"), Description("Icelandic (Iceland)")]
     IsIS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("it", "urn:ietf:bcp:47"), Description("Italian")]
+    [EnumLiteral("it"), Description("Italian")]
     It,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("it-CH", "urn:ietf:bcp:47"), Description("Italian (Switzerland)")]
+    [EnumLiteral("it-CH"), Description("Italian (Switzerland)")]
     ItCH,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("it-IT", "urn:ietf:bcp:47"), Description("Italian (Italy)")]
+    [EnumLiteral("it-IT"), Description("Italian (Italy)")]
     ItIT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ja", "urn:ietf:bcp:47"), Description("Japanese")]
+    [EnumLiteral("ja"), Description("Japanese")]
     Ja,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ko", "urn:ietf:bcp:47"), Description("Korean")]
+    [EnumLiteral("ko"), Description("Korean")]
     Ko,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("lt", "urn:ietf:bcp:47"), Description("Lithuanian")]
+    [EnumLiteral("lt"), Description("Lithuanian")]
     Lt,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("lt-LT", "urn:ietf:bcp:47"), Description("Lithuanian (Lithuania)")]
+    [EnumLiteral("lt-LT"), Description("Lithuanian (Lithuania)")]
     LtLT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("lv", "urn:ietf:bcp:47"), Description("Latvian")]
+    [EnumLiteral("lv"), Description("Latvian")]
     Lv,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("lv-LV", "urn:ietf:bcp:47"), Description("Latvian (Latvia)")]
+    [EnumLiteral("lv-LV"), Description("Latvian (Latvia)")]
     LvLV,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("nl", "urn:ietf:bcp:47"), Description("Dutch")]
+    [EnumLiteral("nl"), Description("Dutch")]
     Nl,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("nl-BE", "urn:ietf:bcp:47"), Description("Dutch (Belgium)")]
+    [EnumLiteral("nl-BE"), Description("Dutch (Belgium)")]
     NlBE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("nl-NL", "urn:ietf:bcp:47"), Description("Dutch (Netherlands)")]
+    [EnumLiteral("nl-NL"), Description("Dutch (Netherlands)")]
     NlNL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("no", "urn:ietf:bcp:47"), Description("Norwegian")]
+    [EnumLiteral("no"), Description("Norwegian")]
     No,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("no-NO", "urn:ietf:bcp:47"), Description("Norwegian (Norway)")]
+    [EnumLiteral("no-NO"), Description("Norwegian (Norway)")]
     NoNO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("pa", "urn:ietf:bcp:47"), Description("Punjabi")]
+    [EnumLiteral("pa"), Description("Punjabi")]
     Pa,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("pl", "urn:ietf:bcp:47"), Description("Polish")]
+    [EnumLiteral("pl"), Description("Polish")]
     Pl,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("pl-PL", "urn:ietf:bcp:47"), Description("Polish (Poland)")]
+    [EnumLiteral("pl-PL"), Description("Polish (Poland)")]
     PlPL,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("pt", "urn:ietf:bcp:47"), Description("Portuguese")]
+    [EnumLiteral("pt"), Description("Portuguese")]
     Pt,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("pt-PT", "urn:ietf:bcp:47"), Description("Portuguese (Portugal)")]
+    [EnumLiteral("pt-PT"), Description("Portuguese (Portugal)")]
     PtPT,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("pt-BR", "urn:ietf:bcp:47"), Description("Portuguese (Brazil)")]
+    [EnumLiteral("pt-BR"), Description("Portuguese (Brazil)")]
     PtBR,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ro", "urn:ietf:bcp:47"), Description("Romanian")]
+    [EnumLiteral("ro"), Description("Romanian")]
     Ro,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ro-RO", "urn:ietf:bcp:47"), Description("Romanian (Romania)")]
+    [EnumLiteral("ro-RO"), Description("Romanian (Romania)")]
     RoRO,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ru", "urn:ietf:bcp:47"), Description("Russian")]
+    [EnumLiteral("ru"), Description("Russian")]
     Ru,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("ru-RU", "urn:ietf:bcp:47"), Description("Russian (Russia)")]
+    [EnumLiteral("ru-RU"), Description("Russian (Russia)")]
     RuRU,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sk", "urn:ietf:bcp:47"), Description("Slovakian")]
+    [EnumLiteral("sk"), Description("Slovakian")]
     Sk,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sk-SK", "urn:ietf:bcp:47"), Description("Slovakian (Slovakia)")]
+    [EnumLiteral("sk-SK"), Description("Slovakian (Slovakia)")]
     SkSK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sl", "urn:ietf:bcp:47"), Description("Slovenian")]
+    [EnumLiteral("sl"), Description("Slovenian")]
     Sl,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sl-SI", "urn:ietf:bcp:47"), Description("Slovenian (Slovenia)")]
+    [EnumLiteral("sl-SI"), Description("Slovenian (Slovenia)")]
     SlSI,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sr", "urn:ietf:bcp:47"), Description("Serbian")]
+    [EnumLiteral("sr"), Description("Serbian")]
     Sr,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sr-RS", "urn:ietf:bcp:47"), Description("Serbian (Serbia)")]
+    [EnumLiteral("sr-RS"), Description("Serbian (Serbia)")]
     SrRS,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sv", "urn:ietf:bcp:47"), Description("Swedish")]
+    [EnumLiteral("sv"), Description("Swedish")]
     Sv,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("sv-SE", "urn:ietf:bcp:47"), Description("Swedish (Sweden)")]
+    [EnumLiteral("sv-SE"), Description("Swedish (Sweden)")]
     SvSE,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("te", "urn:ietf:bcp:47"), Description("Telugu")]
+    [EnumLiteral("te"), Description("Telugu")]
     Te,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("zh", "urn:ietf:bcp:47"), Description("Chinese")]
+    [EnumLiteral("zh"), Description("Chinese")]
     Zh,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("zh-CN", "urn:ietf:bcp:47"), Description("Chinese (China)")]
+    [EnumLiteral("zh-CN"), Description("Chinese (China)")]
     ZhCN,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("zh-HK", "urn:ietf:bcp:47"), Description("Chinese (Hong Kong)")]
+    [EnumLiteral("zh-HK"), Description("Chinese (Hong Kong)")]
     ZhHK,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("zh-SG", "urn:ietf:bcp:47"), Description("Chinese (Singapore)")]
+    [EnumLiteral("zh-SG"), Description("Chinese (Singapore)")]
     ZhSG,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: urn:ietf:bcp:47)
     /// </summary>
-    [EnumLiteral("zh-TW", "urn:ietf:bcp:47"), Description("Chinese (Taiwan)")]
+    [EnumLiteral("zh-TW"), Description("Chinese (Taiwan)")]
     ZhTW,
   }
 
@@ -8375,26 +8375,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/list-mode)
   /// (system: http://hl7.org/fhir/list-mode)
   /// </summary>
-  [FhirEnumeration("ListMode", "http://hl7.org/fhir/ValueSet/list-mode")]
+  [FhirEnumeration("ListMode", "http://hl7.org/fhir/ValueSet/list-mode", "http://hl7.org/fhir/list-mode")]
   public enum ListMode
   {
     /// <summary>
     /// This list is the master list, maintained in an ongoing fashion with regular updates as the real-world list it is tracking changes.
     /// (system: http://hl7.org/fhir/list-mode)
     /// </summary>
-    [EnumLiteral("working", "http://hl7.org/fhir/list-mode"), Description("Working List")]
+    [EnumLiteral("working"), Description("Working List")]
     Working,
     /// <summary>
     /// This list was prepared as a snapshot. It should not be assumed to be current.
     /// (system: http://hl7.org/fhir/list-mode)
     /// </summary>
-    [EnumLiteral("snapshot", "http://hl7.org/fhir/list-mode"), Description("Snapshot List")]
+    [EnumLiteral("snapshot"), Description("Snapshot List")]
     Snapshot,
     /// <summary>
     /// A point-in-time list that shows what changes have been made or recommended.  E.g. a discharge medication list showing what was added and removed during an encounter.
     /// (system: http://hl7.org/fhir/list-mode)
     /// </summary>
-    [EnumLiteral("changes", "http://hl7.org/fhir/list-mode"), Description("Change List")]
+    [EnumLiteral("changes"), Description("Change List")]
     Changes,
   }
 
@@ -8403,20 +8403,20 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/measure-improvement-notation)
   /// (systems: 0)
   /// </summary>
-  [FhirEnumeration("MeasureImprovementNotation", "http://hl7.org/fhir/ValueSet/measure-improvement-notation")]
+  [FhirEnumeration("MeasureImprovementNotation", "http://hl7.org/fhir/ValueSet/measure-improvement-notation", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation")]
   public enum MeasureImprovementNotation
   {
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
     /// </summary>
-    [EnumLiteral("increase", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation"), Description("Increased score indicates improvement")]
+    [EnumLiteral("increase"), Description("Increased score indicates improvement")]
     Increase,
     /// <summary>
     /// MISSING DESCRIPTION
     /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
     /// </summary>
-    [EnumLiteral("decrease", "http://terminology.hl7.org/CodeSystem/measure-improvement-notation"), Description("Decreased score indicates improvement")]
+    [EnumLiteral("decrease"), Description("Decreased score indicates improvement")]
     Decrease,
   }
 
@@ -8425,26 +8425,26 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/note-type)
   /// (system: http://hl7.org/fhir/note-type)
   /// </summary>
-  [FhirEnumeration("NoteType", "http://hl7.org/fhir/ValueSet/note-type")]
+  [FhirEnumeration("NoteType", "http://hl7.org/fhir/ValueSet/note-type", "http://hl7.org/fhir/note-type")]
   public enum NoteType
   {
     /// <summary>
     /// Display the note.
     /// (system: http://hl7.org/fhir/note-type)
     /// </summary>
-    [EnumLiteral("display", "http://hl7.org/fhir/note-type"), Description("Display")]
+    [EnumLiteral("display"), Description("Display")]
     Display,
     /// <summary>
     /// Print the note on the form.
     /// (system: http://hl7.org/fhir/note-type)
     /// </summary>
-    [EnumLiteral("print", "http://hl7.org/fhir/note-type"), Description("Print (Form)")]
+    [EnumLiteral("print"), Description("Print (Form)")]
     Print,
     /// <summary>
     /// Print the note for the operator.
     /// (system: http://hl7.org/fhir/note-type)
     /// </summary>
-    [EnumLiteral("printoper", "http://hl7.org/fhir/note-type"), Description("Print (Operator)")]
+    [EnumLiteral("printoper"), Description("Print (Operator)")]
     Printoper,
   }
 
@@ -8453,56 +8453,56 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/observation-status)
   /// (system: http://hl7.org/fhir/observation-status)
   /// </summary>
-  [FhirEnumeration("ObservationStatus", "http://hl7.org/fhir/ValueSet/observation-status")]
+  [FhirEnumeration("ObservationStatus", "http://hl7.org/fhir/ValueSet/observation-status", "http://hl7.org/fhir/observation-status")]
   public enum ObservationStatus
   {
     /// <summary>
     /// The existence of the observation is registered, but there is no result yet available.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("registered", "http://hl7.org/fhir/observation-status"), Description("Registered")]
+    [EnumLiteral("registered"), Description("Registered")]
     Registered,
     /// <summary>
     /// This is an initial or interim observation: data may be incomplete or unverified.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("preliminary", "http://hl7.org/fhir/observation-status"), Description("Preliminary")]
+    [EnumLiteral("preliminary"), Description("Preliminary")]
     Preliminary,
     /// <summary>
     /// The observation is complete and there are no further actions needed. Additional information such "released", "signed", etc. would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("final", "http://hl7.org/fhir/observation-status"), Description("Final")]
+    [EnumLiteral("final"), Description("Final")]
     Final,
     /// <summary>
     /// Subsequent to being Final, the observation has been modified subsequent.  This includes updates/new information and corrections.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("amended", "http://hl7.org/fhir/observation-status"), Description("Amended")]
+    [EnumLiteral("amended"), Description("Amended")]
     Amended,
     /// <summary>
     /// Subsequent to being Final, the observation has been modified to correct an error in the test result.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("corrected", "http://hl7.org/fhir/observation-status"), Description("Corrected")]
+    [EnumLiteral("corrected"), Description("Corrected")]
     Corrected,
     /// <summary>
     /// The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("cancelled", "http://hl7.org/fhir/observation-status"), Description("Cancelled")]
+    [EnumLiteral("cancelled"), Description("Cancelled")]
     Cancelled,
     /// <summary>
     /// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/observation-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
     /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/observation-status)
     /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/observation-status"), Description("Unknown")]
+    [EnumLiteral("unknown"), Description("Unknown")]
     Unknown,
   }
 
@@ -8511,20 +8511,20 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/operation-parameter-use)
   /// (system: http://hl7.org/fhir/operation-parameter-use)
   /// </summary>
-  [FhirEnumeration("OperationParameterUse", "http://hl7.org/fhir/ValueSet/operation-parameter-use")]
+  [FhirEnumeration("OperationParameterUse", "http://hl7.org/fhir/ValueSet/operation-parameter-use", "http://hl7.org/fhir/operation-parameter-use")]
   public enum OperationParameterUse
   {
     /// <summary>
     /// This is an input parameter.
     /// (system: http://hl7.org/fhir/operation-parameter-use)
     /// </summary>
-    [EnumLiteral("in", "http://hl7.org/fhir/operation-parameter-use"), Description("In")]
+    [EnumLiteral("in"), Description("In")]
     In,
     /// <summary>
     /// This is an output parameter.
     /// (system: http://hl7.org/fhir/operation-parameter-use)
     /// </summary>
-    [EnumLiteral("out", "http://hl7.org/fhir/operation-parameter-use"), Description("Out")]
+    [EnumLiteral("out"), Description("Out")]
     Out,
   }
 
@@ -8533,62 +8533,62 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/request-intent)
   /// (system: http://hl7.org/fhir/request-intent)
   /// </summary>
-  [FhirEnumeration("RequestIntent", "http://hl7.org/fhir/ValueSet/request-intent")]
+  [FhirEnumeration("RequestIntent", "http://hl7.org/fhir/ValueSet/request-intent", "http://hl7.org/fhir/request-intent")]
   public enum RequestIntent
   {
     /// <summary>
     /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
+    [EnumLiteral("proposal"), Description("Proposal")]
     Proposal,
     /// <summary>
     /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
+    [EnumLiteral("plan"), Description("Plan")]
     Plan,
     /// <summary>
     /// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("directive", "http://hl7.org/fhir/request-intent"), Description("Directive")]
+    [EnumLiteral("directive"), Description("Directive")]
     Directive,
     /// <summary>
     /// The request represents a request/demand and authorization for action by the requestor.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
+    [EnumLiteral("order"), Description("Order")]
     Order,
     /// <summary>
     /// The request represents an original authorization for action.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("original-order", "http://hl7.org/fhir/request-intent"), Description("Original Order")]
+    [EnumLiteral("original-order"), Description("Original Order")]
     OriginalOrder,
     /// <summary>
     /// The request represents an automatically generated supplemental authorization for action based on a parent authorization together with initial results of the action taken against that parent authorization.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("reflex-order", "http://hl7.org/fhir/request-intent"), Description("Reflex Order")]
+    [EnumLiteral("reflex-order"), Description("Reflex Order")]
     ReflexOrder,
     /// <summary>
     /// The request represents the view of an authorization instantiated by a fulfilling system representing the details of the fulfiller's intention to act upon a submitted order.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("filler-order", "http://hl7.org/fhir/request-intent"), Description("Filler Order")]
+    [EnumLiteral("filler-order"), Description("Filler Order")]
     FillerOrder,
     /// <summary>
     /// An order created in fulfillment of a broader order that represents the authorization for a single activity occurrence.  E.g. The administration of a single dose of a drug.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("instance-order", "http://hl7.org/fhir/request-intent"), Description("Instance Order")]
+    [EnumLiteral("instance-order"), Description("Instance Order")]
     InstanceOrder,
     /// <summary>
     /// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
+    [EnumLiteral("option"), Description("Option")]
     Option,
   }
 
@@ -8597,32 +8597,32 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/request-priority)
   /// (system: http://hl7.org/fhir/request-priority)
   /// </summary>
-  [FhirEnumeration("RequestPriority", "http://hl7.org/fhir/ValueSet/request-priority")]
+  [FhirEnumeration("RequestPriority", "http://hl7.org/fhir/ValueSet/request-priority", "http://hl7.org/fhir/request-priority")]
   public enum RequestPriority
   {
     /// <summary>
     /// The request has normal priority.
     /// (system: http://hl7.org/fhir/request-priority)
     /// </summary>
-    [EnumLiteral("routine", "http://hl7.org/fhir/request-priority"), Description("Routine")]
+    [EnumLiteral("routine"), Description("Routine")]
     Routine,
     /// <summary>
     /// The request should be actioned promptly - higher priority than routine.
     /// (system: http://hl7.org/fhir/request-priority)
     /// </summary>
-    [EnumLiteral("urgent", "http://hl7.org/fhir/request-priority"), Description("Urgent")]
+    [EnumLiteral("urgent"), Description("Urgent")]
     Urgent,
     /// <summary>
     /// The request should be actioned as soon as possible - higher priority than urgent.
     /// (system: http://hl7.org/fhir/request-priority)
     /// </summary>
-    [EnumLiteral("asap", "http://hl7.org/fhir/request-priority"), Description("ASAP")]
+    [EnumLiteral("asap"), Description("ASAP")]
     Asap,
     /// <summary>
     /// The request should be actioned immediately - highest possible priority.  E.g. an emergency.
     /// (system: http://hl7.org/fhir/request-priority)
     /// </summary>
-    [EnumLiteral("stat", "http://hl7.org/fhir/request-priority"), Description("STAT")]
+    [EnumLiteral("stat"), Description("STAT")]
     Stat,
   }
 
@@ -8631,50 +8631,50 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/request-status)
   /// (system: http://hl7.org/fhir/request-status)
   /// </summary>
-  [FhirEnumeration("RequestStatus", "http://hl7.org/fhir/ValueSet/request-status")]
+  [FhirEnumeration("RequestStatus", "http://hl7.org/fhir/ValueSet/request-status", "http://hl7.org/fhir/request-status")]
   public enum RequestStatus
   {
     /// <summary>
     /// The request has been created but is not yet complete or ready for action.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("draft", "http://hl7.org/fhir/request-status"), Description("Draft")]
+    [EnumLiteral("draft"), Description("Draft")]
     Draft,
     /// <summary>
     /// The request is in force and ready to be acted upon.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("active", "http://hl7.org/fhir/request-status"), Description("Active")]
+    [EnumLiteral("active"), Description("Active")]
     Active,
     /// <summary>
     /// The request (and any implicit authorization to act) has been temporarily withdrawn but is expected to resume in the future.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("on-hold", "http://hl7.org/fhir/request-status"), Description("On Hold")]
+    [EnumLiteral("on-hold"), Description("On Hold")]
     OnHold,
     /// <summary>
     /// The request (and any implicit authorization to act) has been terminated prior to the known full completion of the intended actions.  No further activity should occur.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("revoked", "http://hl7.org/fhir/request-status"), Description("Revoked")]
+    [EnumLiteral("revoked"), Description("Revoked")]
     Revoked,
     /// <summary>
     /// The activity described by the request has been fully performed.  No further activity will occur.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("completed", "http://hl7.org/fhir/request-status"), Description("Completed")]
+    [EnumLiteral("completed"), Description("Completed")]
     Completed,
     /// <summary>
     /// This request should never have existed and should be considered 'void'.  (It is possible that real-world decisions were based on it.  If real-world activity has occurred, the status should be "revoked" rather than "entered-in-error".).
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/request-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
     /// <summary>
     /// The authoring/source system does not know which of the status values currently applies for this request.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
     /// (system: http://hl7.org/fhir/request-status)
     /// </summary>
-    [EnumLiteral("unknown", "http://hl7.org/fhir/request-status"), Description("Unknown")]
+    [EnumLiteral("unknown"), Description("Unknown")]
     Unknown,
   }
 
@@ -8683,957 +8683,957 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/resource-types)
   /// (system: http://hl7.org/fhir/fhir-types)
   /// </summary>
-  [FhirEnumeration("ResourceType", "http://hl7.org/fhir/ValueSet/resource-types")]
+  [FhirEnumeration("ResourceType", "http://hl7.org/fhir/ValueSet/resource-types", "http://hl7.org/fhir/fhir-types")]
   public enum ResourceType
   {
     /// <summary>
     /// A financial tool for tracking value accrued for a particular purpose.  In the healthcare field, used to track charges for a patient, cost centers, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Account", "http://hl7.org/fhir/fhir-types"), Description("Account")]
+    [EnumLiteral("Account"), Description("Account")]
     Account,
     /// <summary>
     /// This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ActivityDefinition", "http://hl7.org/fhir/fhir-types"), Description("ActivityDefinition")]
+    [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
     ActivityDefinition,
     /// <summary>
     /// The ActorDefinition resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ActorDefinition", "http://hl7.org/fhir/fhir-types"), Description("ActorDefinition")]
+    [EnumLiteral("ActorDefinition"), Description("ActorDefinition")]
     ActorDefinition,
     /// <summary>
     /// A medicinal product in the final form which is suitable for administering to a patient (after any mixing of multiple components, dissolution etc. has been performed).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AdministrableProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("AdministrableProductDefinition")]
+    [EnumLiteral("AdministrableProductDefinition"), Description("AdministrableProductDefinition")]
     AdministrableProductDefinition,
     /// <summary>
     /// An event (i.e. any change to current patient status) that may be related to unintended effects on a patient or research participant. The unintended effects may require additional monitoring, treatment, hospitalization, or may result in death. The AdverseEvent resource also extends to potential or avoided events that could have had such effects. There are two major domains where the AdverseEvent resource is expected to be used. One is in clinical care reported adverse events and the other is in reporting adverse events in clinical  research trial management.  Adverse events can be reported by healthcare providers, patients, caregivers or by medical products manufacturers.  Given the differences between these two concepts, we recommend consulting the domain specific implementation guides when implementing the AdverseEvent Resource. The implementation guides include specific extensions, value sets and constraints.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AdverseEvent", "http://hl7.org/fhir/fhir-types"), Description("AdverseEvent")]
+    [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
     AdverseEvent,
     /// <summary>
     /// Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AllergyIntolerance", "http://hl7.org/fhir/fhir-types"), Description("AllergyIntolerance")]
+    [EnumLiteral("AllergyIntolerance"), Description("AllergyIntolerance")]
     AllergyIntolerance,
     /// <summary>
     /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Appointment", "http://hl7.org/fhir/fhir-types"), Description("Appointment")]
+    [EnumLiteral("Appointment"), Description("Appointment")]
     Appointment,
     /// <summary>
     /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/fhir-types"), Description("AppointmentResponse")]
+    [EnumLiteral("AppointmentResponse"), Description("AppointmentResponse")]
     AppointmentResponse,
     /// <summary>
     /// This Resource provides one or more comments, classifiers or ratings about a Resource and supports attribution and rights management metadata for the added content.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ArtifactAssessment", "http://hl7.org/fhir/fhir-types"), Description("ArtifactAssessment")]
+    [EnumLiteral("ArtifactAssessment"), Description("ArtifactAssessment")]
     ArtifactAssessment,
     /// <summary>
     /// A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AuditEvent", "http://hl7.org/fhir/fhir-types"), Description("AuditEvent")]
+    [EnumLiteral("AuditEvent"), Description("AuditEvent")]
     AuditEvent,
     /// <summary>
     /// Basic is used for handling concepts not yet defined in FHIR, narrative-only resources that don't map to an existing resource, and custom resources not appropriate for inclusion in the FHIR specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Basic", "http://hl7.org/fhir/fhir-types"), Description("Basic")]
+    [EnumLiteral("Basic"), Description("Basic")]
     Basic,
     /// <summary>
     /// A resource that represents the data of a single raw artifact as digital content accessible in its native format.  A Binary resource can contain any content, whether text, image, pdf, zip archive, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Binary", "http://hl7.org/fhir/fhir-types"), Description("Binary")]
+    [EnumLiteral("Binary"), Description("Binary")]
     Binary,
     /// <summary>
     /// A biological material originating from a biological entity intended to be transplanted or infused into another (possibly the same) biological entity.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BiologicallyDerivedProduct", "http://hl7.org/fhir/fhir-types"), Description("BiologicallyDerivedProduct")]
+    [EnumLiteral("BiologicallyDerivedProduct"), Description("BiologicallyDerivedProduct")]
     BiologicallyDerivedProduct,
     /// <summary>
     /// A record of dispensation of a biologically derived product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BiologicallyDerivedProductDispense", "http://hl7.org/fhir/fhir-types"), Description("BiologicallyDerivedProductDispense")]
+    [EnumLiteral("BiologicallyDerivedProductDispense"), Description("BiologicallyDerivedProductDispense")]
     BiologicallyDerivedProductDispense,
     /// <summary>
     /// Record details about an anatomical structure.  This resource may be used when a coded concept does not provide the necessary detail needed for the use case.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BodyStructure", "http://hl7.org/fhir/fhir-types"), Description("BodyStructure")]
+    [EnumLiteral("BodyStructure"), Description("BodyStructure")]
     BodyStructure,
     /// <summary>
     /// A container for a collection of resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Bundle", "http://hl7.org/fhir/fhir-types"), Description("Bundle")]
+    [EnumLiteral("Bundle"), Description("Bundle")]
     Bundle,
     /// <summary>
     /// A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server or Client for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CapabilityStatement", "http://hl7.org/fhir/fhir-types"), Description("CapabilityStatement")]
+    [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
     CapabilityStatement,
     /// <summary>
     /// Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CarePlan", "http://hl7.org/fhir/fhir-types"), Description("CarePlan")]
+    [EnumLiteral("CarePlan"), Description("CarePlan")]
     CarePlan,
     /// <summary>
     /// The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CareTeam", "http://hl7.org/fhir/fhir-types"), Description("CareTeam")]
+    [EnumLiteral("CareTeam"), Description("CareTeam")]
     CareTeam,
     /// <summary>
     /// The resource ChargeItem describes the provision of healthcare provider products for a certain patient, therefore referring not only to the product, but containing in addition details of the provision, like date, time, amounts and participating organizations and persons. Main Usage of the ChargeItem is to enable the billing process and internal cost allocation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ChargeItem", "http://hl7.org/fhir/fhir-types"), Description("ChargeItem")]
+    [EnumLiteral("ChargeItem"), Description("ChargeItem")]
     ChargeItem,
     /// <summary>
     /// The ChargeItemDefinition resource provides the properties that apply to the (billing) codes necessary to calculate costs and prices. The properties may differ largely depending on type and realm, therefore this resource gives only a rough structure and requires profiling for each type of billing code system.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ChargeItemDefinition", "http://hl7.org/fhir/fhir-types"), Description("ChargeItemDefinition")]
+    [EnumLiteral("ChargeItemDefinition"), Description("ChargeItemDefinition")]
     ChargeItemDefinition,
     /// <summary>
     /// The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Citation", "http://hl7.org/fhir/fhir-types"), Description("Citation")]
+    [EnumLiteral("Citation"), Description("Citation")]
     Citation,
     /// <summary>
     /// A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Claim", "http://hl7.org/fhir/fhir-types"), Description("Claim")]
+    [EnumLiteral("Claim"), Description("Claim")]
     Claim,
     /// <summary>
     /// This resource provides the adjudication details from the processing of a Claim resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClaimResponse", "http://hl7.org/fhir/fhir-types"), Description("ClaimResponse")]
+    [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
     ClaimResponse,
     /// <summary>
     /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClinicalImpression", "http://hl7.org/fhir/fhir-types"), Description("ClinicalImpression")]
+    [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
     ClinicalImpression,
     /// <summary>
     /// A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClinicalUseDefinition", "http://hl7.org/fhir/fhir-types"), Description("ClinicalUseDefinition")]
+    [EnumLiteral("ClinicalUseDefinition"), Description("ClinicalUseDefinition")]
     ClinicalUseDefinition,
     /// <summary>
     /// The CodeSystem resource is used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CodeSystem", "http://hl7.org/fhir/fhir-types"), Description("CodeSystem")]
+    [EnumLiteral("CodeSystem"), Description("CodeSystem")]
     CodeSystem,
     /// <summary>
     /// A clinical or business level record of information being transmitted or shared; e.g. an alert that was sent to a responsible provider, a public health agency communication to a provider/reporter in response to a case report for a reportable condition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Communication", "http://hl7.org/fhir/fhir-types"), Description("Communication")]
+    [EnumLiteral("Communication"), Description("Communication")]
     Communication,
     /// <summary>
     /// A request to convey information; e.g. the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/fhir-types"), Description("CommunicationRequest")]
+    [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
     CommunicationRequest,
     /// <summary>
     /// A compartment definition that defines how resources are accessed on a server.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CompartmentDefinition", "http://hl7.org/fhir/fhir-types"), Description("CompartmentDefinition")]
+    [EnumLiteral("CompartmentDefinition"), Description("CompartmentDefinition")]
     CompartmentDefinition,
     /// <summary>
     /// A set of healthcare-related information that is assembled together into a single logical package that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement. A Composition defines the structure and narrative content necessary for a document. However, a Composition alone does not constitute a document. Rather, the Composition must be the first entry in a Bundle where Bundle.type=document, and any other resources referenced from Composition must be included as subsequent entries in the Bundle (for example Patient, Practitioner, Encounter, etc.).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Composition", "http://hl7.org/fhir/fhir-types"), Description("Composition")]
+    [EnumLiteral("Composition"), Description("Composition")]
     Composition,
     /// <summary>
     /// A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ConceptMap", "http://hl7.org/fhir/fhir-types"), Description("ConceptMap")]
+    [EnumLiteral("ConceptMap"), Description("ConceptMap")]
     ConceptMap,
     /// <summary>
     /// A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Condition", "http://hl7.org/fhir/fhir-types"), Description("Condition")]
+    [EnumLiteral("Condition"), Description("Condition")]
     Condition,
     /// <summary>
     /// A definition of a condition and information relevant to managing it.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ConditionDefinition", "http://hl7.org/fhir/fhir-types"), Description("ConditionDefinition")]
+    [EnumLiteral("ConditionDefinition"), Description("ConditionDefinition")]
     ConditionDefinition,
     /// <summary>
     /// A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Consent", "http://hl7.org/fhir/fhir-types"), Description("Consent")]
+    [EnumLiteral("Consent"), Description("Consent")]
     Consent,
     /// <summary>
     /// Legally enforceable, formally recorded unilateral or bilateral directive i.e., a policy or agreement.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Contract", "http://hl7.org/fhir/fhir-types"), Description("Contract")]
+    [EnumLiteral("Contract"), Description("Contract")]
     Contract,
     /// <summary>
     /// Financial instrument which may be used to reimburse or pay for health care products and services. Includes both insurance and self-payment.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Coverage", "http://hl7.org/fhir/fhir-types"), Description("Coverage")]
+    [EnumLiteral("Coverage"), Description("Coverage")]
     Coverage,
     /// <summary>
     /// The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CoverageEligibilityRequest", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityRequest")]
+    [EnumLiteral("CoverageEligibilityRequest"), Description("CoverageEligibilityRequest")]
     CoverageEligibilityRequest,
     /// <summary>
     /// This resource provides eligibility and plan details from the processing of an CoverageEligibilityRequest resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CoverageEligibilityResponse", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityResponse")]
+    [EnumLiteral("CoverageEligibilityResponse"), Description("CoverageEligibilityResponse")]
     CoverageEligibilityResponse,
     /// <summary>
     /// Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g. Drug-drug interaction, Ineffective treatment frequency, Procedure-condition conflict, gaps in care, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DetectedIssue", "http://hl7.org/fhir/fhir-types"), Description("DetectedIssue")]
+    [EnumLiteral("DetectedIssue"), Description("DetectedIssue")]
     DetectedIssue,
     /// <summary>
     /// This resource describes the properties (regulated, has real time clock, etc.), adminstrative (manufacturer name, model number, serial number, firmware, etc.), and type (knee replacement, blood pressure cuff, MRI, etc.) of a physical unit (these values do not change much within a given module, for example the serail number, manufacturer name, and model number). An actual unit may consist of several modules in a distinct hierarchy and these are represented by multiple Device resources and bound through the 'parent' element.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Device", "http://hl7.org/fhir/fhir-types"), Description("Device")]
+    [EnumLiteral("Device"), Description("Device")]
     Device,
     /// <summary>
     /// A record of association of a device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceAssociation", "http://hl7.org/fhir/fhir-types"), Description("DeviceAssociation")]
+    [EnumLiteral("DeviceAssociation"), Description("DeviceAssociation")]
     DeviceAssociation,
     /// <summary>
     /// This is a specialized resource that defines the characteristics and capabilities of a device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceDefinition", "http://hl7.org/fhir/fhir-types"), Description("DeviceDefinition")]
+    [EnumLiteral("DeviceDefinition"), Description("DeviceDefinition")]
     DeviceDefinition,
     /// <summary>
     /// Indicates that a device is to be or has been dispensed for a named person/patient.  This includes a description of the product (supply) provided and the instructions for using the device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceDispense", "http://hl7.org/fhir/fhir-types"), Description("DeviceDispense")]
+    [EnumLiteral("DeviceDispense"), Description("DeviceDispense")]
     DeviceDispense,
     /// <summary>
     /// Describes a measurement, calculation or setting capability of a device.  The DeviceMetric resource is derived from the ISO/IEEE 11073-10201 Domain Information Model standard, but is more widely applicable. 
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceMetric", "http://hl7.org/fhir/fhir-types"), Description("DeviceMetric")]
+    [EnumLiteral("DeviceMetric"), Description("DeviceMetric")]
     DeviceMetric,
     /// <summary>
     /// Represents a request a device to be provided to a specific patient. The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/fhir-types"), Description("DeviceRequest")]
+    [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
     DeviceRequest,
     /// <summary>
     /// A record of a device being used by a patient where the record is the result of a report from the patient or a clinician.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceUsage", "http://hl7.org/fhir/fhir-types"), Description("DeviceUsage")]
+    [EnumLiteral("DeviceUsage"), Description("DeviceUsage")]
     DeviceUsage,
     /// <summary>
     /// The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports. The report also includes non-clinical context such as batch analysis and stability reporting of products and substances.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DiagnosticReport", "http://hl7.org/fhir/fhir-types"), Description("DiagnosticReport")]
+    [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
     DiagnosticReport,
     /// <summary>
     /// A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this “document” encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DocumentReference", "http://hl7.org/fhir/fhir-types"), Description("DocumentReference")]
+    [EnumLiteral("DocumentReference"), Description("DocumentReference")]
     DocumentReference,
     /// <summary>
     /// An interaction between healthcare provider(s), and/or patient(s) for the purpose of providing healthcare service(s) or assessing the health status of patient(s).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Encounter", "http://hl7.org/fhir/fhir-types"), Description("Encounter")]
+    [EnumLiteral("Encounter"), Description("Encounter")]
     Encounter,
     /// <summary>
     /// A record of significant events/milestones key data throughout the history of an Encounter
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EncounterHistory", "http://hl7.org/fhir/fhir-types"), Description("EncounterHistory")]
+    [EnumLiteral("EncounterHistory"), Description("EncounterHistory")]
     EncounterHistory,
     /// <summary>
     /// The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b, a REST endpoint for another FHIR server, or a s/Mime email address. This may include any security context information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Endpoint", "http://hl7.org/fhir/fhir-types"), Description("Endpoint")]
+    [EnumLiteral("Endpoint"), Description("Endpoint")]
     Endpoint,
     /// <summary>
     /// This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentRequest")]
+    [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
     EnrollmentRequest,
     /// <summary>
     /// This resource provides enrollment and plan details from the processing of an EnrollmentRequest resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EnrollmentResponse", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentResponse")]
+    [EnumLiteral("EnrollmentResponse"), Description("EnrollmentResponse")]
     EnrollmentResponse,
     /// <summary>
     /// An association between a patient and an organization / healthcare provider(s) during which time encounters may occur. The managing organization assumes a level of responsibility for the patient during this time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/fhir-types"), Description("EpisodeOfCare")]
+    [EnumLiteral("EpisodeOfCare"), Description("EpisodeOfCare")]
     EpisodeOfCare,
     /// <summary>
     /// The EventDefinition resource provides a reusable description of when a particular event can occur.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EventDefinition", "http://hl7.org/fhir/fhir-types"), Description("EventDefinition")]
+    [EnumLiteral("EventDefinition"), Description("EventDefinition")]
     EventDefinition,
     /// <summary>
     /// The Evidence Resource provides a machine-interpretable expression of an evidence concept including the evidence variables (e.g., population, exposures/interventions, comparators, outcomes, measured variables, confounding variables), the statistics, and the certainty of this evidence.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Evidence", "http://hl7.org/fhir/fhir-types"), Description("Evidence")]
+    [EnumLiteral("Evidence"), Description("Evidence")]
     Evidence,
     /// <summary>
     /// The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EvidenceReport", "http://hl7.org/fhir/fhir-types"), Description("EvidenceReport")]
+    [EnumLiteral("EvidenceReport"), Description("EvidenceReport")]
     EvidenceReport,
     /// <summary>
     /// The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EvidenceVariable", "http://hl7.org/fhir/fhir-types"), Description("EvidenceVariable")]
+    [EnumLiteral("EvidenceVariable"), Description("EvidenceVariable")]
     EvidenceVariable,
     /// <summary>
     /// A walkthrough of a workflow showing the interaction between systems and the instances shared, possibly including the evolution of instances over time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExampleScenario", "http://hl7.org/fhir/fhir-types"), Description("ExampleScenario")]
+    [EnumLiteral("ExampleScenario"), Description("ExampleScenario")]
     ExampleScenario,
     /// <summary>
     /// This resource provides: the claim details; adjudication details from the processing of a Claim; and optionally account balance information, for informing the subscriber of the benefits provided.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExplanationOfBenefit", "http://hl7.org/fhir/fhir-types"), Description("ExplanationOfBenefit")]
+    [EnumLiteral("ExplanationOfBenefit"), Description("ExplanationOfBenefit")]
     ExplanationOfBenefit,
     /// <summary>
     /// Significant health conditions for a person related to the patient relevant in the context of care for the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("FamilyMemberHistory", "http://hl7.org/fhir/fhir-types"), Description("FamilyMemberHistory")]
+    [EnumLiteral("FamilyMemberHistory"), Description("FamilyMemberHistory")]
     FamilyMemberHistory,
     /// <summary>
     /// Prospective warnings of potential issues when providing care to the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Flag", "http://hl7.org/fhir/fhir-types"), Description("Flag")]
+    [EnumLiteral("Flag"), Description("Flag")]
     Flag,
     /// <summary>
     /// This resource describes a product or service that is available through a program and includes the conditions and constraints of availability.  All of the information in this resource is specific to the inclusion of the item in the formulary and is not inherent to the item itself.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("FormularyItem", "http://hl7.org/fhir/fhir-types"), Description("FormularyItem")]
+    [EnumLiteral("FormularyItem"), Description("FormularyItem")]
     FormularyItem,
     /// <summary>
     /// A set of analyses performed to analyze and generate genomic data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GenomicStudy", "http://hl7.org/fhir/fhir-types"), Description("GenomicStudy")]
+    [EnumLiteral("GenomicStudy"), Description("GenomicStudy")]
     GenomicStudy,
     /// <summary>
     /// Describes the intended objective(s) for a patient, group or organization care, for example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Goal", "http://hl7.org/fhir/fhir-types"), Description("Goal")]
+    [EnumLiteral("Goal"), Description("Goal")]
     Goal,
     /// <summary>
     /// A formal computable definition of a graph of resources - that is, a coherent set of resources that form a graph by following references. The Graph Definition resource defines a set and makes rules about the set.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GraphDefinition", "http://hl7.org/fhir/fhir-types"), Description("GraphDefinition")]
+    [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
     GraphDefinition,
     /// <summary>
     /// Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Group", "http://hl7.org/fhir/fhir-types"), Description("Group")]
+    [EnumLiteral("Group"), Description("Group")]
     Group,
     /// <summary>
     /// A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GuidanceResponse", "http://hl7.org/fhir/fhir-types"), Description("GuidanceResponse")]
+    [EnumLiteral("GuidanceResponse"), Description("GuidanceResponse")]
     GuidanceResponse,
     /// <summary>
     /// The details of a healthcare service available at a location or in a catalog.  In the case where there is a hierarchy of services (for example, Lab -&gt; Pathology -&gt; Wound Cultures), this can be represented using a set of linked HealthcareServices.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("HealthcareService", "http://hl7.org/fhir/fhir-types"), Description("HealthcareService")]
+    [EnumLiteral("HealthcareService"), Description("HealthcareService")]
     HealthcareService,
     /// <summary>
     /// A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImagingSelection", "http://hl7.org/fhir/fhir-types"), Description("ImagingSelection")]
+    [EnumLiteral("ImagingSelection"), Description("ImagingSelection")]
     ImagingSelection,
     /// <summary>
     /// Representation of the content produced in a DICOM imaging study. A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImagingStudy", "http://hl7.org/fhir/fhir-types"), Description("ImagingStudy")]
+    [EnumLiteral("ImagingStudy"), Description("ImagingStudy")]
     ImagingStudy,
     /// <summary>
     /// Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Immunization", "http://hl7.org/fhir/fhir-types"), Description("Immunization")]
+    [EnumLiteral("Immunization"), Description("Immunization")]
     Immunization,
     /// <summary>
     /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImmunizationEvaluation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationEvaluation")]
+    [EnumLiteral("ImmunizationEvaluation"), Description("ImmunizationEvaluation")]
     ImmunizationEvaluation,
     /// <summary>
     /// A patient's point-in-time set of recommendations (i.e. forecasting) according to a published schedule with optional supporting justification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationRecommendation")]
+    [EnumLiteral("ImmunizationRecommendation"), Description("ImmunizationRecommendation")]
     ImmunizationRecommendation,
     /// <summary>
     /// A set of rules of how a particular interoperability or standards problem is solved - typically through the use of FHIR resources. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImplementationGuide", "http://hl7.org/fhir/fhir-types"), Description("ImplementationGuide")]
+    [EnumLiteral("ImplementationGuide"), Description("ImplementationGuide")]
     ImplementationGuide,
     /// <summary>
     /// An ingredient of a manufactured item or pharmaceutical product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Ingredient", "http://hl7.org/fhir/fhir-types"), Description("Ingredient")]
+    [EnumLiteral("Ingredient"), Description("Ingredient")]
     Ingredient,
     /// <summary>
     /// Details of a Health Insurance product/plan provided by an organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InsurancePlan", "http://hl7.org/fhir/fhir-types"), Description("InsurancePlan")]
+    [EnumLiteral("InsurancePlan"), Description("InsurancePlan")]
     InsurancePlan,
     /// <summary>
     /// functional description of an inventory item used in inventory and supply-related workflows.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InventoryItem", "http://hl7.org/fhir/fhir-types"), Description("InventoryItem")]
+    [EnumLiteral("InventoryItem"), Description("InventoryItem")]
     InventoryItem,
     /// <summary>
     /// A report of inventory or stock items.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InventoryReport", "http://hl7.org/fhir/fhir-types"), Description("InventoryReport")]
+    [EnumLiteral("InventoryReport"), Description("InventoryReport")]
     InventoryReport,
     /// <summary>
     /// Invoice containing collected ChargeItems from an Account with calculated individual and total price for Billing purpose.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Invoice", "http://hl7.org/fhir/fhir-types"), Description("Invoice")]
+    [EnumLiteral("Invoice"), Description("Invoice")]
     Invoice,
     /// <summary>
     /// The Library resource is a general-purpose container for knowledge asset definitions. It can be used to describe and expose existing knowledge assets such as logic libraries and information model descriptions, as well as to describe a collection of knowledge assets.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Library", "http://hl7.org/fhir/fhir-types"), Description("Library")]
+    [EnumLiteral("Library"), Description("Library")]
     Library,
     /// <summary>
     /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Linkage", "http://hl7.org/fhir/fhir-types"), Description("Linkage")]
+    [EnumLiteral("Linkage"), Description("Linkage")]
     Linkage,
     /// <summary>
     /// A List is a curated collection of resources, for things such as problem lists, allergy lists, facility list, organization list, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("List", "http://hl7.org/fhir/fhir-types"), Description("List")]
+    [EnumLiteral("List"), Description("List")]
     List,
     /// <summary>
     /// Details and position information for a place where services are provided and resources and participants may be stored, found, contained, or accommodated.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Location", "http://hl7.org/fhir/fhir-types"), Description("Location")]
+    [EnumLiteral("Location"), Description("Location")]
     Location,
     /// <summary>
     /// The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ManufacturedItemDefinition", "http://hl7.org/fhir/fhir-types"), Description("ManufacturedItemDefinition")]
+    [EnumLiteral("ManufacturedItemDefinition"), Description("ManufacturedItemDefinition")]
     ManufacturedItemDefinition,
     /// <summary>
     /// The Measure resource provides the definition of a quality measure.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Measure", "http://hl7.org/fhir/fhir-types"), Description("Measure")]
+    [EnumLiteral("Measure"), Description("Measure")]
     Measure,
     /// <summary>
     /// The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MeasureReport", "http://hl7.org/fhir/fhir-types"), Description("MeasureReport")]
+    [EnumLiteral("MeasureReport"), Description("MeasureReport")]
     MeasureReport,
     /// <summary>
     /// This resource is primarily used for the identification and definition of a medication, including ingredients, for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Medication", "http://hl7.org/fhir/fhir-types"), Description("Medication")]
+    [EnumLiteral("Medication"), Description("Medication")]
     Medication,
     /// <summary>
     /// Describes the event of a patient consuming or otherwise being administered a medication.  This may be as simple as swallowing a tablet or it may be a long running infusion. Related resources tie this event to the authorizing prescription, and the specific encounter between patient and health care practitioner. This event can also be used to record waste using a status of not-done and the appropriate statusReason.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationAdministration", "http://hl7.org/fhir/fhir-types"), Description("MedicationAdministration")]
+    [EnumLiteral("MedicationAdministration"), Description("MedicationAdministration")]
     MedicationAdministration,
     /// <summary>
     /// Indicates that a medication product is to be or has been dispensed for a named person/patient.  This includes a description of the medication product (supply) provided and the instructions for administering the medication.  The medication dispense is the result of a pharmacy system responding to a medication order.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationDispense", "http://hl7.org/fhir/fhir-types"), Description("MedicationDispense")]
+    [EnumLiteral("MedicationDispense"), Description("MedicationDispense")]
     MedicationDispense,
     /// <summary>
     /// Information about a medication that is used to support knowledge.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationKnowledge", "http://hl7.org/fhir/fhir-types"), Description("MedicationKnowledge")]
+    [EnumLiteral("MedicationKnowledge"), Description("MedicationKnowledge")]
     MedicationKnowledge,
     /// <summary>
     /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/fhir-types"), Description("MedicationRequest")]
+    [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
     MedicationRequest,
     /// <summary>
     /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
     /// The primary difference between a medicationstatement and a medicationadministration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medicationstatement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the Medication Statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationStatement", "http://hl7.org/fhir/fhir-types"), Description("MedicationStatement")]
+    [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
     MedicationStatement,
     /// <summary>
     /// Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use, drug catalogs, to support prescribing, adverse events management etc.).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicinalProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("MedicinalProductDefinition")]
+    [EnumLiteral("MedicinalProductDefinition"), Description("MedicinalProductDefinition")]
     MedicinalProductDefinition,
     /// <summary>
     /// Defines the characteristics of a message that can be shared between systems, including the type of event that initiates the message, the content to be transmitted and what response(s), if any, are permitted.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MessageDefinition", "http://hl7.org/fhir/fhir-types"), Description("MessageDefinition")]
+    [EnumLiteral("MessageDefinition"), Description("MessageDefinition")]
     MessageDefinition,
     /// <summary>
     /// The header for a message exchange that is either requesting or responding to an action.  The reference(s) that are the subject of the action as well as other information related to the action are typically transmitted in a bundle in which the MessageHeader resource instance is the first resource in the bundle.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MessageHeader", "http://hl7.org/fhir/fhir-types"), Description("MessageHeader")]
+    [EnumLiteral("MessageHeader"), Description("MessageHeader")]
     MessageHeader,
     /// <summary>
     /// Representation of a molecular sequence.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MolecularSequence", "http://hl7.org/fhir/fhir-types"), Description("MolecularSequence")]
+    [EnumLiteral("MolecularSequence"), Description("MolecularSequence")]
     MolecularSequence,
     /// <summary>
     /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NamingSystem", "http://hl7.org/fhir/fhir-types"), Description("NamingSystem")]
+    [EnumLiteral("NamingSystem"), Description("NamingSystem")]
     NamingSystem,
     /// <summary>
     /// A record of food or fluid that is being consumed by a patient.  A NutritionIntake may indicate that the patient may be consuming the food or fluid now or has consumed the food or fluid in the past.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay or through an app that tracks food or fluids consumed.   The consumption information may come from sources such as the patient's memory, from a nutrition label,  or from a clinician documenting observed intake.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionIntake", "http://hl7.org/fhir/fhir-types"), Description("NutritionIntake")]
+    [EnumLiteral("NutritionIntake"), Description("NutritionIntake")]
     NutritionIntake,
     /// <summary>
     /// A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/fhir-types"), Description("NutritionOrder")]
+    [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
     NutritionOrder,
     /// <summary>
     /// A food or supplement that is consumed by patients.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/fhir-types"), Description("NutritionProduct")]
+    [EnumLiteral("NutritionProduct"), Description("NutritionProduct")]
     NutritionProduct,
     /// <summary>
     /// Measurements and simple assertions made about a patient, device or other subject.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Observation", "http://hl7.org/fhir/fhir-types"), Description("Observation")]
+    [EnumLiteral("Observation"), Description("Observation")]
     Observation,
     /// <summary>
     /// Set of definitional characteristics for a kind of observation or measurement produced or consumed by an orderable health care service.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ObservationDefinition", "http://hl7.org/fhir/fhir-types"), Description("ObservationDefinition")]
+    [EnumLiteral("ObservationDefinition"), Description("ObservationDefinition")]
     ObservationDefinition,
     /// <summary>
     /// A formal computable definition of an operation (on the RESTful interface) or a named query (using the search interaction).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OperationDefinition", "http://hl7.org/fhir/fhir-types"), Description("OperationDefinition")]
+    [EnumLiteral("OperationDefinition"), Description("OperationDefinition")]
     OperationDefinition,
     /// <summary>
     /// A collection of error, warning, or information messages that result from a system action.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OperationOutcome", "http://hl7.org/fhir/fhir-types"), Description("OperationOutcome")]
+    [EnumLiteral("OperationOutcome"), Description("OperationOutcome")]
     OperationOutcome,
     /// <summary>
     /// A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action.  Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Organization", "http://hl7.org/fhir/fhir-types"), Description("Organization")]
+    [EnumLiteral("Organization"), Description("Organization")]
     Organization,
     /// <summary>
     /// Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OrganizationAffiliation", "http://hl7.org/fhir/fhir-types"), Description("OrganizationAffiliation")]
+    [EnumLiteral("OrganizationAffiliation"), Description("OrganizationAffiliation")]
     OrganizationAffiliation,
     /// <summary>
     /// A medically related item or items, in a container or package.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PackagedProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("PackagedProductDefinition")]
+    [EnumLiteral("PackagedProductDefinition"), Description("PackagedProductDefinition")]
     PackagedProductDefinition,
     /// <summary>
     /// This resource is used to pass information into and back from an operation (whether invoked directly from REST or within a messaging environment).  It is not persisted or allowed to be referenced by other resources except as described in the definition of the Parameters resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Parameters", "http://hl7.org/fhir/fhir-types"), Description("Parameters")]
+    [EnumLiteral("Parameters"), Description("Parameters")]
     Parameters,
     /// <summary>
     /// Demographics and other administrative information about an individual or animal receiving care or other health-related services.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Patient", "http://hl7.org/fhir/fhir-types"), Description("Patient")]
+    [EnumLiteral("Patient"), Description("Patient")]
     Patient,
     /// <summary>
     /// This resource provides the status of the payment for goods and services rendered, and the request and response resource references.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PaymentNotice", "http://hl7.org/fhir/fhir-types"), Description("PaymentNotice")]
+    [EnumLiteral("PaymentNotice"), Description("PaymentNotice")]
     PaymentNotice,
     /// <summary>
     /// This resource provides the details including amount of a payment and allocates the payment items being paid.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/fhir-types"), Description("PaymentReconciliation")]
+    [EnumLiteral("PaymentReconciliation"), Description("PaymentReconciliation")]
     PaymentReconciliation,
     /// <summary>
     /// Permission resource holds access rules for a given data and context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Permission", "http://hl7.org/fhir/fhir-types"), Description("Permission")]
+    [EnumLiteral("Permission"), Description("Permission")]
     Permission,
     /// <summary>
     /// Demographics and administrative information about a person independent of a specific health-related context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Person", "http://hl7.org/fhir/fhir-types"), Description("Person")]
+    [EnumLiteral("Person"), Description("Person")]
     Person,
     /// <summary>
     /// This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PlanDefinition", "http://hl7.org/fhir/fhir-types"), Description("PlanDefinition")]
+    [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
     PlanDefinition,
     /// <summary>
     /// A person who is directly or indirectly involved in the provisioning of healthcare or related services.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Practitioner", "http://hl7.org/fhir/fhir-types"), Description("Practitioner")]
+    [EnumLiteral("Practitioner"), Description("Practitioner")]
     Practitioner,
     /// <summary>
     /// A specific set of Roles/Locations/specialties/services that a practitioner may perform, or has performed at an organization during a period of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PractitionerRole", "http://hl7.org/fhir/fhir-types"), Description("PractitionerRole")]
+    [EnumLiteral("PractitionerRole"), Description("PractitionerRole")]
     PractitionerRole,
     /// <summary>
     /// An action that is or was performed on or for a patient, practitioner, device, organization, or location. For example, this can be a physical intervention on a patient like an operation, or less invasive like long term services, counseling, or hypnotherapy.  This can be a quality or safety inspection for a location, organization, or device.  This can be an accreditation procedure on a practitioner for licensing.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Procedure", "http://hl7.org/fhir/fhir-types"), Description("Procedure")]
+    [EnumLiteral("Procedure"), Description("Procedure")]
     Procedure,
     /// <summary>
     /// Provenance of a resource is a record that describes entities and processes involved in producing and delivering or otherwise influencing that resource. Provenance provides a critical foundation for assessing authenticity, enabling trust, and allowing reproducibility. Provenance assertions are a form of contextual metadata and can themselves become important records with their own provenance. Provenance statement indicates clinical significance in terms of confidence in authenticity, reliability, and trustworthiness, integrity, and stage in lifecycle (e.g. Document Completion - has the artifact been legally authenticated), all of which may impact security, privacy, and trust policies.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Provenance", "http://hl7.org/fhir/fhir-types"), Description("Provenance")]
+    [EnumLiteral("Provenance"), Description("Provenance")]
     Provenance,
     /// <summary>
     /// A structured set of questions intended to guide the collection of answers from end-users. Questionnaires provide detailed control over order, presentation, phraseology and grouping to allow coherent, consistent data collection.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Questionnaire", "http://hl7.org/fhir/fhir-types"), Description("Questionnaire")]
+    [EnumLiteral("Questionnaire"), Description("Questionnaire")]
     Questionnaire,
     /// <summary>
     /// A structured set of questions and their answers. The questions are ordered and grouped into coherent subsets, corresponding to the structure of the grouping of the questionnaire being responded to.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("QuestionnaireResponse", "http://hl7.org/fhir/fhir-types"), Description("QuestionnaireResponse")]
+    [EnumLiteral("QuestionnaireResponse"), Description("QuestionnaireResponse")]
     QuestionnaireResponse,
     /// <summary>
     /// Regulatory approval, clearance or licencing related to a regulated product, treatment, facility or activity that is cited in a guidance, regulation, rule or legislative act. An example is Market Authorization relating to a Medicinal Product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RegulatedAuthorization", "http://hl7.org/fhir/fhir-types"), Description("RegulatedAuthorization")]
+    [EnumLiteral("RegulatedAuthorization"), Description("RegulatedAuthorization")]
     RegulatedAuthorization,
     /// <summary>
     /// Information about a person that is involved in a patient's health or the care for a patient, but who is not the target of healthcare, nor has a formal responsibility in the care process.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/fhir-types"), Description("RelatedPerson")]
+    [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
     /// A set of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RequestOrchestration", "http://hl7.org/fhir/fhir-types"), Description("RequestOrchestration")]
+    [EnumLiteral("RequestOrchestration"), Description("RequestOrchestration")]
     RequestOrchestration,
     /// <summary>
     /// The Requirements resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Requirements", "http://hl7.org/fhir/fhir-types"), Description("Requirements")]
+    [EnumLiteral("Requirements"), Description("Requirements")]
     Requirements,
     /// <summary>
     /// A scientific study of nature that sometimes includes processes involved in health and disease. For example, clinical trials are research studies that involve people. These studies may be related to new ways to screen, prevent, diagnose, and treat disease. They may also study certain outcomes and certain groups of people by looking at data collected in the past or future.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ResearchStudy", "http://hl7.org/fhir/fhir-types"), Description("ResearchStudy")]
+    [EnumLiteral("ResearchStudy"), Description("ResearchStudy")]
     ResearchStudy,
     /// <summary>
     /// A ResearchSubject is a participant or object which is the recipient of investigative activities in a research study.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ResearchSubject", "http://hl7.org/fhir/fhir-types"), Description("ResearchSubject")]
+    [EnumLiteral("ResearchSubject"), Description("ResearchSubject")]
     ResearchSubject,
     /// <summary>
     /// An assessment of the likely outcome(s) for a patient or other subject as well as the likelihood of each outcome.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RiskAssessment", "http://hl7.org/fhir/fhir-types"), Description("RiskAssessment")]
+    [EnumLiteral("RiskAssessment"), Description("RiskAssessment")]
     RiskAssessment,
     /// <summary>
     /// A container for slots of time that may be available for booking appointments.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Schedule", "http://hl7.org/fhir/fhir-types"), Description("Schedule")]
+    [EnumLiteral("Schedule"), Description("Schedule")]
     Schedule,
     /// <summary>
     /// A search parameter that defines a named search item that can be used to search/filter on a resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SearchParameter", "http://hl7.org/fhir/fhir-types"), Description("SearchParameter")]
+    [EnumLiteral("SearchParameter"), Description("SearchParameter")]
     SearchParameter,
     /// <summary>
     /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/fhir-types"), Description("ServiceRequest")]
+    [EnumLiteral("ServiceRequest"), Description("ServiceRequest")]
     ServiceRequest,
     /// <summary>
     /// A slot of time on a schedule that may be available for booking appointments.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Slot", "http://hl7.org/fhir/fhir-types"), Description("Slot")]
+    [EnumLiteral("Slot"), Description("Slot")]
     Slot,
     /// <summary>
     /// A sample to be used for analysis.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Specimen", "http://hl7.org/fhir/fhir-types"), Description("Specimen")]
+    [EnumLiteral("Specimen"), Description("Specimen")]
     Specimen,
     /// <summary>
     /// A kind of specimen with associated set of requirements.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SpecimenDefinition", "http://hl7.org/fhir/fhir-types"), Description("SpecimenDefinition")]
+    [EnumLiteral("SpecimenDefinition"), Description("SpecimenDefinition")]
     SpecimenDefinition,
     /// <summary>
     /// A definition of a FHIR structure. This resource is used to describe the underlying resources, data types defined in FHIR, and also for describing extensions and constraints on resources and data types.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("StructureDefinition", "http://hl7.org/fhir/fhir-types"), Description("StructureDefinition")]
+    [EnumLiteral("StructureDefinition"), Description("StructureDefinition")]
     StructureDefinition,
     /// <summary>
     /// A Map of relationships between 2 structures that can be used to transform data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("StructureMap", "http://hl7.org/fhir/fhir-types"), Description("StructureMap")]
+    [EnumLiteral("StructureMap"), Description("StructureMap")]
     StructureMap,
     /// <summary>
     /// The subscription resource describes a particular client's request to be notified about a SubscriptionTopic.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Subscription", "http://hl7.org/fhir/fhir-types"), Description("Subscription")]
+    [EnumLiteral("Subscription"), Description("Subscription")]
     Subscription,
     /// <summary>
     /// The SubscriptionStatus resource describes the state of a Subscription during notifications. It is not persisted.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/fhir-types"), Description("SubscriptionStatus")]
+    [EnumLiteral("SubscriptionStatus"), Description("SubscriptionStatus")]
     SubscriptionStatus,
     /// <summary>
     /// Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/fhir-types"), Description("SubscriptionTopic")]
+    [EnumLiteral("SubscriptionTopic"), Description("SubscriptionTopic")]
     SubscriptionTopic,
     /// <summary>
     /// A homogeneous material with a definite composition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Substance", "http://hl7.org/fhir/fhir-types"), Description("Substance")]
+    [EnumLiteral("Substance"), Description("Substance")]
     Substance,
     /// <summary>
     /// The detailed description of a substance, typically at a level beyond what is used for prescribing.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceDefinition", "http://hl7.org/fhir/fhir-types"), Description("SubstanceDefinition")]
+    [EnumLiteral("SubstanceDefinition"), Description("SubstanceDefinition")]
     SubstanceDefinition,
     /// <summary>
     /// Nucleic acids are defined by three distinct elements: the base, sugar and linkage. Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceNucleicAcid", "http://hl7.org/fhir/fhir-types"), Description("SubstanceNucleicAcid")]
+    [EnumLiteral("SubstanceNucleicAcid"), Description("SubstanceNucleicAcid")]
     SubstanceNucleicAcid,
     /// <summary>
     /// Properties of a substance specific to it being a polymer.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstancePolymer", "http://hl7.org/fhir/fhir-types"), Description("SubstancePolymer")]
+    [EnumLiteral("SubstancePolymer"), Description("SubstancePolymer")]
     SubstancePolymer,
     /// <summary>
     /// A SubstanceProtein is defined as a single unit of a linear amino acid sequence, or a combination of subunits that are either covalently linked or have a defined invariant stoichiometric relationship. This includes all synthetic, recombinant and purified SubstanceProteins of defined sequence, whether the use is therapeutic or prophylactic. This set of elements will be used to describe albumins, coagulation factors, cytokines, growth factors, peptide/SubstanceProtein hormones, enzymes, toxins, toxoids, recombinant vaccines, and immunomodulators.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceProtein", "http://hl7.org/fhir/fhir-types"), Description("SubstanceProtein")]
+    [EnumLiteral("SubstanceProtein"), Description("SubstanceProtein")]
     SubstanceProtein,
     /// <summary>
     /// Todo.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceReferenceInformation", "http://hl7.org/fhir/fhir-types"), Description("SubstanceReferenceInformation")]
+    [EnumLiteral("SubstanceReferenceInformation"), Description("SubstanceReferenceInformation")]
     SubstanceReferenceInformation,
     /// <summary>
     /// Source material shall capture information on the taxonomic and anatomical origins as well as the fraction of a material that can result in or can be modified to form a substance. This set of data elements shall be used to define polymer substances isolated from biological matrices. Taxonomic and anatomical origins shall be described using a controlled vocabulary as required. This information is captured for naturally derived polymers ( . starch) and structurally diverse substances. For Organisms belonging to the Kingdom Plantae the Substance level defines the fresh material of a single species or infraspecies, the Herbal Drug and the Herbal preparation. For Herbal preparations, the fraction information will be captured at the Substance information level and additional information for herbal extracts will be captured at the Specified Substance Group 1 information level. See for further explanation the Substance Class: Structurally Diverse and the herbal annex.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceSourceMaterial", "http://hl7.org/fhir/fhir-types"), Description("SubstanceSourceMaterial")]
+    [EnumLiteral("SubstanceSourceMaterial"), Description("SubstanceSourceMaterial")]
     SubstanceSourceMaterial,
     /// <summary>
     /// Record of delivery of what is supplied.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SupplyDelivery", "http://hl7.org/fhir/fhir-types"), Description("SupplyDelivery")]
+    [EnumLiteral("SupplyDelivery"), Description("SupplyDelivery")]
     SupplyDelivery,
     /// <summary>
     /// A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/fhir-types"), Description("SupplyRequest")]
+    [EnumLiteral("SupplyRequest"), Description("SupplyRequest")]
     SupplyRequest,
     /// <summary>
     /// A task to be performed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Task", "http://hl7.org/fhir/fhir-types"), Description("Task")]
+    [EnumLiteral("Task"), Description("Task")]
     Task,
     /// <summary>
     /// A TerminologyCapabilities resource documents a set of capabilities (behaviors) of a FHIR Terminology Server that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TerminologyCapabilities", "http://hl7.org/fhir/fhir-types"), Description("TerminologyCapabilities")]
+    [EnumLiteral("TerminologyCapabilities"), Description("TerminologyCapabilities")]
     TerminologyCapabilities,
     /// <summary>
     /// A plan for executing testing on an artifact or specifications
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestPlan", "http://hl7.org/fhir/fhir-types"), Description("TestPlan")]
+    [EnumLiteral("TestPlan"), Description("TestPlan")]
     TestPlan,
     /// <summary>
     /// A summary of information based on the results of executing a TestScript.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestReport", "http://hl7.org/fhir/fhir-types"), Description("TestReport")]
+    [EnumLiteral("TestReport"), Description("TestReport")]
     TestReport,
     /// <summary>
     /// A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestScript", "http://hl7.org/fhir/fhir-types"), Description("TestScript")]
+    [EnumLiteral("TestScript"), Description("TestScript")]
     TestScript,
     /// <summary>
     /// Record of transport.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Transport", "http://hl7.org/fhir/fhir-types"), Description("Transport")]
+    [EnumLiteral("Transport"), Description("Transport")]
     Transport,
     /// <summary>
     /// A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ValueSet", "http://hl7.org/fhir/fhir-types"), Description("ValueSet")]
+    [EnumLiteral("ValueSet"), Description("ValueSet")]
     ValueSet,
     /// <summary>
     /// Describes validation requirements, source(s), status and dates for one or more elements.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VerificationResult", "http://hl7.org/fhir/fhir-types"), Description("VerificationResult")]
+    [EnumLiteral("VerificationResult"), Description("VerificationResult")]
     VerificationResult,
     /// <summary>
     /// An authorization for the provision of glasses and/or contact lenses to a patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/fhir-types"), Description("VisionPrescription")]
+    [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
     VisionPrescription,
   }
 
@@ -9642,62 +9642,62 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/search-comparator)
   /// (system: http://hl7.org/fhir/search-comparator)
   /// </summary>
-  [FhirEnumeration("SearchComparator", "http://hl7.org/fhir/ValueSet/search-comparator")]
+  [FhirEnumeration("SearchComparator", "http://hl7.org/fhir/ValueSet/search-comparator", "http://hl7.org/fhir/search-comparator")]
   public enum SearchComparator
   {
     /// <summary>
     /// the value for the parameter in the resource is equal to the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("eq", "http://hl7.org/fhir/search-comparator"), Description("Equals")]
+    [EnumLiteral("eq"), Description("Equals")]
     Eq,
     /// <summary>
     /// the value for the parameter in the resource is not equal to the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("ne", "http://hl7.org/fhir/search-comparator"), Description("Not Equals")]
+    [EnumLiteral("ne"), Description("Not Equals")]
     Ne,
     /// <summary>
     /// the value for the parameter in the resource is greater than the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("gt", "http://hl7.org/fhir/search-comparator"), Description("Greater Than")]
+    [EnumLiteral("gt"), Description("Greater Than")]
     Gt,
     /// <summary>
     /// the value for the parameter in the resource is less than the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("lt", "http://hl7.org/fhir/search-comparator"), Description("Less Than")]
+    [EnumLiteral("lt"), Description("Less Than")]
     Lt,
     /// <summary>
     /// the value for the parameter in the resource is greater or equal to the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("ge", "http://hl7.org/fhir/search-comparator"), Description("Greater or Equals")]
+    [EnumLiteral("ge"), Description("Greater or Equals")]
     Ge,
     /// <summary>
     /// the value for the parameter in the resource is less or equal to the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("le", "http://hl7.org/fhir/search-comparator"), Description("Less of Equal")]
+    [EnumLiteral("le"), Description("Less of Equal")]
     Le,
     /// <summary>
     /// the value for the parameter in the resource starts after the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("sa", "http://hl7.org/fhir/search-comparator"), Description("Starts After")]
+    [EnumLiteral("sa"), Description("Starts After")]
     Sa,
     /// <summary>
     /// the value for the parameter in the resource ends before the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("eb", "http://hl7.org/fhir/search-comparator"), Description("Ends Before")]
+    [EnumLiteral("eb"), Description("Ends Before")]
     Eb,
     /// <summary>
     /// the value for the parameter in the resource is approximately the same to the provided value.
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [EnumLiteral("ap", "http://hl7.org/fhir/search-comparator"), Description("Approximately")]
+    [EnumLiteral("ap"), Description("Approximately")]
     Ap,
   }
 
@@ -9706,98 +9706,98 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/search-modifier-code)
   /// (system: http://hl7.org/fhir/search-modifier-code)
   /// </summary>
-  [FhirEnumeration("SearchModifierCode", "http://hl7.org/fhir/ValueSet/search-modifier-code")]
+  [FhirEnumeration("SearchModifierCode", "http://hl7.org/fhir/ValueSet/search-modifier-code", "http://hl7.org/fhir/search-modifier-code")]
   public enum SearchModifierCode
   {
     /// <summary>
     /// The search parameter returns resources that have a value or not.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("missing", "http://hl7.org/fhir/search-modifier-code"), Description("Missing")]
+    [EnumLiteral("missing"), Description("Missing")]
     Missing,
     /// <summary>
     /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("exact", "http://hl7.org/fhir/search-modifier-code"), Description("Exact")]
+    [EnumLiteral("exact"), Description("Exact")]
     Exact,
     /// <summary>
     /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("contains", "http://hl7.org/fhir/search-modifier-code"), Description("Contains")]
+    [EnumLiteral("contains"), Description("Contains")]
     Contains,
     /// <summary>
     /// The search parameter returns resources that do not contain a match.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("not", "http://hl7.org/fhir/search-modifier-code"), Description("Not")]
+    [EnumLiteral("not"), Description("Not")]
     Not,
     /// <summary>
     /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, Identifier.type.text, or Reference.display.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("text", "http://hl7.org/fhir/search-modifier-code"), Description("Text")]
+    [EnumLiteral("text"), Description("Text")]
     Text,
     /// <summary>
     /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is in the specified value set.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("in", "http://hl7.org/fhir/search-modifier-code"), Description("In")]
+    [EnumLiteral("in"), Description("In")]
     In,
     /// <summary>
     /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("not-in", "http://hl7.org/fhir/search-modifier-code"), Description("Not In")]
+    [EnumLiteral("not-in"), Description("Not In")]
     NotIn,
     /// <summary>
     /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("below", "http://hl7.org/fhir/search-modifier-code"), Description("Below")]
+    [EnumLiteral("below"), Description("Below")]
     Below,
     /// <summary>
     /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("above", "http://hl7.org/fhir/search-modifier-code"), Description("Above")]
+    [EnumLiteral("above"), Description("Above")]
     Above,
     /// <summary>
     /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("type", "http://hl7.org/fhir/search-modifier-code"), Description("Type")]
+    [EnumLiteral("type"), Description("Type")]
     Type,
     /// <summary>
     /// The search parameter applies to the identifier on the resource, not the reference.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("identifier", "http://hl7.org/fhir/search-modifier-code"), Description("Identifier")]
+    [EnumLiteral("identifier"), Description("Identifier")]
     Identifier,
     /// <summary>
     /// The search parameter has the format system|code|value, where the system and code refer to an Identifier.type.coding.system and .code, and match if any of the type codes match. All 3 parts must be present.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("of-type", "http://hl7.org/fhir/search-modifier-code"), Description("Of Type")]
+    [EnumLiteral("of-type"), Description("Of Type")]
     OfType,
     /// <summary>
     /// Tests whether the textual display value in a resource (e.g., CodeableConcept.text, Coding.display, or Reference.display) matches the supplied parameter value.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("code-text", "http://hl7.org/fhir/search-modifier-code"), Description("Code Text")]
+    [EnumLiteral("code-text"), Description("Code Text")]
     CodeText,
     /// <summary>
     /// Tests whether the value in a resource matches the supplied parameter value using advanced text handling that searches text associated with the code/value - e.g., CodeableConcept.text, Coding.display, or Identifier.type.text.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("text-advanced", "http://hl7.org/fhir/search-modifier-code"), Description("Text Advanced")]
+    [EnumLiteral("text-advanced"), Description("Text Advanced")]
     TextAdvanced,
     /// <summary>
     /// The search parameter indicates an inclusion directive (_include, _revinclude) that is applied to an included resource instead of the matching resource.
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [EnumLiteral("iterate", "http://hl7.org/fhir/search-modifier-code"), Description("Iterate")]
+    [EnumLiteral("iterate"), Description("Iterate")]
     Iterate,
   }
 
@@ -9806,38 +9806,38 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/subscription-status)
   /// (system: http://hl7.org/fhir/subscription-status)
   /// </summary>
-  [FhirEnumeration("SubscriptionStatusCodes", "http://hl7.org/fhir/ValueSet/subscription-status")]
+  [FhirEnumeration("SubscriptionStatusCodes", "http://hl7.org/fhir/ValueSet/subscription-status", "http://hl7.org/fhir/subscription-status")]
   public enum SubscriptionStatusCodes
   {
     /// <summary>
     /// The client has requested the subscription, and the server has not yet set it up.
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [EnumLiteral("requested", "http://hl7.org/fhir/subscription-status"), Description("Requested")]
+    [EnumLiteral("requested"), Description("Requested")]
     Requested,
     /// <summary>
     /// The subscription is active.
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [EnumLiteral("active", "http://hl7.org/fhir/subscription-status"), Description("Active")]
+    [EnumLiteral("active"), Description("Active")]
     Active,
     /// <summary>
     /// The server has an error executing the notification.
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [EnumLiteral("error", "http://hl7.org/fhir/subscription-status"), Description("Error")]
+    [EnumLiteral("error"), Description("Error")]
     Error,
     /// <summary>
     /// Too many errors have occurred or the subscription has expired.
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [EnumLiteral("off", "http://hl7.org/fhir/subscription-status"), Description("Off")]
+    [EnumLiteral("off"), Description("Off")]
     Off,
     /// <summary>
     /// This subscription has been flagged as incorrect.
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [EnumLiteral("entered-in-error", "http://hl7.org/fhir/subscription-status"), Description("Entered in Error")]
+    [EnumLiteral("entered-in-error"), Description("Entered in Error")]
     EnteredInError,
   }
 
@@ -9846,32 +9846,32 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/variable-handling)
   /// (system: http://hl7.org/fhir/variable-handling)
   /// </summary>
-  [FhirEnumeration("EvidenceVariableHandling", "http://hl7.org/fhir/ValueSet/variable-handling")]
+  [FhirEnumeration("EvidenceVariableHandling", "http://hl7.org/fhir/ValueSet/variable-handling", "http://hl7.org/fhir/variable-handling")]
   public enum EvidenceVariableHandling
   {
     /// <summary>
     /// A continuous variable is one for which, within the limits the variable ranges, any value is possible (from STATO http://purl.obolibrary.org/obo/STATO_0000251).
     /// (system: http://hl7.org/fhir/variable-handling)
     /// </summary>
-    [EnumLiteral("continuous", "http://hl7.org/fhir/variable-handling"), Description("continuous variable")]
+    [EnumLiteral("continuous"), Description("continuous variable")]
     Continuous,
     /// <summary>
     /// A dichotomous variable is a categorical variable which is defined to have only 2 categories or possible values (from STATO http://purl.obolibrary.org/obo/STATO_0000090).
     /// (system: http://hl7.org/fhir/variable-handling)
     /// </summary>
-    [EnumLiteral("dichotomous", "http://hl7.org/fhir/variable-handling"), Description("dichotomous variable")]
+    [EnumLiteral("dichotomous"), Description("dichotomous variable")]
     Dichotomous,
     /// <summary>
     /// An ordinal variable is a categorical variable where the discrete possible values are ordered or correspond to an implicit ranking (from STATO http://purl.obolibrary.org/obo/STATO_0000228).
     /// (system: http://hl7.org/fhir/variable-handling)
     /// </summary>
-    [EnumLiteral("ordinal", "http://hl7.org/fhir/variable-handling"), Description("ordinal variable")]
+    [EnumLiteral("ordinal"), Description("ordinal variable")]
     Ordinal,
     /// <summary>
     /// A polychotomous variable is a categorical variable which is defined to have minimally 2 categories or possible values. (from STATO  http://purl.obolibrary.org/obo/STATO_0000087).  Suggestion to limit code use to situations when neither dichotomous nor ordinal variables apply.
     /// (system: http://hl7.org/fhir/variable-handling)
     /// </summary>
-    [EnumLiteral("polychotomous", "http://hl7.org/fhir/variable-handling"), Description("polychotomous variable")]
+    [EnumLiteral("polychotomous"), Description("polychotomous variable")]
     Polychotomous,
   }
 
@@ -9880,7 +9880,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/version-independent-all-resource-types)
   /// (systems: 2)
   /// </summary>
-  [FhirEnumeration("VersionIndependentResourceTypesAll", "http://hl7.org/fhir/ValueSet/version-independent-all-resource-types")]
+  [FhirEnumeration("VersionIndependentResourceTypesAll", "http://hl7.org/fhir/ValueSet/version-independent-all-resource-types", "http://hl7.org/fhir/fhir-types")]
   public enum VersionIndependentResourceTypesAll
   {
     /// <summary>
@@ -10133,974 +10133,974 @@ namespace Hl7.Fhir.Model
     /// A financial tool for tracking value accrued for a particular purpose.  In the healthcare field, used to track charges for a patient, cost centers, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Account", "http://hl7.org/fhir/fhir-types"), Description("Account")]
+    [EnumLiteral("Account"), Description("Account")]
     Account,
     /// <summary>
     /// This resource allows for the definition of some activity to be performed, independent of a particular patient, practitioner, or other performance context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ActivityDefinition", "http://hl7.org/fhir/fhir-types"), Description("ActivityDefinition")]
+    [EnumLiteral("ActivityDefinition"), Description("ActivityDefinition")]
     ActivityDefinition,
     /// <summary>
     /// The ActorDefinition resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ActorDefinition", "http://hl7.org/fhir/fhir-types"), Description("ActorDefinition")]
+    [EnumLiteral("ActorDefinition"), Description("ActorDefinition")]
     ActorDefinition,
     /// <summary>
     /// A medicinal product in the final form which is suitable for administering to a patient (after any mixing of multiple components, dissolution etc. has been performed).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AdministrableProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("AdministrableProductDefinition")]
+    [EnumLiteral("AdministrableProductDefinition"), Description("AdministrableProductDefinition")]
     AdministrableProductDefinition,
     /// <summary>
     /// An event (i.e. any change to current patient status) that may be related to unintended effects on a patient or research participant. The unintended effects may require additional monitoring, treatment, hospitalization, or may result in death. The AdverseEvent resource also extends to potential or avoided events that could have had such effects. There are two major domains where the AdverseEvent resource is expected to be used. One is in clinical care reported adverse events and the other is in reporting adverse events in clinical  research trial management.  Adverse events can be reported by healthcare providers, patients, caregivers or by medical products manufacturers.  Given the differences between these two concepts, we recommend consulting the domain specific implementation guides when implementing the AdverseEvent Resource. The implementation guides include specific extensions, value sets and constraints.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AdverseEvent", "http://hl7.org/fhir/fhir-types"), Description("AdverseEvent")]
+    [EnumLiteral("AdverseEvent"), Description("AdverseEvent")]
     AdverseEvent,
     /// <summary>
     /// Risk of harmful or undesirable, physiological response which is unique to an individual and associated with exposure to a substance.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AllergyIntolerance", "http://hl7.org/fhir/fhir-types"), Description("AllergyIntolerance")]
+    [EnumLiteral("AllergyIntolerance"), Description("AllergyIntolerance")]
     AllergyIntolerance,
     /// <summary>
     /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Appointment", "http://hl7.org/fhir/fhir-types"), Description("Appointment")]
+    [EnumLiteral("Appointment"), Description("Appointment")]
     Appointment,
     /// <summary>
     /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/fhir-types"), Description("AppointmentResponse")]
+    [EnumLiteral("AppointmentResponse"), Description("AppointmentResponse")]
     AppointmentResponse,
     /// <summary>
     /// This Resource provides one or more comments, classifiers or ratings about a Resource and supports attribution and rights management metadata for the added content.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ArtifactAssessment", "http://hl7.org/fhir/fhir-types"), Description("ArtifactAssessment")]
+    [EnumLiteral("ArtifactAssessment"), Description("ArtifactAssessment")]
     ArtifactAssessment,
     /// <summary>
     /// A record of an event relevant for purposes such as operations, privacy, security, maintenance, and performance analysis.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("AuditEvent", "http://hl7.org/fhir/fhir-types"), Description("AuditEvent")]
+    [EnumLiteral("AuditEvent"), Description("AuditEvent")]
     AuditEvent,
     /// <summary>
     /// Basic is used for handling concepts not yet defined in FHIR, narrative-only resources that don't map to an existing resource, and custom resources not appropriate for inclusion in the FHIR specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Basic", "http://hl7.org/fhir/fhir-types"), Description("Basic")]
+    [EnumLiteral("Basic"), Description("Basic")]
     Basic,
     /// <summary>
     /// A resource that represents the data of a single raw artifact as digital content accessible in its native format.  A Binary resource can contain any content, whether text, image, pdf, zip archive, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Binary", "http://hl7.org/fhir/fhir-types"), Description("Binary")]
+    [EnumLiteral("Binary"), Description("Binary")]
     Binary,
     /// <summary>
     /// A biological material originating from a biological entity intended to be transplanted or infused into another (possibly the same) biological entity.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BiologicallyDerivedProduct", "http://hl7.org/fhir/fhir-types"), Description("BiologicallyDerivedProduct")]
+    [EnumLiteral("BiologicallyDerivedProduct"), Description("BiologicallyDerivedProduct")]
     BiologicallyDerivedProduct,
     /// <summary>
     /// A record of dispensation of a biologically derived product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BiologicallyDerivedProductDispense", "http://hl7.org/fhir/fhir-types"), Description("BiologicallyDerivedProductDispense")]
+    [EnumLiteral("BiologicallyDerivedProductDispense"), Description("BiologicallyDerivedProductDispense")]
     BiologicallyDerivedProductDispense,
     /// <summary>
     /// Record details about an anatomical structure.  This resource may be used when a coded concept does not provide the necessary detail needed for the use case.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("BodyStructure", "http://hl7.org/fhir/fhir-types"), Description("BodyStructure")]
+    [EnumLiteral("BodyStructure"), Description("BodyStructure")]
     BodyStructure,
     /// <summary>
     /// A container for a collection of resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Bundle", "http://hl7.org/fhir/fhir-types"), Description("Bundle")]
+    [EnumLiteral("Bundle"), Description("Bundle")]
     Bundle,
     /// <summary>
     /// Common Interface declaration for conformance and knowledge artifact resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CanonicalResource", "http://hl7.org/fhir/fhir-types"), Description("CanonicalResource")]
+    [EnumLiteral("CanonicalResource"), Description("CanonicalResource")]
     CanonicalResource,
     /// <summary>
     /// A Capability Statement documents a set of capabilities (behaviors) of a FHIR Server or Client for a particular version of FHIR that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CapabilityStatement", "http://hl7.org/fhir/fhir-types"), Description("CapabilityStatement")]
+    [EnumLiteral("CapabilityStatement"), Description("CapabilityStatement")]
     CapabilityStatement,
     /// <summary>
     /// Describes the intention of how one or more practitioners intend to deliver care for a particular patient, group or community for a period of time, possibly limited to care for a specific condition or set of conditions.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CarePlan", "http://hl7.org/fhir/fhir-types"), Description("CarePlan")]
+    [EnumLiteral("CarePlan"), Description("CarePlan")]
     CarePlan,
     /// <summary>
     /// The Care Team includes all the people and organizations who plan to participate in the coordination and delivery of care.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CareTeam", "http://hl7.org/fhir/fhir-types"), Description("CareTeam")]
+    [EnumLiteral("CareTeam"), Description("CareTeam")]
     CareTeam,
     /// <summary>
     /// The resource ChargeItem describes the provision of healthcare provider products for a certain patient, therefore referring not only to the product, but containing in addition details of the provision, like date, time, amounts and participating organizations and persons. Main Usage of the ChargeItem is to enable the billing process and internal cost allocation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ChargeItem", "http://hl7.org/fhir/fhir-types"), Description("ChargeItem")]
+    [EnumLiteral("ChargeItem"), Description("ChargeItem")]
     ChargeItem,
     /// <summary>
     /// The ChargeItemDefinition resource provides the properties that apply to the (billing) codes necessary to calculate costs and prices. The properties may differ largely depending on type and realm, therefore this resource gives only a rough structure and requires profiling for each type of billing code system.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ChargeItemDefinition", "http://hl7.org/fhir/fhir-types"), Description("ChargeItemDefinition")]
+    [EnumLiteral("ChargeItemDefinition"), Description("ChargeItemDefinition")]
     ChargeItemDefinition,
     /// <summary>
     /// The Citation Resource enables reference to any knowledge artifact for purposes of identification and attribution. The Citation Resource supports existing reference structures and developing publication practices such as versioning, expressing complex contributorship roles, and referencing computable resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Citation", "http://hl7.org/fhir/fhir-types"), Description("Citation")]
+    [EnumLiteral("Citation"), Description("Citation")]
     Citation,
     /// <summary>
     /// A provider issued list of professional services and products which have been provided, or are to be provided, to a patient which is sent to an insurer for reimbursement.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Claim", "http://hl7.org/fhir/fhir-types"), Description("Claim")]
+    [EnumLiteral("Claim"), Description("Claim")]
     Claim,
     /// <summary>
     /// This resource provides the adjudication details from the processing of a Claim resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClaimResponse", "http://hl7.org/fhir/fhir-types"), Description("ClaimResponse")]
+    [EnumLiteral("ClaimResponse"), Description("ClaimResponse")]
     ClaimResponse,
     /// <summary>
     /// A record of a clinical assessment performed to determine what problem(s) may affect the patient and before planning the treatments or management strategies that are best to manage a patient's condition. Assessments are often 1:1 with a clinical consultation / encounter,  but this varies greatly depending on the clinical workflow. This resource is called "ClinicalImpression" rather than "ClinicalAssessment" to avoid confusion with the recording of assessment tools such as Apgar score.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClinicalImpression", "http://hl7.org/fhir/fhir-types"), Description("ClinicalImpression")]
+    [EnumLiteral("ClinicalImpression"), Description("ClinicalImpression")]
     ClinicalImpression,
     /// <summary>
     /// A single issue - either an indication, contraindication, interaction or an undesirable effect for a medicinal product, medication, device or procedure.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ClinicalUseDefinition", "http://hl7.org/fhir/fhir-types"), Description("ClinicalUseDefinition")]
+    [EnumLiteral("ClinicalUseDefinition"), Description("ClinicalUseDefinition")]
     ClinicalUseDefinition,
     /// <summary>
     /// The CodeSystem resource is used to declare the existence of and describe a code system or code system supplement and its key properties, and optionally define a part or all of its content.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CodeSystem", "http://hl7.org/fhir/fhir-types"), Description("CodeSystem")]
+    [EnumLiteral("CodeSystem"), Description("CodeSystem")]
     CodeSystem,
     /// <summary>
     /// A clinical or business level record of information being transmitted or shared; e.g. an alert that was sent to a responsible provider, a public health agency communication to a provider/reporter in response to a case report for a reportable condition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Communication", "http://hl7.org/fhir/fhir-types"), Description("Communication")]
+    [EnumLiteral("Communication"), Description("Communication")]
     Communication,
     /// <summary>
     /// A request to convey information; e.g. the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/fhir-types"), Description("CommunicationRequest")]
+    [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
     CommunicationRequest,
     /// <summary>
     /// A compartment definition that defines how resources are accessed on a server.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CompartmentDefinition", "http://hl7.org/fhir/fhir-types"), Description("CompartmentDefinition")]
+    [EnumLiteral("CompartmentDefinition"), Description("CompartmentDefinition")]
     CompartmentDefinition,
     /// <summary>
     /// A set of healthcare-related information that is assembled together into a single logical package that provides a single coherent statement of meaning, establishes its own context and that has clinical attestation with regard to who is making the statement. A Composition defines the structure and narrative content necessary for a document. However, a Composition alone does not constitute a document. Rather, the Composition must be the first entry in a Bundle where Bundle.type=document, and any other resources referenced from Composition must be included as subsequent entries in the Bundle (for example Patient, Practitioner, Encounter, etc.).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Composition", "http://hl7.org/fhir/fhir-types"), Description("Composition")]
+    [EnumLiteral("Composition"), Description("Composition")]
     Composition,
     /// <summary>
     /// A statement of relationships from one set of concepts to one or more other concepts - either concepts in code systems, or data element/data element concepts, or classes in class models.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ConceptMap", "http://hl7.org/fhir/fhir-types"), Description("ConceptMap")]
+    [EnumLiteral("ConceptMap"), Description("ConceptMap")]
     ConceptMap,
     /// <summary>
     /// A clinical condition, problem, diagnosis, or other event, situation, issue, or clinical concept that has risen to a level of concern.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Condition", "http://hl7.org/fhir/fhir-types"), Description("Condition")]
+    [EnumLiteral("Condition"), Description("Condition")]
     Condition,
     /// <summary>
     /// A definition of a condition and information relevant to managing it.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ConditionDefinition", "http://hl7.org/fhir/fhir-types"), Description("ConditionDefinition")]
+    [EnumLiteral("ConditionDefinition"), Description("ConditionDefinition")]
     ConditionDefinition,
     /// <summary>
     /// A record of a healthcare consumer’s  choices  or choices made on their behalf by a third party, which permits or denies identified recipient(s) or recipient role(s) to perform one or more actions within a given policy context, for specific purposes and periods of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Consent", "http://hl7.org/fhir/fhir-types"), Description("Consent")]
+    [EnumLiteral("Consent"), Description("Consent")]
     Consent,
     /// <summary>
     /// Legally enforceable, formally recorded unilateral or bilateral directive i.e., a policy or agreement.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Contract", "http://hl7.org/fhir/fhir-types"), Description("Contract")]
+    [EnumLiteral("Contract"), Description("Contract")]
     Contract,
     /// <summary>
     /// Financial instrument which may be used to reimburse or pay for health care products and services. Includes both insurance and self-payment.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Coverage", "http://hl7.org/fhir/fhir-types"), Description("Coverage")]
+    [EnumLiteral("Coverage"), Description("Coverage")]
     Coverage,
     /// <summary>
     /// The CoverageEligibilityRequest provides patient and insurance coverage information to an insurer for them to respond, in the form of an CoverageEligibilityResponse, with information regarding whether the stated coverage is valid and in-force and optionally to provide the insurance details of the policy.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CoverageEligibilityRequest", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityRequest")]
+    [EnumLiteral("CoverageEligibilityRequest"), Description("CoverageEligibilityRequest")]
     CoverageEligibilityRequest,
     /// <summary>
     /// This resource provides eligibility and plan details from the processing of an CoverageEligibilityRequest resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("CoverageEligibilityResponse", "http://hl7.org/fhir/fhir-types"), Description("CoverageEligibilityResponse")]
+    [EnumLiteral("CoverageEligibilityResponse"), Description("CoverageEligibilityResponse")]
     CoverageEligibilityResponse,
     /// <summary>
     /// Indicates an actual or potential clinical issue with or between one or more active or proposed clinical actions for a patient; e.g. Drug-drug interaction, Ineffective treatment frequency, Procedure-condition conflict, gaps in care, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DetectedIssue", "http://hl7.org/fhir/fhir-types"), Description("DetectedIssue")]
+    [EnumLiteral("DetectedIssue"), Description("DetectedIssue")]
     DetectedIssue,
     /// <summary>
     /// This resource describes the properties (regulated, has real time clock, etc.), adminstrative (manufacturer name, model number, serial number, firmware, etc.), and type (knee replacement, blood pressure cuff, MRI, etc.) of a physical unit (these values do not change much within a given module, for example the serail number, manufacturer name, and model number). An actual unit may consist of several modules in a distinct hierarchy and these are represented by multiple Device resources and bound through the 'parent' element.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Device", "http://hl7.org/fhir/fhir-types"), Description("Device")]
+    [EnumLiteral("Device"), Description("Device")]
     Device,
     /// <summary>
     /// A record of association of a device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceAssociation", "http://hl7.org/fhir/fhir-types"), Description("DeviceAssociation")]
+    [EnumLiteral("DeviceAssociation"), Description("DeviceAssociation")]
     DeviceAssociation,
     /// <summary>
     /// This is a specialized resource that defines the characteristics and capabilities of a device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceDefinition", "http://hl7.org/fhir/fhir-types"), Description("DeviceDefinition")]
+    [EnumLiteral("DeviceDefinition"), Description("DeviceDefinition")]
     DeviceDefinition,
     /// <summary>
     /// Indicates that a device is to be or has been dispensed for a named person/patient.  This includes a description of the product (supply) provided and the instructions for using the device.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceDispense", "http://hl7.org/fhir/fhir-types"), Description("DeviceDispense")]
+    [EnumLiteral("DeviceDispense"), Description("DeviceDispense")]
     DeviceDispense,
     /// <summary>
     /// Describes a measurement, calculation or setting capability of a device.  The DeviceMetric resource is derived from the ISO/IEEE 11073-10201 Domain Information Model standard, but is more widely applicable. 
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceMetric", "http://hl7.org/fhir/fhir-types"), Description("DeviceMetric")]
+    [EnumLiteral("DeviceMetric"), Description("DeviceMetric")]
     DeviceMetric,
     /// <summary>
     /// Represents a request a device to be provided to a specific patient. The device may be an implantable device to be subsequently implanted, or an external assistive device, such as a walker, to be delivered and subsequently be used.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/fhir-types"), Description("DeviceRequest")]
+    [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
     DeviceRequest,
     /// <summary>
     /// A record of a device being used by a patient where the record is the result of a report from the patient or a clinician.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DeviceUsage", "http://hl7.org/fhir/fhir-types"), Description("DeviceUsage")]
+    [EnumLiteral("DeviceUsage"), Description("DeviceUsage")]
     DeviceUsage,
     /// <summary>
     /// The findings and interpretation of diagnostic tests performed on patients, groups of patients, products, substances, devices, and locations, and/or specimens derived from these. The report includes clinical context such as requesting provider information, and some mix of atomic results, images, textual and coded interpretations, and formatted representation of diagnostic reports. The report also includes non-clinical context such as batch analysis and stability reporting of products and substances.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DiagnosticReport", "http://hl7.org/fhir/fhir-types"), Description("DiagnosticReport")]
+    [EnumLiteral("DiagnosticReport"), Description("DiagnosticReport")]
     DiagnosticReport,
     /// <summary>
     /// A reference to a document of any kind for any purpose. While the term “document” implies a more narrow focus, for this resource this “document” encompasses *any* serialized object with a mime-type, it includes formal patient-centric documents (CDA), clinical notes, scanned paper, non-patient specific documents like policy text, as well as a photo, video, or audio recording acquired or used in healthcare.  The DocumentReference resource provides metadata about the document so that the document can be discovered and managed.  The actual content may be inline base64 encoded data or provided by direct reference.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DocumentReference", "http://hl7.org/fhir/fhir-types"), Description("DocumentReference")]
+    [EnumLiteral("DocumentReference"), Description("DocumentReference")]
     DocumentReference,
     /// <summary>
     /// A resource that includes narrative, extensions, and contained resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("DomainResource", "http://hl7.org/fhir/fhir-types"), Description("DomainResource")]
+    [EnumLiteral("DomainResource"), Description("DomainResource")]
     DomainResource,
     /// <summary>
     /// An interaction between healthcare provider(s), and/or patient(s) for the purpose of providing healthcare service(s) or assessing the health status of patient(s).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Encounter", "http://hl7.org/fhir/fhir-types"), Description("Encounter")]
+    [EnumLiteral("Encounter"), Description("Encounter")]
     Encounter,
     /// <summary>
     /// A record of significant events/milestones key data throughout the history of an Encounter
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EncounterHistory", "http://hl7.org/fhir/fhir-types"), Description("EncounterHistory")]
+    [EnumLiteral("EncounterHistory"), Description("EncounterHistory")]
     EncounterHistory,
     /// <summary>
     /// The technical details of an endpoint that can be used for electronic services, such as for web services providing XDS.b, a REST endpoint for another FHIR server, or a s/Mime email address. This may include any security context information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Endpoint", "http://hl7.org/fhir/fhir-types"), Description("Endpoint")]
+    [EnumLiteral("Endpoint"), Description("Endpoint")]
     Endpoint,
     /// <summary>
     /// This resource provides the insurance enrollment details to the insurer regarding a specified coverage.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentRequest")]
+    [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
     EnrollmentRequest,
     /// <summary>
     /// This resource provides enrollment and plan details from the processing of an EnrollmentRequest resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EnrollmentResponse", "http://hl7.org/fhir/fhir-types"), Description("EnrollmentResponse")]
+    [EnumLiteral("EnrollmentResponse"), Description("EnrollmentResponse")]
     EnrollmentResponse,
     /// <summary>
     /// An association between a patient and an organization / healthcare provider(s) during which time encounters may occur. The managing organization assumes a level of responsibility for the patient during this time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EpisodeOfCare", "http://hl7.org/fhir/fhir-types"), Description("EpisodeOfCare")]
+    [EnumLiteral("EpisodeOfCare"), Description("EpisodeOfCare")]
     EpisodeOfCare,
     /// <summary>
     /// The EventDefinition resource provides a reusable description of when a particular event can occur.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EventDefinition", "http://hl7.org/fhir/fhir-types"), Description("EventDefinition")]
+    [EnumLiteral("EventDefinition"), Description("EventDefinition")]
     EventDefinition,
     /// <summary>
     /// The Evidence Resource provides a machine-interpretable expression of an evidence concept including the evidence variables (e.g., population, exposures/interventions, comparators, outcomes, measured variables, confounding variables), the statistics, and the certainty of this evidence.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Evidence", "http://hl7.org/fhir/fhir-types"), Description("Evidence")]
+    [EnumLiteral("Evidence"), Description("Evidence")]
     Evidence,
     /// <summary>
     /// The EvidenceReport Resource is a specialized container for a collection of resources and codeable concepts, adapted to support compositions of Evidence, EvidenceVariable, and Citation resources and related concepts.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EvidenceReport", "http://hl7.org/fhir/fhir-types"), Description("EvidenceReport")]
+    [EnumLiteral("EvidenceReport"), Description("EvidenceReport")]
     EvidenceReport,
     /// <summary>
     /// The EvidenceVariable resource describes an element that knowledge (Evidence) is about.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("EvidenceVariable", "http://hl7.org/fhir/fhir-types"), Description("EvidenceVariable")]
+    [EnumLiteral("EvidenceVariable"), Description("EvidenceVariable")]
     EvidenceVariable,
     /// <summary>
     /// A walkthrough of a workflow showing the interaction between systems and the instances shared, possibly including the evolution of instances over time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExampleScenario", "http://hl7.org/fhir/fhir-types"), Description("ExampleScenario")]
+    [EnumLiteral("ExampleScenario"), Description("ExampleScenario")]
     ExampleScenario,
     /// <summary>
     /// This resource provides: the claim details; adjudication details from the processing of a Claim; and optionally account balance information, for informing the subscriber of the benefits provided.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ExplanationOfBenefit", "http://hl7.org/fhir/fhir-types"), Description("ExplanationOfBenefit")]
+    [EnumLiteral("ExplanationOfBenefit"), Description("ExplanationOfBenefit")]
     ExplanationOfBenefit,
     /// <summary>
     /// Significant health conditions for a person related to the patient relevant in the context of care for the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("FamilyMemberHistory", "http://hl7.org/fhir/fhir-types"), Description("FamilyMemberHistory")]
+    [EnumLiteral("FamilyMemberHistory"), Description("FamilyMemberHistory")]
     FamilyMemberHistory,
     /// <summary>
     /// Prospective warnings of potential issues when providing care to the patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Flag", "http://hl7.org/fhir/fhir-types"), Description("Flag")]
+    [EnumLiteral("Flag"), Description("Flag")]
     Flag,
     /// <summary>
     /// This resource describes a product or service that is available through a program and includes the conditions and constraints of availability.  All of the information in this resource is specific to the inclusion of the item in the formulary and is not inherent to the item itself.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("FormularyItem", "http://hl7.org/fhir/fhir-types"), Description("FormularyItem")]
+    [EnumLiteral("FormularyItem"), Description("FormularyItem")]
     FormularyItem,
     /// <summary>
     /// A set of analyses performed to analyze and generate genomic data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GenomicStudy", "http://hl7.org/fhir/fhir-types"), Description("GenomicStudy")]
+    [EnumLiteral("GenomicStudy"), Description("GenomicStudy")]
     GenomicStudy,
     /// <summary>
     /// Describes the intended objective(s) for a patient, group or organization care, for example, weight loss, restoring an activity of daily living, obtaining herd immunity via immunization, meeting a process improvement objective, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Goal", "http://hl7.org/fhir/fhir-types"), Description("Goal")]
+    [EnumLiteral("Goal"), Description("Goal")]
     Goal,
     /// <summary>
     /// A formal computable definition of a graph of resources - that is, a coherent set of resources that form a graph by following references. The Graph Definition resource defines a set and makes rules about the set.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GraphDefinition", "http://hl7.org/fhir/fhir-types"), Description("GraphDefinition")]
+    [EnumLiteral("GraphDefinition"), Description("GraphDefinition")]
     GraphDefinition,
     /// <summary>
     /// Represents a defined collection of entities that may be discussed or acted upon collectively but which are not expected to act collectively, and are not formally or legally recognized; i.e. a collection of entities that isn't an Organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Group", "http://hl7.org/fhir/fhir-types"), Description("Group")]
+    [EnumLiteral("Group"), Description("Group")]
     Group,
     /// <summary>
     /// A guidance response is the formal response to a guidance request, including any output parameters returned by the evaluation, as well as the description of any proposed actions to be taken.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("GuidanceResponse", "http://hl7.org/fhir/fhir-types"), Description("GuidanceResponse")]
+    [EnumLiteral("GuidanceResponse"), Description("GuidanceResponse")]
     GuidanceResponse,
     /// <summary>
     /// The details of a healthcare service available at a location or in a catalog.  In the case where there is a hierarchy of services (for example, Lab -&gt; Pathology -&gt; Wound Cultures), this can be represented using a set of linked HealthcareServices.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("HealthcareService", "http://hl7.org/fhir/fhir-types"), Description("HealthcareService")]
+    [EnumLiteral("HealthcareService"), Description("HealthcareService")]
     HealthcareService,
     /// <summary>
     /// A selection of DICOM SOP instances and/or frames within a single Study and Series. This might include additional specifics such as an image region, an Observation UID or a Segmentation Number, allowing linkage to an Observation Resource or transferring this information along with the ImagingStudy Resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImagingSelection", "http://hl7.org/fhir/fhir-types"), Description("ImagingSelection")]
+    [EnumLiteral("ImagingSelection"), Description("ImagingSelection")]
     ImagingSelection,
     /// <summary>
     /// Representation of the content produced in a DICOM imaging study. A study comprises a set of series, each of which includes a set of Service-Object Pair Instances (SOP Instances - images or other data) acquired or produced in a common context.  A series is of only one modality (e.g. X-ray, CT, MR, ultrasound), but a study may have multiple series of different modalities.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImagingStudy", "http://hl7.org/fhir/fhir-types"), Description("ImagingStudy")]
+    [EnumLiteral("ImagingStudy"), Description("ImagingStudy")]
     ImagingStudy,
     /// <summary>
     /// Describes the event of a patient being administered a vaccine or a record of an immunization as reported by a patient, a clinician or another party.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Immunization", "http://hl7.org/fhir/fhir-types"), Description("Immunization")]
+    [EnumLiteral("Immunization"), Description("Immunization")]
     Immunization,
     /// <summary>
     /// Describes a comparison of an immunization event against published recommendations to determine if the administration is "valid" in relation to those  recommendations.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImmunizationEvaluation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationEvaluation")]
+    [EnumLiteral("ImmunizationEvaluation"), Description("ImmunizationEvaluation")]
     ImmunizationEvaluation,
     /// <summary>
     /// A patient's point-in-time set of recommendations (i.e. forecasting) according to a published schedule with optional supporting justification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/fhir-types"), Description("ImmunizationRecommendation")]
+    [EnumLiteral("ImmunizationRecommendation"), Description("ImmunizationRecommendation")]
     ImmunizationRecommendation,
     /// <summary>
     /// A set of rules of how a particular interoperability or standards problem is solved - typically through the use of FHIR resources. This resource is used to gather all the parts of an implementation guide into a logical whole and to publish a computable definition of all the parts.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ImplementationGuide", "http://hl7.org/fhir/fhir-types"), Description("ImplementationGuide")]
+    [EnumLiteral("ImplementationGuide"), Description("ImplementationGuide")]
     ImplementationGuide,
     /// <summary>
     /// An ingredient of a manufactured item or pharmaceutical product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Ingredient", "http://hl7.org/fhir/fhir-types"), Description("Ingredient")]
+    [EnumLiteral("Ingredient"), Description("Ingredient")]
     Ingredient,
     /// <summary>
     /// Details of a Health Insurance product/plan provided by an organization.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InsurancePlan", "http://hl7.org/fhir/fhir-types"), Description("InsurancePlan")]
+    [EnumLiteral("InsurancePlan"), Description("InsurancePlan")]
     InsurancePlan,
     /// <summary>
     /// functional description of an inventory item used in inventory and supply-related workflows.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InventoryItem", "http://hl7.org/fhir/fhir-types"), Description("InventoryItem")]
+    [EnumLiteral("InventoryItem"), Description("InventoryItem")]
     InventoryItem,
     /// <summary>
     /// A report of inventory or stock items.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("InventoryReport", "http://hl7.org/fhir/fhir-types"), Description("InventoryReport")]
+    [EnumLiteral("InventoryReport"), Description("InventoryReport")]
     InventoryReport,
     /// <summary>
     /// Invoice containing collected ChargeItems from an Account with calculated individual and total price for Billing purpose.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Invoice", "http://hl7.org/fhir/fhir-types"), Description("Invoice")]
+    [EnumLiteral("Invoice"), Description("Invoice")]
     Invoice,
     /// <summary>
     /// The Library resource is a general-purpose container for knowledge asset definitions. It can be used to describe and expose existing knowledge assets such as logic libraries and information model descriptions, as well as to describe a collection of knowledge assets.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Library", "http://hl7.org/fhir/fhir-types"), Description("Library")]
+    [EnumLiteral("Library"), Description("Library")]
     Library,
     /// <summary>
     /// Identifies two or more records (resource instances) that refer to the same real-world "occurrence".
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Linkage", "http://hl7.org/fhir/fhir-types"), Description("Linkage")]
+    [EnumLiteral("Linkage"), Description("Linkage")]
     Linkage,
     /// <summary>
     /// A List is a curated collection of resources, for things such as problem lists, allergy lists, facility list, organization list, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("List", "http://hl7.org/fhir/fhir-types"), Description("List")]
+    [EnumLiteral("List"), Description("List")]
     List,
     /// <summary>
     /// Details and position information for a place where services are provided and resources and participants may be stored, found, contained, or accommodated.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Location", "http://hl7.org/fhir/fhir-types"), Description("Location")]
+    [EnumLiteral("Location"), Description("Location")]
     Location,
     /// <summary>
     /// The definition and characteristics of a medicinal manufactured item, such as a tablet or capsule, as contained in a packaged medicinal product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ManufacturedItemDefinition", "http://hl7.org/fhir/fhir-types"), Description("ManufacturedItemDefinition")]
+    [EnumLiteral("ManufacturedItemDefinition"), Description("ManufacturedItemDefinition")]
     ManufacturedItemDefinition,
     /// <summary>
     /// The Measure resource provides the definition of a quality measure.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Measure", "http://hl7.org/fhir/fhir-types"), Description("Measure")]
+    [EnumLiteral("Measure"), Description("Measure")]
     Measure,
     /// <summary>
     /// The MeasureReport resource contains the results of the calculation of a measure; and optionally a reference to the resources involved in that calculation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MeasureReport", "http://hl7.org/fhir/fhir-types"), Description("MeasureReport")]
+    [EnumLiteral("MeasureReport"), Description("MeasureReport")]
     MeasureReport,
     /// <summary>
     /// This resource is primarily used for the identification and definition of a medication, including ingredients, for the purposes of prescribing, dispensing, and administering a medication as well as for making statements about medication use.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Medication", "http://hl7.org/fhir/fhir-types"), Description("Medication")]
+    [EnumLiteral("Medication"), Description("Medication")]
     Medication,
     /// <summary>
     /// Describes the event of a patient consuming or otherwise being administered a medication.  This may be as simple as swallowing a tablet or it may be a long running infusion. Related resources tie this event to the authorizing prescription, and the specific encounter between patient and health care practitioner. This event can also be used to record waste using a status of not-done and the appropriate statusReason.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationAdministration", "http://hl7.org/fhir/fhir-types"), Description("MedicationAdministration")]
+    [EnumLiteral("MedicationAdministration"), Description("MedicationAdministration")]
     MedicationAdministration,
     /// <summary>
     /// Indicates that a medication product is to be or has been dispensed for a named person/patient.  This includes a description of the medication product (supply) provided and the instructions for administering the medication.  The medication dispense is the result of a pharmacy system responding to a medication order.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationDispense", "http://hl7.org/fhir/fhir-types"), Description("MedicationDispense")]
+    [EnumLiteral("MedicationDispense"), Description("MedicationDispense")]
     MedicationDispense,
     /// <summary>
     /// Information about a medication that is used to support knowledge.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationKnowledge", "http://hl7.org/fhir/fhir-types"), Description("MedicationKnowledge")]
+    [EnumLiteral("MedicationKnowledge"), Description("MedicationKnowledge")]
     MedicationKnowledge,
     /// <summary>
     /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/fhir-types"), Description("MedicationRequest")]
+    [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
     MedicationRequest,
     /// <summary>
     /// A record of a medication that is being consumed by a patient.   A MedicationStatement may indicate that the patient may be taking the medication now or has taken the medication in the past or will be taking the medication in the future.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay.   The medication information may come from sources such as the patient's memory, from a prescription bottle,  or from a list of medications the patient, clinician or other party maintains. 
     /// The primary difference between a medicationstatement and a medicationadministration is that the medication administration has complete administration information and is based on actual administration information from the person who administered the medication.  A medicationstatement is often, if not always, less specific.  There is no required date/time when the medication was administered, in fact we only know that a source has reported the patient is taking this medication, where details such as time, quantity, or rate or even medication product may be incomplete or missing or less precise.  As stated earlier, the Medication Statement information may come from the patient's memory, from a prescription bottle or from a list of medications the patient, clinician or other party maintains.  Medication administration is more formal and is not missing detailed information.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicationStatement", "http://hl7.org/fhir/fhir-types"), Description("MedicationStatement")]
+    [EnumLiteral("MedicationStatement"), Description("MedicationStatement")]
     MedicationStatement,
     /// <summary>
     /// Detailed definition of a medicinal product, typically for uses other than direct patient care (e.g. regulatory use, drug catalogs, to support prescribing, adverse events management etc.).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MedicinalProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("MedicinalProductDefinition")]
+    [EnumLiteral("MedicinalProductDefinition"), Description("MedicinalProductDefinition")]
     MedicinalProductDefinition,
     /// <summary>
     /// Defines the characteristics of a message that can be shared between systems, including the type of event that initiates the message, the content to be transmitted and what response(s), if any, are permitted.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MessageDefinition", "http://hl7.org/fhir/fhir-types"), Description("MessageDefinition")]
+    [EnumLiteral("MessageDefinition"), Description("MessageDefinition")]
     MessageDefinition,
     /// <summary>
     /// The header for a message exchange that is either requesting or responding to an action.  The reference(s) that are the subject of the action as well as other information related to the action are typically transmitted in a bundle in which the MessageHeader resource instance is the first resource in the bundle.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MessageHeader", "http://hl7.org/fhir/fhir-types"), Description("MessageHeader")]
+    [EnumLiteral("MessageHeader"), Description("MessageHeader")]
     MessageHeader,
     /// <summary>
     /// Common Interface declaration for conformance and knowledge artifact resources.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MetadataResource", "http://hl7.org/fhir/fhir-types"), Description("MetadataResource")]
+    [EnumLiteral("MetadataResource"), Description("MetadataResource")]
     MetadataResource,
     /// <summary>
     /// Representation of a molecular sequence.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("MolecularSequence", "http://hl7.org/fhir/fhir-types"), Description("MolecularSequence")]
+    [EnumLiteral("MolecularSequence"), Description("MolecularSequence")]
     MolecularSequence,
     /// <summary>
     /// A curated namespace that issues unique symbols within that namespace for the identification of concepts, people, devices, etc.  Represents a "System" used within the Identifier and Coding data types.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NamingSystem", "http://hl7.org/fhir/fhir-types"), Description("NamingSystem")]
+    [EnumLiteral("NamingSystem"), Description("NamingSystem")]
     NamingSystem,
     /// <summary>
     /// A record of food or fluid that is being consumed by a patient.  A NutritionIntake may indicate that the patient may be consuming the food or fluid now or has consumed the food or fluid in the past.  The source of this information can be the patient, significant other (such as a family member or spouse), or a clinician.  A common scenario where this information is captured is during the history taking process during a patient visit or stay or through an app that tracks food or fluids consumed.   The consumption information may come from sources such as the patient's memory, from a nutrition label,  or from a clinician documenting observed intake.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionIntake", "http://hl7.org/fhir/fhir-types"), Description("NutritionIntake")]
+    [EnumLiteral("NutritionIntake"), Description("NutritionIntake")]
     NutritionIntake,
     /// <summary>
     /// A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/fhir-types"), Description("NutritionOrder")]
+    [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
     NutritionOrder,
     /// <summary>
     /// A food or supplement that is consumed by patients.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("NutritionProduct", "http://hl7.org/fhir/fhir-types"), Description("NutritionProduct")]
+    [EnumLiteral("NutritionProduct"), Description("NutritionProduct")]
     NutritionProduct,
     /// <summary>
     /// Measurements and simple assertions made about a patient, device or other subject.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Observation", "http://hl7.org/fhir/fhir-types"), Description("Observation")]
+    [EnumLiteral("Observation"), Description("Observation")]
     Observation,
     /// <summary>
     /// Set of definitional characteristics for a kind of observation or measurement produced or consumed by an orderable health care service.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ObservationDefinition", "http://hl7.org/fhir/fhir-types"), Description("ObservationDefinition")]
+    [EnumLiteral("ObservationDefinition"), Description("ObservationDefinition")]
     ObservationDefinition,
     /// <summary>
     /// A formal computable definition of an operation (on the RESTful interface) or a named query (using the search interaction).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OperationDefinition", "http://hl7.org/fhir/fhir-types"), Description("OperationDefinition")]
+    [EnumLiteral("OperationDefinition"), Description("OperationDefinition")]
     OperationDefinition,
     /// <summary>
     /// A collection of error, warning, or information messages that result from a system action.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OperationOutcome", "http://hl7.org/fhir/fhir-types"), Description("OperationOutcome")]
+    [EnumLiteral("OperationOutcome"), Description("OperationOutcome")]
     OperationOutcome,
     /// <summary>
     /// A formally or informally recognized grouping of people or organizations formed for the purpose of achieving some form of collective action.  Includes companies, institutions, corporations, departments, community groups, healthcare practice groups, payer/insurer, etc.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Organization", "http://hl7.org/fhir/fhir-types"), Description("Organization")]
+    [EnumLiteral("Organization"), Description("Organization")]
     Organization,
     /// <summary>
     /// Defines an affiliation/assotiation/relationship between 2 distinct organizations, that is not a part-of relationship/sub-division relationship.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("OrganizationAffiliation", "http://hl7.org/fhir/fhir-types"), Description("OrganizationAffiliation")]
+    [EnumLiteral("OrganizationAffiliation"), Description("OrganizationAffiliation")]
     OrganizationAffiliation,
     /// <summary>
     /// A medically related item or items, in a container or package.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PackagedProductDefinition", "http://hl7.org/fhir/fhir-types"), Description("PackagedProductDefinition")]
+    [EnumLiteral("PackagedProductDefinition"), Description("PackagedProductDefinition")]
     PackagedProductDefinition,
     /// <summary>
     /// This resource is used to pass information into and back from an operation (whether invoked directly from REST or within a messaging environment).  It is not persisted or allowed to be referenced by other resources except as described in the definition of the Parameters resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Parameters", "http://hl7.org/fhir/fhir-types"), Description("Parameters")]
+    [EnumLiteral("Parameters"), Description("Parameters")]
     Parameters,
     /// <summary>
     /// Demographics and other administrative information about an individual or animal receiving care or other health-related services.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Patient", "http://hl7.org/fhir/fhir-types"), Description("Patient")]
+    [EnumLiteral("Patient"), Description("Patient")]
     Patient,
     /// <summary>
     /// This resource provides the status of the payment for goods and services rendered, and the request and response resource references.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PaymentNotice", "http://hl7.org/fhir/fhir-types"), Description("PaymentNotice")]
+    [EnumLiteral("PaymentNotice"), Description("PaymentNotice")]
     PaymentNotice,
     /// <summary>
     /// This resource provides the details including amount of a payment and allocates the payment items being paid.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PaymentReconciliation", "http://hl7.org/fhir/fhir-types"), Description("PaymentReconciliation")]
+    [EnumLiteral("PaymentReconciliation"), Description("PaymentReconciliation")]
     PaymentReconciliation,
     /// <summary>
     /// Permission resource holds access rules for a given data and context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Permission", "http://hl7.org/fhir/fhir-types"), Description("Permission")]
+    [EnumLiteral("Permission"), Description("Permission")]
     Permission,
     /// <summary>
     /// Demographics and administrative information about a person independent of a specific health-related context.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Person", "http://hl7.org/fhir/fhir-types"), Description("Person")]
+    [EnumLiteral("Person"), Description("Person")]
     Person,
     /// <summary>
     /// This resource allows for the definition of various types of plans as a sharable, consumable, and executable artifact. The resource is general enough to support the description of a broad range of clinical and non-clinical artifacts such as clinical decision support rules, order sets, protocols, and drug quality specifications.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PlanDefinition", "http://hl7.org/fhir/fhir-types"), Description("PlanDefinition")]
+    [EnumLiteral("PlanDefinition"), Description("PlanDefinition")]
     PlanDefinition,
     /// <summary>
     /// A person who is directly or indirectly involved in the provisioning of healthcare or related services.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Practitioner", "http://hl7.org/fhir/fhir-types"), Description("Practitioner")]
+    [EnumLiteral("Practitioner"), Description("Practitioner")]
     Practitioner,
     /// <summary>
     /// A specific set of Roles/Locations/specialties/services that a practitioner may perform, or has performed at an organization during a period of time.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("PractitionerRole", "http://hl7.org/fhir/fhir-types"), Description("PractitionerRole")]
+    [EnumLiteral("PractitionerRole"), Description("PractitionerRole")]
     PractitionerRole,
     /// <summary>
     /// An action that is or was performed on or for a patient, practitioner, device, organization, or location. For example, this can be a physical intervention on a patient like an operation, or less invasive like long term services, counseling, or hypnotherapy.  This can be a quality or safety inspection for a location, organization, or device.  This can be an accreditation procedure on a practitioner for licensing.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Procedure", "http://hl7.org/fhir/fhir-types"), Description("Procedure")]
+    [EnumLiteral("Procedure"), Description("Procedure")]
     Procedure,
     /// <summary>
     /// Provenance of a resource is a record that describes entities and processes involved in producing and delivering or otherwise influencing that resource. Provenance provides a critical foundation for assessing authenticity, enabling trust, and allowing reproducibility. Provenance assertions are a form of contextual metadata and can themselves become important records with their own provenance. Provenance statement indicates clinical significance in terms of confidence in authenticity, reliability, and trustworthiness, integrity, and stage in lifecycle (e.g. Document Completion - has the artifact been legally authenticated), all of which may impact security, privacy, and trust policies.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Provenance", "http://hl7.org/fhir/fhir-types"), Description("Provenance")]
+    [EnumLiteral("Provenance"), Description("Provenance")]
     Provenance,
     /// <summary>
     /// A structured set of questions intended to guide the collection of answers from end-users. Questionnaires provide detailed control over order, presentation, phraseology and grouping to allow coherent, consistent data collection.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Questionnaire", "http://hl7.org/fhir/fhir-types"), Description("Questionnaire")]
+    [EnumLiteral("Questionnaire"), Description("Questionnaire")]
     Questionnaire,
     /// <summary>
     /// A structured set of questions and their answers. The questions are ordered and grouped into coherent subsets, corresponding to the structure of the grouping of the questionnaire being responded to.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("QuestionnaireResponse", "http://hl7.org/fhir/fhir-types"), Description("QuestionnaireResponse")]
+    [EnumLiteral("QuestionnaireResponse"), Description("QuestionnaireResponse")]
     QuestionnaireResponse,
     /// <summary>
     /// Regulatory approval, clearance or licencing related to a regulated product, treatment, facility or activity that is cited in a guidance, regulation, rule or legislative act. An example is Market Authorization relating to a Medicinal Product.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RegulatedAuthorization", "http://hl7.org/fhir/fhir-types"), Description("RegulatedAuthorization")]
+    [EnumLiteral("RegulatedAuthorization"), Description("RegulatedAuthorization")]
     RegulatedAuthorization,
     /// <summary>
     /// Information about a person that is involved in a patient's health or the care for a patient, but who is not the target of healthcare, nor has a formal responsibility in the care process.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RelatedPerson", "http://hl7.org/fhir/fhir-types"), Description("RelatedPerson")]
+    [EnumLiteral("RelatedPerson"), Description("RelatedPerson")]
     RelatedPerson,
     /// <summary>
     /// A set of related requests that can be used to capture intended activities that have inter-dependencies such as "give this medication after that one".
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RequestOrchestration", "http://hl7.org/fhir/fhir-types"), Description("RequestOrchestration")]
+    [EnumLiteral("RequestOrchestration"), Description("RequestOrchestration")]
     RequestOrchestration,
     /// <summary>
     /// The Requirements resource is used to describe an actor - a human or an application that plays a role in data exchange, and that may have obligations associated with the role the actor plays.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Requirements", "http://hl7.org/fhir/fhir-types"), Description("Requirements")]
+    [EnumLiteral("Requirements"), Description("Requirements")]
     Requirements,
     /// <summary>
     /// A scientific study of nature that sometimes includes processes involved in health and disease. For example, clinical trials are research studies that involve people. These studies may be related to new ways to screen, prevent, diagnose, and treat disease. They may also study certain outcomes and certain groups of people by looking at data collected in the past or future.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ResearchStudy", "http://hl7.org/fhir/fhir-types"), Description("ResearchStudy")]
+    [EnumLiteral("ResearchStudy"), Description("ResearchStudy")]
     ResearchStudy,
     /// <summary>
     /// A ResearchSubject is a participant or object which is the recipient of investigative activities in a research study.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ResearchSubject", "http://hl7.org/fhir/fhir-types"), Description("ResearchSubject")]
+    [EnumLiteral("ResearchSubject"), Description("ResearchSubject")]
     ResearchSubject,
     /// <summary>
     /// This is the base resource type for everything.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Resource", "http://hl7.org/fhir/fhir-types"), Description("Resource")]
+    [EnumLiteral("Resource"), Description("Resource")]
     Resource,
     /// <summary>
     /// An assessment of the likely outcome(s) for a patient or other subject as well as the likelihood of each outcome.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("RiskAssessment", "http://hl7.org/fhir/fhir-types"), Description("RiskAssessment")]
+    [EnumLiteral("RiskAssessment"), Description("RiskAssessment")]
     RiskAssessment,
     /// <summary>
     /// A container for slots of time that may be available for booking appointments.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Schedule", "http://hl7.org/fhir/fhir-types"), Description("Schedule")]
+    [EnumLiteral("Schedule"), Description("Schedule")]
     Schedule,
     /// <summary>
     /// A search parameter that defines a named search item that can be used to search/filter on a resource.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SearchParameter", "http://hl7.org/fhir/fhir-types"), Description("SearchParameter")]
+    [EnumLiteral("SearchParameter"), Description("SearchParameter")]
     SearchParameter,
     /// <summary>
     /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/fhir-types"), Description("ServiceRequest")]
+    [EnumLiteral("ServiceRequest"), Description("ServiceRequest")]
     ServiceRequest,
     /// <summary>
     /// A slot of time on a schedule that may be available for booking appointments.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Slot", "http://hl7.org/fhir/fhir-types"), Description("Slot")]
+    [EnumLiteral("Slot"), Description("Slot")]
     Slot,
     /// <summary>
     /// A sample to be used for analysis.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Specimen", "http://hl7.org/fhir/fhir-types"), Description("Specimen")]
+    [EnumLiteral("Specimen"), Description("Specimen")]
     Specimen,
     /// <summary>
     /// A kind of specimen with associated set of requirements.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SpecimenDefinition", "http://hl7.org/fhir/fhir-types"), Description("SpecimenDefinition")]
+    [EnumLiteral("SpecimenDefinition"), Description("SpecimenDefinition")]
     SpecimenDefinition,
     /// <summary>
     /// A definition of a FHIR structure. This resource is used to describe the underlying resources, data types defined in FHIR, and also for describing extensions and constraints on resources and data types.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("StructureDefinition", "http://hl7.org/fhir/fhir-types"), Description("StructureDefinition")]
+    [EnumLiteral("StructureDefinition"), Description("StructureDefinition")]
     StructureDefinition,
     /// <summary>
     /// A Map of relationships between 2 structures that can be used to transform data.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("StructureMap", "http://hl7.org/fhir/fhir-types"), Description("StructureMap")]
+    [EnumLiteral("StructureMap"), Description("StructureMap")]
     StructureMap,
     /// <summary>
     /// The subscription resource describes a particular client's request to be notified about a SubscriptionTopic.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Subscription", "http://hl7.org/fhir/fhir-types"), Description("Subscription")]
+    [EnumLiteral("Subscription"), Description("Subscription")]
     Subscription,
     /// <summary>
     /// The SubscriptionStatus resource describes the state of a Subscription during notifications. It is not persisted.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubscriptionStatus", "http://hl7.org/fhir/fhir-types"), Description("SubscriptionStatus")]
+    [EnumLiteral("SubscriptionStatus"), Description("SubscriptionStatus")]
     SubscriptionStatus,
     /// <summary>
     /// Describes a stream of resource state changes identified by trigger criteria and annotated with labels useful to filter projections from this topic.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubscriptionTopic", "http://hl7.org/fhir/fhir-types"), Description("SubscriptionTopic")]
+    [EnumLiteral("SubscriptionTopic"), Description("SubscriptionTopic")]
     SubscriptionTopic,
     /// <summary>
     /// A homogeneous material with a definite composition.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Substance", "http://hl7.org/fhir/fhir-types"), Description("Substance")]
+    [EnumLiteral("Substance"), Description("Substance")]
     Substance,
     /// <summary>
     /// The detailed description of a substance, typically at a level beyond what is used for prescribing.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceDefinition", "http://hl7.org/fhir/fhir-types"), Description("SubstanceDefinition")]
+    [EnumLiteral("SubstanceDefinition"), Description("SubstanceDefinition")]
     SubstanceDefinition,
     /// <summary>
     /// Nucleic acids are defined by three distinct elements: the base, sugar and linkage. Individual substance/moiety IDs will be created for each of these elements. The nucleotide sequence will be always entered in the 5’-3’ direction.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceNucleicAcid", "http://hl7.org/fhir/fhir-types"), Description("SubstanceNucleicAcid")]
+    [EnumLiteral("SubstanceNucleicAcid"), Description("SubstanceNucleicAcid")]
     SubstanceNucleicAcid,
     /// <summary>
     /// Properties of a substance specific to it being a polymer.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstancePolymer", "http://hl7.org/fhir/fhir-types"), Description("SubstancePolymer")]
+    [EnumLiteral("SubstancePolymer"), Description("SubstancePolymer")]
     SubstancePolymer,
     /// <summary>
     /// A SubstanceProtein is defined as a single unit of a linear amino acid sequence, or a combination of subunits that are either covalently linked or have a defined invariant stoichiometric relationship. This includes all synthetic, recombinant and purified SubstanceProteins of defined sequence, whether the use is therapeutic or prophylactic. This set of elements will be used to describe albumins, coagulation factors, cytokines, growth factors, peptide/SubstanceProtein hormones, enzymes, toxins, toxoids, recombinant vaccines, and immunomodulators.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceProtein", "http://hl7.org/fhir/fhir-types"), Description("SubstanceProtein")]
+    [EnumLiteral("SubstanceProtein"), Description("SubstanceProtein")]
     SubstanceProtein,
     /// <summary>
     /// Todo.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceReferenceInformation", "http://hl7.org/fhir/fhir-types"), Description("SubstanceReferenceInformation")]
+    [EnumLiteral("SubstanceReferenceInformation"), Description("SubstanceReferenceInformation")]
     SubstanceReferenceInformation,
     /// <summary>
     /// Source material shall capture information on the taxonomic and anatomical origins as well as the fraction of a material that can result in or can be modified to form a substance. This set of data elements shall be used to define polymer substances isolated from biological matrices. Taxonomic and anatomical origins shall be described using a controlled vocabulary as required. This information is captured for naturally derived polymers ( . starch) and structurally diverse substances. For Organisms belonging to the Kingdom Plantae the Substance level defines the fresh material of a single species or infraspecies, the Herbal Drug and the Herbal preparation. For Herbal preparations, the fraction information will be captured at the Substance information level and additional information for herbal extracts will be captured at the Specified Substance Group 1 information level. See for further explanation the Substance Class: Structurally Diverse and the herbal annex.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SubstanceSourceMaterial", "http://hl7.org/fhir/fhir-types"), Description("SubstanceSourceMaterial")]
+    [EnumLiteral("SubstanceSourceMaterial"), Description("SubstanceSourceMaterial")]
     SubstanceSourceMaterial,
     /// <summary>
     /// Record of delivery of what is supplied.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SupplyDelivery", "http://hl7.org/fhir/fhir-types"), Description("SupplyDelivery")]
+    [EnumLiteral("SupplyDelivery"), Description("SupplyDelivery")]
     SupplyDelivery,
     /// <summary>
     /// A record of a non-patient specific request for a medication, substance, device, certain types of biologically derived product, and nutrition product used in the healthcare setting.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/fhir-types"), Description("SupplyRequest")]
+    [EnumLiteral("SupplyRequest"), Description("SupplyRequest")]
     SupplyRequest,
     /// <summary>
     /// A task to be performed.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Task", "http://hl7.org/fhir/fhir-types"), Description("Task")]
+    [EnumLiteral("Task"), Description("Task")]
     Task,
     /// <summary>
     /// A TerminologyCapabilities resource documents a set of capabilities (behaviors) of a FHIR Terminology Server that may be used as a statement of actual server functionality or a statement of required or desired server implementation.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TerminologyCapabilities", "http://hl7.org/fhir/fhir-types"), Description("TerminologyCapabilities")]
+    [EnumLiteral("TerminologyCapabilities"), Description("TerminologyCapabilities")]
     TerminologyCapabilities,
     /// <summary>
     /// A plan for executing testing on an artifact or specifications
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestPlan", "http://hl7.org/fhir/fhir-types"), Description("TestPlan")]
+    [EnumLiteral("TestPlan"), Description("TestPlan")]
     TestPlan,
     /// <summary>
     /// A summary of information based on the results of executing a TestScript.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestReport", "http://hl7.org/fhir/fhir-types"), Description("TestReport")]
+    [EnumLiteral("TestReport"), Description("TestReport")]
     TestReport,
     /// <summary>
     /// A structured set of tests against a FHIR server or client implementation to determine compliance against the FHIR specification.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("TestScript", "http://hl7.org/fhir/fhir-types"), Description("TestScript")]
+    [EnumLiteral("TestScript"), Description("TestScript")]
     TestScript,
     /// <summary>
     /// Record of transport.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("Transport", "http://hl7.org/fhir/fhir-types"), Description("Transport")]
+    [EnumLiteral("Transport"), Description("Transport")]
     Transport,
     /// <summary>
     /// A ValueSet resource instance specifies a set of codes drawn from one or more code systems, intended for use in a particular context. Value sets link between [[[CodeSystem]]] definitions and their use in [coded elements](terminologies.html).
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("ValueSet", "http://hl7.org/fhir/fhir-types"), Description("ValueSet")]
+    [EnumLiteral("ValueSet"), Description("ValueSet")]
     ValueSet,
     /// <summary>
     /// Describes validation requirements, source(s), status and dates for one or more elements.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VerificationResult", "http://hl7.org/fhir/fhir-types"), Description("VerificationResult")]
+    [EnumLiteral("VerificationResult"), Description("VerificationResult")]
     VerificationResult,
     /// <summary>
     /// An authorization for the provision of glasses and/or contact lenses to a patient.
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/fhir-types"), Description("VisionPrescription")]
+    [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
     VisionPrescription,
   }
 

@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatementStatusCodes", "http://hl7.org/fhir/ValueSet/medication-statement-status")]
+    [FhirEnumeration("MedicationStatementStatusCodes", "http://hl7.org/fhir/ValueSet/medication-statement-status", "http://hl7.org/fhir/CodeSystem/medication-statement-status")]
     public enum MedicationStatementStatusCodes
     {
       /// <summary>
       /// The action of recording the medication statement is finished.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("recorded", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Recorded")]
+      [EnumLiteral("recorded"), Description("Recorded")]
       Recorded,
       /// <summary>
       /// Some of the actions that are implied by the medication usage may have occurred.  For example, the patient may have taken some of the medication.  Clinical decision support systems should take this status into account.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication usage is draft or preliminary.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
     }
 

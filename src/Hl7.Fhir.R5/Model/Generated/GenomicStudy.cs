@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/genomicstudy-status)
     /// (system: http://hl7.org/fhir/genomicstudy-status)
     /// </summary>
-    [FhirEnumeration("GenomicStudyStatus", "http://hl7.org/fhir/ValueSet/genomicstudy-status")]
+    [FhirEnumeration("GenomicStudyStatus", "http://hl7.org/fhir/ValueSet/genomicstudy-status", "http://hl7.org/fhir/genomicstudy-status")]
     public enum GenomicStudyStatus
     {
       /// <summary>
       /// The existence of the genomic study is registered, but there is nothing yet available.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("registered", "http://hl7.org/fhir/genomicstudy-status"), Description("Registered")]
+      [EnumLiteral("registered"), Description("Registered")]
       Registered,
       /// <summary>
       /// At least one instance has been associated with this genomic study.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/genomicstudy-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// The genomic study is unavailable because the genomic study was not started or not completed (also sometimes called "aborted").
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/genomicstudy-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The genomic study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/genomicstudy-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/genomicstudy-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/genomicstudy-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

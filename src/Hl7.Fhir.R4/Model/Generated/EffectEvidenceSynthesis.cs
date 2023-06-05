@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/exposure-state)
     /// (system: http://hl7.org/fhir/exposure-state)
     /// </summary>
-    [FhirEnumeration("ExposureState", "http://hl7.org/fhir/ValueSet/exposure-state")]
+    [FhirEnumeration("ExposureState", "http://hl7.org/fhir/ValueSet/exposure-state", "http://hl7.org/fhir/exposure-state")]
     public enum ExposureStateCode
     {
       /// <summary>
       /// used when the results by exposure is describing the results for the primary exposure of interest.
       /// (system: http://hl7.org/fhir/exposure-state)
       /// </summary>
-      [EnumLiteral("exposure", "http://hl7.org/fhir/exposure-state"), Description("Exposure")]
+      [EnumLiteral("exposure"), Description("Exposure")]
       Exposure,
       /// <summary>
       /// used when the results by exposure is describing the results for the alternative exposure state, control state or comparator state.
       /// (system: http://hl7.org/fhir/exposure-state)
       /// </summary>
-      [EnumLiteral("exposure-alternative", "http://hl7.org/fhir/exposure-state"), Description("Exposure Alternative")]
+      [EnumLiteral("exposure-alternative"), Description("Exposure Alternative")]
       ExposureAlternative,
     }
 

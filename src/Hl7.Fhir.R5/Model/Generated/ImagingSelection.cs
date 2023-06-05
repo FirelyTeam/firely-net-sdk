@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-status)
     /// (system: http://hl7.org/fhir/imagingselection-status)
     /// </summary>
-    [FhirEnumeration("ImagingSelectionStatus", "http://hl7.org/fhir/ValueSet/imagingselection-status")]
+    [FhirEnumeration("ImagingSelectionStatus", "http://hl7.org/fhir/ValueSet/imagingselection-status", "http://hl7.org/fhir/imagingselection-status")]
     public enum ImagingSelectionStatus
     {
       /// <summary>
       /// The selected resources are available..
       /// (system: http://hl7.org/fhir/imagingselection-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/imagingselection-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// The imaging selection has been withdrawn following a release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/imagingselection-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/imagingselection-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/imagingselection-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/imagingselection-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -88,38 +88,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype)
     /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
     /// </summary>
-    [FhirEnumeration("ImagingSelection2DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype")]
+    [FhirEnumeration("ImagingSelection2DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype", "http://hl7.org/fhir/imagingselection-2dgraphictype")]
     public enum ImagingSelection2DGraphicType
     {
       /// <summary>
       /// A single location denoted by a single (x,y) pair.
       /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
       /// </summary>
-      [EnumLiteral("point", "http://hl7.org/fhir/imagingselection-2dgraphictype"), Description("POINT")]
+      [EnumLiteral("point"), Description("POINT")]
       Point,
       /// <summary>
       /// A series of connected line segments with ordered vertices denoted by (x,y) triplets; the points need not be coplanar.
       /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
       /// </summary>
-      [EnumLiteral("polyline", "http://hl7.org/fhir/imagingselection-2dgraphictype"), Description("POLYLINE")]
+      [EnumLiteral("polyline"), Description("POLYLINE")]
       Polyline,
       /// <summary>
       /// An n-tuple list of (x,y) pair end points between which some form of implementation dependent curved lines are to be drawn. The rendered line shall pass through all the specified points.
       /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
       /// </summary>
-      [EnumLiteral("interpolated", "http://hl7.org/fhir/imagingselection-2dgraphictype"), Description("INTERPOLATED")]
+      [EnumLiteral("interpolated"), Description("INTERPOLATED")]
       Interpolated,
       /// <summary>
       /// Two points shall be present; the first point is to be interpreted as the center and the second point as a point on the circumference of a circle, some form of implementation dependent representation of which is to be drawn.
       /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
       /// </summary>
-      [EnumLiteral("circle", "http://hl7.org/fhir/imagingselection-2dgraphictype"), Description("CIRCLE")]
+      [EnumLiteral("circle"), Description("CIRCLE")]
       Circle,
       /// <summary>
       /// An ellipse defined by four (x,y) pairs, the first two pairs specifying the endpoints of the major axis and the second two pairs specifying the endpoints of the minor axis.
       /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
       /// </summary>
-      [EnumLiteral("ellipse", "http://hl7.org/fhir/imagingselection-2dgraphictype"), Description("ELLIPSE")]
+      [EnumLiteral("ellipse"), Description("ELLIPSE")]
       Ellipse,
     }
 
@@ -128,44 +128,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype)
     /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
     /// </summary>
-    [FhirEnumeration("ImagingSelection3DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype")]
+    [FhirEnumeration("ImagingSelection3DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype", "http://hl7.org/fhir/imagingselection-3dgraphictype")]
     public enum ImagingSelection3DGraphicType
     {
       /// <summary>
       /// A single location denoted by a single (x,y,z) triplet.
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
-      [EnumLiteral("point", "http://hl7.org/fhir/imagingselection-3dgraphictype"), Description("POINT")]
+      [EnumLiteral("point"), Description("POINT")]
       Point,
       /// <summary>
       /// multiple locations each denoted by an (x,y,z) triplet; the points need not be coplanar.
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
-      [EnumLiteral("multipoint", "http://hl7.org/fhir/imagingselection-3dgraphictype"), Description("MULTIPOINT")]
+      [EnumLiteral("multipoint"), Description("MULTIPOINT")]
       Multipoint,
       /// <summary>
       /// a series of connected line segments with ordered vertices denoted by (x,y,z) triplets; the points need not be coplanar.
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
-      [EnumLiteral("polyline", "http://hl7.org/fhir/imagingselection-3dgraphictype"), Description("POLYLINE")]
+      [EnumLiteral("polyline"), Description("POLYLINE")]
       Polyline,
       /// <summary>
       /// a series of connected line segments with ordered vertices denoted by (x,y,z) triplets, where the first and last vertices shall be the same forming a polygon; the points shall be coplanar.
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
-      [EnumLiteral("polygon", "http://hl7.org/fhir/imagingselection-3dgraphictype"), Description("POLYGON")]
+      [EnumLiteral("polygon"), Description("POLYGON")]
       Polygon,
       /// <summary>
       /// an ellipse defined by four (x,y,z) triplets, the first two triplets specifying the endpoints of the major axis and the second two triplets specifying the endpoints of the minor axis.
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
-      [EnumLiteral("ellipse", "http://hl7.org/fhir/imagingselection-3dgraphictype"), Description("ELLIPSE")]
+      [EnumLiteral("ellipse"), Description("ELLIPSE")]
       Ellipse,
       /// <summary>
       /// a three-dimensional geometric surface whose plane sections are either ellipses or circles and contains three intersecting orthogonal axes, "a", "b", and "c"; the ellipsoid is defined by six (x,y,z) triplets, the first and second triplets specifying the endpoints of axis "a", the third and fourth triplets specifying the endpoints of axis "b", and the fifth and sixth triplets specifying the endpoints of axis "c".
       /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
       /// </summary>
-      [EnumLiteral("ellipsoid", "http://hl7.org/fhir/imagingselection-3dgraphictype"), Description("ELLIPSOID")]
+      [EnumLiteral("ellipsoid"), Description("ELLIPSOID")]
       Ellipsoid,
     }
 

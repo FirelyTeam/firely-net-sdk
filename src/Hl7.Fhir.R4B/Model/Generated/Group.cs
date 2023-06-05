@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-type)
     /// (system: http://hl7.org/fhir/group-type)
     /// </summary>
-    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type")]
+    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type", "http://hl7.org/fhir/group-type")]
     public enum GroupType
     {
       /// <summary>
       /// Group contains "person" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
+      [EnumLiteral("person"), Description("Person")]
       Person,
       /// <summary>
       /// Group contains "animal" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
+      [EnumLiteral("animal"), Description("Animal")]
       Animal,
       /// <summary>
       /// Group contains healthcare practitioner resources (Practitioner or PractitionerRole).
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
+      [EnumLiteral("practitioner"), Description("Practitioner")]
       Practitioner,
       /// <summary>
       /// Group contains Device resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
+      [EnumLiteral("device"), Description("Device")]
       Device,
       /// <summary>
       /// Group contains Medication resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("medication", "http://hl7.org/fhir/group-type"), Description("Medication")]
+      [EnumLiteral("medication"), Description("Medication")]
       Medication,
       /// <summary>
       /// Group contains Substance resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("substance", "http://hl7.org/fhir/group-type"), Description("Substance")]
+      [EnumLiteral("substance"), Description("Substance")]
       Substance,
     }
 

@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
     /// (system: http://hl7.org/fhir/document-reference-status)
     /// </summary>
-    [FhirEnumeration("DocumentReferenceStatus", "http://hl7.org/fhir/ValueSet/document-reference-status")]
+    [FhirEnumeration("DocumentReferenceStatus", "http://hl7.org/fhir/ValueSet/document-reference-status", "http://hl7.org/fhir/document-reference-status")]
     public enum DocumentReferenceStatus
     {
       /// <summary>
       /// This is the current reference for this document.
       /// (system: http://hl7.org/fhir/document-reference-status)
       /// </summary>
-      [EnumLiteral("current", "http://hl7.org/fhir/document-reference-status"), Description("Current")]
+      [EnumLiteral("current"), Description("Current")]
       Current,
       /// <summary>
       /// This reference has been superseded by another reference.
       /// (system: http://hl7.org/fhir/document-reference-status)
       /// </summary>
-      [EnumLiteral("superseded", "http://hl7.org/fhir/document-reference-status"), Description("Superseded")]
+      [EnumLiteral("superseded"), Description("Superseded")]
       Superseded,
       /// <summary>
       /// This reference was created in error.
       /// (system: http://hl7.org/fhir/document-reference-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/document-reference-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 

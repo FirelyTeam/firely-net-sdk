@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/code-search-support)
     /// (system: http://hl7.org/fhir/code-search-support)
     /// </summary>
-    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support")]
+    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support", "http://hl7.org/fhir/code-search-support")]
     public enum CodeSearchSupport
     {
       /// <summary>
       /// The search for code on ValueSet returns ValueSet resources where the code is included in the extensional definition of the ValueSet.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("in-compose", "http://hl7.org/fhir/code-search-support"), Description("In Compose")]
+      [EnumLiteral("in-compose"), Description("In Compose")]
       InCompose,
       /// <summary>
       /// The search for code on ValueSet returns ValueSet resources where the code is contained in the  ValueSet expansion.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("in-expansion", "http://hl7.org/fhir/code-search-support"), Description("In Expansion")]
+      [EnumLiteral("in-expansion"), Description("In Expansion")]
       InExpansion,
       /// <summary>
       /// The search for code on ValueSet returns ValueSet resources where the code is included in the extensional definition or contained in the ValueSet expansion.
       /// (system: http://hl7.org/fhir/code-search-support)
       /// </summary>
-      [EnumLiteral("in-compose-or-expansion", "http://hl7.org/fhir/code-search-support"), Description("In Compose Or Expansion")]
+      [EnumLiteral("in-compose-or-expansion"), Description("In Compose Or Expansion")]
       InComposeOrExpansion,
     }
 

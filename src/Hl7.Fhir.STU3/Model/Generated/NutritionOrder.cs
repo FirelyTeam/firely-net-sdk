@@ -60,62 +60,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/nutrition-request-status)
     /// (system: http://hl7.org/fhir/nutrition-request-status)
     /// </summary>
-    [FhirEnumeration("NutritionOrderStatus", "http://hl7.org/fhir/ValueSet/nutrition-request-status")]
+    [FhirEnumeration("NutritionOrderStatus", "http://hl7.org/fhir/ValueSet/nutrition-request-status", "http://hl7.org/fhir/nutrition-request-status")]
     public enum NutritionOrderStatus
     {
       /// <summary>
       /// The request has been proposed.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/nutrition-request-status"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// The request is in preliminary form prior to being sent.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/nutrition-request-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The request has been planned.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/nutrition-request-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// The request has been placed.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("requested", "http://hl7.org/fhir/nutrition-request-status"), Description("Requested")]
+      [EnumLiteral("requested"), Description("Requested")]
       Requested,
       /// <summary>
       /// The request is 'actionable', but not all actions that are implied by it have occurred yet.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/nutrition-request-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// Actions implied by the request have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/nutrition-request-status"), Description("On-Hold")]
+      [EnumLiteral("on-hold"), Description("On-Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the order have occurred and no continuation is planned (this will rarely be made explicit).
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/nutrition-request-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The request has been withdrawn and is no longer actionable.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/nutrition-request-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The request was entered in error and voided.
       /// (system: http://hl7.org/fhir/nutrition-request-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/nutrition-request-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 

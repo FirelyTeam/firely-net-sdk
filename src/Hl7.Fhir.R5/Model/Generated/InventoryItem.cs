@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryitem-status)
     /// (system: http://hl7.org/fhir/inventoryitem-status)
     /// </summary>
-    [FhirEnumeration("InventoryItemStatusCodes", "http://hl7.org/fhir/ValueSet/inventoryitem-status")]
+    [FhirEnumeration("InventoryItemStatusCodes", "http://hl7.org/fhir/ValueSet/inventoryitem-status", "http://hl7.org/fhir/inventoryitem-status")]
     public enum InventoryItemStatusCodes
     {
       /// <summary>
       /// The item is active and can be referenced.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/inventoryitem-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The item is presently inactive - there may be references to it but the item is not expected to be used.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/inventoryitem-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The item record was entered in error.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/inventoryitem-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The item status has not been determined.
       /// (system: http://hl7.org/fhir/inventoryitem-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/inventoryitem-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

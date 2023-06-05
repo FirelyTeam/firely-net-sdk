@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-status)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("DetectedIssueStatus", "http://hl7.org/fhir/ValueSet/detectedissue-status")]
+    [FhirEnumeration("DetectedIssueStatus", "http://hl7.org/fhir/ValueSet/detectedissue-status", "http://hl7.org/fhir/observation-status")]
     public enum DetectedIssueStatus
     {
       /// <summary>
       /// This is an initial or interim observation: data may be incomplete or unverified.
       /// (system: http://hl7.org/fhir/observation-status)
       /// </summary>
-      [EnumLiteral("preliminary", "http://hl7.org/fhir/observation-status"), Description("Preliminary")]
+      [EnumLiteral("preliminary"), Description("Preliminary")]
       Preliminary,
       /// <summary>
       /// The observation is complete and there are no further actions needed. Additional information such "released", "signed", etc. would be represented using [Provenance](provenance.html) which provides not only the act but also the actors and dates and other related data. These act states would be associated with an observation status of `preliminary` until they are all completed and then a status of `final` would be applied.
       /// (system: http://hl7.org/fhir/observation-status)
       /// </summary>
-      [EnumLiteral("final", "http://hl7.org/fhir/observation-status"), Description("Final")]
+      [EnumLiteral("final"), Description("Final")]
       Final,
       /// <summary>
       /// The observation has been withdrawn following previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/observation-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/observation-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Indicates the detected issue has been mitigated
@@ -94,26 +94,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
     /// (system: http://hl7.org/fhir/detectedissue-severity)
     /// </summary>
-    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity")]
+    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity", "http://hl7.org/fhir/detectedissue-severity")]
     public enum DetectedIssueSeverity
     {
       /// <summary>
       /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("high", "http://hl7.org/fhir/detectedissue-severity"), Description("High")]
+      [EnumLiteral("high"), Description("High")]
       High,
       /// <summary>
       /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("moderate", "http://hl7.org/fhir/detectedissue-severity"), Description("Moderate")]
+      [EnumLiteral("moderate"), Description("Moderate")]
       Moderate,
       /// <summary>
       /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("low", "http://hl7.org/fhir/detectedissue-severity"), Description("Low")]
+      [EnumLiteral("low"), Description("Low")]
       Low,
     }
 

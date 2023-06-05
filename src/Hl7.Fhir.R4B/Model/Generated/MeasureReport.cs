@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
     /// (system: http://hl7.org/fhir/measure-report-status)
     /// </summary>
-    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status")]
+    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status", "http://hl7.org/fhir/measure-report-status")]
     public enum MeasureReportStatus
     {
       /// <summary>
       /// The report is complete and ready for use.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/measure-report-status"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
       /// <summary>
       /// The report is currently being generated.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/measure-report-status"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
       /// <summary>
       /// An error occurred attempting to generate the report.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/measure-report-status"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
     /// (system: http://hl7.org/fhir/measure-report-type)
     /// </summary>
-    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type")]
+    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type", "http://hl7.org/fhir/measure-report-type")]
     public enum MeasureReportType
     {
       /// <summary>
       /// An individual report that provides information on the performance for a given measure with respect to a single subject.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("individual", "http://hl7.org/fhir/measure-report-type"), Description("Individual")]
+      [EnumLiteral("individual"), Description("Individual")]
       Individual,
       /// <summary>
       /// A subject list report that includes a listing of subjects that satisfied each population criteria in the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("subject-list", "http://hl7.org/fhir/measure-report-type"), Description("Subject List")]
+      [EnumLiteral("subject-list"), Description("Subject List")]
       SubjectList,
       /// <summary>
       /// A summary report that returns the number of members in each population criteria for the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("summary", "http://hl7.org/fhir/measure-report-type"), Description("Summary")]
+      [EnumLiteral("summary"), Description("Summary")]
       Summary,
       /// <summary>
       /// A data collection report that contains data-of-interest for the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("data-collection", "http://hl7.org/fhir/measure-report-type"), Description("Data Collection")]
+      [EnumLiteral("data-collection"), Description("Data Collection")]
       DataCollection,
     }
 

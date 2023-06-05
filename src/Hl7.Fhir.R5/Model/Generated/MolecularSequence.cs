@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
-    [FhirEnumeration("SequenceType", "http://hl7.org/fhir/ValueSet/sequence-type")]
+    [FhirEnumeration("SequenceType", "http://hl7.org/fhir/ValueSet/sequence-type", "http://hl7.org/fhir/sequence-type")]
     public enum SequenceType
     {
       /// <summary>
       /// Amino acid sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("aa", "http://hl7.org/fhir/sequence-type"), Description("AA Sequence")]
+      [EnumLiteral("aa"), Description("AA Sequence")]
       Aa,
       /// <summary>
       /// DNA Sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("dna", "http://hl7.org/fhir/sequence-type"), Description("DNA Sequence")]
+      [EnumLiteral("dna"), Description("DNA Sequence")]
       Dna,
       /// <summary>
       /// RNA Sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("rna", "http://hl7.org/fhir/sequence-type"), Description("RNA Sequence")]
+      [EnumLiteral("rna"), Description("RNA Sequence")]
       Rna,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
-    [FhirEnumeration("OrientationType", "http://hl7.org/fhir/ValueSet/orientation-type")]
+    [FhirEnumeration("OrientationType", "http://hl7.org/fhir/ValueSet/orientation-type", "http://hl7.org/fhir/orientation-type")]
     public enum OrientationType
     {
       /// <summary>
       /// Sense orientation of reference sequence.
       /// (system: http://hl7.org/fhir/orientation-type)
       /// </summary>
-      [EnumLiteral("sense", "http://hl7.org/fhir/orientation-type"), Description("Sense orientation of referenceSeq")]
+      [EnumLiteral("sense"), Description("Sense orientation of referenceSeq")]
       Sense,
       /// <summary>
       /// Antisense orientation of reference sequence.
       /// (system: http://hl7.org/fhir/orientation-type)
       /// </summary>
-      [EnumLiteral("antisense", "http://hl7.org/fhir/orientation-type"), Description("Antisense orientation of referenceSeq")]
+      [EnumLiteral("antisense"), Description("Antisense orientation of referenceSeq")]
       Antisense,
     }
 
@@ -110,20 +110,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/strand-type)
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
-    [FhirEnumeration("StrandType", "http://hl7.org/fhir/ValueSet/strand-type")]
+    [FhirEnumeration("StrandType", "http://hl7.org/fhir/ValueSet/strand-type", "http://hl7.org/fhir/strand-type")]
     public enum StrandType
     {
       /// <summary>
       /// Watson strand of starting sequence.
       /// (system: http://hl7.org/fhir/strand-type)
       /// </summary>
-      [EnumLiteral("watson", "http://hl7.org/fhir/strand-type"), Description("Watson strand of starting sequence")]
+      [EnumLiteral("watson"), Description("Watson strand of starting sequence")]
       Watson,
       /// <summary>
       /// Crick strand of starting sequence.
       /// (system: http://hl7.org/fhir/strand-type)
       /// </summary>
-      [EnumLiteral("crick", "http://hl7.org/fhir/strand-type"), Description("Crick strand of starting sequence")]
+      [EnumLiteral("crick"), Description("Crick strand of starting sequence")]
       Crick,
     }
 

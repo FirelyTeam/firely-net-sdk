@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-status-codes)
     /// (system: http://hl7.org/fhir/report-status-codes)
     /// </summary>
-    [FhirEnumeration("TestReportStatus", "http://hl7.org/fhir/ValueSet/report-status-codes")]
+    [FhirEnumeration("TestReportStatus", "http://hl7.org/fhir/ValueSet/report-status-codes", "http://hl7.org/fhir/report-status-codes")]
     public enum TestReportStatus
     {
       /// <summary>
       /// All test operations have completed
       /// (system: http://hl7.org/fhir/report-status-codes)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/report-status-codes"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// A test operations is currently executing
       /// (system: http://hl7.org/fhir/report-status-codes)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/report-status-codes"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// A test operation is waiting for an external client request
       /// (system: http://hl7.org/fhir/report-status-codes)
       /// </summary>
-      [EnumLiteral("waiting", "http://hl7.org/fhir/report-status-codes"), Description("Waiting")]
+      [EnumLiteral("waiting"), Description("Waiting")]
       Waiting,
       /// <summary>
       /// The test script execution was manually stopped
       /// (system: http://hl7.org/fhir/report-status-codes)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/report-status-codes"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// This test report was entered or created in error
       /// (system: http://hl7.org/fhir/report-status-codes)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/report-status-codes"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -100,26 +100,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-result-codes)
     /// (system: http://hl7.org/fhir/report-result-codes)
     /// </summary>
-    [FhirEnumeration("TestReportResult", "http://hl7.org/fhir/ValueSet/report-result-codes")]
+    [FhirEnumeration("TestReportResult", "http://hl7.org/fhir/ValueSet/report-result-codes", "http://hl7.org/fhir/report-result-codes")]
     public enum TestReportResult
     {
       /// <summary>
       /// All test operations successfully passed all asserts
       /// (system: http://hl7.org/fhir/report-result-codes)
       /// </summary>
-      [EnumLiteral("pass", "http://hl7.org/fhir/report-result-codes"), Description("Pass")]
+      [EnumLiteral("pass"), Description("Pass")]
       Pass,
       /// <summary>
       /// One or more test operations failed one or more asserts
       /// (system: http://hl7.org/fhir/report-result-codes)
       /// </summary>
-      [EnumLiteral("fail", "http://hl7.org/fhir/report-result-codes"), Description("Fail")]
+      [EnumLiteral("fail"), Description("Fail")]
       Fail,
       /// <summary>
       /// One or more test operations is pending execution completion
       /// (system: http://hl7.org/fhir/report-result-codes)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/report-result-codes"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
     }
 
@@ -128,26 +128,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-participant-type)
     /// (system: http://hl7.org/fhir/report-participant-type)
     /// </summary>
-    [FhirEnumeration("TestReportParticipantType", "http://hl7.org/fhir/ValueSet/report-participant-type")]
+    [FhirEnumeration("TestReportParticipantType", "http://hl7.org/fhir/ValueSet/report-participant-type", "http://hl7.org/fhir/report-participant-type")]
     public enum TestReportParticipantType
     {
       /// <summary>
       /// The test execution engine.
       /// (system: http://hl7.org/fhir/report-participant-type)
       /// </summary>
-      [EnumLiteral("test-engine", "http://hl7.org/fhir/report-participant-type"), Description("Test Engine")]
+      [EnumLiteral("test-engine"), Description("Test Engine")]
       TestEngine,
       /// <summary>
       /// A FHIR Client
       /// (system: http://hl7.org/fhir/report-participant-type)
       /// </summary>
-      [EnumLiteral("client", "http://hl7.org/fhir/report-participant-type"), Description("Client")]
+      [EnumLiteral("client"), Description("Client")]
       Client,
       /// <summary>
       /// A FHIR Server
       /// (system: http://hl7.org/fhir/report-participant-type)
       /// </summary>
-      [EnumLiteral("server", "http://hl7.org/fhir/report-participant-type"), Description("Server")]
+      [EnumLiteral("server"), Description("Server")]
       Server,
     }
 
@@ -156,38 +156,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-action-result-codes)
     /// (system: http://hl7.org/fhir/report-action-result-codes)
     /// </summary>
-    [FhirEnumeration("TestReportActionResult", "http://hl7.org/fhir/ValueSet/report-action-result-codes")]
+    [FhirEnumeration("TestReportActionResult", "http://hl7.org/fhir/ValueSet/report-action-result-codes", "http://hl7.org/fhir/report-action-result-codes")]
     public enum TestReportActionResult
     {
       /// <summary>
       /// The action was successful.
       /// (system: http://hl7.org/fhir/report-action-result-codes)
       /// </summary>
-      [EnumLiteral("pass", "http://hl7.org/fhir/report-action-result-codes"), Description("Pass")]
+      [EnumLiteral("pass"), Description("Pass")]
       Pass,
       /// <summary>
       /// The action was skipped.
       /// (system: http://hl7.org/fhir/report-action-result-codes)
       /// </summary>
-      [EnumLiteral("skip", "http://hl7.org/fhir/report-action-result-codes"), Description("Skip")]
+      [EnumLiteral("skip"), Description("Skip")]
       Skip,
       /// <summary>
       /// The action failed.
       /// (system: http://hl7.org/fhir/report-action-result-codes)
       /// </summary>
-      [EnumLiteral("fail", "http://hl7.org/fhir/report-action-result-codes"), Description("Fail")]
+      [EnumLiteral("fail"), Description("Fail")]
       Fail,
       /// <summary>
       /// The action passed but with warnings.
       /// (system: http://hl7.org/fhir/report-action-result-codes)
       /// </summary>
-      [EnumLiteral("warning", "http://hl7.org/fhir/report-action-result-codes"), Description("Warning")]
+      [EnumLiteral("warning"), Description("Warning")]
       Warning,
       /// <summary>
       /// The action encountered a fatal error and the engine was unable to process.
       /// (system: http://hl7.org/fhir/report-action-result-codes)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/report-action-result-codes"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
     }
 

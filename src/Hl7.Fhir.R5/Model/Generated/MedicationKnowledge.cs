@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationknowledge-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
     /// </summary>
-    [FhirEnumeration("MedicationKnowledgeStatusCodes", "http://hl7.org/fhir/ValueSet/medicationknowledge-status")]
+    [FhirEnumeration("MedicationKnowledgeStatusCodes", "http://hl7.org/fhir/ValueSet/medicationknowledge-status", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status")]
     public enum MedicationKnowledgeStatusCodes
     {
       /// <summary>
       /// The medication referred to by this MedicationKnowledge is in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication referred to by this MedicationKnowledge was entered in error within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication referred to by this MedicationKnowledge is not in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
     }
 

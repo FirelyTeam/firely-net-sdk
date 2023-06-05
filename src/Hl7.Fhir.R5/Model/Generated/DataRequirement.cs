@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/value-filter-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("ValueFilterComparator", "http://hl7.org/fhir/ValueSet/value-filter-comparator")]
+    [FhirEnumeration("ValueFilterComparator", "http://hl7.org/fhir/ValueSet/value-filter-comparator", "http://hl7.org/fhir/search-comparator")]
     public enum ValueFilterComparator
     {
       /// <summary>
       /// the value for the parameter in the resource is equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("eq", "http://hl7.org/fhir/search-comparator"), Description("Equals")]
+      [EnumLiteral("eq"), Description("Equals")]
       Eq,
       /// <summary>
       /// the value for the parameter in the resource is greater than the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("gt", "http://hl7.org/fhir/search-comparator"), Description("Greater Than")]
+      [EnumLiteral("gt"), Description("Greater Than")]
       Gt,
       /// <summary>
       /// the value for the parameter in the resource is less than the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("lt", "http://hl7.org/fhir/search-comparator"), Description("Less Than")]
+      [EnumLiteral("lt"), Description("Less Than")]
       Lt,
       /// <summary>
       /// the value for the parameter in the resource is greater or equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("ge", "http://hl7.org/fhir/search-comparator"), Description("Greater or Equals")]
+      [EnumLiteral("ge"), Description("Greater or Equals")]
       Ge,
       /// <summary>
       /// the value for the parameter in the resource is less or equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("le", "http://hl7.org/fhir/search-comparator"), Description("Less of Equal")]
+      [EnumLiteral("le"), Description("Less of Equal")]
       Le,
       /// <summary>
       /// the value for the parameter in the resource starts after the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("sa", "http://hl7.org/fhir/search-comparator"), Description("Starts After")]
+      [EnumLiteral("sa"), Description("Starts After")]
       Sa,
       /// <summary>
       /// the value for the parameter in the resource ends before the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("eb", "http://hl7.org/fhir/search-comparator"), Description("Ends Before")]
+      [EnumLiteral("eb"), Description("Ends Before")]
       Eb,
     }
 
@@ -112,20 +112,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
     /// (system: http://hl7.org/fhir/sort-direction)
     /// </summary>
-    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction")]
+    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction", "http://hl7.org/fhir/sort-direction")]
     public enum SortDirection
     {
       /// <summary>
       /// Sort by the value ascending, so that lower values appear first.
       /// (system: http://hl7.org/fhir/sort-direction)
       /// </summary>
-      [EnumLiteral("ascending", "http://hl7.org/fhir/sort-direction"), Description("Ascending")]
+      [EnumLiteral("ascending"), Description("Ascending")]
       Ascending,
       /// <summary>
       /// Sort by the value descending, so that lower values appear last.
       /// (system: http://hl7.org/fhir/sort-direction)
       /// </summary>
-      [EnumLiteral("descending", "http://hl7.org/fhir/sort-direction"), Description("Descending")]
+      [EnumLiteral("descending"), Description("Descending")]
       Descending,
     }
 

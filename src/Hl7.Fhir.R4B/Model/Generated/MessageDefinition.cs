@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
     /// (system: http://hl7.org/fhir/message-significance-category)
     /// </summary>
-    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category")]
+    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category", "http://hl7.org/fhir/message-significance-category")]
     public enum MessageSignificanceCategory
     {
       /// <summary>
       /// The message represents/requests a change that should not be processed more than once; e.g., making a booking for an appointment.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+      [EnumLiteral("consequence"), Description("Consequence")]
       Consequence,
       /// <summary>
       /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+      [EnumLiteral("currency"), Description("Currency")]
       Currency,
       /// <summary>
       /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+      [EnumLiteral("notification"), Description("Notification")]
       Notification,
     }
 

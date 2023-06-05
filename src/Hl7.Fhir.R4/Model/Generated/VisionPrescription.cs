@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
     /// (system: http://hl7.org/fhir/vision-eye-codes)
     /// </summary>
-    [FhirEnumeration("VisionEyes", "http://hl7.org/fhir/ValueSet/vision-eye-codes")]
+    [FhirEnumeration("VisionEyes", "http://hl7.org/fhir/ValueSet/vision-eye-codes", "http://hl7.org/fhir/vision-eye-codes")]
     public enum VisionEyes
     {
       /// <summary>
       /// Right Eye.
       /// (system: http://hl7.org/fhir/vision-eye-codes)
       /// </summary>
-      [EnumLiteral("right", "http://hl7.org/fhir/vision-eye-codes"), Description("Right Eye")]
+      [EnumLiteral("right"), Description("Right Eye")]
       Right,
       /// <summary>
       /// Left Eye.
       /// (system: http://hl7.org/fhir/vision-eye-codes)
       /// </summary>
-      [EnumLiteral("left", "http://hl7.org/fhir/vision-eye-codes"), Description("Left Eye")]
+      [EnumLiteral("left"), Description("Left Eye")]
       Left,
     }
 
@@ -82,32 +82,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
     /// (system: http://hl7.org/fhir/vision-base-codes)
     /// </summary>
-    [FhirEnumeration("VisionBase", "http://hl7.org/fhir/ValueSet/vision-base-codes")]
+    [FhirEnumeration("VisionBase", "http://hl7.org/fhir/ValueSet/vision-base-codes", "http://hl7.org/fhir/vision-base-codes")]
     public enum VisionBase
     {
       /// <summary>
       /// top.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("up", "http://hl7.org/fhir/vision-base-codes"), Description("Up")]
+      [EnumLiteral("up"), Description("Up")]
       Up,
       /// <summary>
       /// bottom.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("down", "http://hl7.org/fhir/vision-base-codes"), Description("Down")]
+      [EnumLiteral("down"), Description("Down")]
       Down,
       /// <summary>
       /// inner edge.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("in", "http://hl7.org/fhir/vision-base-codes"), Description("In")]
+      [EnumLiteral("in"), Description("In")]
       In,
       /// <summary>
       /// outer edge.
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("out", "http://hl7.org/fhir/vision-base-codes"), Description("Out")]
+      [EnumLiteral("out"), Description("Out")]
       Out,
     }
 

@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/account-status)
     /// (system: http://hl7.org/fhir/account-status)
     /// </summary>
-    [FhirEnumeration("AccountStatus", "http://hl7.org/fhir/ValueSet/account-status")]
+    [FhirEnumeration("AccountStatus", "http://hl7.org/fhir/ValueSet/account-status", "http://hl7.org/fhir/account-status")]
     public enum AccountStatus
     {
       /// <summary>
       /// This account is active and may be used.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/account-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This account is inactive and should not be used to track financial information.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/account-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/account-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 

@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-admin-status)
     /// (system: http://hl7.org/fhir/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("MedicationAdministrationStatus", "http://hl7.org/fhir/ValueSet/medication-admin-status")]
+    [FhirEnumeration("MedicationAdministrationStatus", "http://hl7.org/fhir/ValueSet/medication-admin-status", "http://hl7.org/fhir/medication-admin-status")]
     public enum MedicationAdministrationStatus
     {
       /// <summary>
       /// The administration has started but has not yet completed.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-admin-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-admin-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the administration have occurred.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-admin-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The administration was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-admin-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the administration have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-admin-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/medication-admin-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

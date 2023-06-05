@@ -60,34 +60,34 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/encounter-location-status)
     /// (system: http://hl7.org/fhir/encounter-location-status)
     /// </summary>
-    [FhirEnumeration("EncounterLocationStatus", "http://hl7.org/fhir/ValueSet/encounter-location-status")]
+    [FhirEnumeration("EncounterLocationStatus", "http://hl7.org/fhir/ValueSet/encounter-location-status", "http://hl7.org/fhir/encounter-location-status")]
     public enum EncounterLocationStatus
     {
       /// <summary>
       /// The patient is planned to be moved to this location at some point in the future.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/encounter-location-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// The patient is currently at this location, or was between the period specified.
       /// A system may update these records when the patient leaves the location to either reserved, or completed.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/encounter-location-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This location is held empty for this patient.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("reserved", "http://hl7.org/fhir/encounter-location-status"), Description("Reserved")]
+      [EnumLiteral("reserved"), Description("Reserved")]
       Reserved,
       /// <summary>
       /// The patient was at this location during the period specified.
       /// Not to be used when the patient is currently at the location.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/encounter-location-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
     }
 

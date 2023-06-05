@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-contained-preference)
     /// (system: http://hl7.org/fhir/specimen-contained-preference)
     /// </summary>
-    [FhirEnumeration("SpecimenContainedPreference", "http://hl7.org/fhir/ValueSet/specimen-contained-preference")]
+    [FhirEnumeration("SpecimenContainedPreference", "http://hl7.org/fhir/ValueSet/specimen-contained-preference", "http://hl7.org/fhir/specimen-contained-preference")]
     public enum SpecimenContainedPreference
     {
       /// <summary>
       /// This type of contained specimen is preferred to collect this kind of specimen.
       /// (system: http://hl7.org/fhir/specimen-contained-preference)
       /// </summary>
-      [EnumLiteral("preferred", "http://hl7.org/fhir/specimen-contained-preference"), Description("Preferred")]
+      [EnumLiteral("preferred"), Description("Preferred")]
       Preferred,
       /// <summary>
       /// This type of conditioned specimen is an alternate.
       /// (system: http://hl7.org/fhir/specimen-contained-preference)
       /// </summary>
-      [EnumLiteral("alternate", "http://hl7.org/fhir/specimen-contained-preference"), Description("Alternate")]
+      [EnumLiteral("alternate"), Description("Alternate")]
       Alternate,
     }
 

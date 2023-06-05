@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinical-impression-status)
     /// (system: http://hl7.org/fhir/clinical-impression-status)
     /// </summary>
-    [FhirEnumeration("ClinicalImpressionStatus", "http://hl7.org/fhir/ValueSet/clinical-impression-status")]
+    [FhirEnumeration("ClinicalImpressionStatus", "http://hl7.org/fhir/ValueSet/clinical-impression-status", "http://hl7.org/fhir/clinical-impression-status")]
     public enum ClinicalImpressionStatus
     {
       /// <summary>
       /// The assessment is still on-going and results are not yet final.
       /// (system: http://hl7.org/fhir/clinical-impression-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/clinical-impression-status"), Description("In progress")]
+      [EnumLiteral("draft"), Description("In progress")]
       Draft,
       /// <summary>
       /// The assessment is done and the results are final.
       /// (system: http://hl7.org/fhir/clinical-impression-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/clinical-impression-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This assessment was never actually done and the record is erroneous (e.g. Wrong patient).
       /// (system: http://hl7.org/fhir/clinical-impression-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/clinical-impression-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 

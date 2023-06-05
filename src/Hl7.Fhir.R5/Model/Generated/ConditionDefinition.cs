@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-precondition-type)
     /// (system: http://hl7.org/fhir/condition-precondition-type)
     /// </summary>
-    [FhirEnumeration("ConditionPreconditionType", "http://hl7.org/fhir/ValueSet/condition-precondition-type")]
+    [FhirEnumeration("ConditionPreconditionType", "http://hl7.org/fhir/ValueSet/condition-precondition-type", "http://hl7.org/fhir/condition-precondition-type")]
     public enum ConditionPreconditionType
     {
       /// <summary>
       /// The observation is very sensitive for the condition, but may also indicate other conditions.
       /// (system: http://hl7.org/fhir/condition-precondition-type)
       /// </summary>
-      [EnumLiteral("sensitive", "http://hl7.org/fhir/condition-precondition-type"), Description("Sensitive")]
+      [EnumLiteral("sensitive"), Description("Sensitive")]
       Sensitive,
       /// <summary>
       /// The observation is very specific for this condition, but not particularly sensitive.
       /// (system: http://hl7.org/fhir/condition-precondition-type)
       /// </summary>
-      [EnumLiteral("specific", "http://hl7.org/fhir/condition-precondition-type"), Description("Specific")]
+      [EnumLiteral("specific"), Description("Specific")]
       Specific,
     }
 
@@ -82,26 +82,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose)
     /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
     /// </summary>
-    [FhirEnumeration("ConditionQuestionnairePurpose", "http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose")]
+    [FhirEnumeration("ConditionQuestionnairePurpose", "http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose", "http://hl7.org/fhir/condition-questionnaire-purpose")]
     public enum ConditionQuestionnairePurpose
     {
       /// <summary>
       /// A pre-admit questionnaire.
       /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
       /// </summary>
-      [EnumLiteral("preadmit", "http://hl7.org/fhir/condition-questionnaire-purpose"), Description("Pre-admit")]
+      [EnumLiteral("preadmit"), Description("Pre-admit")]
       Preadmit,
       /// <summary>
       /// A questionnaire that helps with diferential diagnosis.
       /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
       /// </summary>
-      [EnumLiteral("diff-diagnosis", "http://hl7.org/fhir/condition-questionnaire-purpose"), Description("Diff Diagnosis")]
+      [EnumLiteral("diff-diagnosis"), Description("Diff Diagnosis")]
       DiffDiagnosis,
       /// <summary>
       /// A questionnaire to check on outcomes for the patient.
       /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
       /// </summary>
-      [EnumLiteral("outcome", "http://hl7.org/fhir/condition-questionnaire-purpose"), Description("Outcome")]
+      [EnumLiteral("outcome"), Description("Outcome")]
       Outcome,
     }
 

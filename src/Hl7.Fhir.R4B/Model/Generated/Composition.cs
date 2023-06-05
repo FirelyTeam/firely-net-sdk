@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://terminology.hl7.org/ValueSet/v3-Confidentiality)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("Confidentiality", "http://terminology.hl7.org/ValueSet/v3-Confidentiality")]
+    [FhirEnumeration("Confidentiality", "http://terminology.hl7.org/ValueSet/v3-Confidentiality", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality")]
     public enum ConfidentialityCode
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
       /// </summary>
-      [EnumLiteral("L", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("")]
+      [EnumLiteral("L"), Description("")]
       L,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
       /// </summary>
-      [EnumLiteral("M", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("")]
+      [EnumLiteral("M"), Description("")]
       M,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
       /// </summary>
-      [EnumLiteral("N", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("")]
+      [EnumLiteral("N"), Description("")]
       N,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
       /// </summary>
-      [EnumLiteral("R", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("")]
+      [EnumLiteral("R"), Description("")]
       R,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
       /// </summary>
-      [EnumLiteral("U", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("")]
+      [EnumLiteral("U"), Description("")]
       U,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/v3-Confidentiality)
       /// </summary>
-      [EnumLiteral("V", "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"), Description("")]
+      [EnumLiteral("V"), Description("")]
       V,
     }
 
@@ -106,32 +106,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/composition-attestation-mode)
     /// (system: http://hl7.org/fhir/composition-attestation-mode)
     /// </summary>
-    [FhirEnumeration("CompositionAttestationMode", "http://hl7.org/fhir/ValueSet/composition-attestation-mode")]
+    [FhirEnumeration("CompositionAttestationMode", "http://hl7.org/fhir/ValueSet/composition-attestation-mode", "http://hl7.org/fhir/composition-attestation-mode")]
     public enum CompositionAttestationMode
     {
       /// <summary>
       /// The person authenticated the content in their personal capacity.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("personal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Personal")]
+      [EnumLiteral("personal"), Description("Personal")]
       Personal,
       /// <summary>
       /// The person authenticated the content in their professional capacity.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("professional", "http://hl7.org/fhir/composition-attestation-mode"), Description("Professional")]
+      [EnumLiteral("professional"), Description("Professional")]
       Professional,
       /// <summary>
       /// The person authenticated the content and accepted legal responsibility for its content.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("legal", "http://hl7.org/fhir/composition-attestation-mode"), Description("Legal")]
+      [EnumLiteral("legal"), Description("Legal")]
       Legal,
       /// <summary>
       /// The organization authenticated the content as consistent with their policies and procedures.
       /// (system: http://hl7.org/fhir/composition-attestation-mode)
       /// </summary>
-      [EnumLiteral("official", "http://hl7.org/fhir/composition-attestation-mode"), Description("Official")]
+      [EnumLiteral("official"), Description("Official")]
       Official,
     }
 

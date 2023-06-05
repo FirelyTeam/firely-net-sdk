@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-dispense-status)
     /// (system: http://hl7.org/fhir/medication-dispense-status)
     /// </summary>
-    [FhirEnumeration("MedicationDispenseStatus", "http://hl7.org/fhir/ValueSet/medication-dispense-status")]
+    [FhirEnumeration("MedicationDispenseStatus", "http://hl7.org/fhir/ValueSet/medication-dispense-status", "http://hl7.org/fhir/medication-dispense-status")]
     public enum MedicationDispenseStatus
     {
       /// <summary>
       /// The core event has not started yet, but some staging activities have begun (e.g. initial compounding or packaging of medication). Preparation stages may be tracked for billing purposes.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("preparation", "http://hl7.org/fhir/medication-dispense-status"), Description("Preparation")]
+      [EnumLiteral("preparation"), Description("Preparation")]
       Preparation,
       /// <summary>
       /// The dispense has started but has not yet completed.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-dispense-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended"
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-dispense-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the dispense have occurred.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-dispense-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The dispense was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-dispense-status"), Description("Entered in-Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in-Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the dispense have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-dispense-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
     }
 
