@@ -95,8 +95,7 @@ public class InterfaceApplier : IInterfaceApplier
 
     private void logEntriesFormatted(string message, IEnumerable<string> entries,
         LogLevel logLevel = LogLevel.Information)
-        => _logger.Log(logLevel,
-                       $"{message}:{Environment.NewLine}{string.Join(Environment.NewLine, entries.Select(line => $"   - {line}"))}");
+        => _logger.Log(logLevel, $"{message}:{Environment.NewLine}{string.Join(Environment.NewLine, entries.Select(line => $"   - {line}"))}");
 
     #endregion
 }

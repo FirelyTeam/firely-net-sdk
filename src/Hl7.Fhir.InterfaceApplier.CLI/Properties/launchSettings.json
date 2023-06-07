@@ -2,7 +2,7 @@
   "profiles": {
     "InterfaceApplier": {
       "commandName": "Project",
-      "commandLineArgs": "--SourcesDirectory=../../../../ --FhirVersions=R4 --LogLevel=Debug"
+      "commandLineArgs": "--SourcesDirectory=../../../../ --FhirVersions=R4|R4B|R5|STU3 --LogLevel=Debug --LogToFile=true"
     }
   }
 }
