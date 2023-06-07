@@ -7,15 +7,21 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.ControlledBy(GetLogLevel())
-    .WriteTo.Console()
-    .CreateLogger();
+var loggerConfig = new LoggerConfiguration()
+    .MinimumLevel.ControlledBy(getLogLevel())
+    .WriteTo.Console();
+
+if (getLogToFile())
+{
+    loggerConfig.WriteTo.File("./logs/interface-applier-.log", rollingInterval: RollingInterval.Day);
+}
+
+Log.Logger = loggerConfig.CreateLogger();
 
 // Set up the DI container
 var services = new ServiceCollection();
 
-services.AddOptions<ProjectManagerConfiguration>().Configure(GetProjectManagerConfiguration);
+services.AddOptions<ProjectManagerConfiguration>().Configure(getProjectManagerConfiguration);
 
 services.AddTransient<IProjectManager, ProjectManager>();
 services.AddTransient<IInterfaceDiscoveryService, InterfaceDiscoveryService>();
@@ -44,7 +50,7 @@ Log.CloseAndFlush();
 
 #region Private Methods
 
-void GetProjectManagerConfiguration(ProjectManagerConfiguration configuration)
+void getProjectManagerConfiguration(ProjectManagerConfiguration configuration)
 {
     // SolutionPath
     const string sourcesDirectoryArgPrefix = "--SourcesDirectory=";
@@ -69,16 +75,24 @@ void GetProjectManagerConfiguration(ProjectManagerConfiguration configuration)
         .ToList();
 }
 
-LoggingLevelSwitch GetLogLevel()
+LoggingLevelSwitch getLogLevel()
 {
     const string logLevelArgPrefix = "--LogLevel=";
-    var sourcesDirectoryArg = args.FirstOrDefault(arg => arg.StartsWith(logLevelArgPrefix, StringComparison.InvariantCulture));
+    var logLevelArg = args.FirstOrDefault(arg => arg.StartsWith(logLevelArgPrefix, StringComparison.InvariantCulture));
 
-    var logLevel = sourcesDirectoryArg == null
+    var logLevel = logLevelArg == null
         ? LogEventLevel.Information
-        : Enum.Parse<LogEventLevel>(sourcesDirectoryArg[logLevelArgPrefix.Length..]);
+        : Enum.Parse<LogEventLevel>(logLevelArg[logLevelArgPrefix.Length..]);
 
     return new LoggingLevelSwitch(logLevel);
+}
+
+bool getLogToFile()
+{
+    const string logToFileArgPrefix = "--LogToFile=";
+    var logToFileArg = args.FirstOrDefault(arg => arg.StartsWith(logToFileArgPrefix, StringComparison.InvariantCulture));
+
+    return logToFileArg != null && bool.Parse(logToFileArg[logToFileArgPrefix.Length..]);
 }
 
 #endregion
