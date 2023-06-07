@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "InterfaceApplier": {
+      "commandName": "Project",
+      "commandLineArgs": "--SourcesDirectory=../../../../ --FhirVersions=R4 --LogLevel=Debug"
+    }
+  }
+}
