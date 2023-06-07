@@ -28,9 +28,10 @@ public class InterfaceApplierService : IInterfaceApplierService
     public void Apply(IEnumerable<string> sourceFilesDirectories,
         IDictionary<Type, ICollection<Type>> classTypesForInterface)
     {
-        var sourceFilePaths = sourceFilesDirectories.SelectMany(sourceFilesDirectory => Directory.GetFiles(sourceFilesDirectory, "*.cs", SearchOption.AllDirectories))
-            .Where(path => path.Contains($"{Path.DirectorySeparatorChar}Generated{Path.DirectorySeparatorChar}"));
-        var sources = sourceFilePaths.Select(sourceFilePath => CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFilePath), path: sourceFilePath)).ToList();
+        var sources = sourceFilesDirectories.SelectMany(sourceFilesDirectory => Directory.GetFiles(sourceFilesDirectory, "*.cs", SearchOption.AllDirectories))
+            .Where(path => path.Contains($"{Path.DirectorySeparatorChar}Generated{Path.DirectorySeparatorChar}"))
+            .Select(sourceFilePath => CSharpSyntaxTree.ParseText(File.ReadAllText(sourceFilePath), path: sourceFilePath))
+            .ToList();
 
         foreach ((Type interfaceType, ICollection<Type> classTypes) in classTypesForInterface)
         {
@@ -42,7 +43,7 @@ public class InterfaceApplierService : IInterfaceApplierService
 
     #region Private  Methods
 
-    private void applyInterfaceToClasses(Type interfaceType, ICollection<Type> classTypes, List<SyntaxTree> sources)
+    private void applyInterfaceToClasses(Type interfaceType, ICollection<Type> classTypes, ICollection<SyntaxTree> sources)
     {
         foreach (var classType in classTypes)
         {
@@ -55,10 +56,17 @@ public class InterfaceApplierService : IInterfaceApplierService
     {
         var sourcesForClassType = getSourcesForClassType(classType, sources).ToList();
         _logger.LogDebug("Found {0} sources for class type {1}", sourcesForClassType.Count, classType.FullName);
-        applyInterfaceToSources(interfaceType, classType, sourcesForClassType);
+        var updatedByOriginalSources = applyInterfaceToSources(interfaceType, classType, sourcesForClassType);
+
+        // Update the cached sources so we can apply interfaces on multiple classes contained in the same source file
+        foreach (var (originalSource, updatedSource) in updatedByOriginalSources)
+        {
+            sources.Remove(originalSource);
+            sources.Add(updatedSource);
+        }
     }
 
-    private IEnumerable<SyntaxTree> getSourcesForClassType(Type classType, IEnumerable<SyntaxTree> sources) 
+    private static IEnumerable<SyntaxTree> getSourcesForClassType(Type classType, IEnumerable<SyntaxTree> sources) 
         => sources.Where(source => isClassTypeSource(source, classType));
 
     private static bool isClassTypeSource(SyntaxTree source, Type classType)
@@ -93,15 +101,20 @@ public class InterfaceApplierService : IInterfaceApplierService
         });
     }
 
-    private void applyInterfaceToSources(Type interfaceType, Type classType, IEnumerable<SyntaxTree> sources)
+    private IDictionary<SyntaxTree, SyntaxTree> applyInterfaceToSources(Type interfaceType, Type classType, IEnumerable<SyntaxTree> sources)
     {
+        var updatedByOriginalSources = new Dictionary<SyntaxTree, SyntaxTree>();
+        
         foreach (var source in sources)
         {
-            applyInterfaceToSource(interfaceType, classType, source);
+            var updatedSource = applyInterfaceToSource(interfaceType, classType, source);
+            updatedByOriginalSources.Add(source, updatedSource);
         }
+
+        return updatedByOriginalSources;
     }
 
-    private void applyInterfaceToSource(Type interfaceType, Type classType, SyntaxTree source)
+    private SyntaxTree applyInterfaceToSource(Type interfaceType, Type classType, SyntaxTree source)
     {
         var root = source.GetRoot();
 
@@ -111,18 +124,21 @@ public class InterfaceApplierService : IInterfaceApplierService
 
         var interfaceName = interfaceType.Name;
         var interfaceBaseType = SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(interfaceName));
-        
+
         var existingBaseTypes = classDeclaration.BaseList?.Types.ToList() ?? new List<BaseTypeSyntax>();
         var newBaseTypes = existingBaseTypes.Concat(new[] { interfaceBaseType });
+
         var newBaseList = SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(newBaseTypes));
         var newClassDeclaration = classDeclaration.WithBaseList(newBaseList);
         var newRoot = root.ReplaceNode(classDeclaration, newClassDeclaration);
-        var newSourceCode = newRoot.ToFullString();
 
         var filePath = source.FilePath;
+        var newSourceCode = newRoot.ToFullString();
+        File.WriteAllText(filePath, newSourceCode);
+
         _logger.LogDebug("Added interface {0} to class {1} in file {2}", interfaceName, classType.Name, filePath);
 
-        File.WriteAllText(filePath, newSourceCode);
+        return source.WithRootAndOptions(newRoot, source.Options);
     }
 
     #endregion
