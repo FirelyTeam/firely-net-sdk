@@ -41,6 +41,7 @@ public class InterfaceApplier : IInterfaceApplier
     {
         var fhirBaseProjectDirectory = _projectManager.GetFhirBaseProjectDirectory();
         var fhirConformanceProjectDirectory = _projectManager.GetFhirConformanceProjectDirectory();
+
         foreach (var projectVersionPath in _projectManager.GetFhirVersionProjectFilePaths())
         {
             applyInterfacesToProject(projectVersionPath, fhirBaseProjectDirectory, fhirConformanceProjectDirectory);
@@ -51,8 +52,7 @@ public class InterfaceApplier : IInterfaceApplier
 
     #region Private Methods
 
-    private void applyInterfacesToProject(string projectFilePath, string fhirBaseProjectDirectory,
-        string fhirConformanceProjectDirectory)
+    private void applyInterfacesToProject(string projectFilePath, string fhirBaseProjectDirectory, string fhirConformanceProjectDirectory)
     {
         _logger.LogInformation("Start applying interfaces on classes for project {0}", projectFilePath);
 

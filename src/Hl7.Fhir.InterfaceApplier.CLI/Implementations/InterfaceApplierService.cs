@@ -49,6 +49,7 @@ public class InterfaceApplierService : IInterfaceApplierService
         {
             applyInterfaceToClass(interfaceType, classType, sources);
         }
+
         _logger.LogInformation("Applied interface {0} on {1} classes", interfaceType.Name, classTypes.Count);
     }
 

@@ -77,8 +77,7 @@ public class ProjectManager : IProjectManager
                .Select(Path.GetFullPath)
                .Select(Path.GetDirectoryName)
                .SingleOrDefault()
-           ?? throw new InvalidOperationException(
-               $"The project file for project with name={projectName} could not be found");
+           ?? throw new InvalidOperationException($"The project file for project with name={projectName} could not be found");
 
     private bool isFhirVersionProject(string projectFilePath)
         => _configuration.FhirVersions
