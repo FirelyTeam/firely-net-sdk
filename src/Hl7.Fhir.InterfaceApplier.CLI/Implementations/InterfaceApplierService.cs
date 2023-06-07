@@ -49,13 +49,12 @@ public class InterfaceApplierService : IInterfaceApplierService
         {
             applyInterfaceToClass(interfaceType, classType, sources);
         }
-        _logger.LogDebug("Applied interface {0} on {1} classes", interfaceType.FullName, classTypes.Count);
+        _logger.LogInformation("Applied interface {0} on {1} classes", interfaceType.Name, classTypes.Count);
     }
 
     private void applyInterfaceToClass(Type interfaceType, Type classType, ICollection<SyntaxTree> sources)
     {
         var sourcesForClassType = getSourcesForClassType(classType, sources).ToList();
-        _logger.LogDebug("Found {0} sources for class type {1}", sourcesForClassType.Count, classType.FullName);
         var updatedByOriginalSources = applyInterfaceToSources(interfaceType, classType, sourcesForClassType);
 
         // Update the cached sources so we can apply interfaces on multiple classes contained in the same source file
@@ -126,17 +125,22 @@ public class InterfaceApplierService : IInterfaceApplierService
         var interfaceBaseType = SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(interfaceName));
 
         var existingBaseTypes = classDeclaration.BaseList?.Types.ToList() ?? new List<BaseTypeSyntax>();
+        if (existingBaseTypes.Any(syntax => syntax.ToString() == interfaceName))
+        {
+            _logger.LogDebug("Skip adding interface {0} to class {1} in file {2} because it already contains it.", interfaceName, classType.FullName, source.FilePath);
+            return source;
+        }
+
         var newBaseTypes = existingBaseTypes.Concat(new[] { interfaceBaseType });
 
         var newBaseList = SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(newBaseTypes));
         var newClassDeclaration = classDeclaration.WithBaseList(newBaseList);
         var newRoot = root.ReplaceNode(classDeclaration, newClassDeclaration);
-
-        var filePath = source.FilePath;
+        
         var newSourceCode = newRoot.ToFullString();
-        File.WriteAllText(filePath, newSourceCode);
+        File.WriteAllText(source.FilePath, newSourceCode);
 
-        _logger.LogDebug("Added interface {0} to class {1} in file {2}", interfaceName, classType.Name, filePath);
+        _logger.LogDebug("Added interface {0} to class {1} in file {2}", interfaceName, classType.FullName, source.FilePath);
 
         return source.WithRootAndOptions(newRoot, source.Options);
     }
