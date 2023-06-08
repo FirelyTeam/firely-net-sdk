@@ -66,7 +66,7 @@ public class InterfaceApplier : IInterfaceApplier
         logEntriesFormatted("Loaded assemblies from published project", projectAssemblies.Select(assembly => assembly.GetName().FullName));
 
         var interfaceTypesToApply = _interfaceDiscoveryService.GetInterfaceTypesToApply(projectAssemblies).ToList();
-        logEntriesFormatted("Found interfaces, marked with attribute [ApplyInterfaceToClassesOnGenerate]", interfaceTypesToApply.Select(type => type.FullName!));
+        logEntriesFormatted("Found interfaces, marked with attribute [ApplyInterfaceToGeneratedClasses]", interfaceTypesToApply.Select(type => type.FullName!));
 
         var classTypesForInterface = _classDiscoveryService.GetClassTypesToApplyInterfaceTo(projectAssemblies, interfaceTypesToApply);
         if (classTypesForInterface.Any())
