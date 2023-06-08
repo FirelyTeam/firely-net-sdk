@@ -19,12 +19,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripBinarySerialization.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripNewSerializers.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)RoundtripTest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersJson.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersXml.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersXmlPoco.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientJson.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializeDemoPatientXml.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SerializePartialTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamJsonResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)StreamXmlResources.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SummaryTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SerializationExcexptionHandlersJsonPoco.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)TestData\all-xml-features.xml">

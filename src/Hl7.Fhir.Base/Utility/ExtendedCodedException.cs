@@ -21,19 +21,27 @@ namespace Hl7.Fhir.Utility
     /// for this subclass, providing a list of codes used by that module.</remarks>
     public class ExtendedCodedException : CodedException
     {
-        public ExtendedCodedException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType) : base(errorCode, message)
+        public ExtendedCodedException(
+            string errorCode,
+            string baseMessage,
+            string? instancePath,
+            long? lineNumber,
+            long? position,
+            OperationOutcome.IssueSeverity issueSeverity,
+            OperationOutcome.IssueType issueType,
+            Exception? innerException = null) :
+            base(errorCode, formatLocationMessage(baseMessage, instancePath, lineNumber, position), innerException)
         {
             IssueSeverity = issueSeverity;
             IssueType = issueType;
+            BaseErrorMessage = baseMessage;
+            InstancePath = instancePath;
+            LineNumber = lineNumber;
+            Position = position;
         }
 
-        public ExtendedCodedException(string errorCode, string message, OperationOutcome.IssueSeverity issueSeverity, OperationOutcome.IssueType issueType, Exception? innerException) : base(errorCode, message, innerException)
-        {
-            IssueSeverity = issueSeverity;
-            IssueType = issueType;
-        }
 
-        internal static string FormatLocationMessage(string baseMessage, string? instancePath, long? lineNumber, long? position)
+        private static string formatLocationMessage(string baseMessage, string? instancePath, long? lineNumber, long? position)
         {
             string location = $"At line {lineNumber}, position {position}";
             if (!string.IsNullOrEmpty(instancePath))
@@ -49,27 +57,27 @@ namespace Hl7.Fhir.Utility
         /// Setter is public to permit others to upgrade/downgrade specific issues
         /// as needed.
         /// </remarks>
-        public OperationOutcome.IssueSeverity IssueSeverity { get; init; } = OperationOutcome.IssueSeverity.Error;
+        public OperationOutcome.IssueSeverity IssueSeverity { get; private set; } = OperationOutcome.IssueSeverity.Error;
 
         /// <summary>
         /// Type of issue to report in a FHIR OperationOutcome.
         /// </summary>
-        public OperationOutcome.IssueType IssueType { get; init; } = OperationOutcome.IssueType.Invalid;
+        public OperationOutcome.IssueType IssueType { get; private set; } = OperationOutcome.IssueType.Invalid;
 
         /// <summary>
         /// The error message without any location information appended to it (which is in Exception.Message property).
         /// </summary>
-        public string? BaseErrorMessage { get; init; }
+        public string? BaseErrorMessage { get; private set; }
 
         /// <summary>
         /// The line number of the error in the original source data.
         /// </summary>
-        public long? LineNumber { get; init; }
+        public long? LineNumber { get; private set; }
 
         /// <summary>
         /// The position of the error on the line in the original source data.
         /// </summary>
-        public long? Position { get; init; }
+        public long? Position { get; private set; }
 
         /// <summary>
         /// The InstancePath of the error in the resource in simple fhirpath format.
@@ -77,7 +85,7 @@ namespace Hl7.Fhir.Utility
         /// <remarks>
         /// This is usually populated into the OperationOutcome.expression property.
         /// </remarks>
-        public string? InstancePath { get; init; }
+        public string? InstancePath { get; private set; }
     }
 }
 

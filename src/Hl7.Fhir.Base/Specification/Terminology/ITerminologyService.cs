@@ -22,7 +22,6 @@ namespace Hl7.Fhir.Specification.Terminology
         /// <param name="useGet"> Use the GET instead of POST Http method</param>
         /// <returns>Output parameters containing the result of the operation</returns>
         /// <exception cref="FhirOperationException">Thrown when the terminology service encounters an error</exception>
-        /// <remarks>See  for more information</remarks>
         /// <remarks>This function corresponds to the <seealso href="http://hl7.org/fhir/valueset-operation-validate-code.html">$validate-codes</seealso> operation.</remarks>
         Task<Parameters> ValueSetValidateCode(Parameters parameters, string id = null, bool useGet = false);
 
