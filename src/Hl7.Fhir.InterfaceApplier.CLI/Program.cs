@@ -27,7 +27,7 @@ services.AddTransient<IProjectManager, ProjectManager>();
 services.AddTransient<IInterfaceDiscoveryService, InterfaceDiscoveryService>();
 services.AddTransient<IClassDiscoveryService, ClassDiscoveryService>();
 services.AddTransient<IInterfaceApplierService, InterfaceApplierService>();
-services.AddTransient<IInterfaceApplier, InterfaceApplier>();
+services.AddTransient<IInterfaceApplierManager, InterfaceApplierManager>();
 
 services.AddLogging(builder =>
 {
@@ -43,7 +43,7 @@ var serviceProvider = services.BuildServiceProvider();
 Log.Information("*** Executing InterfaceApplier ***");
 
 // Set the interfaces on classes
-serviceProvider.GetRequiredService<IInterfaceApplier>().Run();
+serviceProvider.GetRequiredService<IInterfaceApplierManager>().Run();
 
 Log.Information("*** Finished executing InterfaceApplier ***");
 Log.CloseAndFlush();

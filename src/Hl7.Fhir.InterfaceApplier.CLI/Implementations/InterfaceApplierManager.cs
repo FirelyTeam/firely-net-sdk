@@ -5,7 +5,7 @@ using System.Runtime.Loader;
 
 namespace Hl7.Fhir.InterfaceApplier.CLI.Implementations;
 
-public class InterfaceApplier : IInterfaceApplier
+public class InterfaceApplierManager : IInterfaceApplierManager
 {
     #region Private Fields
 
@@ -13,18 +13,18 @@ public class InterfaceApplier : IInterfaceApplier
     private readonly IProjectManager _projectManager;
     private readonly IClassDiscoveryService _classDiscoveryService;
     private readonly IInterfaceApplierService _interfaceApplierService;
-    private readonly ILogger<InterfaceApplier> _logger;
+    private readonly ILogger<InterfaceApplierManager> _logger;
 
     #endregion
 
     #region Constructors
 
-    public InterfaceApplier(
+    public InterfaceApplierManager(
         IProjectManager projectManager,
         IInterfaceDiscoveryService interfaceDiscoveryService,
         IClassDiscoveryService classDiscoveryService,
         IInterfaceApplierService interfaceApplierService,
-        ILogger<InterfaceApplier> logger)
+        ILogger<InterfaceApplierManager> logger)
     {
         _projectManager = projectManager;
         _interfaceDiscoveryService = interfaceDiscoveryService;
