@@ -2,7 +2,7 @@
 
 namespace Hl7.Fhir.Model
 {
-    [ApplyInterfaceToClassesOnGenerate]
+    [ApplyInterfaceToGeneratedClasses]
     public interface ICodeable
     {
         CodeableConcept Code { get; set; }
