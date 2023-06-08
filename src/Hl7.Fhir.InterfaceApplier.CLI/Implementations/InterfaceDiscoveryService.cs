@@ -12,5 +12,5 @@ public class InterfaceDiscoveryService : IInterfaceDiscoveryService
         => assembly.GetTypes()
             .Where(type => type is { IsInterface: true }
                            && type.CustomAttributes.Any(data => data.AttributeType.FullName ==
-                                                                "Hl7.Fhir.Generation.ApplyInterfaceToClassesOnGenerateAttribute"));
+                                                                "Hl7.Fhir.Generation.ApplyInterfaceToGeneratedClassesAttribute"));
 }
