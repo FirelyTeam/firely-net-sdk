@@ -126,12 +126,6 @@ public class InterfaceApplierService : IInterfaceApplierService
         var interfaceBaseType = SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(interfaceName));
 
         var existingBaseTypes = classDeclaration.BaseList?.Types.ToList() ?? new List<BaseTypeSyntax>();
-        if (existingBaseTypes.Any(syntax => syntax.ToString() == interfaceName))
-        {
-            _logger.LogDebug("Skip adding interface {0} to class {1} in file {2} because it already contains it.", interfaceName, classType.FullName, source.FilePath);
-            return source;
-        }
-
         var newBaseTypes = existingBaseTypes.Concat(new[] { interfaceBaseType });
 
         var newBaseList = SyntaxFactory.BaseList(SyntaxFactory.SeparatedList(newBaseTypes));

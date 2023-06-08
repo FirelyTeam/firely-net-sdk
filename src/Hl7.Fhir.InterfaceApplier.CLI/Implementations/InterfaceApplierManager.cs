@@ -78,8 +78,13 @@ public class InterfaceApplierManager : IInterfaceApplierManager
             _logger.LogInformation("No classes found to apply interfaces on");
         }
 
-        // Consider sources for the project itself as well as Base and Conformance.
-        var sourceFilesDirectories = new[] { fhirBaseProjectDirectory, projectDirectory, fhirConformanceProjectDirectory };
+        // Consider sources for the project itself as well as Base and Conformance, if they are referenced by the project.
+        // R4, R4B and R5 reference Conformance which references Base
+        // STU3 references Base directly
+        var loadedAssemblyNames = projectAssemblies.Select(assembly => assembly.GetName().Name!);
+        var sourceFilesDirectories = new[] { projectDirectory, fhirBaseProjectDirectory,  fhirConformanceProjectDirectory }
+            .Where(directory => loadedAssemblyNames.Any(directory.EndsWith));
+
         _interfaceApplierService.Apply(sourceFilesDirectories, classTypesForInterface);
 
         context.Unload();
