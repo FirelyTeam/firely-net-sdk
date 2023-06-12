@@ -104,6 +104,7 @@ namespace Hl7.Fhir.Model
     /// The measurement unit of the interval between samples
     /// </summary>
     [FhirElement("intervalUnit", InSummary=true, Order=50)]
+    [Binding("Units")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code IntervalUnitElement

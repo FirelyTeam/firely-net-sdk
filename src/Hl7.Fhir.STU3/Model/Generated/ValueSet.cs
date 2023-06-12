@@ -730,6 +730,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -953,6 +954,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("op", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.FilterOperator> OpElement
@@ -2077,6 +2079,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role)
     /// (system: http://hl7.org/fhir/ingredient-manufacturer-role)
     /// </summary>
-    [FhirEnumeration("IngredientManufacturerRole")]
+    [FhirEnumeration("IngredientManufacturerRole", "http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role")]
     public enum IngredientManufacturerRole
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("IngredientManufacturerRole")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Ingredient.IngredientManufacturerRole> RoleElement
       {
@@ -908,6 +909,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/price-component-type)
     /// (system: http://hl7.org/fhir/price-component-type)
     /// </summary>
-    [FhirEnumeration("PriceComponentType")]
+    [FhirEnumeration("PriceComponentType", "http://hl7.org/fhir/ValueSet/price-component-type")]
     public enum PriceComponentType
     {
       /// <summary>
@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PriceComponentType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MonetaryComponent.PriceComponentType> TypeElement

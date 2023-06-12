@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/transport-status)
     /// (system: http://hl7.org/fhir/transport-status)
     /// </summary>
-    [FhirEnumeration("TransportStatus")]
+    [FhirEnumeration("TransportStatus", "http://hl7.org/fhir/ValueSet/transport-status")]
     public enum TransportStatus
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/transport-intent)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("TransportIntent")]
+    [FhirEnumeration("TransportIntent", "http://hl7.org/fhir/ValueSet/transport-intent")]
     public enum TransportIntent
     {
       /// <summary>
@@ -735,6 +735,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TransportStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Transport.TransportStatus> StatusElement
     {
@@ -780,6 +781,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=170, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TransportIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Transport.TransportIntent> IntentElement
@@ -813,6 +815,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=180, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TransportPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

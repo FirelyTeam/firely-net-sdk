@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationknowledge-status)
     /// (system: http://terminology.hl7.org/CodeSystem/medicationknowledge-status)
     /// </summary>
-    [FhirEnumeration("MedicationKnowledgeStatusCodes")]
+    [FhirEnumeration("MedicationKnowledgeStatusCodes", "http://hl7.org/fhir/ValueSet/medicationknowledge-status")]
     public enum MedicationKnowledgeStatusCodes
     {
       /// <summary>
@@ -2435,6 +2435,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationKnowledgeStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
     {

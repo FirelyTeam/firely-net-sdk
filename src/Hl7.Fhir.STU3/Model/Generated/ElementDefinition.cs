@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/property-representation)
     /// (system: http://hl7.org/fhir/property-representation)
     /// </summary>
-    [FhirEnumeration("PropertyRepresentation")]
+    [FhirEnumeration("PropertyRepresentation", "http://hl7.org/fhir/ValueSet/property-representation")]
     public enum PropertyRepresentation
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-slicing-rules)
     /// (system: http://hl7.org/fhir/resource-slicing-rules)
     /// </summary>
-    [FhirEnumeration("SlicingRules")]
+    [FhirEnumeration("SlicingRules", "http://hl7.org/fhir/ValueSet/resource-slicing-rules")]
     public enum SlicingRules
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/discriminator-type)
     /// (system: http://hl7.org/fhir/discriminator-type)
     /// </summary>
-    [FhirEnumeration("DiscriminatorType")]
+    [FhirEnumeration("DiscriminatorType", "http://hl7.org/fhir/ValueSet/discriminator-type")]
     public enum DiscriminatorType
     {
       /// <summary>
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-aggregation-mode)
     /// (system: http://hl7.org/fhir/resource-aggregation-mode)
     /// </summary>
-    [FhirEnumeration("AggregationMode")]
+    [FhirEnumeration("AggregationMode", "http://hl7.org/fhir/ValueSet/resource-aggregation-mode")]
     public enum AggregationMode
     {
       /// <summary>
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-version-rules)
     /// (system: http://hl7.org/fhir/reference-version-rules)
     /// </summary>
-    [FhirEnumeration("ReferenceVersionRules")]
+    [FhirEnumeration("ReferenceVersionRules", "http://hl7.org/fhir/ValueSet/reference-version-rules")]
     public enum ReferenceVersionRules
     {
       /// <summary>
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/constraint-severity)
     /// (system: http://hl7.org/fhir/constraint-severity)
     /// </summary>
-    [FhirEnumeration("ConstraintSeverity")]
+    [FhirEnumeration("ConstraintSeverity", "http://hl7.org/fhir/ValueSet/constraint-severity")]
     public enum ConstraintSeverity
     {
       /// <summary>
@@ -335,6 +335,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rules", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SlicingRules")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules> RulesElement
@@ -491,6 +492,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DiscriminatorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType> TypeElement
@@ -965,6 +967,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("aggregation", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AggregationMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
@@ -998,6 +1001,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("versioning", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ReferenceVersionRules")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
       {
@@ -1380,6 +1384,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConstraintSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ConstraintSeverity> SeverityElement
@@ -1690,6 +1695,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
@@ -1917,6 +1923,7 @@ namespace Hl7.Fhir.Model
       /// Computable language of mapping
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -2156,6 +2163,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PropertyRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement

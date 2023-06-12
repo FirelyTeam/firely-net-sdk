@@ -363,6 +363,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RiskAssessmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement

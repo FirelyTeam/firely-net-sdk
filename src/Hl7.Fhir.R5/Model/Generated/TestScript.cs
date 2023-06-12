@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/http-operations)
     /// (system: http://hl7.org/fhir/http-operations)
     /// </summary>
-    [FhirEnumeration("TestScriptRequestMethodCode")]
+    [FhirEnumeration("TestScriptRequestMethodCode", "http://hl7.org/fhir/ValueSet/http-operations")]
     public enum TestScriptRequestMethodCode
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-direction-codes)
     /// (system: http://hl7.org/fhir/assert-direction-codes)
     /// </summary>
-    [FhirEnumeration("AssertionDirectionType")]
+    [FhirEnumeration("AssertionDirectionType", "http://hl7.org/fhir/ValueSet/assert-direction-codes")]
     public enum AssertionDirectionType
     {
       /// <summary>
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-manual-completion-codes)
     /// (system: http://hl7.org/fhir/assert-manual-completion-codes)
     /// </summary>
-    [FhirEnumeration("AssertionManualCompletionType")]
+    [FhirEnumeration("AssertionManualCompletionType", "http://hl7.org/fhir/ValueSet/assert-manual-completion-codes")]
     public enum AssertionManualCompletionType
     {
       /// <summary>
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-operator-codes)
     /// (system: http://hl7.org/fhir/assert-operator-codes)
     /// </summary>
-    [FhirEnumeration("AssertionOperatorType")]
+    [FhirEnumeration("AssertionOperatorType", "http://hl7.org/fhir/ValueSet/assert-operator-codes")]
     public enum AssertionOperatorType
     {
       /// <summary>
@@ -250,7 +250,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-response-code-types)
     /// (system: http://hl7.org/fhir/assert-response-code-types)
     /// </summary>
-    [FhirEnumeration("AssertionResponseTypes")]
+    [FhirEnumeration("AssertionResponseTypes", "http://hl7.org/fhir/ValueSet/assert-response-code-types")]
     public enum AssertionResponseTypes
     {
       /// <summary>
@@ -2711,6 +2711,7 @@ namespace Hl7.Fhir.Model
       /// Mime type to accept in the payload of the response, with charset etc
       /// </summary>
       [FhirElement("accept", Order=80)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code AcceptElement
       {
@@ -2742,6 +2743,7 @@ namespace Hl7.Fhir.Model
       /// Mime type of the request payload contents, with charset etc
       /// </summary>
       [FhirElement("contentType", Order=90)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code ContentTypeElement
       {
@@ -2837,6 +2839,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("method", Order=120)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestScriptRequestMethodCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> MethodElement
       {
@@ -3571,6 +3574,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionDirectionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType> DirectionElement
       {
@@ -3695,6 +3699,7 @@ namespace Hl7.Fhir.Model
       /// Mime type to compare against the 'Content-Type' header
       /// </summary>
       [FhirElement("contentType", Order=100)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code ContentTypeElement
       {
@@ -3727,6 +3732,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("defaultManualCompletion", Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionManualCompletionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionManualCompletionType> DefaultManualCompletionElement
       {
@@ -3883,6 +3889,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", Order=160)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionOperatorType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> OperatorElement
       {
@@ -3946,6 +3953,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requestMethod", Order=180)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestScriptRequestMethodCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> RequestMethodElement
       {
@@ -4040,6 +4048,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("response", Order=210)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionResponseTypes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
       {
@@ -5379,6 +5388,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

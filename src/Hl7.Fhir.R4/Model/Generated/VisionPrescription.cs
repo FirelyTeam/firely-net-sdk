@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
     /// (system: http://hl7.org/fhir/vision-eye-codes)
     /// </summary>
-    [FhirEnumeration("VisionEyes")]
+    [FhirEnumeration("VisionEyes", "http://hl7.org/fhir/ValueSet/vision-eye-codes")]
     public enum VisionEyes
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
     /// (system: http://hl7.org/fhir/vision-base-codes)
     /// </summary>
-    [FhirEnumeration("VisionBase")]
+    [FhirEnumeration("VisionBase", "http://hl7.org/fhir/ValueSet/vision-base-codes")]
     public enum VisionBase
     {
       /// <summary>
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VisionPrescription#LensSpecification", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}VisionPrescription.LensSpecification")]
     public partial class LensSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -143,6 +144,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("eye", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("VisionEyes")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
@@ -697,6 +699,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VisionPrescription#Prism", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}VisionPrescription.LensSpecification.Prism")]
     public partial class PrismComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -741,6 +744,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("base", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("VisionBase")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
@@ -880,6 +884,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("VisionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement

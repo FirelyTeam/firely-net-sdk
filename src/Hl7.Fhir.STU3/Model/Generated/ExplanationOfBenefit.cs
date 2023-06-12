@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/explanationofbenefit-status)
     /// (system: http://hl7.org/fhir/explanationofbenefit-status)
     /// </summary>
-    [FhirEnumeration("ExplanationOfBenefitStatus")]
+    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status")]
     public enum ExplanationOfBenefitStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-type-link)
     /// (system: http://hl7.org/fhir/resource-type-link)
     /// </summary>
-    [FhirEnumeration("PayeeResourceType")]
+    [FhirEnumeration("PayeeResourceType", "http://hl7.org/fhir/ValueSet/resource-type-link")]
     public enum PayeeResourceType
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode)
     /// (system: http://hl7.org/fhir/v3/ActCode)
     /// </summary>
-    [FhirEnumeration("ActInvoiceGroupCode")]
+    [FhirEnumeration("ActInvoiceGroupCode", "http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode")]
     public enum ActInvoiceGroupCode
     {
       /// <summary>
@@ -5215,6 +5215,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ExplanationOfBenefitStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus> StatusElement
     {

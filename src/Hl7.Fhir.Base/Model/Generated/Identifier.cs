@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/identifier-use)
     /// (system: http://hl7.org/fhir/identifier-use)
     /// </summary>
-    [FhirEnumeration("IdentifierUse")]
+    [FhirEnumeration("IdentifierUse", "http://hl7.org/fhir/ValueSet/identifier-use")]
     public enum IdentifierUse
     {
       /// <summary>
@@ -100,6 +100,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("IdentifierUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Identifier.IdentifierUse> UseElement
     {

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-category)
     /// (system: http://hl7.org/fhir/product-category)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductCategory")]
+    [FhirEnumeration("BiologicallyDerivedProductCategory", "http://hl7.org/fhir/ValueSet/product-category")]
     public enum BiologicallyDerivedProductCategory
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-status)
     /// (system: http://hl7.org/fhir/product-status)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductStatus")]
+    [FhirEnumeration("BiologicallyDerivedProductStatus", "http://hl7.org/fhir/ValueSet/product-status")]
     public enum BiologicallyDerivedProductStatus
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-storage-scale)
     /// (system: http://hl7.org/fhir/product-storage-scale)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductStorageScale")]
+    [FhirEnumeration("BiologicallyDerivedProductStorageScale", "http://hl7.org/fhir/ValueSet/product-storage-scale")]
     public enum BiologicallyDerivedProductStorageScale
     {
       /// <summary>
@@ -732,6 +732,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("scale", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("BiologicallyDerivedProductStorageScale")]
       [DataMember]
       public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale> ScaleElement
       {
@@ -901,6 +902,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("productCategory", Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BiologicallyDerivedProductCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory> ProductCategoryElement
     {
@@ -946,6 +948,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BiologicallyDerivedProductStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus> StatusElement
     {

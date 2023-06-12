@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationrequest-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-status)
     /// </summary>
-    [FhirEnumeration("medicationrequestStatus")]
+    [FhirEnumeration("medicationrequestStatus", "http://hl7.org/fhir/ValueSet/medicationrequest-status")]
     public enum MedicationrequestStatus
     {
       /// <summary>
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationrequest-intent)
     /// (system: http://hl7.org/fhir/CodeSystem/medicationrequest-intent)
     /// </summary>
-    [FhirEnumeration("medicationRequestIntent")]
+    [FhirEnumeration("medicationRequestIntent", "http://hl7.org/fhir/ValueSet/medicationrequest-intent")]
     public enum MedicationRequestIntent
     {
       /// <summary>
@@ -177,6 +177,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#DispenseRequest", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationRequest.DispenseRequest")]
     public partial class DispenseRequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -438,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#InitialFill", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationRequest.DispenseRequest.InitialFill")]
     public partial class InitialFillComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,6 +571,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationRequest#Substitution", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicationRequest.Substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -716,6 +719,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationrequestStatus> StatusElement
@@ -762,6 +766,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> IntentElement
@@ -809,6 +814,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

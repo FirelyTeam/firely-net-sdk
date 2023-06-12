@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose)
     /// (system: http://hl7.org/fhir/eligibilityrequest-purpose)
     /// </summary>
-    [FhirEnumeration("EligibilityRequestPurpose")]
+    [FhirEnumeration("EligibilityRequestPurpose", "http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose")]
     public enum EligibilityRequestPurpose
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#SupportingInformation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityRequest.SupportingInfo")]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -288,6 +289,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Insurance", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityRequest.Insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -480,6 +482,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Details", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityRequest.Item")]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -815,6 +818,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Diagnosis", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CoverageEligibilityRequest.Item.Diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -940,6 +944,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityRequestStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -986,6 +991,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("purpose", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityRequestPurpose")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.CoverageEligibilityRequest.EligibilityRequestPurpose>> PurposeElement

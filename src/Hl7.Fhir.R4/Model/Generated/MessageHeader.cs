@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/response-code)
     /// (system: http://hl7.org/fhir/response-code)
     /// </summary>
-    [FhirEnumeration("ResponseType")]
+    [FhirEnumeration("ResponseType", "http://hl7.org/fhir/ValueSet/response-code")]
     public enum ResponseType
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#MessageDestination", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageHeader.Destination")]
     public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#MessageSource", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageHeader.Source")]
     public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -575,6 +577,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#Response", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MessageHeader.Response")]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -619,6 +622,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResponseType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement

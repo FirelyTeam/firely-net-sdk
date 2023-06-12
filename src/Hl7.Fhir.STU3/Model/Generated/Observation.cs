@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
     /// (system: http://hl7.org/fhir/observation-relationshiptypes)
     /// </summary>
-    [FhirEnumeration("ObservationRelationshipType")]
+    [FhirEnumeration("ObservationRelationshipType", "http://hl7.org/fhir/ValueSet/observation-relationshiptypes")]
     public enum ObservationRelationshipType
     {
       /// <summary>
@@ -357,6 +357,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
       {
@@ -728,6 +729,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement

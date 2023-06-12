@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/link-type)
     /// (system: http://hl7.org/fhir/link-type)
     /// </summary>
-    [FhirEnumeration("LinkType")]
+    [FhirEnumeration("LinkType", "http://hl7.org/fhir/ValueSet/link-type")]
     public enum LinkType
     {
       /// <summary>
@@ -161,6 +161,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gender", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -537,6 +538,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("LinkType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -735,6 +737,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

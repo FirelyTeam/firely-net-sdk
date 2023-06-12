@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/response-code)
     /// (system: http://hl7.org/fhir/response-code)
     /// </summary>
-    [FhirEnumeration("ResponseType")]
+    [FhirEnumeration("ResponseType", "http://hl7.org/fhir/ValueSet/response-code")]
     public enum ResponseType
     {
       /// <summary>
@@ -619,6 +619,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResponseType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MessageHeader.ResponseType> CodeElement

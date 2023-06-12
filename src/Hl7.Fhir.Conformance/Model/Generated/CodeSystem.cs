@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning)
     /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
     /// </summary>
-    [FhirEnumeration("CodeSystemHierarchyMeaning")]
+    [FhirEnumeration("CodeSystemHierarchyMeaning", "http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning")]
     public enum CodeSystemHierarchyMeaning
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-property-type)
     /// (system: http://hl7.org/fhir/concept-property-type)
     /// </summary>
-    [FhirEnumeration("PropertyType")]
+    [FhirEnumeration("PropertyType", "http://hl7.org/fhir/ValueSet/concept-property-type")]
     public enum PropertyType
     {
       /// <summary>
@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Filter", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CodeSystem.Filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -222,6 +223,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FilterOperator>> OperatorElement
@@ -398,6 +400,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Property", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CodeSystem.Property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -504,6 +507,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CodeSystem.PropertyType> TypeElement
@@ -648,6 +652,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CodeSystem.Concept")]
     public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -925,6 +930,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Designation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CodeSystem.Concept.Designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -936,6 +942,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1138,6 +1145,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CodeSystem.Concept.Property")]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1443,6 +1451,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1956,6 +1965,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("hierarchyMeaning", InSummary=true, Order=370)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSystemHierarchyMeaning")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystem.CodeSystemHierarchyMeaning> HierarchyMeaningElement
     {
@@ -2050,6 +2060,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("content", InSummary=true, Order=400)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSystemContentMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CodeSystemContentMode> ContentElement

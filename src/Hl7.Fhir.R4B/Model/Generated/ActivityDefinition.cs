@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/request-resource-types)
     /// (system: http://hl7.org/fhir/request-resource-types)
     /// </summary>
-    [FhirEnumeration("RequestResourceType")]
+    [FhirEnumeration("RequestResourceType", "http://hl7.org/fhir/ValueSet/request-resource-types")]
     public enum RequestResourceType
     {
       /// <summary>
@@ -173,6 +173,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
@@ -631,6 +632,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1130,6 +1132,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=370)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActivityDefinitionKind")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ActivityDefinition.RequestResourceType> KindElement
     {
@@ -1206,6 +1209,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", Order=400)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestIntent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
     {
@@ -1238,6 +1242,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=410)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

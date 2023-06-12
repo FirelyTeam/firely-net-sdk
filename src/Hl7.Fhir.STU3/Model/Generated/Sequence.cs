@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
-    [FhirEnumeration("qualityType")]
+    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type")]
     public enum QualityType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/repository-type)
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
-    [FhirEnumeration("repositoryType")]
+    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type")]
     public enum RepositoryType
     {
       /// <summary>
@@ -809,6 +809,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Sequence.QualityType> TypeElement
@@ -1404,6 +1405,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Sequence.RepositoryType> TypeElement
@@ -1733,6 +1735,7 @@ namespace Hl7.Fhir.Model
     /// aa | dna | rna
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [Binding("sequenceType")]
     [DataMember]
     public Hl7.Fhir.Model.Code TypeElement
     {

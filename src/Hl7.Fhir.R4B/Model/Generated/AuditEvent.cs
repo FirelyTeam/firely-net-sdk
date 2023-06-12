@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-action)
     /// (system: http://hl7.org/fhir/audit-event-action)
     /// </summary>
-    [FhirEnumeration("AuditEventAction")]
+    [FhirEnumeration("AuditEventAction", "http://hl7.org/fhir/ValueSet/audit-event-action")]
     public enum AuditEventAction
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-outcome)
     /// (system: http://hl7.org/fhir/audit-event-outcome)
     /// </summary>
-    [FhirEnumeration("AuditEventOutcome")]
+    [FhirEnumeration("AuditEventOutcome", "http://hl7.org/fhir/ValueSet/audit-event-outcome")]
     public enum AuditEventOutcome
     {
       /// <summary>
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/network-type)
     /// (system: http://hl7.org/fhir/network-type)
     /// </summary>
-    [FhirEnumeration("AuditEventAgentNetworkType")]
+    [FhirEnumeration("AuditEventAgentNetworkType", "http://hl7.org/fhir/ValueSet/network-type")]
     public enum AuditEventAgentNetworkType
     {
       /// <summary>
@@ -627,6 +627,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.where[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AuditEventAgentNetworkType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAgentNetworkType> TypeElement
       {
@@ -1450,6 +1451,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
     {
@@ -1527,6 +1529,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", InSummary=true, Order=140, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventOutcome> OutcomeElement
     {

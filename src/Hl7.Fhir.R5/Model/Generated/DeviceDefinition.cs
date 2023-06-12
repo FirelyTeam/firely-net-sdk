@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-productidentifierinudi)
     /// (system: http://hl7.org/fhir/device-productidentifierinudi)
     /// </summary>
-    [FhirEnumeration("DeviceProductionIdentifierInUDI")]
+    [FhirEnumeration("DeviceProductionIdentifierInUDI", "http://hl7.org/fhir/ValueSet/device-productidentifierinudi")]
     public enum DeviceProductionIdentifierInUDI
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type)
     /// (system: http://hl7.org/fhir/devicedefinition-regulatory-identifier-type)
     /// </summary>
-    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType")]
+    [FhirEnumeration("DeviceDefinitionRegulatoryIdentifierType", "http://hl7.org/fhir/ValueSet/devicedefinition-regulatory-identifier-type")]
     public enum DeviceDefinitionRegulatoryIdentifierType
     {
       /// <summary>
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-correctiveactionscope)
     /// (system: http://hl7.org/fhir/device-correctiveactionscope)
     /// </summary>
-    [FhirEnumeration("DeviceCorrectiveActionScope")]
+    [FhirEnumeration("DeviceCorrectiveActionScope", "http://hl7.org/fhir/ValueSet/device-correctiveactionscope")]
     public enum DeviceCorrectiveActionScope
     {
       /// <summary>
@@ -559,6 +559,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceRegulatoryIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceDefinition.DeviceDefinitionRegulatoryIdentifierType> TypeElement
@@ -843,6 +844,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -2798,6 +2800,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("scope", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceCorrectiveActionScope")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceDefinition.DeviceCorrectiveActionScope> ScopeElement
       {
@@ -3484,6 +3487,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("productionIdentifierInUDI", Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceProductionIdentifierInUDI")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.DeviceDefinition.DeviceProductionIdentifierInUDI>> ProductionIdentifierInUDIElement

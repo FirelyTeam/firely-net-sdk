@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-request-status)
     /// (system: http://hl7.org/fhir/medication-request-status)
     /// </summary>
-    [FhirEnumeration("MedicationRequestStatus")]
+    [FhirEnumeration("MedicationRequestStatus", "http://hl7.org/fhir/ValueSet/medication-request-status")]
     public enum MedicationRequestStatus
     {
       /// <summary>
@@ -118,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-request-intent)
     /// (system: http://hl7.org/fhir/medication-request-intent)
     /// </summary>
-    [FhirEnumeration("MedicationRequestIntent")]
+    [FhirEnumeration("MedicationRequestIntent", "http://hl7.org/fhir/ValueSet/medication-request-intent")]
     public enum MedicationRequestIntent
     {
       /// <summary>
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-request-priority)
     /// (system: http://hl7.org/fhir/medication-request-priority)
     /// </summary>
-    [FhirEnumeration("MedicationRequestPriority")]
+    [FhirEnumeration("MedicationRequestPriority", "http://hl7.org/fhir/ValueSet/medication-request-priority")]
     public enum MedicationRequestPriority
     {
       /// <summary>
@@ -748,6 +748,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestStatus> StatusElement
     {
@@ -780,6 +781,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=140, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestIntent> IntentElement
@@ -826,6 +828,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationRequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationRequest.MedicationRequestPriority> PriorityElement
     {

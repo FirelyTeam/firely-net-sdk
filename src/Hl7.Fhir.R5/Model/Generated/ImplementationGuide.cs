@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/spdx-license)
     /// (system: http://hl7.org/fhir/spdx-license)
     /// </summary>
-    [FhirEnumeration("SPDXLicense")]
+    [FhirEnumeration("SPDXLicense", "http://hl7.org/fhir/ValueSet/spdx-license")]
     public enum SPDXLicense
     {
       /// <summary>
@@ -2146,7 +2146,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-page-generation)
     /// (system: http://hl7.org/fhir/guide-page-generation)
     /// </summary>
-    [FhirEnumeration("GuidePageGeneration")]
+    [FhirEnumeration("GuidePageGeneration", "http://hl7.org/fhir/ValueSet/guide-page-generation")]
     public enum GuidePageGeneration
     {
       /// <summary>
@@ -2441,6 +2441,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -2996,6 +2997,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("fhirVersion", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRVersion")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement
@@ -3414,6 +3416,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("generation", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuidePageGeneration")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageGeneration> GenerationElement
@@ -4792,6 +4795,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -5116,6 +5120,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("license", InSummary=true, Order=270)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SPDXLicense")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImplementationGuide.SPDXLicense> LicenseElement
     {
@@ -5148,6 +5153,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRVersion")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.FHIRVersion>> FhirVersionElement

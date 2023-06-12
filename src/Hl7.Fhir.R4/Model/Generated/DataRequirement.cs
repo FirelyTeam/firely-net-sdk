@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
     /// (system: http://hl7.org/fhir/sort-direction)
     /// </summary>
-    [FhirEnumeration("SortDirection")]
+    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction")]
     public enum SortDirection
     {
       /// <summary>
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DataRequirement.CodeFilter")]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DataRequirement.DateFilter")]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -504,6 +506,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#Sort", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DataRequirement.Sort")]
     public partial class SortComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -548,6 +551,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
@@ -673,6 +677,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRAllTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement

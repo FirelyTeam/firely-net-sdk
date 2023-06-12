@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/diagnostic-report-status)
     /// (system: http://hl7.org/fhir/diagnostic-report-status)
     /// </summary>
-    [FhirEnumeration("DiagnosticReportStatus")]
+    [FhirEnumeration("DiagnosticReportStatus", "http://hl7.org/fhir/ValueSet/diagnostic-report-status")]
     public enum DiagnosticReportStatus
     {
       /// <summary>
@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Media", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}DiagnosticReport.Media")]
     public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -312,6 +313,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DiagnosticReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> StatusElement
@@ -358,6 +360,7 @@ namespace Hl7.Fhir.Model
     /// Name/Code for this diagnostic report
     /// </summary>
     [FhirElement("code", InSummary=true, Order=130, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

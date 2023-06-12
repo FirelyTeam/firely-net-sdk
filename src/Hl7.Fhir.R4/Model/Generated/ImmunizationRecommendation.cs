@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImmunizationRecommendation#Recommendation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImmunizationRecommendation.Recommendation")]
     public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -463,6 +464,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImmunizationRecommendation#DateCriterion", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImmunizationRecommendation.Recommendation.DateCriterion")]
     public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

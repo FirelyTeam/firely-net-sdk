@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/dataelement-stringency)
     /// (system: http://hl7.org/fhir/dataelement-stringency)
     /// </summary>
-    [FhirEnumeration("DataElementStringency")]
+    [FhirEnumeration("DataElementStringency", "http://hl7.org/fhir/ValueSet/dataelement-stringency")]
     public enum DataElementStringency
     {
       /// <summary>
@@ -430,6 +430,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -691,6 +692,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("stringency", InSummary=true, Order=220)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DataElementStringency")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DataElement.DataElementStringency> StringencyElement
     {

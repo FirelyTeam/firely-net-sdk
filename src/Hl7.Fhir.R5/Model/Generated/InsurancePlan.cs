@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/insuranceplan-applicability)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("BenefitCostApplicability")]
+    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability")]
     public enum BenefitCostApplicability
     {
       /// <summary>
@@ -1446,6 +1446,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

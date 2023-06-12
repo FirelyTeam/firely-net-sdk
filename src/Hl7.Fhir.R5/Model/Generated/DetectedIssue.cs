@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-status)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("DetectedIssueStatus")]
+    [FhirEnumeration("DetectedIssueStatus", "http://hl7.org/fhir/ValueSet/detectedissue-status")]
     public enum DetectedIssueStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
     /// (system: http://hl7.org/fhir/detectedissue-severity)
     /// </summary>
-    [FhirEnumeration("DetectedIssueSeverity")]
+    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity")]
     public enum DetectedIssueSeverity
     {
       /// <summary>
@@ -468,6 +468,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DetectedIssueStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueStatus> StatusElement
@@ -528,6 +529,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=130, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DetectedIssueSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
     {

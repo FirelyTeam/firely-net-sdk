@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/enrollment-outcome)
     /// (system: http://hl7.org/fhir/enrollment-outcome)
     /// </summary>
-    [FhirEnumeration("EnrollmentOutcome")]
+    [FhirEnumeration("EnrollmentOutcome", "http://hl7.org/fhir/ValueSet/enrollment-outcome")]
     public enum EnrollmentOutcome
     {
       /// <summary>
@@ -108,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EnrollmentResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -155,6 +156,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EnrollmentOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EnrollmentResponse.EnrollmentOutcome> OutcomeElement
     {

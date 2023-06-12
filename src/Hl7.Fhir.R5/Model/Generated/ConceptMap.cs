@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-property-type)
     /// (system: http://hl7.org/fhir/conceptmap-property-type)
     /// </summary>
-    [FhirEnumeration("ConceptMapPropertyType")]
+    [FhirEnumeration("ConceptMapPropertyType", "http://hl7.org/fhir/ValueSet/conceptmap-property-type")]
     public enum ConceptMapPropertyType
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-attribute-type)
     /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
     /// </summary>
-    [FhirEnumeration("ConceptMapAttributeType")]
+    [FhirEnumeration("ConceptMapAttributeType", "http://hl7.org/fhir/ValueSet/conceptmap-attribute-type")]
     public enum ConceptMapAttributeType
     {
       /// <summary>
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-map-relationship)
     /// (system: http://hl7.org/fhir/concept-map-relationship)
     /// </summary>
-    [FhirEnumeration("ConceptMapRelationship")]
+    [FhirEnumeration("ConceptMapRelationship", "http://hl7.org/fhir/ValueSet/concept-map-relationship")]
     public enum ConceptMapRelationship
     {
       /// <summary>
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>
@@ -327,6 +327,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PropertyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapPropertyType> TypeElement
@@ -617,6 +618,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapmapAttributeType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapAttributeType> TypeElement
@@ -1348,6 +1350,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", IsModifier=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapRelationship")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement
@@ -1958,6 +1961,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -2084,6 +2088,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", IsModifier=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnmappedConceptMapRelationship")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapRelationship> RelationshipElement
       {
@@ -2428,6 +2433,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

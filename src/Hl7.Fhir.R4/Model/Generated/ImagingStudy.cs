@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingstudy-status)
     /// (system: http://hl7.org/fhir/imagingstudy-status)
     /// </summary>
-    [FhirEnumeration("ImagingStudyStatus")]
+    [FhirEnumeration("ImagingStudyStatus", "http://hl7.org/fhir/ValueSet/imagingstudy-status")]
     public enum ImagingStudyStatus
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingStudy#Series", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImagingStudy.Series")]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -552,6 +553,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingStudy#Performer", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImagingStudy.Series.Performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -686,6 +688,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingStudy#Instance", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ImagingStudy.Series.Instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -930,6 +933,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImagingStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingStudy.ImagingStudyStatus> StatusElement

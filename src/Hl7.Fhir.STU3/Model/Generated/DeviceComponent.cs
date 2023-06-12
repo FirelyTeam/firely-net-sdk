@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measurement-principle)
     /// (system: http://hl7.org/fhir/measurement-principle)
     /// </summary>
-    [FhirEnumeration("MeasmntPrinciple")]
+    [FhirEnumeration("MeasmntPrinciple", "http://hl7.org/fhir/ValueSet/measurement-principle")]
     public enum MeasmntPrinciple
     {
       /// <summary>
@@ -423,6 +423,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasmntPrinciple")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
     {

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/relation-type)
     /// (system: http://hl7.org/fhir/relation-type)
     /// </summary>
-    [FhirEnumeration("CatalogEntryRelationType")]
+    [FhirEnumeration("CatalogEntryRelationType", "http://hl7.org/fhir/ValueSet/relation-type")]
     public enum CatalogEntryRelationType
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationtype", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CatalogEntryRelationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType> RelationtypeElement
@@ -339,6 +340,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

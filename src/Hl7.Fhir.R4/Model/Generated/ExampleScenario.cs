@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/examplescenario-actor-type)
     /// (system: http://hl7.org/fhir/examplescenario-actor-type)
     /// </summary>
-    [FhirEnumeration("ExampleScenarioActorType")]
+    [FhirEnumeration("ExampleScenarioActorType", "http://hl7.org/fhir/ValueSet/examplescenario-actor-type")]
     public enum ExampleScenarioActorType
     {
       /// <summary>
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Actor", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -127,6 +128,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ExampleScenarioActorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ExampleScenario.ExampleScenarioActorType> TypeElement
@@ -333,6 +335,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Instance", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -377,6 +380,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resourceType", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> ResourceTypeElement
@@ -629,6 +633,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Version", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Instance.Version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -798,6 +803,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#ContainedInstance", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Instance.ContainedInstance")]
     public partial class ContainedInstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -966,6 +972,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Process", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Process")]
     public partial class ProcessComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1237,6 +1244,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Step", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Process.Step")]
     public partial class StepComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1432,6 +1440,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Operation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Process.Step.Operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1884,6 +1893,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExampleScenario#Alternative", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ExampleScenario.Process.Step.Alternative")]
     public partial class AlternativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2181,6 +2191,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

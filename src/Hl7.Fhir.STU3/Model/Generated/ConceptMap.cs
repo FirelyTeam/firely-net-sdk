@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-map-equivalence)
     /// (system: http://hl7.org/fhir/concept-map-equivalence)
     /// </summary>
-    [FhirEnumeration("ConceptMapEquivalence")]
+    [FhirEnumeration("ConceptMapEquivalence", "http://hl7.org/fhir/ValueSet/concept-map-equivalence")]
     public enum ConceptMapEquivalence
     {
       /// <summary>
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>
@@ -715,6 +715,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("equivalence", IsModifier=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapEquivalence")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapEquivalence> EquivalenceElement
       {
@@ -1196,6 +1197,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -1569,6 +1571,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/chargeitem-status)
     /// (system: http://hl7.org/fhir/chargeitem-status)
     /// </summary>
-    [FhirEnumeration("ChargeItemStatus")]
+    [FhirEnumeration("ChargeItemStatus", "http://hl7.org/fhir/ValueSet/chargeitem-status")]
     public enum ChargeItemStatus
     {
       /// <summary>
@@ -324,6 +324,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ChargeItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ChargeItem.ChargeItemStatus> StatusElement

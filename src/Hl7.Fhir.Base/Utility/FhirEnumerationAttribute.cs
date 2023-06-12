@@ -28,6 +28,8 @@
 
 */
 
+#nullable enable
+
 using System;
 
 namespace Hl7.Fhir.Utility
@@ -38,14 +40,24 @@ namespace Hl7.Fhir.Utility
         private readonly string _bindingName;
 
         // This is a positional argument
-        public FhirEnumerationAttribute(string bindingName)
+        public FhirEnumerationAttribute(string bindingName, string? canonical)
         {
             this._bindingName = bindingName;
+            Valueset = canonical;
+        }
+
+        public FhirEnumerationAttribute(string bindingName) : this(bindingName, null)
+        {
+            // Nothing
         }
 
         public string BindingName
         {
             get { return _bindingName; }
         }
+
+        public string? Valueset { get; }
     }
 }
+
+#nullable restore

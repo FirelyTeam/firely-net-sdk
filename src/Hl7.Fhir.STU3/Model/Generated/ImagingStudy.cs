@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/instance-availability)
     /// (system: http://dicom.nema.org/resources/ontology/DCM)
     /// </summary>
-    [FhirEnumeration("InstanceAvailability")]
+    [FhirEnumeration("InstanceAvailability", "http://hl7.org/fhir/ValueSet/instance-availability")]
     public enum InstanceAvailability
     {
       /// <summary>
@@ -246,6 +246,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("availability", InSummary=true, Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("InstanceAvailability")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
       {
@@ -871,6 +872,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("availability", InSummary=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InstanceAvailability")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability> AvailabilityElement
     {

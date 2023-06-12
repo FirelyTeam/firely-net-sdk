@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#SampleSize", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.SampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#RiskEstimate", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.RiskEstimate")]
     public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -582,6 +584,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.RiskEstimate.PrecisionEstimate")]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -811,6 +814,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#Certainty", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.Certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -967,6 +971,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.Certainty.CertaintySubcomponent")]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1259,6 +1264,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

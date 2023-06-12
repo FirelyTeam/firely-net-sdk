@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#Characteristics", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductPharmaceutical.Characteristics")]
     public partial class CharacteristicsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#RouteOfAdministration", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductPharmaceutical.RouteOfAdministration")]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -436,6 +438,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#TargetSpecies", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductPharmaceutical.RouteOfAdministration.TargetSpecies")]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,6 +572,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductPharmaceutical#WithdrawalPeriod", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductPharmaceutical.RouteOfAdministration.TargetSpecies.WithdrawalPeriod")]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

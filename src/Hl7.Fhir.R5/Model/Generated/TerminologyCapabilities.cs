@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/code-search-support)
     /// (system: http://hl7.org/fhir/code-search-support)
     /// </summary>
-    [FhirEnumeration("CodeSearchSupport")]
+    [FhirEnumeration("CodeSearchSupport", "http://hl7.org/fhir/ValueSet/code-search-support")]
     public enum CodeSearchSupport
     {
       /// <summary>
@@ -482,6 +482,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("content", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CodeSystemContentMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CodeSystemContentMode> ContentElement
@@ -762,6 +763,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("language", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("Language")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CommonLanguages>> LanguageElement
@@ -2112,6 +2114,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2405,6 +2408,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=260)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatementKind> KindElement
@@ -2522,6 +2526,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("codeSearch", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CodeSearchSupport")]
     [DataMember]
     public Code<Hl7.Fhir.Model.TerminologyCapabilities.CodeSearchSupport> CodeSearchElement
     {

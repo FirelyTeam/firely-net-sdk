@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentstatus)
     /// (system: http://hl7.org/fhir/appointmentstatus)
     /// </summary>
-    [FhirEnumeration("AppointmentStatus")]
+    [FhirEnumeration("AppointmentStatus", "http://hl7.org/fhir/ValueSet/appointmentstatus")]
     public enum AppointmentStatus
     {
       /// <summary>
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/participantrequired)
     /// (system: http://hl7.org/fhir/participantrequired)
     /// </summary>
-    [FhirEnumeration("ParticipantRequired")]
+    [FhirEnumeration("ParticipantRequired", "http://hl7.org/fhir/ValueSet/participantrequired")]
     public enum ParticipantRequired
     {
       /// <summary>
@@ -160,6 +160,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#Participant", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Appointment.Participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -201,6 +202,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("required", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipantRequired")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> RequiredElement
       {
@@ -233,6 +235,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ParticipationStatus> StatusElement
@@ -412,6 +415,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
@@ -471,6 +475,7 @@ namespace Hl7.Fhir.Model
     /// The specific service that is to be performed during this appointment
     /// </summary>
     [FhirElement("serviceType", InSummary=true, Order=130)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ServiceType

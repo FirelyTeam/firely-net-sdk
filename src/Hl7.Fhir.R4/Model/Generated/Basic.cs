@@ -73,6 +73,7 @@ namespace Hl7.Fhir.Model
     /// Kind of Resource
     /// </summary>
     [FhirElement("code", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

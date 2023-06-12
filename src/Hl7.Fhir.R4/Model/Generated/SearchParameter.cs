@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-xpath-usage)
     /// (system: http://hl7.org/fhir/search-xpath-usage)
     /// </summary>
-    [FhirEnumeration("XPathUsageType")]
+    [FhirEnumeration("XPathUsageType", "http://hl7.org/fhir/ValueSet/search-xpath-usage")]
     public enum XPathUsageType
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("SearchComparator")]
+    [FhirEnumeration("SearchComparator", "http://hl7.org/fhir/ValueSet/search-comparator")]
     public enum SearchComparator
     {
       /// <summary>
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-modifier-code)
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [FhirEnumeration("SearchModifierCode")]
+    [FhirEnumeration("SearchModifierCode", "http://hl7.org/fhir/ValueSet/search-modifier-code")]
     public enum SearchModifierCode
     {
       /// <summary>
@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SearchParameter#Component", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SearchParameter.Component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -541,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -804,6 +806,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("base", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> BaseElement
@@ -837,6 +840,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=240)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchParamType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -932,6 +936,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("xpathUsage", Order=270)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("XPathUsageType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> XpathUsageElement
     {
@@ -964,6 +969,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("target", Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [CqlElement(IsPrimaryCodePath = true)]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
@@ -1059,6 +1066,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comparator", Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchComparator")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>> ComparatorElement
@@ -1092,6 +1100,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("modifier", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchModifierCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>> ModifierElement

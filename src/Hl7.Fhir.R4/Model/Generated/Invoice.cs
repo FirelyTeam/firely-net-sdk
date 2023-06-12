@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/invoice-status)
     /// (system: http://hl7.org/fhir/invoice-status)
     /// </summary>
-    [FhirEnumeration("InvoiceStatus")]
+    [FhirEnumeration("InvoiceStatus", "http://hl7.org/fhir/ValueSet/invoice-status")]
     public enum InvoiceStatus
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#Participant", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Invoice.Participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +236,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#LineItem", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Invoice.LineItem")]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -411,6 +413,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#PriceComponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Invoice.LineItem.PriceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -423,6 +426,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("InvoicePriceComponentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.InvoicePriceComponentType> TypeElement
@@ -637,6 +641,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InvoiceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Invoice.InvoiceStatus> StatusElement

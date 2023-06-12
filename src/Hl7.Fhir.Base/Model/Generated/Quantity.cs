@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quantity-comparator)
     /// (system: http://hl7.org/fhir/quantity-comparator)
     /// </summary>
-    [FhirEnumeration("QuantityComparator")]
+    [FhirEnumeration("QuantityComparator", "http://hl7.org/fhir/ValueSet/quantity-comparator")]
     public enum QuantityComparator
     {
       /// <summary>
@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comparator", InSummary=true, IsModifier=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("QuantityComparator")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Quantity.QuantityComparator> ComparatorElement
     {
@@ -224,6 +225,7 @@ namespace Hl7.Fhir.Model
     /// Coded form of the unit
     /// </summary>
     [FhirElement("code", InSummary=true, Order=70)]
+    [CqlElement(IsPrimaryCodePath = true)]
     [DataMember]
     public Hl7.Fhir.Model.Code CodeElement
     {

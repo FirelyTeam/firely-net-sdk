@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/location-status)
     /// (system: http://hl7.org/fhir/location-status)
     /// </summary>
-    [FhirEnumeration("LocationStatus")]
+    [FhirEnumeration("LocationStatus", "http://hl7.org/fhir/ValueSet/location-status")]
     public enum LocationStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/location-mode)
     /// (system: http://hl7.org/fhir/location-mode)
     /// </summary>
-    [FhirEnumeration("LocationMode")]
+    [FhirEnumeration("LocationMode", "http://hl7.org/fhir/ValueSet/location-mode")]
     public enum LocationMode
     {
       /// <summary>
@@ -333,6 +333,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("LocationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
     {
@@ -472,6 +473,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("mode", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("LocationMode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
     {

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#Applicability", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ChargeItemDefinition.Applicability")]
     public partial class ApplicabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#PropertyGroup", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ChargeItemDefinition.PropertyGroup")]
     public partial class PropertyGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -401,6 +403,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItemDefinition#PriceComponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}ChargeItemDefinition.PropertyGroup.PriceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -413,6 +416,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ChargeItemDefinitionPriceComponentType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.InvoicePriceComponentType> TypeElement
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1121,6 +1126,7 @@ namespace Hl7.Fhir.Model
     /// Billing codes or product types this definition applies to
     /// </summary>
     [FhirElement("code", InSummary=true, Order=280)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

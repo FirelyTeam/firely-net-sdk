@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-team-status)
     /// (system: http://hl7.org/fhir/care-team-status)
     /// </summary>
-    [FhirEnumeration("CareTeamStatus")]
+    [FhirEnumeration("CareTeamStatus", "http://hl7.org/fhir/ValueSet/care-team-status")]
     public enum CareTeamStatus
     {
       /// <summary>
@@ -295,6 +295,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CareTeamStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus> StatusElement
     {

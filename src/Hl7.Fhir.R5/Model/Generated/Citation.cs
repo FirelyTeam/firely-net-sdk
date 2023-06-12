@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/related-artifact-type-all)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("RelatedArtifactTypeExpanded")]
+    [FhirEnumeration("RelatedArtifactTypeExpanded", "http://hl7.org/fhir/ValueSet/related-artifact-type-all")]
     public enum RelatedArtifactTypeExpanded
     {
       /// <summary>
@@ -2095,6 +2095,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RelatedArtifactTypeExpanded")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Citation.RelatedArtifactTypeExpanded> TypeElement
@@ -4610,6 +4611,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

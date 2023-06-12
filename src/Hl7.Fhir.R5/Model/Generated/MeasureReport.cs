@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
     /// (system: http://hl7.org/fhir/measure-report-status)
     /// </summary>
-    [FhirEnumeration("MeasureReportStatus")]
+    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status")]
     public enum MeasureReportStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
     /// (system: http://hl7.org/fhir/measure-report-type)
     /// </summary>
-    [FhirEnumeration("MeasureReportType")]
+    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type")]
     public enum MeasureReportType
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/submit-data-update-type)
     /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
     /// </summary>
-    [FhirEnumeration("SubmitDataUpdateType")]
+    [FhirEnumeration("SubmitDataUpdateType", "http://hl7.org/fhir/ValueSet/submit-data-update-type")]
     public enum SubmitDataUpdateType
     {
       /// <summary>
@@ -1453,6 +1453,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
@@ -1486,6 +1487,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement
@@ -1519,6 +1521,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("dataUpdateType", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubmitDataUpdateType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.SubmitDataUpdateType> DataUpdateTypeElement
     {

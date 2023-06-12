@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-team-status)
     /// (system: http://hl7.org/fhir/care-team-status)
     /// </summary>
-    [FhirEnumeration("CareTeamStatus")]
+    [FhirEnumeration("CareTeamStatus", "http://hl7.org/fhir/ValueSet/care-team-status")]
     public enum CareTeamStatus
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CareTeam#Participant", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}CareTeam.Participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -294,6 +295,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CareTeamStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus> StatusElement
     {
@@ -325,6 +327,7 @@ namespace Hl7.Fhir.Model
     /// Type of team
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

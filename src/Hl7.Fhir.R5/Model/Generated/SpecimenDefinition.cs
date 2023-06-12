@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-contained-preference)
     /// (system: http://hl7.org/fhir/specimen-contained-preference)
     /// </summary>
-    [FhirEnumeration("SpecimenContainedPreference")]
+    [FhirEnumeration("SpecimenContainedPreference", "http://hl7.org/fhir/ValueSet/specimen-contained-preference")]
     public enum SpecimenContainedPreference
     {
       /// <summary>
@@ -139,6 +139,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("preference", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SpecimenContainedPreference")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.SpecimenDefinition.SpecimenContainedPreference> PreferenceElement
@@ -1290,6 +1291,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

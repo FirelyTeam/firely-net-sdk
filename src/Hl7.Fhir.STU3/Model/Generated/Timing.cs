@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/units-of-time)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("UnitsOfTime")]
+    [FhirEnumeration("UnitsOfTime", "http://hl7.org/fhir/ValueSet/units-of-time")]
     public enum UnitsOfTime
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-timing)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("EventTiming")]
+    [FhirEnumeration("EventTiming", "http://hl7.org/fhir/ValueSet/event-timing")]
     public enum EventTiming
     {
       /// <summary>
@@ -397,6 +397,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> DurationUnitElement
       {
@@ -553,6 +554,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> PeriodUnitElement
       {
@@ -585,6 +587,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DayOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
@@ -650,6 +653,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventTiming")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement

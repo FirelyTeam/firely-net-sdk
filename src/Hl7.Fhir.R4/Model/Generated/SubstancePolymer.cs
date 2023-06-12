@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#MonomerSet", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SubstancePolymer.MonomerSet")]
     public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#StartingMaterial", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SubstancePolymer.MonomerSet.StartingMaterial")]
     public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#Repeat", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat")]
     public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -598,6 +601,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#RepeatUnit", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat.RepeatUnit")]
     public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -815,6 +819,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#DegreeOfPolymerisation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat.RepeatUnit.DegreeOfPolymerisation")]
     public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -946,6 +951,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#StructuralRepresentation", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat.RepeatUnit.StructuralRepresentation")]
     public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

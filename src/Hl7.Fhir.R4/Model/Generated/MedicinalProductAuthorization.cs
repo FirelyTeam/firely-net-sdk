@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductAuthorization#JurisdictionalAuthorization", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductAuthorization.JurisdictionalAuthorization")]
     public partial class JurisdictionalAuthorizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -260,6 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductAuthorization#Procedure", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}MedicinalProductAuthorization.Procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

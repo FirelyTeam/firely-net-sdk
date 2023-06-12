@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
     /// (system: http://hl7.org/fhir/adverse-event-actuality)
     /// </summary>
-    [FhirEnumeration("AdverseEventActuality")]
+    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality")]
     public enum AdverseEventActuality
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-severity)
     /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-severity)
     /// </summary>
-    [FhirEnumeration("AdverseEventSeverity")]
+    [FhirEnumeration("AdverseEventSeverity", "http://hl7.org/fhir/ValueSet/adverse-event-severity")]
     public enum AdverseEventSeverity
     {
       /// <summary>
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-outcome)
     /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
     /// </summary>
-    [FhirEnumeration("AdverseEventOutcome")]
+    [FhirEnumeration("AdverseEventOutcome", "http://hl7.org/fhir/ValueSet/adverse-event-outcome")]
     public enum AdverseEventOutcome
     {
       /// <summary>
@@ -157,6 +157,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}AdverseEvent.SuspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}AdverseEvent.SuspectEntity.Causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -499,6 +501,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement
@@ -545,6 +548,7 @@ namespace Hl7.Fhir.Model
     /// Type of the event itself in relation to the subject
     /// </summary>
     [FhirElement("event", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Event
     {

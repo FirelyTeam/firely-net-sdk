@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
     /// (system: http://hl7.org/fhir/verificationresult-status)
     /// </summary>
-    [FhirEnumeration("status")]
+    [FhirEnumeration("status", "http://hl7.org/fhir/ValueSet/verificationresult-status")]
     public enum StatusCode
     {
       /// <summary>
@@ -926,6 +926,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.VerificationResult.StatusCode> StatusElement

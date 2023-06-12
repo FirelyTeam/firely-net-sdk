@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/payment-outcome)
     /// (system: http://hl7.org/fhir/payment-outcome)
     /// </summary>
-    [FhirEnumeration("PaymentOutcome")]
+    [FhirEnumeration("PaymentOutcome", "http://hl7.org/fhir/ValueSet/payment-outcome")]
     public enum PaymentOutcome
     {
       /// <summary>
@@ -514,6 +514,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NoteType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
       {
@@ -697,6 +698,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentReconciliationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -861,6 +863,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", Order=200)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PaymentReconciliation.PaymentOutcome> OutcomeElement
     {

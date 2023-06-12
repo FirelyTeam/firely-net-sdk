@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-operational-status)
     /// (system: http://hl7.org/fhir/metric-operational-status)
     /// </summary>
-    [FhirEnumeration("DeviceMetricOperationalStatus")]
+    [FhirEnumeration("DeviceMetricOperationalStatus", "http://hl7.org/fhir/ValueSet/metric-operational-status")]
     public enum DeviceMetricOperationalStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-category)
     /// (system: http://hl7.org/fhir/metric-category)
     /// </summary>
-    [FhirEnumeration("DeviceMetricCategory")]
+    [FhirEnumeration("DeviceMetricCategory", "http://hl7.org/fhir/ValueSet/metric-category")]
     public enum DeviceMetricCategory
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-calibration-type)
     /// (system: http://hl7.org/fhir/metric-calibration-type)
     /// </summary>
-    [FhirEnumeration("DeviceMetricCalibrationType")]
+    [FhirEnumeration("DeviceMetricCalibrationType", "http://hl7.org/fhir/ValueSet/metric-calibration-type")]
     public enum DeviceMetricCalibrationType
     {
       /// <summary>
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/metric-calibration-state)
     /// (system: http://hl7.org/fhir/metric-calibration-state)
     /// </summary>
-    [FhirEnumeration("DeviceMetricCalibrationState")]
+    [FhirEnumeration("DeviceMetricCalibrationState", "http://hl7.org/fhir/ValueSet/metric-calibration-state")]
     public enum DeviceMetricCalibrationState
     {
       /// <summary>
@@ -209,6 +209,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceMetricCalibrationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationType> TypeElement
       {
@@ -241,6 +242,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("state", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceMetricCalibrationState")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCalibrationState> StateElement
       {
@@ -462,6 +464,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("operationalStatus", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceMetricOperationalStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricOperationalStatus> OperationalStatusElement
     {
@@ -525,6 +528,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=150, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceMetricCategory")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceMetric.DeviceMetricCategory> CategoryElement

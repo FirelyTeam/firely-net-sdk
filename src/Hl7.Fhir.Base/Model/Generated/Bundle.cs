@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/bundle-type)
     /// (system: http://hl7.org/fhir/bundle-type)
     /// </summary>
-    [FhirEnumeration("BundleType")]
+    [FhirEnumeration("BundleType", "http://hl7.org/fhir/ValueSet/bundle-type")]
     public enum BundleType
     {
       /// <summary>
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/iana-link-relations)
     /// (system: http://hl7.org/fhir/CodeSystem/iana-link-relations)
     /// </summary>
-    [FhirEnumeration("LinkRelationTypes")]
+    [FhirEnumeration("LinkRelationTypes", "http://hl7.org/fhir/ValueSet/iana-link-relations")]
     public enum LinkRelationTypes
     {
       /// <summary>
@@ -954,7 +954,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-entry-mode)
     /// (system: http://hl7.org/fhir/search-entry-mode)
     /// </summary>
-    [FhirEnumeration("SearchEntryMode")]
+    [FhirEnumeration("SearchEntryMode", "http://hl7.org/fhir/ValueSet/search-entry-mode")]
     public enum SearchEntryMode
     {
       /// <summary>
@@ -982,7 +982,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/http-verb)
     /// (system: http://hl7.org/fhir/http-verb)
     /// </summary>
-    [FhirEnumeration("HTTPVerb")]
+    [FhirEnumeration("HTTPVerb", "http://hl7.org/fhir/ValueSet/http-verb")]
     public enum HTTPVerb
     {
       /// <summary>
@@ -1029,6 +1029,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Link", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Bundle.Link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1199,6 +1200,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Entry", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Bundle.Entry")]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1439,6 +1441,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Search", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Bundle.Entry.Search")]
     public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1451,6 +1454,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchEntryMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.SearchEntryMode> ModeElement
       {
@@ -1607,6 +1611,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Request", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Bundle.Entry.Request")]
     public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1619,6 +1624,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("method", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("HTTPVerb")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Bundle.HTTPVerb> MethodElement
@@ -1937,6 +1943,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Response", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}Bundle.Entry.Response")]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2221,6 +2228,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=60, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BundleType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Bundle.BundleType> TypeElement

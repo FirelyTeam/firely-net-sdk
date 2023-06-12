@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/digital-media-type)
     /// (system: http://hl7.org/fhir/digital-media-type)
     /// </summary>
-    [FhirEnumeration("DigitalMediaType")]
+    [FhirEnumeration("DigitalMediaType", "http://hl7.org/fhir/ValueSet/digital-media-type")]
     public enum DigitalMediaType
     {
       /// <summary>
@@ -118,6 +118,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DigitalMediaType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Media.DigitalMediaType> TypeElement

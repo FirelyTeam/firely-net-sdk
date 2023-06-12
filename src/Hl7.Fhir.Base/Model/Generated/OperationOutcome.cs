@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/issue-severity)
     /// (system: http://hl7.org/fhir/issue-severity)
     /// </summary>
-    [FhirEnumeration("IssueSeverity")]
+    [FhirEnumeration("IssueSeverity", "http://hl7.org/fhir/ValueSet/issue-severity")]
     public enum IssueSeverity
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/issue-type)
     /// (system: http://hl7.org/fhir/issue-type)
     /// </summary>
-    [FhirEnumeration("IssueType")]
+    [FhirEnumeration("IssueType", "http://hl7.org/fhir/ValueSet/issue-type")]
     public enum IssueType
     {
       /// <summary>
@@ -309,6 +309,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("OperationOutcome#Issue", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}OperationOutcome.Issue")]
     public partial class IssueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -322,6 +323,7 @@ namespace Hl7.Fhir.Model
       [FhirElement("severity", InSummary=true, IsModifier=true, Order=40)]
       [FhirElement("severity", InSummary=true, Order=40, Since=FhirRelease.R4)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("IssueSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity> SeverityElement
@@ -355,6 +357,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("IssueType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.OperationOutcome.IssueType> CodeElement

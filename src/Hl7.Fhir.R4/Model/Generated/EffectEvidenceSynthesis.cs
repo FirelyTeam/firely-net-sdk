@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/exposure-state)
     /// (system: http://hl7.org/fhir/exposure-state)
     /// </summary>
-    [FhirEnumeration("ExposureState")]
+    [FhirEnumeration("ExposureState", "http://hl7.org/fhir/ValueSet/exposure-state")]
     public enum ExposureStateCode
     {
       /// <summary>
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#SampleSize", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.SampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -290,6 +291,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#ResultsByExposure", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.ResultsByExposure")]
     public partial class ResultsByExposureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -333,6 +335,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("exposureState", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ExposureState")]
       [DataMember]
       public Code<Hl7.Fhir.Model.EffectEvidenceSynthesis.ExposureStateCode> ExposureStateElement
       {
@@ -505,6 +508,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#EffectEstimate", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.EffectEstimate")]
     public partial class EffectEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -761,6 +765,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.EffectEstimate.PrecisionEstimate")]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -990,6 +995,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#Certainty", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.Certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1146,6 +1152,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EffectEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
+    [CqlType("{http://hl7.org/fhir}EffectEvidenceSynthesis.Certainty.CertaintySubcomponent")]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1438,6 +1445,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

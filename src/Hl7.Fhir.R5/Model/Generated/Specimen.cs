@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
     /// (system: http://hl7.org/fhir/specimen-status)
     /// </summary>
-    [FhirEnumeration("SpecimenStatus")]
+    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status")]
     public enum SpecimenStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-combined)
     /// (system: http://hl7.org/fhir/specimen-combined)
     /// </summary>
-    [FhirEnumeration("SpecimenCombined")]
+    [FhirEnumeration("SpecimenCombined", "http://hl7.org/fhir/ValueSet/specimen-combined")]
     public enum SpecimenCombined
     {
       /// <summary>
@@ -943,6 +943,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SpecimenStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {
@@ -1066,6 +1067,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("combined", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenCombined> CombinedElement
     {

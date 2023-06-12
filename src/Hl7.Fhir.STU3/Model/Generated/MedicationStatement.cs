@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
     /// (system: http://hl7.org/fhir/medication-statement-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatementStatus")]
+    [FhirEnumeration("MedicationStatementStatus", "http://hl7.org/fhir/ValueSet/medication-statement-status")]
     public enum MedicationStatementStatus
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-taken)
     /// (system: http://hl7.org/fhir/medication-statement-taken)
     /// </summary>
-    [FhirEnumeration("MedicationStatementTaken")]
+    [FhirEnumeration("MedicationStatementTaken", "http://hl7.org/fhir/ValueSet/medication-statement-taken")]
     public enum MedicationStatementTaken
     {
       /// <summary>
@@ -201,6 +201,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus> StatusElement
@@ -357,6 +358,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("taken", InSummary=true, IsModifier=true, Order=210)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatementTaken")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementTaken> TakenElement

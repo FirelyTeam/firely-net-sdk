@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/coverage-kind)
     /// (system: http://hl7.org/fhir/coverage-kind)
     /// </summary>
-    [FhirEnumeration("Kind")]
+    [FhirEnumeration("Kind", "http://hl7.org/fhir/ValueSet/coverage-kind")]
     public enum CoverageKindCode
     {
       /// <summary>
@@ -803,6 +803,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CoverageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -836,6 +837,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CoverageKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Coverage.CoverageKindCode> KindElement

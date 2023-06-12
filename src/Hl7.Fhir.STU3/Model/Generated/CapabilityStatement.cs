@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/capability-statement-kind)
     /// (system: http://hl7.org/fhir/capability-statement-kind)
     /// </summary>
-    [FhirEnumeration("CapabilityStatementKind")]
+    [FhirEnumeration("CapabilityStatementKind", "http://hl7.org/fhir/ValueSet/capability-statement-kind")]
     public enum CapabilityStatementKind
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/unknown-content-code)
     /// (system: http://hl7.org/fhir/unknown-content-code)
     /// </summary>
-    [FhirEnumeration("UnknownContentCode")]
+    [FhirEnumeration("UnknownContentCode", "http://hl7.org/fhir/ValueSet/unknown-content-code")]
     public enum UnknownContentCode
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/restful-capability-mode)
     /// (system: http://hl7.org/fhir/restful-capability-mode)
     /// </summary>
-    [FhirEnumeration("RestfulCapabilityMode")]
+    [FhirEnumeration("RestfulCapabilityMode", "http://hl7.org/fhir/ValueSet/restful-capability-mode")]
     public enum RestfulCapabilityMode
     {
       /// <summary>
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/versioning-policy)
     /// (system: http://hl7.org/fhir/versioning-policy)
     /// </summary>
-    [FhirEnumeration("ResourceVersionPolicy")]
+    [FhirEnumeration("ResourceVersionPolicy", "http://hl7.org/fhir/ValueSet/versioning-policy")]
     public enum ResourceVersionPolicy
     {
       /// <summary>
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-read-status)
     /// (system: http://hl7.org/fhir/conditional-read-status)
     /// </summary>
-    [FhirEnumeration("ConditionalReadStatus")]
+    [FhirEnumeration("ConditionalReadStatus", "http://hl7.org/fhir/ValueSet/conditional-read-status")]
     public enum ConditionalReadStatus
     {
       /// <summary>
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-delete-status)
     /// (system: http://hl7.org/fhir/conditional-delete-status)
     /// </summary>
-    [FhirEnumeration("ConditionalDeleteStatus")]
+    [FhirEnumeration("ConditionalDeleteStatus", "http://hl7.org/fhir/ValueSet/conditional-delete-status")]
     public enum ConditionalDeleteStatus
     {
       /// <summary>
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-handling-policy)
     /// (system: http://hl7.org/fhir/reference-handling-policy)
     /// </summary>
-    [FhirEnumeration("ReferenceHandlingPolicy")]
+    [FhirEnumeration("ReferenceHandlingPolicy", "http://hl7.org/fhir/ValueSet/reference-handling-policy")]
     public enum ReferenceHandlingPolicy
     {
       /// <summary>
@@ -274,7 +274,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("TypeRestfulInteraction")]
+    [FhirEnumeration("TypeRestfulInteraction", "http://hl7.org/fhir/ValueSet/type-restful-interaction")]
     public enum TypeRestfulInteraction
     {
       /// <summary>
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("SystemRestfulInteraction")]
+    [FhirEnumeration("SystemRestfulInteraction", "http://hl7.org/fhir/ValueSet/system-restful-interaction")]
     public enum SystemRestfulInteraction
     {
       /// <summary>
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-capability-mode)
     /// (system: http://hl7.org/fhir/event-capability-mode)
     /// </summary>
-    [FhirEnumeration("EventCapabilityMode")]
+    [FhirEnumeration("EventCapabilityMode", "http://hl7.org/fhir/ValueSet/event-capability-mode")]
     public enum EventCapabilityMode
     {
       /// <summary>
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-mode)
     /// (system: http://hl7.org/fhir/document-mode)
     /// </summary>
-    [FhirEnumeration("DocumentMode")]
+    [FhirEnumeration("DocumentMode", "http://hl7.org/fhir/ValueSet/document-mode")]
     public enum DocumentMode
     {
       /// <summary>
@@ -807,6 +807,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RestfulCapabilityMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.RestfulCapabilityMode> ModeElement
@@ -1343,6 +1344,7 @@ namespace Hl7.Fhir.Model
       /// Mime type for certificates
       /// </summary>
       [FhirElement("type", Order=40)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code TypeElement
       {
@@ -1511,6 +1513,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -1604,6 +1607,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("versioning", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceVersionPolicy")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ResourceVersionPolicy> VersioningElement
       {
@@ -1729,6 +1733,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("conditionalRead", Order=120)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionalReadStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ConditionalReadStatus> ConditionalReadElement
       {
@@ -1792,6 +1797,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("conditionalDelete", Order=140)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionalDeleteStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.ConditionalDeleteStatus> ConditionalDeleteElement
       {
@@ -1824,6 +1830,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("referencePolicy", Order=150)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ReferenceHandlingPolicy")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.CapabilityStatement.ReferenceHandlingPolicy>> ReferencePolicyElement
@@ -2157,6 +2164,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TypeRestfulInteraction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.TypeRestfulInteraction> CodeElement
@@ -2389,6 +2397,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchParamType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -2576,6 +2585,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SystemRestfulInteraction")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.SystemRestfulInteraction> CodeElement
@@ -3285,6 +3295,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventCapabilityMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> ModeElement
@@ -3453,6 +3464,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("category", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("MessageSignificanceCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MessageSignificanceCategory> CategoryElement
       {
@@ -3485,6 +3497,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventCapabilityMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.EventCapabilityMode> ModeElement
@@ -3518,6 +3531,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("focus", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> FocusElement
@@ -3764,6 +3778,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DocumentMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CapabilityStatement.DocumentMode> ModeElement
@@ -4069,6 +4084,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -4331,6 +4347,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CapabilityStatementKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatement.CapabilityStatementKind> KindElement
@@ -4454,6 +4471,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("acceptUnknown", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("UnknownContentCode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CapabilityStatement.UnknownContentCode> AcceptUnknownElement
@@ -4486,6 +4504,7 @@ namespace Hl7.Fhir.Model
     /// formats supported (xml | json | ttl | mime type)
     /// </summary>
     [FhirElement("format", InSummary=true, Order=290)]
+    [Binding("MimeType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> FormatElement
@@ -4518,6 +4537,7 @@ namespace Hl7.Fhir.Model
     /// Patch formats supported
     /// </summary>
     [FhirElement("patchFormat", InSummary=true, Order=300)]
+    [Binding("MimeType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PatchFormatElement
