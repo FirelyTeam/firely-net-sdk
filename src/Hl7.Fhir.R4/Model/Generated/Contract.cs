@@ -261,7 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContentDefinition", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.ContentDefinition")]
+    [BackboneType("Contract.contentDefinition")]
     public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Term", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term")]
+    [BackboneType("Contract.term")]
     public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#SecurityLabel", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.SecurityLabel")]
+    [BackboneType("Contract.term.securityLabel")]
     public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1135,7 +1135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContractOffer", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Offer")]
+    [BackboneType("Contract.term.offer")]
     public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1505,7 +1505,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContractParty", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Offer.Party")]
+    [BackboneType("Contract.term.offer.party")]
     public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1641,7 +1641,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Answer", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Offer.Answer")]
+    [BackboneType("Contract.term.offer.answer")]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1755,7 +1755,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContractAsset", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Asset")]
+    [BackboneType("Contract.term.asset")]
     public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2258,7 +2258,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#AssetContext", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Asset.Context")]
+    [BackboneType("Contract.term.asset.context")]
     public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2433,7 +2433,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ValuedItem", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Asset.ValuedItem")]
+    [BackboneType("Contract.term.asset.valuedItem")]
     public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2964,7 +2964,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Action", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Action")]
+    [BackboneType("Contract.term.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3684,7 +3684,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ActionSubject", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Term.Action.Subject")]
+    [BackboneType("Contract.term.action.subject")]
     public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3819,7 +3819,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Signatory", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Signer")]
+    [BackboneType("Contract.signer")]
     public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3978,7 +3978,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#FriendlyLanguage", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Friendly")]
+    [BackboneType("Contract.friendly")]
     public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4092,7 +4092,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#LegalLanguage", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Legal")]
+    [BackboneType("Contract.legal")]
     public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4206,7 +4206,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ComputableLanguage", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Contract.Rule")]
+    [BackboneType("Contract.rule")]
     public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

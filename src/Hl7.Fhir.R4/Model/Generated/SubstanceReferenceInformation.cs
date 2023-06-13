@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceReferenceInformation#Gene", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceReferenceInformation.Gene")]
+    [BackboneType("SubstanceReferenceInformation.gene")]
     public partial class GeneComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -218,7 +218,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceReferenceInformation#GeneElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceReferenceInformation.GeneElement")]
+    [BackboneType("SubstanceReferenceInformation.geneElement")]
     public partial class GeneElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceReferenceInformation#Classification", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceReferenceInformation.Classification")]
+    [BackboneType("SubstanceReferenceInformation.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -555,7 +555,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceReferenceInformation#Target", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceReferenceInformation.Target")]
+    [BackboneType("SubstanceReferenceInformation.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

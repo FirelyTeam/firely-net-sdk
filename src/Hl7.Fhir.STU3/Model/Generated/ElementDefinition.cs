@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
+    [BackboneType("ElementDefinition.slicing")]
     public partial class SlicingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -480,6 +481,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
+    [BackboneType("ElementDefinition.slicing.discriminator")]
     public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -651,6 +653,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Base", IsNestedType=true)]
+    [BackboneType("ElementDefinition.base")]
     public partial class BaseComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -861,6 +864,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
+    [BackboneType("ElementDefinition.type")]
     public partial class TypeRefComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1154,6 +1158,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Example", IsNestedType=true)]
+    [BackboneType("ElementDefinition.example")]
     public partial class ExampleComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1307,6 +1312,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
+    [BackboneType("ElementDefinition.constraint")]
     public partial class ConstraintComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1683,6 +1689,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
+    [BackboneType("ElementDefinition.binding")]
     public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1880,6 +1887,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
+    [BackboneType("ElementDefinition.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

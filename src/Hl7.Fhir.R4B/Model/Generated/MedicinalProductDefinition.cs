@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#Contact", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -195,6 +196,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#Name", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -391,6 +393,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#NamePart", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.name.namePart")]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -542,6 +545,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#CountryLanguage", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.name.countryLanguage")]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -697,6 +701,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#CrossReference", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.crossReference")]
     public partial class CrossReferenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -829,6 +834,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#Operation", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1007,6 +1013,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductDefinition#Characteristic", IsNestedType=true)]
+    [BackboneType("MedicinalProductDefinition.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

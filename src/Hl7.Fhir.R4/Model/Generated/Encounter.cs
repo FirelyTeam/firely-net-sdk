@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#StatusHistory", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Encounter.StatusHistory")]
+    [BackboneType("Encounter.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#ClassHistory", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Encounter.ClassHistory")]
+    [BackboneType("Encounter.classHistory")]
     public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Participant", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Encounter.Participant")]
+    [BackboneType("Encounter.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -606,7 +606,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Diagnosis", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Encounter.Diagnosis")]
+    [BackboneType("Encounter.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -781,7 +781,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Hospitalization", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Encounter.Hospitalization")]
+    [BackboneType("Encounter.hospitalization")]
     public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1074,7 +1074,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Location", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Encounter.Location")]
+    [BackboneType("Encounter.location")]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

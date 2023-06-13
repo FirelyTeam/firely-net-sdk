@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Compose", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Compose")]
+    [BackboneType("ValueSet.compose")]
     public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -316,7 +316,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#ConceptSet", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Compose.Include")]
+    [BackboneType("ValueSet.compose.include")]
     public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#ConceptReference", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Compose.Include.Concept")]
+    [BackboneType("ValueSet.compose.include.concept")]
     public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Designation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Compose.Include.Concept.Designation")]
+    [BackboneType("ValueSet.compose.include.concept.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Filter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Compose.Include.Filter")]
+    [BackboneType("ValueSet.compose.include.filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1231,7 +1231,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Expansion", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Expansion")]
+    [BackboneType("ValueSet.expansion")]
     public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1589,7 +1589,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Parameter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Expansion.Parameter")]
+    [BackboneType("ValueSet.expansion.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1742,7 +1742,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Property", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Expansion.Property")]
+    [BackboneType("ValueSet.expansion.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1911,7 +1911,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Contains", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Expansion.Contains")]
+    [BackboneType("ValueSet.expansion.contains")]
     public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2308,7 +2308,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#ConceptProperty", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Expansion.Contains.Property")]
+    [BackboneType("ValueSet.expansion.contains.property")]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2485,7 +2485,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#ConceptSubProperty", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Expansion.Contains.Property.SubProperty")]
+    [BackboneType("ValueSet.expansion.contains.property.subProperty")]
     public partial class ConceptSubPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2639,7 +2639,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Scope", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ValueSet.Scope")]
+    [BackboneType("ValueSet.scope")]
     public partial class ScopeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

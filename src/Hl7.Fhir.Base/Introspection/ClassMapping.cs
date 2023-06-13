@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Introspection
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
             if (GetAttribute<FhirTypeAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
-            var cqlTypeAttribute = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release);
+            var backboneAttribute = GetAttribute<BackboneTypeAttribute>(type, release);
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
@@ -95,12 +95,11 @@ namespace Hl7.Fhir.Introspection
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                 ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
-                IsNestedType = typeAttribute.IsNestedType,
+                IsBackboneType = typeAttribute.IsNestedType || backboneAttribute is not null,
+                DefinitionPath = backboneAttribute?.DefinitionPath,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
-                IsPatientClass = cqlTypeAttribute?.IsPatientClass == true,
-                CqlTypeSpecifier = cqlTypeAttribute?.Name ?? "{http://hl7.org/fhir}" + typeAttribute.Name
             };
 
             return true;
@@ -163,9 +162,22 @@ namespace Hl7.Fhir.Introspection
         public bool IsCodeOfT { get; private set; } = false;
 
         /// <summary>
-        /// Indicates whether this class represents the nested complex type for a (backbone) element.
+        /// Indicates whether this class represents the nested complex type for a backbone element.
         /// </summary>
-        public bool IsNestedType { get; private set; } = false;
+        [Obsolete("These types are now generally called Backbone types, so use IsBackboneType instead.")]
+        public bool IsNestedType { get => IsBackboneType; set => IsBackboneType = value; }
+
+        /// <summary>
+        /// Indicates whether this class represents the nested complex type for a backbone element.
+        /// </summary>
+        public bool IsBackboneType { get; private set; } = false;
+
+
+        /// <summary>
+        /// If this is a backbone type (<see cref="IsBackboneType"/>), then this contains the path
+        /// in the StructureDefinition where the backbone was defined first.
+        /// </summary>
+        public string? DefinitionPath { get; private set; }
 
         /// <summary>
         /// Indicates whether this class can be used for binding.
@@ -177,10 +189,6 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>Will be null for backbone types.</remarks>
         public string? Canonical { get; private set; }
-
-
-        public string? CqlTypeSpecifier { get; private set; }
-
 
         // This list is created lazily. This not only improves initial startup time of 
         // applications but also ensures circular references between types will not cause loops.
@@ -218,15 +226,9 @@ namespace Hl7.Fhir.Introspection
         public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.IsPrimaryCodePath);
 
         /// <summary>
-        /// In Cql, this indicates the property on the model's Patient class that represents the patient's birthdate.
+        /// This indicates that this class is representing the Patient data (and implements <see cref="IPatient"/>).
         /// </summary>
-        public PropertyMapping? PatientBirthDateMapping => PropertyMappings.SingleOrDefault(pm => pm.IsPatientBirthDate);
-
-
-        /// <summary>
-        /// In Cql, this indicates that this class is representing the Patient data.
-        /// </summary>
-        public bool IsPatientClass { get; private set; }
+        public bool IsPatientClass => typeof(IPatient).IsAssignableFrom(NativeType);
 
         /// <summary>
         /// Whether the reflected type has a member that represent a primitive value.
@@ -273,8 +275,6 @@ namespace Hl7.Fhir.Introspection
             }
         }
 
-
-
         internal static T? GetAttribute<T>(MemberInfo t, FhirRelease version) where T : Attribute => GetAttributes<T>(t, version).LastOrDefault();
 
         internal static IEnumerable<T> GetAttributes<T>(MemberInfo t, FhirRelease version) where T : Attribute
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Introspection
             this switch
             {
                 { IsCodeOfT: true } => "code",
-                { IsNestedType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
+                { IsBackboneType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
                             "BackboneElement"
                             : "Element",
                 _ => Name

@@ -48,8 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
-  [CqlType("{http://hl7.org/fhir}Patient", IsPatientClass=true)]
-  public partial class Patient : Hl7.Fhir.Model.DomainResource
+  public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient
   {
     /// <summary>
     /// FHIR Type Name
@@ -96,7 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Contact", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Patient.Contact")]
+    [BackboneType("Patient.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -362,7 +361,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Communication", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Patient.Communication")]
+    [BackboneType("Patient.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -513,7 +512,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Link", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Patient.Link")]
+    [BackboneType("Patient.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -773,7 +772,6 @@ namespace Hl7.Fhir.Model
     /// The date of birth for the individual
     /// </summary>
     [FhirElement("birthDate", InSummary=true, Order=140)]
-    [CqlElement(IsBirthDate=true)]
     [DataMember]
     public Hl7.Fhir.Model.Date BirthDateElement
     {
@@ -782,6 +780,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Date _BirthDateElement;
+
+    Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
 
     /// <summary>
     /// The date of birth for the individual

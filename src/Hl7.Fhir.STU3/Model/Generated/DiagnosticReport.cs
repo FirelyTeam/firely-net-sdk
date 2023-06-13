@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -265,6 +266,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Image", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.image")]
     public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

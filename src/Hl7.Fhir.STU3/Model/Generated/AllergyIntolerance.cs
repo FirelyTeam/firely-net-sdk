@@ -235,6 +235,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
+    [BackboneType("AllergyIntolerance.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

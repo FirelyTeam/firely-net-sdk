@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Participant", IsNestedType=true)]
+    [BackboneType("AdverseEvent.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -251,6 +252,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity.causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -541,6 +544,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#ContributingFactor", IsNestedType=true)]
+    [BackboneType("AdverseEvent.contributingFactor")]
     public partial class ContributingFactorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -654,6 +658,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#PreventiveAction", IsNestedType=true)]
+    [BackboneType("AdverseEvent.preventiveAction")]
     public partial class PreventiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -767,6 +772,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#MitigatingAction", IsNestedType=true)]
+    [BackboneType("AdverseEvent.mitigatingAction")]
     public partial class MitigatingActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -880,6 +886,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SupportingInfo", IsNestedType=true)]
+    [BackboneType("AdverseEvent.supportingInfo")]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

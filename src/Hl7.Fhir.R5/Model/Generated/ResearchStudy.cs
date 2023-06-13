@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Label", IsNestedType=true)]
+    [BackboneType("ResearchStudy.label")]
     public partial class LabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -210,6 +211,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#AssociatedParty", IsNestedType=true)]
+    [BackboneType("ResearchStudy.associatedParty")]
     public partial class AssociatedPartyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -430,6 +432,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#ProgressStatus", IsNestedType=true)]
+    [BackboneType("ResearchStudy.progressStatus")]
     public partial class ProgressStatusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -602,6 +605,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Recruitment", IsNestedType=true)]
+    [BackboneType("ResearchStudy.recruitment")]
     public partial class RecruitmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#ComparisonGroup", IsNestedType=true)]
+    [BackboneType("ResearchStudy.comparisonGroup")]
     public partial class ComparisonGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1096,6 +1101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Objective", IsNestedType=true)]
+    [BackboneType("ResearchStudy.objective")]
     public partial class ObjectiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1285,6 +1291,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#OutcomeMeasure", IsNestedType=true)]
+    [BackboneType("ResearchStudy.outcomeMeasure")]
     public partial class OutcomeMeasureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -200,6 +200,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Activity", IsNestedType=true)]
+    [BackboneType("CarePlan.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -404,6 +405,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Detail", IsNestedType=true)]
+    [BackboneType("CarePlan.activity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

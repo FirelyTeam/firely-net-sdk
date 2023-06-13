@@ -30,7 +30,7 @@ namespace Hl7.Fhir.Tests.Introspection
             bool isNested(Type testee)
             {
                 _ = ClassMapping.TryCreate(testee, out var cm);
-                return cm.IsNestedType;
+                return cm.IsBackboneType;
             }
         }
 

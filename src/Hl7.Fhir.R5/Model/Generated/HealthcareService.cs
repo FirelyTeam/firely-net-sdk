@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("HealthcareService#Eligibility", IsNestedType=true)]
+    [BackboneType("HealthcareService.eligibility")]
     public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

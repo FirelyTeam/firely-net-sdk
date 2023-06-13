@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Subscription#FilterBy", IsNestedType=true)]
+    [BackboneType("Subscription.filterBy")]
     public partial class FilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -382,6 +383,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Subscription#Parameter", IsNestedType=true)]
+    [BackboneType("Subscription.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SearchParameter#Component", IsNestedType=true)]
+    [BackboneType("SearchParameter.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

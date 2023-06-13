@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Collection", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -310,6 +311,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Processing", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.processing")]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -507,6 +509,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Manipulation", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.manipulation")]
     public partial class ManipulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -658,6 +661,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Storage", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.storage")]
     public partial class StorageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Person#Link", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Person.Link")]
+    [BackboneType("Person.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

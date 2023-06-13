@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
+    [BackboneType("DetectedIssue.mitigation")]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

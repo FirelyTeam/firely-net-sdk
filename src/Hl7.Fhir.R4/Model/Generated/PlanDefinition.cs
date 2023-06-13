@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Goal", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Goal")]
+    [BackboneType("PlanDefinition.goal")]
     public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -307,7 +307,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Target", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Goal.Target")]
+    [BackboneType("PlanDefinition.goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -463,7 +463,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Action", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Action")]
+    [BackboneType("PlanDefinition.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1392,7 +1392,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Condition", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Action.Condition")]
+    [BackboneType("PlanDefinition.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1545,7 +1545,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#RelatedAction", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Action.RelatedAction")]
+    [BackboneType("PlanDefinition.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1741,7 +1741,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Participant", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Action.Participant")]
+    [BackboneType("PlanDefinition.action.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1894,7 +1894,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#DynamicValue", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}PlanDefinition.Action.DynamicValue")]
+    [BackboneType("PlanDefinition.action.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

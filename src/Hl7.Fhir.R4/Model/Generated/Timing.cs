@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Timing#Repeat", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Timing.Repeat")]
+    [BackboneType("Timing.repeat")]
     public partial class RepeatComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

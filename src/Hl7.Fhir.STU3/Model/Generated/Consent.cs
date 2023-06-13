@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Actor", IsNestedType=true)]
+    [BackboneType("Consent.actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -298,6 +299,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Policy", IsNestedType=true)]
+    [BackboneType("Consent.policy")]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -465,6 +467,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Data", IsNestedType=true)]
+    [BackboneType("Consent.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -620,6 +623,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Except", IsNestedType=true)]
+    [BackboneType("Consent.except")]
     public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -955,6 +959,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#ExceptActor", IsNestedType=true)]
+    [BackboneType("Consent.except.actor")]
     public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1090,6 +1095,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#ExceptData", IsNestedType=true)]
+    [BackboneType("Consent.except.data")]
     public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

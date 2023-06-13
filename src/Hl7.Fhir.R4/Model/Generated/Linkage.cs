@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Linkage#Item", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Linkage.Item")]
+    [BackboneType("Linkage.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

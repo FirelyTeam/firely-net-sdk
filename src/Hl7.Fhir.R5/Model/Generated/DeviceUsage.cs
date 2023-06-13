@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceUsage#Adherence", IsNestedType=true)]
+    [BackboneType("DeviceUsage.adherence")]
     public partial class AdherenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

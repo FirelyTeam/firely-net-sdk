@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Insurance", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Items", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.insurance.item")]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -782,6 +784,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Benefit", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.insurance.item.benefit")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -940,6 +943,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityResponse#Errors", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityResponse.error")]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

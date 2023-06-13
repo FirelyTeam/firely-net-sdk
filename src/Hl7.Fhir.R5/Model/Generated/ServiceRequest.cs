@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ServiceRequest#OrderDetail", IsNestedType=true)]
+    [BackboneType("ServiceRequest.orderDetail")]
     public partial class OrderDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -193,6 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ServiceRequest#Parameter", IsNestedType=true)]
+    [BackboneType("ServiceRequest.orderDetail.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -328,6 +330,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ServiceRequest#PatientInstruction", IsNestedType=true)]
+    [BackboneType("ServiceRequest.patientInstruction")]
     public partial class PatientInstructionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

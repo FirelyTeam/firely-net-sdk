@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#Participant", IsNestedType=true)]
+    [BackboneType("Invoice.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -235,6 +236,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#LineItem", IsNestedType=true)]
+    [BackboneType("Invoice.lineItem")]
     public partial class LineItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -411,6 +413,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Invoice#PriceComponent", IsNestedType=true)]
+    [BackboneType("Invoice.lineItem.priceComponent")]
     public partial class PriceComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

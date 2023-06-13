@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Investigation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ClinicalImpression.Investigation")]
+    [BackboneType("ClinicalImpression.investigation")]
     public partial class InvestigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ClinicalImpression.Finding")]
+    [BackboneType("ClinicalImpression.finding")]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
