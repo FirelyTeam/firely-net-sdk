@@ -44,12 +44,12 @@ namespace Hl7.Fhir.Introspection
         /// metadata for that release only. If the type is from the base assembly, it will contain
         /// metadata for that type from the most recent release of the base assembly.</remarks>
         public static ClassMapping? GetClassMappingForType(Type t) =>
-            ForAssembly(t.GetTypeInfo().Assembly).FindOrImportClassMapping(t);
+            ForAssembly(t.Assembly).FindOrImportClassMapping(t);
 
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
-        /// FHIR metadata contents of the given assembly. Calling this function repeatedly for
-        /// the same assembly will return the same inspector.
+        /// FHIR metadata contents of the given assembly, plus all the assemblies it depends upon.
+        /// Calling this function repeatedly for the same assembly will return the same inspector.
         /// </summary>
         /// <remarks>If the assembly given is FHIR Release specific, the returned inspector will contain
         /// metadata for that release only. If the assembly is the base assembly, it will contain
@@ -58,6 +58,8 @@ namespace Hl7.Fhir.Introspection
         {
             return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)), _ => configureInspector(a));
 
+            // NB: The concurrent dictionary will make sure only one of these initializers will run at the same time,
+            // so there is no additional locking done in these nested functions.
             static ModelInspector configureInspector(Assembly a)
             {
                 if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not FhirModelAssemblyAttribute modelAssemblyAttr)
@@ -65,14 +67,10 @@ namespace Hl7.Fhir.Introspection
                         $" as it is not marked with a {nameof(FhirModelAssemblyAttribute)} attribute.");
 
                 var newInspector = new ModelInspector(modelAssemblyAttr.Since);
-                newInspector.Import(a);
+                var imported = new List<Assembly>();
+                importRecursively(a);
 
-                // Make sure we always include the types from the base assembly too. 
-                var baseAssembly = typeof(Resource).GetTypeInfo().Assembly;
-                if (a.FullName != baseAssembly.FullName)
-                    newInspector.Import(baseAssembly);
-
-                // And finally, the System/CQL primitive types
+                // Finally, add the System/CQL primitive types
                 foreach (var cqlType in getCqlTypes())
                     newInspector.ImportType(cqlType);
 
@@ -82,6 +80,24 @@ namespace Hl7.Fhir.Introspection
                 {
                     return typeof(ElementModel.Types.Any).GetTypeInfo().Assembly.GetExportedTypes().
                         Where(typ => typeof(ElementModel.Types.Any).IsAssignableFrom(typ));
+                }
+
+                void importRecursively(Assembly a)
+                {
+                    if (imported.Contains(a)) return;
+
+                    newInspector.Import(a);
+                    imported.Add(a);
+
+                    var referencedFhirAssemblies = a.GetReferencedAssemblies()
+                            .Select(an => Assembly.Load(an))
+                            .Where(isFhirModelAssembly);
+
+                    foreach (var ra in referencedFhirAssemblies)
+                        importRecursively(ra);
+
+                    static bool isFhirModelAssembly(Assembly a) =>
+                        a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not null;
                 }
             }
         }
