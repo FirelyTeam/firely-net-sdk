@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Filter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CodeSystem.Filter")]
+    [BackboneType("CodeSystem.filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Property", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CodeSystem.Property")]
+    [BackboneType("CodeSystem.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#ConceptDefinition", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CodeSystem.Concept")]
+    [BackboneType("CodeSystem.concept")]
     public partial class ConceptDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -930,7 +930,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#Designation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CodeSystem.Concept.Designation")]
+    [BackboneType("CodeSystem.concept.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1145,7 +1145,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CodeSystem#ConceptProperty", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CodeSystem.Concept.Property")]
+    [BackboneType("CodeSystem.concept.property")]
     public partial class ConceptPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

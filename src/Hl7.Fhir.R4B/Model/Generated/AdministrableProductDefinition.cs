@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#Property", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -217,6 +218,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#RouteOfAdministration", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.routeOfAdministration")]
     public partial class RouteOfAdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -460,6 +462,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#TargetSpecies", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies")]
     public partial class TargetSpeciesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -593,6 +596,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdministrableProductDefinition#WithdrawalPeriod", IsNestedType=true)]
+    [BackboneType("AdministrableProductDefinition.routeOfAdministration.targetSpecies.withdrawalPeriod")]
     public partial class WithdrawalPeriodComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

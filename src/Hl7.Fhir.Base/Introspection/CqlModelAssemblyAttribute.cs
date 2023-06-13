@@ -6,10 +6,9 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using System;
-
 namespace Hl7.Fhir.Introspection
 {
+#if USE_CQLMODEL_ATTRIBUTE
     /// <summary>
     /// Signals that the assembly contains classes that define metadata for 
     /// types used in CQL.
@@ -39,4 +38,5 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         public string Url { get; }
     }
+#endif
 }

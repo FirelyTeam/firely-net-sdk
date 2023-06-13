@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#MonomerSet", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstancePolymer.MonomerSet")]
+    [BackboneType("SubstancePolymer.monomerSet")]
     public partial class MonomerSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#StartingMaterial", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstancePolymer.MonomerSet.StartingMaterial")]
+    [BackboneType("SubstancePolymer.monomerSet.startingMaterial")]
     public partial class StartingMaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#Repeat", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat")]
+    [BackboneType("SubstancePolymer.repeat")]
     public partial class RepeatComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#RepeatUnit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat.RepeatUnit")]
+    [BackboneType("SubstancePolymer.repeat.repeatUnit")]
     public partial class RepeatUnitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -819,7 +819,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#DegreeOfPolymerisation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat.RepeatUnit.DegreeOfPolymerisation")]
+    [BackboneType("SubstancePolymer.repeat.repeatUnit.degreeOfPolymerisation")]
     public partial class DegreeOfPolymerisationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -951,7 +951,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstancePolymer#StructuralRepresentation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstancePolymer.Repeat.RepeatUnit.StructuralRepresentation")]
+    [BackboneType("SubstancePolymer.repeat.repeatUnit.structuralRepresentation")]
     public partial class StructuralRepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Observation", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.observation")]
     public partial class ObservationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -242,6 +243,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Medication", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.medication")]
     public partial class MedicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -373,6 +375,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Precondition", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.precondition")]
     public partial class PreconditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -550,6 +553,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Questionnaire", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.questionnaire")]
     public partial class QuestionnaireComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -705,6 +709,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Plan", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.plan")]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

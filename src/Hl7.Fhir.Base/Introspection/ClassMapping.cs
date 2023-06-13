@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Introspection
             // Now continue with the normal algorithm, types adorned with the [FhirTypeAttribute]
             if (GetAttribute<FhirTypeAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
-            var cqlTypeAttribute = GetAttribute<CqlTypeAttribute>(type.GetTypeInfo(), release);
+            var backboneAttribute = GetAttribute<BackboneTypeAttribute>(type, release);
 
             result = new ClassMapping(collectTypeName(typeAttribute, type), type, release)
             {
@@ -95,12 +95,11 @@ namespace Hl7.Fhir.Introspection
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                 ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
-                IsBackboneType = typeAttribute.IsNestedType,
+                IsBackboneType = typeAttribute.IsNestedType || backboneAttribute is not null,
+                DefinitionPath = backboneAttribute?.DefinitionPath,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
-                IsPatientClass = cqlTypeAttribute?.IsPatientClass == true,
-                CqlTypeSpecifier = cqlTypeAttribute?.Name ?? "{http://hl7.org/fhir}" + typeAttribute.Name
             };
 
             return true;
@@ -175,6 +174,12 @@ namespace Hl7.Fhir.Introspection
 
 
         /// <summary>
+        /// If this is a backbone type (<see cref="IsBackboneType"/>), then this contains the path
+        /// in the StructureDefinition where the backbone was defined first.
+        /// </summary>
+        public string? DefinitionPath { get; private set; }
+
+        /// <summary>
         /// Indicates whether this class can be used for binding.
         /// </summary>
         public bool IsBindable { get; private set; }
@@ -184,10 +189,6 @@ namespace Hl7.Fhir.Introspection
         /// </summary>
         /// <remarks>Will be null for backbone types.</remarks>
         public string? Canonical { get; private set; }
-
-
-        public string? CqlTypeSpecifier { get; private set; }
-
 
         // This list is created lazily. This not only improves initial startup time of 
         // applications but also ensures circular references between types will not cause loops.
@@ -225,15 +226,9 @@ namespace Hl7.Fhir.Introspection
         public PropertyMapping? PrimaryCodePath => PropertyMappings.SingleOrDefault(pm => pm.IsPrimaryCodePath);
 
         /// <summary>
-        /// In Cql, this indicates the property on the model's Patient class that represents the patient's birthdate.
+        /// This indicates that this class is representing the Patient data (and implements <see cref="IPatient"/>).
         /// </summary>
-        public PropertyMapping? PatientBirthDateMapping => PropertyMappings.SingleOrDefault(pm => pm.IsPatientBirthDate);
-
-
-        /// <summary>
-        /// In Cql, this indicates that this class is representing the Patient data.
-        /// </summary>
-        public bool IsPatientClass { get; private set; }
+        public bool IsPatientClass => typeof(IPatient).IsAssignableFrom(NativeType);
 
         /// <summary>
         /// Whether the reflected type has a member that represent a primitive value.
@@ -279,8 +274,6 @@ namespace Hl7.Fhir.Introspection
                 return null;
             }
         }
-
-
 
         internal static T? GetAttribute<T>(MemberInfo t, FhirRelease version) where T : Attribute => GetAttributes<T>(t, version).LastOrDefault();
 

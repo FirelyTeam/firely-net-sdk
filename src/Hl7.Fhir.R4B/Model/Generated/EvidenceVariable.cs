@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +387,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#TimeFromStart", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.timeFromStart")]
     public partial class TimeFromStartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -580,6 +582,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Category", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.category")]
     public partial class CategoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

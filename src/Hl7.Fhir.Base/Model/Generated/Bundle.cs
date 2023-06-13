@@ -1029,7 +1029,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Link", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Bundle.Link")]
+    [BackboneType("Bundle.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1200,7 +1200,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Entry", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Bundle.Entry")]
+    [BackboneType("Bundle.entry")]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1441,7 +1441,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Search", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Bundle.Entry.Search")]
+    [BackboneType("Bundle.entry.search")]
     public partial class SearchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1611,7 +1611,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Request", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Bundle.Entry.Request")]
+    [BackboneType("Bundle.entry.request")]
     public partial class RequestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1943,7 +1943,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Bundle#Response", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Bundle.Entry.Response")]
+    [BackboneType("Bundle.entry.response")]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

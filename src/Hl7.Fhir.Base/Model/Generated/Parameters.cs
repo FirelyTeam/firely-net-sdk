@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Parameters#Parameter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Parameters.Parameter")]
+    [BackboneType("Parameters.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

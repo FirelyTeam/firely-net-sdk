@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Mapping", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureDefinition.Mapping")]
+    [BackboneType("StructureDefinition.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Context", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureDefinition.Context")]
+    [BackboneType("StructureDefinition.context")]
     public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -566,7 +566,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Snapshot", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureDefinition.Snapshot")]
+    [BackboneType("StructureDefinition.snapshot")]
     public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -677,7 +677,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Differential", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureDefinition.Differential")]
+    [BackboneType("StructureDefinition.differential")]
     public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

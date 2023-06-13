@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Justification", IsNestedType=true)]
+    [BackboneType("Permission.justification")]
     public partial class JustificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -276,6 +277,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Rule", IsNestedType=true)]
+    [BackboneType("Permission.rule")]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -474,6 +476,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Data", IsNestedType=true)]
+    [BackboneType("Permission.rule.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -652,6 +655,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Resource", IsNestedType=true)]
+    [BackboneType("Permission.rule.data.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -807,6 +811,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Activity", IsNestedType=true)]
+    [BackboneType("Permission.rule.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

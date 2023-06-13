@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.codeFilter")]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.dateFilter")]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -504,6 +506,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#Sort", IsNestedType=true)]
+    [BackboneType("DataRequirement.sort")]
     public partial class SortComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

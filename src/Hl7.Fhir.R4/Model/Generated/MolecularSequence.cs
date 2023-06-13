@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#ReferenceSeq", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.ReferenceSeq")]
+    [BackboneType("MolecularSequence.referenceSeq")]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Variant", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.Variant")]
+    [BackboneType("MolecularSequence.variant")]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -913,7 +913,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Quality", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.Quality")]
+    [BackboneType("MolecularSequence.quality")]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1532,7 +1532,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Roc", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.Quality.Roc")]
+    [BackboneType("MolecularSequence.quality.roc")]
     public partial class RocComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1907,7 +1907,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Repository", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.Repository")]
+    [BackboneType("MolecularSequence.repository")]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2238,7 +2238,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#StructureVariant", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.StructureVariant")]
+    [BackboneType("MolecularSequence.structureVariant")]
     public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2472,7 +2472,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Outer", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.StructureVariant.Outer")]
+    [BackboneType("MolecularSequence.structureVariant.outer")]
     public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2640,7 +2640,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Inner", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MolecularSequence.StructureVariant.Inner")]
+    [BackboneType("MolecularSequence.structureVariant.inner")]
     public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

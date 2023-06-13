@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Practitioner#Qualification", IsNestedType=true)]
+    [BackboneType("Practitioner.qualification")]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -240,6 +241,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Practitioner#Communication", IsNestedType=true)]
+    [BackboneType("Practitioner.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

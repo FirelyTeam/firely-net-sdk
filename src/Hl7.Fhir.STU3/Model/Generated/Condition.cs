@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Stage", IsNestedType=true)]
+    [BackboneType("Condition.stage")]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -281,6 +282,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Evidence", IsNestedType=true)]
+    [BackboneType("Condition.evidence")]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

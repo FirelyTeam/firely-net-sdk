@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#TriggeredBy", IsNestedType=true)]
+    [BackboneType("Observation.triggeredBy")]
     public partial class TriggeredByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -284,6 +285,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#ReferenceRange", IsNestedType=true)]
+    [BackboneType("Observation.referenceRange")]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -544,6 +546,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#Component", IsNestedType=true)]
+    [BackboneType("Observation.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

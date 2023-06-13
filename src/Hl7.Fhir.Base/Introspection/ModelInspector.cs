@@ -169,11 +169,6 @@ namespace Hl7.Fhir.Introspection
                 FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
             }
 
-            if (assembly.GetCustomAttribute<CqlModelAssemblyAttribute>() is { } cmaa)
-            {
-                CqlNamespace = cmaa.Url;
-            }
-
             // Find and extract all EnumMappings
             var exportedEnums = exportedTypes.Where(et => et.IsEnum);
             extractEnums(exportedEnums);
@@ -273,11 +268,6 @@ namespace Hl7.Fhir.Introspection
         /// The class mapping representing the Cql Patient type for the inspected model.
         /// </summary>
         public ClassMapping? PatientMapping => ClassMappings.FirstOrDefault(cm => cm.IsPatientClass);
-
-        /// <summary>
-        /// The namespace used to prefix the types in this model with to get the full ELM type specifier.
-        /// </summary>
-        internal string? CqlNamespace { get; private set; }
 
         /// <summary>
         /// List of ClassMappings registered with the inspector.

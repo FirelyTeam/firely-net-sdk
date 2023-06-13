@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskAssessment#Prediction", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RiskAssessment.Prediction")]
+    [BackboneType("RiskAssessment.prediction")]
     public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

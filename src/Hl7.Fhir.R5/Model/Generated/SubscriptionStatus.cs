@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionStatus#NotificationEvent", IsNestedType=true)]
+    [BackboneType("SubscriptionStatus.notificationEvent")]
     public partial class NotificationEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Goal#Target", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Goal.Target")]
+    [BackboneType("Goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

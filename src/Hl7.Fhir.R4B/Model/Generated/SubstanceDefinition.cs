@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Moiety", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.moiety")]
     public partial class MoietyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -362,6 +363,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Property", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -496,6 +498,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#MolecularWeight", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.molecularWeight")]
     public partial class MolecularWeightComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -650,6 +653,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Structure", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.structure")]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -954,6 +958,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Representation", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.structure.representation")]
     public partial class RepresentationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1149,6 +1154,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Code", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.code")]
     public partial class CodeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1368,6 +1374,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Name", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1743,6 +1750,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Official", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.name.official")]
     public partial class OfficialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1914,6 +1922,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#Relationship", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.relationship")]
     public partial class RelationshipComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2182,6 +2191,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceDefinition#SourceMaterial", IsNestedType=true)]
+    [BackboneType("SubstanceDefinition.sourceMaterial")]
     public partial class SourceMaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

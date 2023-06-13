@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger")]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -384,6 +385,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger.queryCriteria")]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -675,6 +677,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#EventTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.eventTrigger")]
     public partial class EventTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -866,6 +869,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.canFilterBy")]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1200,6 +1204,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#NotificationShape", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.notificationShape")]
     public partial class NotificationShapeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

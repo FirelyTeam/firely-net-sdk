@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Contact", IsNestedType=true)]
+    [BackboneType("InsurancePlan.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -265,6 +266,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Coverage", IsNestedType=true)]
+    [BackboneType("InsurancePlan.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -423,6 +425,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#CoverageBenefit", IsNestedType=true)]
+    [BackboneType("InsurancePlan.coverage.benefit")]
     public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -596,6 +599,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Limit", IsNestedType=true)]
+    [BackboneType("InsurancePlan.coverage.benefit.limit")]
     public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -727,6 +731,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Plan", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan")]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -955,6 +960,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#GeneralCost", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.generalCost")]
     public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1166,6 +1172,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#SpecificCost", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.specificCost")]
     public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1299,6 +1306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#PlanBenefit", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.specificCost.benefit")]
     public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1432,6 +1440,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Cost", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.specificCost.benefit.cost")]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

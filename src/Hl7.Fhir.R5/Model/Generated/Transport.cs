@@ -171,6 +171,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Transport#Restriction", IsNestedType=true)]
+    [BackboneType("Transport.restriction")]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -345,6 +346,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Transport#Parameter", IsNestedType=true)]
+    [BackboneType("Transport.input")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -480,6 +482,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Transport#Output", IsNestedType=true)]
+    [BackboneType("Transport.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Collection", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -220,6 +221,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Property", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Group", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group")]
+    [BackboneType("ConceptMap.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#SourceElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Element")]
+    [BackboneType("ConceptMap.group.element")]
     public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#TargetElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Element.Target")]
+    [BackboneType("ConceptMap.group.element.target")]
     public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -870,7 +870,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#OtherElement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Element.Target.DependsOn")]
+    [BackboneType("ConceptMap.group.element.target.dependsOn")]
     public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Unmapped", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ConceptMap.Group.Unmapped")]
+    [BackboneType("ConceptMap.group.unmapped")]
     public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

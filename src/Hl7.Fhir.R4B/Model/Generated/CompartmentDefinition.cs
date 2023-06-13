@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CompartmentDefinition#Resource", IsNestedType=true)]
+    [BackboneType("CompartmentDefinition.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

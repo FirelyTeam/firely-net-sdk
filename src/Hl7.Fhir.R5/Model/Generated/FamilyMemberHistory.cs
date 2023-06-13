@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Participant", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -229,6 +230,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -448,6 +450,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Procedure", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

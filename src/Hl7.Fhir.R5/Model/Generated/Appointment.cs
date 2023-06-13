@@ -3030,6 +3030,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#Participant", IsNestedType=true)]
+    [BackboneType("Appointment.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3269,6 +3270,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#RecurrenceTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate")]
     public partial class RecurrenceTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3670,6 +3672,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#WeeklyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.weeklyTemplate")]
     public partial class WeeklyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4077,6 +4080,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#MonthlyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.monthlyTemplate")]
     public partial class MonthlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4289,6 +4293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#YearlyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.yearlyTemplate")]
     public partial class YearlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NamingSystem#UniqueId", IsNestedType=true)]
+    [BackboneType("NamingSystem.uniqueId")]
     public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

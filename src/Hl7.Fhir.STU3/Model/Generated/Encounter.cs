@@ -161,6 +161,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#StatusHistory", IsNestedType=true)]
+    [BackboneType("Encounter.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -314,6 +315,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#ClassHistory", IsNestedType=true)]
+    [BackboneType("Encounter.classHistory")]
     public partial class ClassHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -447,6 +449,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Participant", IsNestedType=true)]
+    [BackboneType("Encounter.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -603,6 +606,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Diagnosis", IsNestedType=true)]
+    [BackboneType("Encounter.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -777,6 +781,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Hospitalization", IsNestedType=true)]
+    [BackboneType("Encounter.hospitalization")]
     public partial class HospitalizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1069,6 +1074,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Location", IsNestedType=true)]
+    [BackboneType("Encounter.location")]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

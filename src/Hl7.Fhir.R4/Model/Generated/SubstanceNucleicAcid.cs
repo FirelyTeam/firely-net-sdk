@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceNucleicAcid#Subunit", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceNucleicAcid.Subunit")]
+    [BackboneType("SubstanceNucleicAcid.subunit")]
     public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -381,7 +381,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceNucleicAcid#Linkage", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceNucleicAcid.Subunit.Linkage")]
+    [BackboneType("SubstanceNucleicAcid.subunit.linkage")]
     public partial class LinkageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -611,7 +611,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceNucleicAcid#Sugar", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SubstanceNucleicAcid.Subunit.Sugar")]
+    [BackboneType("SubstanceNucleicAcid.subunit.sugar")]
     public partial class SugarComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcessResponse#ProcessNote", IsNestedType=true)]
+    [BackboneType("ProcessResponse.processNote")]
     public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

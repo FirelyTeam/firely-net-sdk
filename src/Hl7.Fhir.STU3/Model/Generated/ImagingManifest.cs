@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Study", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study")]
     public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -261,6 +262,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Series", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study.series")]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -437,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Instance", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study.series.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

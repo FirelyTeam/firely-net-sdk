@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Coverage", IsNestedType=true)]
+    [BackboneType("Account.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Guarantor", IsNestedType=true)]
+    [BackboneType("Account.guarantor")]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

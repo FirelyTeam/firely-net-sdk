@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.udiDeviceIdentifier")]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -396,6 +397,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#UdiDeviceIdentifierMarketDistribution", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.udiDeviceIdentifier.marketDistribution")]
     public partial class UdiDeviceIdentifierMarketDistributionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -547,6 +549,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#RegulatoryIdentifier", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.regulatoryIdentifier")]
     public partial class RegulatoryIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -800,6 +803,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.deviceName")]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -971,6 +975,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Classification", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.classification")]
     public partial class ClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1104,6 +1109,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#ConformsTo", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.conformsTo")]
     public partial class ConformsToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1300,6 +1306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#HasPart", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.hasPart")]
     public partial class HasPartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1452,6 +1459,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Packaging", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.packaging")]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1692,6 +1700,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#PackagingDistributor", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.packaging.distributor")]
     public partial class PackagingDistributorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1844,6 +1853,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Version", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2016,6 +2026,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Property", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2151,6 +2162,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Link", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2284,6 +2296,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Material", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.material")]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2474,6 +2487,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Guideline", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.guideline")]
     public partial class GuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2756,6 +2770,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#CorrectiveAction", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.correctiveAction")]
     public partial class CorrectiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2949,6 +2964,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#ChargeItem", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.chargeItem")]
     public partial class ChargeItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

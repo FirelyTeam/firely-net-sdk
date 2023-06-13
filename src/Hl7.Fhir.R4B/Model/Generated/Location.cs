@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Location#Position", IsNestedType=true)]
+    [BackboneType("Location.position")]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -320,6 +321,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Location#HoursOfOperation", IsNestedType=true)]
+    [BackboneType("Location.hoursOfOperation")]
     public partial class HoursOfOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

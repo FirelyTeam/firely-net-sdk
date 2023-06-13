@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Goal#Target", IsNestedType=true)]
+    [BackboneType("Goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

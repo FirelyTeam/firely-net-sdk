@@ -75,17 +75,12 @@ namespace Hl7.Fhir.Tests.Introspection
         {
             Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
 
-            Assert.IsTrue(mapping.CqlTypeSpecifier == "{http://hl7.org/fhir}Way");
             Assert.IsTrue(mapping.IsPatientClass);
-            Assert.IsTrue(mapping.PatientBirthDateMapping.Name == "member");
             Assert.IsTrue(mapping.PrimaryCodePath?.Name == "code");
 
             var inspector = new ModelInspector(Specification.FhirRelease.STU3);
             inspector.ImportType(typeof(Way));
             inspector.ImportType(typeof(Way2));
-
-            Assert.IsTrue(inspector.PatientMapping.Name == "Way");
-
         }
 
 
@@ -160,9 +155,7 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType("Way")]
     [Test("One")]
     [Test("Two")]
-    [CqlType("{http://hl7.org/fhir}Way", IsPatientClass = true)]
-
-    public class Way : Resource
+    public class Way : Resource, IPatient
     {
         [Test("AttrA")]
         [FhirElement("member")]
@@ -173,6 +166,8 @@ namespace Hl7.Fhir.Tests.Introspection
         [FhirElement("code")]
         [CqlElement(IsPrimaryCodePath = true)]
         public string Code { get; set; }
+
+        public Date BirthDate => new(1972, 11, 30);
 
         public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
     }

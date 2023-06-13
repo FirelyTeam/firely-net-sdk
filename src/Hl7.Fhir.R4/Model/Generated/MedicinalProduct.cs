@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#Name", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MedicinalProduct.Name")]
+    [BackboneType("MedicinalProduct.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#NamePart", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MedicinalProduct.Name.NamePart")]
+    [BackboneType("MedicinalProduct.name.namePart")]
     public partial class NamePartComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#CountryLanguage", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MedicinalProduct.Name.CountryLanguage")]
+    [BackboneType("MedicinalProduct.name.countryLanguage")]
     public partial class CountryLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -544,7 +544,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#ManufacturingBusinessOperation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MedicinalProduct.ManufacturingBusinessOperation")]
+    [BackboneType("MedicinalProduct.manufacturingBusinessOperation")]
     public partial class ManufacturingBusinessOperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -787,7 +787,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProduct#SpecialDesignation", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MedicinalProduct.SpecialDesignation")]
+    [BackboneType("MedicinalProduct.specialDesignation")]
     public partial class SpecialDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
