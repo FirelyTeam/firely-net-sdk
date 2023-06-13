@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Introspection
                 IsCodeOfT = ReflectionHelper.IsClosedGenericType(type) &&
                                 ReflectionHelper.IsConstructedFromGenericTypeDefinition(type, typeof(Code<>)),
                 IsFhirPrimitive = typeof(PrimitiveType).IsAssignableFrom(type),
-                IsNestedType = typeAttribute.IsNestedType,
+                IsBackboneType = typeAttribute.IsNestedType,
                 IsBindable = GetAttribute<BindableAttribute>(type.GetTypeInfo(), release)?.IsBindable ?? false,
                 Canonical = typeAttribute.Canonical,
                 ValidationAttributes = GetAttributes<ValidationAttribute>(type.GetTypeInfo(), release).ToArray(),
@@ -163,9 +163,16 @@ namespace Hl7.Fhir.Introspection
         public bool IsCodeOfT { get; private set; } = false;
 
         /// <summary>
-        /// Indicates whether this class represents the nested complex type for a (backbone) element.
+        /// Indicates whether this class represents the nested complex type for a backbone element.
         /// </summary>
-        public bool IsNestedType { get; private set; } = false;
+        [Obsolete("These types are now generally called Backbone types, so use IsBackboneType instead.")]
+        public bool IsNestedType { get => IsBackboneType; set => IsBackboneType = value; }
+
+        /// <summary>
+        /// Indicates whether this class represents the nested complex type for a backbone element.
+        /// </summary>
+        public bool IsBackboneType { get; private set; } = false;
+
 
         /// <summary>
         /// Indicates whether this class can be used for binding.
@@ -290,7 +297,7 @@ namespace Hl7.Fhir.Introspection
             this switch
             {
                 { IsCodeOfT: true } => "code",
-                { IsNestedType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
+                { IsBackboneType: true } => NativeType.CanBeTreatedAsType(typeof(BackboneElement)) ?
                             "BackboneElement"
                             : "Element",
                 _ => Name

@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Introspection
 
             // Find and extract all EnumMappings
             var exportedEnums = exportedTypes.Where(et => et.IsEnum);
-            extractFromEnums(exportedEnums);
+            extractEnums(exportedEnums);
 
             // Find and extract all ClassMappings
             var exportedClasses = exportedTypes.Where(et => et.IsClass && !et.IsEnum);
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Introspection
 
             var nestedTypes = type.GetNestedTypes(BindingFlags.Public);
             var nestedEnums = nestedTypes.Where(t => t.IsEnum);
-            extractFromEnums(nestedEnums);
+            extractEnums(nestedEnums);
 
             var nestedClasses = nestedTypes.Where(t => t.IsClass && !t.IsEnum);
             extractBackbonesFromClasses(nestedClasses);
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Introspection
             return mapping;
         }
 
-        private void extractFromEnums(IEnumerable<Type> enumTypes)
+        private void extractEnums(IEnumerable<Type> enumTypes)
         {
             foreach (var enumType in enumTypes)
             {
@@ -220,8 +220,7 @@ namespace Hl7.Fhir.Introspection
         {
             foreach (var classType in classTypes)
             {
-                var success = ClassMapping.TryGetMappingForType(classType, FhirRelease, out var mapping);
-                if (success) _backboneClassMappings.Add(mapping!);
+                _ = ImportType(classType);
             }
         }
 
@@ -287,12 +286,6 @@ namespace Hl7.Fhir.Introspection
 
         private readonly ClassMappingCollection _classMappings = new();
 
-        /// <summary>
-        /// List of ClassMappings for the nested types generated for backbone elements.
-        /// </summary>
-        public ICollection<ClassMapping> BackboneClassMappings => _backboneClassMappings.ByName.Values.ToList();
-
-        private readonly ClassMappingCollection _backboneClassMappings = new();
         /// <summary>
         /// List of EnumMappings registered with the inspector.
         /// </summary>
