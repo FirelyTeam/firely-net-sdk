@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -194,6 +195,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupMeasure", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> GroupMeasureElement
       {
@@ -563,6 +565,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -935,6 +938,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=340)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EvidenceVariableType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.VariableTypeCode> TypeElement
     {

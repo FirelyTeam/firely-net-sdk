@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
     /// (system: http://hl7.org/fhir/consent-state-codes)
     /// </summary>
-    [FhirEnumeration("ConsentState")]
+    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes")]
     public enum ConsentState
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-data-meaning)
     /// (system: http://hl7.org/fhir/consent-data-meaning)
     /// </summary>
-    [FhirEnumeration("ConsentDataMeaning")]
+    [FhirEnumeration("ConsentDataMeaning", "http://hl7.org/fhir/ValueSet/consent-data-meaning")]
     public enum ConsentDataMeaning
     {
       /// <summary>
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-except-type)
     /// (system: http://hl7.org/fhir/consent-except-type)
     /// </summary>
-    [FhirEnumeration("ConsentExceptType")]
+    [FhirEnumeration("ConsentExceptType", "http://hl7.org/fhir/ValueSet/consent-except-type")]
     public enum ConsentExceptType
     {
       /// <summary>
@@ -163,6 +163,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Actor", IsNestedType=true)]
+    [BackboneType("Consent.actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -298,6 +299,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Policy", IsNestedType=true)]
+    [BackboneType("Consent.policy")]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -465,6 +467,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Data", IsNestedType=true)]
+    [BackboneType("Consent.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -477,6 +480,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -619,6 +623,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Except", IsNestedType=true)]
+    [BackboneType("Consent.except")]
     public partial class ExceptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -631,6 +636,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentExceptType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentExceptType> TypeElement
@@ -953,6 +959,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#ExceptActor", IsNestedType=true)]
+    [BackboneType("Consent.except.actor")]
     public partial class ExceptActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1088,6 +1095,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#ExceptData", IsNestedType=true)]
+    [BackboneType("Consent.except.data")]
     public partial class ExceptDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1100,6 +1108,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Consent.ConsentDataMeaning> MeaningElement
@@ -1254,6 +1263,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement

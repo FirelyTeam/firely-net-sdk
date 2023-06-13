@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/endpoint-status)
     /// (system: http://hl7.org/fhir/endpoint-status)
     /// </summary>
-    [FhirEnumeration("EndpointStatus")]
+    [FhirEnumeration("EndpointStatus", "http://hl7.org/fhir/ValueSet/endpoint-status")]
     public enum EndpointStatus
     {
       /// <summary>
@@ -120,6 +120,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EndpointStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> StatusElement
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
     /// </summary>
     [FhirElement("payloadMimeType", InSummary=true, Order=170)]
+    [Binding("MimeType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement

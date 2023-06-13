@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
     /// (system: http://hl7.org/fhir/observation-relationshiptypes)
     /// </summary>
-    [FhirEnumeration("ObservationRelationshipType")]
+    [FhirEnumeration("ObservationRelationshipType", "http://hl7.org/fhir/ValueSet/observation-relationshiptypes")]
     public enum ObservationRelationshipType
     {
       /// <summary>
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#ReferenceRange", IsNestedType=true)]
+    [BackboneType("Observation.referenceRange")]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -345,6 +346,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#Related", IsNestedType=true)]
+    [BackboneType("Observation.related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -357,6 +359,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType> TypeElement
       {
@@ -498,6 +501,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#Component", IsNestedType=true)]
+    [BackboneType("Observation.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -728,6 +732,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permitted-data-type)
     /// (system: http://hl7.org/fhir/permitted-data-type)
     /// </summary>
-    [FhirEnumeration("ObservationDataType")]
+    [FhirEnumeration("ObservationDataType", "http://hl7.org/fhir/ValueSet/permitted-data-type")]
     public enum ObservationDataType
     {
       /// <summary>
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-range-category)
     /// (system: http://hl7.org/fhir/observation-range-category)
     /// </summary>
-    [FhirEnumeration("ObservationRangeCategory")]
+    [FhirEnumeration("ObservationRangeCategory", "http://hl7.org/fhir/ValueSet/observation-range-category")]
     public enum ObservationRangeCategory
     {
       /// <summary>
@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#QualifiedValue", IsNestedType=true)]
+    [BackboneType("ObservationDefinition.qualifiedValue")]
     public partial class QualifiedValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -204,6 +205,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gender", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -293,6 +295,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rangeCategory", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationRangeCategory")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ObservationDefinition.ObservationRangeCategory> RangeCategoryElement
       {
@@ -645,6 +648,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#Component", IsNestedType=true)]
+    [BackboneType("ObservationDefinition.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -671,6 +675,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("permittedDataType", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ObservationDataType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement
@@ -994,6 +999,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1480,6 +1486,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("permittedDataType", Order=350)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationDataType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ObservationDefinition.ObservationDataType>> PermittedDataTypeElement

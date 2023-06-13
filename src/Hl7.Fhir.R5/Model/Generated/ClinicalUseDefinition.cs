@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinical-use-definition-type)
     /// (system: http://hl7.org/fhir/clinical-use-definition-type)
     /// </summary>
-    [FhirEnumeration("ClinicalUseDefinitionType")]
+    [FhirEnumeration("ClinicalUseDefinitionType", "http://hl7.org/fhir/ValueSet/clinical-use-definition-type")]
     public enum ClinicalUseDefinitionType
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Contraindication", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.contraindication")]
     public partial class ContraindicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -325,6 +326,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#OtherTherapy", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.contraindication.otherTherapy")]
     public partial class OtherTherapyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -458,6 +460,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Indication", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.indication")]
     public partial class IndicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -728,6 +731,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Interaction", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.interaction")]
     public partial class InteractionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -927,6 +931,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Interactant", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.interaction.interactant")]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1040,6 +1045,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#UndesirableEffect", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.undesirableEffect")]
     public partial class UndesirableEffectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1193,6 +1199,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalUseDefinition#Warning", IsNestedType=true)]
+    [BackboneType("ClinicalUseDefinition.warning")]
     public partial class WarningComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1355,6 +1362,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClinicalUseDefinitionType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ClinicalUseDefinition.ClinicalUseDefinitionType> TypeElement

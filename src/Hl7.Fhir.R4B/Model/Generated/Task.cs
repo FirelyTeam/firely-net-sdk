@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/task-status)
     /// (system: http://hl7.org/fhir/task-status)
     /// </summary>
-    [FhirEnumeration("TaskStatus")]
+    [FhirEnumeration("TaskStatus", "http://hl7.org/fhir/ValueSet/task-status")]
     public enum TaskStatus
     {
       /// <summary>
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/task-intent)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("TaskIntent")]
+    [FhirEnumeration("TaskIntent", "http://hl7.org/fhir/ValueSet/task-intent")]
     public enum TaskIntent
     {
       /// <summary>
@@ -207,6 +207,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Restriction", IsNestedType=true)]
+    [BackboneType("Task.restriction")]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -381,6 +382,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Parameter", IsNestedType=true)]
+    [BackboneType("Task.input")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -516,6 +518,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Output", IsNestedType=true)]
+    [BackboneType("Task.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -771,6 +774,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskStatus> StatusElement
@@ -830,6 +834,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, Order=180, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskIntent> IntentElement
@@ -863,6 +868,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=190, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

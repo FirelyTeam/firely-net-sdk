@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-answers-status)
     /// (system: http://hl7.org/fhir/questionnaire-answers-status)
     /// </summary>
-    [FhirEnumeration("QuestionnaireResponseStatus")]
+    [FhirEnumeration("QuestionnaireResponseStatus", "http://hl7.org/fhir/ValueSet/questionnaire-answers-status")]
     public enum QuestionnaireResponseStatus
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("QuestionnaireResponse#Item", IsNestedType=true)]
+    [BackboneType("QuestionnaireResponse.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -355,6 +356,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("QuestionnaireResponse#Answer", IsNestedType=true)]
+    [BackboneType("QuestionnaireResponse.item.answer")]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -568,6 +570,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("QuestionnaireResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement

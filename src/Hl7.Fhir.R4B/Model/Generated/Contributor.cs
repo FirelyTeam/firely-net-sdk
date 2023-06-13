@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contributor-type)
     /// (system: http://hl7.org/fhir/contributor-type)
     /// </summary>
-    [FhirEnumeration("ContributorType")]
+    [FhirEnumeration("ContributorType", "http://hl7.org/fhir/ValueSet/contributor-type")]
     public enum ContributorType
     {
       /// <summary>
@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ContributorType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contributor.ContributorType> TypeElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-dispense-status)
     /// (system: http://hl7.org/fhir/medication-dispense-status)
     /// </summary>
-    [FhirEnumeration("MedicationDispenseStatus")]
+    [FhirEnumeration("MedicationDispenseStatus", "http://hl7.org/fhir/ValueSet/medication-dispense-status")]
     public enum MedicationDispenseStatus
     {
       /// <summary>
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [BackboneType("MedicationDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -243,6 +244,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationDispense.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -470,6 +472,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationDispenseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
     {

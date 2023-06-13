@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-cardinality-behavior)
   /// (system: http://hl7.org/fhir/action-cardinality-behavior)
   /// </summary>
-  [FhirEnumeration("ActionCardinalityBehavior")]
+  [FhirEnumeration("ActionCardinalityBehavior", "http://hl7.org/fhir/ValueSet/action-cardinality-behavior")]
   public enum ActionCardinalityBehavior
   {
     /// <summary>
@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-condition-kind)
   /// (system: http://hl7.org/fhir/action-condition-kind)
   /// </summary>
-  [FhirEnumeration("ActionConditionKind")]
+  [FhirEnumeration("ActionConditionKind", "http://hl7.org/fhir/ValueSet/action-condition-kind")]
   public enum ActionConditionKind
   {
     /// <summary>
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-grouping-behavior)
   /// (system: http://hl7.org/fhir/action-grouping-behavior)
   /// </summary>
-  [FhirEnumeration("ActionGroupingBehavior")]
+  [FhirEnumeration("ActionGroupingBehavior", "http://hl7.org/fhir/ValueSet/action-grouping-behavior")]
   public enum ActionGroupingBehavior
   {
     /// <summary>
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-participant-type)
   /// (system: http://hl7.org/fhir/action-participant-type)
   /// </summary>
-  [FhirEnumeration("ActionParticipantType")]
+  [FhirEnumeration("ActionParticipantType", "http://hl7.org/fhir/ValueSet/action-participant-type")]
   public enum ActionParticipantType
   {
     /// <summary>
@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-precheck-behavior)
   /// (system: http://hl7.org/fhir/action-precheck-behavior)
   /// </summary>
-  [FhirEnumeration("ActionPrecheckBehavior")]
+  [FhirEnumeration("ActionPrecheckBehavior", "http://hl7.org/fhir/ValueSet/action-precheck-behavior")]
   public enum ActionPrecheckBehavior
   {
     /// <summary>
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-relationship-type)
   /// (system: http://hl7.org/fhir/action-relationship-type)
   /// </summary>
-  [FhirEnumeration("ActionRelationshipType")]
+  [FhirEnumeration("ActionRelationshipType", "http://hl7.org/fhir/ValueSet/action-relationship-type")]
   public enum ActionRelationshipType
   {
     /// <summary>
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-required-behavior)
   /// (system: http://hl7.org/fhir/action-required-behavior)
   /// </summary>
-  [FhirEnumeration("ActionRequiredBehavior")]
+  [FhirEnumeration("ActionRequiredBehavior", "http://hl7.org/fhir/ValueSet/action-required-behavior")]
   public enum ActionRequiredBehavior
   {
     /// <summary>
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/action-selection-behavior)
   /// (system: http://hl7.org/fhir/action-selection-behavior)
   /// </summary>
-  [FhirEnumeration("ActionSelectionBehavior")]
+  [FhirEnumeration("ActionSelectionBehavior", "http://hl7.org/fhir/ValueSet/action-selection-behavior")]
   public enum ActionSelectionBehavior
   {
     /// <summary>
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/administrative-gender)
   /// (system: http://hl7.org/fhir/administrative-gender)
   /// </summary>
-  [FhirEnumeration("AdministrativeGender")]
+  [FhirEnumeration("AdministrativeGender", "http://hl7.org/fhir/ValueSet/administrative-gender")]
   public enum AdministrativeGender
   {
     /// <summary>
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/all-types)
   /// (systems: 3)
   /// </summary>
-  [FhirEnumeration("FHIRAllTypes")]
+  [FhirEnumeration("FHIRAllTypes", "http://hl7.org/fhir/ValueSet/all-types")]
   public enum FHIRAllTypes
   {
     /// <summary>
@@ -1635,7 +1635,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/claim-use)
   /// (system: http://hl7.org/fhir/claim-use)
   /// </summary>
-  [FhirEnumeration("Use")]
+  [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use")]
   public enum ClaimUseCode
   {
     /// <summary>
@@ -1663,7 +1663,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/compartment-type)
   /// (system: http://hl7.org/fhir/compartment-type)
   /// </summary>
-  [FhirEnumeration("CompartmentType")]
+  [FhirEnumeration("CompartmentType", "http://hl7.org/fhir/ValueSet/compartment-type")]
   public enum CompartmentType
   {
     /// <summary>
@@ -1703,7 +1703,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/composition-status)
   /// (system: http://hl7.org/fhir/composition-status)
   /// </summary>
-  [FhirEnumeration("CompositionStatus")]
+  [FhirEnumeration("CompositionStatus", "http://hl7.org/fhir/ValueSet/composition-status")]
   public enum CompositionStatus
   {
     /// <summary>
@@ -1737,7 +1737,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/concept-map-equivalence)
   /// (system: http://hl7.org/fhir/concept-map-equivalence)
   /// </summary>
-  [FhirEnumeration("ConceptMapEquivalence")]
+  [FhirEnumeration("ConceptMapEquivalence", "http://hl7.org/fhir/ValueSet/concept-map-equivalence")]
   public enum ConceptMapEquivalence
   {
     /// <summary>
@@ -1807,7 +1807,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/days-of-week)
   /// (system: http://hl7.org/fhir/days-of-week)
   /// </summary>
-  [FhirEnumeration("DaysOfWeek")]
+  [FhirEnumeration("DaysOfWeek", "http://hl7.org/fhir/ValueSet/days-of-week")]
   public enum DaysOfWeek
   {
     /// <summary>
@@ -1859,7 +1859,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/defined-types)
   /// (systems: 2)
   /// </summary>
-  [FhirEnumeration("FHIRDefinedType")]
+  [FhirEnumeration("FHIRDefinedType", "http://hl7.org/fhir/ValueSet/defined-types")]
   public enum FHIRDefinedType
   {
     /// <summary>
@@ -3137,7 +3137,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/device-nametype)
   /// (system: http://hl7.org/fhir/device-nametype)
   /// </summary>
-  [FhirEnumeration("DeviceNameType")]
+  [FhirEnumeration("DeviceNameType", "http://hl7.org/fhir/ValueSet/device-nametype")]
   public enum DeviceNameType
   {
     /// <summary>
@@ -3183,7 +3183,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/document-reference-status)
   /// (system: http://hl7.org/fhir/document-reference-status)
   /// </summary>
-  [FhirEnumeration("DocumentReferenceStatus")]
+  [FhirEnumeration("DocumentReferenceStatus", "http://hl7.org/fhir/ValueSet/document-reference-status")]
   public enum DocumentReferenceStatus
   {
     /// <summary>
@@ -3211,7 +3211,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/document-relationship-type)
   /// (system: http://hl7.org/fhir/document-relationship-type)
   /// </summary>
-  [FhirEnumeration("DocumentRelationshipType")]
+  [FhirEnumeration("DocumentRelationshipType", "http://hl7.org/fhir/ValueSet/document-relationship-type")]
   public enum DocumentRelationshipType
   {
     /// <summary>
@@ -3245,7 +3245,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/event-status)
   /// (system: http://hl7.org/fhir/event-status)
   /// </summary>
-  [FhirEnumeration("EventStatus")]
+  [FhirEnumeration("EventStatus", "http://hl7.org/fhir/ValueSet/event-status")]
   public enum EventStatus
   {
     /// <summary>
@@ -3303,7 +3303,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/fm-status)
   /// (system: http://hl7.org/fhir/fm-status)
   /// </summary>
-  [FhirEnumeration("FinancialResourceStatusCodes")]
+  [FhirEnumeration("FinancialResourceStatusCodes", "http://hl7.org/fhir/ValueSet/fm-status")]
   public enum FinancialResourceStatusCodes
   {
     /// <summary>
@@ -3337,7 +3337,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/group-measure)
   /// (system: http://hl7.org/fhir/group-measure)
   /// </summary>
-  [FhirEnumeration("GroupMeasure")]
+  [FhirEnumeration("GroupMeasure", "http://hl7.org/fhir/ValueSet/group-measure")]
   public enum GroupMeasureCode
   {
     /// <summary>
@@ -3383,7 +3383,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/invoice-priceComponentType)
   /// (system: http://hl7.org/fhir/invoice-priceComponentType)
   /// </summary>
-  [FhirEnumeration("InvoicePriceComponentType")]
+  [FhirEnumeration("InvoicePriceComponentType", "http://hl7.org/fhir/ValueSet/invoice-priceComponentType")]
   public enum InvoicePriceComponentType
   {
     /// <summary>
@@ -3429,7 +3429,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/list-mode)
   /// (system: http://hl7.org/fhir/list-mode)
   /// </summary>
-  [FhirEnumeration("ListMode")]
+  [FhirEnumeration("ListMode", "http://hl7.org/fhir/ValueSet/list-mode")]
   public enum ListMode
   {
     /// <summary>
@@ -3457,7 +3457,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/measure-improvement-notation)
   /// (system: http://terminology.hl7.org/CodeSystem/measure-improvement-notation)
   /// </summary>
-  [FhirEnumeration("MeasureImprovementNotation")]
+  [FhirEnumeration("MeasureImprovementNotation", "http://hl7.org/fhir/ValueSet/measure-improvement-notation")]
   public enum MeasureImprovementNotation
   {
     /// <summary>
@@ -3479,7 +3479,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
   /// (system: http://hl7.org/fhir/messageheader-response-request)
   /// </summary>
-  [FhirEnumeration("messageheader-response-request")]
+  [FhirEnumeration("messageheader-response-request", "http://hl7.org/fhir/ValueSet/messageheader-response-request")]
   public enum MessageheaderResponseRequest
   {
     /// <summary>
@@ -3513,7 +3513,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/note-type)
   /// (system: http://hl7.org/fhir/note-type)
   /// </summary>
-  [FhirEnumeration("NoteType")]
+  [FhirEnumeration("NoteType", "http://hl7.org/fhir/ValueSet/note-type")]
   public enum NoteType
   {
     /// <summary>
@@ -3541,7 +3541,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/observation-status)
   /// (system: http://hl7.org/fhir/observation-status)
   /// </summary>
-  [FhirEnumeration("ObservationStatus")]
+  [FhirEnumeration("ObservationStatus", "http://hl7.org/fhir/ValueSet/observation-status")]
   public enum ObservationStatus
   {
     /// <summary>
@@ -3599,7 +3599,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/operation-parameter-use)
   /// (system: http://hl7.org/fhir/operation-parameter-use)
   /// </summary>
-  [FhirEnumeration("OperationParameterUse")]
+  [FhirEnumeration("OperationParameterUse", "http://hl7.org/fhir/ValueSet/operation-parameter-use")]
   public enum OperationParameterUse
   {
     /// <summary>
@@ -3621,7 +3621,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
   /// (system: http://hl7.org/fhir/participationstatus)
   /// </summary>
-  [FhirEnumeration("ParticipationStatus")]
+  [FhirEnumeration("ParticipationStatus", "http://hl7.org/fhir/ValueSet/participationstatus")]
   public enum ParticipationStatus
   {
     /// <summary>
@@ -3655,7 +3655,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/remittance-outcome)
   /// (system: http://hl7.org/fhir/remittance-outcome)
   /// </summary>
-  [FhirEnumeration("ClaimProcessingCodes")]
+  [FhirEnumeration("ClaimProcessingCodes", "http://hl7.org/fhir/ValueSet/remittance-outcome")]
   public enum ClaimProcessingCodes
   {
     /// <summary>
@@ -3689,7 +3689,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/request-intent)
   /// (system: http://hl7.org/fhir/request-intent)
   /// </summary>
-  [FhirEnumeration("RequestIntent")]
+  [FhirEnumeration("RequestIntent", "http://hl7.org/fhir/ValueSet/request-intent")]
   public enum RequestIntent
   {
     /// <summary>
@@ -3753,7 +3753,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/request-priority)
   /// (system: http://hl7.org/fhir/request-priority)
   /// </summary>
-  [FhirEnumeration("RequestPriority")]
+  [FhirEnumeration("RequestPriority", "http://hl7.org/fhir/ValueSet/request-priority")]
   public enum RequestPriority
   {
     /// <summary>
@@ -3787,7 +3787,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/request-status)
   /// (system: http://hl7.org/fhir/request-status)
   /// </summary>
-  [FhirEnumeration("RequestStatus")]
+  [FhirEnumeration("RequestStatus", "http://hl7.org/fhir/ValueSet/request-status")]
   public enum RequestStatus
   {
     /// <summary>
@@ -3839,7 +3839,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/resource-types)
   /// (system: http://hl7.org/fhir/resource-types)
   /// </summary>
-  [FhirEnumeration("ResourceType")]
+  [FhirEnumeration("ResourceType", "http://hl7.org/fhir/ValueSet/resource-types")]
   public enum ResourceType
   {
     /// <summary>
@@ -4739,7 +4739,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/variable-type)
   /// (system: http://hl7.org/fhir/variable-type)
   /// </summary>
-  [FhirEnumeration("EvidenceVariableType")]
+  [FhirEnumeration("EvidenceVariableType", "http://hl7.org/fhir/ValueSet/variable-type")]
   public enum VariableTypeCode
   {
     /// <summary>

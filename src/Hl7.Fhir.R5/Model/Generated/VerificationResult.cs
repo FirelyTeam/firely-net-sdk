@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
     /// (system: http://hl7.org/fhir/CodeSystem/verificationresult-status)
     /// </summary>
-    [FhirEnumeration("VerificationResultStatus")]
+    [FhirEnumeration("VerificationResultStatus", "http://hl7.org/fhir/ValueSet/verificationresult-status")]
     public enum StatusCode
     {
       /// <summary>
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#PrimarySource", IsNestedType=true)]
+    [BackboneType("VerificationResult.primarySource")]
     public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -377,6 +378,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#Attestation", IsNestedType=true)]
+    [BackboneType("VerificationResult.attestation")]
     public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -698,6 +700,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#Validator", IsNestedType=true)]
+    [BackboneType("VerificationResult.validator")]
     public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -932,6 +935,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.VerificationResult.StatusCode> StatusElement

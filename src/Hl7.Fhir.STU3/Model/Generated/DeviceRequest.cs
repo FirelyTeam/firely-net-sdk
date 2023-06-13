@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceRequest#Requester", IsNestedType=true)]
+    [BackboneType("DeviceRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -271,6 +272,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
     {
@@ -317,6 +319,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=160, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

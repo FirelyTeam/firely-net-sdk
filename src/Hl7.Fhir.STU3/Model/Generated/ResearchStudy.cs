@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-study-status)
     /// (system: http://hl7.org/fhir/research-study-status)
     /// </summary>
-    [FhirEnumeration("ResearchStudyStatus")]
+    [FhirEnumeration("ResearchStudyStatus", "http://hl7.org/fhir/ValueSet/research-study-status")]
     public enum ResearchStudyStatus
     {
       /// <summary>
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Arm", IsNestedType=true)]
+    [BackboneType("ResearchStudy.arm")]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -373,6 +374,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchStudy.ResearchStudyStatus> StatusElement

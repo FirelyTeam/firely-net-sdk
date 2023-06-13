@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-statement-status)
     /// (system: http://hl7.org/fhir/device-statement-status)
     /// </summary>
-    [FhirEnumeration("DeviceUseStatementStatus")]
+    [FhirEnumeration("DeviceUseStatementStatus", "http://hl7.org/fhir/ValueSet/device-statement-status")]
     public enum DeviceUseStatementStatus
     {
       /// <summary>
@@ -120,6 +120,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceUseStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> StatusElement

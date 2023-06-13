@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/identity-assuranceLevel)
     /// (system: http://hl7.org/fhir/identity-assuranceLevel)
     /// </summary>
-    [FhirEnumeration("IdentityAssuranceLevel")]
+    [FhirEnumeration("IdentityAssuranceLevel", "http://hl7.org/fhir/ValueSet/identity-assuranceLevel")]
     public enum IdentityAssuranceLevel
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Person#Link", IsNestedType=true)]
+    [BackboneType("Person.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -123,6 +124,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("assurance", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("IdentityAssuranceLevel")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
       {
@@ -289,6 +291,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

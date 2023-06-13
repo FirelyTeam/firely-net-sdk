@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
+    [BackboneType("ActivityDefinition.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
@@ -212,6 +214,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
+    [BackboneType("ActivityDefinition.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -596,6 +599,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1021,6 +1025,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActivityDefinitionKind")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType> KindElement
     {

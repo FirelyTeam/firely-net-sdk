@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryreport-status)
     /// (system: http://hl7.org/fhir/inventoryreport-status)
     /// </summary>
-    [FhirEnumeration("InventoryReportStatus")]
+    [FhirEnumeration("InventoryReportStatus", "http://hl7.org/fhir/ValueSet/inventoryreport-status")]
     public enum InventoryReportStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryreport-counttype)
     /// (system: http://hl7.org/fhir/inventoryreport-counttype)
     /// </summary>
-    [FhirEnumeration("InventoryCountType")]
+    [FhirEnumeration("InventoryCountType", "http://hl7.org/fhir/ValueSet/inventoryreport-counttype")]
     public enum InventoryCountType
     {
       /// <summary>
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryReport#InventoryListing", IsNestedType=true)]
+    [BackboneType("InventoryReport.inventoryListing")]
     public partial class InventoryListingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryReport#Item", IsNestedType=true)]
+    [BackboneType("InventoryReport.inventoryListing.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -481,6 +483,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryReportStatus> StatusElement
@@ -514,6 +517,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("countType", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryCountType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryReport.InventoryCountType> CountTypeElement

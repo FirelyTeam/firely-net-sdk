@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/value-filter-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("ValueFilterComparator")]
+    [FhirEnumeration("ValueFilterComparator", "http://hl7.org/fhir/ValueSet/value-filter-comparator")]
     public enum ValueFilterComparator
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
     /// (system: http://hl7.org/fhir/sort-direction)
     /// </summary>
-    [FhirEnumeration("SortDirection")]
+    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction")]
     public enum SortDirection
     {
       /// <summary>
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#CodeFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.codeFilter")]
     public partial class CodeFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -365,6 +366,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#DateFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.dateFilter")]
     public partial class DateFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -556,6 +558,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#ValueFilter", IsNestedType=true)]
+    [BackboneType("DataRequirement.valueFilter")]
     public partial class ValueFilterComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -630,6 +633,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ValueFilterComparator")]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.ValueFilterComparator> ComparatorElement
       {
@@ -788,6 +792,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataRequirement#Sort", IsNestedType=true)]
+    [BackboneType("DataRequirement.sort")]
     public partial class SortComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -832,6 +837,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SortDirection")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DataRequirement.SortDirection> DirectionElement
@@ -957,6 +963,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRAllTypes> TypeElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/item-type)
     /// (system: http://hl7.org/fhir/item-type)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemType")]
+    [FhirEnumeration("QuestionnaireItemType", "http://hl7.org/fhir/ValueSet/item-type")]
     public enum QuestionnaireItemType
     {
       /// <summary>
@@ -175,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#Item", IsNestedType=true)]
+    [BackboneType("Questionnaire.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -326,6 +327,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> TypeElement
@@ -766,6 +768,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.enableWhen")]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -959,6 +962,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#Option", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.option")]
     public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1208,6 +1212,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1558,6 +1563,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("subjectType", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement

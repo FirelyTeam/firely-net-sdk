@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/binding-strength)
   /// (system: http://hl7.org/fhir/binding-strength)
   /// </summary>
-  [FhirEnumeration("BindingStrength")]
+  [FhirEnumeration("BindingStrength", "http://hl7.org/fhir/ValueSet/binding-strength")]
   public enum BindingStrength
   {
     /// <summary>
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/capability-statement-kind)
   /// (system: http://hl7.org/fhir/capability-statement-kind)
   /// </summary>
-  [FhirEnumeration("CapabilityStatementKind")]
+  [FhirEnumeration("CapabilityStatementKind", "http://hl7.org/fhir/ValueSet/capability-statement-kind")]
   public enum CapabilityStatementKind
   {
     /// <summary>
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/codesystem-content-mode)
   /// (system: http://hl7.org/fhir/codesystem-content-mode)
   /// </summary>
-  [FhirEnumeration("CodeSystemContentMode")]
+  [FhirEnumeration("CodeSystemContentMode", "http://hl7.org/fhir/ValueSet/codesystem-content-mode")]
   public enum CodeSystemContentMode
   {
     /// <summary>
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/constraint-severity)
   /// (system: http://hl7.org/fhir/constraint-severity)
   /// </summary>
-  [FhirEnumeration("ConstraintSeverity")]
+  [FhirEnumeration("ConstraintSeverity", "http://hl7.org/fhir/ValueSet/constraint-severity")]
   public enum ConstraintSeverity
   {
     /// <summary>
@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
   /// (url: http://hl7.org/fhir/ValueSet/search-param-type)
   /// (system: http://hl7.org/fhir/search-param-type)
   /// </summary>
-  [FhirEnumeration("SearchParamType")]
+  [FhirEnumeration("SearchParamType", "http://hl7.org/fhir/ValueSet/search-param-type")]
   public enum SearchParamType
   {
     /// <summary>

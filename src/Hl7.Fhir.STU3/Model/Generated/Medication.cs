@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-status)
     /// (system: http://hl7.org/fhir/medication-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatus")]
+    [FhirEnumeration("MedicationStatus", "http://hl7.org/fhir/ValueSet/medication-status")]
     public enum MedicationStatus
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Ingredient", IsNestedType=true)]
+    [BackboneType("Medication.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -264,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Package", IsNestedType=true)]
+    [BackboneType("Medication.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -419,6 +421,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Content", IsNestedType=true)]
+    [BackboneType("Medication.package.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -554,6 +557,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Batch", IsNestedType=true)]
+    [BackboneType("Medication.package.batch")]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -733,6 +737,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Medication.MedicationStatus> StatusElement
     {

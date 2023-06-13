@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/account-status)
     /// (system: http://hl7.org/fhir/account-status)
     /// </summary>
-    [FhirEnumeration("AccountStatus")]
+    [FhirEnumeration("AccountStatus", "http://hl7.org/fhir/ValueSet/account-status")]
     public enum AccountStatus
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Coverage", IsNestedType=true)]
+    [BackboneType("Account.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Guarantor", IsNestedType=true)]
+    [BackboneType("Account.guarantor")]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -427,6 +429,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Diagnosis", IsNestedType=true)]
+    [BackboneType("Account.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -703,6 +706,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Procedure", IsNestedType=true)]
+    [BackboneType("Account.procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -964,6 +968,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#RelatedAccount", IsNestedType=true)]
+    [BackboneType("Account.relatedAccount")]
     public partial class RelatedAccountComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1098,6 +1103,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Balance", IsNestedType=true)]
+    [BackboneType("Account.balance")]
     public partial class BalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1305,6 +1311,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AccountStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement

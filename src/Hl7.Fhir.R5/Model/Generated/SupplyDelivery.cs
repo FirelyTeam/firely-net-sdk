@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-status)
     /// (system: http://hl7.org/fhir/supplydelivery-status)
     /// </summary>
-    [FhirEnumeration("SupplyDeliveryStatus")]
+    [FhirEnumeration("SupplyDeliveryStatus", "http://hl7.org/fhir/ValueSet/supplydelivery-status")]
     public enum SupplyDeliveryStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-supplyitemtype)
     /// (system: http://hl7.org/fhir/supplydelivery-supplyitemtype)
     /// </summary>
-    [FhirEnumeration("SupplyDeliverySupplyItemType")]
+    [FhirEnumeration("SupplyDeliverySupplyItemType", "http://hl7.org/fhir/ValueSet/supplydelivery-supplyitemtype")]
     public enum SupplyDeliverySupplyItemType
     {
       /// <summary>
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyDelivery#SuppliedItem", IsNestedType=true)]
+    [BackboneType("SupplyDelivery.suppliedItem")]
     public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -302,6 +303,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SupplyDeliveryStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
     {

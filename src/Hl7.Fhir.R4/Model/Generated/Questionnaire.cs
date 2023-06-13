@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/item-type)
     /// (system: http://hl7.org/fhir/item-type)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemType")]
+    [FhirEnumeration("QuestionnaireItemType", "http://hl7.org/fhir/ValueSet/item-type")]
     public enum QuestionnaireItemType
     {
       /// <summary>
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior)
     /// (system: http://hl7.org/fhir/questionnaire-enable-behavior)
     /// </summary>
-    [FhirEnumeration("EnableWhenBehavior")]
+    [FhirEnumeration("EnableWhenBehavior", "http://hl7.org/fhir/ValueSet/questionnaire-enable-behavior")]
     public enum EnableWhenBehavior
     {
       /// <summary>
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-enable-operator)
     /// (system: http://hl7.org/fhir/questionnaire-enable-operator)
     /// </summary>
-    [FhirEnumeration("QuestionnaireItemOperator")]
+    [FhirEnumeration("QuestionnaireItemOperator", "http://hl7.org/fhir/ValueSet/questionnaire-enable-operator")]
     public enum QuestionnaireItemOperator
     {
       /// <summary>
@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#Item", IsNestedType=true)]
+    [BackboneType("Questionnaire.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -398,6 +399,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemType> TypeElement
@@ -445,6 +447,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("enableBehavior", Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EnableWhenBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.EnableWhenBehavior> EnableBehaviorElement
       {
@@ -893,6 +896,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#EnableWhen", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.enableWhen")]
     public partial class EnableWhenComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -937,6 +941,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("QuestionnaireItemOperator")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Questionnaire.QuestionnaireItemOperator> OperatorElement
@@ -1089,6 +1094,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#AnswerOption", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.answerOption")]
     public partial class AnswerOptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1242,6 +1248,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Questionnaire#Initial", IsNestedType=true)]
+    [BackboneType("Questionnaire.item.initial")]
     public partial class InitialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1429,6 +1436,7 @@ namespace Hl7.Fhir.Model
     /// Name for this questionnaire (computer friendly)
     /// </summary>
     [FhirElement("name", InSummary=true, Order=120)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -1524,6 +1532,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1588,6 +1597,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("subjectType", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> SubjectTypeElement

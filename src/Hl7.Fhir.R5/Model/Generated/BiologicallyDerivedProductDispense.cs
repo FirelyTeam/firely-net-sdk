@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status)
     /// (system: http://hl7.org/fhir/biologicallyderivedproductdispense-status)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductDispenseCodes")]
+    [FhirEnumeration("BiologicallyDerivedProductDispenseCodes", "http://hl7.org/fhir/ValueSet/biologicallyderivedproductdispense-status")]
     public enum BiologicallyDerivedProductDispenseCodes
     {
       /// <summary>
@@ -119,6 +119,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProductDispense#Performer", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProductDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -298,6 +299,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BiologicallyDerivedProductDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProductDispense.BiologicallyDerivedProductDispenseCodes> StatusElement

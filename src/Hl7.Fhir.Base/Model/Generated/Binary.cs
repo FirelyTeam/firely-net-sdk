@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Model
     /// MimeType of the binary content
     /// </summary>
     [FhirElement("contentType", InSummary=true, Order=50)]
+    [Binding("MimeType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code ContentTypeElement

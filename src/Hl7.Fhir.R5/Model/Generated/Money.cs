@@ -91,6 +91,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("currency", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CurrencyCode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Currencies> CurrencyElement
     {

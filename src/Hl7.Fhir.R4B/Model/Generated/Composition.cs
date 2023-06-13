@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://terminology.hl7.org/ValueSet/v3-Confidentiality)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("Confidentiality")]
+    [FhirEnumeration("Confidentiality", "http://terminology.hl7.org/ValueSet/v3-Confidentiality")]
     public enum ConfidentialityCode
     {
       /// <summary>
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/composition-attestation-mode)
     /// (system: http://hl7.org/fhir/composition-attestation-mode)
     /// </summary>
-    [FhirEnumeration("CompositionAttestationMode")]
+    [FhirEnumeration("CompositionAttestationMode", "http://hl7.org/fhir/ValueSet/composition-attestation-mode")]
     public enum CompositionAttestationMode
     {
       /// <summary>
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#Attester", IsNestedType=true)]
+    [BackboneType("Composition.attester")]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CompositionAttestationMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode> ModeElement
@@ -334,6 +336,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#RelatesTo", IsNestedType=true)]
+    [BackboneType("Composition.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -346,6 +349,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
@@ -489,6 +493,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#Event", IsNestedType=true)]
+    [BackboneType("Composition.event")]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -646,6 +651,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Composition#Section", IsNestedType=true)]
+    [BackboneType("Composition.section")]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -746,6 +752,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=90, FiveWs="FiveWs.class")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SectionMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
       {
@@ -1011,6 +1018,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CompositionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> StatusElement
@@ -1182,6 +1190,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("confidentiality", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DocumentConfidentiality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Composition.ConfidentialityCode> ConfidentialityElement
     {

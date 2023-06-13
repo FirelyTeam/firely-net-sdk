@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/request-resource-types)
     /// (system: http://hl7.org/fhir/fhir-types)
     /// </summary>
-    [FhirEnumeration("RequestResourceTypes")]
+    [FhirEnumeration("RequestResourceTypes", "http://hl7.org/fhir/ValueSet/request-resource-types")]
     public enum RequestResourceTypes
     {
       /// <summary>
@@ -173,6 +173,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#Participant", IsNestedType=true)]
+    [BackboneType("ActivityDefinition.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -185,6 +186,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
       {
@@ -409,6 +411,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ActivityDefinition#DynamicValue", IsNestedType=true)]
+    [BackboneType("ActivityDefinition.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -743,6 +746,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1273,6 +1277,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=390)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActivityDefinitionKind")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ActivityDefinition.RequestResourceTypes> KindElement
     {
@@ -1349,6 +1354,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", Order=420)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestIntent")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
     {
@@ -1381,6 +1387,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=430)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

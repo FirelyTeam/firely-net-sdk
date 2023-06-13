@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/actionlist)
     /// (system: http://hl7.org/fhir/actionlist)
     /// </summary>
-    [FhirEnumeration("ActionList")]
+    [FhirEnumeration("ActionList", "http://hl7.org/fhir/ValueSet/actionlist")]
     public enum ActionList
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcessRequest#Items", IsNestedType=true)]
+    [BackboneType("ProcessRequest.item")]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -236,6 +237,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcessRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -268,6 +270,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActionList")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ProcessRequest.ActionList> ActionElement
     {

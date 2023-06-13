@@ -32,6 +32,7 @@
 
 namespace Hl7.Fhir.Model
 {
+
     public partial class Time
     {
         /// <summary>

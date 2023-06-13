@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/history-status)
     /// (system: http://hl7.org/fhir/history-status)
     /// </summary>
-    [FhirEnumeration("FamilyHistoryStatus")]
+    [FhirEnumeration("FamilyHistoryStatus", "http://hl7.org/fhir/ValueSet/history-status")]
     public enum FamilyHistoryStatus
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -303,6 +304,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement
@@ -472,6 +474,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

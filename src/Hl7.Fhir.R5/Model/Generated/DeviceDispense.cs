@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedispense-status)
     /// (system: http://hl7.org/fhir/devicedispense-status)
     /// </summary>
-    [FhirEnumeration("DeviceDispenseStatusCodes")]
+    [FhirEnumeration("DeviceDispenseStatusCodes", "http://hl7.org/fhir/ValueSet/devicedispense-status")]
     public enum DeviceDispenseStatusCodes
     {
       /// <summary>
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDispense#Performer", IsNestedType=true)]
+    [BackboneType("DeviceDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,6 +305,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceDispense.DeviceDispenseStatusCodes> StatusElement

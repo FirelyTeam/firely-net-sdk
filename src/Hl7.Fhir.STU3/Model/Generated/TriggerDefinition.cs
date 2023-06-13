@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/trigger-type)
     /// (system: http://hl7.org/fhir/trigger-type)
     /// </summary>
-    [FhirEnumeration("TriggerType")]
+    [FhirEnumeration("TriggerType", "http://hl7.org/fhir/ValueSet/trigger-type")]
     public enum TriggerType
     {
       /// <summary>
@@ -112,6 +112,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TriggerType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.TriggerDefinition.TriggerType> TypeElement

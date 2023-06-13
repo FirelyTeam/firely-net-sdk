@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-rule)
     /// (system: http://hl7.org/fhir/graph-compartment-rule)
     /// </summary>
-    [FhirEnumeration("GraphCompartmentRule")]
+    [FhirEnumeration("GraphCompartmentRule", "http://hl7.org/fhir/ValueSet/graph-compartment-rule")]
     public enum GraphCompartmentRule
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Link", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -406,6 +407,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Target", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -418,6 +420,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -621,6 +624,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link.target.compartment")]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -633,6 +637,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CompartmentCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
@@ -666,6 +671,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rule", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GraphCompartmentRule")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule> RuleElement
@@ -965,6 +971,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1195,6 +1202,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", Order=210)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType> StartElement

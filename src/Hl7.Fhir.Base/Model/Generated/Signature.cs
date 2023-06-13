@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Model
     /// The technical format of the signed resources. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("targetFormat", Order=70, Since=FhirRelease.R4)]
+    [Binding("MimeType")]
     [DataMember]
     public Hl7.Fhir.Model.Code TargetFormatElement
     {
@@ -210,6 +211,7 @@ namespace Hl7.Fhir.Model
     /// The technical format of the signature. Note: Element was introduced in R4, do not use when working with older releases.
     /// </summary>
     [FhirElement("sigFormat", Order=80, Since=FhirRelease.R4)]
+    [Binding("MimeType")]
     [DataMember]
     public Hl7.Fhir.Model.Code SigFormatElement
     {

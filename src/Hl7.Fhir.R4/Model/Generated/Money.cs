@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/currencies)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("Currencies")]
+    [FhirEnumeration("Currencies", "http://hl7.org/fhir/ValueSet/currencies")]
     public enum Currencies
     {
       /// <summary>
@@ -1193,6 +1193,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("currency", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CurrencyCode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Money.Currencies> CurrencyElement
     {

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-dependency-type)
     /// (system: http://hl7.org/fhir/guide-dependency-type)
     /// </summary>
-    [FhirEnumeration("GuideDependencyType")]
+    [FhirEnumeration("GuideDependencyType", "http://hl7.org/fhir/ValueSet/guide-dependency-type")]
     public enum GuideDependencyType
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-page-kind)
     /// (system: http://hl7.org/fhir/guide-page-kind)
     /// </summary>
-    [FhirEnumeration("GuidePageKind")]
+    [FhirEnumeration("GuidePageKind", "http://hl7.org/fhir/ValueSet/guide-page-kind")]
     public enum GuidePageKind
     {
       /// <summary>
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Dependency", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.dependency")]
     public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuideDependencyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType> TypeElement
@@ -311,6 +313,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Package", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -502,6 +505,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.package.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -800,6 +804,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Global", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.global")]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -812,6 +817,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -954,6 +960,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Page", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.page")]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1030,6 +1037,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuidePageKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind> KindElement
@@ -1063,6 +1071,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ResourceType>> TypeElement
@@ -1127,6 +1136,7 @@ namespace Hl7.Fhir.Model
       /// Format of the page (e.g. html, markdown, etc.)
       /// </summary>
       [FhirElement("format", Order=90)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code FormatElement
       {
@@ -1405,6 +1415,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

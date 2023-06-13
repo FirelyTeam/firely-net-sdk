@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ConditionClinicalStatusCodes")]
+    [FhirEnumeration("ConditionClinicalStatusCodes", "http://hl7.org/fhir/ValueSet/condition-clinical")]
     public enum ConditionClinicalStatusCodes
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("ConditionVerificationStatus")]
+    [FhirEnumeration("ConditionVerificationStatus", "http://hl7.org/fhir/ValueSet/condition-ver-status")]
     public enum ConditionVerificationStatus
     {
       /// <summary>
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Participant", IsNestedType=true)]
+    [BackboneType("Condition.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -293,6 +294,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Stage", IsNestedType=true)]
+    [BackboneType("Condition.stage")]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

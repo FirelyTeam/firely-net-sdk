@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/flag-status)
     /// (system: http://hl7.org/fhir/flag-status)
     /// </summary>
-    [FhirEnumeration("FlagStatus")]
+    [FhirEnumeration("FlagStatus", "http://hl7.org/fhir/ValueSet/flag-status")]
     public enum FlagStatus
     {
       /// <summary>
@@ -102,6 +102,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FlagStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Flag.FlagStatus> StatusElement
@@ -148,6 +149,7 @@ namespace Hl7.Fhir.Model
     /// Coded or textual message to display to user
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

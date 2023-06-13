@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
-    [FhirEnumeration("SequenceType")]
+    [FhirEnumeration("SequenceType", "http://hl7.org/fhir/ValueSet/sequence-type")]
     public enum SequenceType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
-    [FhirEnumeration("OrientationType")]
+    [FhirEnumeration("OrientationType", "http://hl7.org/fhir/ValueSet/orientation-type")]
     public enum OrientationType
     {
       /// <summary>
@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/strand-type)
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
-    [FhirEnumeration("StrandType")]
+    [FhirEnumeration("StrandType", "http://hl7.org/fhir/ValueSet/strand-type")]
     public enum StrandType
     {
       /// <summary>
@@ -133,6 +133,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Relative", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative")]
     public partial class RelativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -350,6 +351,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#StartingSequence", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative.startingSequence")]
     public partial class StartingSequenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -466,6 +468,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("orientationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> OrientationElement
       {
@@ -498,6 +501,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("strandType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.StrandType> StrandElement
       {
@@ -668,6 +672,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Edit", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative.edit")]
     public partial class EditComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -928,6 +933,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("sequenceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> TypeElement
     {

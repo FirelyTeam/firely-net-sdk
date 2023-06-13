@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/diagnostic-report-status)
     /// (system: http://hl7.org/fhir/diagnostic-report-status)
     /// </summary>
-    [FhirEnumeration("DiagnosticReportStatus")]
+    [FhirEnumeration("DiagnosticReportStatus", "http://hl7.org/fhir/ValueSet/diagnostic-report-status")]
     public enum DiagnosticReportStatus
     {
       /// <summary>
@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -265,6 +266,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Image", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.image")]
     public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -446,6 +448,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DiagnosticReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> StatusElement

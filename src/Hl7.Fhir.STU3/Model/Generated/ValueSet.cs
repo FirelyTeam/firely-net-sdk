@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Compose", IsNestedType=true)]
+    [BackboneType("ValueSet.compose")]
     public partial class ComposeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -274,6 +275,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#ConceptSet", IsNestedType=true)]
+    [BackboneType("ValueSet.compose.include")]
     public partial class ConceptSetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -528,6 +530,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#ConceptReference", IsNestedType=true)]
+    [BackboneType("ValueSet.compose.include.concept")]
     public partial class ConceptReferenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -719,6 +722,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Designation", IsNestedType=true)]
+    [BackboneType("ValueSet.compose.include.concept.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -730,6 +734,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation
       /// </summary>
       [FhirElement("language", Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -909,6 +914,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Filter", IsNestedType=true)]
+    [BackboneType("ValueSet.compose.include.filter")]
     public partial class FilterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -953,6 +959,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("op", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FilterOperator")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.FilterOperator> OpElement
@@ -1120,6 +1127,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Expansion", IsNestedType=true)]
+    [BackboneType("ValueSet.expansion")]
     public partial class ExpansionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1415,6 +1423,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Parameter", IsNestedType=true)]
+    [BackboneType("ValueSet.expansion.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1567,6 +1576,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ValueSet#Contains", IsNestedType=true)]
+    [BackboneType("ValueSet.expansion.contains")]
     public partial class ContainsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2077,6 +2087,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

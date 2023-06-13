@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-action)
     /// (system: http://hl7.org/fhir/audit-event-action)
     /// </summary>
-    [FhirEnumeration("AuditEventAction")]
+    [FhirEnumeration("AuditEventAction", "http://hl7.org/fhir/ValueSet/audit-event-action")]
     public enum AuditEventAction
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/audit-event-severity)
     /// (system: http://hl7.org/fhir/audit-event-severity)
     /// </summary>
-    [FhirEnumeration("AuditEventSeverity")]
+    [FhirEnumeration("AuditEventSeverity", "http://hl7.org/fhir/ValueSet/audit-event-severity")]
     public enum AuditEventSeverity
     {
       /// <summary>
@@ -159,6 +159,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Outcome", IsNestedType=true)]
+    [BackboneType("AuditEvent.outcome")]
     public partial class OutcomeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Agent", IsNestedType=true)]
+    [BackboneType("AuditEvent.agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -602,6 +604,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Source", IsNestedType=true)]
+    [BackboneType("AuditEvent.source")]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -761,6 +764,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Entity", IsNestedType=true)]
+    [BackboneType("AuditEvent.entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1003,6 +1007,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Detail", IsNestedType=true)]
+    [BackboneType("AuditEvent.entity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1165,6 +1170,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("action", InSummary=true, Order=110, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventAction")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventAction> ActionElement
     {
@@ -1197,6 +1203,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AuditEventSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AuditEvent.AuditEventSeverity> SeverityElement
     {

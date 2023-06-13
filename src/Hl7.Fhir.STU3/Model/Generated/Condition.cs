@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-clinical)
     /// (system: http://hl7.org/fhir/condition-clinical)
     /// </summary>
-    [FhirEnumeration("ConditionClinicalStatusCodes")]
+    [FhirEnumeration("ConditionClinicalStatusCodes", "http://hl7.org/fhir/ValueSet/condition-clinical")]
     public enum ConditionClinicalStatusCodes
     {
       /// <summary>
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-ver-status)
     /// (system: http://hl7.org/fhir/condition-ver-status)
     /// </summary>
-    [FhirEnumeration("ConditionVerificationStatus")]
+    [FhirEnumeration("ConditionVerificationStatus", "http://hl7.org/fhir/ValueSet/condition-ver-status")]
     public enum ConditionVerificationStatus
     {
       /// <summary>
@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Stage", IsNestedType=true)]
+    [BackboneType("Condition.stage")]
     public partial class StageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -281,6 +282,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Condition#Evidence", IsNestedType=true)]
+    [BackboneType("Condition.evidence")]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -429,6 +431,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("clinicalStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConditionClinicalStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionClinicalStatusCodes> ClinicalStatusElement
     {
@@ -461,6 +464,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("verificationStatus", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConditionVerificationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Condition.ConditionVerificationStatus> VerificationStatusElement
     {

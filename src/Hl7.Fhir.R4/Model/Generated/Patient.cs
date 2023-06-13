@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
-  public partial class Patient : Hl7.Fhir.Model.DomainResource
+  public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient
   {
     /// <summary>
     /// FHIR Type Name
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/link-type)
     /// (system: http://hl7.org/fhir/link-type)
     /// </summary>
-    [FhirEnumeration("LinkType")]
+    [FhirEnumeration("LinkType", "http://hl7.org/fhir/ValueSet/link-type")]
     public enum LinkType
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Contact", IsNestedType=true)]
+    [BackboneType("Patient.contact")]
     public partial class ContactComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -161,6 +162,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("gender", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdministrativeGender")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
       {
@@ -359,6 +361,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Communication", IsNestedType=true)]
+    [BackboneType("Patient.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -509,6 +512,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Patient#Link", IsNestedType=true)]
+    [BackboneType("Patient.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -537,6 +541,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("LinkType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Patient.LinkType> TypeElement
@@ -735,6 +740,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=130)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
@@ -774,6 +780,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Date _BirthDateElement;
+
+    Hl7.Fhir.Model.Date Hl7.Fhir.Model.IPatient.BirthDate => BirthDateElement;
 
     /// <summary>
     /// The date of birth for the individual

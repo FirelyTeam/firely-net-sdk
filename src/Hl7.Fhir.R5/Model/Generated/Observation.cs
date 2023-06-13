@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-triggeredbytype)
     /// (system: http://hl7.org/fhir/observation-triggeredbytype)
     /// </summary>
-    [FhirEnumeration("TriggeredBytype")]
+    [FhirEnumeration("TriggeredBytype", "http://hl7.org/fhir/ValueSet/observation-triggeredbytype")]
     public enum TriggeredBytype
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#TriggeredBy", IsNestedType=true)]
+    [BackboneType("Observation.triggeredBy")]
     public partial class TriggeredByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -117,6 +118,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TriggeredByType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Observation.TriggeredBytype> TypeElement
@@ -283,6 +285,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#ReferenceRange", IsNestedType=true)]
+    [BackboneType("Observation.referenceRange")]
     public partial class ReferenceRangeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -543,6 +546,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Observation#Component", IsNestedType=true)]
+    [BackboneType("Observation.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -821,6 +825,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ObservationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
