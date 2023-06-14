@@ -1,4 +1,6 @@
-﻿/*
+﻿#nullable enable
+
+/*
   Copyright (c) 2011-2013, HL7, Inc.
   All rights reserved.
   
@@ -29,9 +31,6 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Utility
 {
@@ -39,10 +38,10 @@ namespace Hl7.Fhir.Utility
     public sealed class EnumLiteralAttribute : Attribute
     {
         private readonly string _literal;
-        private readonly string _system;
+        private readonly string? _system;
 
         // This is a positional argument
-        public EnumLiteralAttribute(string literal, string system=null)
+        public EnumLiteralAttribute(string literal, string? system = null)
         {
             _literal = literal;
             _system = system;
@@ -53,7 +52,7 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// The system name-space of the code system that this literal value comes from 
         /// </summary>
-        public string System => _system;
+        public string? System => _system;
     }
 
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
@@ -67,3 +66,5 @@ namespace Hl7.Fhir.Utility
         public string Description => _description;
     }
 }
+
+#nullable restore

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/list-status)
     /// (system: http://hl7.org/fhir/list-status)
     /// </summary>
-    [FhirEnumeration("ListStatus")]
+    [FhirEnumeration("ListStatus", "http://hl7.org/fhir/ValueSet/list-status")]
     public enum ListStatus
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("List#Entry", IsNestedType=true)]
+    [BackboneType("List.entry")]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -316,6 +317,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ListStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.List.ListStatus> StatusElement
@@ -349,6 +351,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("mode", InSummary=true, IsModifier=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ListMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ListMode> ModeElement

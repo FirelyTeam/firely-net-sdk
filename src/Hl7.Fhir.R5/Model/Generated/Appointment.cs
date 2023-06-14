@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentstatus)
     /// (system: http://hl7.org/fhir/appointmentstatus)
     /// </summary>
-    [FhirEnumeration("AppointmentStatus")]
+    [FhirEnumeration("AppointmentStatus", "http://hl7.org/fhir/ValueSet/appointmentstatus")]
     public enum AppointmentStatus
     {
       /// <summary>
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
     /// (system: http://hl7.org/fhir/participationstatus)
     /// </summary>
-    [FhirEnumeration("ParticipationStatus")]
+    [FhirEnumeration("ParticipationStatus", "http://hl7.org/fhir/ValueSet/participationstatus")]
     public enum ParticipationStatus
     {
       /// <summary>
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/timezones)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("IANATimezones")]
+    [FhirEnumeration("IANATimezones", "http://hl7.org/fhir/ValueSet/timezones")]
     public enum IANATimezones
     {
       /// <summary>
@@ -2989,7 +2989,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/week-of-month)
     /// (system: http://hl7.org/fhir/week-of-month)
     /// </summary>
-    [FhirEnumeration("WeekOfMonth")]
+    [FhirEnumeration("WeekOfMonth", "http://hl7.org/fhir/ValueSet/week-of-month")]
     public enum WeekOfMonth
     {
       /// <summary>
@@ -3030,6 +3030,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#Participant", IsNestedType=true)]
+    [BackboneType("Appointment.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3115,6 +3116,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> StatusElement
@@ -3268,6 +3270,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#RecurrenceTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate")]
     public partial class RecurrenceTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3669,6 +3672,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#WeeklyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.weeklyTemplate")]
     public partial class WeeklyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4076,6 +4080,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#MonthlyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.monthlyTemplate")]
     public partial class MonthlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4288,6 +4293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#YearlyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.yearlyTemplate")]
     public partial class YearlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4429,6 +4435,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement

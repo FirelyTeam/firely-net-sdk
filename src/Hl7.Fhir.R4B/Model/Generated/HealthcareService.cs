@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("HealthcareService#Eligibility", IsNestedType=true)]
+    [BackboneType("HealthcareService.eligibility")]
     public partial class EligibilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -210,6 +211,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("HealthcareService#AvailableTime", IsNestedType=true)]
+    [BackboneType("HealthcareService.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -222,6 +224,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
@@ -459,6 +462,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("HealthcareService#NotAvailable", IsNestedType=true)]
+    [BackboneType("HealthcareService.notAvailable")]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

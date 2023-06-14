@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationdispense-status)
     /// (system: http://terminology.hl7.org/CodeSystem/medicationdispense-status)
     /// </summary>
-    [FhirEnumeration("MedicationDispenseStatusCodes")]
+    [FhirEnumeration("MedicationDispenseStatusCodes", "http://hl7.org/fhir/ValueSet/medicationdispense-status")]
     public enum MedicationDispenseStatusCodes
     {
       /// <summary>
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [BackboneType("MedicationDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -259,6 +260,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationDispense.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -486,6 +488,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatusCodes> StatusElement

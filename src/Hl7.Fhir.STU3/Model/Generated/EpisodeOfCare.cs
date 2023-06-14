@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/episode-of-care-status)
     /// (system: http://hl7.org/fhir/episode-of-care-status)
     /// </summary>
-    [FhirEnumeration("EpisodeOfCareStatus")]
+    [FhirEnumeration("EpisodeOfCareStatus", "http://hl7.org/fhir/ValueSet/episode-of-care-status")]
     public enum EpisodeOfCareStatus
     {
       /// <summary>
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EpisodeOfCare#StatusHistory", IsNestedType=true)]
+    [BackboneType("EpisodeOfCare.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -125,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EpisodeOfCareStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
@@ -265,6 +267,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EpisodeOfCare#Diagnosis", IsNestedType=true)]
+    [BackboneType("EpisodeOfCare.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -452,6 +455,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EpisodeOfCareStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-version-processing-mode)
     /// (system: http://hl7.org/fhir/system-version-processing-mode)
     /// </summary>
-    [FhirEnumeration("SystemVersionProcessingMode")]
+    [FhirEnumeration("SystemVersionProcessingMode", "http://hl7.org/fhir/ValueSet/system-version-processing-mode")]
     public enum SystemVersionProcessingMode
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.fixedVersion")]
     public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -165,6 +166,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SystemVersionProcessingMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ExpansionProfile.SystemVersionProcessingMode> ModeElement
@@ -300,6 +302,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.excludedSystem")]
     public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -468,6 +471,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -599,6 +603,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.include")]
     public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -709,6 +714,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.include.designation")]
     public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -720,6 +726,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation to be included
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -858,6 +865,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.exclude")]
     public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -968,6 +976,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.exclude.designation")]
     public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -979,6 +988,7 @@ namespace Hl7.Fhir.Model
       /// Human language of the designation to be excluded
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("Language")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -1222,6 +1232,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1646,6 +1657,7 @@ namespace Hl7.Fhir.Model
     /// Specify the language for the display element of codes in the value set expansion
     /// </summary>
     [FhirElement("displayLanguage", InSummary=true, Order=300)]
+    [Binding("Language")]
     [DataMember]
     public Hl7.Fhir.Model.Code DisplayLanguageElement
     {

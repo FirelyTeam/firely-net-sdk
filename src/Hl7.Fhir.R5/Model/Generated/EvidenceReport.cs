@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/report-relation-type)
     /// (system: http://hl7.org/fhir/report-relation-type)
     /// </summary>
-    [FhirEnumeration("ReportRelationshipType")]
+    [FhirEnumeration("ReportRelationshipType", "http://hl7.org/fhir/ValueSet/report-relation-type")]
     public enum ReportRelationshipType
     {
       /// <summary>
@@ -119,6 +119,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceReport#Subject", IsNestedType=true)]
+    [BackboneType("EvidenceReport.subject")]
     public partial class SubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -252,6 +253,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceReport#Characteristic", IsNestedType=true)]
+    [BackboneType("EvidenceReport.subject.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -450,6 +452,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceReport#RelatesTo", IsNestedType=true)]
+    [BackboneType("EvidenceReport.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -462,6 +465,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ReportRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceReport.ReportRelationshipType> CodeElement
@@ -602,6 +606,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceReport#Target", IsNestedType=true)]
+    [BackboneType("EvidenceReport.relatesTo.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -815,6 +820,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceReport#Section", IsNestedType=true)]
+    [BackboneType("EvidenceReport.section")]
     public partial class SectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -915,6 +921,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SectionMode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ListMode> ModeElement
       {
@@ -1244,6 +1251,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

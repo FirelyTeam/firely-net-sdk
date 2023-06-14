@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guidance-response-status)
     /// (system: http://hl7.org/fhir/guidance-response-status)
     /// </summary>
-    [FhirEnumeration("GuidanceResponseStatus")]
+    [FhirEnumeration("GuidanceResponseStatus", "http://hl7.org/fhir/ValueSet/guidance-response-status")]
     public enum GuidanceResponseStatus
     {
       /// <summary>
@@ -166,6 +166,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GuidanceResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> StatusElement

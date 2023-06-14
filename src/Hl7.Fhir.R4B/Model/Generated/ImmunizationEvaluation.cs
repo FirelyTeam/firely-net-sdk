@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/immunization-evaluation-status)
     /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("ImmunizationEvaluationStatusCodes")]
+    [FhirEnumeration("ImmunizationEvaluationStatusCodes", "http://hl7.org/fhir/ValueSet/immunization-evaluation-status")]
     public enum ImmunizationEvaluationStatusCodes
     {
       /// <summary>
@@ -96,6 +96,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImmunizationEvaluationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImmunizationEvaluation.ImmunizationEvaluationStatusCodes> StatusElement

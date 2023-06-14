@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Model
         /// (url: http://hl7.org/fhir/ValueSet/narrative-status)
         /// (system: http://hl7.org/fhir/narrative-status)
         /// </summary>
-        [FhirEnumeration("NarrativeStatus")]
+        [FhirEnumeration("NarrativeStatus", "http://hl7.org/fhir/ValueSet/narrative-status")]
         public enum NarrativeStatus
         {
             /// <summary>
@@ -106,6 +106,7 @@ namespace Hl7.Fhir.Model
         [Cardinality(Min = 1, Max = 1)]
         [DeclaredType(Type = typeof(Code))]
         [DataMember]
+        [Binding("NarrativeStatus")]
         public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
         {
             get { return _StatusElement; }

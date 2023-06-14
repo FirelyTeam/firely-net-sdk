@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-precondition-type)
     /// (system: http://hl7.org/fhir/condition-precondition-type)
     /// </summary>
-    [FhirEnumeration("ConditionPreconditionType")]
+    [FhirEnumeration("ConditionPreconditionType", "http://hl7.org/fhir/ValueSet/condition-precondition-type")]
     public enum ConditionPreconditionType
     {
       /// <summary>
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose)
     /// (system: http://hl7.org/fhir/condition-questionnaire-purpose)
     /// </summary>
-    [FhirEnumeration("ConditionQuestionnairePurpose")]
+    [FhirEnumeration("ConditionQuestionnairePurpose", "http://hl7.org/fhir/ValueSet/condition-questionnaire-purpose")]
     public enum ConditionQuestionnairePurpose
     {
       /// <summary>
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Observation", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.observation")]
     public partial class ObservationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -242,6 +243,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Medication", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.medication")]
     public partial class MedicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -373,6 +375,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Precondition", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.precondition")]
     public partial class PreconditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -385,6 +388,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionPreconditionType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionPreconditionType> TypeElement
@@ -549,6 +553,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Questionnaire", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.questionnaire")]
     public partial class QuestionnaireComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -561,6 +566,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("purpose", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConditionQuestionnairePurpose")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConditionDefinition.ConditionQuestionnairePurpose> PurposeElement
@@ -703,6 +709,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConditionDefinition#Plan", IsNestedType=true)]
+    [BackboneType("ConditionDefinition.plan")]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1020,6 +1027,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

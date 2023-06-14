@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permission-status)
     /// (system: http://hl7.org/fhir/permission-status)
     /// </summary>
-    [FhirEnumeration("PermissionStatus")]
+    [FhirEnumeration("PermissionStatus", "http://hl7.org/fhir/ValueSet/permission-status")]
     public enum PermissionStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permission-rule-combining)
     /// (system: http://hl7.org/fhir/permission-rule-combining)
     /// </summary>
-    [FhirEnumeration("PermissionRuleCombining")]
+    [FhirEnumeration("PermissionRuleCombining", "http://hl7.org/fhir/ValueSet/permission-rule-combining")]
     public enum PermissionRuleCombining
     {
       /// <summary>
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Justification", IsNestedType=true)]
+    [BackboneType("Permission.justification")]
     public partial class JustificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -276,6 +277,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Rule", IsNestedType=true)]
+    [BackboneType("Permission.rule")]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -288,6 +290,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, IsModifier=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PermissionProvisionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConsentProvisionType> TypeElement
       {
@@ -473,6 +476,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Data", IsNestedType=true)]
+    [BackboneType("Permission.rule.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -651,6 +655,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Resource", IsNestedType=true)]
+    [BackboneType("Permission.rule.data.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -663,6 +668,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
@@ -805,6 +811,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Activity", IsNestedType=true)]
+    [BackboneType("Permission.rule.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -962,6 +969,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PermissionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Permission.PermissionStatus> StatusElement
@@ -1068,6 +1076,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("combining", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PermissionCombining")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining> CombiningElement

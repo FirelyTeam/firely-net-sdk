@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,6 +18,37 @@ using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Tests.Introspection
 {
+    [TestClass]
+    public class EnumMappingTest
+    {
+        private enum Random
+        {
+            Eight,
+            Five,
+            Three
+        }
+
+        [TestMethod]
+        public void TestEnumMappingCreation()
+        {
+            EnumMapping.TryCreate(typeof(EnumMappingTest), out var _).Should().BeFalse();
+            EnumMapping.TryCreate(typeof(FilterOperator), out var mapping).Should().BeTrue();
+
+            mapping.Canonical.Should().Be("http://hl7.org/fhir/ValueSet/filter-operator");
+            mapping.Name.Should().Be("FilterOperator");
+
+            var values = Enum.GetValues<FilterOperator>();
+            mapping.Members.Should().HaveCount(values.Length);
+            mapping.Members.Select(kvp => kvp.Value.Value).Should().BeEquivalentTo(values);
+
+            var equals = mapping.Members["="];
+            equals.Code.Should().Be("=");
+            equals.Value.Should().Be(FilterOperator.Equal);
+            equals.Description.Should().Be("Equals");
+            equals.System.Should().Be("http://hl7.org/fhir/filter-operator");
+        }
+    }
+
     [TestClass]
     public class ClassMappingTest
     {
@@ -36,6 +68,19 @@ namespace Hl7.Fhir.Tests.Introspection
             Assert.IsFalse(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.DSTU1));
             Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.DSTU2));
             Assert.IsTrue(ClassMapping.TryCreate(typeof(Way2), out _, Specification.FhirRelease.STU3));
+        }
+
+        [TestMethod]
+        public void TestCqlInformation()
+        {
+            Assert.IsTrue(ClassMapping.TryCreate(typeof(Way), out var mapping));
+
+            Assert.IsTrue(mapping.IsPatientClass);
+            Assert.IsTrue(mapping.PrimaryCodePath?.Name == "code");
+
+            var inspector = new ModelInspector(Specification.FhirRelease.STU3);
+            inspector.ImportType(typeof(Way));
+            inspector.ImportType(typeof(Way2));
         }
 
 
@@ -110,10 +155,20 @@ namespace Hl7.Fhir.Tests.Introspection
     [FhirType("Way")]
     [Test("One")]
     [Test("Two")]
-    public class Way : Resource
+    public class Way : Resource, IPatient
     {
         [Test("AttrA")]
+        [FhirElement("member")]
+        [CqlElement(IsBirthDate = true)]
         public string Member { get; set; }
+
+        [Test("AttrB")]
+        [FhirElement("code")]
+        [CqlElement(IsPrimaryCodePath = true)]
+        public string Code { get; set; }
+
+        public Date BirthDate => new(1972, 11, 30);
+
         public override IDeepCopyable DeepCopy() => throw new NotImplementedException();
     }
 

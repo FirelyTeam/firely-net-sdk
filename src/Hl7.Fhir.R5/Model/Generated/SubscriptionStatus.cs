@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-notification-type)
     /// (system: http://hl7.org/fhir/subscription-notification-type)
     /// </summary>
-    [FhirEnumeration("SubscriptionNotificationType")]
+    [FhirEnumeration("SubscriptionNotificationType", "http://hl7.org/fhir/ValueSet/subscription-notification-type")]
     public enum SubscriptionNotificationType
     {
       /// <summary>
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionStatus#NotificationEvent", IsNestedType=true)]
+    [BackboneType("SubscriptionStatus.notificationEvent")]
     public partial class NotificationEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -317,6 +318,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatusCodes> StatusElement
     {
@@ -349,6 +351,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionNotificationType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType> TypeElement

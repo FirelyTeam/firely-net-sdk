@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/substance-status)
     /// (system: http://hl7.org/fhir/substance-status)
     /// </summary>
-    [FhirEnumeration("FHIRSubstanceStatus")]
+    [FhirEnumeration("FHIRSubstanceStatus", "http://hl7.org/fhir/ValueSet/substance-status")]
     public enum FHIRSubstanceStatus
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Ingredient", IsNestedType=true)]
+    [BackboneType("Substance.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -269,6 +270,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRSubstanceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> StatusElement
     {

@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergyintolerance-clinical)
     /// (system: http://terminology.hl7.org/CodeSystem/allergyintolerance-clinical)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceClinicalStatusCodes")]
+    [FhirEnumeration("AllergyIntoleranceClinicalStatusCodes", "http://hl7.org/fhir/ValueSet/allergyintolerance-clinical")]
     public enum AllergyIntoleranceClinicalStatusCodes
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergyintolerance-verification)
     /// (system: http://terminology.hl7.org/CodeSystem/allergyintolerance-verification)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceVerificationStatusCodes")]
+    [FhirEnumeration("AllergyIntoleranceVerificationStatusCodes", "http://hl7.org/fhir/ValueSet/allergyintolerance-verification")]
     public enum AllergyIntoleranceVerificationStatusCodes
     {
       /// <summary>
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-type)
     /// (system: http://hl7.org/fhir/allergy-intolerance-type)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceType")]
+    [FhirEnumeration("AllergyIntoleranceType", "http://hl7.org/fhir/ValueSet/allergy-intolerance-type")]
     public enum AllergyIntoleranceType
     {
       /// <summary>
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-category)
     /// (system: http://hl7.org/fhir/allergy-intolerance-category)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceCategory")]
+    [FhirEnumeration("AllergyIntoleranceCategory", "http://hl7.org/fhir/ValueSet/allergy-intolerance-category")]
     public enum AllergyIntoleranceCategory
     {
       /// <summary>
@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality)
     /// (system: http://hl7.org/fhir/allergy-intolerance-criticality)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceCriticality")]
+    [FhirEnumeration("AllergyIntoleranceCriticality", "http://hl7.org/fhir/ValueSet/allergy-intolerance-criticality")]
     public enum AllergyIntoleranceCriticality
     {
       /// <summary>
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reaction-event-severity)
     /// (system: http://hl7.org/fhir/reaction-event-severity)
     /// </summary>
-    [FhirEnumeration("AllergyIntoleranceSeverity")]
+    [FhirEnumeration("AllergyIntoleranceSeverity", "http://hl7.org/fhir/ValueSet/reaction-event-severity")]
     public enum AllergyIntoleranceSeverity
     {
       /// <summary>
@@ -235,6 +235,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
+    [BackboneType("AllergyIntolerance.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -336,6 +337,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AllergyIntoleranceSeverity")]
       [DataMember]
       public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceSeverity> SeverityElement
       {
@@ -572,6 +574,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=120, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceType> TypeElement
     {
@@ -604,6 +607,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=130, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceCategory")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCategory>> CategoryElement
@@ -637,6 +641,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("criticality", InSummary=true, Order=140, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AllergyIntoleranceCriticality")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AllergyIntolerance.AllergyIntoleranceCriticality> CriticalityElement
     {

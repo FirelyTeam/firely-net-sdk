@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/substance-status)
     /// (system: http://hl7.org/fhir/substance-status)
     /// </summary>
-    [FhirEnumeration("FHIRSubstanceStatus")]
+    [FhirEnumeration("FHIRSubstanceStatus", "http://hl7.org/fhir/ValueSet/substance-status")]
     public enum FHIRSubstanceStatus
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Instance", IsNestedType=true)]
+    [BackboneType("Substance.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -260,6 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Ingredient", IsNestedType=true)]
+    [BackboneType("Substance.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -408,6 +410,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRSubstanceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> StatusElement
     {
@@ -453,6 +456,7 @@ namespace Hl7.Fhir.Model
     /// What substance this is
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PractitionerRole#AvailableTime", IsNestedType=true)]
+    [BackboneType("PractitionerRole.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
@@ -310,6 +312,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PractitionerRole#NotAvailable", IsNestedType=true)]
+    [BackboneType("PractitionerRole.notAvailable")]
     public partial class NotAvailableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -546,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// Roles which this practitioner may perform
     /// </summary>
     [FhirElement("code", InSummary=true, Order=140)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Code

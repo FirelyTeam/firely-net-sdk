@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/slotstatus)
     /// (system: http://hl7.org/fhir/slotstatus)
     /// </summary>
-    [FhirEnumeration("SlotStatus")]
+    [FhirEnumeration("SlotStatus", "http://hl7.org/fhir/ValueSet/slotstatus")]
     public enum SlotStatus
     {
       /// <summary>
@@ -186,6 +186,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SlotStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Slot.SlotStatus> StatusElement

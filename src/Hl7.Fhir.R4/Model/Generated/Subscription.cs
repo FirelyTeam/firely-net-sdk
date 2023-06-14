@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-status)
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [FhirEnumeration("SubscriptionStatus")]
+    [FhirEnumeration("SubscriptionStatus", "http://hl7.org/fhir/ValueSet/subscription-status")]
     public enum SubscriptionStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-channel-type)
     /// (system: http://hl7.org/fhir/subscription-channel-type)
     /// </summary>
-    [FhirEnumeration("SubscriptionChannelType")]
+    [FhirEnumeration("SubscriptionChannelType", "http://hl7.org/fhir/ValueSet/subscription-channel-type")]
     public enum SubscriptionChannelType
     {
       /// <summary>
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Subscription#Channel", IsNestedType=true)]
+    [BackboneType("Subscription.channel")]
     public partial class ChannelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -147,6 +148,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SubscriptionChannelType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Subscription.SubscriptionChannelType> TypeElement
@@ -210,6 +212,7 @@ namespace Hl7.Fhir.Model
       /// MIME type to send, or omit for no payload
       /// </summary>
       [FhirElement("payload", InSummary=true, Order=60)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code PayloadElement
       {
@@ -384,6 +387,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Subscription.SubscriptionStatus> StatusElement

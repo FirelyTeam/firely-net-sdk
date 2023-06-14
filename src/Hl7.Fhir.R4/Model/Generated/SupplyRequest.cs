@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplyrequest-status)
     /// (system: http://hl7.org/fhir/supplyrequest-status)
     /// </summary>
-    [FhirEnumeration("SupplyRequestStatus")]
+    [FhirEnumeration("SupplyRequestStatus", "http://hl7.org/fhir/ValueSet/supplyrequest-status")]
     public enum SupplyRequestStatus
     {
       /// <summary>
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyRequest#Parameter", IsNestedType=true)]
+    [BackboneType("SupplyRequest.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -259,6 +260,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SupplyRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> StatusElement
     {
@@ -290,6 +292,7 @@ namespace Hl7.Fhir.Model
     /// The kind of supply (central, non-stock, etc.)
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -304,6 +307,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=120, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

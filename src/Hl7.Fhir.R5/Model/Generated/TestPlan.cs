@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#Dependency", IsNestedType=true)]
+    [BackboneType("TestPlan.dependency")]
     public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -210,6 +211,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#TestCase", IsNestedType=true)]
+    [BackboneType("TestPlan.testCase")]
     public partial class TestCaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -452,6 +454,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#TestCaseDependency", IsNestedType=true)]
+    [BackboneType("TestPlan.testCase.dependency")]
     public partial class TestCaseDependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -601,6 +604,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#TestRun", IsNestedType=true)]
+    [BackboneType("TestPlan.testCase.testRun")]
     public partial class TestRunComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -750,6 +754,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#Script", IsNestedType=true)]
+    [BackboneType("TestPlan.testCase.testRun.script")]
     public partial class ScriptComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -883,6 +888,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#TestData", IsNestedType=true)]
+    [BackboneType("TestPlan.testCase.testData")]
     public partial class TestDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1039,6 +1045,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestPlan#Assertion", IsNestedType=true)]
+    [BackboneType("TestPlan.testCase.assertion")]
     public partial class AssertionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1347,6 +1354,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

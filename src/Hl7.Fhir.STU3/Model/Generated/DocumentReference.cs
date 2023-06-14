@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#RelatesTo", IsNestedType=true)]
+    [BackboneType("DocumentReference.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DocumentRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DocumentRelationshipType> CodeElement
@@ -215,6 +217,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Content", IsNestedType=true)]
+    [BackboneType("DocumentReference.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -347,6 +350,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Context", IsNestedType=true)]
+    [BackboneType("DocumentReference.context")]
     public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -594,6 +598,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Related", IsNestedType=true)]
+    [BackboneType("DocumentReference.context.related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -753,6 +758,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DocumentReferenceStatus> StatusElement
@@ -786,6 +792,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("docStatus", InSummary=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ReferredDocumentStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CompositionStatus> DocStatusElement
     {

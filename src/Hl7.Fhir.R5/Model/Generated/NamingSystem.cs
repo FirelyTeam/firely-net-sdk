@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-type)
     /// (system: http://hl7.org/fhir/namingsystem-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemType")]
+    [FhirEnumeration("NamingSystemType", "http://hl7.org/fhir/ValueSet/namingsystem-type")]
     public enum NamingSystemType
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-identifier-type)
     /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemIdentifierType")]
+    [FhirEnumeration("NamingSystemIdentifierType", "http://hl7.org/fhir/ValueSet/namingsystem-identifier-type")]
     public enum NamingSystemIdentifierType
     {
       /// <summary>
@@ -135,6 +135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NamingSystem#UniqueId", IsNestedType=true)]
+    [BackboneType("NamingSystem.uniqueId")]
     public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -147,6 +148,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NamingSystemIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -600,6 +602,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -633,6 +636,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NamingSystemType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement

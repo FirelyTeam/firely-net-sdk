@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#UdiDeviceIdentifier", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.udiDeviceIdentifier")]
     public partial class UdiDeviceIdentifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -271,6 +272,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#DeviceName", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.deviceName")]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -315,6 +317,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -441,6 +444,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Specialization", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.specialization")]
     public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -609,6 +613,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Capability", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.capability")]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -742,6 +747,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Property", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -898,6 +904,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDefinition#Material", IsNestedType=true)]
+    [BackboneType("DeviceDefinition.material")]
     public partial class MaterialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

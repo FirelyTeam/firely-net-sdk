@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/structure-definition-kind)
     /// (system: http://hl7.org/fhir/structure-definition-kind)
     /// </summary>
-    [FhirEnumeration("StructureDefinitionKind")]
+    [FhirEnumeration("StructureDefinitionKind", "http://hl7.org/fhir/ValueSet/structure-definition-kind")]
     public enum StructureDefinitionKind
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-derivation-rule)
     /// (system: http://hl7.org/fhir/type-derivation-rule)
     /// </summary>
-    [FhirEnumeration("TypeDerivationRule")]
+    [FhirEnumeration("TypeDerivationRule", "http://hl7.org/fhir/ValueSet/type-derivation-rule")]
     public enum TypeDerivationRule
     {
       /// <summary>
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/extension-context-type)
     /// (system: http://hl7.org/fhir/extension-context-type)
     /// </summary>
-    [FhirEnumeration("ExtensionContextType")]
+    [FhirEnumeration("ExtensionContextType", "http://hl7.org/fhir/ValueSet/extension-context-type")]
     public enum ExtensionContextType
     {
       /// <summary>
@@ -145,6 +145,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Mapping", IsNestedType=true)]
+    [BackboneType("StructureDefinition.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -393,6 +394,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Context", IsNestedType=true)]
+    [BackboneType("StructureDefinition.context")]
     public partial class ContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -405,6 +407,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ExtensionContextType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContextType> TypeElement
@@ -563,6 +566,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Snapshot", IsNestedType=true)]
+    [BackboneType("StructureDefinition.snapshot")]
     public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -673,6 +677,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Differential", IsNestedType=true)]
+    [BackboneType("StructureDefinition.differential")]
     public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -937,6 +942,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1243,6 +1249,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("fhirVersion", InSummary=true, Order=270)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRVersion")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FHIRVersion> FhirVersionElement
     {
@@ -1289,6 +1296,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("StructureDefinitionKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind> KindElement
@@ -1463,6 +1471,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("derivation", InSummary=true, Order=350)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TypeDerivationRule")]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule> DerivationElement
     {

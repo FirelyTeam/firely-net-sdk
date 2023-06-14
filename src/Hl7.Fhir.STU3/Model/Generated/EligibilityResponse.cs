@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Insurance", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -219,6 +220,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Benefits", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.insurance.benefitBalance")]
     public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -560,6 +562,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Benefit", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.insurance.benefitBalance.financial")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -718,6 +721,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Errors", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.error")]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -841,6 +845,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {

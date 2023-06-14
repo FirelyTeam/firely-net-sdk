@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/goal-status)
     /// (system: http://hl7.org/fhir/goal-status)
     /// </summary>
-    [FhirEnumeration("GoalLifecycleStatus")]
+    [FhirEnumeration("GoalLifecycleStatus", "http://hl7.org/fhir/ValueSet/goal-status")]
     public enum GoalLifecycleStatus
     {
       /// <summary>
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Goal#Target", IsNestedType=true)]
+    [BackboneType("Goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -295,6 +296,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("lifecycleStatus", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GoalLifecycleStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Goal.GoalLifecycleStatus> LifecycleStatusElement
@@ -340,6 +342,7 @@ namespace Hl7.Fhir.Model
     /// E.g. Treatment, dietary, behavioral, etc.
     /// </summary>
     [FhirElement("category", InSummary=true, Order=120, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

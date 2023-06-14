@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("AdverseEventStatus")]
+    [FhirEnumeration("AdverseEventStatus", "http://hl7.org/fhir/ValueSet/adverse-event-status")]
     public enum AdverseEventStatus
     {
       /// <summary>
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
     /// (system: http://hl7.org/fhir/adverse-event-actuality)
     /// </summary>
-    [FhirEnumeration("AdverseEventActuality")]
+    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality")]
     public enum AdverseEventActuality
     {
       /// <summary>
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Participant", IsNestedType=true)]
+    [BackboneType("AdverseEvent.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -251,6 +252,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity.causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -541,6 +544,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#ContributingFactor", IsNestedType=true)]
+    [BackboneType("AdverseEvent.contributingFactor")]
     public partial class ContributingFactorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -654,6 +658,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#PreventiveAction", IsNestedType=true)]
+    [BackboneType("AdverseEvent.preventiveAction")]
     public partial class PreventiveActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -767,6 +772,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#MitigatingAction", IsNestedType=true)]
+    [BackboneType("AdverseEvent.mitigatingAction")]
     public partial class MitigatingActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -880,6 +886,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SupportingInfo", IsNestedType=true)]
+    [BackboneType("AdverseEvent.supportingInfo")]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1006,6 +1013,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventStatus> StatusElement
@@ -1039,6 +1047,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement

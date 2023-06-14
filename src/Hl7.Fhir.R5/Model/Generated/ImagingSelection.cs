@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-status)
     /// (system: http://hl7.org/fhir/imagingselection-status)
     /// </summary>
-    [FhirEnumeration("ImagingSelectionStatus")]
+    [FhirEnumeration("ImagingSelectionStatus", "http://hl7.org/fhir/ValueSet/imagingselection-status")]
     public enum ImagingSelectionStatus
     {
       /// <summary>
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype)
     /// (system: http://hl7.org/fhir/imagingselection-2dgraphictype)
     /// </summary>
-    [FhirEnumeration("ImagingSelection2DGraphicType")]
+    [FhirEnumeration("ImagingSelection2DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-2dgraphictype")]
     public enum ImagingSelection2DGraphicType
     {
       /// <summary>
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype)
     /// (system: http://hl7.org/fhir/imagingselection-3dgraphictype)
     /// </summary>
-    [FhirEnumeration("ImagingSelection3DGraphicType")]
+    [FhirEnumeration("ImagingSelection3DGraphicType", "http://hl7.org/fhir/ValueSet/imagingselection-3dgraphictype")]
     public enum ImagingSelection3DGraphicType
     {
       /// <summary>
@@ -175,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#Performer", IsNestedType=true)]
+    [BackboneType("ImagingSelection.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -308,6 +309,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#Instance", IsNestedType=true)]
+    [BackboneType("ImagingSelection.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -585,6 +587,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#ImageRegion2D", IsNestedType=true)]
+    [BackboneType("ImagingSelection.instance.imageRegion2D")]
     public partial class ImageRegion2DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -597,6 +600,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("regionType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ImagingSelection2DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection2DGraphicType> RegionTypeElement
@@ -755,6 +759,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#ImageRegion3D", IsNestedType=true)]
+    [BackboneType("ImagingSelection.instance.imageRegion3D")]
     public partial class ImageRegion3DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -767,6 +772,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("regionType", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ImagingSelection3DGraphicType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelection3DGraphicType> RegionTypeElement
@@ -938,6 +944,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImagingSelectionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingSelection.ImagingSelectionStatus> StatusElement

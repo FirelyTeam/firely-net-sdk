@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/inventoryitem-status)
     /// (system: http://hl7.org/fhir/inventoryitem-status)
     /// </summary>
-    [FhirEnumeration("InventoryItemStatusCodes")]
+    [FhirEnumeration("InventoryItemStatusCodes", "http://hl7.org/fhir/ValueSet/inventoryitem-status")]
     public enum InventoryItemStatusCodes
     {
       /// <summary>
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Name", IsNestedType=true)]
+    [BackboneType("InventoryItem.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -121,6 +122,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("language", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NameLanguage")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CommonLanguages> LanguageElement
@@ -288,6 +290,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#ResponsibleOrganization", IsNestedType=true)]
+    [BackboneType("InventoryItem.responsibleOrganization")]
     public partial class ResponsibleOrganizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -423,6 +426,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Description", IsNestedType=true)]
+    [BackboneType("InventoryItem.description")]
     public partial class DescriptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -435,6 +439,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("language", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ItemDescriptionLanguage")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CommonLanguages> LanguageElement
       {
@@ -591,6 +596,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Association", IsNestedType=true)]
+    [BackboneType("InventoryItem.association")]
     public partial class AssociationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -749,6 +755,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Characteristic", IsNestedType=true)]
+    [BackboneType("InventoryItem.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -884,6 +891,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Instance", IsNestedType=true)]
+    [BackboneType("InventoryItem.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1135,6 +1143,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("InventoryItemStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.InventoryItem.InventoryItemStatusCodes> StatusElement

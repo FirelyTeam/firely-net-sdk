@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#Class", IsNestedType=true)]
+    [BackboneType("Coverage.class")]
     public partial class ClassComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -252,6 +253,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#CostToBeneficiary", IsNestedType=true)]
+    [BackboneType("Coverage.costToBeneficiary")]
     public partial class CostToBeneficiaryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -409,6 +411,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Coverage#Exemption", IsNestedType=true)]
+    [BackboneType("Coverage.costToBeneficiary.exception")]
     public partial class ExemptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -554,6 +557,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CoverageStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -586,6 +590,7 @@ namespace Hl7.Fhir.Model
     /// Coverage category such as medical or accident
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

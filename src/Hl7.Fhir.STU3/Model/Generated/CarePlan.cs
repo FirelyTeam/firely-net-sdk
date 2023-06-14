@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-status)
     /// (system: http://hl7.org/fhir/care-plan-status)
     /// </summary>
-    [FhirEnumeration("CarePlanStatus")]
+    [FhirEnumeration("CarePlanStatus", "http://hl7.org/fhir/ValueSet/care-plan-status")]
     public enum CarePlanStatus
     {
       /// <summary>
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-intent)
     /// (system: http://hl7.org/fhir/care-plan-intent)
     /// </summary>
-    [FhirEnumeration("CarePlanIntent")]
+    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent")]
     public enum CarePlanIntent
     {
       /// <summary>
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-activity-status)
     /// (system: http://hl7.org/fhir/care-plan-activity-status)
     /// </summary>
-    [FhirEnumeration("CarePlanActivityStatus")]
+    [FhirEnumeration("CarePlanActivityStatus", "http://hl7.org/fhir/ValueSet/care-plan-activity-status")]
     public enum CarePlanActivityStatus
     {
       /// <summary>
@@ -200,6 +200,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Activity", IsNestedType=true)]
+    [BackboneType("CarePlan.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -404,6 +405,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Detail", IsNestedType=true)]
+    [BackboneType("CarePlan.activity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -503,6 +505,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", IsModifier=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CarePlanActivityStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> StatusElement
@@ -1013,6 +1016,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanStatus> StatusElement
@@ -1046,6 +1050,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> IntentElement

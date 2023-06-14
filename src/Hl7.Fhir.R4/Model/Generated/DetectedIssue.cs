@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
     /// (system: http://hl7.org/fhir/detectedissue-severity)
     /// </summary>
-    [FhirEnumeration("DetectedIssueSeverity")]
+    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity")]
     public enum DetectedIssueSeverity
     {
       /// <summary>
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DetectedIssue#Evidence", IsNestedType=true)]
+    [BackboneType("DetectedIssue.evidence")]
     public partial class EvidenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -224,6 +225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DetectedIssue#Mitigation", IsNestedType=true)]
+    [BackboneType("DetectedIssue.mitigation")]
     public partial class MitigationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -411,6 +413,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DetectedIssueStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -443,6 +446,7 @@ namespace Hl7.Fhir.Model
     /// Issue Category, e.g. drug-drug, duplicate therapy, etc.
     /// </summary>
     [FhirElement("code", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -457,6 +461,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("severity", InSummary=true, Order=120, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DetectedIssueSeverity")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DetectedIssue.DetectedIssueSeverity> SeverityElement
     {

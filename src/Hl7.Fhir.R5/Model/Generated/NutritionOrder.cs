@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#OralDiet", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet")]
     public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -302,6 +303,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#OralDietSchedule", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet.schedule")]
     public partial class OralDietScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -474,6 +476,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Nutrient", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet.nutrient")]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -605,6 +608,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Texture", IsNestedType=true)]
+    [BackboneType("NutritionOrder.oralDiet.texture")]
     public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -736,6 +740,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Supplement", IsNestedType=true)]
+    [BackboneType("NutritionOrder.supplement")]
     public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -969,6 +974,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#SupplementSchedule", IsNestedType=true)]
+    [BackboneType("NutritionOrder.supplement.schedule")]
     public partial class SupplementScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1141,6 +1147,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#EnteralFormula", IsNestedType=true)]
+    [BackboneType("NutritionOrder.enteralFormula")]
     public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1465,6 +1472,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Additive", IsNestedType=true)]
+    [BackboneType("NutritionOrder.enteralFormula.additive")]
     public partial class AdditiveComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1636,6 +1644,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Administration", IsNestedType=true)]
+    [BackboneType("NutritionOrder.enteralFormula.administration")]
     public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1791,6 +1800,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#EnteralFormulaSchedule", IsNestedType=true)]
+    [BackboneType("NutritionOrder.enteralFormula.administration.schedule")]
     public partial class EnteralFormulaScheduleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2101,6 +2111,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NutritionOrderStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -2134,6 +2145,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NutritiionOrderIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -2167,6 +2179,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", Order=170, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NutritionOrderPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
