@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Specification.Terminology
     {
         private const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
         private const string MIMETYPE_VALUESET_R4_AND_UP = "http://hl7.org/fhir/ValueSet/mimetypes";
-
+        private const string MIMETYPE_VALUESET_STU3 = "http://www.rfc-editor.org/bcp/bcp13.txt";
 
         ///<inheritdoc />
         public T.Task<Resource> Closure(Parameters parameters, bool useGet = false) => throw new NotImplementedException();

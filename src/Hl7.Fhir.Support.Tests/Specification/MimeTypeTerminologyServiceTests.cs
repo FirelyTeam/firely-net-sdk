@@ -14,6 +14,7 @@ namespace Hl7.Fhir.Specification.Tests
         private readonly MimeTypeTerminologyService _service = new();
         private const string MIMETYPEVS = "http://hl7.org/fhir/ValueSet/mimetypes";
         private const string MIMETYPE_VERSIONED_VS = "http://hl7.org/fhir/ValueSet/mimetypes|4.0.1";
+        private const string MIMETYPE_VS_STU3 = "http://www.rfc-editor.org/bcp/bcp13.txt";
         private const string ADMINGENDERVS = "http://hl7.org/fhir/ValueSet/administrative-gender";
 
         [TestMethod]
@@ -75,5 +76,29 @@ namespace Hl7.Fhir.Specification.Tests
             result = await _service.ValueSetValidateCode(parameters);
             result.Parameter.Should().Contain(p => p.Name == "result")
                 .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
-        }    }
+        }
+
+        [TestMethod]
+        public async Task MimeTypeValidationWithStu3VS()
+        {
+            var parameters = new ValidateCodeParameters()
+                   .WithValueSet(MIMETYPE_VS_STU3)
+                   .WithCode(code: "invalid", context: "context")
+                   .Build();
+
+            var result = await _service.ValueSetValidateCode(parameters);
+            result.Parameter.Should().Contain(p => p.Name == "message")
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"'invalid' is not a valid MIME type."));
+
+
+            parameters = new ValidateCodeParameters()
+                   .WithValueSet(MIMETYPE_VS_STU3)
+                   .WithCode(code: "application/json", context: "context")
+                   .Build();
+
+            result = await _service.ValueSetValidateCode(parameters);
+            result.Parameter.Should().Contain(p => p.Name == "result")
+                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
+        }
+    }
 }
