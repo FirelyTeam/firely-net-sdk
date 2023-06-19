@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Specification.Terminology
     public class MimeTypeTerminologyService : ITerminologyService
     {
         private const string MIMETYPE_SYSTEM = "urn:ietf:bcp:13";
-        private const string MIMETYPE_VALUESET = "http://hl7.org/fhir/ValueSet/mimetypes";
+        private const string MIMETYPE_VALUESET_R4_AND_UP = "http://hl7.org/fhir/ValueSet/mimetypes";
 
 
         ///<inheritdoc />
@@ -41,8 +41,9 @@ namespace Hl7.Fhir.Specification.Terminology
             parameters.CheckForValidityOfValidateCodeParams();
 
             var validCodeParams = new ValidateCodeParameters(parameters);
+            var valueSetUri = validCodeParams?.Url?.Value != null ? new Canonical(validCodeParams?.Url?.Value)?.Uri : null;
 
-            if (validCodeParams?.Url?.Value is not null && validCodeParams?.Url?.Value != MIMETYPE_VALUESET)
+            if (valueSetUri is not null && valueSetUri != MIMETYPE_VALUESET_R4_AND_UP && valueSetUri != MIMETYPE_VALUESET_STU3)
             {   // 404 not found
                 throw new FhirOperationException($"Cannot find valueset '{validCodeParams!.Url.Value}'", HttpStatusCode.NotFound);
             }
@@ -114,6 +115,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private static Task<Parameters> validateCodeVS(string? code, string? system)
         {
             var result = new Parameters();
+            var systemUri = system != null ? new Canonical(system)?.Uri : null;
 
             if (code is null)
             {
@@ -121,7 +123,7 @@ namespace Hl7.Fhir.Specification.Terminology
                       .Add("result", new FhirBoolean(false));
 
             }
-            else if (system == MIMETYPE_SYSTEM || system == null)
+            else if (systemUri == MIMETYPE_SYSTEM || systemUri == null)
             {
                 var success = validateMimeType(code);
 
