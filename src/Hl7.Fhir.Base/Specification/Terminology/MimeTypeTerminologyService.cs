@@ -41,9 +41,9 @@ namespace Hl7.Fhir.Specification.Terminology
             parameters.CheckForValidityOfValidateCodeParams();
 
             var validCodeParams = new ValidateCodeParameters(parameters);
-            var valueSetUri = validCodeParams?.Url?.Value != null ? new Canonical(validCodeParams?.Url?.Value)?.Uri : null;
+            var valueSetUri = validCodeParams?.Url?.Value != null ? new Canonical(validCodeParams?.Url?.Value).Uri : null;
 
-            if (valueSetUri is not null && valueSetUri != MIMETYPE_VALUESET_R4_AND_UP && valueSetUri != MIMETYPE_VALUESET_STU3)
+            if (valueSetUri != MIMETYPE_VALUESET_R4_AND_UP && valueSetUri != MIMETYPE_VALUESET_STU3)
             {   // 404 not found
                 throw new FhirOperationException($"Cannot find valueset '{validCodeParams!.Url.Value}'", HttpStatusCode.NotFound);
             }
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Specification.Terminology
         private static Task<Parameters> validateCodeVS(string? code, string? system)
         {
             var result = new Parameters();
-            var systemUri = system != null ? new Canonical(system)?.Uri : null;
+            var systemUri = system != null ? new Canonical(system).Uri : null;
 
             if (code is null)
             {

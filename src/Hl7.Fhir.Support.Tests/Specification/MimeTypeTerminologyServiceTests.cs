@@ -55,11 +55,13 @@ namespace Hl7.Fhir.Specification.Tests
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a system or a context must be provided");
         }
 
-        [TestMethod]
-        public async Task MimeTypeValidationWithVersionedVSTest()
+        [DataRow(MIMETYPE_VERSIONED_VS)]
+        [DataRow(MIMETYPE_VS_STU3)]
+        [DataTestMethod]
+        public async Task MimeTypeValidationAlternativeValueSet(string valueset)
         {
             var parameters = new ValidateCodeParameters()
-                   .WithValueSet(MIMETYPE_VERSIONED_VS)
+                   .WithValueSet(valueset)
                    .WithCode(code: "invalid", context: "context")
                    .Build();
 
@@ -69,30 +71,7 @@ namespace Hl7.Fhir.Specification.Tests
 
 
             parameters = new ValidateCodeParameters()
-                   .WithValueSet(MIMETYPE_VERSIONED_VS)
-                   .WithCode(code: "application/json", context: "context")
-                   .Build();
-
-            result = await _service.ValueSetValidateCode(parameters);
-            result.Parameter.Should().Contain(p => p.Name == "result")
-                .Subject.Value.Should().BeEquivalentTo(new FhirBoolean(true));
-        }
-
-        [TestMethod]
-        public async Task MimeTypeValidationWithStu3VS()
-        {
-            var parameters = new ValidateCodeParameters()
-                   .WithValueSet(MIMETYPE_VS_STU3)
-                   .WithCode(code: "invalid", context: "context")
-                   .Build();
-
-            var result = await _service.ValueSetValidateCode(parameters);
-            result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"'invalid' is not a valid MIME type."));
-
-
-            parameters = new ValidateCodeParameters()
-                   .WithValueSet(MIMETYPE_VS_STU3)
+                   .WithValueSet(valueset)
                    .WithCode(code: "application/json", context: "context")
                    .Build();
 
