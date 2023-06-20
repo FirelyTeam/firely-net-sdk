@@ -17,9 +17,11 @@ using Hl7.FhirPath.Expressions;
 using Hl7.FhirPath.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Linq;
 
 namespace Hl7.FhirPath.R4.Tests
@@ -371,41 +373,34 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void CompilationIsCached()
         {
-            // If the test failed, try again, we might have been
-            // bugged by temporary slowness of the CI build.
-            if (!test())
-            {
-                Assert.IsTrue(test());
-            }
-                   
-            static bool test()
-            {
-                var uncached = run(null, out var last);
-                var cached = run(last, out var _);
-                Console.WriteLine("Uncached: {0}, cached: {1}".FormatWith(uncached, cached));
+            fixture.TestInput.Select($"Patient.name[0]");
+            Assert.IsTrue(checkIfPresentInCache($"Patient.name[0]"));
 
-                return cached < uncached / 2;
-            }
+            Assert.IsFalse(checkIfPresentInCache($"Patient.name[1]"));
 
-            static long run(string fixd, out string lastExpression)
-            {
-                lastExpression = null;
-                var sw = new Stopwatch();
-                sw.Start();
+            fixture.TestInput.Select($"Patient.name[1]");
+            Assert.IsTrue(checkIfPresentInCache($"Patient.name[1]"));
 
-                var random = new Random();
+        }
 
-                // something that has not been compiled before
-                for (int i = 0; i < 1000; i++)
-                {
-                    var next = random.Next(0, 10000);
-                    lastExpression = fixd ?? $"Patient.name[{next}]";
-                    fixture.TestInput.Select(lastExpression);
-                }
-                sw.Stop();
+        private bool checkIfPresentInCache(string expression)
+        {
+            var cache = typeof(FhirPathExtensions)
+                             .GetField("CACHE", BindingFlags.NonPublic | BindingFlags.Static)
+                             .GetValue(null);
 
-                return sw.ElapsedMilliseconds;
-            }
+
+            var cachedExpressions = typeof(FhirPathCompilerCache)
+                                    .GetField("_cache", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
+                                    .GetValue(cache) as Cache<string, CompiledExpression>;
+
+
+            var dictionary = typeof(Cache<string, CompiledExpression>)
+                                   .GetField("_cached", BindingFlags.NonPublic | BindingFlags.Instance)
+                                   .GetValue(cachedExpressions) as ConcurrentDictionary<string, CacheItem<CompiledExpression>>;
+
+            return dictionary.TryGetValue(expression, out var result);
+
         }
 
         // Verifies https://github.com/FirelyTeam/firely-net-sdk/issues/1140
