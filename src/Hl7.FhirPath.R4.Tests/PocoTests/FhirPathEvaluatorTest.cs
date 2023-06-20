@@ -373,17 +373,20 @@ namespace Hl7.FhirPath.R4.Tests
         [TestMethod]
         public void CompilationIsCached()
         {
-            fixture.TestInput.Select($"Patient.name[0]");
-            Assert.IsTrue(checkIfPresentInCache($"Patient.name[0]"));
+            //setup, use reflection to access cache.
+            var cacheDictionary = getCache();
 
-            Assert.IsFalse(checkIfPresentInCache($"Patient.name[1]"));
+            fixture.TestInput.Select($"Patient.name[0]");
+            Assert.IsTrue(checkIfPresentInCache(cacheDictionary, $"Patient.name[0]"));
+
+            Assert.IsFalse(checkIfPresentInCache(cacheDictionary, $"Patient.name[1]"));
 
             fixture.TestInput.Select($"Patient.name[1]");
-            Assert.IsTrue(checkIfPresentInCache($"Patient.name[1]"));
+            Assert.IsTrue(checkIfPresentInCache(cacheDictionary, $"Patient.name[1]"));
 
         }
 
-        private bool checkIfPresentInCache(string expression)
+        private ConcurrentDictionary<string, CacheItem<CompiledExpression>> getCache()
         {
             var cache = typeof(FhirPathExtensions)
                              .GetField("CACHE", BindingFlags.NonPublic | BindingFlags.Static)
@@ -395,12 +398,14 @@ namespace Hl7.FhirPath.R4.Tests
                                     .GetValue(cache) as Cache<string, CompiledExpression>;
 
 
-            var dictionary = typeof(Cache<string, CompiledExpression>)
+            return typeof(Cache<string, CompiledExpression>)
                                    .GetField("_cached", BindingFlags.NonPublic | BindingFlags.Instance)
                                    .GetValue(cachedExpressions) as ConcurrentDictionary<string, CacheItem<CompiledExpression>>;
+        }
 
-            return dictionary.TryGetValue(expression, out var result);
-
+        private static bool checkIfPresentInCache(ConcurrentDictionary<string, CacheItem<CompiledExpression>> cache, string expression)
+        {
+            return cache.TryGetValue(expression, out var result);
         }
 
         // Verifies https://github.com/FirelyTeam/firely-net-sdk/issues/1140
