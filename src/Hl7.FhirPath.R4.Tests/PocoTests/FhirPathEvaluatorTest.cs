@@ -391,7 +391,7 @@ namespace Hl7.FhirPath.R4.Tests
 
 
             var cachedExpressions = typeof(FhirPathCompilerCache)
-                                    .GetField("_cache", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
+                                    .GetField("_cache", BindingFlags.NonPublic | BindingFlags.Instance)
                                     .GetValue(cache) as Cache<string, CompiledExpression>;
 
 
