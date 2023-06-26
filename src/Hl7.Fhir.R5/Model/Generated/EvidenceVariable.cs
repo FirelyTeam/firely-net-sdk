@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -606,6 +607,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#DefinitionByTypeAndValue", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.definitionByTypeAndValue")]
     public partial class DefinitionByTypeAndValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -810,6 +812,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#DefinitionByCombination", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.definitionByCombination")]
     public partial class DefinitionByCombinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1003,6 +1006,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#TimeFromEvent", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.timeFromEvent")]
     public partial class TimeFromEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1221,6 +1225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Category", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.category")]
     public partial class CategoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

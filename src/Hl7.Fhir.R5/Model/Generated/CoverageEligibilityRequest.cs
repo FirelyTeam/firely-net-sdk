@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Event", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityRequest.event")]
     public partial class EventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -230,6 +231,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#SupportingInformation", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityRequest.supportingInfo")]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -423,6 +425,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Insurance", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityRequest.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -615,6 +618,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Details", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityRequest.item")]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -950,6 +954,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CoverageEligibilityRequest#Diagnosis", IsNestedType=true)]
+    [BackboneType("CoverageEligibilityRequest.item.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

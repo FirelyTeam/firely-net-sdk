@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ManufacturedItemDefinition#Property", IsNestedType=true)]
+    [BackboneType("ManufacturedItemDefinition.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -196,6 +197,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ManufacturedItemDefinition#Component", IsNestedType=true)]
+    [BackboneType("ManufacturedItemDefinition.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -421,6 +423,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ManufacturedItemDefinition#Constituent", IsNestedType=true)]
+    [BackboneType("ManufacturedItemDefinition.component.constituent")]
     public partial class ConstituentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#Focus", IsNestedType=true)]
+    [BackboneType("MessageDefinition.focus")]
     public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -340,6 +341,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
+    [BackboneType("MessageDefinition.allowedResponse")]
     public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

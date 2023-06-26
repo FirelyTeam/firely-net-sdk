@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#SampleSize", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.SampleSize")]
+    [BackboneType("RiskEvidenceSynthesis.sampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#RiskEstimate", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.RiskEstimate")]
+    [BackboneType("RiskEvidenceSynthesis.riskEstimate")]
     public partial class RiskEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#PrecisionEstimate", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.RiskEstimate.PrecisionEstimate")]
+    [BackboneType("RiskEvidenceSynthesis.riskEstimate.precisionEstimate")]
     public partial class PrecisionEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -814,7 +814,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#Certainty", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.Certainty")]
+    [BackboneType("RiskEvidenceSynthesis.certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -971,7 +971,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskEvidenceSynthesis#CertaintySubcomponent", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RiskEvidenceSynthesis.Certainty.CertaintySubcomponent")]
+    [BackboneType("RiskEvidenceSynthesis.certainty.certaintySubcomponent")]
     public partial class CertaintySubcomponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

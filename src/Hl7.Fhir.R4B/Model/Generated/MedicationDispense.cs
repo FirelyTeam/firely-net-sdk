@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [BackboneType("MedicationDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -259,6 +260,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationDispense.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

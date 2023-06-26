@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentManifest#Content", IsNestedType=true)]
+    [BackboneType("DocumentManifest.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -174,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentManifest#Related", IsNestedType=true)]
+    [BackboneType("DocumentManifest.related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

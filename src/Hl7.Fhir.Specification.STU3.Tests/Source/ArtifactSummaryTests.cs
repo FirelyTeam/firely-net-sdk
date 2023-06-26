@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Hl7.Fhir.ElementModel;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
@@ -5,6 +6,7 @@ using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Specification.Summary;
 using Hl7.Fhir.Utility;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -432,5 +434,19 @@ namespace Hl7.Fhir.Specification.Tests
             }
         }
 
+        [DataTestMethod]
+        [DataRow(true)]
+        [DataRow(false)]
+        public void TestIsConformanceSummary(bool typeNameFound)
+        {
+            object value = typeNameFound ? "unknownTypeName" : null;
+            var propertiesMock = new Mock<IArtifactSummaryPropertyBag>();
+
+            propertiesMock.Setup(p => p.TryGetValue(ArtifactSummaryProperties.TypeNameKey, out value)).Returns(typeNameFound);
+            
+            var result = propertiesMock.Object.IsConformanceSummary();
+
+            result.Should().BeFalse();
+        }
     }
 }

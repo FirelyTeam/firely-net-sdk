@@ -153,6 +153,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Characteristic", IsNestedType=true)]
+    [BackboneType("Group.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -351,6 +352,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Member", IsNestedType=true)]
+    [BackboneType("Group.member")]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

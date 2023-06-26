@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ClinicalImpression#Finding", IsNestedType=true)]
+    [BackboneType("ClinicalImpression.finding")]
     public partial class FindingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

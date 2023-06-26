@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Ingredient", IsNestedType=true)]
+    [BackboneType("Medication.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -264,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Package", IsNestedType=true)]
+    [BackboneType("Medication.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -419,6 +421,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Content", IsNestedType=true)]
+    [BackboneType("Medication.package.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -554,6 +557,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Batch", IsNestedType=true)]
+    [BackboneType("Medication.package.batch")]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

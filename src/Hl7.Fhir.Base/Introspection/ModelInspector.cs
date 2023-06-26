@@ -44,12 +44,12 @@ namespace Hl7.Fhir.Introspection
         /// metadata for that release only. If the type is from the base assembly, it will contain
         /// metadata for that type from the most recent release of the base assembly.</remarks>
         public static ClassMapping? GetClassMappingForType(Type t) =>
-            ForAssembly(t.GetTypeInfo().Assembly).FindOrImportClassMapping(t);
+            ForAssembly(t.Assembly).FindOrImportClassMapping(t);
 
         /// <summary>
         /// Returns a fully configured <see cref="ModelInspector"/> with the
-        /// FHIR metadata contents of the given assembly. Calling this function repeatedly for
-        /// the same assembly will return the same inspector.
+        /// FHIR metadata contents of the given assembly, plus all the assemblies it depends upon.
+        /// Calling this function repeatedly for the same assembly will return the same inspector.
         /// </summary>
         /// <remarks>If the assembly given is FHIR Release specific, the returned inspector will contain
         /// metadata for that release only. If the assembly is the base assembly, it will contain
@@ -58,6 +58,8 @@ namespace Hl7.Fhir.Introspection
         {
             return _inspectedAssemblies.GetOrAdd(a.FullName ?? throw Error.ArgumentNull(nameof(a.FullName)), _ => configureInspector(a));
 
+            // NB: The concurrent dictionary will make sure only one of these initializers will run at the same time,
+            // so there is no additional locking done in these nested functions.
             static ModelInspector configureInspector(Assembly a)
             {
                 if (a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not FhirModelAssemblyAttribute modelAssemblyAttr)
@@ -65,14 +67,10 @@ namespace Hl7.Fhir.Introspection
                         $" as it is not marked with a {nameof(FhirModelAssemblyAttribute)} attribute.");
 
                 var newInspector = new ModelInspector(modelAssemblyAttr.Since);
-                newInspector.Import(a);
+                var imported = new List<Assembly>();
+                importRecursively(a);
 
-                // Make sure we always include the types from the base assembly too. 
-                var baseAssembly = typeof(Resource).GetTypeInfo().Assembly;
-                if (a.FullName != baseAssembly.FullName)
-                    newInspector.Import(baseAssembly);
-
-                // And finally, the System/CQL primitive types
+                // Finally, add the System/CQL primitive types
                 foreach (var cqlType in getCqlTypes())
                     newInspector.ImportType(cqlType);
 
@@ -82,6 +80,24 @@ namespace Hl7.Fhir.Introspection
                 {
                     return typeof(ElementModel.Types.Any).GetTypeInfo().Assembly.GetExportedTypes().
                         Where(typ => typeof(ElementModel.Types.Any).IsAssignableFrom(typ));
+                }
+
+                void importRecursively(Assembly a)
+                {
+                    if (imported.Contains(a)) return;
+
+                    newInspector.Import(a);
+                    imported.Add(a);
+
+                    var referencedFhirAssemblies = a.GetReferencedAssemblies()
+                            .Select(an => Assembly.Load(an))
+                            .Where(isFhirModelAssembly);
+
+                    foreach (var ra in referencedFhirAssemblies)
+                        importRecursively(ra);
+
+                    static bool isFhirModelAssembly(Assembly a) =>
+                        a.GetCustomAttribute<FhirModelAssemblyAttribute>() is not null;
                 }
             }
         }
@@ -153,14 +169,9 @@ namespace Hl7.Fhir.Introspection
                 FhirVersion = pi.GetValue(null) as string;   // null, since this is a static property
             }
 
-            if (assembly.GetCustomAttribute<CqlModelAssemblyAttribute>() is { } cmaa)
-            {
-                CqlNamespace = cmaa.Url;
-            }
-
             // Find and extract all EnumMappings
             var exportedEnums = exportedTypes.Where(et => et.IsEnum);
-            extractFromEnums(exportedEnums);
+            extractEnums(exportedEnums);
 
             // Find and extract all ClassMappings
             var exportedClasses = exportedTypes.Where(et => et.IsClass && !et.IsEnum);
@@ -183,7 +194,7 @@ namespace Hl7.Fhir.Introspection
 
             var nestedTypes = type.GetNestedTypes(BindingFlags.Public);
             var nestedEnums = nestedTypes.Where(t => t.IsEnum);
-            extractFromEnums(nestedEnums);
+            extractEnums(nestedEnums);
 
             var nestedClasses = nestedTypes.Where(t => t.IsClass && !t.IsEnum);
             extractBackbonesFromClasses(nestedClasses);
@@ -191,7 +202,7 @@ namespace Hl7.Fhir.Introspection
             return mapping;
         }
 
-        private void extractFromEnums(IEnumerable<Type> enumTypes)
+        private void extractEnums(IEnumerable<Type> enumTypes)
         {
             foreach (var enumType in enumTypes)
             {
@@ -204,8 +215,7 @@ namespace Hl7.Fhir.Introspection
         {
             foreach (var classType in classTypes)
             {
-                var success = ClassMapping.TryGetMappingForType(classType, FhirRelease, out var mapping);
-                if (success) _backboneClassMappings.Add(mapping!);
+                _ = ImportType(classType);
             }
         }
 
@@ -260,23 +270,12 @@ namespace Hl7.Fhir.Introspection
         public ClassMapping? PatientMapping => ClassMappings.FirstOrDefault(cm => cm.IsPatientClass);
 
         /// <summary>
-        /// The namespace used to prefix the types in this model with to get the full ELM type specifier.
-        /// </summary>
-        internal string? CqlNamespace { get; private set; }
-
-        /// <summary>
         /// List of ClassMappings registered with the inspector.
         /// </summary>
         public ICollection<ClassMapping> ClassMappings => _classMappings.ByName.Values.ToList();
 
         private readonly ClassMappingCollection _classMappings = new();
 
-        /// <summary>
-        /// List of ClassMappings for the nested types generated for backbone elements.
-        /// </summary>
-        public ICollection<ClassMapping> BackboneClassMappings => _backboneClassMappings.ByName.Values.ToList();
-
-        private readonly ClassMappingCollection _backboneClassMappings = new();
         /// <summary>
         /// List of EnumMappings registered with the inspector.
         /// </summary>

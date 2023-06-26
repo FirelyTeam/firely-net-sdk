@@ -137,6 +137,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#SupportingInfo", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.supportingInfo")]
     public partial class SupportingInfoComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -272,6 +273,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Media", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.media")]
     public partial class MediaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

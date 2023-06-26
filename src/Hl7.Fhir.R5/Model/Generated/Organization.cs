@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Organization#Qualification", IsNestedType=true)]
+    [BackboneType("Organization.qualification")]
     public partial class QualificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

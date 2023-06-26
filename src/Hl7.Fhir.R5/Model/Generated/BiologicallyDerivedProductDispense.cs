@@ -119,6 +119,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProductDispense#Performer", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProductDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

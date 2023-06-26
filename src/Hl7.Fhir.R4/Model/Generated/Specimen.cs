@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Collection", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Specimen.Collection")]
+    [BackboneType("Specimen.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Processing", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Specimen.Processing")]
+    [BackboneType("Specimen.processing")]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Container", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Specimen.Container")]
+    [BackboneType("Specimen.container")]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

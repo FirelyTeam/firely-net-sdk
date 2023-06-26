@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ChargeItem#Participant", IsNestedType=true)]
+    [BackboneType("ChargeItem.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

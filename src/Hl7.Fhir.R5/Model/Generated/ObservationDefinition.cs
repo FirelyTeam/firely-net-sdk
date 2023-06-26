@@ -165,6 +165,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#QualifiedValue", IsNestedType=true)]
+    [BackboneType("ObservationDefinition.qualifiedValue")]
     public partial class QualifiedValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -647,6 +648,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ObservationDefinition#Component", IsNestedType=true)]
+    [BackboneType("ObservationDefinition.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

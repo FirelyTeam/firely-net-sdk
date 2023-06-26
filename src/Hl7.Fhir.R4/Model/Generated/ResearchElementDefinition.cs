@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}ResearchElementDefinition.Characteristic")]
+    [BackboneType("ResearchElementDefinition.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

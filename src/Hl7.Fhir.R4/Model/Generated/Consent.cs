@@ -163,7 +163,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Policy", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.Policy")]
+    [BackboneType("Consent.policy")]
     public partial class PolicyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Verification", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.Verification")]
+    [BackboneType("Consent.verification")]
     public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provision", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.Provision")]
+    [BackboneType("Consent.provision")]
     public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -882,7 +882,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provisionActor", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.Provision.Actor")]
+    [BackboneType("Consent.provision.actor")]
     public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1018,7 +1018,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provisionData", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}Consent.Provision.Data")]
+    [BackboneType("Consent.provision.data")]
     public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

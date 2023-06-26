@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyDelivery#SuppliedItem", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SupplyDelivery.SuppliedItem")]
+    [BackboneType("SupplyDelivery.suppliedItem")]
     public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Availability#AvailableTime", IsNestedType=true)]
+    [BackboneType("Availability.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -311,6 +312,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Availability#NotAvailableTime", IsNestedType=true)]
+    [BackboneType("Availability.notAvailableTime")]
     public partial class NotAvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

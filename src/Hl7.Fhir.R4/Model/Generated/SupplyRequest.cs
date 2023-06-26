@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyRequest#Parameter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}SupplyRequest.Parameter")]
+    [BackboneType("SupplyRequest.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

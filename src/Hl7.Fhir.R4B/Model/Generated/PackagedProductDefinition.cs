@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PackagedProductDefinition#LegalStatusOfSupply", IsNestedType=true)]
+    [BackboneType("PackagedProductDefinition.legalStatusOfSupply")]
     public partial class LegalStatusOfSupplyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -192,6 +193,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PackagedProductDefinition#Package", IsNestedType=true)]
+    [BackboneType("PackagedProductDefinition.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -527,6 +529,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PackagedProductDefinition#ShelfLifeStorage", IsNestedType=true)]
+    [BackboneType("PackagedProductDefinition.package.shelfLifeStorage")]
     public partial class ShelfLifeStorageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -683,6 +686,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PackagedProductDefinition#Property", IsNestedType=true)]
+    [BackboneType("PackagedProductDefinition.package.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -817,6 +821,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PackagedProductDefinition#ContainedItem", IsNestedType=true)]
+    [BackboneType("PackagedProductDefinition.package.containedItem")]
     public partial class ContainedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

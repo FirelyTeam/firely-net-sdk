@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDispense#Performer", IsNestedType=true)]
+    [BackboneType("DeviceDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

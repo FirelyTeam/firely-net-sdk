@@ -221,6 +221,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Property", IsNestedType=true)]
+    [BackboneType("ConceptMap.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -512,6 +513,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#AdditionalAttribute", IsNestedType=true)]
+    [BackboneType("ConceptMap.additionalAttribute")]
     public partial class AdditionalAttributeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -763,6 +765,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Group", IsNestedType=true)]
+    [BackboneType("ConceptMap.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -975,6 +978,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#SourceElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element")]
     public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1245,6 +1249,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#TargetElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target")]
     public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1604,6 +1609,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#MappingProperty", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target.property")]
     public partial class MappingPropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1757,6 +1763,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#OtherElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target.dependsOn")]
     public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1949,6 +1956,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Unmapped", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.unmapped")]
     public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

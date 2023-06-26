@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BodyStructure#IncludedStructure", IsNestedType=true)]
+    [BackboneType("BodyStructure.includedStructure")]
     public partial class IncludedStructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -264,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BodyStructure#BodyLandmarkOrientation", IsNestedType=true)]
+    [BackboneType("BodyStructure.includedStructure.bodyLandmarkOrientation")]
     public partial class BodyLandmarkOrientationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -443,6 +445,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BodyStructure#DistanceFromLandmark", IsNestedType=true)]
+    [BackboneType("BodyStructure.includedStructure.bodyLandmarkOrientation.distanceFromLandmark")]
     public partial class DistanceFromLandmarkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

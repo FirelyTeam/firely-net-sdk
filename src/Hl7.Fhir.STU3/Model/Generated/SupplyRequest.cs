@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyRequest#OrderedItem", IsNestedType=true)]
+    [BackboneType("SupplyRequest.orderedItem")]
     public partial class OrderedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -248,6 +249,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyRequest#Requester", IsNestedType=true)]
+    [BackboneType("SupplyRequest.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

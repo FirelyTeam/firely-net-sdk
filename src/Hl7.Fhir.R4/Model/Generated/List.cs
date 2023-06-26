@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("List#Entry", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}List.Entry")]
+    [BackboneType("List.entry")]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

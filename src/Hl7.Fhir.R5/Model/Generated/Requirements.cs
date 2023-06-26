@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Requirements#Statement", IsNestedType=true)]
+    [BackboneType("Requirements.statement")]
     public partial class StatementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

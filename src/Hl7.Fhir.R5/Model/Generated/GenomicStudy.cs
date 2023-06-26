@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Analysis", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis")]
     public partial class AnalysisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -678,6 +679,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Input", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -836,6 +838,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Output", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -969,6 +972,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Performer", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1102,6 +1106,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GenomicStudy#Device", IsNestedType=true)]
+    [BackboneType("GenomicStudy.analysis.device")]
     public partial class DeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

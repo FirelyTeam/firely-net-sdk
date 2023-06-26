@@ -219,6 +219,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AllergyIntolerance#Participant", IsNestedType=true)]
+    [BackboneType("AllergyIntolerance.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -353,6 +354,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AllergyIntolerance#Reaction", IsNestedType=true)]
+    [BackboneType("AllergyIntolerance.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

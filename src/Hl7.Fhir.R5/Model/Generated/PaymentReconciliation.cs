@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Allocation", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.allocation")]
     public partial class AllocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -502,6 +503,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Notes", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.processNote")]
     public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

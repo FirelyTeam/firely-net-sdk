@@ -207,6 +207,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Performer", IsNestedType=true)]
+    [BackboneType("Task.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -341,6 +342,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Restriction", IsNestedType=true)]
+    [BackboneType("Task.restriction")]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -515,6 +517,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Input", IsNestedType=true)]
+    [BackboneType("Task.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -650,6 +653,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Output", IsNestedType=true)]
+    [BackboneType("Task.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

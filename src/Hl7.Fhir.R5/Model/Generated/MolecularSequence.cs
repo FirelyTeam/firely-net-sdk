@@ -133,6 +133,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Relative", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative")]
     public partial class RelativeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -350,6 +351,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#StartingSequence", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative.startingSequence")]
     public partial class StartingSequenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -670,6 +672,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Edit", IsNestedType=true)]
+    [BackboneType("MolecularSequence.relative.edit")]
     public partial class EditComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

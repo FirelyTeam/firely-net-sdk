@@ -157,7 +157,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AdverseEvent.SuspectEntity")]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Causality", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AdverseEvent.SuspectEntity.Causality")]
+    [BackboneType("AdverseEvent.suspectEntity.causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductInteraction#Interactant", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}MedicinalProductInteraction.Interactant")]
+    [BackboneType("MedicinalProductInteraction.interactant")]
     public partial class InteractantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

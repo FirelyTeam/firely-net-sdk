@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#OralDiet", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}NutritionOrder.OralDiet")]
+    [BackboneType("NutritionOrder.oralDiet")]
     public partial class OralDietComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,7 +304,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Nutrient", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}NutritionOrder.OralDiet.Nutrient")]
+    [BackboneType("NutritionOrder.oralDiet.nutrient")]
     public partial class NutrientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Texture", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}NutritionOrder.OralDiet.Texture")]
+    [BackboneType("NutritionOrder.oralDiet.texture")]
     public partial class TextureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -568,7 +568,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Supplement", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}NutritionOrder.Supplement")]
+    [BackboneType("NutritionOrder.supplement")]
     public partial class SupplementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#EnteralFormula", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}NutritionOrder.EnteralFormula")]
+    [BackboneType("NutritionOrder.enteralFormula")]
     public partial class EnteralFormulaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1144,7 +1144,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionOrder#Administration", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}NutritionOrder.EnteralFormula.Administration")]
+    [BackboneType("NutritionOrder.enteralFormula.administration")]
     public partial class AdministrationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

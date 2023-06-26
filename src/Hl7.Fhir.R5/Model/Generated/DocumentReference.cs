@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Attester", IsNestedType=true)]
+    [BackboneType("DocumentReference.attester")]
     public partial class AttesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -263,6 +264,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#RelatesTo", IsNestedType=true)]
+    [BackboneType("DocumentReference.relatesTo")]
     public partial class RelatesToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -398,6 +400,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Content", IsNestedType=true)]
+    [BackboneType("DocumentReference.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -531,6 +534,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentReference#Profile", IsNestedType=true)]
+    [BackboneType("DocumentReference.content.profile")]
     public partial class ProfileComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

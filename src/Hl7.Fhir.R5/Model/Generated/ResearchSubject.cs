@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchSubject#Progress", IsNestedType=true)]
+    [BackboneType("ResearchSubject.progress")]
     public partial class ProgressComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

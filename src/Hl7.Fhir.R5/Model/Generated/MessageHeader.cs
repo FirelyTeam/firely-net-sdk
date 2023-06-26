@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#MessageDestination", IsNestedType=true)]
+    [BackboneType("MessageHeader.destination")]
     public partial class MessageDestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -289,6 +290,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#MessageSource", IsNestedType=true)]
+    [BackboneType("MessageHeader.source")]
     public partial class MessageSourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -543,6 +545,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageHeader#Response", IsNestedType=true)]
+    [BackboneType("MessageHeader.response")]
     public partial class ResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

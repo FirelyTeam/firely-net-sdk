@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestGroup#Action", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RequestGroup.Action")]
+    [BackboneType("RequestGroup.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestGroup#Condition", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RequestGroup.Action.Condition")]
+    [BackboneType("RequestGroup.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestGroup#RelatedAction", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}RequestGroup.Action.RelatedAction")]
+    [BackboneType("RequestGroup.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

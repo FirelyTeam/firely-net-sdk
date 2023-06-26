@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchStudy#Arm", IsNestedType=true)]
+    [BackboneType("ResearchStudy.arm")]
     public partial class ArmComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

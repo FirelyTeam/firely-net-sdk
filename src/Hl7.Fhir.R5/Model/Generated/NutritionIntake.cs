@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionIntake#ConsumedItem", IsNestedType=true)]
+    [BackboneType("NutritionIntake.consumedItem")]
     public partial class ConsumedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -322,6 +323,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionIntake#IngredientLabel", IsNestedType=true)]
+    [BackboneType("NutritionIntake.ingredientLabel")]
     public partial class IngredientLabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -455,6 +457,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NutritionIntake#Performer", IsNestedType=true)]
+    [BackboneType("NutritionIntake.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

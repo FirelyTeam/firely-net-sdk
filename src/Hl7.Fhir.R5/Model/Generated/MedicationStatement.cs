@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationStatement#Adherence", IsNestedType=true)]
+    [BackboneType("MedicationStatement.adherence")]
     public partial class AdherenceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

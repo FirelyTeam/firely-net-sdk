@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Udi", IsNestedType=true)]
+    [BackboneType("Device.udi")]
     public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}FamilyMemberHistory.Condition")]
+    [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

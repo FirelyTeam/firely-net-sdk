@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#ReferenceSeq", IsNestedType=true)]
+    [BackboneType("Sequence.referenceSeq")]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -486,6 +487,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#Variant", IsNestedType=true)]
+    [BackboneType("Sequence.variant")]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -797,6 +799,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#Quality", IsNestedType=true)]
+    [BackboneType("Sequence.quality")]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1393,6 +1396,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#Repository", IsNestedType=true)]
+    [BackboneType("Sequence.repository")]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Name", IsNestedType=true)]
+    [BackboneType("InventoryItem.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -289,6 +290,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#ResponsibleOrganization", IsNestedType=true)]
+    [BackboneType("InventoryItem.responsibleOrganization")]
     public partial class ResponsibleOrganizationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -424,6 +426,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Description", IsNestedType=true)]
+    [BackboneType("InventoryItem.description")]
     public partial class DescriptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -593,6 +596,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Association", IsNestedType=true)]
+    [BackboneType("InventoryItem.association")]
     public partial class AssociationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -751,6 +755,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Characteristic", IsNestedType=true)]
+    [BackboneType("InventoryItem.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -886,6 +891,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryItem#Instance", IsNestedType=true)]
+    [BackboneType("InventoryItem.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

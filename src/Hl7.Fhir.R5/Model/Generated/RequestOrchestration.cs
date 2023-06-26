@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Action", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -988,6 +989,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Condition", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1140,6 +1142,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Input", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1329,6 +1332,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Output", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1518,6 +1522,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#RelatedAction", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1755,6 +1760,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#Participant", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2017,6 +2023,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RequestOrchestration#DynamicValue", IsNestedType=true)]
+    [BackboneType("RequestOrchestration.action.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

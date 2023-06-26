@@ -353,7 +353,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Structure", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Structure")]
+    [BackboneType("StructureMap.structure")]
     public partial class StructureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -605,7 +605,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Group", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group")]
+    [BackboneType("StructureMap.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -903,7 +903,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Input", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group.Input")]
+    [BackboneType("StructureMap.group.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1155,7 +1155,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Rule", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group.Rule")]
+    [BackboneType("StructureMap.group.rule")]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1416,7 +1416,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Source", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group.Rule.Source")]
+    [BackboneType("StructureMap.group.rule.source")]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1931,7 +1931,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Target", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group.Rule.Target")]
+    [BackboneType("StructureMap.group.rule.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2329,7 +2329,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Parameter", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group.Rule.Target.Parameter")]
+    [BackboneType("StructureMap.group.rule.target.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2442,7 +2442,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureMap#Dependent", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}StructureMap.Group.Rule.Dependent")]
+    [BackboneType("StructureMap.group.rule.dependent")]
     public partial class DependentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

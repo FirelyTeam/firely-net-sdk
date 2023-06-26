@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryReport#InventoryListing", IsNestedType=true)]
+    [BackboneType("InventoryReport.inventoryListing")]
     public partial class InventoryListingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InventoryReport#Item", IsNestedType=true)]
+    [BackboneType("InventoryReport.inventoryListing.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

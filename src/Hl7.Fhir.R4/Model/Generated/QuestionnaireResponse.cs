@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("QuestionnaireResponse#Item", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}QuestionnaireResponse.Item")]
+    [BackboneType("QuestionnaireResponse.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -356,7 +356,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("QuestionnaireResponse#Answer", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}QuestionnaireResponse.Item.Answer")]
+    [BackboneType("QuestionnaireResponse.item.answer")]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

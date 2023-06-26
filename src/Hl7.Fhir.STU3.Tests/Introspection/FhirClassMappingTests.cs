@@ -1,13 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hl7.Fhir.Rest;
-using Hl7.Fhir.Introspection;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Model;
-using System.Diagnostics;
 using Hl7.Fhir.Specification;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -33,7 +29,7 @@ namespace Hl7.Fhir.Tests.Rest
             bool isNested(Type testee)
             {
                 _ = ClassMapping.TryCreate(testee, out var cm);
-                return cm.IsNestedType;
+                return cm.IsBackboneType;
             }
         }
 
@@ -67,14 +63,14 @@ namespace Hl7.Fhir.Tests.Rest
                 foreach (var testee in typesToTest)
                     createMapping(testee);
             sw.Stop();
-            Console.WriteLine($"No props: {sw.ElapsedMilliseconds/(float)numRepeats}ms");
+            Console.WriteLine($"No props: {sw.ElapsedMilliseconds / (float)numRepeats}ms");
 
             sw.Restart();
             for (int i = 0; i < numRepeats; i++)
                 foreach (var testee in typesToTest)
                     createMapping(testee, touchProps: true);
             sw.Stop();
-            Console.WriteLine($"With props: {sw.ElapsedMilliseconds/(float)numRepeats}ms");
+            Console.WriteLine($"With props: {sw.ElapsedMilliseconds / (float)numRepeats}ms");
 
             int createMapping(Type t, bool touchProps = false)
             {

@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#FixedVersion", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.fixedVersion")]
     public partial class FixedVersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -301,6 +302,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#ExcludedSystem", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.excludedSystem")]
     public partial class ExcludedSystemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -469,6 +471,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#Designation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation")]
     public partial class DesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -600,6 +603,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationInclude", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.include")]
     public partial class DesignationIncludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -710,6 +714,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationIncludeDesignation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.include.designation")]
     public partial class DesignationIncludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -860,6 +865,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationExclude", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.exclude")]
     public partial class DesignationExcludeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -970,6 +976,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExpansionProfile#DesignationExcludeDesignation", IsNestedType=true)]
+    [BackboneType("ExpansionProfile.designation.exclude.designation")]
     public partial class DesignationExcludeDesignationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

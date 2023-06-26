@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#UdiCarrier", IsNestedType=true)]
+    [BackboneType("Device.udiCarrier")]
     public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -472,6 +473,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Name", IsNestedType=true)]
+    [BackboneType("Device.name")]
     public partial class NameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -683,6 +685,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Version", IsNestedType=true)]
+    [BackboneType("Device.version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -895,6 +898,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#ConformsTo", IsNestedType=true)]
+    [BackboneType("Device.conformsTo")]
     public partial class ConformsToComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1067,6 +1071,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Property", IsNestedType=true)]
+    [BackboneType("Device.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

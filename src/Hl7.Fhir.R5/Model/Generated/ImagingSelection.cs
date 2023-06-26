@@ -175,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#Performer", IsNestedType=true)]
+    [BackboneType("ImagingSelection.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -308,6 +309,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#Instance", IsNestedType=true)]
+    [BackboneType("ImagingSelection.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -585,6 +587,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#ImageRegion2D", IsNestedType=true)]
+    [BackboneType("ImagingSelection.instance.imageRegion2D")]
     public partial class ImageRegion2DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -756,6 +759,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingSelection#ImageRegion3D", IsNestedType=true)]
+    [BackboneType("ImagingSelection.instance.imageRegion3D")]
     public partial class ImageRegion3DComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

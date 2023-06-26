@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EpisodeOfCare#StatusHistory", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}EpisodeOfCare.StatusHistory")]
+    [BackboneType("EpisodeOfCare.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EpisodeOfCare#Diagnosis", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}EpisodeOfCare.Diagnosis")]
+    [BackboneType("EpisodeOfCare.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

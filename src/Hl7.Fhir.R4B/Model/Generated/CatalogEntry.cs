@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CatalogEntry#RelatedEntry", IsNestedType=true)]
+    [BackboneType("CatalogEntry.relatedEntry")]
     public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

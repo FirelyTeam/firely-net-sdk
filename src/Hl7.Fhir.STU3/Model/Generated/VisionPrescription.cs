@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VisionPrescription#Dispense", IsNestedType=true)]
+    [BackboneType("VisionPrescription.dispense")]
     public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

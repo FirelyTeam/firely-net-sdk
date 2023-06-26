@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Introspection
         {
             var elementTypeMapping = PropertyTypeMapping;
 
-            if (elementTypeMapping!.IsNestedType)
+            if (elementTypeMapping!.IsBackboneType)
             {
                 var info = elementTypeMapping;
                 return new ITypeSerializationInfo[] { info };

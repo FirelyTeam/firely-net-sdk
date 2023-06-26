@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Agent", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AuditEvent.Agent")]
+    [BackboneType("AuditEvent.agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -585,7 +585,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Network", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AuditEvent.Agent.Network")]
+    [BackboneType("AuditEvent.agent.network")]
     public partial class NetworkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Source", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AuditEvent.Source")]
+    [BackboneType("AuditEvent.source")]
     public partial class SourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Entity", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AuditEvent.Entity")]
+    [BackboneType("AuditEvent.entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1275,7 +1275,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AuditEvent#Detail", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}AuditEvent.Entity.Detail")]
+    [BackboneType("AuditEvent.entity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

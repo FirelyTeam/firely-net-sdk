@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Activity", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CarePlan.Activity")]
+    [BackboneType("CarePlan.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -422,7 +422,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Detail", IsNestedType=true)]
-    [CqlType("{http://hl7.org/fhir}CarePlan.Activity.Detail")]
+    [BackboneType("CarePlan.activity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

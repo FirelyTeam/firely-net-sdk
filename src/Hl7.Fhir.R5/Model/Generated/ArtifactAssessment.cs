@@ -217,6 +217,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ArtifactAssessment#Content", IsNestedType=true)]
+    [BackboneType("ArtifactAssessment.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Coverage", IsNestedType=true)]
+    [BackboneType("Account.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Guarantor", IsNestedType=true)]
+    [BackboneType("Account.guarantor")]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -427,6 +429,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Diagnosis", IsNestedType=true)]
+    [BackboneType("Account.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -703,6 +706,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Procedure", IsNestedType=true)]
+    [BackboneType("Account.procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -964,6 +968,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#RelatedAccount", IsNestedType=true)]
+    [BackboneType("Account.relatedAccount")]
     public partial class RelatedAccountComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1098,6 +1103,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Balance", IsNestedType=true)]
+    [BackboneType("Account.balance")]
     public partial class BalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
