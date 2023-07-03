@@ -36,9 +36,9 @@ Read the [online documentation][netsdk-docu], and download the correct for your 
 
 ### Using a pre-release NuGet package
 Every release of the SDK results in a NuGet package on the normal NuGet feed. However, each commit on our develop branch also results in a pre-release package.
-These are public too. So if you want to be brave and use a pre-release packages. You can do so by adding ```https://nuget.pkg.github.com/FirelyTeam/index.json``` to your NuGet sources:
+These are public too. So if you want to be brave and use a pre-release packages, you can do so by adding ```https://nuget.pkg.github.com/FirelyTeam/index.json``` to your NuGet sources:
 
- - Get a Personal Access token (PAT) from [github.com][github-pat] with scope ```read:packages```
+- Get a Personal Access token (PAT) from [github.com][github-pat] with scope ```read:packages```
 
 - Next open a console on your machine and run ```dotnet nuget add source --name github --username <USERNAME> --password <PAT> https://nuget.pkg.github.com/FirelyTeam/index.json```
 
