@@ -34,6 +34,18 @@ Read the [online documentation][netsdk-docu], and download the correct for your 
 |R4| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.R4 | 
 |STU3| https://github.com/FirelyTeam/firely-net-sdk/tree/release/5.0.0 | https://www.nuget.org/packages/Hl7.Fhir.STU3 | 
 
+### Using a pre-release NuGet package
+Every release of the SDK results in a NuGet package on the normal NuGet feed. However, each commit on our develop branch also results in a pre-release package.
+These are public too. So if you want to be brave and use a pre-release packages. You can do so by adding ```https://nuget.pkg.github.com/FirelyTeam/index.json``` to your NuGet sources:
+
+ - Get a Personal Access token (PAT) from [github.com][github-pat] with scope ```read:packages```
+
+- Next open a console on your machine and run ```dotnet nuget add source --name github --username <USERNAME> --password <PAT> https://nuget.pkg.github.com/FirelyTeam/index.json```
+
+```USERNAME```: your username on GitHub
+```PAT```: your Personal access token with at least the scope ```read:packages```
+
+
 ## Upgrading
 We spend a lot of effort trying to maintain *compile* compatibility (not binary compatibility) between minor releases of the SDK. We do, however, publish a new major version with breaking changes about once a year. The table below lists the breaking changes for each of the major upgrades.
 
@@ -75,3 +87,4 @@ If you want to participate in this project, we're using [Git Flow][nvie] for our
 [r4B-spec]: http://hl7.org/fhir/index.html
 [r5-spec]: http://build.fhir.org/index.html
 [fhirpath-spec]: http://hl7.org/fhirpath/
+[github-pat]: https://github.com/settings/apps
