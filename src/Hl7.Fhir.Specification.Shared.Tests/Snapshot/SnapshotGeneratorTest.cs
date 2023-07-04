@@ -9884,5 +9884,74 @@ namespace Hl7.Fhir.Specification.Tests
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
         }
+
+        [TestMethod]
+        public async T.Task TestNewR5Elements()
+        {
+            var sd = createR5StructureDefinition();
+            var resolver = new InMemoryResourceResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var snapshot = await _generator.GenerateAsync(sd);
+            var gender = snapshot.Where(e => e.Path == "Patient.gender").FirstOrDefault();
+            gender.Should().NotBeNull();
+
+            gender.SliceIsConstraining.Should().BeFalse();
+            gender.MustHaveValue.Should().BeTrue();
+            gender.ValueAlternatives.Should().Contain("foo");
+            gender.ValueAlternatives.Should().Contain("bar");
+            gender.Binding.Additional.FirstOrDefault().Purpose.Should().Be(ElementDefinition.AdditionalBindingPurposeVS.Maximum);
+            gender.Binding.Additional.FirstOrDefault().Documentation.Should().Be("foo");
+
+        }
+
+        private StructureDefinition createR5StructureDefinition()
+        {
+            return new StructureDefinition
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "PatientWithR5Features",
+                Url = @"http://example.org/fhir/StructureDefinition/PatientWithR5Features",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.gender")
+                        {
+                            SliceIsConstraining = false,
+                            MustHaveValue = true,
+                            ValueAlternatives = new List<string>()
+                            {
+                                "foo",
+                                "bar"
+                            },
+                            Binding = new()
+                            {
+                                Strength = BindingStrength.Required,
+                                Description = "The gender of a person used for administrative purposes",
+                                ValueSet = "http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0",
+                                Additional = new List<ElementDefinition.AdditionalComponent>
+                                {
+                                    new()
+                                    {
+                                        Purpose = ElementDefinition.AdditionalBindingPurposeVS.Maximum,
+                                        ValueSet = "http://example.org/fhir/ValueSet/additional-binding",
+                                        Documentation = "foo",
+                                        ShortDoco = "bar",
+                                        Any = true
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            };
+        }
     }
 }
