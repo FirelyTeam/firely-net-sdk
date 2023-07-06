@@ -109,9 +109,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
                 correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
-#if R5
                 snap.SliceIsConstrainingElement = mergePrimitiveElement(snap.SliceIsConstrainingElement, diff.SliceIsConstrainingElement);
-#endif
 
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
                 snap.DefinitionElement = mergePrimitiveElement(snap.DefinitionElement, diff.DefinitionElement, true);
