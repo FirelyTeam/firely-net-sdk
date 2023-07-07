@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Specification.Terminology
 
             if (valueSetUri != MIMETYPE_VALUESET_R4_AND_UP && valueSetUri != MIMETYPE_VALUESET_STU3)
             {   // 404 not found
-                throw new FhirOperationException($"Cannot find valueset '{validCodeParams!.Url.Value}'", HttpStatusCode.NotFound);
+                throw new FhirOperationException($"Cannot find valueset '{validCodeParams!.Url?.Value}'", HttpStatusCode.NotFound);
             }
 
             try
@@ -117,30 +117,32 @@ namespace Hl7.Fhir.Specification.Terminology
             var result = new Parameters();
             var systemUri = system != null ? new Canonical(system).Uri : null;
 
-            if (code is null)
-            {
-                result.Add("message", new FhirString("No code supplied."))
-                      .Add("result", new FhirBoolean(false));
 
-            }
-            else if (systemUri == MIMETYPE_SYSTEM || systemUri == null)
+            if (systemUri == MIMETYPE_SYSTEM || systemUri == null)
             {
-                var success = validateMimeType(code);
-
-                if (success)
+                if (code is null)
                 {
-                    result.Add("result", new FhirBoolean(true));
+                    result.Add("message", new FhirString("No code supplied."))
+                          .Add("result", new FhirBoolean(false));
                 }
                 else
                 {
-                    result.Add("result", new FhirBoolean(false))
-                          .Add("message", new FhirString($"'{code}' is not a valid MIME type."));
+                    var success = validateMimeType(code);
+
+                    if (success)
+                    {
+                        result.Add("result", new FhirBoolean(true));
+                    }
+                    else
+                    {
+                        result.Add("result", new FhirBoolean(false))
+                              .Add("message", new FhirString($"'{code}' is not a valid MIME type."));
+                    }
                 }
             }
             else
             {
-                result.Add("result", new FhirBoolean(false))
-                      .Add("message", new FhirString($"Unknown system {system} encountered, cannot validate code."));
+                throw new FhirOperationException($"Unknown system '{systemUri}'", HttpStatusCode.NotFound);
             }
             return Task.FromResult(result);
         }

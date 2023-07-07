@@ -53,6 +53,14 @@ namespace Hl7.Fhir.Specification.Tests
 
             validateCode = async () => await _service.ValueSetValidateCode(parameters);
             await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("If a code is provided, a system or a context must be provided");
+
+            parameters = new ValidateCodeParameters()
+                  .WithValueSet(MIMETYPEVS)
+                  .WithCode(code: "male", system: "http://hl7.org/fhir/administrative-gender")
+                  .Build();
+
+            validateCode = async () => await _service.ValueSetValidateCode(parameters);
+            await validateCode.Should().ThrowAsync<FhirOperationException>().WithMessage("Unknown system 'http://hl7.org/fhir/administrative-gender'");
         }
 
         [DataRow(MIMETYPE_VERSIONED_VS)]
