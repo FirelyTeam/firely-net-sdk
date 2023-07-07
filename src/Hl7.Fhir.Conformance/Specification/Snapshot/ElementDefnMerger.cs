@@ -109,6 +109,8 @@ namespace Hl7.Fhir.Specification.Snapshot
                 snap.Slicing = mergeComplexAttribute(snap.Slicing, diff.Slicing);
                 correctListMerge(originalDiscriminator, diff.Slicing?.Discriminator, list => snap.Slicing.Discriminator = list);
 
+                snap.SliceIsConstrainingElement = mergePrimitiveElement(snap.SliceIsConstrainingElement, diff.SliceIsConstrainingElement);
+
                 snap.ShortElement = mergePrimitiveElement(snap.ShortElement, diff.ShortElement);
                 snap.DefinitionElement = mergePrimitiveElement(snap.DefinitionElement, diff.DefinitionElement, true);
                 snap.CommentElement = mergePrimitiveElement(snap.CommentElement, diff.CommentElement, true);
@@ -160,6 +162,11 @@ namespace Hl7.Fhir.Specification.Snapshot
                 // [WMR 20190723] R4 NEW: Initialize Constraint.source property
                 //snap.Constraint = mergeCollection(snap.Constraint, diff.Constraint, matchExactly);
                 snap.Constraint = mergeConstraints(snap.Constraint, diff.Constraint, baseUrl);
+
+                //#if R5
+                snap.MustHaveValueElement = mergePrimitiveElement(snap.MustHaveValueElement, diff.MustHaveValueElement);
+                snap.ValueAlternativesElement = mergeCollection(snap.ValueAlternativesElement, diff.ValueAlternativesElement, matchStringValues);
+                //#endif
 
                 snap.MustSupportElement = mergePrimitiveElement(snap.MustSupportElement, diff.MustSupportElement);
 
@@ -360,6 +367,7 @@ namespace Hl7.Fhir.Specification.Snapshot
                         snap.DescriptionElement = mergePrimitiveElement(snap.DescriptionElement, diff.DescriptionElement);
                         snap.ValueSetElement = mergeComplexAttribute(snap.ValueSetElement, diff.ValueSetElement);
                         snap.Extension = mergeExtensions(snap.Extension, diff.Extension);
+                        snap.Additional = mergeCollection(snap.Additional, diff.Additional, matchExactly);
                         onConstraint(result);
                     }
                 }
