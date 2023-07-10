@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Introspection
 
             if (ClassMapping.GetAttribute<FhirEnumerationAttribute>(type.GetTypeInfo(), release) is not { } typeAttribute) return false;
 
-            result = new EnumMapping(typeAttribute.BindingName, typeAttribute.Valueset, type, release, typeAttribute.DefaultCodeSystem);
+            result = new EnumMapping(typeAttribute.BindingName, typeAttribute.Valueset, type, release, (typeAttribute.DefaultCodeSystem is not null) ? string.Intern(typeAttribute.DefaultCodeSystem) : null);
             return true;
         }
 
@@ -65,10 +65,7 @@ namespace Hl7.Fhir.Introspection
             Canonical = canonical;
             NativeType = nativeType;
             Release = release;
-            DefaultCodeSystem = defaultCodeSystem;
-
-
-            _mappings = new(valueFactory: mappingInitializer);
+            _mappings = new(valueFactory: () => mappingInitializer(defaultCodeSystem));
         }
 
         /// <summary>
@@ -94,7 +91,6 @@ namespace Hl7.Fhir.Introspection
         /// <summary>
         /// The code system of most of the member of the ValueSet
         /// </summary>
-        public string? DefaultCodeSystem { get; }
 
         /// <summary>
         /// The .NET class that implements the FHIR datatype/resource
@@ -111,13 +107,13 @@ namespace Hl7.Fhir.Introspection
         public string CqlTypeSpecifier => "{http://hl7.org/fhir}" + Name;
 
 
-        private IReadOnlyDictionary<string, EnumMemberMapping> mappingInitializer()
+        private IReadOnlyDictionary<string, EnumMemberMapping> mappingInitializer(string? defaultCS)
         {
             var result = new Dictionary<string, EnumMemberMapping>();
 
             foreach (var member in ReflectionHelper.FindEnumFields(NativeType))
             {
-                var success = EnumMemberMapping.TryCreate(member, out var mapping, (FhirRelease)int.MaxValue, DefaultCodeSystem);
+                var success = EnumMemberMapping.TryCreate(member, out var mapping, (FhirRelease)int.MaxValue, defaultCS);
 
                 if (success) result.Add(mapping!.Code, mapping);
             }

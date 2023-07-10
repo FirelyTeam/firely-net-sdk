@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Introspection
         public object Value { get; }
 
         /// <summary>
-        /// The originaal <see cref="FieldInfo"/> the metadata was extracted from.
+        /// The original <see cref="FieldInfo"/> the metadata was extracted from.
         /// </summary>
         public FieldInfo NativeField { get; }
 
