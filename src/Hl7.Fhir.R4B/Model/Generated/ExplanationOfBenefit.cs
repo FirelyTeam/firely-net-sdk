@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/explanationofbenefit-status)
     /// (system: http://hl7.org/fhir/explanationofbenefit-status)
     /// </summary>
-    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status")]
+    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status", "http://hl7.org/fhir/explanationofbenefit-status")]
     public enum ExplanationOfBenefitStatus
     {
       /// <summary>
       /// The resource instance is currently in-force.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The resource instance is withdrawn, rescinded or reversed.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// A new resource instance the contents of which is not complete.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The resource instance was entered in error.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 

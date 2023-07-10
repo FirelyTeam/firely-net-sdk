@@ -60,98 +60,98 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/request-resource-types)
     /// (system: http://hl7.org/fhir/request-resource-types)
     /// </summary>
-    [FhirEnumeration("RequestResourceType", "http://hl7.org/fhir/ValueSet/request-resource-types")]
+    [FhirEnumeration("RequestResourceType", "http://hl7.org/fhir/ValueSet/request-resource-types", "http://hl7.org/fhir/request-resource-types")]
     public enum RequestResourceType
     {
       /// <summary>
       /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("Appointment", "http://hl7.org/fhir/request-resource-types"), Description("Appointment")]
+      [EnumLiteral("Appointment"), Description("Appointment")]
       Appointment,
       /// <summary>
       /// A reply to an appointment request for a patient and/or practitioner(s), such as a confirmation or rejection.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("AppointmentResponse", "http://hl7.org/fhir/request-resource-types"), Description("AppointmentResponse")]
+      [EnumLiteral("AppointmentResponse"), Description("AppointmentResponse")]
       AppointmentResponse,
       /// <summary>
       /// Healthcare plan for patient or group.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("CarePlan", "http://hl7.org/fhir/request-resource-types"), Description("CarePlan")]
+      [EnumLiteral("CarePlan"), Description("CarePlan")]
       CarePlan,
       /// <summary>
       /// Claim, Pre-determination or Pre-authorization.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("Claim", "http://hl7.org/fhir/request-resource-types"), Description("Claim")]
+      [EnumLiteral("Claim"), Description("Claim")]
       Claim,
       /// <summary>
       /// A request for information to be sent to a receiver.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/request-resource-types"), Description("CommunicationRequest")]
+      [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
       CommunicationRequest,
       /// <summary>
       /// Legal Agreement.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("Contract", "http://hl7.org/fhir/request-resource-types"), Description("Contract")]
+      [EnumLiteral("Contract"), Description("Contract")]
       Contract,
       /// <summary>
       /// Medical device request.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/request-resource-types"), Description("DeviceRequest")]
+      [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
       DeviceRequest,
       /// <summary>
       /// Enrollment request.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("EnrollmentRequest", "http://hl7.org/fhir/request-resource-types"), Description("EnrollmentRequest")]
+      [EnumLiteral("EnrollmentRequest"), Description("EnrollmentRequest")]
       EnrollmentRequest,
       /// <summary>
       /// Guidance or advice relating to an immunization.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("ImmunizationRecommendation", "http://hl7.org/fhir/request-resource-types"), Description("ImmunizationRecommendation")]
+      [EnumLiteral("ImmunizationRecommendation"), Description("ImmunizationRecommendation")]
       ImmunizationRecommendation,
       /// <summary>
       /// Ordering of medication for patient or group.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/request-resource-types"), Description("MedicationRequest")]
+      [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
       MedicationRequest,
       /// <summary>
       /// Diet, formula or nutritional supplement request.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/request-resource-types"), Description("NutritionOrder")]
+      [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
       NutritionOrder,
       /// <summary>
       /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/request-resource-types"), Description("ServiceRequest")]
+      [EnumLiteral("ServiceRequest"), Description("ServiceRequest")]
       ServiceRequest,
       /// <summary>
       /// Request for a medication, substance or device.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("SupplyRequest", "http://hl7.org/fhir/request-resource-types"), Description("SupplyRequest")]
+      [EnumLiteral("SupplyRequest"), Description("SupplyRequest")]
       SupplyRequest,
       /// <summary>
       /// A task to be performed.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("Task", "http://hl7.org/fhir/request-resource-types"), Description("Task")]
+      [EnumLiteral("Task"), Description("Task")]
       Task,
       /// <summary>
       /// Prescription for vision correction products for a patient.
       /// (system: http://hl7.org/fhir/request-resource-types)
       /// </summary>
-      [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/request-resource-types"), Description("VisionPrescription")]
+      [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
       VisionPrescription,
     }
 

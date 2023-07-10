@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role)
     /// (system: http://hl7.org/fhir/ingredient-manufacturer-role)
     /// </summary>
-    [FhirEnumeration("IngredientManufacturerRole", "http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role")]
+    [FhirEnumeration("IngredientManufacturerRole", "http://hl7.org/fhir/ValueSet/ingredient-manufacturer-role", "http://hl7.org/fhir/ingredient-manufacturer-role")]
     public enum IngredientManufacturerRole
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/ingredient-manufacturer-role)
       /// </summary>
-      [EnumLiteral("allowed", "http://hl7.org/fhir/ingredient-manufacturer-role"), Description("Manufacturer is specifically allowed for this ingredient")]
+      [EnumLiteral("allowed"), Description("Manufacturer is specifically allowed for this ingredient")]
       Allowed,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/ingredient-manufacturer-role)
       /// </summary>
-      [EnumLiteral("possible", "http://hl7.org/fhir/ingredient-manufacturer-role"), Description("Manufacturer is known to make this ingredient in general")]
+      [EnumLiteral("possible"), Description("Manufacturer is known to make this ingredient in general")]
       Possible,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/ingredient-manufacturer-role)
       /// </summary>
-      [EnumLiteral("actual", "http://hl7.org/fhir/ingredient-manufacturer-role"), Description("Manufacturer actually makes this particular ingredient")]
+      [EnumLiteral("actual"), Description("Manufacturer actually makes this particular ingredient")]
       Actual,
     }
 

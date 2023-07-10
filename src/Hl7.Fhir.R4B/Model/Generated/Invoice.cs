@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/invoice-status)
     /// (system: http://hl7.org/fhir/invoice-status)
     /// </summary>
-    [FhirEnumeration("InvoiceStatus", "http://hl7.org/fhir/ValueSet/invoice-status")]
+    [FhirEnumeration("InvoiceStatus", "http://hl7.org/fhir/ValueSet/invoice-status", "http://hl7.org/fhir/invoice-status")]
     public enum InvoiceStatus
     {
       /// <summary>
       /// the invoice has been prepared but not yet finalized.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/invoice-status"), Description("draft")]
+      [EnumLiteral("draft"), Description("draft")]
       Draft,
       /// <summary>
       /// the invoice has been finalized and sent to the recipient.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("issued", "http://hl7.org/fhir/invoice-status"), Description("issued")]
+      [EnumLiteral("issued"), Description("issued")]
       Issued,
       /// <summary>
       /// the invoice has been balaced / completely paid.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("balanced", "http://hl7.org/fhir/invoice-status"), Description("balanced")]
+      [EnumLiteral("balanced"), Description("balanced")]
       Balanced,
       /// <summary>
       /// the invoice was cancelled.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/invoice-status"), Description("cancelled")]
+      [EnumLiteral("cancelled"), Description("cancelled")]
       Cancelled,
       /// <summary>
       /// the invoice was determined as entered in error before it was issued.
       /// (system: http://hl7.org/fhir/invoice-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/invoice-status"), Description("entered in error")]
+      [EnumLiteral("entered-in-error"), Description("entered in error")]
       EnteredInError,
     }
 

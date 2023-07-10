@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/history-status)
     /// (system: http://hl7.org/fhir/history-status)
     /// </summary>
-    [FhirEnumeration("FamilyHistoryStatus", "http://hl7.org/fhir/ValueSet/history-status")]
+    [FhirEnumeration("FamilyHistoryStatus", "http://hl7.org/fhir/ValueSet/history-status", "http://hl7.org/fhir/history-status")]
     public enum FamilyHistoryStatus
     {
       /// <summary>
       /// Some health information is known and captured, but not complete - see notes for details.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
+      [EnumLiteral("partial"), Description("Partial")]
       Partial,
       /// <summary>
       /// All available related health information is captured as of the date (and possibly time) when the family member history was taken.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
       /// <summary>
       /// Health information for this individual is unavailable/unknown.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health unknown")]
+      [EnumLiteral("health-unknown"), Description("Health unknown")]
       HealthUnknown,
     }
 

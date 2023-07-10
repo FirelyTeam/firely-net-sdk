@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-version-processing-mode)
     /// (system: http://hl7.org/fhir/system-version-processing-mode)
     /// </summary>
-    [FhirEnumeration("SystemVersionProcessingMode", "http://hl7.org/fhir/ValueSet/system-version-processing-mode")]
+    [FhirEnumeration("SystemVersionProcessingMode", "http://hl7.org/fhir/ValueSet/system-version-processing-mode", "http://hl7.org/fhir/system-version-processing-mode")]
     public enum SystemVersionProcessingMode
     {
       /// <summary>
       /// Use this version of the code system if a value set doesn't specify a version
       /// (system: http://hl7.org/fhir/system-version-processing-mode)
       /// </summary>
-      [EnumLiteral("default", "http://hl7.org/fhir/system-version-processing-mode"), Description("Default Version")]
+      [EnumLiteral("default"), Description("Default Version")]
       Default,
       /// <summary>
       /// Use this version of the code system. If a value set specifies a different version, the expansion operation should fail
       /// (system: http://hl7.org/fhir/system-version-processing-mode)
       /// </summary>
-      [EnumLiteral("check", "http://hl7.org/fhir/system-version-processing-mode"), Description("Check ValueSet Version")]
+      [EnumLiteral("check"), Description("Check ValueSet Version")]
       Check,
       /// <summary>
       /// Use this version of the code system irrespective of which version is specified by a value set. Note that this has obvious safety issues, in that it may result in a value set expansion giving a different list of codes that is both wrong and unsafe, and implementers should only use this capability reluctantly. It primarily exists to deal with situations where specifications have fallen into decay as time passes. If a  version is override, the version used SHALL explicitly be represented in the expansion parameters
       /// (system: http://hl7.org/fhir/system-version-processing-mode)
       /// </summary>
-      [EnumLiteral("override", "http://hl7.org/fhir/system-version-processing-mode"), Description("Override ValueSet Version")]
+      [EnumLiteral("override"), Description("Override ValueSet Version")]
       Override,
     }
 

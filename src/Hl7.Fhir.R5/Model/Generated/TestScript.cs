@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/http-operations)
     /// (system: http://hl7.org/fhir/http-operations)
     /// </summary>
-    [FhirEnumeration("TestScriptRequestMethodCode", "http://hl7.org/fhir/ValueSet/http-operations")]
+    [FhirEnumeration("TestScriptRequestMethodCode", "http://hl7.org/fhir/ValueSet/http-operations", "http://hl7.org/fhir/http-operations")]
     public enum TestScriptRequestMethodCode
     {
       /// <summary>
       /// HTTP DELETE operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/http-operations"), Description("DELETE")]
+      [EnumLiteral("delete"), Description("DELETE")]
       Delete,
       /// <summary>
       /// HTTP GET operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("get", "http://hl7.org/fhir/http-operations"), Description("GET")]
+      [EnumLiteral("get"), Description("GET")]
       Get,
       /// <summary>
       /// HTTP OPTIONS operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("options", "http://hl7.org/fhir/http-operations"), Description("OPTIONS")]
+      [EnumLiteral("options"), Description("OPTIONS")]
       Options,
       /// <summary>
       /// HTTP PATCH operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("patch", "http://hl7.org/fhir/http-operations"), Description("PATCH")]
+      [EnumLiteral("patch"), Description("PATCH")]
       Patch,
       /// <summary>
       /// HTTP POST operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("post", "http://hl7.org/fhir/http-operations"), Description("POST")]
+      [EnumLiteral("post"), Description("POST")]
       Post,
       /// <summary>
       /// HTTP PUT operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("put", "http://hl7.org/fhir/http-operations"), Description("PUT")]
+      [EnumLiteral("put"), Description("PUT")]
       Put,
       /// <summary>
       /// HTTP HEAD operation.
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("head", "http://hl7.org/fhir/http-operations"), Description("HEAD")]
+      [EnumLiteral("head"), Description("HEAD")]
       Head,
     }
 
@@ -112,20 +112,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-direction-codes)
     /// (system: http://hl7.org/fhir/assert-direction-codes)
     /// </summary>
-    [FhirEnumeration("AssertionDirectionType", "http://hl7.org/fhir/ValueSet/assert-direction-codes")]
+    [FhirEnumeration("AssertionDirectionType", "http://hl7.org/fhir/ValueSet/assert-direction-codes", "http://hl7.org/fhir/assert-direction-codes")]
     public enum AssertionDirectionType
     {
       /// <summary>
       /// The assertion is evaluated on the response. This is the default value.
       /// (system: http://hl7.org/fhir/assert-direction-codes)
       /// </summary>
-      [EnumLiteral("response", "http://hl7.org/fhir/assert-direction-codes"), Description("response")]
+      [EnumLiteral("response"), Description("response")]
       Response,
       /// <summary>
       /// The assertion is evaluated on the request.
       /// (system: http://hl7.org/fhir/assert-direction-codes)
       /// </summary>
-      [EnumLiteral("request", "http://hl7.org/fhir/assert-direction-codes"), Description("request")]
+      [EnumLiteral("request"), Description("request")]
       Request,
     }
 
@@ -134,32 +134,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-manual-completion-codes)
     /// (system: http://hl7.org/fhir/assert-manual-completion-codes)
     /// </summary>
-    [FhirEnumeration("AssertionManualCompletionType", "http://hl7.org/fhir/ValueSet/assert-manual-completion-codes")]
+    [FhirEnumeration("AssertionManualCompletionType", "http://hl7.org/fhir/ValueSet/assert-manual-completion-codes", "http://hl7.org/fhir/assert-manual-completion-codes")]
     public enum AssertionManualCompletionType
     {
       /// <summary>
       /// Mark the currently waiting test failed and proceed with the next assert if the stopTestOnFail is false or the next test in the TestScript if the stopTestOnFail is true.
       /// (system: http://hl7.org/fhir/assert-manual-completion-codes)
       /// </summary>
-      [EnumLiteral("fail", "http://hl7.org/fhir/assert-manual-completion-codes"), Description("Fail")]
+      [EnumLiteral("fail"), Description("Fail")]
       Fail,
       /// <summary>
       /// Mark the currently waiting test passed (if the test is not failed already) and proceed with the next action in the TestScript.
       /// (system: http://hl7.org/fhir/assert-manual-completion-codes)
       /// </summary>
-      [EnumLiteral("pass", "http://hl7.org/fhir/assert-manual-completion-codes"), Description("Pass")]
+      [EnumLiteral("pass"), Description("Pass")]
       Pass,
       /// <summary>
       /// Mark this assert as skipped and proceed with the next action in the TestScript.
       /// (system: http://hl7.org/fhir/assert-manual-completion-codes)
       /// </summary>
-      [EnumLiteral("skip", "http://hl7.org/fhir/assert-manual-completion-codes"), Description("Skip")]
+      [EnumLiteral("skip"), Description("Skip")]
       Skip,
       /// <summary>
       /// Stop execution of this TestScript. The overall status of this TestScript is evaluated based on the status of the completed tests.
       /// (system: http://hl7.org/fhir/assert-manual-completion-codes)
       /// </summary>
-      [EnumLiteral("stop", "http://hl7.org/fhir/assert-manual-completion-codes"), Description("Stop")]
+      [EnumLiteral("stop"), Description("Stop")]
       Stop,
     }
 
@@ -168,80 +168,80 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-operator-codes)
     /// (system: http://hl7.org/fhir/assert-operator-codes)
     /// </summary>
-    [FhirEnumeration("AssertionOperatorType", "http://hl7.org/fhir/ValueSet/assert-operator-codes")]
+    [FhirEnumeration("AssertionOperatorType", "http://hl7.org/fhir/ValueSet/assert-operator-codes", "http://hl7.org/fhir/assert-operator-codes")]
     public enum AssertionOperatorType
     {
       /// <summary>
       /// Default value. Equals comparison.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("equals", "http://hl7.org/fhir/assert-operator-codes"), Description("equals")]
+      [EnumLiteral("equals"), Description("equals")]
       Equals,
       /// <summary>
       /// Not equals comparison.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notEquals", "http://hl7.org/fhir/assert-operator-codes"), Description("notEquals")]
+      [EnumLiteral("notEquals"), Description("notEquals")]
       NotEquals,
       /// <summary>
       /// Compare value within a known set of values.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("in", "http://hl7.org/fhir/assert-operator-codes"), Description("in")]
+      [EnumLiteral("in"), Description("in")]
       In,
       /// <summary>
       /// Compare value not within a known set of values.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notIn", "http://hl7.org/fhir/assert-operator-codes"), Description("notIn")]
+      [EnumLiteral("notIn"), Description("notIn")]
       NotIn,
       /// <summary>
       /// Compare value to be greater than a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("greaterThan", "http://hl7.org/fhir/assert-operator-codes"), Description("greaterThan")]
+      [EnumLiteral("greaterThan"), Description("greaterThan")]
       GreaterThan,
       /// <summary>
       /// Compare value to be less than a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("lessThan", "http://hl7.org/fhir/assert-operator-codes"), Description("lessThan")]
+      [EnumLiteral("lessThan"), Description("lessThan")]
       LessThan,
       /// <summary>
       /// Compare value is empty.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("empty", "http://hl7.org/fhir/assert-operator-codes"), Description("empty")]
+      [EnumLiteral("empty"), Description("empty")]
       Empty,
       /// <summary>
       /// Compare value is not empty.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notEmpty", "http://hl7.org/fhir/assert-operator-codes"), Description("notEmpty")]
+      [EnumLiteral("notEmpty"), Description("notEmpty")]
       NotEmpty,
       /// <summary>
       /// Compare value string contains a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("contains", "http://hl7.org/fhir/assert-operator-codes"), Description("contains")]
+      [EnumLiteral("contains"), Description("contains")]
       Contains,
       /// <summary>
       /// Compare value string does not contain a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notContains", "http://hl7.org/fhir/assert-operator-codes"), Description("notContains")]
+      [EnumLiteral("notContains"), Description("notContains")]
       NotContains,
       /// <summary>
       /// Evaluate the FHIRPath expression as a boolean condition.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("eval", "http://hl7.org/fhir/assert-operator-codes"), Description("evaluate")]
+      [EnumLiteral("eval"), Description("evaluate")]
       Eval,
       /// <summary>
       /// Manually evaluate the condition described by this assert. The test engine SHALL pause and provide an input mechanism to set the outcome of this assert to 'pass', 'fail', 'skip' or 'stop'.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("manualEval", "http://hl7.org/fhir/assert-operator-codes"), Description("manualEvaluate")]
+      [EnumLiteral("manualEval"), Description("manualEvaluate")]
       ManualEval,
     }
 
@@ -250,272 +250,272 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-response-code-types)
     /// (system: http://hl7.org/fhir/assert-response-code-types)
     /// </summary>
-    [FhirEnumeration("AssertionResponseTypes", "http://hl7.org/fhir/ValueSet/assert-response-code-types")]
+    [FhirEnumeration("AssertionResponseTypes", "http://hl7.org/fhir/ValueSet/assert-response-code-types", "http://hl7.org/fhir/assert-response-code-types")]
     public enum AssertionResponseTypes
     {
       /// <summary>
       /// Response code is 100.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("continue", "http://hl7.org/fhir/assert-response-code-types"), Description("Continue")]
+      [EnumLiteral("continue"), Description("Continue")]
       Continue,
       /// <summary>
       /// Response code is 101.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("switchingProtocols", "http://hl7.org/fhir/assert-response-code-types"), Description("Switching Protocols")]
+      [EnumLiteral("switchingProtocols"), Description("Switching Protocols")]
       SwitchingProtocols,
       /// <summary>
       /// Response code is 200.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("okay", "http://hl7.org/fhir/assert-response-code-types"), Description("OK")]
+      [EnumLiteral("okay"), Description("OK")]
       Okay,
       /// <summary>
       /// Response code is 201.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("created", "http://hl7.org/fhir/assert-response-code-types"), Description("Created")]
+      [EnumLiteral("created"), Description("Created")]
       Created,
       /// <summary>
       /// Response code is 202.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/assert-response-code-types"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// Response code is 203.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("nonAuthoritativeInformation", "http://hl7.org/fhir/assert-response-code-types"), Description("Non-Authoritative Information")]
+      [EnumLiteral("nonAuthoritativeInformation"), Description("Non-Authoritative Information")]
       NonAuthoritativeInformation,
       /// <summary>
       /// Response code is 204.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("noContent", "http://hl7.org/fhir/assert-response-code-types"), Description("No Content")]
+      [EnumLiteral("noContent"), Description("No Content")]
       NoContent,
       /// <summary>
       /// Response code is 205.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("resetContent", "http://hl7.org/fhir/assert-response-code-types"), Description("Reset Content")]
+      [EnumLiteral("resetContent"), Description("Reset Content")]
       ResetContent,
       /// <summary>
       /// Response code is 206.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("partialContent", "http://hl7.org/fhir/assert-response-code-types"), Description("Partial Content")]
+      [EnumLiteral("partialContent"), Description("Partial Content")]
       PartialContent,
       /// <summary>
       /// Response code is 300.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("multipleChoices", "http://hl7.org/fhir/assert-response-code-types"), Description("Multiple Choices")]
+      [EnumLiteral("multipleChoices"), Description("Multiple Choices")]
       MultipleChoices,
       /// <summary>
       /// Response code is 301.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("movedPermanently", "http://hl7.org/fhir/assert-response-code-types"), Description("Moved Permanently")]
+      [EnumLiteral("movedPermanently"), Description("Moved Permanently")]
       MovedPermanently,
       /// <summary>
       /// Response code is 302.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("found", "http://hl7.org/fhir/assert-response-code-types"), Description("Found")]
+      [EnumLiteral("found"), Description("Found")]
       Found,
       /// <summary>
       /// Response code is 303.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("seeOther", "http://hl7.org/fhir/assert-response-code-types"), Description("See Other")]
+      [EnumLiteral("seeOther"), Description("See Other")]
       SeeOther,
       /// <summary>
       /// Response code is 304.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("notModified", "http://hl7.org/fhir/assert-response-code-types"), Description("Not Modified")]
+      [EnumLiteral("notModified"), Description("Not Modified")]
       NotModified,
       /// <summary>
       /// Response code is 305.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("useProxy", "http://hl7.org/fhir/assert-response-code-types"), Description("Use Proxy")]
+      [EnumLiteral("useProxy"), Description("Use Proxy")]
       UseProxy,
       /// <summary>
       /// Response code is 307.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("temporaryRedirect", "http://hl7.org/fhir/assert-response-code-types"), Description("Temporary Redirect")]
+      [EnumLiteral("temporaryRedirect"), Description("Temporary Redirect")]
       TemporaryRedirect,
       /// <summary>
       /// Response code is 308.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("permanentRedirect", "http://hl7.org/fhir/assert-response-code-types"), Description("Permanent Redirect")]
+      [EnumLiteral("permanentRedirect"), Description("Permanent Redirect")]
       PermanentRedirect,
       /// <summary>
       /// Response code is 400.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("badRequest", "http://hl7.org/fhir/assert-response-code-types"), Description("Bad Request")]
+      [EnumLiteral("badRequest"), Description("Bad Request")]
       BadRequest,
       /// <summary>
       /// Response code is 401.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("unauthorized", "http://hl7.org/fhir/assert-response-code-types"), Description("Unauthorized")]
+      [EnumLiteral("unauthorized"), Description("Unauthorized")]
       Unauthorized,
       /// <summary>
       /// Response code is 402.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("paymentRequired", "http://hl7.org/fhir/assert-response-code-types"), Description("Payment Required")]
+      [EnumLiteral("paymentRequired"), Description("Payment Required")]
       PaymentRequired,
       /// <summary>
       /// Response code is 403.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("forbidden", "http://hl7.org/fhir/assert-response-code-types"), Description("Forbidden")]
+      [EnumLiteral("forbidden"), Description("Forbidden")]
       Forbidden,
       /// <summary>
       /// Response code is 404.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("notFound", "http://hl7.org/fhir/assert-response-code-types"), Description("Not Found")]
+      [EnumLiteral("notFound"), Description("Not Found")]
       NotFound,
       /// <summary>
       /// Response code is 405.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("methodNotAllowed", "http://hl7.org/fhir/assert-response-code-types"), Description("Method Not Allowed")]
+      [EnumLiteral("methodNotAllowed"), Description("Method Not Allowed")]
       MethodNotAllowed,
       /// <summary>
       /// Response code is 406.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("notAcceptable", "http://hl7.org/fhir/assert-response-code-types"), Description("Not Acceptable")]
+      [EnumLiteral("notAcceptable"), Description("Not Acceptable")]
       NotAcceptable,
       /// <summary>
       /// Response code is 407.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("proxyAuthenticationRequired", "http://hl7.org/fhir/assert-response-code-types"), Description("Proxy Authentication Required")]
+      [EnumLiteral("proxyAuthenticationRequired"), Description("Proxy Authentication Required")]
       ProxyAuthenticationRequired,
       /// <summary>
       /// Response code is 408.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("requestTimeout", "http://hl7.org/fhir/assert-response-code-types"), Description("Request Timeout")]
+      [EnumLiteral("requestTimeout"), Description("Request Timeout")]
       RequestTimeout,
       /// <summary>
       /// Response code is 409.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("conflict", "http://hl7.org/fhir/assert-response-code-types"), Description("Conflict")]
+      [EnumLiteral("conflict"), Description("Conflict")]
       Conflict,
       /// <summary>
       /// Response code is 410.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("gone", "http://hl7.org/fhir/assert-response-code-types"), Description("Gone")]
+      [EnumLiteral("gone"), Description("Gone")]
       Gone,
       /// <summary>
       /// Response code is 411.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("lengthRequired", "http://hl7.org/fhir/assert-response-code-types"), Description("Length Required")]
+      [EnumLiteral("lengthRequired"), Description("Length Required")]
       LengthRequired,
       /// <summary>
       /// Response code is 412.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("preconditionFailed", "http://hl7.org/fhir/assert-response-code-types"), Description("Precondition Failed")]
+      [EnumLiteral("preconditionFailed"), Description("Precondition Failed")]
       PreconditionFailed,
       /// <summary>
       /// Response code is 413.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("contentTooLarge", "http://hl7.org/fhir/assert-response-code-types"), Description("Content Too Large")]
+      [EnumLiteral("contentTooLarge"), Description("Content Too Large")]
       ContentTooLarge,
       /// <summary>
       /// Response code is 414.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("uriTooLong", "http://hl7.org/fhir/assert-response-code-types"), Description("URI Too Long")]
+      [EnumLiteral("uriTooLong"), Description("URI Too Long")]
       UriTooLong,
       /// <summary>
       /// Response code is 415.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("unsupportedMediaType", "http://hl7.org/fhir/assert-response-code-types"), Description("Unsupported Media Type")]
+      [EnumLiteral("unsupportedMediaType"), Description("Unsupported Media Type")]
       UnsupportedMediaType,
       /// <summary>
       /// Response code is 416.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("rangeNotSatisfiable", "http://hl7.org/fhir/assert-response-code-types"), Description("Range Not Satisfiable")]
+      [EnumLiteral("rangeNotSatisfiable"), Description("Range Not Satisfiable")]
       RangeNotSatisfiable,
       /// <summary>
       /// Response code is 417.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("expectationFailed", "http://hl7.org/fhir/assert-response-code-types"), Description("Expectation Failed")]
+      [EnumLiteral("expectationFailed"), Description("Expectation Failed")]
       ExpectationFailed,
       /// <summary>
       /// Response code is 421.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("misdirectedRequest", "http://hl7.org/fhir/assert-response-code-types"), Description("Misdirected Request")]
+      [EnumLiteral("misdirectedRequest"), Description("Misdirected Request")]
       MisdirectedRequest,
       /// <summary>
       /// Response code is 422.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("unprocessableContent", "http://hl7.org/fhir/assert-response-code-types"), Description("Unprocessable Content")]
+      [EnumLiteral("unprocessableContent"), Description("Unprocessable Content")]
       UnprocessableContent,
       /// <summary>
       /// Response code is 426.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("upgradeRequired", "http://hl7.org/fhir/assert-response-code-types"), Description("Upgrade Required")]
+      [EnumLiteral("upgradeRequired"), Description("Upgrade Required")]
       UpgradeRequired,
       /// <summary>
       /// Response code is 500.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("internalServerError", "http://hl7.org/fhir/assert-response-code-types"), Description("Internal Server Error")]
+      [EnumLiteral("internalServerError"), Description("Internal Server Error")]
       InternalServerError,
       /// <summary>
       /// Response code is 501.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("notImplemented", "http://hl7.org/fhir/assert-response-code-types"), Description("Not Implemented")]
+      [EnumLiteral("notImplemented"), Description("Not Implemented")]
       NotImplemented,
       /// <summary>
       /// Response code is 502.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("badGateway", "http://hl7.org/fhir/assert-response-code-types"), Description("Bad Gateway")]
+      [EnumLiteral("badGateway"), Description("Bad Gateway")]
       BadGateway,
       /// <summary>
       /// Response code is 503.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("serviceUnavailable", "http://hl7.org/fhir/assert-response-code-types"), Description("Service Unavailable")]
+      [EnumLiteral("serviceUnavailable"), Description("Service Unavailable")]
       ServiceUnavailable,
       /// <summary>
       /// Response code is 504.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("gatewayTimeout", "http://hl7.org/fhir/assert-response-code-types"), Description("Gateway Timeout")]
+      [EnumLiteral("gatewayTimeout"), Description("Gateway Timeout")]
       GatewayTimeout,
       /// <summary>
       /// Response code is 505.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("httpVersionNotSupported", "http://hl7.org/fhir/assert-response-code-types"), Description("HTTP Version Not Supported")]
+      [EnumLiteral("httpVersionNotSupported"), Description("HTTP Version Not Supported")]
       HttpVersionNotSupported,
     }
 

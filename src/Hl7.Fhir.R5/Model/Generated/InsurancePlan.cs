@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/insuranceplan-applicability)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability")]
+    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability", "http://terminology.hl7.org/CodeSystem/applicability")]
     public enum BenefitCostApplicability
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("in-network", "http://terminology.hl7.org/CodeSystem/applicability"), Description("In Network")]
+      [EnumLiteral("in-network"), Description("In Network")]
       InNetwork,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("out-of-network", "http://terminology.hl7.org/CodeSystem/applicability"), Description("Out of Network")]
+      [EnumLiteral("out-of-network"), Description("Out of Network")]
       OutOfNetwork,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("other", "http://terminology.hl7.org/CodeSystem/applicability"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 

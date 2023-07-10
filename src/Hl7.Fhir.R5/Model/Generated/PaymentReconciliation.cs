@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/payment-outcome)
     /// (system: http://hl7.org/fhir/payment-outcome)
     /// </summary>
-    [FhirEnumeration("PaymentOutcome", "http://hl7.org/fhir/ValueSet/payment-outcome")]
+    [FhirEnumeration("PaymentOutcome", "http://hl7.org/fhir/ValueSet/payment-outcome", "http://hl7.org/fhir/payment-outcome")]
     public enum PaymentOutcome
     {
       /// <summary>
       /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("queued", "http://hl7.org/fhir/payment-outcome"), Description("Queued")]
+      [EnumLiteral("queued"), Description("Queued")]
       Queued,
       /// <summary>
       /// The processing has completed without errors
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/payment-outcome"), Description("Processing Complete")]
+      [EnumLiteral("complete"), Description("Processing Complete")]
       Complete,
       /// <summary>
       /// One or more errors have been detected in the Claim
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/payment-outcome"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// No errors have been detected in the Claim and some of the adjudication has been performed.
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/payment-outcome"), Description("Partial Processing")]
+      [EnumLiteral("partial"), Description("Partial Processing")]
       Partial,
     }
 

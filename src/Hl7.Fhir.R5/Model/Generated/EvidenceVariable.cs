@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/characteristic-combination)
     /// (system: http://hl7.org/fhir/characteristic-combination)
     /// </summary>
-    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination")]
+    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination", "http://hl7.org/fhir/characteristic-combination")]
     public enum CharacteristicCombinationCode
     {
       /// <summary>
       /// Combine characteristics with AND.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("all-of", "http://hl7.org/fhir/characteristic-combination"), Description("All of")]
+      [EnumLiteral("all-of"), Description("All of")]
       AllOf,
       /// <summary>
       /// Combine characteristics with OR.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("any-of", "http://hl7.org/fhir/characteristic-combination"), Description("Any of")]
+      [EnumLiteral("any-of"), Description("Any of")]
       AnyOf,
       /// <summary>
       /// Meet at least the threshold number of characteristics for definition.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("at-least", "http://hl7.org/fhir/characteristic-combination"), Description("At least")]
+      [EnumLiteral("at-least"), Description("At least")]
       AtLeast,
       /// <summary>
       /// Meet at most the threshold number of characteristics for definition.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("at-most", "http://hl7.org/fhir/characteristic-combination"), Description("At most")]
+      [EnumLiteral("at-most"), Description("At most")]
       AtMost,
       /// <summary>
       /// Combine characteristics statistically. Use method to specify the statistical method.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("statistical", "http://hl7.org/fhir/characteristic-combination"), Description("Statistical")]
+      [EnumLiteral("statistical"), Description("Statistical")]
       Statistical,
       /// <summary>
       /// Combine characteristics by addition of benefits and subtraction of harms.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("net-effect", "http://hl7.org/fhir/characteristic-combination"), Description("Net effect")]
+      [EnumLiteral("net-effect"), Description("Net effect")]
       NetEffect,
       /// <summary>
       /// Combine characteristics as a collection used as the dataset.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("dataset", "http://hl7.org/fhir/characteristic-combination"), Description("Dataset")]
+      [EnumLiteral("dataset"), Description("Dataset")]
       Dataset,
     }
 
