@@ -149,9 +149,13 @@ namespace Hl7.Fhir.ElementModel.Types
         /// <param name="defaultOffset">Offset used when the datetime does not specify one.</param>
         /// <returns></returns>
         public DateTimeOffset ToDateTimeOffset(TimeSpan defaultOffset) =>
-             new(_parsedValue.Year, _parsedValue.Month, _parsedValue.Day,
-                 _parsedValue.Hour, _parsedValue.Minute, _parsedValue.Second, _parsedValue.Millisecond,
-                    HasOffset ? _parsedValue.Offset : defaultOffset);
+               HasOffset switch
+               {
+                   true => _parsedValue,
+                   false => new(_parsedValue.Year, _parsedValue.Month, _parsedValue.Day,
+                       _parsedValue.Hour, _parsedValue.Minute, _parsedValue.Second, _parsedValue.Millisecond,
+                       defaultOffset)
+               };
 
         public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";
 

@@ -18,7 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCompareTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCopyTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepMatchTest.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\ModelTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\ModelInfoTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\NullExtensionsTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\TerminologyTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Rest\FhirClientTests.cs" />
