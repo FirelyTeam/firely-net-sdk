@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
     /// (system: http://hl7.org/fhir/measure-report-status)
     /// </summary>
-    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status")]
+    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status", "http://hl7.org/fhir/measure-report-status")]
     public enum MeasureReportStatus
     {
       /// <summary>
       /// The report is complete and ready for use.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/measure-report-status"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
       /// <summary>
       /// The report is currently being generated.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/measure-report-status"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
       /// <summary>
       /// An error occurred attempting to generate the report.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/measure-report-status"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
     /// (system: http://hl7.org/fhir/measure-report-type)
     /// </summary>
-    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type")]
+    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type", "http://hl7.org/fhir/measure-report-type")]
     public enum MeasureReportType
     {
       /// <summary>
       /// An individual report that provides information on the performance for a given measure with respect to a single subject.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("individual", "http://hl7.org/fhir/measure-report-type"), Description("Individual")]
+      [EnumLiteral("individual"), Description("Individual")]
       Individual,
       /// <summary>
       /// A subject list report that includes a listing of subjects that satisfied each population criteria in the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("subject-list", "http://hl7.org/fhir/measure-report-type"), Description("Subject List")]
+      [EnumLiteral("subject-list"), Description("Subject List")]
       SubjectList,
       /// <summary>
       /// A summary report that returns the number of members in each population criteria for the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("summary", "http://hl7.org/fhir/measure-report-type"), Description("Summary")]
+      [EnumLiteral("summary"), Description("Summary")]
       Summary,
       /// <summary>
       /// A data exchange report that contains data-of-interest for the measure (i.e. data that is needed to calculate the measure)
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("data-exchange", "http://hl7.org/fhir/measure-report-type"), Description("Data Exchange")]
+      [EnumLiteral("data-exchange"), Description("Data Exchange")]
       DataExchange,
     }
 
@@ -122,20 +122,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/submit-data-update-type)
     /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
     /// </summary>
-    [FhirEnumeration("SubmitDataUpdateType", "http://hl7.org/fhir/ValueSet/submit-data-update-type")]
+    [FhirEnumeration("SubmitDataUpdateType", "http://hl7.org/fhir/ValueSet/submit-data-update-type", "http://hl7.org/fhir/CodeSystem/submit-data-update-type")]
     public enum SubmitDataUpdateType
     {
       /// <summary>
       /// In contrast to the Snapshot Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains only the new and updated DEQM and QI Core Profiles since the last transaction. If the Consumer supports incremental updates, the contents of the updated payload updates the previous payload data.
       /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
       /// </summary>
-      [EnumLiteral("incremental", "http://hl7.org/fhir/CodeSystem/submit-data-update-type"), Description("Incremental")]
+      [EnumLiteral("incremental"), Description("Incremental")]
       Incremental,
       /// <summary>
       /// In contrast to the Incremental Update, the FHIR Parameters resource used in a Submit Data or the Collect Data scenario contains all the DEQM and QI Core Profiles for each transaction.  If the Consumer supports snapshot updates, the contents of the updated payload entirely replaces the previous payload
       /// (system: http://hl7.org/fhir/CodeSystem/submit-data-update-type)
       /// </summary>
-      [EnumLiteral("snapshot", "http://hl7.org/fhir/CodeSystem/submit-data-update-type"), Description("Snapshot")]
+      [EnumLiteral("snapshot"), Description("Snapshot")]
       Snapshot,
     }
 

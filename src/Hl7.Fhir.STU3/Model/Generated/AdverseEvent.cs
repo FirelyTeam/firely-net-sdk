@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-category)
     /// (system: http://hl7.org/fhir/adverse-event-category)
     /// </summary>
-    [FhirEnumeration("AdverseEventCategory", "http://hl7.org/fhir/ValueSet/adverse-event-category")]
+    [FhirEnumeration("AdverseEventCategory", "http://hl7.org/fhir/ValueSet/adverse-event-category", "http://hl7.org/fhir/adverse-event-category")]
     public enum AdverseEventCategory
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-category)
       /// </summary>
-      [EnumLiteral("AE", "http://hl7.org/fhir/adverse-event-category"), Description("Adverse Event")]
+      [EnumLiteral("AE"), Description("Adverse Event")]
       AE,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-category)
       /// </summary>
-      [EnumLiteral("PAE", "http://hl7.org/fhir/adverse-event-category"), Description("Potential Adverse Event")]
+      [EnumLiteral("PAE"), Description("Potential Adverse Event")]
       PAE,
     }
 
@@ -82,44 +82,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-outcome)
     /// (system: http://hl7.org/fhir/adverse-event-outcome)
     /// </summary>
-    [FhirEnumeration("AdverseEventOutcome", "http://hl7.org/fhir/ValueSet/adverse-event-outcome")]
+    [FhirEnumeration("AdverseEventOutcome", "http://hl7.org/fhir/ValueSet/adverse-event-outcome", "http://hl7.org/fhir/adverse-event-outcome")]
     public enum AdverseEventOutcome
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("resolved", "http://hl7.org/fhir/adverse-event-outcome"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("recovering", "http://hl7.org/fhir/adverse-event-outcome"), Description("Recovering")]
+      [EnumLiteral("recovering"), Description("Recovering")]
       Recovering,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("ongoing", "http://hl7.org/fhir/adverse-event-outcome"), Description("Ongoing")]
+      [EnumLiteral("ongoing"), Description("Ongoing")]
       Ongoing,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("resolvedWithSequelae", "http://hl7.org/fhir/adverse-event-outcome"), Description("Resolved with Sequelae")]
+      [EnumLiteral("resolvedWithSequelae"), Description("Resolved with Sequelae")]
       ResolvedWithSequelae,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("fatal", "http://hl7.org/fhir/adverse-event-outcome"), Description("Fatal")]
+      [EnumLiteral("fatal"), Description("Fatal")]
       Fatal,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/adverse-event-outcome"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -128,20 +128,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-causality)
     /// (system: http://hl7.org/fhir/adverse-event-causality)
     /// </summary>
-    [FhirEnumeration("AdverseEventCausality", "http://hl7.org/fhir/ValueSet/adverse-event-causality")]
+    [FhirEnumeration("AdverseEventCausality", "http://hl7.org/fhir/ValueSet/adverse-event-causality", "http://hl7.org/fhir/adverse-event-causality")]
     public enum AdverseEventCausality
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-causality)
       /// </summary>
-      [EnumLiteral("causality1", "http://hl7.org/fhir/adverse-event-causality"), Description("causality1 placeholder")]
+      [EnumLiteral("causality1"), Description("causality1 placeholder")]
       Causality1,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/adverse-event-causality)
       /// </summary>
-      [EnumLiteral("causality2", "http://hl7.org/fhir/adverse-event-causality"), Description("causality2 placeholder")]
+      [EnumLiteral("causality2"), Description("causality2 placeholder")]
       Causality2,
     }
 

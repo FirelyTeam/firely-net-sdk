@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose)
     /// (system: http://hl7.org/fhir/eligibilityrequest-purpose)
     /// </summary>
-    [FhirEnumeration("EligibilityRequestPurpose", "http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose")]
+    [FhirEnumeration("EligibilityRequestPurpose", "http://hl7.org/fhir/ValueSet/eligibilityrequest-purpose", "http://hl7.org/fhir/eligibilityrequest-purpose")]
     public enum EligibilityRequestPurpose
     {
       /// <summary>
       /// The prior authorization requirements for the listed, or discovered if specified, converages for the categories of service and/or specifed biling codes are requested.
       /// (system: http://hl7.org/fhir/eligibilityrequest-purpose)
       /// </summary>
-      [EnumLiteral("auth-requirements", "http://hl7.org/fhir/eligibilityrequest-purpose"), Description("Coverage auth-requirements")]
+      [EnumLiteral("auth-requirements"), Description("Coverage auth-requirements")]
       AuthRequirements,
       /// <summary>
       /// The plan benefits and optionally benefits consumed  for the listed, or discovered if specified, converages are requested.
       /// (system: http://hl7.org/fhir/eligibilityrequest-purpose)
       /// </summary>
-      [EnumLiteral("benefits", "http://hl7.org/fhir/eligibilityrequest-purpose"), Description("Coverage benefits")]
+      [EnumLiteral("benefits"), Description("Coverage benefits")]
       Benefits,
       /// <summary>
       /// The insurer is requested to report on any coverages which they are aware of in addition to any specifed.
       /// (system: http://hl7.org/fhir/eligibilityrequest-purpose)
       /// </summary>
-      [EnumLiteral("discovery", "http://hl7.org/fhir/eligibilityrequest-purpose"), Description("Coverage Discovery")]
+      [EnumLiteral("discovery"), Description("Coverage Discovery")]
       Discovery,
       /// <summary>
       /// A check that the specified coverages are in-force is requested.
       /// (system: http://hl7.org/fhir/eligibilityrequest-purpose)
       /// </summary>
-      [EnumLiteral("validation", "http://hl7.org/fhir/eligibilityrequest-purpose"), Description("Coverage Validation")]
+      [EnumLiteral("validation"), Description("Coverage Validation")]
       Validation,
     }
 

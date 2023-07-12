@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/digital-media-type)
     /// (system: http://hl7.org/fhir/digital-media-type)
     /// </summary>
-    [FhirEnumeration("DigitalMediaType", "http://hl7.org/fhir/ValueSet/digital-media-type")]
+    [FhirEnumeration("DigitalMediaType", "http://hl7.org/fhir/ValueSet/digital-media-type", "http://hl7.org/fhir/digital-media-type")]
     public enum DigitalMediaType
     {
       /// <summary>
       /// The media consists of one or more unmoving images, including photographs, computer-generated graphs and charts, and scanned documents
       /// (system: http://hl7.org/fhir/digital-media-type)
       /// </summary>
-      [EnumLiteral("photo", "http://hl7.org/fhir/digital-media-type"), Description("Photo")]
+      [EnumLiteral("photo"), Description("Photo")]
       Photo,
       /// <summary>
       /// The media consists of a series of frames that capture a moving image
       /// (system: http://hl7.org/fhir/digital-media-type)
       /// </summary>
-      [EnumLiteral("video", "http://hl7.org/fhir/digital-media-type"), Description("Video")]
+      [EnumLiteral("video"), Description("Video")]
       Video,
       /// <summary>
       /// The media consists of a sound recording
       /// (system: http://hl7.org/fhir/digital-media-type)
       /// </summary>
-      [EnumLiteral("audio", "http://hl7.org/fhir/digital-media-type"), Description("Audio")]
+      [EnumLiteral("audio"), Description("Audio")]
       Audio,
     }
 

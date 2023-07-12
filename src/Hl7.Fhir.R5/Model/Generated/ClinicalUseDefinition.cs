@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/clinical-use-definition-type)
     /// (system: http://hl7.org/fhir/clinical-use-definition-type)
     /// </summary>
-    [FhirEnumeration("ClinicalUseDefinitionType", "http://hl7.org/fhir/ValueSet/clinical-use-definition-type")]
+    [FhirEnumeration("ClinicalUseDefinitionType", "http://hl7.org/fhir/ValueSet/clinical-use-definition-type", "http://hl7.org/fhir/clinical-use-definition-type")]
     public enum ClinicalUseDefinitionType
     {
       /// <summary>
       /// A reason for giving the medication.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("indication", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Indication")]
+      [EnumLiteral("indication"), Description("Indication")]
       Indication,
       /// <summary>
       /// A reason for not giving the medication.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("contraindication", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Contraindication")]
+      [EnumLiteral("contraindication"), Description("Contraindication")]
       Contraindication,
       /// <summary>
       /// Interactions between the medication and other substances.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("interaction", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Interaction")]
+      [EnumLiteral("interaction"), Description("Interaction")]
       Interaction,
       /// <summary>
       /// Side effects or adverse effects associated with the medication.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("undesirable-effect", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Undesirable Effect")]
+      [EnumLiteral("undesirable-effect"), Description("Undesirable Effect")]
       UndesirableEffect,
       /// <summary>
       /// A general warning or issue that is not specifically one of the other types.
       /// (system: http://hl7.org/fhir/clinical-use-definition-type)
       /// </summary>
-      [EnumLiteral("warning", "http://hl7.org/fhir/clinical-use-definition-type"), Description("Warning")]
+      [EnumLiteral("warning"), Description("Warning")]
       Warning,
     }
 

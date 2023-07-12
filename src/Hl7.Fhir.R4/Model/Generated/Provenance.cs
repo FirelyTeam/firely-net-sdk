@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/provenance-entity-role)
     /// (system: http://hl7.org/fhir/provenance-entity-role)
     /// </summary>
-    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role")]
+    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role", "http://hl7.org/fhir/provenance-entity-role")]
     public enum ProvenanceEntityRole
     {
       /// <summary>
       /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a pre-existing entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("derivation", "http://hl7.org/fhir/provenance-entity-role"), Description("Derivation")]
+      [EnumLiteral("derivation"), Description("Derivation")]
       Derivation,
       /// <summary>
       /// A derivation for which the resulting entity is a revised version of some original.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("revision", "http://hl7.org/fhir/provenance-entity-role"), Description("Revision")]
+      [EnumLiteral("revision"), Description("Revision")]
       Revision,
       /// <summary>
       /// The repeat of (some or all of) an entity, such as text or image, by someone who might or might not be its original author.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("quotation", "http://hl7.org/fhir/provenance-entity-role"), Description("Quotation")]
+      [EnumLiteral("quotation"), Description("Quotation")]
       Quotation,
       /// <summary>
       /// A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/provenance-entity-role"), Description("Source")]
+      [EnumLiteral("source"), Description("Source")]
       Source,
       /// <summary>
       /// A derivation for which the entity is removed from accessibility usually through the use of the Delete operation.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("removal", "http://hl7.org/fhir/provenance-entity-role"), Description("Removal")]
+      [EnumLiteral("removal"), Description("Removal")]
       Removal,
     }
 

@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/formularyitem-status)
     /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
     /// </summary>
-    [FhirEnumeration("FormularyItemStatusCodes", "http://hl7.org/fhir/ValueSet/formularyitem-status")]
+    [FhirEnumeration("FormularyItemStatusCodes", "http://hl7.org/fhir/ValueSet/formularyitem-status", "http://hl7.org/fhir/CodeSystem/formularyitem-status")]
     public enum FormularyItemStatusCodes
     {
       /// <summary>
       /// The service or product referred to by this FormularyItem is in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/formularyitem-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The service or product referred to by this FormularyItem was entered in error within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/formularyitem-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The service or product referred to by this FormularyItem is not in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/formularyitem-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/CodeSystem/formularyitem-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
     }
 

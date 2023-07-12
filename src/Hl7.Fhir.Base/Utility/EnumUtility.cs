@@ -9,9 +9,9 @@
  */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Collections.Concurrent;
 
 namespace Hl7.Fhir.Utility
 {
@@ -29,7 +29,7 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// Retrieves the system canonical for the code represented by this enum value, or <c>null</c> if there is no system defined.
         /// </summary>
-        public static string? GetSystem(this Enum e) => e.GetAttributeOnEnum<EnumLiteralAttribute>()?.System;
+        public static string? GetSystem(this Enum e) => e.GetAttributeOnEnum<EnumLiteralAttribute>()?.System ?? e.GetType().GetCustomAttribute<FhirEnumerationAttribute>()?.DefaultCodeSystem;
 
         /// <summary>
         /// Retrieves the description for this enum value or the enumeration value itself if there is no description defined.
@@ -42,13 +42,13 @@ namespace Hl7.Fhir.Utility
         /// <summary>
         /// Finds an enumeration value from <paramref name="enumType"/> where the literal is the same as <paramref name="rawValue"/>.
         /// </summary>
-        public static Enum? ParseLiteral(string? rawValue, Type enumType, bool ignoreCase = false) 
+        public static Enum? ParseLiteral(string? rawValue, Type enumType, bool ignoreCase = false)
             => getEnumMapping(enumType).ParseLiteral(rawValue, ignoreCase);
 
         /// <summary>
         /// Finds an enumeration value from enum <typeparamref name="T"/> where the literal is the same as <paramref name="rawValue"/>.
         /// </summary>
-        public static T? ParseLiteral<T>(string? rawValue, bool ignoreCase = false) where T : struct 
+        public static T? ParseLiteral<T>(string? rawValue, bool ignoreCase = false) where T : struct
             => (T?)(object?)ParseLiteral(rawValue, typeof(T), ignoreCase);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Utility
         public static string GetName<T>() where T : struct => GetName(typeof(T));
 
         private static EnumMapping getEnumMapping(Type enumType)
-            => CACHE.GetOrAdd(enumType, t => EnumMapping.Create(t));     
+            => CACHE.GetOrAdd(enumType, t => EnumMapping.Create(t));
 
         internal class EnumMapping
         {
@@ -82,7 +82,7 @@ namespace Hl7.Fhir.Utility
             private readonly Dictionary<string, Enum> _lowercaseLiteralToEnum = new();
             private readonly Dictionary<Enum, string> _enumToLiteral = new();
 
-            public string GetLiteral(Enum value) => 
+            public string GetLiteral(Enum value) =>
                 !_enumToLiteral.TryGetValue(value, out string? result)
                     ? throw new InvalidOperationException($"Should only pass enum values that are member of the given enum: {value} is not a member of {Name}.")
                     : result;

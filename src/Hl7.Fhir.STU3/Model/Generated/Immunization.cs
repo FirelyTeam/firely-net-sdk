@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/immunization-status)
     /// (system: http://hl7.org/fhir/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("ImmunizationStatusCodes", "http://hl7.org/fhir/ValueSet/immunization-status")]
+    [FhirEnumeration("ImmunizationStatusCodes", "http://hl7.org/fhir/ValueSet/immunization-status", "http://hl7.org/fhir/medication-admin-status")]
     public enum ImmunizationStatusCodes
     {
       /// <summary>
       /// All actions that are implied by the administration have occurred.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-admin-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The administration was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/medication-admin-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-admin-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 

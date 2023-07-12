@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-property-type)
     /// (system: http://hl7.org/fhir/conceptmap-property-type)
     /// </summary>
-    [FhirEnumeration("ConceptMapPropertyType", "http://hl7.org/fhir/ValueSet/conceptmap-property-type")]
+    [FhirEnumeration("ConceptMapPropertyType", "http://hl7.org/fhir/ValueSet/conceptmap-property-type", "http://hl7.org/fhir/conceptmap-property-type")]
     public enum ConceptMapPropertyType
     {
       /// <summary>
       /// The property  value is a code defined in an external code system. This may be used for translations, but is not the intent.
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("Coding", "http://hl7.org/fhir/conceptmap-property-type"), Description("Coding (external reference)")]
+      [EnumLiteral("Coding"), Description("Coding (external reference)")]
       Coding,
       /// <summary>
       /// The property value is a string.
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("string", "http://hl7.org/fhir/conceptmap-property-type"), Description("string")]
+      [EnumLiteral("string"), Description("string")]
       String,
       /// <summary>
       /// The property value is an integer (often used to assign ranking values to concepts for supporting score assessments).
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("integer", "http://hl7.org/fhir/conceptmap-property-type"), Description("integer")]
+      [EnumLiteral("integer"), Description("integer")]
       Integer,
       /// <summary>
       /// The property value is a boolean true | false.
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("boolean", "http://hl7.org/fhir/conceptmap-property-type"), Description("boolean")]
+      [EnumLiteral("boolean"), Description("boolean")]
       Boolean,
       /// <summary>
       /// The property is a date or a date + time.
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("dateTime", "http://hl7.org/fhir/conceptmap-property-type"), Description("dateTime")]
+      [EnumLiteral("dateTime"), Description("dateTime")]
       DateTime,
       /// <summary>
       /// The property value is a decimal number.
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("decimal", "http://hl7.org/fhir/conceptmap-property-type"), Description("decimal")]
+      [EnumLiteral("decimal"), Description("decimal")]
       Decimal,
       /// <summary>
       /// The property value is a code as defined in the CodeSystem in ConceptMap.property.system.
       /// (system: http://hl7.org/fhir/conceptmap-property-type)
       /// </summary>
-      [EnumLiteral("code", "http://hl7.org/fhir/conceptmap-property-type"), Description("code")]
+      [EnumLiteral("code"), Description("code")]
       Code,
     }
 
@@ -112,38 +112,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-attribute-type)
     /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
     /// </summary>
-    [FhirEnumeration("ConceptMapAttributeType", "http://hl7.org/fhir/ValueSet/conceptmap-attribute-type")]
+    [FhirEnumeration("ConceptMapAttributeType", "http://hl7.org/fhir/ValueSet/conceptmap-attribute-type", "http://hl7.org/fhir/conceptmap-attribute-type")]
     public enum ConceptMapAttributeType
     {
       /// <summary>
       /// The attribute value is a code defined in the code system in context.
       /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
       /// </summary>
-      [EnumLiteral("code", "http://hl7.org/fhir/conceptmap-attribute-type"), Description("code")]
+      [EnumLiteral("code"), Description("code")]
       Code,
       /// <summary>
       /// The attribute value is a code defined in a code system.
       /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
       /// </summary>
-      [EnumLiteral("Coding", "http://hl7.org/fhir/conceptmap-attribute-type"), Description("Coding")]
+      [EnumLiteral("Coding"), Description("Coding")]
       Coding,
       /// <summary>
       /// The attribute value is a string.
       /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
       /// </summary>
-      [EnumLiteral("string", "http://hl7.org/fhir/conceptmap-attribute-type"), Description("string")]
+      [EnumLiteral("string"), Description("string")]
       String,
       /// <summary>
       /// The attribute value is a boolean true | false.
       /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
       /// </summary>
-      [EnumLiteral("boolean", "http://hl7.org/fhir/conceptmap-attribute-type"), Description("boolean")]
+      [EnumLiteral("boolean"), Description("boolean")]
       Boolean,
       /// <summary>
       /// The attribute is a Quantity (may represent an integer or a decimal with no units).
       /// (system: http://hl7.org/fhir/conceptmap-attribute-type)
       /// </summary>
-      [EnumLiteral("Quantity", "http://hl7.org/fhir/conceptmap-attribute-type"), Description("Quantity")]
+      [EnumLiteral("Quantity"), Description("Quantity")]
       Quantity,
     }
 
@@ -152,38 +152,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-map-relationship)
     /// (system: http://hl7.org/fhir/concept-map-relationship)
     /// </summary>
-    [FhirEnumeration("ConceptMapRelationship", "http://hl7.org/fhir/ValueSet/concept-map-relationship")]
+    [FhirEnumeration("ConceptMapRelationship", "http://hl7.org/fhir/ValueSet/concept-map-relationship", "http://hl7.org/fhir/concept-map-relationship")]
     public enum ConceptMapRelationship
     {
       /// <summary>
       /// The concepts are related to each other, but the exact relationship is not known.
       /// (system: http://hl7.org/fhir/concept-map-relationship)
       /// </summary>
-      [EnumLiteral("related-to", "http://hl7.org/fhir/concept-map-relationship"), Description("Related To")]
+      [EnumLiteral("related-to"), Description("Related To")]
       RelatedTo,
       /// <summary>
       /// The definitions of the concepts mean the same thing.
       /// (system: http://hl7.org/fhir/concept-map-relationship)
       /// </summary>
-      [EnumLiteral("equivalent", "http://hl7.org/fhir/concept-map-relationship"), Description("Equivalent")]
+      [EnumLiteral("equivalent"), Description("Equivalent")]
       Equivalent,
       /// <summary>
       /// The source concept is narrower in meaning than the target concept.
       /// (system: http://hl7.org/fhir/concept-map-relationship)
       /// </summary>
-      [EnumLiteral("source-is-narrower-than-target", "http://hl7.org/fhir/concept-map-relationship"), Description("Source Is Narrower Than Target")]
+      [EnumLiteral("source-is-narrower-than-target"), Description("Source Is Narrower Than Target")]
       SourceIsNarrowerThanTarget,
       /// <summary>
       /// The source concept is broader in meaning than the target concept.
       /// (system: http://hl7.org/fhir/concept-map-relationship)
       /// </summary>
-      [EnumLiteral("source-is-broader-than-target", "http://hl7.org/fhir/concept-map-relationship"), Description("Source Is Broader Than Target")]
+      [EnumLiteral("source-is-broader-than-target"), Description("Source Is Broader Than Target")]
       SourceIsBroaderThanTarget,
       /// <summary>
       /// This is an explicit assertion that the target concept is not related to the source concept.
       /// (system: http://hl7.org/fhir/concept-map-relationship)
       /// </summary>
-      [EnumLiteral("not-related-to", "http://hl7.org/fhir/concept-map-relationship"), Description("Not Related To")]
+      [EnumLiteral("not-related-to"), Description("Not Related To")]
       NotRelatedTo,
     }
 
@@ -192,26 +192,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode", "http://hl7.org/fhir/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>
       /// Use the code as provided in the $translate request in one of the following input parameters: sourceCode, sourceCoding, sourceCodeableConcept.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("use-source-code", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Use Provided Source Code")]
+      [EnumLiteral("use-source-code"), Description("Use Provided Source Code")]
       UseSourceCode,
       /// <summary>
       /// Use the code(s) explicitly provided in the group.unmapped 'code' or 'valueSet' element.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("fixed", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Fixed Code")]
+      [EnumLiteral("fixed"), Description("Fixed Code")]
       Fixed,
       /// <summary>
       /// Use the map identified by the canonical URL in the url element.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("other-map", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Other Map")]
+      [EnumLiteral("other-map"), Description("Other Map")]
       OtherMap,
     }
 

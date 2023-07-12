@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/detectedissue-severity)
     /// (system: http://hl7.org/fhir/detectedissue-severity)
     /// </summary>
-    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity")]
+    [FhirEnumeration("DetectedIssueSeverity", "http://hl7.org/fhir/ValueSet/detectedissue-severity", "http://hl7.org/fhir/detectedissue-severity")]
     public enum DetectedIssueSeverity
     {
       /// <summary>
       /// Indicates the issue may be life-threatening or has the potential to cause permanent injury.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("high", "http://hl7.org/fhir/detectedissue-severity"), Description("High")]
+      [EnumLiteral("high"), Description("High")]
       High,
       /// <summary>
       /// Indicates the issue may result in noticeable adverse consequences but is unlikely to be life-threatening or cause permanent injury.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("moderate", "http://hl7.org/fhir/detectedissue-severity"), Description("Moderate")]
+      [EnumLiteral("moderate"), Description("Moderate")]
       Moderate,
       /// <summary>
       /// Indicates the issue may result in some adverse consequences but is unlikely to substantially affect the situation of the subject.
       /// (system: http://hl7.org/fhir/detectedissue-severity)
       /// </summary>
-      [EnumLiteral("low", "http://hl7.org/fhir/detectedissue-severity"), Description("Low")]
+      [EnumLiteral("low"), Description("Low")]
       Low,
     }
 

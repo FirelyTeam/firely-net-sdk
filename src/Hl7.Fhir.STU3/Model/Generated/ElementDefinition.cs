@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/property-representation)
     /// (system: http://hl7.org/fhir/property-representation)
     /// </summary>
-    [FhirEnumeration("PropertyRepresentation", "http://hl7.org/fhir/ValueSet/property-representation")]
+    [FhirEnumeration("PropertyRepresentation", "http://hl7.org/fhir/ValueSet/property-representation", "http://hl7.org/fhir/property-representation")]
     public enum PropertyRepresentation
     {
       /// <summary>
       /// In XML, this property is represented as an attribute not an element.
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("xmlAttr", "http://hl7.org/fhir/property-representation"), Description("XML Attribute")]
+      [EnumLiteral("xmlAttr"), Description("XML Attribute")]
       XmlAttr,
       /// <summary>
       /// This element is represented using the XML text attribute (primitives only)
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("xmlText", "http://hl7.org/fhir/property-representation"), Description("XML Text")]
+      [EnumLiteral("xmlText"), Description("XML Text")]
       XmlText,
       /// <summary>
       /// The type of this element is indicated using xsi:type
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("typeAttr", "http://hl7.org/fhir/property-representation"), Description("Type Attribute")]
+      [EnumLiteral("typeAttr"), Description("Type Attribute")]
       TypeAttr,
       /// <summary>
       /// Use CDA narrative instead of XHTML
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("cdaText", "http://hl7.org/fhir/property-representation"), Description("CDA Text Format")]
+      [EnumLiteral("cdaText"), Description("CDA Text Format")]
       CdaText,
       /// <summary>
       /// The property is represented using XHTML
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("xhtml", "http://hl7.org/fhir/property-representation"), Description("XHTML")]
+      [EnumLiteral("xhtml"), Description("XHTML")]
       Xhtml,
     }
 
@@ -100,26 +100,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-slicing-rules)
     /// (system: http://hl7.org/fhir/resource-slicing-rules)
     /// </summary>
-    [FhirEnumeration("SlicingRules", "http://hl7.org/fhir/ValueSet/resource-slicing-rules")]
+    [FhirEnumeration("SlicingRules", "http://hl7.org/fhir/ValueSet/resource-slicing-rules", "http://hl7.org/fhir/resource-slicing-rules")]
     public enum SlicingRules
     {
       /// <summary>
       /// No additional content is allowed other than that described by the slices in this profile.
       /// (system: http://hl7.org/fhir/resource-slicing-rules)
       /// </summary>
-      [EnumLiteral("closed", "http://hl7.org/fhir/resource-slicing-rules"), Description("Closed")]
+      [EnumLiteral("closed"), Description("Closed")]
       Closed,
       /// <summary>
       /// Additional content is allowed anywhere in the list.
       /// (system: http://hl7.org/fhir/resource-slicing-rules)
       /// </summary>
-      [EnumLiteral("open", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open")]
+      [EnumLiteral("open"), Description("Open")]
       Open,
       /// <summary>
       /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
       /// (system: http://hl7.org/fhir/resource-slicing-rules)
       /// </summary>
-      [EnumLiteral("openAtEnd", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open at End")]
+      [EnumLiteral("openAtEnd"), Description("Open at End")]
       OpenAtEnd,
     }
 
@@ -128,38 +128,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/discriminator-type)
     /// (system: http://hl7.org/fhir/discriminator-type)
     /// </summary>
-    [FhirEnumeration("DiscriminatorType", "http://hl7.org/fhir/ValueSet/discriminator-type")]
+    [FhirEnumeration("DiscriminatorType", "http://hl7.org/fhir/ValueSet/discriminator-type", "http://hl7.org/fhir/discriminator-type")]
     public enum DiscriminatorType
     {
       /// <summary>
       /// The slices have different values in the nominated element
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("value", "http://hl7.org/fhir/discriminator-type"), Description("Value")]
+      [EnumLiteral("value"), Description("Value")]
       Value,
       /// <summary>
       /// The slices are differentiated by the presence or absence of the nominated element
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("exists", "http://hl7.org/fhir/discriminator-type"), Description("Exists")]
+      [EnumLiteral("exists"), Description("Exists")]
       Exists,
       /// <summary>
       /// The slices have different values in the nominated element, as determined by testing them against the applicable ElementDefinition.pattern[x]
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("pattern", "http://hl7.org/fhir/discriminator-type"), Description("Pattern")]
+      [EnumLiteral("pattern"), Description("Pattern")]
       Pattern,
       /// <summary>
       /// The slices are differentiated by type of the nominated element to a specifed profile
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("type", "http://hl7.org/fhir/discriminator-type"), Description("Type")]
+      [EnumLiteral("type"), Description("Type")]
       Type,
       /// <summary>
       /// The slices are differentiated by conformance of the nominated element to a specifed profile
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("profile", "http://hl7.org/fhir/discriminator-type"), Description("Profile")]
+      [EnumLiteral("profile"), Description("Profile")]
       Profile,
     }
 
@@ -168,26 +168,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-aggregation-mode)
     /// (system: http://hl7.org/fhir/resource-aggregation-mode)
     /// </summary>
-    [FhirEnumeration("AggregationMode", "http://hl7.org/fhir/ValueSet/resource-aggregation-mode")]
+    [FhirEnumeration("AggregationMode", "http://hl7.org/fhir/ValueSet/resource-aggregation-mode", "http://hl7.org/fhir/resource-aggregation-mode")]
     public enum AggregationMode
     {
       /// <summary>
       /// The reference is a local reference to a contained resource.
       /// (system: http://hl7.org/fhir/resource-aggregation-mode)
       /// </summary>
-      [EnumLiteral("contained", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Contained")]
+      [EnumLiteral("contained"), Description("Contained")]
       Contained,
       /// <summary>
       /// The reference to a resource that has to be resolved externally to the resource that includes the reference.
       /// (system: http://hl7.org/fhir/resource-aggregation-mode)
       /// </summary>
-      [EnumLiteral("referenced", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Referenced")]
+      [EnumLiteral("referenced"), Description("Referenced")]
       Referenced,
       /// <summary>
       /// The resource the reference points to will be found in the same bundle as the resource that includes the reference.
       /// (system: http://hl7.org/fhir/resource-aggregation-mode)
       /// </summary>
-      [EnumLiteral("bundled", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Bundled")]
+      [EnumLiteral("bundled"), Description("Bundled")]
       Bundled,
     }
 
@@ -196,26 +196,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-version-rules)
     /// (system: http://hl7.org/fhir/reference-version-rules)
     /// </summary>
-    [FhirEnumeration("ReferenceVersionRules", "http://hl7.org/fhir/ValueSet/reference-version-rules")]
+    [FhirEnumeration("ReferenceVersionRules", "http://hl7.org/fhir/ValueSet/reference-version-rules", "http://hl7.org/fhir/reference-version-rules")]
     public enum ReferenceVersionRules
     {
       /// <summary>
       /// The reference may be either version independent or version specific
       /// (system: http://hl7.org/fhir/reference-version-rules)
       /// </summary>
-      [EnumLiteral("either", "http://hl7.org/fhir/reference-version-rules"), Description("Either Specific or independent")]
+      [EnumLiteral("either"), Description("Either Specific or independent")]
       Either,
       /// <summary>
       /// The reference must be version independent
       /// (system: http://hl7.org/fhir/reference-version-rules)
       /// </summary>
-      [EnumLiteral("independent", "http://hl7.org/fhir/reference-version-rules"), Description("Version independent")]
+      [EnumLiteral("independent"), Description("Version independent")]
       Independent,
       /// <summary>
       /// The reference must be version specific
       /// (system: http://hl7.org/fhir/reference-version-rules)
       /// </summary>
-      [EnumLiteral("specific", "http://hl7.org/fhir/reference-version-rules"), Description("Version Specific")]
+      [EnumLiteral("specific"), Description("Version Specific")]
       Specific,
     }
 
@@ -224,20 +224,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/constraint-severity)
     /// (system: http://hl7.org/fhir/constraint-severity)
     /// </summary>
-    [FhirEnumeration("ConstraintSeverity", "http://hl7.org/fhir/ValueSet/constraint-severity")]
+    [FhirEnumeration("ConstraintSeverity", "http://hl7.org/fhir/ValueSet/constraint-severity", "http://hl7.org/fhir/constraint-severity")]
     public enum ConstraintSeverity
     {
       /// <summary>
       /// If the constraint is violated, the resource is not conformant.
       /// (system: http://hl7.org/fhir/constraint-severity)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/constraint-severity"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// If the constraint is violated, the resource is conformant, but it is not necessarily following best practice.
       /// (system: http://hl7.org/fhir/constraint-severity)
       /// </summary>
-      [EnumLiteral("warning", "http://hl7.org/fhir/constraint-severity"), Description("Warning")]
+      [EnumLiteral("warning"), Description("Warning")]
       Warning,
     }
 

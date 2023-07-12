@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/provenance-entity-role)
     /// (system: http://hl7.org/fhir/provenance-entity-role)
     /// </summary>
-    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role")]
+    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role", "http://hl7.org/fhir/provenance-entity-role")]
     public enum ProvenanceEntityRole
     {
       /// <summary>
       /// An entity that is used by the activity to produce a new version of that entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("revision", "http://hl7.org/fhir/provenance-entity-role"), Description("Revision")]
+      [EnumLiteral("revision"), Description("Revision")]
       Revision,
       /// <summary>
       /// An entity that is copied in full or part by an agent that is not the author of the entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("quotation", "http://hl7.org/fhir/provenance-entity-role"), Description("Quotation")]
+      [EnumLiteral("quotation"), Description("Quotation")]
       Quotation,
       /// <summary>
       /// An entity that is used as input to the activity that produced the target.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/provenance-entity-role"), Description("Source")]
+      [EnumLiteral("source"), Description("Source")]
       Source,
       /// <summary>
       /// The record resulting from this event adheres to the protocol, guideline, order set or other definition represented by this entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("instantiates", "http://hl7.org/fhir/provenance-entity-role"), Description("Instantiates")]
+      [EnumLiteral("instantiates"), Description("Instantiates")]
       Instantiates,
       /// <summary>
       /// An entity that is removed from accessibility, usually through the DELETE operator.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("removal", "http://hl7.org/fhir/provenance-entity-role"), Description("Removal")]
+      [EnumLiteral("removal"), Description("Removal")]
       Removal,
     }
 

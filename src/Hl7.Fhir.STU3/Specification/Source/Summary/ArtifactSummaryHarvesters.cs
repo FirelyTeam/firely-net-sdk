@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Specification.Source
 
         /// <summary>Determines if the specified instance represents summary information about a conformance resource.</summary>
         public static bool IsConformanceSummary(this IArtifactSummaryPropertyBag properties)
-            => ModelInfo.IsConformanceResource(properties.GetTypeName());
+            => properties.GetTypeName() is { } typeName && ModelInfo.IsConformanceResource(typeName);
 
         /// <summary>Harvest common summary information from a conformance resource.</summary>
         /// <returns><c>true</c> if the current target represents a conformance resource, or <c>false</c> otherwise.</returns>
