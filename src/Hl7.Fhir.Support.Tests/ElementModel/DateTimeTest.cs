@@ -150,12 +150,30 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("2001-04-06T13:01:02")]
         [DataRow("2001-04-06T13:01:02-04:00")]
         [DataRow("2001-04-06T13:01:02.1234-04:00")]
-        [DataRow("2001-04-06T13:01:02.1234+00:00")]
-        [DataRow("2001-04-06T13:01:02.1234Z")]
-        public void CanConvertToString(string format)
+        [DataRow("2001-04-06T13:01:02.890-04:00")]
+        [DataRow("2001-04-06T13:01:02+00:00")]
+        [DataRow("2001-04-06T13:01:02Z")]
+        public void CanConvertToOriginalString(string format)
         {
             var parsed = P.DateTime.Parse(format);
             parsed.ToString().Should().Be(format);
+        }
+
+        [TestMethod]
+        [DataRow(P.DateTimePrecision.Year, false, "2001")]
+        [DataRow(P.DateTimePrecision.Month, false, "2001-04")]
+        [DataRow(P.DateTimePrecision.Day, false, "2001-04-06")]
+        [DataRow(P.DateTimePrecision.Day, true, "2001-04-06+01:00")]
+        [DataRow(P.DateTimePrecision.Hour, false, "2001-04-06T13")]
+        [DataRow(P.DateTimePrecision.Minute, false, "2001-04-06T13:01")]
+        [DataRow(P.DateTimePrecision.Second, false, "2001-04-06T13:01:02")]
+        [DataRow(P.DateTimePrecision.Second, true, "2001-04-06T13:01:02+01:00")]
+        [DataRow(P.DateTimePrecision.Fraction, true, "2001-04-06T13:01:02.89+01:00")]
+        public void CanConvertToString(P.DateTimePrecision p, bool hasOffset, string expected)
+        {
+            var dt = new DateTimeOffset(2001, 4, 6, 13, 1, 2, 890, TimeSpan.FromHours(1));
+            var parsed = new P.DateTime(dt, p, hasOffset);
+            parsed.ToString().Should().Be(expected);
         }
     }
 }
