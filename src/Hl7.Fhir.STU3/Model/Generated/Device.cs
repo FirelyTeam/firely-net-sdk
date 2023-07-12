@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-status)
     /// (system: http://hl7.org/fhir/device-status)
     /// </summary>
-    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status")]
+    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status", "http://hl7.org/fhir/device-status")]
     public enum FHIRDeviceStatus
     {
       /// <summary>
       /// The Device is available for use.  Note: This means for *implanted devices*  the device is implanted in the patient.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The Device is no longer available for use (e.g. lost, expired, damaged).  Note: This means for *implanted devices*  the device has been removed from the patient.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/device-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The Device was entered in error and voided.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The status of the device has not been determined.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/device-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -94,44 +94,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
     /// (system: http://hl7.org/fhir/udi-entry-type)
     /// </summary>
-    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type")]
+    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type", "http://hl7.org/fhir/udi-entry-type")]
     public enum UDIEntryType
     {
       /// <summary>
       /// A Barcode scanner captured the data from the device label
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("barcode", "http://hl7.org/fhir/udi-entry-type"), Description("BarCode")]
+      [EnumLiteral("barcode"), Description("BarCode")]
       Barcode,
       /// <summary>
       /// An RFID chip reader captured the data from the device label
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("rfid", "http://hl7.org/fhir/udi-entry-type"), Description("RFID")]
+      [EnumLiteral("rfid"), Description("RFID")]
       Rfid,
       /// <summary>
       /// The data was read from the label by a person and manually entered. (e.g.  via a keyboard)
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("manual", "http://hl7.org/fhir/udi-entry-type"), Description("Manual")]
+      [EnumLiteral("manual"), Description("Manual")]
       Manual,
       /// <summary>
       /// The data originated from a patient's implant card and read by an operator.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("card", "http://hl7.org/fhir/udi-entry-type"), Description("Card")]
+      [EnumLiteral("card"), Description("Card")]
       Card,
       /// <summary>
       /// The data originated from a patient source and not directly scanned or read from a label or card.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
+      [EnumLiteral("self-reported"), Description("Self Reported")]
       SelfReported,
       /// <summary>
       /// The method of data capture has not been determined
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/udi-entry-type"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

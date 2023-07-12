@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode", "http://hl7.org/fhir/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>
       /// Use the code as provided in the $translate request.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("provided", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Provided Code")]
+      [EnumLiteral("provided"), Description("Provided Code")]
       Provided,
       /// <summary>
       /// Use the code explicitly provided in the group.unmapped.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("fixed", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Fixed Code")]
+      [EnumLiteral("fixed"), Description("Fixed Code")]
       Fixed,
       /// <summary>
       /// Use the map identified by the canonical URL in the url element.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("other-map", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Other Map")]
+      [EnumLiteral("other-map"), Description("Other Map")]
       OtherMap,
     }
 

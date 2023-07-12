@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/observation-relationshiptypes)
     /// (system: http://hl7.org/fhir/observation-relationshiptypes)
     /// </summary>
-    [FhirEnumeration("ObservationRelationshipType", "http://hl7.org/fhir/ValueSet/observation-relationshiptypes")]
+    [FhirEnumeration("ObservationRelationshipType", "http://hl7.org/fhir/ValueSet/observation-relationshiptypes", "http://hl7.org/fhir/observation-relationshiptypes")]
     public enum ObservationRelationshipType
     {
       /// <summary>
       /// This observation is a group observation (e.g. a battery, a panel of tests, a set of vital sign measurements) that includes the target as a member of the group.
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("has-member", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Has Member")]
+      [EnumLiteral("has-member"), Description("Has Member")]
       HasMember,
       /// <summary>
       /// The target resource (Observation or QuestionnaireResponse) is part of the information from which this observation value is derived. (e.g. calculated anion gap, Apgar score)  NOTE:  "derived-from" is the only logical choice when referencing QuestionnaireResponse.
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("derived-from", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Derived From")]
+      [EnumLiteral("derived-from"), Description("Derived From")]
       DerivedFrom,
       /// <summary>
       /// This observation follows the target observation (e.g. timed tests such as Glucose Tolerance Test).
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("sequel-to", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Sequel To")]
+      [EnumLiteral("sequel-to"), Description("Sequel To")]
       SequelTo,
       /// <summary>
       /// This observation replaces a previous observation (i.e. a revised value). The target observation is now obsolete.
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("replaces", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Replaces")]
+      [EnumLiteral("replaces"), Description("Replaces")]
       Replaces,
       /// <summary>
       /// The value of the target observation qualifies (refines) the semantics of the source observation (e.g. a lipemia measure target from a plasma measure).
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("qualified-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Qualified By")]
+      [EnumLiteral("qualified-by"), Description("Qualified By")]
       QualifiedBy,
       /// <summary>
       /// The value of the target observation interferes (degrades quality, or prevents valid observation) with the semantics of the source observation (e.g. a hemolysis measure target from a plasma potassium measure, which has no value).
       /// (system: http://hl7.org/fhir/observation-relationshiptypes)
       /// </summary>
-      [EnumLiteral("interfered-by", "http://hl7.org/fhir/observation-relationshiptypes"), Description("Interfered By")]
+      [EnumLiteral("interfered-by"), Description("Interfered By")]
       InterferedBy,
     }
 

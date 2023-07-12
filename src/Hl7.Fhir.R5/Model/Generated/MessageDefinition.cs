@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
     /// (system: http://hl7.org/fhir/message-significance-category)
     /// </summary>
-    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category")]
+    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category", "http://hl7.org/fhir/message-significance-category")]
     public enum MessageSignificanceCategory
     {
       /// <summary>
       /// The message represents/requests a change that should not be processed more than once; e.g., making a booking for an appointment.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+      [EnumLiteral("consequence"), Description("Consequence")]
       Consequence,
       /// <summary>
       /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+      [EnumLiteral("currency"), Description("Currency")]
       Currency,
       /// <summary>
       /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+      [EnumLiteral("notification"), Description("Notification")]
       Notification,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/messageheader-response-request)
     /// (system: http://hl7.org/fhir/messageheader-response-request)
     /// </summary>
-    [FhirEnumeration("MessageheaderResponseRequest", "http://hl7.org/fhir/ValueSet/messageheader-response-request")]
+    [FhirEnumeration("MessageheaderResponseRequest", "http://hl7.org/fhir/ValueSet/messageheader-response-request", "http://hl7.org/fhir/messageheader-response-request")]
     public enum MessageheaderResponseRequest
     {
       /// <summary>
       /// initiator expects a response for this message.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("always", "http://hl7.org/fhir/messageheader-response-request"), Description("Always")]
+      [EnumLiteral("always"), Description("Always")]
       Always,
       /// <summary>
       /// initiator expects a response only if in error.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("on-error", "http://hl7.org/fhir/messageheader-response-request"), Description("Error/reject conditions only")]
+      [EnumLiteral("on-error"), Description("Error/reject conditions only")]
       OnError,
       /// <summary>
       /// initiator does not expect a response.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("never", "http://hl7.org/fhir/messageheader-response-request"), Description("Never")]
+      [EnumLiteral("never"), Description("Never")]
       Never,
       /// <summary>
       /// initiator expects a response only if successful.
       /// (system: http://hl7.org/fhir/messageheader-response-request)
       /// </summary>
-      [EnumLiteral("on-success", "http://hl7.org/fhir/messageheader-response-request"), Description("Successful completion only")]
+      [EnumLiteral("on-success"), Description("Successful completion only")]
       OnSuccess,
     }
 

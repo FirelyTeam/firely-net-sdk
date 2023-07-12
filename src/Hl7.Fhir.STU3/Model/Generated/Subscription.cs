@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-status)
     /// (system: http://hl7.org/fhir/subscription-status)
     /// </summary>
-    [FhirEnumeration("SubscriptionStatus", "http://hl7.org/fhir/ValueSet/subscription-status")]
+    [FhirEnumeration("SubscriptionStatus", "http://hl7.org/fhir/ValueSet/subscription-status", "http://hl7.org/fhir/subscription-status")]
     public enum SubscriptionStatus
     {
       /// <summary>
       /// The client has requested the subscription, and the server has not yet set it up.
       /// (system: http://hl7.org/fhir/subscription-status)
       /// </summary>
-      [EnumLiteral("requested", "http://hl7.org/fhir/subscription-status"), Description("Requested")]
+      [EnumLiteral("requested"), Description("Requested")]
       Requested,
       /// <summary>
       /// The subscription is active.
       /// (system: http://hl7.org/fhir/subscription-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/subscription-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The server has an error executing the notification.
       /// (system: http://hl7.org/fhir/subscription-status)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/subscription-status"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// Too many errors have occurred or the subscription has expired.
       /// (system: http://hl7.org/fhir/subscription-status)
       /// </summary>
-      [EnumLiteral("off", "http://hl7.org/fhir/subscription-status"), Description("Off")]
+      [EnumLiteral("off"), Description("Off")]
       Off,
     }
 
@@ -94,38 +94,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-channel-type)
     /// (system: http://hl7.org/fhir/subscription-channel-type)
     /// </summary>
-    [FhirEnumeration("SubscriptionChannelType", "http://hl7.org/fhir/ValueSet/subscription-channel-type")]
+    [FhirEnumeration("SubscriptionChannelType", "http://hl7.org/fhir/ValueSet/subscription-channel-type", "http://hl7.org/fhir/subscription-channel-type")]
     public enum SubscriptionChannelType
     {
       /// <summary>
       /// The channel is executed by making a post to the URI. If a payload is included, the URL is interpreted as the service base, and an update (PUT) is made.
       /// (system: http://hl7.org/fhir/subscription-channel-type)
       /// </summary>
-      [EnumLiteral("rest-hook", "http://hl7.org/fhir/subscription-channel-type"), Description("Rest Hook")]
+      [EnumLiteral("rest-hook"), Description("Rest Hook")]
       RestHook,
       /// <summary>
       /// The channel is executed by sending a packet across a web socket connection maintained by the client. The URL identifies the websocket, and the client binds to this URL.
       /// (system: http://hl7.org/fhir/subscription-channel-type)
       /// </summary>
-      [EnumLiteral("websocket", "http://hl7.org/fhir/subscription-channel-type"), Description("Websocket")]
+      [EnumLiteral("websocket"), Description("Websocket")]
       Websocket,
       /// <summary>
       /// The channel is executed by sending an email to the email addressed in the URI (which must be a mailto:).
       /// (system: http://hl7.org/fhir/subscription-channel-type)
       /// </summary>
-      [EnumLiteral("email", "http://hl7.org/fhir/subscription-channel-type"), Description("Email")]
+      [EnumLiteral("email"), Description("Email")]
       Email,
       /// <summary>
       /// The channel is executed by sending an SMS message to the phone number identified in the URL (tel:).
       /// (system: http://hl7.org/fhir/subscription-channel-type)
       /// </summary>
-      [EnumLiteral("sms", "http://hl7.org/fhir/subscription-channel-type"), Description("SMS")]
+      [EnumLiteral("sms"), Description("SMS")]
       Sms,
       /// <summary>
       /// The channel is executed by sending a message (e.g. a Bundle with a MessageHeader resource etc.) to the application identified in the URI.
       /// (system: http://hl7.org/fhir/subscription-channel-type)
       /// </summary>
-      [EnumLiteral("message", "http://hl7.org/fhir/subscription-channel-type"), Description("Message")]
+      [EnumLiteral("message"), Description("Message")]
       Message,
     }
 

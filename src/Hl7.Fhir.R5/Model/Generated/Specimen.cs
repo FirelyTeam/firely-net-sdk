@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
     /// (system: http://hl7.org/fhir/specimen-status)
     /// </summary>
-    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status")]
+    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status", "http://hl7.org/fhir/specimen-status")]
     public enum SpecimenStatus
     {
       /// <summary>
       /// The physical specimen is present and in good condition.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/specimen-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// There is no physical specimen because it is either lost, destroyed or consumed.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unavailable", "http://hl7.org/fhir/specimen-status"), Description("Unavailable")]
+      [EnumLiteral("unavailable"), Description("Unavailable")]
       Unavailable,
       /// <summary>
       /// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unsatisfactory", "http://hl7.org/fhir/specimen-status"), Description("Unsatisfactory")]
+      [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
       Unsatisfactory,
       /// <summary>
       /// The specimen was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/specimen-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-combined)
     /// (system: http://hl7.org/fhir/specimen-combined)
     /// </summary>
-    [FhirEnumeration("SpecimenCombined", "http://hl7.org/fhir/ValueSet/specimen-combined")]
+    [FhirEnumeration("SpecimenCombined", "http://hl7.org/fhir/ValueSet/specimen-combined", "http://hl7.org/fhir/specimen-combined")]
     public enum SpecimenCombined
     {
       /// <summary>
       /// The specimen is in a group.
       /// (system: http://hl7.org/fhir/specimen-combined)
       /// </summary>
-      [EnumLiteral("grouped", "http://hl7.org/fhir/specimen-combined"), Description("Grouped")]
+      [EnumLiteral("grouped"), Description("Grouped")]
       Grouped,
       /// <summary>
       /// The specimen is pooled.
       /// (system: http://hl7.org/fhir/specimen-combined)
       /// </summary>
-      [EnumLiteral("pooled", "http://hl7.org/fhir/specimen-combined"), Description("Pooled")]
+      [EnumLiteral("pooled"), Description("Pooled")]
       Pooled,
     }
 

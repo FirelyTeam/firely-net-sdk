@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/relation-type)
     /// (system: http://hl7.org/fhir/relation-type)
     /// </summary>
-    [FhirEnumeration("CatalogEntryRelationType", "http://hl7.org/fhir/ValueSet/relation-type")]
+    [FhirEnumeration("CatalogEntryRelationType", "http://hl7.org/fhir/ValueSet/relation-type", "http://hl7.org/fhir/relation-type")]
     public enum CatalogEntryRelationType
     {
       /// <summary>
       /// the related entry represents an activity that may be triggered by the current item.
       /// (system: http://hl7.org/fhir/relation-type)
       /// </summary>
-      [EnumLiteral("triggers", "http://hl7.org/fhir/relation-type"), Description("Triggers")]
+      [EnumLiteral("triggers"), Description("Triggers")]
       Triggers,
       /// <summary>
       /// the related entry represents an item that replaces the current retired item.
       /// (system: http://hl7.org/fhir/relation-type)
       /// </summary>
-      [EnumLiteral("is-replaced-by", "http://hl7.org/fhir/relation-type"), Description("Replaced By")]
+      [EnumLiteral("is-replaced-by"), Description("Replaced By")]
       IsReplacedBy,
     }
 

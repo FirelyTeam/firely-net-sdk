@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-dependency-type)
     /// (system: http://hl7.org/fhir/guide-dependency-type)
     /// </summary>
-    [FhirEnumeration("GuideDependencyType", "http://hl7.org/fhir/ValueSet/guide-dependency-type")]
+    [FhirEnumeration("GuideDependencyType", "http://hl7.org/fhir/ValueSet/guide-dependency-type", "http://hl7.org/fhir/guide-dependency-type")]
     public enum GuideDependencyType
     {
       /// <summary>
       /// The guide is referred to by URL.
       /// (system: http://hl7.org/fhir/guide-dependency-type)
       /// </summary>
-      [EnumLiteral("reference", "http://hl7.org/fhir/guide-dependency-type"), Description("Reference")]
+      [EnumLiteral("reference"), Description("Reference")]
       Reference,
       /// <summary>
       /// The guide is embedded in this guide when published.
       /// (system: http://hl7.org/fhir/guide-dependency-type)
       /// </summary>
-      [EnumLiteral("inclusion", "http://hl7.org/fhir/guide-dependency-type"), Description("Inclusion")]
+      [EnumLiteral("inclusion"), Description("Inclusion")]
       Inclusion,
     }
 
@@ -82,56 +82,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-page-kind)
     /// (system: http://hl7.org/fhir/guide-page-kind)
     /// </summary>
-    [FhirEnumeration("GuidePageKind", "http://hl7.org/fhir/ValueSet/guide-page-kind")]
+    [FhirEnumeration("GuidePageKind", "http://hl7.org/fhir/ValueSet/guide-page-kind", "http://hl7.org/fhir/guide-page-kind")]
     public enum GuidePageKind
     {
       /// <summary>
       /// This is a page of content that is included in the implementation guide. It has no particular function.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("page", "http://hl7.org/fhir/guide-page-kind"), Description("Page")]
+      [EnumLiteral("page"), Description("Page")]
       Page,
       /// <summary>
       /// This is a page that represents a human readable rendering of an example.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("example", "http://hl7.org/fhir/guide-page-kind"), Description("Example")]
+      [EnumLiteral("example"), Description("Example")]
       Example,
       /// <summary>
       /// This is a page that represents a list of resources of one or more types.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("list", "http://hl7.org/fhir/guide-page-kind"), Description("List")]
+      [EnumLiteral("list"), Description("List")]
       List,
       /// <summary>
       /// This is a page showing where an included guide is injected.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("include", "http://hl7.org/fhir/guide-page-kind"), Description("Include")]
+      [EnumLiteral("include"), Description("Include")]
       Include,
       /// <summary>
       /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("directory", "http://hl7.org/fhir/guide-page-kind"), Description("Directory")]
+      [EnumLiteral("directory"), Description("Directory")]
       Directory,
       /// <summary>
       /// This is a page that creates the listed resources as a dictionary.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("dictionary", "http://hl7.org/fhir/guide-page-kind"), Description("Dictionary")]
+      [EnumLiteral("dictionary"), Description("Dictionary")]
       Dictionary,
       /// <summary>
       /// This is a generated page that contains the table of contents.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("toc", "http://hl7.org/fhir/guide-page-kind"), Description("Table Of Contents")]
+      [EnumLiteral("toc"), Description("Table Of Contents")]
       Toc,
       /// <summary>
       /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("resource", "http://hl7.org/fhir/guide-page-kind"), Description("Resource")]
+      [EnumLiteral("resource"), Description("Resource")]
       Resource,
     }
 

@@ -60,68 +60,68 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status)
     /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
     /// </summary>
-    [FhirEnumeration("ArtifactAssessmentWorkflowStatus", "http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status")]
+    [FhirEnumeration("ArtifactAssessmentWorkflowStatus", "http://hl7.org/fhir/ValueSet/artifactassessment-workflow-status", "http://hl7.org/fhir/artifactassessment-workflow-status")]
     public enum ArtifactAssessmentWorkflowStatus
     {
       /// <summary>
       /// The comment has been submitted, but the responsible party has not yet been determined, or the responsible party has not yet determined the next steps to be taken.
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("submitted", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Submitted")]
+      [EnumLiteral("submitted"), Description("Submitted")]
       Submitted,
       /// <summary>
       /// The comment has been triaged, meaning the responsible party has been determined and next steps have been identified to address the comment.
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("triaged", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Triaged")]
+      [EnumLiteral("triaged"), Description("Triaged")]
       Triaged,
       /// <summary>
       /// The comment is waiting for input from a specific party before next steps can be taken.
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("waiting-for-input", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Waiting for Input")]
+      [EnumLiteral("waiting-for-input"), Description("Waiting for Input")]
       WaitingForInput,
       /// <summary>
       /// The comment has been resolved and no changes resulted from the resolution
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("resolved-no-change", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Resolved - No Change")]
+      [EnumLiteral("resolved-no-change"), Description("Resolved - No Change")]
       ResolvedNoChange,
       /// <summary>
       /// The comment has been resolved and changes are required to address the comment
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("resolved-change-required", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Resolved - Change Required")]
+      [EnumLiteral("resolved-change-required"), Description("Resolved - Change Required")]
       ResolvedChangeRequired,
       /// <summary>
       /// The comment is acceptable, but resolution of the comment and application of any associated changes have been deferred
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("deferred", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Deferred")]
+      [EnumLiteral("deferred"), Description("Deferred")]
       Deferred,
       /// <summary>
       /// The comment is a duplicate of another comment already received
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("duplicate", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Duplicate")]
+      [EnumLiteral("duplicate"), Description("Duplicate")]
       Duplicate,
       /// <summary>
       /// The comment is resolved and any necessary changes have been applied
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("applied", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Applied")]
+      [EnumLiteral("applied"), Description("Applied")]
       Applied,
       /// <summary>
       /// The necessary changes to the artifact have been published in a new version of the artifact
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("published", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Published")]
+      [EnumLiteral("published"), Description("Published")]
       Published,
       /// <summary>
       /// The assessment was entered in error
       /// (system: http://hl7.org/fhir/artifactassessment-workflow-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/artifactassessment-workflow-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -130,38 +130,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/artifactassessment-disposition)
     /// (system: http://hl7.org/fhir/artifactassessment-disposition)
     /// </summary>
-    [FhirEnumeration("ArtifactAssessmentDisposition", "http://hl7.org/fhir/ValueSet/artifactassessment-disposition")]
+    [FhirEnumeration("ArtifactAssessmentDisposition", "http://hl7.org/fhir/ValueSet/artifactassessment-disposition", "http://hl7.org/fhir/artifactassessment-disposition")]
     public enum ArtifactAssessmentDisposition
     {
       /// <summary>
       /// The comment is unresolved
       /// (system: http://hl7.org/fhir/artifactassessment-disposition)
       /// </summary>
-      [EnumLiteral("unresolved", "http://hl7.org/fhir/artifactassessment-disposition"), Description("Unresolved")]
+      [EnumLiteral("unresolved"), Description("Unresolved")]
       Unresolved,
       /// <summary>
       /// The comment is not persuasive (rejected in full)
       /// (system: http://hl7.org/fhir/artifactassessment-disposition)
       /// </summary>
-      [EnumLiteral("not-persuasive", "http://hl7.org/fhir/artifactassessment-disposition"), Description("Not Persuasive")]
+      [EnumLiteral("not-persuasive"), Description("Not Persuasive")]
       NotPersuasive,
       /// <summary>
       /// The comment is persuasive (accepted in full)
       /// (system: http://hl7.org/fhir/artifactassessment-disposition)
       /// </summary>
-      [EnumLiteral("persuasive", "http://hl7.org/fhir/artifactassessment-disposition"), Description("Persuasive")]
+      [EnumLiteral("persuasive"), Description("Persuasive")]
       Persuasive,
       /// <summary>
       /// The comment is persuasive with modification (partially accepted)
       /// (system: http://hl7.org/fhir/artifactassessment-disposition)
       /// </summary>
-      [EnumLiteral("persuasive-with-modification", "http://hl7.org/fhir/artifactassessment-disposition"), Description("Persuasive with Modification")]
+      [EnumLiteral("persuasive-with-modification"), Description("Persuasive with Modification")]
       PersuasiveWithModification,
       /// <summary>
       /// The comment is not persuasive with modification (partially rejected)
       /// (system: http://hl7.org/fhir/artifactassessment-disposition)
       /// </summary>
-      [EnumLiteral("not-persuasive-with-modification", "http://hl7.org/fhir/artifactassessment-disposition"), Description("Not Persuasive with Modification")]
+      [EnumLiteral("not-persuasive-with-modification"), Description("Not Persuasive with Modification")]
       NotPersuasiveWithModification,
     }
 
@@ -170,44 +170,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/artifactassessment-information-type)
     /// (system: http://hl7.org/fhir/artifactassessment-information-type)
     /// </summary>
-    [FhirEnumeration("ArtifactAssessmentInformationType", "http://hl7.org/fhir/ValueSet/artifactassessment-information-type")]
+    [FhirEnumeration("ArtifactAssessmentInformationType", "http://hl7.org/fhir/ValueSet/artifactassessment-information-type", "http://hl7.org/fhir/artifactassessment-information-type")]
     public enum ArtifactAssessmentInformationType
     {
       /// <summary>
       /// A comment on the artifact
       /// (system: http://hl7.org/fhir/artifactassessment-information-type)
       /// </summary>
-      [EnumLiteral("comment", "http://hl7.org/fhir/artifactassessment-information-type"), Description("Comment")]
+      [EnumLiteral("comment"), Description("Comment")]
       Comment,
       /// <summary>
       /// A classifier of the artifact
       /// (system: http://hl7.org/fhir/artifactassessment-information-type)
       /// </summary>
-      [EnumLiteral("classifier", "http://hl7.org/fhir/artifactassessment-information-type"), Description("Classifier")]
+      [EnumLiteral("classifier"), Description("Classifier")]
       Classifier,
       /// <summary>
       /// A rating of the artifact
       /// (system: http://hl7.org/fhir/artifactassessment-information-type)
       /// </summary>
-      [EnumLiteral("rating", "http://hl7.org/fhir/artifactassessment-information-type"), Description("Rating")]
+      [EnumLiteral("rating"), Description("Rating")]
       Rating,
       /// <summary>
       /// A container for multiple components
       /// (system: http://hl7.org/fhir/artifactassessment-information-type)
       /// </summary>
-      [EnumLiteral("container", "http://hl7.org/fhir/artifactassessment-information-type"), Description("Container")]
+      [EnumLiteral("container"), Description("Container")]
       Container,
       /// <summary>
       /// A response to a comment
       /// (system: http://hl7.org/fhir/artifactassessment-information-type)
       /// </summary>
-      [EnumLiteral("response", "http://hl7.org/fhir/artifactassessment-information-type"), Description("Response")]
+      [EnumLiteral("response"), Description("Response")]
       Response,
       /// <summary>
       /// A change request for the artifact
       /// (system: http://hl7.org/fhir/artifactassessment-information-type)
       /// </summary>
-      [EnumLiteral("change-request", "http://hl7.org/fhir/artifactassessment-information-type"), Description("Change Request")]
+      [EnumLiteral("change-request"), Description("Change Request")]
       ChangeRequest,
     }
 

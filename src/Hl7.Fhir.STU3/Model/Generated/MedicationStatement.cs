@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
     /// (system: http://hl7.org/fhir/medication-statement-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatementStatus", "http://hl7.org/fhir/ValueSet/medication-statement-status")]
+    [FhirEnumeration("MedicationStatementStatus", "http://hl7.org/fhir/ValueSet/medication-statement-status", "http://hl7.org/fhir/medication-statement-status")]
     public enum MedicationStatementStatus
     {
       /// <summary>
       /// The medication is still being taken.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/medication-statement-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication is no longer being taken.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-statement-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The statement was recorded incorrectly.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication may be taken at some time in the future.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("intended", "http://hl7.org/fhir/medication-statement-status"), Description("Intended")]
+      [EnumLiteral("intended"), Description("Intended")]
       Intended,
       /// <summary>
       /// Actions implied by the statement have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-statement-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-statement-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
     }
 
@@ -106,32 +106,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-taken)
     /// (system: http://hl7.org/fhir/medication-statement-taken)
     /// </summary>
-    [FhirEnumeration("MedicationStatementTaken", "http://hl7.org/fhir/ValueSet/medication-statement-taken")]
+    [FhirEnumeration("MedicationStatementTaken", "http://hl7.org/fhir/ValueSet/medication-statement-taken", "http://hl7.org/fhir/medication-statement-taken")]
     public enum MedicationStatementTaken
     {
       /// <summary>
       /// Positive assertion that patient has taken medication
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("y", "http://hl7.org/fhir/medication-statement-taken"), Description("Yes")]
+      [EnumLiteral("y"), Description("Yes")]
       Y,
       /// <summary>
       /// Negative assertion that patient has not taken medication
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("n", "http://hl7.org/fhir/medication-statement-taken"), Description("No")]
+      [EnumLiteral("n"), Description("No")]
       N,
       /// <summary>
       /// Unknown assertion if patient has taken medication
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("unk", "http://hl7.org/fhir/medication-statement-taken"), Description("Unknown")]
+      [EnumLiteral("unk"), Description("Unknown")]
       Unk,
       /// <summary>
       /// Patient reporting does not apply
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("na", "http://hl7.org/fhir/medication-statement-taken"), Description("Not Applicable")]
+      [EnumLiteral("na"), Description("Not Applicable")]
       Na,
     }
 
