@@ -14,7 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Model\AnnotationTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\BundleExtensionsTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\CodeEnumTests.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Model\DateTimeOperatorTests.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCompareTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepCopyTest.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Model\DeepMatchTest.cs" />

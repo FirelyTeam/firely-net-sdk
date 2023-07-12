@@ -121,14 +121,10 @@ namespace Hl7.Fhir.Model
             bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
         }
 
-        protected override void OnPropertyChanged(String property)
+        protected override void OnObjectValueChanged()
         {
-            if (property == "Value")
-            {
-                _parsedValue = null;   // Invalidate contents of parsed value on change
-            }
-
-            base.OnPropertyChanged(property);
+            _parsedValue = null;
+            base.OnObjectValueChanged();
         }
 
         /// <summary>
