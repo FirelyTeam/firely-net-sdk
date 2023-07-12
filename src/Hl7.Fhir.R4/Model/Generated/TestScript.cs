@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("TestScript","http://hl7.org/fhir/StructureDefinition/TestScript", IsResource=true)]
-  public partial class TestScript : Hl7.Fhir.Model.DomainResource
+  public partial class TestScript : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -5073,6 +5073,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.TestScript.TeardownComponent _Teardown;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

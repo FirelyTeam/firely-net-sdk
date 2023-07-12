@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("InventoryItem","http://hl7.org/fhir/StructureDefinition/InventoryItem", IsResource=true)]
-  public partial class InventoryItem : Hl7.Fhir.Model.DomainResource
+  public partial class InventoryItem : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1336,6 +1336,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _ProductReference;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

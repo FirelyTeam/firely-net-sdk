@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ExpansionProfile","http://hl7.org/fhir/StructureDefinition/ExpansionProfile", IsResource=true)]
-  public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource
+  public partial class ExpansionProfile : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1715,6 +1715,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("LimitedExpansion");
       }
     }
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

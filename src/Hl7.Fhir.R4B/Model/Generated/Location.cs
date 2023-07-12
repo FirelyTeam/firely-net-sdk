@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Location","http://hl7.org/fhir/StructureDefinition/Location", IsResource=true)]
-  public partial class Location : Hl7.Fhir.Model.DomainResource
+  public partial class Location : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -910,6 +910,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ResourceReference> _Endpoint;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

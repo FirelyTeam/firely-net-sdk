@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("VisionPrescription","http://hl7.org/fhir/StructureDefinition/VisionPrescription", IsResource=true)]
-  public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource
+  public partial class VisionPrescription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1037,6 +1037,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.VisionPrescription.LensSpecificationComponent> _LensSpecification;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

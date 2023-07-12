@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("EvidenceVariable","http://hl7.org/fhir/StructureDefinition/EvidenceVariable", IsResource=true)]
-  public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource
+  public partial class EvidenceVariable : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2084,6 +2084,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.EvidenceVariable.CategoryComponent> _Category;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

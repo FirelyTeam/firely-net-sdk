@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Bundle","http://hl7.org/fhir/StructureDefinition/Bundle", IsResource=true)]
-  public partial class Bundle : Hl7.Fhir.Model.Resource
+  public partial class Bundle : Hl7.Fhir.Model.Resource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2374,6 +2374,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Resource _Issues;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

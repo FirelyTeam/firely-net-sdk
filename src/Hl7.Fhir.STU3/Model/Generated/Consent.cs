@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Consent","http://hl7.org/fhir/StructureDefinition/Consent", IsResource=true)]
-  public partial class Consent : Hl7.Fhir.Model.DomainResource
+  public partial class Consent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1555,6 +1555,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Consent.ExceptComponent> _Except;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SupplyRequest","http://hl7.org/fhir/StructureDefinition/SupplyRequest", IsResource=true)]
-  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource
+  public partial class SupplyRequest : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -605,6 +605,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _DeliverTo;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

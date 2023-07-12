@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("StructureMap","http://hl7.org/fhir/StructureDefinition/StructureMap", IsResource=true)]
-  public partial class StructureMap : Hl7.Fhir.Model.DomainResource
+  public partial class StructureMap : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -3221,6 +3221,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.StructureMap.GroupComponent> _Group;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ExampleScenario","http://hl7.org/fhir/StructureDefinition/ExampleScenario", IsResource=true)]
-  public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource
+  public partial class ExampleScenario : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2695,6 +2695,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ExampleScenario.ProcessComponent> _Process;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Contract","http://hl7.org/fhir/StructureDefinition/Contract", IsResource=true)]
-  public partial class Contract : Hl7.Fhir.Model.DomainResource
+  public partial class Contract : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -4942,6 +4942,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.DataType _LegallyBinding;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

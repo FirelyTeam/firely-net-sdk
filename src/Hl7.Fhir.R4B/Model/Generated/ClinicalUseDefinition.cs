@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClinicalUseDefinition","http://hl7.org/fhir/StructureDefinition/ClinicalUseDefinition", IsResource=true)]
-  public partial class ClinicalUseDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ClinicalUseDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1470,6 +1470,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ClinicalUseDefinition.WarningComponent _Warning;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

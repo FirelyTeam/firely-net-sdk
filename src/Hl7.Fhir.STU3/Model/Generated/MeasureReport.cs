@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("MeasureReport","http://hl7.org/fhir/StructureDefinition/MeasureReport", IsResource=true)]
-  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource
+  public partial class MeasureReport : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1225,6 +1225,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _EvaluatedResources;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

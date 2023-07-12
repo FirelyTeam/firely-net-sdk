@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ConceptMap","http://hl7.org/fhir/StructureDefinition/ConceptMap", IsResource=true)]
-  public partial class ConceptMap : Hl7.Fhir.Model.DomainResource
+  public partial class ConceptMap : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1878,6 +1878,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ConceptMap.GroupComponent> _Group;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

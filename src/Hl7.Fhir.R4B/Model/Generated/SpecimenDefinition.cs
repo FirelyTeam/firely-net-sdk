@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SpecimenDefinition","http://hl7.org/fhir/StructureDefinition/SpecimenDefinition", IsResource=true)]
-  public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class SpecimenDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1109,6 +1109,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SpecimenDefinition.TypeTestedComponent> _TypeTested;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

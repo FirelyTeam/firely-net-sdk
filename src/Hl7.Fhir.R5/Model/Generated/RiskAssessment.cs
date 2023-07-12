@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("RiskAssessment","http://hl7.org/fhir/StructureDefinition/RiskAssessment", IsResource=true)]
-  public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource
+  public partial class RiskAssessment : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -583,6 +583,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Annotation> _Note;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

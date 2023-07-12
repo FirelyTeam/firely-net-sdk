@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SearchParameter","http://hl7.org/fhir/StructureDefinition/SearchParameter", IsResource=true)]
-  public partial class SearchParameter : Hl7.Fhir.Model.DomainResource
+  public partial class SearchParameter : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1137,6 +1137,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.SearchParameter.ComponentComponent> _Component;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

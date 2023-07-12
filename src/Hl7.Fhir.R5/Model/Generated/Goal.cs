@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Goal","http://hl7.org/fhir/StructureDefinition/Goal", IsResource=true)]
-  public partial class Goal : Hl7.Fhir.Model.DomainResource
+  public partial class Goal : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -575,6 +575,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeableReference> _Outcome;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

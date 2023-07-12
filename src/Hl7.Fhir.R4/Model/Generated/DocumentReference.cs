@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DocumentReference","http://hl7.org/fhir/StructureDefinition/DocumentReference", IsResource=true)]
-  public partial class DocumentReference : Hl7.Fhir.Model.DomainResource
+  public partial class DocumentReference : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -893,6 +893,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.DocumentReference.ContextComponent _Context;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("SubstanceDefinition","http://hl7.org/fhir/StructureDefinition/SubstanceDefinition", IsResource=true)]
-  public partial class SubstanceDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class SubstanceDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2954,6 +2954,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.SubstanceDefinition.SourceMaterialComponent _SourceMaterial;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ChargeItemDefinition","http://hl7.org/fhir/StructureDefinition/ChargeItemDefinition", IsResource=true)]
-  public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ChargeItemDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1179,6 +1179,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ChargeItemDefinition.PropertyGroupComponent> _PropertyGroup;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

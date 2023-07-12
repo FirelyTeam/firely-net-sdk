@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AdministrableProductDefinition","http://hl7.org/fhir/StructureDefinition/AdministrableProductDefinition", IsResource=true)]
-  public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class AdministrableProductDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -926,6 +926,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.AdministrableProductDefinition.RouteOfAdministrationComponent> _RouteOfAdministration;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

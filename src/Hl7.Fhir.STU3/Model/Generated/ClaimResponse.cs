@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ClaimResponse","http://hl7.org/fhir/StructureDefinition/ClaimResponse", IsResource=true)]
-  public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource
+  public partial class ClaimResponse : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2819,6 +2819,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.ClaimResponse.InsuranceComponent> _Insurance;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

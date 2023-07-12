@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("AllergyIntolerance","http://hl7.org/fhir/StructureDefinition/AllergyIntolerance", IsResource=true)]
-  public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource
+  public partial class AllergyIntolerance : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -930,6 +930,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.AllergyIntolerance.ReactionComponent> _Reaction;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

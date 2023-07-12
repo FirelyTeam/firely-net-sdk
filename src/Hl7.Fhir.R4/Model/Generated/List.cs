@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("List","http://hl7.org/fhir/StructureDefinition/List", IsResource=true)]
-  public partial class List : Hl7.Fhir.Model.DomainResource
+  public partial class List : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -554,6 +554,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _EmptyReason;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

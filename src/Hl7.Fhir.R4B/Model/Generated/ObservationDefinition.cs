@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ObservationDefinition","http://hl7.org/fhir/StructureDefinition/ObservationDefinition", IsResource=true)]
-  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class ObservationDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -931,6 +931,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ResourceReference _CriticalCodedValueSet;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

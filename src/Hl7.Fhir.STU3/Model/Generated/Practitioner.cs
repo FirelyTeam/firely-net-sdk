@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Practitioner","http://hl7.org/fhir/StructureDefinition/Practitioner", IsResource=true)]
-  public partial class Practitioner : Hl7.Fhir.Model.DomainResource
+  public partial class Practitioner : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -427,6 +427,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

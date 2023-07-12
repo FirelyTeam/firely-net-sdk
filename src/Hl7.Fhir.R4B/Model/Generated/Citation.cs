@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Citation","http://hl7.org/fhir/StructureDefinition/Citation", IsResource=true)]
-  public partial class Citation : Hl7.Fhir.Model.DomainResource
+  public partial class Citation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -5733,6 +5733,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.Citation.CitedArtifactComponent _CitedArtifact;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

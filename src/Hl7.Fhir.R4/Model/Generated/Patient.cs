@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Patient","http://hl7.org/fhir/StructureDefinition/Patient", IsResource=true)]
-  public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient
+  public partial class Patient : Hl7.Fhir.Model.DomainResource, Hl7.Fhir.Model.IPatient, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -944,6 +944,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.Patient.LinkComponent> _Link;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

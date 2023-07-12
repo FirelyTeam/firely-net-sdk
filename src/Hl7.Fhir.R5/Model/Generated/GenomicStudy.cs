@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("GenomicStudy","http://hl7.org/fhir/StructureDefinition/GenomicStudy", IsResource=true)]
-  public partial class GenomicStudy : Hl7.Fhir.Model.DomainResource
+  public partial class GenomicStudy : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1539,6 +1539,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.GenomicStudy.AnalysisComponent> _Analysis;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

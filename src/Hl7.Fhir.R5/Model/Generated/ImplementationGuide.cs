@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ImplementationGuide","http://hl7.org/fhir/StructureDefinition/ImplementationGuide", IsResource=true)]
-  public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource
+  public partial class ImplementationGuide : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -5246,6 +5246,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.ImplementationGuide.ManifestComponent _Manifest;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

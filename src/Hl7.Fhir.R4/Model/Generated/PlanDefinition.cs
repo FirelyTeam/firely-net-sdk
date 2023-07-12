@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("PlanDefinition","http://hl7.org/fhir/StructureDefinition/PlanDefinition", IsResource=true)]
-  public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource
+  public partial class PlanDefinition : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -2747,6 +2747,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.PlanDefinition.ActionComponent> _Action;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

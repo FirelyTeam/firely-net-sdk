@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("FamilyMemberHistory","http://hl7.org/fhir/StructureDefinition/FamilyMemberHistory", IsResource=true)]
-  public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource
+  public partial class FamilyMemberHistory : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1039,6 +1039,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.FamilyMemberHistory.ProcedureComponent> _Procedure;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

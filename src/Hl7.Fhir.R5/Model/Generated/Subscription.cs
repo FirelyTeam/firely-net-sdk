@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Subscription","http://hl7.org/fhir/StructureDefinition/Subscription", IsResource=true)]
-  public partial class Subscription : Hl7.Fhir.Model.DomainResource
+  public partial class Subscription : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -979,6 +979,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("MaxCount");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

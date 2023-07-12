@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("BiologicallyDerivedProduct","http://hl7.org/fhir/StructureDefinition/BiologicallyDerivedProduct", IsResource=true)]
-  public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource
+  public partial class BiologicallyDerivedProduct : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -566,6 +566,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.BiologicallyDerivedProduct.PropertyComponent> _Property;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

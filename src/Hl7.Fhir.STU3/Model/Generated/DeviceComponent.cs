@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("DeviceComponent","http://hl7.org/fhir/StructureDefinition/DeviceComponent", IsResource=true)]
-  public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource
+  public partial class DeviceComponent : Hl7.Fhir.Model.DomainResource, IIdentifiable<Identifier>
   {
     /// <summary>
     /// FHIR Type Name
@@ -478,6 +478,8 @@ namespace Hl7.Fhir.Model
     }
 
     private Hl7.Fhir.Model.CodeableConcept _LanguageCode;
+
+    Identifier IIdentifiable<Identifier>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

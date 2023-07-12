@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("CapabilityStatement","http://hl7.org/fhir/StructureDefinition/CapabilityStatement", IsResource=true)]
-  public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource
+  public partial class CapabilityStatement : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -4372,6 +4372,8 @@ namespace Hl7.Fhir.Model
     }
 
     private List<Hl7.Fhir.Model.CapabilityStatement.DocumentComponent> _Document;
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

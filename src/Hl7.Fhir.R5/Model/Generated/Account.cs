@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("Account","http://hl7.org/fhir/StructureDefinition/Account", IsResource=true)]
-  public partial class Account : Hl7.Fhir.Model.DomainResource
+  public partial class Account : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -1599,6 +1599,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("CalculatedAt");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {

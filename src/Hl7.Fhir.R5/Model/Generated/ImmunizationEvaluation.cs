@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Model
   [Serializable]
   [DataContract]
   [FhirType("ImmunizationEvaluation","http://hl7.org/fhir/StructureDefinition/ImmunizationEvaluation", IsResource=true)]
-  public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource
+  public partial class ImmunizationEvaluation : Hl7.Fhir.Model.DomainResource, IIdentifiable<List<Identifier>>
   {
     /// <summary>
     /// FHIR Type Name
@@ -368,6 +368,8 @@ namespace Hl7.Fhir.Model
         OnPropertyChanged("SeriesDoses");
       }
     }
+
+    List<Identifier> IIdentifiable<List<Identifier>>.Identifier { get => Identifier; set => Identifier = value; }
 
     public override IDeepCopyable CopyTo(IDeepCopyable other)
     {
