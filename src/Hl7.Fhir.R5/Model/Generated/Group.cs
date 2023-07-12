@@ -60,68 +60,68 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-type)
     /// (system: http://hl7.org/fhir/group-type)
     /// </summary>
-    [FhirEnumeration("GroupType")]
+    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type", "http://hl7.org/fhir/group-type")]
     public enum GroupType
     {
       /// <summary>
       /// Group contains "person" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
+      [EnumLiteral("person"), Description("Person")]
       Person,
       /// <summary>
       /// Group contains "animal" Patient resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
+      [EnumLiteral("animal"), Description("Animal")]
       Animal,
       /// <summary>
       /// Group contains healthcare practitioner resources (Practitioner or PractitionerRole).
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
+      [EnumLiteral("practitioner"), Description("Practitioner")]
       Practitioner,
       /// <summary>
       /// Group contains Device resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
+      [EnumLiteral("device"), Description("Device")]
       Device,
       /// <summary>
       /// Group contains CareTeam resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("careteam", "http://hl7.org/fhir/group-type"), Description("CareTeam")]
+      [EnumLiteral("careteam"), Description("CareTeam")]
       Careteam,
       /// <summary>
       /// Group contains HealthcareService resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("healthcareservice", "http://hl7.org/fhir/group-type"), Description("HealthcareService")]
+      [EnumLiteral("healthcareservice"), Description("HealthcareService")]
       Healthcareservice,
       /// <summary>
       /// Group contains Location resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("location", "http://hl7.org/fhir/group-type"), Description("Location")]
+      [EnumLiteral("location"), Description("Location")]
       Location,
       /// <summary>
       /// Group contains Organization resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("organization", "http://hl7.org/fhir/group-type"), Description("Organization")]
+      [EnumLiteral("organization"), Description("Organization")]
       Organization,
       /// <summary>
       /// Group contains RelatedPerson resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("relatedperson", "http://hl7.org/fhir/group-type"), Description("RelatedPerson")]
+      [EnumLiteral("relatedperson"), Description("RelatedPerson")]
       Relatedperson,
       /// <summary>
       /// Group contains Specimen resources.
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("specimen", "http://hl7.org/fhir/group-type"), Description("Specimen")]
+      [EnumLiteral("specimen"), Description("Specimen")]
       Specimen,
     }
 
@@ -130,20 +130,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-membership-basis)
     /// (system: http://hl7.org/fhir/group-membership-basis)
     /// </summary>
-    [FhirEnumeration("GroupMembershipBasis")]
+    [FhirEnumeration("GroupMembershipBasis", "http://hl7.org/fhir/ValueSet/group-membership-basis", "http://hl7.org/fhir/group-membership-basis")]
     public enum GroupMembershipBasis
     {
       /// <summary>
       /// The Group.characteristics specified are both necessary and sufficient to determine membership. All entities that meet the criteria are considered to be members of the group, whether referenced by the group or not. If members are present, they are individuals that happen to be known as meeting the Group.characteristics. The list cannot be presumed to be complete.
       /// (system: http://hl7.org/fhir/group-membership-basis)
       /// </summary>
-      [EnumLiteral("definitional", "http://hl7.org/fhir/group-membership-basis"), Description("Definitional")]
+      [EnumLiteral("definitional"), Description("Definitional")]
       Definitional,
       /// <summary>
       /// The Group.characteristics are necessary but not sufficient to determine membership. Membership is determined by being listed as one of the Group.member.
       /// (system: http://hl7.org/fhir/group-membership-basis)
       /// </summary>
-      [EnumLiteral("enumerated", "http://hl7.org/fhir/group-membership-basis"), Description("Enumerated")]
+      [EnumLiteral("enumerated"), Description("Enumerated")]
       Enumerated,
     }
 
@@ -153,6 +153,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Characteristic", IsNestedType=true)]
+    [BackboneType("Group.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -351,6 +352,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Member", IsNestedType=true)]
+    [BackboneType("Group.member")]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -569,6 +571,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement

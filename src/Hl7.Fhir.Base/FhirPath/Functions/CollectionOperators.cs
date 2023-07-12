@@ -85,7 +85,7 @@ namespace Hl7.FhirPath.Functions
             return element.Children(name);
         }
 
-        public static string FpJoin(this IEnumerable<ITypedElement> collection, string separator)
+        public static string FpJoin(this IEnumerable<ITypedElement> collection, string separator = null)
         {
             //if the collection is empty return the empty result
             if (!collection.Any())

@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-element-type)
     /// (system: http://hl7.org/fhir/research-element-type)
     /// </summary>
-    [FhirEnumeration("ResearchElementType")]
+    [FhirEnumeration("ResearchElementType", "http://hl7.org/fhir/ValueSet/research-element-type", "http://hl7.org/fhir/research-element-type")]
     public enum ResearchElementType
     {
       /// <summary>
       /// The element defines the population that forms the basis for research.
       /// (system: http://hl7.org/fhir/research-element-type)
       /// </summary>
-      [EnumLiteral("population", "http://hl7.org/fhir/research-element-type"), Description("Population")]
+      [EnumLiteral("population"), Description("Population")]
       Population,
       /// <summary>
       /// The element defines an exposure within the population that is being researched.
       /// (system: http://hl7.org/fhir/research-element-type)
       /// </summary>
-      [EnumLiteral("exposure", "http://hl7.org/fhir/research-element-type"), Description("Exposure")]
+      [EnumLiteral("exposure"), Description("Exposure")]
       Exposure,
       /// <summary>
       /// The element defines an outcome within the population that is being researched.
       /// (system: http://hl7.org/fhir/research-element-type)
       /// </summary>
-      [EnumLiteral("outcome", "http://hl7.org/fhir/research-element-type"), Description("Outcome")]
+      [EnumLiteral("outcome"), Description("Outcome")]
       Outcome,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ResearchElementDefinition#Characteristic", IsNestedType=true)]
+    [BackboneType("ResearchElementDefinition.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -234,6 +235,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("studyEffectiveGroupMeasure", Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> StudyEffectiveGroupMeasureElement
       {
@@ -325,6 +327,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("participantEffectiveGroupMeasure", Order=150)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GroupMeasure")]
       [DataMember]
       public Code<Hl7.Fhir.Model.GroupMeasureCode> ParticipantEffectiveGroupMeasureElement
       {
@@ -739,6 +742,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1270,6 +1274,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=390)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchElementType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchElementDefinition.ResearchElementType> TypeElement
@@ -1303,6 +1308,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("variableType", Order=400)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("VariableType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.VariableTypeCode> VariableTypeElement
     {

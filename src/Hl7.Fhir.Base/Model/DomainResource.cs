@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Model
             if (this.Contained != null)
             {
                 if (!Contained.OfType<DomainResource>().All(cr => cr.Contained == null || !cr.Contained.Any()))
-                    result.Add(COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED.AsResult(validationContext));
+                    result.Add(COVE.CONTAINED_RESOURCES_CANNOT_BE_NESTED(validationContext).AsResult(validationContext));
             }
 
             return result;

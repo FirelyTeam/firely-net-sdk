@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-team-status)
     /// (system: http://hl7.org/fhir/care-team-status)
     /// </summary>
-    [FhirEnumeration("CareTeamStatus")]
+    [FhirEnumeration("CareTeamStatus", "http://hl7.org/fhir/ValueSet/care-team-status", "http://hl7.org/fhir/care-team-status")]
     public enum CareTeamStatus
     {
       /// <summary>
       /// The care team has been drafted and proposed, but not yet participating in the coordination and delivery of care.
       /// (system: http://hl7.org/fhir/care-team-status)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/care-team-status"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// The care team is currently participating in the coordination and delivery of care.
       /// (system: http://hl7.org/fhir/care-team-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/care-team-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The care team is temporarily on hold or suspended and not participating in the coordination and delivery of care.
       /// (system: http://hl7.org/fhir/care-team-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/care-team-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The care team was, but is no longer, participating in the coordination and delivery of care.
       /// (system: http://hl7.org/fhir/care-team-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/care-team-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The care team should have never existed.
       /// (system: http://hl7.org/fhir/care-team-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/care-team-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CareTeam#Participant", IsNestedType=true)]
+    [BackboneType("CareTeam.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -124,7 +125,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who is involved
       /// </summary>
-      [FhirElement("member", InSummary=true, Order=50)]
+      [FhirElement("member", InSummary=true, Order=50, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","RelatedPerson","Patient","Organization","CareTeam")]
       [DataMember]
@@ -277,7 +278,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this team
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -291,8 +292,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | active | suspended | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CareTeamStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.CareTeam.CareTeamStatus> StatusElement
     {
@@ -323,7 +325,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of team
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -368,7 +370,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who care team is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -383,7 +385,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or episode associated with CareTeam
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=140)]
+    [FhirElement("context", InSummary=true, Order=140, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -398,7 +400,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time period team covers
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=150)]
+    [FhirElement("period", InSummary=true, Order=150, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -425,7 +427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists
     /// </summary>
-    [FhirElement("reasonCode", Order=170)]
+    [FhirElement("reasonCode", Order=170, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -439,7 +441,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the care team exists
     /// </summary>
-    [FhirElement("reasonReference", Order=180)]
+    [FhirElement("reasonReference", Order=180, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition")]
     [Cardinality(Min=0,Max=-1)]

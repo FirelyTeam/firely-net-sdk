@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guidance-response-status)
     /// (system: http://hl7.org/fhir/guidance-response-status)
     /// </summary>
-    [FhirEnumeration("GuidanceResponseStatus")]
+    [FhirEnumeration("GuidanceResponseStatus", "http://hl7.org/fhir/ValueSet/guidance-response-status", "http://hl7.org/fhir/guidance-response-status")]
     public enum GuidanceResponseStatus
     {
       /// <summary>
       /// The request was processed successfully.
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("success", "http://hl7.org/fhir/guidance-response-status"), Description("Success")]
+      [EnumLiteral("success"), Description("Success")]
       Success,
       /// <summary>
       /// The request was processed successfully, but more data may result in a more complete evaluation.
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("data-requested", "http://hl7.org/fhir/guidance-response-status"), Description("Data Requested")]
+      [EnumLiteral("data-requested"), Description("Data Requested")]
       DataRequested,
       /// <summary>
       /// The request was processed, but more data is required to complete the evaluation.
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("data-required", "http://hl7.org/fhir/guidance-response-status"), Description("Data Required")]
+      [EnumLiteral("data-required"), Description("Data Required")]
       DataRequired,
       /// <summary>
       /// The request is currently being processed.
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/guidance-response-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The request was not processed successfully.
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("failure", "http://hl7.org/fhir/guidance-response-status"), Description("Failure")]
+      [EnumLiteral("failure"), Description("Failure")]
       Failure,
       /// <summary>
       /// The response was entered in error.
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/guidance-response-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -149,6 +149,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GuidanceResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> StatusElement

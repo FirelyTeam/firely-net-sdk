@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/questionnaire-answers-status)
     /// (system: http://hl7.org/fhir/questionnaire-answers-status)
     /// </summary>
-    [FhirEnumeration("QuestionnaireResponseStatus")]
+    [FhirEnumeration("QuestionnaireResponseStatus", "http://hl7.org/fhir/ValueSet/questionnaire-answers-status", "http://hl7.org/fhir/questionnaire-answers-status")]
     public enum QuestionnaireResponseStatus
     {
       /// <summary>
       /// This QuestionnaireResponse has been partially filled out with answers but changes or additions are still expected to be made to it.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/questionnaire-answers-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// This QuestionnaireResponse has been filled out with answers and the current content is regarded as definitive.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This QuestionnaireResponse has been filled out with answers, then marked as complete, yet changes or additions have been made to it afterwards.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("amended", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Amended")]
+      [EnumLiteral("amended"), Description("Amended")]
       Amended,
       /// <summary>
       /// This QuestionnaireResponse was entered in error and voided.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// This QuestionnaireResponse has been partially filled out with answers but has been abandoned. It is unknown whether changes or additions are expected to be made to it.
       /// (system: http://hl7.org/fhir/questionnaire-answers-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/questionnaire-answers-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("QuestionnaireResponse#Item", IsNestedType=true)]
+    [BackboneType("QuestionnaireResponse.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -355,6 +356,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("QuestionnaireResponse#Answer", IsNestedType=true)]
+    [BackboneType("QuestionnaireResponse.item.answer")]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -565,6 +567,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("QuestionnaireResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.QuestionnaireResponse.QuestionnaireResponseStatus> StatusElement

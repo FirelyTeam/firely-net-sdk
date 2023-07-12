@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/slotstatus)
     /// (system: http://hl7.org/fhir/slotstatus)
     /// </summary>
-    [FhirEnumeration("SlotStatus")]
+    [FhirEnumeration("SlotStatus", "http://hl7.org/fhir/ValueSet/slotstatus", "http://hl7.org/fhir/slotstatus")]
     public enum SlotStatus
     {
       /// <summary>
       /// Indicates that the time interval is busy because one  or more events have been scheduled for that interval.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("busy", "http://hl7.org/fhir/slotstatus"), Description("Busy")]
+      [EnumLiteral("busy"), Description("Busy")]
       Busy,
       /// <summary>
       /// Indicates that the time interval is free for scheduling.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("free", "http://hl7.org/fhir/slotstatus"), Description("Free")]
+      [EnumLiteral("free"), Description("Free")]
       Free,
       /// <summary>
       /// Indicates that the time interval is busy and that the interval cannot be scheduled.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("busy-unavailable", "http://hl7.org/fhir/slotstatus"), Description("Busy (Unavailable)")]
+      [EnumLiteral("busy-unavailable"), Description("Busy (Unavailable)")]
       BusyUnavailable,
       /// <summary>
       /// Indicates that the time interval is busy because one or more events have been tentatively scheduled for that interval.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("busy-tentative", "http://hl7.org/fhir/slotstatus"), Description("Busy (Tentative)")]
+      [EnumLiteral("busy-tentative"), Description("Busy (Tentative)")]
       BusyTentative,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/slotstatus)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/slotstatus"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 
@@ -185,6 +185,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SlotStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Slot.SlotStatus> StatusElement

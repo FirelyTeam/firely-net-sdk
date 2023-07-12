@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/episode-of-care-status)
     /// (system: http://hl7.org/fhir/episode-of-care-status)
     /// </summary>
-    [FhirEnumeration("EpisodeOfCareStatus")]
+    [FhirEnumeration("EpisodeOfCareStatus", "http://hl7.org/fhir/ValueSet/episode-of-care-status", "http://hl7.org/fhir/episode-of-care-status")]
     public enum EpisodeOfCareStatus
     {
       /// <summary>
       /// This episode of care is planned to start at the date specified in the period.start. During this status, an organization may perform assessments to determine if the patient is eligible to receive services, or be organizing to make resources available to provide care services.
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/episode-of-care-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// This episode has been placed on a waitlist, pending the episode being made active (or cancelled).
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("waitlist", "http://hl7.org/fhir/episode-of-care-status"), Description("Waitlist")]
+      [EnumLiteral("waitlist"), Description("Waitlist")]
       Waitlist,
       /// <summary>
       /// This episode of care is current.
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/episode-of-care-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This episode of care is on hold; the organization has limited responsibility for the patient (such as while on respite).
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("onhold", "http://hl7.org/fhir/episode-of-care-status"), Description("On Hold")]
+      [EnumLiteral("onhold"), Description("On Hold")]
       Onhold,
       /// <summary>
       /// This episode of care is finished and the organization is not expecting to be providing further care to the patient. Can also be known as "closed", "completed" or other similar terms.
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("finished", "http://hl7.org/fhir/episode-of-care-status"), Description("Finished")]
+      [EnumLiteral("finished"), Description("Finished")]
       Finished,
       /// <summary>
       /// The episode of care was cancelled, or withdrawn from service, often selected during the planned stage as the patient may have gone elsewhere, or the circumstances have changed and the organization is unable to provide the care. It indicates that services terminated outside the planned/expected workflow.
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/episode-of-care-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/episode-of-care-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/episode-of-care-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EpisodeOfCare#StatusHistory", IsNestedType=true)]
+    [BackboneType("EpisodeOfCare.statusHistory")]
     public partial class StatusHistoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -125,6 +126,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EpisodeOfCareStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement
@@ -265,6 +267,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EpisodeOfCare#Diagnosis", IsNestedType=true)]
+    [BackboneType("EpisodeOfCare.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -452,6 +455,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EpisodeOfCareStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EpisodeOfCare.EpisodeOfCareStatus> StatusElement

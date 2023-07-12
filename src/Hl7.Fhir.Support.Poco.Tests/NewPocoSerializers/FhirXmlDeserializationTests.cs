@@ -35,6 +35,7 @@ namespace Hl7.Fhir.Support.Poco.Tests
         [DataTestMethod]
         [DataRow("<foo value =\"true\"/>", typeof(bool), true, null, DisplayName = "XmlBool1")]
         [DataRow("<foo value =\"1\"/>", typeof(bool), "1", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool2")]
+        [DataRow("<foo value =\"treu\"/>", typeof(bool), "treu", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlBool3")]
         [DataRow("<foo value =\"2000-01-01\"/>", typeof(DateTimeOffset), "2000-01-01", null, DisplayName = "XmlInstant1")]
         [DataRow("<foo value =\"foo\"/>", typeof(DateTimeOffset), "foo", ERR.VALUE_IS_NOT_OF_EXPECTED_TYPE_CODE, DisplayName = "XmlInstant2")]
         [DataRow("<foo value =\"foo\"/>", typeof(byte[]), "foo", ERR.INCORRECT_BASE64_DATA_CODE, DisplayName = "XmlByteArray")]
@@ -58,7 +59,9 @@ namespace Hl7.Fhir.Support.Poco.Tests
             reader.MoveToFirstAttribute();
 
             var deserializer = getTestDeserializer(new());
-            var (value, error) = deserializer.ParsePrimitiveValue(reader, implementingType);
+            var ps = new PathStack();
+            ps.EnterElement("Patient", 0, false);
+            var (value, error) = deserializer.ParsePrimitiveValue(reader, implementingType, ps);
 
             error?.ErrorCode.Should().Be(expectedErrorCode);
 

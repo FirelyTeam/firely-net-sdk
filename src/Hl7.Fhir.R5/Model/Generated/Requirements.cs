@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conformance-expectation)
     /// (system: http://hl7.org/fhir/conformance-expectation)
     /// </summary>
-    [FhirEnumeration("ConformanceExpectation")]
+    [FhirEnumeration("ConformanceExpectation", "http://hl7.org/fhir/ValueSet/conformance-expectation", "http://hl7.org/fhir/conformance-expectation")]
     public enum ConformanceExpectation
     {
       /// <summary>
       /// Support for the specified capability is required to be considered conformant.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("SHALL", "http://hl7.org/fhir/conformance-expectation"), Description("SHALL")]
+      [EnumLiteral("SHALL"), Description("SHALL")]
       SHALL,
       /// <summary>
       /// Support for the specified capability is strongly encouraged, and failure to support it should only occur after careful consideration.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("SHOULD", "http://hl7.org/fhir/conformance-expectation"), Description("SHOULD")]
+      [EnumLiteral("SHOULD"), Description("SHOULD")]
       SHOULD,
       /// <summary>
       /// Support for the specified capability is not necessary to be considered conformant, and the requirement should be considered strictly optional.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("MAY", "http://hl7.org/fhir/conformance-expectation"), Description("MAY")]
+      [EnumLiteral("MAY"), Description("MAY")]
       MAY,
       /// <summary>
       /// Support for the specified capability is strongly discouraged and should occur only after careful consideration.
       /// (system: http://hl7.org/fhir/conformance-expectation)
       /// </summary>
-      [EnumLiteral("SHOULD-NOT", "http://hl7.org/fhir/conformance-expectation"), Description("SHOULD-NOT")]
+      [EnumLiteral("SHOULD-NOT"), Description("SHOULD-NOT")]
       SHOULDNOT,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Requirements#Statement", IsNestedType=true)]
+    [BackboneType("Requirements.statement")]
     public partial class StatementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -170,6 +171,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("conformance", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("??")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Requirements.ConformanceExpectation>> ConformanceElement
@@ -725,6 +727,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

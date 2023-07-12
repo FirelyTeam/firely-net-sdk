@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/identity-assuranceLevel)
     /// (system: http://hl7.org/fhir/identity-assuranceLevel)
     /// </summary>
-    [FhirEnumeration("IdentityAssuranceLevel")]
+    [FhirEnumeration("IdentityAssuranceLevel", "http://hl7.org/fhir/ValueSet/identity-assuranceLevel", "http://hl7.org/fhir/identity-assuranceLevel")]
     public enum IdentityAssuranceLevel
     {
       /// <summary>
       /// Little or no confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level1", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 1")]
+      [EnumLiteral("level1"), Description("Level 1")]
       Level1,
       /// <summary>
       /// Some confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level2", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 2")]
+      [EnumLiteral("level2"), Description("Level 2")]
       Level2,
       /// <summary>
       /// High confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level3", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 3")]
+      [EnumLiteral("level3"), Description("Level 3")]
       Level3,
       /// <summary>
       /// Very high confidence in the asserted identity's accuracy.
       /// (system: http://hl7.org/fhir/identity-assuranceLevel)
       /// </summary>
-      [EnumLiteral("level4", "http://hl7.org/fhir/identity-assuranceLevel"), Description("Level 4")]
+      [EnumLiteral("level4"), Description("Level 4")]
       Level4,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Person#Link", IsNestedType=true)]
+    [BackboneType("Person.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -123,6 +124,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("assurance", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("IdentityAssuranceLevel")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Person.IdentityAssuranceLevel> AssuranceElement
       {
@@ -289,6 +291,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

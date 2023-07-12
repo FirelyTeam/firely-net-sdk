@@ -60,62 +60,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/devicedispense-status)
     /// (system: http://hl7.org/fhir/devicedispense-status)
     /// </summary>
-    [FhirEnumeration("DeviceDispenseStatusCodes")]
+    [FhirEnumeration("DeviceDispenseStatusCodes", "http://hl7.org/fhir/ValueSet/devicedispense-status", "http://hl7.org/fhir/devicedispense-status")]
     public enum DeviceDispenseStatusCodes
     {
       /// <summary>
       /// The core event has not started yet, but some staging activities have begun (e.g. initial preparing of the device. Preparation stages may be tracked e.g. for planning, supply or billing purposes.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("preparation", "http://hl7.org/fhir/devicedispense-status"), Description("Preparation")]
+      [EnumLiteral("preparation"), Description("Preparation")]
       Preparation,
       /// <summary>
       /// The dispensed product is ready for pickup.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/devicedispense-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The dispensed product was not and will never be picked up by the patient.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/devicedispense-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The dispense process is paused while waiting for an external event to reactivate the dispense.  For example, new stock has arrived or the prescriber has called.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/devicedispense-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The dispensed product has been picked up.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/devicedispense-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The dispense was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/devicedispense-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the dispense have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/devicedispense-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The dispense was declined and not performed.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("declined", "http://hl7.org/fhir/devicedispense-status"), Description("Declined")]
+      [EnumLiteral("declined"), Description("Declined")]
       Declined,
       /// <summary>
       /// The authoring system does not know which of the status values applies for this dispense.  Note: this concept is not to be used for other - one of the listed statuses is presumed to apply, it's just now known which one.
       /// (system: http://hl7.org/fhir/devicedispense-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/devicedispense-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -125,6 +125,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceDispense#Performer", IsNestedType=true)]
+    [BackboneType("DeviceDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,6 +305,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceDispenseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceDispense.DeviceDispenseStatusCodes> StatusElement

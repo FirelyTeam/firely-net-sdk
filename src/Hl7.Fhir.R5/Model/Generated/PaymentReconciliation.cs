@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/payment-outcome)
     /// (system: http://hl7.org/fhir/payment-outcome)
     /// </summary>
-    [FhirEnumeration("PaymentOutcome")]
+    [FhirEnumeration("PaymentOutcome", "http://hl7.org/fhir/ValueSet/payment-outcome", "http://hl7.org/fhir/payment-outcome")]
     public enum PaymentOutcome
     {
       /// <summary>
       /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("queued", "http://hl7.org/fhir/payment-outcome"), Description("Queued")]
+      [EnumLiteral("queued"), Description("Queued")]
       Queued,
       /// <summary>
       /// The processing has completed without errors
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/payment-outcome"), Description("Processing Complete")]
+      [EnumLiteral("complete"), Description("Processing Complete")]
       Complete,
       /// <summary>
       /// One or more errors have been detected in the Claim
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/payment-outcome"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// No errors have been detected in the Claim and some of the adjudication has been performed.
       /// (system: http://hl7.org/fhir/payment-outcome)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/payment-outcome"), Description("Partial Processing")]
+      [EnumLiteral("partial"), Description("Partial Processing")]
       Partial,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Allocation", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.allocation")]
     public partial class AllocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -502,6 +503,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Notes", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.processNote")]
     public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -514,6 +516,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NoteType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
       {
@@ -697,6 +700,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentReconciliationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -861,6 +865,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", Order=200)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PaymentReconciliation.PaymentOutcome> OutcomeElement
     {

@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/characteristic-combination)
     /// (system: http://hl7.org/fhir/characteristic-combination)
     /// </summary>
-    [FhirEnumeration("CharacteristicCombination")]
+    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination", "http://hl7.org/fhir/characteristic-combination")]
     public enum CharacteristicCombinationCode
     {
       /// <summary>
       /// Combine characteristics with AND.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("all-of", "http://hl7.org/fhir/characteristic-combination"), Description("All of")]
+      [EnumLiteral("all-of"), Description("All of")]
       AllOf,
       /// <summary>
       /// Combine characteristics with OR.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("any-of", "http://hl7.org/fhir/characteristic-combination"), Description("Any of")]
+      [EnumLiteral("any-of"), Description("Any of")]
       AnyOf,
       /// <summary>
       /// Meet at least the threshold number of characteristics for definition.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("at-least", "http://hl7.org/fhir/characteristic-combination"), Description("At least")]
+      [EnumLiteral("at-least"), Description("At least")]
       AtLeast,
       /// <summary>
       /// Meet at most the threshold number of characteristics for definition.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("at-most", "http://hl7.org/fhir/characteristic-combination"), Description("At most")]
+      [EnumLiteral("at-most"), Description("At most")]
       AtMost,
       /// <summary>
       /// Combine characteristics statistically. Use method to specify the statistical method.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("statistical", "http://hl7.org/fhir/characteristic-combination"), Description("Statistical")]
+      [EnumLiteral("statistical"), Description("Statistical")]
       Statistical,
       /// <summary>
       /// Combine characteristics by addition of benefits and subtraction of harms.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("net-effect", "http://hl7.org/fhir/characteristic-combination"), Description("Net effect")]
+      [EnumLiteral("net-effect"), Description("Net effect")]
       NetEffect,
       /// <summary>
       /// Combine characteristics as a collection used as the dataset.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("dataset", "http://hl7.org/fhir/characteristic-combination"), Description("Dataset")]
+      [EnumLiteral("dataset"), Description("Dataset")]
       Dataset,
     }
 
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Characteristic", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -606,6 +607,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#DefinitionByTypeAndValue", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.definitionByTypeAndValue")]
     public partial class DefinitionByTypeAndValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -810,6 +812,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#DefinitionByCombination", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.definitionByCombination")]
     public partial class DefinitionByCombinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -822,6 +825,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CharacteristicCombination")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceVariable.CharacteristicCombinationCode> CodeElement
@@ -1002,6 +1006,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#TimeFromEvent", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.characteristic.timeFromEvent")]
     public partial class TimeFromEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1220,6 +1225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EvidenceVariable#Category", IsNestedType=true)]
+    [BackboneType("EvidenceVariable.category")]
     public partial class CategoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1554,6 +1560,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -2036,6 +2043,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("handling", Order=370)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EvidenceVariableHandling")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
     {

@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/property-representation)
     /// (system: http://hl7.org/fhir/property-representation)
     /// </summary>
-    [FhirEnumeration("PropertyRepresentation")]
+    [FhirEnumeration("PropertyRepresentation", "http://hl7.org/fhir/ValueSet/property-representation", "http://hl7.org/fhir/property-representation")]
     public enum PropertyRepresentation
     {
       /// <summary>
       /// In XML, this property is represented as an attribute not an element.
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("xmlAttr", "http://hl7.org/fhir/property-representation"), Description("XML Attribute")]
+      [EnumLiteral("xmlAttr"), Description("XML Attribute")]
       XmlAttr,
       /// <summary>
       /// This element is represented using the XML text attribute (primitives only).
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("xmlText", "http://hl7.org/fhir/property-representation"), Description("XML Text")]
+      [EnumLiteral("xmlText"), Description("XML Text")]
       XmlText,
       /// <summary>
       /// The type of this element is indicated using xsi:type.
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("typeAttr", "http://hl7.org/fhir/property-representation"), Description("Type Attribute")]
+      [EnumLiteral("typeAttr"), Description("Type Attribute")]
       TypeAttr,
       /// <summary>
       /// Use CDA narrative instead of XHTML.
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("cdaText", "http://hl7.org/fhir/property-representation"), Description("CDA Text Format")]
+      [EnumLiteral("cdaText"), Description("CDA Text Format")]
       CdaText,
       /// <summary>
       /// The property is represented using XHTML.
       /// (system: http://hl7.org/fhir/property-representation)
       /// </summary>
-      [EnumLiteral("xhtml", "http://hl7.org/fhir/property-representation"), Description("XHTML")]
+      [EnumLiteral("xhtml"), Description("XHTML")]
       Xhtml,
     }
 
@@ -100,26 +100,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-slicing-rules)
     /// (system: http://hl7.org/fhir/resource-slicing-rules)
     /// </summary>
-    [FhirEnumeration("SlicingRules")]
+    [FhirEnumeration("SlicingRules", "http://hl7.org/fhir/ValueSet/resource-slicing-rules", "http://hl7.org/fhir/resource-slicing-rules")]
     public enum SlicingRules
     {
       /// <summary>
       /// No additional content is allowed other than that described by the slices in this profile.
       /// (system: http://hl7.org/fhir/resource-slicing-rules)
       /// </summary>
-      [EnumLiteral("closed", "http://hl7.org/fhir/resource-slicing-rules"), Description("Closed")]
+      [EnumLiteral("closed"), Description("Closed")]
       Closed,
       /// <summary>
       /// Additional content is allowed anywhere in the list.
       /// (system: http://hl7.org/fhir/resource-slicing-rules)
       /// </summary>
-      [EnumLiteral("open", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open")]
+      [EnumLiteral("open"), Description("Open")]
       Open,
       /// <summary>
       /// Additional content is allowed, but only at the end of the list. Note that using this requires that the slices be ordered, which makes it hard to share uses. This should only be done where absolutely required.
       /// (system: http://hl7.org/fhir/resource-slicing-rules)
       /// </summary>
-      [EnumLiteral("openAtEnd", "http://hl7.org/fhir/resource-slicing-rules"), Description("Open at End")]
+      [EnumLiteral("openAtEnd"), Description("Open at End")]
       OpenAtEnd,
     }
 
@@ -128,45 +128,45 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/discriminator-type)
     /// (system: http://hl7.org/fhir/discriminator-type)
     /// </summary>
-    [FhirEnumeration("DiscriminatorType")]
+    [FhirEnumeration("DiscriminatorType", "http://hl7.org/fhir/ValueSet/discriminator-type", "http://hl7.org/fhir/discriminator-type")]
     public enum DiscriminatorType
     {
       /// <summary>
       /// The slices have different values in the nominated element, as determined by the applicable fixed value, pattern, or required ValueSet binding.
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("value", "http://hl7.org/fhir/discriminator-type"), Description("Value")]
+      [EnumLiteral("value"), Description("Value")]
       Value,
       /// <summary>
       /// The slices are differentiated by the presence or absence of the nominated element. There SHALL be no more than two slices. The slices are differentiated by the fact that one must have a max of 0 and the other must have a min of 1 (or more).  The order in which the slices are declared doesn't matter.
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("exists", "http://hl7.org/fhir/discriminator-type"), Description("Exists")]
+      [EnumLiteral("exists"), Description("Exists")]
       Exists,
       /// <summary>
       /// The slices are differentiated by type of the nominated element.
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("type", "http://hl7.org/fhir/discriminator-type"), Description("Type")]
+      [EnumLiteral("type"), Description("Type")]
       Type,
       /// <summary>
       /// The slices are differentiated by conformance of the nominated element to a specified profile. Note that if the path specifies .resolve() then the profile is the target profile on the reference. In this case, validation by the possible profiles is required to differentiate the slices.
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("profile", "http://hl7.org/fhir/discriminator-type"), Description("Profile")]
+      [EnumLiteral("profile"), Description("Profile")]
       Profile,
       /// <summary>
       /// The slices are differentiated by their index. This is only possible if all but the last slice have min=max cardinality, and the (optional) last slice contains other undifferentiated elements.
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// </summary>
-      [EnumLiteral("position", "http://hl7.org/fhir/discriminator-type"), Description("Position")]
+      [EnumLiteral("position"), Description("Position")]
       Position,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://hl7.org/fhir/discriminator-type)
       /// This enum is DEPRECATED.
       /// </summary>
-      [EnumLiteral("pattern", "http://hl7.org/fhir/discriminator-type"), Description("Pattern")]
+      [EnumLiteral("pattern"), Description("Pattern")]
       Pattern,
     }
 
@@ -175,26 +175,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-aggregation-mode)
     /// (system: http://hl7.org/fhir/resource-aggregation-mode)
     /// </summary>
-    [FhirEnumeration("AggregationMode")]
+    [FhirEnumeration("AggregationMode", "http://hl7.org/fhir/ValueSet/resource-aggregation-mode", "http://hl7.org/fhir/resource-aggregation-mode")]
     public enum AggregationMode
     {
       /// <summary>
       /// The reference is a local reference to a contained resource.
       /// (system: http://hl7.org/fhir/resource-aggregation-mode)
       /// </summary>
-      [EnumLiteral("contained", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Contained")]
+      [EnumLiteral("contained"), Description("Contained")]
       Contained,
       /// <summary>
       /// The reference to a resource that has to be resolved externally to the resource that includes the reference.
       /// (system: http://hl7.org/fhir/resource-aggregation-mode)
       /// </summary>
-      [EnumLiteral("referenced", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Referenced")]
+      [EnumLiteral("referenced"), Description("Referenced")]
       Referenced,
       /// <summary>
       /// When the resource is in a Bundle, the resource the reference points to will be found in the same bundle as the resource that includes the reference.
       /// (system: http://hl7.org/fhir/resource-aggregation-mode)
       /// </summary>
-      [EnumLiteral("bundled", "http://hl7.org/fhir/resource-aggregation-mode"), Description("Bundled")]
+      [EnumLiteral("bundled"), Description("Bundled")]
       Bundled,
     }
 
@@ -203,26 +203,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-version-rules)
     /// (system: http://hl7.org/fhir/reference-version-rules)
     /// </summary>
-    [FhirEnumeration("ReferenceVersionRules")]
+    [FhirEnumeration("ReferenceVersionRules", "http://hl7.org/fhir/ValueSet/reference-version-rules", "http://hl7.org/fhir/reference-version-rules")]
     public enum ReferenceVersionRules
     {
       /// <summary>
       /// The reference may be either version independent or version specific.
       /// (system: http://hl7.org/fhir/reference-version-rules)
       /// </summary>
-      [EnumLiteral("either", "http://hl7.org/fhir/reference-version-rules"), Description("Either Specific or independent")]
+      [EnumLiteral("either"), Description("Either Specific or independent")]
       Either,
       /// <summary>
       /// The reference must be version independent.
       /// (system: http://hl7.org/fhir/reference-version-rules)
       /// </summary>
-      [EnumLiteral("independent", "http://hl7.org/fhir/reference-version-rules"), Description("Version independent")]
+      [EnumLiteral("independent"), Description("Version independent")]
       Independent,
       /// <summary>
       /// The reference must be version specific.
       /// (system: http://hl7.org/fhir/reference-version-rules)
       /// </summary>
-      [EnumLiteral("specific", "http://hl7.org/fhir/reference-version-rules"), Description("Version Specific")]
+      [EnumLiteral("specific"), Description("Version Specific")]
       Specific,
     }
 
@@ -231,68 +231,68 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/additional-binding-purpose)
     /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
     /// </summary>
-    [FhirEnumeration("AdditionalBindingPurposeVS")]
+    [FhirEnumeration("AdditionalBindingPurposeVS", "http://hl7.org/fhir/ValueSet/additional-binding-purpose", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose")]
     public enum AdditionalBindingPurposeVS
     {
       /// <summary>
       /// A required binding, for use when the binding strength is 'extensible' or 'preferred'
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("maximum", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Maximum Binding")]
+      [EnumLiteral("maximum"), Description("Maximum Binding")]
       Maximum,
       /// <summary>
       /// The minimum allowable value set - any conformant system SHALL support all these codes
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("minimum", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Minimum Binding")]
+      [EnumLiteral("minimum"), Description("Minimum Binding")]
       Minimum,
       /// <summary>
       /// This value set is used as a required binding (in addition to the base binding (not a replacement), usually in a particular usage context)
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("required", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Required Binding")]
+      [EnumLiteral("required"), Description("Required Binding")]
       Required,
       /// <summary>
       /// This value set is used as an extensible binding (in addition to the base binding (not a replacement), usually in a particular usage context)
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("extensible", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Conformance Binding")]
+      [EnumLiteral("extensible"), Description("Conformance Binding")]
       Extensible,
       /// <summary>
       /// This value set is a candidate to substitute for the overall conformance value set in some situations; usually these are defined in the documentation
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("candidate", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Candidate Binding")]
+      [EnumLiteral("candidate"), Description("Candidate Binding")]
       Candidate,
       /// <summary>
       /// New records are required to use this value set, but legacy records may use other codes. The definition of 'new record' is difficult, since systems often create new records based on pre-existing data. Usually 'current' bindings are mandated by an external authority that makes clear rules around this
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("current", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Current Binding")]
+      [EnumLiteral("current"), Description("Current Binding")]
       Current,
       /// <summary>
       /// This is the value set that is preferred in a given context (documentation should explain why)
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("preferred", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Preferred Binding")]
+      [EnumLiteral("preferred"), Description("Preferred Binding")]
       Preferred,
       /// <summary>
       /// This value set is provided for user look up in a given context. Typically, these valuesets only include a subset of codes relevant for input in a context
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("ui", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("UI Suggested Binding")]
+      [EnumLiteral("ui"), Description("UI Suggested Binding")]
       Ui,
       /// <summary>
       /// This value set is a good set of codes to start with when designing your system
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("starter", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Starter Binding")]
+      [EnumLiteral("starter"), Description("Starter Binding")]
       Starter,
       /// <summary>
       /// This value set is a component of the base value set. Usually this is called out so that documentation can be written about a portion of the value set
       /// (system: http://hl7.org/fhir/CodeSystem/additional-binding-purpose)
       /// </summary>
-      [EnumLiteral("component", "http://hl7.org/fhir/CodeSystem/additional-binding-purpose"), Description("Component Binding")]
+      [EnumLiteral("component"), Description("Component Binding")]
       Component,
     }
 
@@ -302,6 +302,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Slicing", IsNestedType=true)]
+    [BackboneType("ElementDefinition.slicing")]
     public partial class SlicingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -390,6 +391,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rules", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SlicingRules")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.SlicingRules> RulesElement
@@ -534,6 +536,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Discriminator", IsNestedType=true)]
+    [BackboneType("ElementDefinition.slicing.discriminator")]
     public partial class DiscriminatorComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -546,6 +549,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DiscriminatorType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.DiscriminatorType> TypeElement
@@ -704,6 +708,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Base", IsNestedType=true)]
+    [BackboneType("ElementDefinition.base")]
     public partial class BaseComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -914,6 +919,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#TypeRef", IsNestedType=true)]
+    [BackboneType("ElementDefinition.type")]
     public partial class TypeRefComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1022,6 +1028,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("aggregation", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AggregationMode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ElementDefinition.AggregationMode>> AggregationElement
@@ -1055,6 +1062,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("versioning", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ReferenceVersionRules")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.ReferenceVersionRules> VersioningElement
       {
@@ -1207,6 +1215,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Example", IsNestedType=true)]
+    [BackboneType("ElementDefinition.example")]
     public partial class ExampleComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1358,6 +1367,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Constraint", IsNestedType=true)]
+    [BackboneType("ElementDefinition.constraint")]
     public partial class ConstraintComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1435,6 +1445,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("severity", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConstraintSeverity")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConstraintSeverity> SeverityElement
@@ -1772,6 +1783,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#ElementDefinitionBinding", IsNestedType=true)]
+    [BackboneType("ElementDefinition.binding")]
     public partial class ElementDefinitionBindingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -1784,6 +1796,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strength", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("BindingStrength")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.BindingStrength> StrengthElement
@@ -2006,6 +2019,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Additional", IsNestedType=true)]
+    [BackboneType("ElementDefinition.binding.additional")]
     public partial class AdditionalComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -2018,6 +2032,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("purpose", InSummary=true, Order=30, Since=FhirRelease.R5)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AdditionalBindingPurpose")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ElementDefinition.AdditionalBindingPurposeVS> PurposeElement
@@ -2319,6 +2334,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ElementDefinition#Mapping", IsNestedType=true)]
+    [BackboneType("ElementDefinition.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -2362,6 +2378,7 @@ namespace Hl7.Fhir.Model
       /// Computable language of mapping
       /// </summary>
       [FhirElement("language", InSummary=true, Order=40)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code LanguageElement
       {
@@ -2601,6 +2618,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("representation", InSummary=true, Order=50)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PropertyRepresentation")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ElementDefinition.PropertyRepresentation>> RepresentationElement

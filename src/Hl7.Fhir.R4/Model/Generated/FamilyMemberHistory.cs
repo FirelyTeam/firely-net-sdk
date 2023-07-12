@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/history-status)
     /// (system: http://hl7.org/fhir/history-status)
     /// </summary>
-    [FhirEnumeration("FamilyHistoryStatus")]
+    [FhirEnumeration("FamilyHistoryStatus", "http://hl7.org/fhir/ValueSet/history-status", "http://hl7.org/fhir/history-status")]
     public enum FamilyHistoryStatus
     {
       /// <summary>
       /// Some health information is known and captured, but not complete - see notes for details.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
+      [EnumLiteral("partial"), Description("Partial")]
       Partial,
       /// <summary>
       /// All available related health information is captured as of the date (and possibly time) when the family member history was taken.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Health information for this family member is unavailable/unknown.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health Unknown")]
+      [EnumLiteral("health-unknown"), Description("Health Unknown")]
       HealthUnknown,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -391,6 +392,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement

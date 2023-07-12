@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/verificationresult-status)
     /// (system: http://hl7.org/fhir/CodeSystem/status)
     /// </summary>
-    [FhirEnumeration("status")]
+    [FhirEnumeration("status", "http://hl7.org/fhir/ValueSet/verificationresult-status", "http://hl7.org/fhir/CodeSystem/status")]
     public enum StatusCode
     {
       /// <summary>
       /// ***TODO***
       /// (system: http://hl7.org/fhir/CodeSystem/status)
       /// </summary>
-      [EnumLiteral("attested", "http://hl7.org/fhir/CodeSystem/status"), Description("Attested")]
+      [EnumLiteral("attested"), Description("Attested")]
       Attested,
       /// <summary>
       /// ***TODO***
       /// (system: http://hl7.org/fhir/CodeSystem/status)
       /// </summary>
-      [EnumLiteral("validated", "http://hl7.org/fhir/CodeSystem/status"), Description("Validated")]
+      [EnumLiteral("validated"), Description("Validated")]
       Validated,
       /// <summary>
       /// ***TODO***
       /// (system: http://hl7.org/fhir/CodeSystem/status)
       /// </summary>
-      [EnumLiteral("in-process", "http://hl7.org/fhir/CodeSystem/status"), Description("In process")]
+      [EnumLiteral("in-process"), Description("In process")]
       InProcess,
       /// <summary>
       /// ***TODO***
       /// (system: http://hl7.org/fhir/CodeSystem/status)
       /// </summary>
-      [EnumLiteral("req-revalid", "http://hl7.org/fhir/CodeSystem/status"), Description("Requires revalidation")]
+      [EnumLiteral("req-revalid"), Description("Requires revalidation")]
       ReqRevalid,
       /// <summary>
       /// ***TODO***
       /// (system: http://hl7.org/fhir/CodeSystem/status)
       /// </summary>
-      [EnumLiteral("val-fail", "http://hl7.org/fhir/CodeSystem/status"), Description("Validation failed")]
+      [EnumLiteral("val-fail"), Description("Validation failed")]
       ValFail,
       /// <summary>
       /// ***TODO***
       /// (system: http://hl7.org/fhir/CodeSystem/status)
       /// </summary>
-      [EnumLiteral("reval-fail", "http://hl7.org/fhir/CodeSystem/status"), Description("Re-Validation failed")]
+      [EnumLiteral("reval-fail"), Description("Re-Validation failed")]
       RevalFail,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#PrimarySource", IsNestedType=true)]
+    [BackboneType("VerificationResult.primarySource")]
     public partial class PrimarySourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -371,6 +372,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#Attestation", IsNestedType=true)]
+    [BackboneType("VerificationResult.attestation")]
     public partial class AttestationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -692,6 +694,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VerificationResult#Validator", IsNestedType=true)]
+    [BackboneType("VerificationResult.validator")]
     public partial class ValidatorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -926,6 +929,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("status")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.VerificationResult.StatusCode> StatusElement

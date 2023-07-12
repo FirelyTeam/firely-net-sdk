@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-processingmode)
     /// (system: http://hl7.org/fhir/search-processingmode)
     /// </summary>
-    [FhirEnumeration("SearchProcessingModeType")]
+    [FhirEnumeration("SearchProcessingModeType", "http://hl7.org/fhir/ValueSet/search-processingmode", "http://hl7.org/fhir/search-processingmode")]
     public enum SearchProcessingModeType
     {
       /// <summary>
       /// The search parameter is derived directly from the selected nodes based on the type definitions.
       /// (system: http://hl7.org/fhir/search-processingmode)
       /// </summary>
-      [EnumLiteral("normal", "http://hl7.org/fhir/search-processingmode"), Description("Normal")]
+      [EnumLiteral("normal"), Description("Normal")]
       Normal,
       /// <summary>
       /// The search parameter is derived by a phonetic transform from the selected nodes.
       /// (system: http://hl7.org/fhir/search-processingmode)
       /// </summary>
-      [EnumLiteral("phonetic", "http://hl7.org/fhir/search-processingmode"), Description("Phonetic")]
+      [EnumLiteral("phonetic"), Description("Phonetic")]
       Phonetic,
       /// <summary>
       /// The interpretation of the xpath statement is unknown (and can't be automated).
       /// (system: http://hl7.org/fhir/search-processingmode)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/search-processingmode"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SearchParameter#Component", IsNestedType=true)]
+    [BackboneType("SearchParameter.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -443,6 +444,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -768,6 +770,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("base", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRTypes")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> BaseElement
@@ -801,6 +804,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchParamType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -865,6 +869,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("processingMode", Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchProcessingModeType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParameter.SearchProcessingModeType> ProcessingModeElement
     {
@@ -928,6 +933,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("target", Order=330)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRTypes")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.VersionIndependentResourceTypesAll>> TargetElement
@@ -1023,6 +1029,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comparator", Order=360)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchComparator")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
@@ -1056,6 +1063,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("modifier", Order=370)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchModifierCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement

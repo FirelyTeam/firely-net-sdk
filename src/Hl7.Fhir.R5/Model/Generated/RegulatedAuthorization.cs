@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RegulatedAuthorization#Case", IsNestedType=true)]
+    [BackboneType("RegulatedAuthorization.case")]
     public partial class CaseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

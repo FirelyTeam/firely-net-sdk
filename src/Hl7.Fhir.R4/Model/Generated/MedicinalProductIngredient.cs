@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#SpecifiedSubstance", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance")]
     public partial class SpecifiedSubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -239,6 +240,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#Strength", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength")]
     public partial class StrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -501,6 +503,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#ReferenceStrength", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.specifiedSubstance.strength.referenceStrength")]
     public partial class ReferenceStrengthComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -718,6 +721,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicinalProductIngredient#Substance", IsNestedType=true)]
+    [BackboneType("MedicinalProductIngredient.substance")]
     public partial class SubstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

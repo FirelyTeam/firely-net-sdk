@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/flag-status)
     /// (system: http://hl7.org/fhir/flag-status)
     /// </summary>
-    [FhirEnumeration("FlagStatus")]
+    [FhirEnumeration("FlagStatus", "http://hl7.org/fhir/ValueSet/flag-status", "http://hl7.org/fhir/flag-status")]
     public enum FlagStatus
     {
       /// <summary>
       /// A current flag that should be displayed to a user. A system may use the category to determine which user roles should view the flag.
       /// (system: http://hl7.org/fhir/flag-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/flag-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The flag no longer needs to be displayed.
       /// (system: http://hl7.org/fhir/flag-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/flag-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The flag was added in error and should no longer be displayed.
       /// (system: http://hl7.org/fhir/flag-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/flag-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -102,6 +102,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FlagStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Flag.FlagStatus> StatusElement
@@ -148,6 +149,7 @@ namespace Hl7.Fhir.Model
     /// Coded or textual message to display to user
     /// </summary>
     [FhirElement("code", InSummary=true, Order=120, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

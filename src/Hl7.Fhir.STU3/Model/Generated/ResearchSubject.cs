@@ -60,51 +60,51 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-subject-status)
     /// (system: http://hl7.org/fhir/research-subject-status)
     /// </summary>
-    [FhirEnumeration("ResearchSubjectStatus")]
+    [FhirEnumeration("ResearchSubjectStatus", "http://hl7.org/fhir/ValueSet/research-subject-status", "http://hl7.org/fhir/research-subject-status")]
     public enum ResearchSubjectStatus
     {
       /// <summary>
       /// The subject has been identified as a potential participant in the study but has not yet agreed to participate
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("candidate", "http://hl7.org/fhir/research-subject-status"), Description("Candidate")]
+      [EnumLiteral("candidate"), Description("Candidate")]
       Candidate,
       /// <summary>
       /// The subject has agreed to participate in the study but has not yet begun performing any action within the study
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("enrolled", "http://hl7.org/fhir/research-subject-status"), Description("Enrolled")]
+      [EnumLiteral("enrolled"), Description("Enrolled")]
       Enrolled,
       /// <summary>
       /// The subject is currently being monitored and/or subject to treatment as part of the study
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/research-subject-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The subject has temporarily discontinued monitoring/treatment as part of the study
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/research-subject-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The subject has permanently ended participation in the study prior to completion of the intended monitoring/treatment
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("withdrawn", "http://hl7.org/fhir/research-subject-status"), Description("Withdrawn")]
+      [EnumLiteral("withdrawn"), Description("Withdrawn")]
       Withdrawn,
       /// <summary>
       /// All intended monitoring/treatment of the subject has been completed and their engagement with the study is now ended
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/research-subject-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
     }
 
     /// <summary>
     /// Business Identifier for research subject
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -117,8 +117,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// candidate | enrolled | active | suspended | withdrawn | completed
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchSubjectStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> StatusElement
@@ -150,7 +151,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end of participation
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=110)]
+    [FhirElement("period", InSummary=true, Order=110, FiveWs="when.planned")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {

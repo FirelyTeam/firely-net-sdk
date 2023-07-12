@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-dependency-type)
     /// (system: http://hl7.org/fhir/guide-dependency-type)
     /// </summary>
-    [FhirEnumeration("GuideDependencyType")]
+    [FhirEnumeration("GuideDependencyType", "http://hl7.org/fhir/ValueSet/guide-dependency-type", "http://hl7.org/fhir/guide-dependency-type")]
     public enum GuideDependencyType
     {
       /// <summary>
       /// The guide is referred to by URL.
       /// (system: http://hl7.org/fhir/guide-dependency-type)
       /// </summary>
-      [EnumLiteral("reference", "http://hl7.org/fhir/guide-dependency-type"), Description("Reference")]
+      [EnumLiteral("reference"), Description("Reference")]
       Reference,
       /// <summary>
       /// The guide is embedded in this guide when published.
       /// (system: http://hl7.org/fhir/guide-dependency-type)
       /// </summary>
-      [EnumLiteral("inclusion", "http://hl7.org/fhir/guide-dependency-type"), Description("Inclusion")]
+      [EnumLiteral("inclusion"), Description("Inclusion")]
       Inclusion,
     }
 
@@ -82,56 +82,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guide-page-kind)
     /// (system: http://hl7.org/fhir/guide-page-kind)
     /// </summary>
-    [FhirEnumeration("GuidePageKind")]
+    [FhirEnumeration("GuidePageKind", "http://hl7.org/fhir/ValueSet/guide-page-kind", "http://hl7.org/fhir/guide-page-kind")]
     public enum GuidePageKind
     {
       /// <summary>
       /// This is a page of content that is included in the implementation guide. It has no particular function.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("page", "http://hl7.org/fhir/guide-page-kind"), Description("Page")]
+      [EnumLiteral("page"), Description("Page")]
       Page,
       /// <summary>
       /// This is a page that represents a human readable rendering of an example.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("example", "http://hl7.org/fhir/guide-page-kind"), Description("Example")]
+      [EnumLiteral("example"), Description("Example")]
       Example,
       /// <summary>
       /// This is a page that represents a list of resources of one or more types.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("list", "http://hl7.org/fhir/guide-page-kind"), Description("List")]
+      [EnumLiteral("list"), Description("List")]
       List,
       /// <summary>
       /// This is a page showing where an included guide is injected.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("include", "http://hl7.org/fhir/guide-page-kind"), Description("Include")]
+      [EnumLiteral("include"), Description("Include")]
       Include,
       /// <summary>
       /// This is a page that lists the resources of a given type, and also creates pages for all the listed types as other pages in the section.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("directory", "http://hl7.org/fhir/guide-page-kind"), Description("Directory")]
+      [EnumLiteral("directory"), Description("Directory")]
       Directory,
       /// <summary>
       /// This is a page that creates the listed resources as a dictionary.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("dictionary", "http://hl7.org/fhir/guide-page-kind"), Description("Dictionary")]
+      [EnumLiteral("dictionary"), Description("Dictionary")]
       Dictionary,
       /// <summary>
       /// This is a generated page that contains the table of contents.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("toc", "http://hl7.org/fhir/guide-page-kind"), Description("Table Of Contents")]
+      [EnumLiteral("toc"), Description("Table Of Contents")]
       Toc,
       /// <summary>
       /// This is a page that represents a presented resource. This is typically used for generated conformance resource presentations.
       /// (system: http://hl7.org/fhir/guide-page-kind)
       /// </summary>
-      [EnumLiteral("resource", "http://hl7.org/fhir/guide-page-kind"), Description("Resource")]
+      [EnumLiteral("resource"), Description("Resource")]
       Resource,
     }
 
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Dependency", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.dependency")]
     public partial class DependencyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -153,6 +154,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuideDependencyType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuideDependencyType> TypeElement
@@ -311,6 +313,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Package", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -502,6 +505,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Resource", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.package.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -800,6 +804,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Global", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.global")]
     public partial class GlobalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -812,6 +817,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -954,6 +960,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImplementationGuide#Page", IsNestedType=true)]
+    [BackboneType("ImplementationGuide.page")]
     public partial class PageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1030,6 +1037,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GuidePageKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ImplementationGuide.GuidePageKind> KindElement
@@ -1063,6 +1071,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.ResourceType>> TypeElement
@@ -1127,6 +1136,7 @@ namespace Hl7.Fhir.Model
       /// Format of the page (e.g. html, markdown, etc.)
       /// </summary>
       [FhirElement("format", Order=90)]
+      [Binding("MimeType")]
       [DataMember]
       public Hl7.Fhir.Model.Code FormatElement
       {
@@ -1308,7 +1318,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this implementation guide (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -1340,7 +1350,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the implementation guide
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -1403,8 +1413,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1436,7 +1447,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1467,7 +1478,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1498,7 +1509,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=150)]
+    [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {

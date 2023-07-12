@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/content-type)
     /// (system: http://hl7.org/fhir/content-type)
     /// </summary>
-    [FhirEnumeration("ContentType")]
+    [FhirEnumeration("ContentType", "http://hl7.org/fhir/ValueSet/content-type", "http://hl7.org/fhir/content-type")]
     public enum ContentTypeCode
     {
       /// <summary>
       /// XML content-type corresponding to the application/fhir+xml mime-type.
       /// (system: http://hl7.org/fhir/content-type)
       /// </summary>
-      [EnumLiteral("xml", "http://hl7.org/fhir/content-type"), Description("xml")]
+      [EnumLiteral("xml"), Description("xml")]
       Xml,
       /// <summary>
       /// JSON content-type corresponding to the application/fhir+json mime-type.
       /// (system: http://hl7.org/fhir/content-type)
       /// </summary>
-      [EnumLiteral("json", "http://hl7.org/fhir/content-type"), Description("json")]
+      [EnumLiteral("json"), Description("json")]
       Json,
       /// <summary>
       /// RDF content-type corresponding to the text/turtle mime-type.
       /// (system: http://hl7.org/fhir/content-type)
       /// </summary>
-      [EnumLiteral("ttl", "http://hl7.org/fhir/content-type"), Description("ttl")]
+      [EnumLiteral("ttl"), Description("ttl")]
       Ttl,
       /// <summary>
       /// Prevent the use of the corresponding http header.
       /// (system: http://hl7.org/fhir/content-type)
       /// </summary>
-      [EnumLiteral("none", "http://hl7.org/fhir/content-type"), Description("none")]
+      [EnumLiteral("none"), Description("none")]
       None,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-direction-codes)
     /// (system: http://hl7.org/fhir/assert-direction-codes)
     /// </summary>
-    [FhirEnumeration("AssertionDirectionType")]
+    [FhirEnumeration("AssertionDirectionType", "http://hl7.org/fhir/ValueSet/assert-direction-codes", "http://hl7.org/fhir/assert-direction-codes")]
     public enum AssertionDirectionType
     {
       /// <summary>
       /// The assertion is evaluated on the response. This is the default value.
       /// (system: http://hl7.org/fhir/assert-direction-codes)
       /// </summary>
-      [EnumLiteral("response", "http://hl7.org/fhir/assert-direction-codes"), Description("response")]
+      [EnumLiteral("response"), Description("response")]
       Response,
       /// <summary>
       /// The assertion is evaluated on the request.
       /// (system: http://hl7.org/fhir/assert-direction-codes)
       /// </summary>
-      [EnumLiteral("request", "http://hl7.org/fhir/assert-direction-codes"), Description("request")]
+      [EnumLiteral("request"), Description("request")]
       Request,
     }
 
@@ -116,74 +116,74 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-operator-codes)
     /// (system: http://hl7.org/fhir/assert-operator-codes)
     /// </summary>
-    [FhirEnumeration("AssertionOperatorType")]
+    [FhirEnumeration("AssertionOperatorType", "http://hl7.org/fhir/ValueSet/assert-operator-codes", "http://hl7.org/fhir/assert-operator-codes")]
     public enum AssertionOperatorType
     {
       /// <summary>
       /// Default value. Equals comparison.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("equals", "http://hl7.org/fhir/assert-operator-codes"), Description("equals")]
+      [EnumLiteral("equals"), Description("equals")]
       Equals,
       /// <summary>
       /// Not equals comparison.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notEquals", "http://hl7.org/fhir/assert-operator-codes"), Description("notEquals")]
+      [EnumLiteral("notEquals"), Description("notEquals")]
       NotEquals,
       /// <summary>
       /// Compare value within a known set of values.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("in", "http://hl7.org/fhir/assert-operator-codes"), Description("in")]
+      [EnumLiteral("in"), Description("in")]
       In,
       /// <summary>
       /// Compare value not within a known set of values.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notIn", "http://hl7.org/fhir/assert-operator-codes"), Description("notIn")]
+      [EnumLiteral("notIn"), Description("notIn")]
       NotIn,
       /// <summary>
       /// Compare value to be greater than a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("greaterThan", "http://hl7.org/fhir/assert-operator-codes"), Description("greaterThan")]
+      [EnumLiteral("greaterThan"), Description("greaterThan")]
       GreaterThan,
       /// <summary>
       /// Compare value to be less than a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("lessThan", "http://hl7.org/fhir/assert-operator-codes"), Description("lessThan")]
+      [EnumLiteral("lessThan"), Description("lessThan")]
       LessThan,
       /// <summary>
       /// Compare value is empty.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("empty", "http://hl7.org/fhir/assert-operator-codes"), Description("empty")]
+      [EnumLiteral("empty"), Description("empty")]
       Empty,
       /// <summary>
       /// Compare value is not empty.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notEmpty", "http://hl7.org/fhir/assert-operator-codes"), Description("notEmpty")]
+      [EnumLiteral("notEmpty"), Description("notEmpty")]
       NotEmpty,
       /// <summary>
       /// Compare value string contains a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("contains", "http://hl7.org/fhir/assert-operator-codes"), Description("contains")]
+      [EnumLiteral("contains"), Description("contains")]
       Contains,
       /// <summary>
       /// Compare value string does not contain a known value.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("notContains", "http://hl7.org/fhir/assert-operator-codes"), Description("notContains")]
+      [EnumLiteral("notContains"), Description("notContains")]
       NotContains,
       /// <summary>
       /// Evaluate the fluentpath expression as a boolean condition.
       /// (system: http://hl7.org/fhir/assert-operator-codes)
       /// </summary>
-      [EnumLiteral("eval", "http://hl7.org/fhir/assert-operator-codes"), Description("evaluate")]
+      [EnumLiteral("eval"), Description("evaluate")]
       Eval,
     }
 
@@ -192,44 +192,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/http-operations)
     /// (system: http://hl7.org/fhir/http-operations)
     /// </summary>
-    [FhirEnumeration("TestScriptRequestMethodCode")]
+    [FhirEnumeration("TestScriptRequestMethodCode", "http://hl7.org/fhir/ValueSet/http-operations", "http://hl7.org/fhir/http-operations")]
     public enum TestScriptRequestMethodCode
     {
       /// <summary>
       /// HTTP DELETE operation
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/http-operations"), Description("DELETE")]
+      [EnumLiteral("delete"), Description("DELETE")]
       Delete,
       /// <summary>
       /// HTTP GET operation
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("get", "http://hl7.org/fhir/http-operations"), Description("GET")]
+      [EnumLiteral("get"), Description("GET")]
       Get,
       /// <summary>
       /// HTTP OPTIONS operation
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("options", "http://hl7.org/fhir/http-operations"), Description("OPTIONS")]
+      [EnumLiteral("options"), Description("OPTIONS")]
       Options,
       /// <summary>
       /// HTTP PATCH operation
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("patch", "http://hl7.org/fhir/http-operations"), Description("PATCH")]
+      [EnumLiteral("patch"), Description("PATCH")]
       Patch,
       /// <summary>
       /// HTTP POST operation
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("post", "http://hl7.org/fhir/http-operations"), Description("POST")]
+      [EnumLiteral("post"), Description("POST")]
       Post,
       /// <summary>
       /// HTTP PUT operation
       /// (system: http://hl7.org/fhir/http-operations)
       /// </summary>
-      [EnumLiteral("put", "http://hl7.org/fhir/http-operations"), Description("PUT")]
+      [EnumLiteral("put"), Description("PUT")]
       Put,
     }
 
@@ -238,80 +238,80 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/assert-response-code-types)
     /// (system: http://hl7.org/fhir/assert-response-code-types)
     /// </summary>
-    [FhirEnumeration("AssertionResponseTypes")]
+    [FhirEnumeration("AssertionResponseTypes", "http://hl7.org/fhir/ValueSet/assert-response-code-types", "http://hl7.org/fhir/assert-response-code-types")]
     public enum AssertionResponseTypes
     {
       /// <summary>
       /// Response code is 200.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("okay", "http://hl7.org/fhir/assert-response-code-types"), Description("okay")]
+      [EnumLiteral("okay"), Description("okay")]
       Okay,
       /// <summary>
       /// Response code is 201.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("created", "http://hl7.org/fhir/assert-response-code-types"), Description("created")]
+      [EnumLiteral("created"), Description("created")]
       Created,
       /// <summary>
       /// Response code is 204.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("noContent", "http://hl7.org/fhir/assert-response-code-types"), Description("noContent")]
+      [EnumLiteral("noContent"), Description("noContent")]
       NoContent,
       /// <summary>
       /// Response code is 304.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("notModified", "http://hl7.org/fhir/assert-response-code-types"), Description("notModified")]
+      [EnumLiteral("notModified"), Description("notModified")]
       NotModified,
       /// <summary>
       /// Response code is 400.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("bad", "http://hl7.org/fhir/assert-response-code-types"), Description("bad")]
+      [EnumLiteral("bad"), Description("bad")]
       Bad,
       /// <summary>
       /// Response code is 403.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("forbidden", "http://hl7.org/fhir/assert-response-code-types"), Description("forbidden")]
+      [EnumLiteral("forbidden"), Description("forbidden")]
       Forbidden,
       /// <summary>
       /// Response code is 404.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("notFound", "http://hl7.org/fhir/assert-response-code-types"), Description("notFound")]
+      [EnumLiteral("notFound"), Description("notFound")]
       NotFound,
       /// <summary>
       /// Response code is 405.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("methodNotAllowed", "http://hl7.org/fhir/assert-response-code-types"), Description("methodNotAllowed")]
+      [EnumLiteral("methodNotAllowed"), Description("methodNotAllowed")]
       MethodNotAllowed,
       /// <summary>
       /// Response code is 409.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("conflict", "http://hl7.org/fhir/assert-response-code-types"), Description("conflict")]
+      [EnumLiteral("conflict"), Description("conflict")]
       Conflict,
       /// <summary>
       /// Response code is 410.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("gone", "http://hl7.org/fhir/assert-response-code-types"), Description("gone")]
+      [EnumLiteral("gone"), Description("gone")]
       Gone,
       /// <summary>
       /// Response code is 412.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("preconditionFailed", "http://hl7.org/fhir/assert-response-code-types"), Description("preconditionFailed")]
+      [EnumLiteral("preconditionFailed"), Description("preconditionFailed")]
       PreconditionFailed,
       /// <summary>
       /// Response code is 422.
       /// (system: http://hl7.org/fhir/assert-response-code-types)
       /// </summary>
-      [EnumLiteral("unprocessable", "http://hl7.org/fhir/assert-response-code-types"), Description("unprocessable")]
+      [EnumLiteral("unprocessable"), Description("unprocessable")]
       Unprocessable,
     }
 
@@ -321,6 +321,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Origin", IsNestedType=true)]
+    [BackboneType("TestScript.origin")]
     public partial class OriginComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -472,6 +473,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Destination", IsNestedType=true)]
+    [BackboneType("TestScript.destination")]
     public partial class DestinationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -623,6 +625,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Metadata", IsNestedType=true)]
+    [BackboneType("TestScript.metadata")]
     public partial class MetadataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -756,6 +759,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Link", IsNestedType=true)]
+    [BackboneType("TestScript.metadata.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -924,6 +928,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Capability", IsNestedType=true)]
+    [BackboneType("TestScript.metadata.capability")]
     public partial class CapabilityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1278,6 +1283,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Fixture", IsNestedType=true)]
+    [BackboneType("TestScript.fixture")]
     public partial class FixtureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1469,6 +1475,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Variable", IsNestedType=true)]
+    [BackboneType("TestScript.variable")]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1877,6 +1884,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Rule", IsNestedType=true)]
+    [BackboneType("TestScript.rule")]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2012,6 +2020,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#RuleParam", IsNestedType=true)]
+    [BackboneType("TestScript.rule.param")]
     public partial class RuleParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2180,6 +2189,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Ruleset", IsNestedType=true)]
+    [BackboneType("TestScript.ruleset")]
     public partial class RulesetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2315,6 +2325,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#RulesetRule", IsNestedType=true)]
+    [BackboneType("TestScript.ruleset.rule")]
     public partial class RulesetRuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2466,6 +2477,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#RulesetRuleParam", IsNestedType=true)]
+    [BackboneType("TestScript.ruleset.rule.param")]
     public partial class RulesetRuleParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2634,6 +2646,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Setup", IsNestedType=true)]
+    [BackboneType("TestScript.setup")]
     public partial class SetupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2744,6 +2757,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#SetupAction", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action")]
     public partial class SetupActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2875,6 +2889,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Operation", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2900,6 +2915,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRDefinedType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
@@ -2994,6 +3010,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("accept", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContentType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> AcceptElement
       {
@@ -3026,6 +3043,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("contentType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContentType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> ContentTypeElement
       {
@@ -3570,6 +3588,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#RequestHeader", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.operation.requestHeader")]
     public partial class RequestHeaderComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3739,6 +3758,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Assert", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.assert")]
     public partial class AssertComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3813,6 +3833,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("direction", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionDirectionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionDirectionType> DirectionElement
       {
@@ -3938,6 +3959,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("contentType", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContentType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.ContentTypeCode> ContentTypeElement
       {
@@ -4094,6 +4116,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("operator", Order=150)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionOperatorType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionOperatorType> OperatorElement
       {
@@ -4157,6 +4180,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requestMethod", Order=170)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("TestScriptRequestMethodCode")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.TestScriptRequestMethodCode> RequestMethodElement
       {
@@ -4220,6 +4244,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resource", Order=190)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("FHIRDefinedType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.FHIRDefinedType> ResourceElement
       {
@@ -4252,6 +4277,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("response", Order=200)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("AssertionResponseTypes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.TestScript.AssertionResponseTypes> ResponseElement
       {
@@ -4756,6 +4782,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#ActionAssertRule", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.assert.rule")]
     public partial class ActionAssertRuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4907,6 +4934,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#ActionAssertRuleParam", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.assert.rule.param")]
     public partial class ActionAssertRuleParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5076,6 +5104,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#ActionAssertRuleset", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.assert.ruleset")]
     public partial class ActionAssertRulesetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5227,6 +5256,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#ActionAssertRulesetRule", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.assert.ruleset.rule")]
     public partial class ActionAssertRulesetRuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5378,6 +5408,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Param", IsNestedType=true)]
+    [BackboneType("TestScript.setup.action.assert.ruleset.rule.param")]
     public partial class ParamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5547,6 +5578,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Test", IsNestedType=true)]
+    [BackboneType("TestScript.test")]
     public partial class TestComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5737,6 +5769,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#TestAction", IsNestedType=true)]
+    [BackboneType("TestScript.test.action")]
     public partial class TestActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5868,6 +5901,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#Teardown", IsNestedType=true)]
+    [BackboneType("TestScript.teardown")]
     public partial class TeardownComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5978,6 +6012,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("TestScript#TeardownAction", IsNestedType=true)]
+    [BackboneType("TestScript.teardown.action")]
     public partial class TeardownActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -6085,7 +6120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this test script (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -6117,7 +6152,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the test script
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -6130,7 +6165,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the test script
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -6224,8 +6259,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -6257,7 +6293,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -6288,7 +6324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -6319,7 +6355,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -6423,7 +6459,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this test script is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown PurposeElement
     {

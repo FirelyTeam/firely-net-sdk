@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentManifest#Content", IsNestedType=true)]
+    [BackboneType("DocumentManifest.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -174,6 +175,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DocumentManifest#Related", IsNestedType=true)]
+    [BackboneType("DocumentManifest.related")]
     public partial class RelatedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,7 +306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Identifier for the set of documents
     /// </summary>
-    [FhirElement("masterIdentifier", InSummary=true, Order=90)]
+    [FhirElement("masterIdentifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier MasterIdentifier
     {
@@ -317,7 +319,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Other identifiers for the manifest
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -331,8 +333,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | superseded | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DocumentReferenceStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DocumentReferenceStatus> StatusElement
@@ -364,7 +367,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of document set
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120)]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -377,7 +380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the set of documents
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","Group","Device")]
     [DataMember]
@@ -392,7 +395,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When this document manifest created
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=140)]
+    [FhirElement("created", InSummary=true, Order=140, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -423,7 +426,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what authored the manifest
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=150)]
+    [FhirElement("author", InSummary=true, Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Organization","Device","Patient","RelatedPerson")]
     [Cardinality(Min=0,Max=-1)]
@@ -439,7 +442,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Intended to get notified about this set of documents
     /// </summary>
-    [FhirElement("recipient", InSummary=true, Order=160)]
+    [FhirElement("recipient", InSummary=true, Order=160, FiveWs="who.cause")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson","Organization")]
     [Cardinality(Min=0,Max=-1)]

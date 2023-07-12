@@ -60,51 +60,51 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/endpoint-status)
     /// (system: http://hl7.org/fhir/endpoint-status)
     /// </summary>
-    [FhirEnumeration("EndpointStatus")]
+    [FhirEnumeration("EndpointStatus", "http://hl7.org/fhir/ValueSet/endpoint-status", "http://hl7.org/fhir/endpoint-status")]
     public enum EndpointStatus
     {
       /// <summary>
       /// This endpoint is expected to be active and can be used
       /// (system: http://hl7.org/fhir/endpoint-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/endpoint-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This endpoint is temporarily unavailable
       /// (system: http://hl7.org/fhir/endpoint-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/endpoint-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// This endpoint has exceeded connectivity thresholds and is considered in an error state and should no longer be attempted to connect to until corrective action is taken
       /// (system: http://hl7.org/fhir/endpoint-status)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/endpoint-status"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// This endpoint is no longer to be used
       /// (system: http://hl7.org/fhir/endpoint-status)
       /// </summary>
-      [EnumLiteral("off", "http://hl7.org/fhir/endpoint-status"), Description("Off")]
+      [EnumLiteral("off"), Description("Off")]
       Off,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/endpoint-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/endpoint-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
       /// <summary>
       /// This endpoint is not intended for production usage.
       /// (system: http://hl7.org/fhir/endpoint-status)
       /// </summary>
-      [EnumLiteral("test", "http://hl7.org/fhir/endpoint-status"), Description("Test")]
+      [EnumLiteral("test"), Description("Test")]
       Test,
     }
 
     /// <summary>
     /// Identifies this endpoint across multiple systems
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -118,8 +118,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | error | off | entered-in-error | test
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EndpointStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Endpoint.EndpointStatus> StatusElement
@@ -151,7 +152,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Protocol/Profile/Standard to be used with this endpoint connection
     /// </summary>
-    [FhirElement("connectionType", InSummary=true, Order=110)]
+    [FhirElement("connectionType", InSummary=true, Order=110, FiveWs="class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Coding ConnectionType
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A name that this endpoint can be identified by
     /// </summary>
-    [FhirElement("name", InSummary=true, Order=120)]
+    [FhirElement("name", InSummary=true, Order=120, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString NameElement
     {
@@ -225,7 +226,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Interval the endpoint is expected to be operational
     /// </summary>
-    [FhirElement("period", InSummary=true, Order=150)]
+    [FhirElement("period", InSummary=true, Order=150, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     /// Mimetype to send. If not specified, the content could be anything (including no payload, if the connectionType defined this)
     /// </summary>
     [FhirElement("payloadMimeType", InSummary=true, Order=170)]
+    [Binding("MimeType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Code> PayloadMimeTypeElement

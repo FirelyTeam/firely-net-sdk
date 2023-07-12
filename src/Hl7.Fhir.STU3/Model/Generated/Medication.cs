@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-status)
     /// (system: http://hl7.org/fhir/medication-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatus")]
+    [FhirEnumeration("MedicationStatus", "http://hl7.org/fhir/ValueSet/medication-status", "http://hl7.org/fhir/medication-status")]
     public enum MedicationStatus
     {
       /// <summary>
       /// The medication is available for use
       /// (system: http://hl7.org/fhir/medication-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/medication-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication is not available for use
       /// (system: http://hl7.org/fhir/medication-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/medication-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The medication was entered in error
       /// (system: http://hl7.org/fhir/medication-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Ingredient", IsNestedType=true)]
+    [BackboneType("Medication.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -264,6 +265,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Package", IsNestedType=true)]
+    [BackboneType("Medication.package")]
     public partial class PackageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -419,6 +421,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Content", IsNestedType=true)]
+    [BackboneType("Medication.package.content")]
     public partial class ContentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -554,6 +557,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Medication#Batch", IsNestedType=true)]
+    [BackboneType("Medication.package.batch")]
     public partial class BatchComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -718,7 +722,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Codes that identify this medication
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=90)]
+    [FhirElement("code", InSummary=true, Order=90, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -733,6 +737,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Medication.MedicationStatus> StatusElement
     {
@@ -763,7 +768,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if a brand
     /// </summary>
-    [FhirElement("isBrand", InSummary=true, Order=110)]
+    [FhirElement("isBrand", InSummary=true, Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean IsBrandElement
     {
@@ -794,7 +799,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// True if medication does not require a prescription
     /// </summary>
-    [FhirElement("isOverTheCounter", InSummary=true, Order=120)]
+    [FhirElement("isOverTheCounter", InSummary=true, Order=120, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean IsOverTheCounterElement
     {
@@ -825,7 +830,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Manufacturer of the item
     /// </summary>
-    [FhirElement("manufacturer", InSummary=true, Order=130)]
+    [FhirElement("manufacturer", InSummary=true, Order=130, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

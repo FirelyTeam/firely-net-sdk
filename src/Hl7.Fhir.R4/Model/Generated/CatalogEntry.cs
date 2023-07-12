@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/relation-type)
     /// (system: http://hl7.org/fhir/relation-type)
     /// </summary>
-    [FhirEnumeration("CatalogEntryRelationType")]
+    [FhirEnumeration("CatalogEntryRelationType", "http://hl7.org/fhir/ValueSet/relation-type", "http://hl7.org/fhir/relation-type")]
     public enum CatalogEntryRelationType
     {
       /// <summary>
       /// the related entry represents an activity that may be triggered by the current item.
       /// (system: http://hl7.org/fhir/relation-type)
       /// </summary>
-      [EnumLiteral("triggers", "http://hl7.org/fhir/relation-type"), Description("Triggers")]
+      [EnumLiteral("triggers"), Description("Triggers")]
       Triggers,
       /// <summary>
       /// the related entry represents an item that replaces the current retired item.
       /// (system: http://hl7.org/fhir/relation-type)
       /// </summary>
-      [EnumLiteral("is-replaced-by", "http://hl7.org/fhir/relation-type"), Description("Replaced By")]
+      [EnumLiteral("is-replaced-by"), Description("Replaced By")]
       IsReplacedBy,
     }
 
@@ -83,6 +83,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CatalogEntry#RelatedEntry", IsNestedType=true)]
+    [BackboneType("CatalogEntry.relatedEntry")]
     public partial class RelatedEntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -95,6 +96,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationtype", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CatalogEntryRelationType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CatalogEntry.CatalogEntryRelationType> RelationtypeElement
@@ -339,6 +341,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

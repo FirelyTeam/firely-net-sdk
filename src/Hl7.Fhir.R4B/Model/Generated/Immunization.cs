@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/immunization-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("ImmunizationStatusCodes")]
+    [FhirEnumeration("ImmunizationStatusCodes", "http://hl7.org/fhir/ValueSet/immunization-status", "http://hl7.org/fhir/event-status")]
     public enum ImmunizationStatusCodes
     {
       /// <summary>
       /// The event has now concluded.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The event was terminated prior to any activity beyond preparation.  I.e. The 'main' activity has not yet begun.  The boundary between preparatory and the 'main' activity is context-specific.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("not-done", "http://hl7.org/fhir/event-status"), Description("Not Done")]
+      [EnumLiteral("not-done"), Description("Not Done")]
       NotDone,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Performer", IsNestedType=true)]
+    [BackboneType("Immunization.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -223,6 +224,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Education", IsNestedType=true)]
+    [BackboneType("Immunization.education")]
     public partial class EducationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -470,6 +472,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#Reaction", IsNestedType=true)]
+    [BackboneType("Immunization.reaction")]
     public partial class ReactionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -661,6 +664,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Immunization#ProtocolApplied", IsNestedType=true)]
+    [BackboneType("Immunization.protocolApplied")]
     public partial class ProtocolAppliedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -897,6 +901,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImmunizationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Immunization.ImmunizationStatusCodes> StatusElement

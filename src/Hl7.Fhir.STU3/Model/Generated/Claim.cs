@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/claim-use)
     /// (system: http://hl7.org/fhir/claim-use)
     /// </summary>
-    [FhirEnumeration("Use")]
+    [FhirEnumeration("Use", "http://hl7.org/fhir/ValueSet/claim-use", "http://hl7.org/fhir/claim-use")]
     public enum ClaimUseCode
     {
       /// <summary>
       /// The treatment is complete and this represents a Claim for the services.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/claim-use"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
       /// <summary>
       /// The treatment is proposed and this represents a Pre-authorization for the services.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/claim-use"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// The treatment is proposed and this represents a Pre-determination for the services.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("exploratory", "http://hl7.org/fhir/claim-use"), Description("Exploratory")]
+      [EnumLiteral("exploratory"), Description("Exploratory")]
       Exploratory,
       /// <summary>
       /// A locally defined or otherwise resolved status.
       /// (system: http://hl7.org/fhir/claim-use)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/claim-use"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#RelatedClaim", IsNestedType=true)]
+    [BackboneType("Claim.related")]
     public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -250,6 +251,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Payee", IsNestedType=true)]
+    [BackboneType("Claim.payee")]
     public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -406,6 +408,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#CareTeam", IsNestedType=true)]
+    [BackboneType("Claim.careTeam")]
     public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -448,7 +451,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Provider individual or organization
       /// </summary>
-      [FhirElement("provider", Order=50)]
+      [FhirElement("provider", Order=50, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -643,6 +646,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#SpecialCondition", IsNestedType=true)]
+    [BackboneType("Claim.information")]
     public partial class SpecialConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -887,6 +891,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Diagnosis", IsNestedType=true)]
+    [BackboneType("Claim.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1086,6 +1091,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Procedure", IsNestedType=true)]
+    [BackboneType("Claim.procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1280,6 +1286,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Insurance", IsNestedType=true)]
+    [BackboneType("Claim.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1579,6 +1586,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Accident", IsNestedType=true)]
+    [BackboneType("Claim.accident")]
     public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1758,6 +1766,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Item", IsNestedType=true)]
+    [BackboneType("Claim.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1995,7 +2004,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date or dates of Service
       /// </summary>
-      [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -2010,7 +2019,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Place of service
       /// </summary>
-      [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="where")]
       [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -2435,6 +2444,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#Detail", IsNestedType=true)]
+    [BackboneType("Claim.item.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2829,6 +2839,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Claim#SubDetail", IsNestedType=true)]
+    [BackboneType("Claim.item.detail.subDetail")]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3197,7 +3208,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim number
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -3211,8 +3222,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ClaimStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -3243,7 +3255,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type or discipline
     /// </summary>
-    [FhirElement("type", Order=110)]
+    [FhirElement("type", Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -3256,7 +3268,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Finer grained claim type information
     /// </summary>
-    [FhirElement("subType", Order=120)]
+    [FhirElement("subType", Order=120, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
@@ -3270,8 +3282,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// complete | proposed | exploratory | other
     /// </summary>
-    [FhirElement("use", Order=130)]
+    [FhirElement("use", Order=130, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("Use")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Claim.ClaimUseCode> UseElement
     {
@@ -3302,7 +3315,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the Products and Services
     /// </summary>
-    [FhirElement("patient", Order=140)]
+    [FhirElement("patient", Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -3317,7 +3330,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period for charge submission
     /// </summary>
-    [FhirElement("billablePeriod", Order=150)]
+    [FhirElement("billablePeriod", Order=150, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period BillablePeriod
     {
@@ -3330,7 +3343,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=160)]
+    [FhirElement("created", Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -3361,7 +3374,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author
     /// </summary>
-    [FhirElement("enterer", Order=170)]
+    [FhirElement("enterer", Order=170, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -3391,7 +3404,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible provider
     /// </summary>
-    [FhirElement("provider", Order=190)]
+    [FhirElement("provider", Order=190, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -3406,7 +3419,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization
     /// </summary>
-    [FhirElement("organization", Order=200)]
+    [FhirElement("organization", Order=200, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -3504,7 +3517,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Treatment Referral
     /// </summary>
-    [FhirElement("referral", Order=270)]
+    [FhirElement("referral", Order=270, FiveWs="who.cause")]
     [CLSCompliant(false)]
     [References("ReferralRequest")]
     [DataMember]
@@ -3519,7 +3532,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Servicing Facility
     /// </summary>
-    [FhirElement("facility", Order=280)]
+    [FhirElement("facility", Order=280, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]

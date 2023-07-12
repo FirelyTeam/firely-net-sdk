@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,8 +72,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentNoticeStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request reference
     /// </summary>
-    [FhirElement("request", Order=110)]
+    [FhirElement("request", Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -119,7 +120,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Response reference
     /// </summary>
-    [FhirElement("response", Order=120)]
+    [FhirElement("response", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -134,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Payment or clearing date
     /// </summary>
-    [FhirElement("statusDate", Order=130)]
+    [FhirElement("statusDate", Order=130, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Date StatusDateElement
     {
@@ -165,7 +166,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=140)]
+    [FhirElement("created", Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -211,7 +212,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=160)]
+    [FhirElement("provider", Order=160, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -226,7 +227,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization
     /// </summary>
-    [FhirElement("organization", Order=170)]
+    [FhirElement("organization", Order=170, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

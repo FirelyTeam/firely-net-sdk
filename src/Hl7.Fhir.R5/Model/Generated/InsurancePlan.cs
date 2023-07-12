@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/insuranceplan-applicability)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("BenefitCostApplicability")]
+    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability", "http://terminology.hl7.org/CodeSystem/applicability")]
     public enum BenefitCostApplicability
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("in-network", "http://terminology.hl7.org/CodeSystem/applicability"), Description("In Network")]
+      [EnumLiteral("in-network"), Description("In Network")]
       InNetwork,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("out-of-network", "http://terminology.hl7.org/CodeSystem/applicability"), Description("Out of Network")]
+      [EnumLiteral("out-of-network"), Description("Out of Network")]
       OutOfNetwork,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("other", "http://terminology.hl7.org/CodeSystem/applicability"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Coverage", IsNestedType=true)]
+    [BackboneType("InsurancePlan.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -247,6 +248,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#CoverageBenefit", IsNestedType=true)]
+    [BackboneType("InsurancePlan.coverage.benefit")]
     public partial class CoverageBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -420,6 +422,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Limit", IsNestedType=true)]
+    [BackboneType("InsurancePlan.coverage.benefit.limit")]
     public partial class LimitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -551,6 +554,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Plan", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan")]
     public partial class PlanComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -779,6 +783,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#GeneralCost", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.generalCost")]
     public partial class GeneralCostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -990,6 +995,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#SpecificCost", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.specificCost")]
     public partial class SpecificCostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1123,6 +1129,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#PlanBenefit", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.specificCost.benefit")]
     public partial class PlanBenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1256,6 +1263,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("InsurancePlan#Cost", IsNestedType=true)]
+    [BackboneType("InsurancePlan.plan.specificCost.benefit.cost")]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1446,6 +1454,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
     {

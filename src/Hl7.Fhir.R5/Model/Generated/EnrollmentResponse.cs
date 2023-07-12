@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/enrollment-outcome)
     /// (system: http://hl7.org/fhir/enrollment-outcome)
     /// </summary>
-    [FhirEnumeration("EnrollmentOutcome")]
+    [FhirEnumeration("EnrollmentOutcome", "http://hl7.org/fhir/ValueSet/enrollment-outcome", "http://hl7.org/fhir/enrollment-outcome")]
     public enum EnrollmentOutcome
     {
       /// <summary>
       /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
       /// (system: http://hl7.org/fhir/enrollment-outcome)
       /// </summary>
-      [EnumLiteral("queued", "http://hl7.org/fhir/enrollment-outcome"), Description("Queued")]
+      [EnumLiteral("queued"), Description("Queued")]
       Queued,
       /// <summary>
       /// The processing has completed without errors
       /// (system: http://hl7.org/fhir/enrollment-outcome)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/enrollment-outcome"), Description("Processing Complete")]
+      [EnumLiteral("complete"), Description("Processing Complete")]
       Complete,
       /// <summary>
       /// One or more errors have been detected in the Claim
       /// (system: http://hl7.org/fhir/enrollment-outcome)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/enrollment-outcome"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// No errors have been detected in the Claim and some of the adjudication has been performed.
       /// (system: http://hl7.org/fhir/enrollment-outcome)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/enrollment-outcome"), Description("Partial Processing")]
+      [EnumLiteral("partial"), Description("Partial Processing")]
       Partial,
     }
 
@@ -108,6 +108,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EnrollmentResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -155,6 +156,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EnrollmentOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.EnrollmentResponse.EnrollmentOutcome> OutcomeElement
     {

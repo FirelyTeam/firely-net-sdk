@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-use)
     /// (system: http://hl7.org/fhir/graph-compartment-use)
     /// </summary>
-    [FhirEnumeration("GraphCompartmentUse")]
+    [FhirEnumeration("GraphCompartmentUse", "http://hl7.org/fhir/ValueSet/graph-compartment-use", "http://hl7.org/fhir/graph-compartment-use")]
     public enum GraphCompartmentUse
     {
       /// <summary>
       /// This compartment rule is a condition for whether the rule applies.
       /// (system: http://hl7.org/fhir/graph-compartment-use)
       /// </summary>
-      [EnumLiteral("condition", "http://hl7.org/fhir/graph-compartment-use"), Description("Condition")]
+      [EnumLiteral("condition"), Description("Condition")]
       Condition,
       /// <summary>
       /// This compartment rule is enforced on any relationships that meet the conditions.
       /// (system: http://hl7.org/fhir/graph-compartment-use)
       /// </summary>
-      [EnumLiteral("requirement", "http://hl7.org/fhir/graph-compartment-use"), Description("Requirement")]
+      [EnumLiteral("requirement"), Description("Requirement")]
       Requirement,
     }
 
@@ -82,32 +82,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-rule)
     /// (system: http://hl7.org/fhir/graph-compartment-rule)
     /// </summary>
-    [FhirEnumeration("GraphCompartmentRule")]
+    [FhirEnumeration("GraphCompartmentRule", "http://hl7.org/fhir/ValueSet/graph-compartment-rule", "http://hl7.org/fhir/graph-compartment-rule")]
     public enum GraphCompartmentRule
     {
       /// <summary>
       /// The compartment must be identical (the same literal reference).
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("identical", "http://hl7.org/fhir/graph-compartment-rule"), Description("Identical")]
+      [EnumLiteral("identical"), Description("Identical")]
       Identical,
       /// <summary>
       /// The compartment must be the same - the record must be about the same patient, but the reference may be different.
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("matching", "http://hl7.org/fhir/graph-compartment-rule"), Description("Matching")]
+      [EnumLiteral("matching"), Description("Matching")]
       Matching,
       /// <summary>
       /// The compartment must be different.
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("different", "http://hl7.org/fhir/graph-compartment-rule"), Description("Different")]
+      [EnumLiteral("different"), Description("Different")]
       Different,
       /// <summary>
       /// The compartment rule is defined in the accompanying FHIRPath expression.
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("custom", "http://hl7.org/fhir/graph-compartment-rule"), Description("Custom")]
+      [EnumLiteral("custom"), Description("Custom")]
       Custom,
     }
 
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Link", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -427,6 +428,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Target", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -439,6 +441,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -682,6 +685,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link.target.compartment")]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -694,6 +698,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("use", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GraphCompartmentUse")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentUse> UseElement
@@ -727,6 +732,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CompartmentCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
@@ -760,6 +766,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rule", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GraphCompartmentRule")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule> RuleElement
@@ -1068,6 +1075,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1298,6 +1306,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", InSummary=true, Order=210)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType> StartElement

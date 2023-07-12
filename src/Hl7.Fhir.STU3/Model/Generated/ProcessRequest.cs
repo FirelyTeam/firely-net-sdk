@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/actionlist)
     /// (system: http://hl7.org/fhir/actionlist)
     /// </summary>
-    [FhirEnumeration("ActionList")]
+    [FhirEnumeration("ActionList", "http://hl7.org/fhir/ValueSet/actionlist", "http://hl7.org/fhir/actionlist")]
     public enum ActionList
     {
       /// <summary>
       /// Cancel, reverse or nullify the target resource.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("cancel", "http://hl7.org/fhir/actionlist"), Description("Cancel, Reverse or Nullify")]
+      [EnumLiteral("cancel"), Description("Cancel, Reverse or Nullify")]
       Cancel,
       /// <summary>
       /// Check for previously un-read/ not-retrieved resources.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("poll", "http://hl7.org/fhir/actionlist"), Description("Poll")]
+      [EnumLiteral("poll"), Description("Poll")]
       Poll,
       /// <summary>
       /// Re-process the target resource.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("reprocess", "http://hl7.org/fhir/actionlist"), Description("Re-Process")]
+      [EnumLiteral("reprocess"), Description("Re-Process")]
       Reprocess,
       /// <summary>
       /// Retrieve the processing status of the target resource.
       /// (system: http://hl7.org/fhir/actionlist)
       /// </summary>
-      [EnumLiteral("status", "http://hl7.org/fhir/actionlist"), Description("Status Check")]
+      [EnumLiteral("status"), Description("Status Check")]
       Status,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcessRequest#Items", IsNestedType=true)]
+    [BackboneType("ProcessRequest.item")]
     public partial class ItemsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -220,7 +221,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -234,8 +235,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcessRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -266,8 +268,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// cancel | poll | reprocess | status
     /// </summary>
-    [FhirElement("action", Order=110)]
+    [FhirElement("action", Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ActionList")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ProcessRequest.ActionList> ActionElement
     {
@@ -298,7 +301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Party which is the target of the request
     /// </summary>
-    [FhirElement("target", Order=120)]
+    [FhirElement("target", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -313,7 +316,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=130)]
+    [FhirElement("created", Order=130, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -344,7 +347,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=140)]
+    [FhirElement("provider", Order=140, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -359,7 +362,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization
     /// </summary>
-    [FhirElement("organization", Order=150)]
+    [FhirElement("organization", Order=150, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]

@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/structure-definition-kind)
     /// (system: http://hl7.org/fhir/structure-definition-kind)
     /// </summary>
-    [FhirEnumeration("StructureDefinitionKind")]
+    [FhirEnumeration("StructureDefinitionKind", "http://hl7.org/fhir/ValueSet/structure-definition-kind", "http://hl7.org/fhir/structure-definition-kind")]
     public enum StructureDefinitionKind
     {
       /// <summary>
       /// A primitive type that has a value and an extension. These can be used throughout Resource and extension definitions. Only the base specification can define primitive types.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("primitive-type", "http://hl7.org/fhir/structure-definition-kind"), Description("Primitive Data Type")]
+      [EnumLiteral("primitive-type"), Description("Primitive Data Type")]
       PrimitiveType,
       /// <summary>
       /// A  complex structure that defines a set of data elements. These can be used throughout Resource and extension definitions, and in logical models.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("complex-type", "http://hl7.org/fhir/structure-definition-kind"), Description("Complex Data Type")]
+      [EnumLiteral("complex-type"), Description("Complex Data Type")]
       ComplexType,
       /// <summary>
       /// A resource defined by the FHIR specification.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("resource", "http://hl7.org/fhir/structure-definition-kind"), Description("Resource")]
+      [EnumLiteral("resource"), Description("Resource")]
       Resource,
       /// <summary>
       /// A conceptual package of data that will be mapped to resources for implementation.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("logical", "http://hl7.org/fhir/structure-definition-kind"), Description("Logical Model")]
+      [EnumLiteral("logical"), Description("Logical Model")]
       Logical,
     }
 
@@ -94,26 +94,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/extension-context)
     /// (system: http://hl7.org/fhir/extension-context)
     /// </summary>
-    [FhirEnumeration("ExtensionContext")]
+    [FhirEnumeration("ExtensionContext", "http://hl7.org/fhir/ValueSet/extension-context", "http://hl7.org/fhir/extension-context")]
     public enum ExtensionContext
     {
       /// <summary>
       /// The context is all elements matching a particular resource element path.
       /// (system: http://hl7.org/fhir/extension-context)
       /// </summary>
-      [EnumLiteral("resource", "http://hl7.org/fhir/extension-context"), Description("Resource")]
+      [EnumLiteral("resource"), Description("Resource")]
       Resource,
       /// <summary>
       /// The context is all nodes matching a particular data type element path (root or repeating element) or all elements referencing a particular primitive data type (expressed as the datatype name).
       /// (system: http://hl7.org/fhir/extension-context)
       /// </summary>
-      [EnumLiteral("datatype", "http://hl7.org/fhir/extension-context"), Description("Datatype")]
+      [EnumLiteral("datatype"), Description("Datatype")]
       Datatype,
       /// <summary>
       /// The context is a particular extension from a particular profile, a uri that identifies the extension definition.
       /// (system: http://hl7.org/fhir/extension-context)
       /// </summary>
-      [EnumLiteral("extension", "http://hl7.org/fhir/extension-context"), Description("Extension")]
+      [EnumLiteral("extension"), Description("Extension")]
       Extension,
     }
 
@@ -122,20 +122,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-derivation-rule)
     /// (system: http://hl7.org/fhir/type-derivation-rule)
     /// </summary>
-    [FhirEnumeration("TypeDerivationRule")]
+    [FhirEnumeration("TypeDerivationRule", "http://hl7.org/fhir/ValueSet/type-derivation-rule", "http://hl7.org/fhir/type-derivation-rule")]
     public enum TypeDerivationRule
     {
       /// <summary>
       /// This definition defines a new type that adds additional elements to the base type
       /// (system: http://hl7.org/fhir/type-derivation-rule)
       /// </summary>
-      [EnumLiteral("specialization", "http://hl7.org/fhir/type-derivation-rule"), Description("Specialization")]
+      [EnumLiteral("specialization"), Description("Specialization")]
       Specialization,
       /// <summary>
       /// This definition adds additional rules to an existing concrete type
       /// (system: http://hl7.org/fhir/type-derivation-rule)
       /// </summary>
-      [EnumLiteral("constraint", "http://hl7.org/fhir/type-derivation-rule"), Description("Constraint")]
+      [EnumLiteral("constraint"), Description("Constraint")]
       Constraint,
     }
 
@@ -145,6 +145,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Mapping", IsNestedType=true)]
+    [BackboneType("StructureDefinition.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -393,6 +394,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Snapshot", IsNestedType=true)]
+    [BackboneType("StructureDefinition.snapshot")]
     public partial class SnapshotComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -503,6 +505,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("StructureDefinition#Differential", IsNestedType=true)]
+    [BackboneType("StructureDefinition.differential")]
     public partial class DifferentialComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -610,7 +613,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this structure definition (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
@@ -642,7 +645,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the structure definition
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -656,7 +659,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the structure definition
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -750,8 +753,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=140)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -783,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -814,7 +818,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -845,7 +849,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=170)]
+    [FhirElement("publisher", InSummary=true, Order=170, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -949,7 +953,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this structure definition is defined
     /// </summary>
-    [FhirElement("purpose", Order=220)]
+    [FhirElement("purpose", Order=220, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown PurposeElement
     {
@@ -1072,6 +1076,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("kind", InSummary=true, Order=270)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("StructureDefinitionKind")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.StructureDefinitionKind> KindElement
@@ -1137,6 +1142,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("contextType", InSummary=true, Order=290)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ExtensionContext")]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.ExtensionContext> ContextTypeElement
     {
@@ -1232,6 +1238,7 @@ namespace Hl7.Fhir.Model
     /// Type defined or constrained by this structure
     /// </summary>
     [FhirElement("type", InSummary=true, Order=320)]
+    [Binding("FHIRDefinedTypeExt")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Code TypeElement
@@ -1296,6 +1303,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("derivation", InSummary=true, Order=340)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TypeDerivationRule")]
     [DataMember]
     public Code<Hl7.Fhir.Model.StructureDefinition.TypeDerivationRule> DerivationElement
     {

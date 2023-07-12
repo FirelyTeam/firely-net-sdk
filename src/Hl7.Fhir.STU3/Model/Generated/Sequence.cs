@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
-    [FhirEnumeration("qualityType")]
+    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type", "http://hl7.org/fhir/quality-type")]
     public enum QualityType
     {
       /// <summary>
       /// INDEL Comparison
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("indel", "http://hl7.org/fhir/quality-type"), Description("INDEL Comparison")]
+      [EnumLiteral("indel"), Description("INDEL Comparison")]
       Indel,
       /// <summary>
       /// SNP Comparison
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("snp", "http://hl7.org/fhir/quality-type"), Description("SNP Comparison")]
+      [EnumLiteral("snp"), Description("SNP Comparison")]
       Snp,
       /// <summary>
       /// UNKNOWN Comparison
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/quality-type"), Description("UNKNOWN Comparison")]
+      [EnumLiteral("unknown"), Description("UNKNOWN Comparison")]
       Unknown,
     }
 
@@ -88,38 +88,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/repository-type)
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
-    [FhirEnumeration("repositoryType")]
+    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type", "http://hl7.org/fhir/repository-type")]
     public enum RepositoryType
     {
       /// <summary>
       /// When URL is clicked, the resource can be seen directly (by webpage or by download link format)
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("directlink", "http://hl7.org/fhir/repository-type"), Description("Click and see")]
+      [EnumLiteral("directlink"), Description("Click and see")]
       Directlink,
       /// <summary>
       /// When the API method (e.g. [base_url]/[parameter]) related with the URL of the website is executed, the resource can be seen directly (usually in JSON or XML format)
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("openapi", "http://hl7.org/fhir/repository-type"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
+      [EnumLiteral("openapi"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
       Openapi,
       /// <summary>
       /// When logged into the website, the resource can be seen.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("login", "http://hl7.org/fhir/repository-type"), Description("Result cannot be access unless an account is logged in")]
+      [EnumLiteral("login"), Description("Result cannot be access unless an account is logged in")]
       Login,
       /// <summary>
       /// When logged in and  follow the API in the website related with URL, the resource can be seen.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("oauth", "http://hl7.org/fhir/repository-type"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
+      [EnumLiteral("oauth"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
       Oauth,
       /// <summary>
       /// Some other complicated or particular way to get resource from URL.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/repository-type"), Description("Some other complicated or particular way to get resource from URL.")]
+      [EnumLiteral("other"), Description("Some other complicated or particular way to get resource from URL.")]
       Other,
     }
 
@@ -129,6 +129,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#ReferenceSeq", IsNestedType=true)]
+    [BackboneType("Sequence.referenceSeq")]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -486,6 +487,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#Variant", IsNestedType=true)]
+    [BackboneType("Sequence.variant")]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -797,6 +799,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#Quality", IsNestedType=true)]
+    [BackboneType("Sequence.quality")]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -809,6 +812,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Sequence.QualityType> TypeElement
@@ -1392,6 +1396,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Sequence#Repository", IsNestedType=true)]
+    [BackboneType("Sequence.repository")]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1404,6 +1409,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Sequence.RepositoryType> TypeElement
@@ -1718,7 +1724,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique ID for this particular sequence. This is a FHIR-defined id
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -1733,6 +1739,7 @@ namespace Hl7.Fhir.Model
     /// aa | dna | rna
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
+    [Binding("sequenceType")]
     [DataMember]
     public Hl7.Fhir.Model.Code TypeElement
     {

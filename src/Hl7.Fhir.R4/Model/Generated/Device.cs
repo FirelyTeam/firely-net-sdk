@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-status)
     /// (system: http://hl7.org/fhir/device-status)
     /// </summary>
-    [FhirEnumeration("FHIRDeviceStatus")]
+    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status", "http://hl7.org/fhir/device-status")]
     public enum FHIRDeviceStatus
     {
       /// <summary>
       /// The device is available for use.  Note: For *implanted devices*  this means that the device is implanted in the patient.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The device is no longer available for use (e.g. lost, expired, damaged).  Note: For *implanted devices*  this means that the device has been removed from the patient.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/device-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The device was entered in error and voided.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The status of the device has not been determined.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/device-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -94,44 +94,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
     /// (system: http://hl7.org/fhir/udi-entry-type)
     /// </summary>
-    [FhirEnumeration("UDIEntryType")]
+    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type", "http://hl7.org/fhir/udi-entry-type")]
     public enum UDIEntryType
     {
       /// <summary>
       /// a barcodescanner captured the data from the device label.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("barcode", "http://hl7.org/fhir/udi-entry-type"), Description("Barcode")]
+      [EnumLiteral("barcode"), Description("Barcode")]
       Barcode,
       /// <summary>
       /// An RFID chip reader captured the data from the device label.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("rfid", "http://hl7.org/fhir/udi-entry-type"), Description("RFID")]
+      [EnumLiteral("rfid"), Description("RFID")]
       Rfid,
       /// <summary>
       /// The data was read from the label by a person and manually entered. (e.g.  via a keyboard).
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("manual", "http://hl7.org/fhir/udi-entry-type"), Description("Manual")]
+      [EnumLiteral("manual"), Description("Manual")]
       Manual,
       /// <summary>
       /// The data originated from a patient's implant card and was read by an operator.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("card", "http://hl7.org/fhir/udi-entry-type"), Description("Card")]
+      [EnumLiteral("card"), Description("Card")]
       Card,
       /// <summary>
       /// The data originated from a patient source and was not directly scanned or read from a label or card.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
+      [EnumLiteral("self-reported"), Description("Self Reported")]
       SelfReported,
       /// <summary>
       /// The method of data capture has not been determined.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/udi-entry-type"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#UdiCarrier", IsNestedType=true)]
+    [BackboneType("Device.udiCarrier")]
     public partial class UdiCarrierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -308,6 +309,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("entryType", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UDIEntryType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType> EntryTypeElement
       {
@@ -469,6 +471,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#DeviceName", IsNestedType=true)]
+    [BackboneType("Device.deviceName")]
     public partial class DeviceNameComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -513,6 +516,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50, FiveWs="FiveWs.what[x]")]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DeviceNameType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.DeviceNameType> TypeElement
@@ -639,6 +643,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Specialization", IsNestedType=true)]
+    [BackboneType("Device.specialization")]
     public partial class SpecializationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -789,6 +794,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Version", IsNestedType=true)]
+    [BackboneType("Device.version")]
     public partial class VersionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -961,6 +967,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Property", IsNestedType=true)]
+    [BackboneType("Device.property")]
     public partial class PropertyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1159,6 +1166,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRDeviceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
     {
@@ -1466,6 +1474,7 @@ namespace Hl7.Fhir.Model
     /// The kind or type of device
     /// </summary>
     [FhirElement("type", Order=230)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

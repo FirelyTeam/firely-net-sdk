@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// A human identifier for this person
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this related person's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("active", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The nature of the relationship
     /// </summary>
-    [FhirElement("relationship", InSummary=true, Order=120)]
+    [FhirElement("relationship", InSummary=true, Order=120, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Relationship
     {
@@ -162,6 +162,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
@@ -251,7 +252,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period of time that this relationship is considered valid
     /// </summary>
-    [FhirElement("period", Order=190)]
+    [FhirElement("period", Order=190, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {

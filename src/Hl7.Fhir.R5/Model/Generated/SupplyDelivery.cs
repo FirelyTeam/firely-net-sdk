@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-status)
     /// (system: http://hl7.org/fhir/supplydelivery-status)
     /// </summary>
-    [FhirEnumeration("SupplyDeliveryStatus")]
+    [FhirEnumeration("SupplyDeliveryStatus", "http://hl7.org/fhir/ValueSet/supplydelivery-status", "http://hl7.org/fhir/supplydelivery-status")]
     public enum SupplyDeliveryStatus
     {
       /// <summary>
       /// Supply has been requested, but not delivered.
       /// (system: http://hl7.org/fhir/supplydelivery-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/supplydelivery-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Supply has been delivered ("completed").
       /// (system: http://hl7.org/fhir/supplydelivery-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/supplydelivery-status"), Description("Delivered")]
+      [EnumLiteral("completed"), Description("Delivered")]
       Completed,
       /// <summary>
       /// Delivery was not completed.
       /// (system: http://hl7.org/fhir/supplydelivery-status)
       /// </summary>
-      [EnumLiteral("abandoned", "http://hl7.org/fhir/supplydelivery-status"), Description("Abandoned")]
+      [EnumLiteral("abandoned"), Description("Abandoned")]
       Abandoned,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "abandoned" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/supplydelivery-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplydelivery-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -94,26 +94,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplydelivery-supplyitemtype)
     /// (system: http://hl7.org/fhir/supplydelivery-supplyitemtype)
     /// </summary>
-    [FhirEnumeration("SupplyDeliverySupplyItemType")]
+    [FhirEnumeration("SupplyDeliverySupplyItemType", "http://hl7.org/fhir/ValueSet/supplydelivery-supplyitemtype", "http://hl7.org/fhir/supplydelivery-supplyitemtype")]
     public enum SupplyDeliverySupplyItemType
     {
       /// <summary>
       /// Supply is a kind of medication.
       /// (system: http://hl7.org/fhir/supplydelivery-supplyitemtype)
       /// </summary>
-      [EnumLiteral("medication", "http://hl7.org/fhir/supplydelivery-supplyitemtype"), Description("Medication")]
+      [EnumLiteral("medication"), Description("Medication")]
       Medication,
       /// <summary>
       /// What is supplied (or requested) is a device.
       /// (system: http://hl7.org/fhir/supplydelivery-supplyitemtype)
       /// </summary>
-      [EnumLiteral("device", "http://hl7.org/fhir/supplydelivery-supplyitemtype"), Description("Device")]
+      [EnumLiteral("device"), Description("Device")]
       Device,
       /// <summary>
       /// Supply is a kind of biologically derived product.
       /// (system: http://hl7.org/fhir/supplydelivery-supplyitemtype)
       /// </summary>
-      [EnumLiteral("biologicallyderivedproduct", "http://hl7.org/fhir/supplydelivery-supplyitemtype"), Description("Biologically Derived Product")]
+      [EnumLiteral("biologicallyderivedproduct"), Description("Biologically Derived Product")]
       Biologicallyderivedproduct,
     }
 
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyDelivery#SuppliedItem", IsNestedType=true)]
+    [BackboneType("SupplyDelivery.suppliedItem")]
     public partial class SuppliedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -302,6 +303,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SupplyDeliveryStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyDelivery.SupplyDeliveryStatus> StatusElement
     {

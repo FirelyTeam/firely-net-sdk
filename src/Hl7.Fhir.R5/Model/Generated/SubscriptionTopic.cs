@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/interaction-trigger)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("InteractionTrigger")]
+    [FhirEnumeration("InteractionTrigger", "http://hl7.org/fhir/ValueSet/interaction-trigger", "http://hl7.org/fhir/restful-interaction")]
     public enum InteractionTrigger
     {
       /// <summary>
       /// Create a new resource with a server assigned id.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// Update an existing resource by its id (or create it if it is new).
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
+      [EnumLiteral("update"), Description("update")]
       Update,
       /// <summary>
       /// Delete a resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
+      [EnumLiteral("delete"), Description("delete")]
       Delete,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior)
     /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
     /// </summary>
-    [FhirEnumeration("CriteriaNotExistsBehavior")]
+    [FhirEnumeration("CriteriaNotExistsBehavior", "http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior", "http://hl7.org/fhir/subscriptiontopic-cr-behavior")]
     public enum CriteriaNotExistsBehavior
     {
       /// <summary>
       /// The requested conditional statement will pass if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-passes", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("Test passes")]
+      [EnumLiteral("test-passes"), Description("Test passes")]
       TestPasses,
       /// <summary>
       /// The requested conditional statement will fail if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-fails", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("Test fails")]
+      [EnumLiteral("test-fails"), Description("Test fails")]
       TestFails,
     }
 
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#ResourceTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger")]
     public partial class ResourceTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -186,6 +187,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("supportedInteraction", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("MethodCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SubscriptionTopic.InteractionTrigger>> SupportedInteractionElement
@@ -383,6 +385,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#QueryCriteria", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.resourceTrigger.queryCriteria")]
     public partial class QueryCriteriaComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -426,6 +429,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForCreate", InSummary=true, Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForCreateElement
       {
@@ -489,6 +493,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("resultForDelete", InSummary=true, Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CriteriaNotExistsBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.SubscriptionTopic.CriteriaNotExistsBehavior> ResultForDeleteElement
       {
@@ -672,6 +677,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#EventTrigger", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.eventTrigger")]
     public partial class EventTriggerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -863,6 +869,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#CanFilterBy", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.canFilterBy")]
     public partial class CanFilterByComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1000,6 +1007,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("comparator", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchComparator")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchComparator>> ComparatorElement
@@ -1033,6 +1041,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("modifier", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("SearchModifierCode")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.SearchModifierCode>> ModifierElement
@@ -1195,6 +1204,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionTopic#NotificationShape", IsNestedType=true)]
+    [BackboneType("SubscriptionTopic.notificationShape")]
     public partial class NotificationShapeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1590,6 +1600,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=160, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

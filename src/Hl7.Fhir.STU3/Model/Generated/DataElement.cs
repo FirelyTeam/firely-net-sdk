@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/dataelement-stringency)
     /// (system: http://hl7.org/fhir/dataelement-stringency)
     /// </summary>
-    [FhirEnumeration("DataElementStringency")]
+    [FhirEnumeration("DataElementStringency", "http://hl7.org/fhir/ValueSet/dataelement-stringency", "http://hl7.org/fhir/dataelement-stringency")]
     public enum DataElementStringency
     {
       /// <summary>
       /// The data element is sufficiently well-constrained that multiple pieces of data captured according to the constraints of the data element will be comparable (though in some cases, a degree of automated conversion/normalization may be required).
       /// (system: http://hl7.org/fhir/dataelement-stringency)
       /// </summary>
-      [EnumLiteral("comparable", "http://hl7.org/fhir/dataelement-stringency"), Description("Comparable")]
+      [EnumLiteral("comparable"), Description("Comparable")]
       Comparable,
       /// <summary>
       /// The data element is fully specified down to a single value set, single unit of measure, single data type, etc.  Multiple pieces of data associated with this data element are fully comparable.
       /// (system: http://hl7.org/fhir/dataelement-stringency)
       /// </summary>
-      [EnumLiteral("fully-specified", "http://hl7.org/fhir/dataelement-stringency"), Description("Fully Specified")]
+      [EnumLiteral("fully-specified"), Description("Fully Specified")]
       FullySpecified,
       /// <summary>
       /// The data element allows multiple units of measure having equivalent meaning; e.g. "cc" (cubic centimeter) and "mL" (milliliter).
       /// (system: http://hl7.org/fhir/dataelement-stringency)
       /// </summary>
-      [EnumLiteral("equivalent", "http://hl7.org/fhir/dataelement-stringency"), Description("Equivalent")]
+      [EnumLiteral("equivalent"), Description("Equivalent")]
       Equivalent,
       /// <summary>
       /// The data element allows multiple units of measure that are convertable between each other (e.g. inches and centimeters) and/or allows data to be captured in multiple value sets for which a known mapping exists allowing conversion of meaning.
       /// (system: http://hl7.org/fhir/dataelement-stringency)
       /// </summary>
-      [EnumLiteral("convertable", "http://hl7.org/fhir/dataelement-stringency"), Description("Convertable")]
+      [EnumLiteral("convertable"), Description("Convertable")]
       Convertable,
       /// <summary>
       /// A convertable data element where unit conversions are different only by a power of 10; e.g. g, mg, kg.
       /// (system: http://hl7.org/fhir/dataelement-stringency)
       /// </summary>
-      [EnumLiteral("scaleable", "http://hl7.org/fhir/dataelement-stringency"), Description("Scaleable")]
+      [EnumLiteral("scaleable"), Description("Scaleable")]
       Scaleable,
       /// <summary>
       /// The data element is unconstrained in units, choice of data types and/or choice of vocabulary such that automated comparison of data captured using the data element is not possible.
       /// (system: http://hl7.org/fhir/dataelement-stringency)
       /// </summary>
-      [EnumLiteral("flexible", "http://hl7.org/fhir/dataelement-stringency"), Description("Flexible")]
+      [EnumLiteral("flexible"), Description("Flexible")]
       Flexible,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DataElement#Mapping", IsNestedType=true)]
+    [BackboneType("DataElement.mapping")]
     public partial class MappingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -352,7 +353,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this data element (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -383,7 +384,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional identifier for the data element
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -397,7 +398,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the data element
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=110)]
+    [FhirElement("version", InSummary=true, Order=110, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -428,8 +429,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -461,7 +463,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -492,7 +494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -523,7 +525,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=150)]
+    [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -691,6 +693,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("stringency", InSummary=true, Order=220)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DataElementStringency")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DataElement.DataElementStringency> StringencyElement
     {

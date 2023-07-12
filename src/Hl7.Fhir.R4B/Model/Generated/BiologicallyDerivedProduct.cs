@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-category)
     /// (system: http://hl7.org/fhir/product-category)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductCategory")]
+    [FhirEnumeration("BiologicallyDerivedProductCategory", "http://hl7.org/fhir/ValueSet/product-category", "http://hl7.org/fhir/product-category")]
     public enum BiologicallyDerivedProductCategory
     {
       /// <summary>
       /// A collection of tissues joined in a structural unit to serve a common function.
       /// (system: http://hl7.org/fhir/product-category)
       /// </summary>
-      [EnumLiteral("organ", "http://hl7.org/fhir/product-category"), Description("Organ")]
+      [EnumLiteral("organ"), Description("Organ")]
       Organ,
       /// <summary>
       /// An ensemble of similar cells and their extracellular matrix from the same origin that together carry out a specific function.
       /// (system: http://hl7.org/fhir/product-category)
       /// </summary>
-      [EnumLiteral("tissue", "http://hl7.org/fhir/product-category"), Description("Tissue")]
+      [EnumLiteral("tissue"), Description("Tissue")]
       Tissue,
       /// <summary>
       /// Body fluid.
       /// (system: http://hl7.org/fhir/product-category)
       /// </summary>
-      [EnumLiteral("fluid", "http://hl7.org/fhir/product-category"), Description("Fluid")]
+      [EnumLiteral("fluid"), Description("Fluid")]
       Fluid,
       /// <summary>
       /// Collection of cells.
       /// (system: http://hl7.org/fhir/product-category)
       /// </summary>
-      [EnumLiteral("cells", "http://hl7.org/fhir/product-category"), Description("Cells")]
+      [EnumLiteral("cells"), Description("Cells")]
       Cells,
       /// <summary>
       /// Biological agent of unspecified type.
       /// (system: http://hl7.org/fhir/product-category)
       /// </summary>
-      [EnumLiteral("biologicalAgent", "http://hl7.org/fhir/product-category"), Description("BiologicalAgent")]
+      [EnumLiteral("biologicalAgent"), Description("BiologicalAgent")]
       BiologicalAgent,
     }
 
@@ -100,20 +100,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-status)
     /// (system: http://hl7.org/fhir/product-status)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductStatus")]
+    [FhirEnumeration("BiologicallyDerivedProductStatus", "http://hl7.org/fhir/ValueSet/product-status", "http://hl7.org/fhir/product-status")]
     public enum BiologicallyDerivedProductStatus
     {
       /// <summary>
       /// Product is currently available for use.
       /// (system: http://hl7.org/fhir/product-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/product-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// Product is not currently available for use.
       /// (system: http://hl7.org/fhir/product-status)
       /// </summary>
-      [EnumLiteral("unavailable", "http://hl7.org/fhir/product-status"), Description("Unavailable")]
+      [EnumLiteral("unavailable"), Description("Unavailable")]
       Unavailable,
     }
 
@@ -122,26 +122,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/product-storage-scale)
     /// (system: http://hl7.org/fhir/product-storage-scale)
     /// </summary>
-    [FhirEnumeration("BiologicallyDerivedProductStorageScale")]
+    [FhirEnumeration("BiologicallyDerivedProductStorageScale", "http://hl7.org/fhir/ValueSet/product-storage-scale", "http://hl7.org/fhir/product-storage-scale")]
     public enum BiologicallyDerivedProductStorageScale
     {
       /// <summary>
       /// Fahrenheit temperature scale.
       /// (system: http://hl7.org/fhir/product-storage-scale)
       /// </summary>
-      [EnumLiteral("farenheit", "http://hl7.org/fhir/product-storage-scale"), Description("Fahrenheit")]
+      [EnumLiteral("farenheit"), Description("Fahrenheit")]
       Farenheit,
       /// <summary>
       /// Celsius or centigrade temperature scale.
       /// (system: http://hl7.org/fhir/product-storage-scale)
       /// </summary>
-      [EnumLiteral("celsius", "http://hl7.org/fhir/product-storage-scale"), Description("Celsius")]
+      [EnumLiteral("celsius"), Description("Celsius")]
       Celsius,
       /// <summary>
       /// Kelvin absolute thermodynamic temperature scale.
       /// (system: http://hl7.org/fhir/product-storage-scale)
       /// </summary>
-      [EnumLiteral("kelvin", "http://hl7.org/fhir/product-storage-scale"), Description("Kelvin")]
+      [EnumLiteral("kelvin"), Description("Kelvin")]
       Kelvin,
     }
 
@@ -151,6 +151,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Collection", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -310,6 +311,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Processing", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.processing")]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -507,6 +509,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Manipulation", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.manipulation")]
     public partial class ManipulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -658,6 +661,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("BiologicallyDerivedProduct#Storage", IsNestedType=true)]
+    [BackboneType("BiologicallyDerivedProduct.storage")]
     public partial class StorageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -732,6 +736,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("scale", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("BiologicallyDerivedProductStorageScale")]
       [DataMember]
       public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStorageScale> ScaleElement
       {
@@ -901,6 +906,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("productCategory", Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BiologicallyDerivedProductCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductCategory> ProductCategoryElement
     {
@@ -946,6 +952,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", Order=120)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("BiologicallyDerivedProductStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.BiologicallyDerivedProduct.BiologicallyDerivedProductStatus> StatusElement
     {

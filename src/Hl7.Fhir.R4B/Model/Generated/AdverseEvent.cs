@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
     /// (system: http://hl7.org/fhir/adverse-event-actuality)
     /// </summary>
-    [FhirEnumeration("AdverseEventActuality")]
+    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality", "http://hl7.org/fhir/adverse-event-actuality")]
     public enum AdverseEventActuality
     {
       /// <summary>
       /// The adverse event actually happened regardless of whether anyone was affected or harmed.
       /// (system: http://hl7.org/fhir/adverse-event-actuality)
       /// </summary>
-      [EnumLiteral("actual", "http://hl7.org/fhir/adverse-event-actuality"), Description("Adverse Event")]
+      [EnumLiteral("actual"), Description("Adverse Event")]
       Actual,
       /// <summary>
       /// A potential adverse event.
       /// (system: http://hl7.org/fhir/adverse-event-actuality)
       /// </summary>
-      [EnumLiteral("potential", "http://hl7.org/fhir/adverse-event-actuality"), Description("Potential Adverse Event")]
+      [EnumLiteral("potential"), Description("Potential Adverse Event")]
       Potential,
     }
 
@@ -82,26 +82,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-severity)
     /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-severity)
     /// </summary>
-    [FhirEnumeration("AdverseEventSeverity")]
+    [FhirEnumeration("AdverseEventSeverity", "http://hl7.org/fhir/ValueSet/adverse-event-severity", "http://terminology.hl7.org/CodeSystem/adverse-event-severity")]
     public enum AdverseEventSeverity
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-severity)
       /// </summary>
-      [EnumLiteral("mild", "http://terminology.hl7.org/CodeSystem/adverse-event-severity"), Description("Mild")]
+      [EnumLiteral("mild"), Description("Mild")]
       Mild,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-severity)
       /// </summary>
-      [EnumLiteral("moderate", "http://terminology.hl7.org/CodeSystem/adverse-event-severity"), Description("Moderate")]
+      [EnumLiteral("moderate"), Description("Moderate")]
       Moderate,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-severity)
       /// </summary>
-      [EnumLiteral("severe", "http://terminology.hl7.org/CodeSystem/adverse-event-severity"), Description("Severe")]
+      [EnumLiteral("severe"), Description("Severe")]
       Severe,
     }
 
@@ -110,44 +110,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-outcome)
     /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
     /// </summary>
-    [FhirEnumeration("AdverseEventOutcome")]
+    [FhirEnumeration("AdverseEventOutcome", "http://hl7.org/fhir/ValueSet/adverse-event-outcome", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome")]
     public enum AdverseEventOutcome
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("resolved", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("recovering", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome"), Description("Recovering")]
+      [EnumLiteral("recovering"), Description("Recovering")]
       Recovering,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("ongoing", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome"), Description("Ongoing")]
+      [EnumLiteral("ongoing"), Description("Ongoing")]
       Ongoing,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("resolvedWithSequelae", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome"), Description("Resolved with Sequelae")]
+      [EnumLiteral("resolvedWithSequelae"), Description("Resolved with Sequelae")]
       ResolvedWithSequelae,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("fatal", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome"), Description("Fatal")]
+      [EnumLiteral("fatal"), Description("Fatal")]
       Fatal,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://terminology.hl7.org/CodeSystem/adverse-event-outcome)
       /// </summary>
-      [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/adverse-event-outcome"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -157,6 +157,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#SuspectEntity", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity")]
     public partial class SuspectEntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -292,6 +293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("AdverseEvent#Causality", IsNestedType=true)]
+    [BackboneType("AdverseEvent.suspectEntity.causality")]
     public partial class CausalityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -499,6 +501,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("actuality", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdverseEventActuality")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdverseEvent.AdverseEventActuality> ActualityElement

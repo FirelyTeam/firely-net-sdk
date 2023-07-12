@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-rule)
     /// (system: http://hl7.org/fhir/graph-compartment-rule)
     /// </summary>
-    [FhirEnumeration("GraphCompartmentRule")]
+    [FhirEnumeration("GraphCompartmentRule", "http://hl7.org/fhir/ValueSet/graph-compartment-rule", "http://hl7.org/fhir/graph-compartment-rule")]
     public enum GraphCompartmentRule
     {
       /// <summary>
       /// The compartment must be identical (the same literal reference)
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("identical", "http://hl7.org/fhir/graph-compartment-rule"), Description("Identical")]
+      [EnumLiteral("identical"), Description("Identical")]
       Identical,
       /// <summary>
       /// The compartment must be the same - the record must be about the same patient, but the reference may be different
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("matching", "http://hl7.org/fhir/graph-compartment-rule"), Description("Matching")]
+      [EnumLiteral("matching"), Description("Matching")]
       Matching,
       /// <summary>
       /// The compartment must be different
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("different", "http://hl7.org/fhir/graph-compartment-rule"), Description("Different")]
+      [EnumLiteral("different"), Description("Different")]
       Different,
       /// <summary>
       /// The compartment rule is defined in the accompanying FHIRPath expression
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("custom", "http://hl7.org/fhir/graph-compartment-rule"), Description("Custom")]
+      [EnumLiteral("custom"), Description("Custom")]
       Custom,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Link", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link")]
     public partial class LinkComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -406,6 +407,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Target", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -418,6 +420,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> TypeElement
@@ -621,6 +624,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("GraphDefinition#Compartment", IsNestedType=true)]
+    [BackboneType("GraphDefinition.link.target.compartment")]
     public partial class CompartmentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -633,6 +637,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CompartmentCode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CompartmentType> CodeElement
@@ -666,6 +671,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("rule", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("GraphCompartmentRule")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.GraphDefinition.GraphCompartmentRule> RuleElement
@@ -869,7 +875,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Logical URI to reference this graph definition (globally unique)
     /// </summary>
-    [FhirElement("url", InSummary=true, Order=90)]
+    [FhirElement("url", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {
@@ -900,7 +906,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business version of the graph definition
     /// </summary>
-    [FhirElement("version", InSummary=true, Order=100)]
+    [FhirElement("version", InSummary=true, Order=100, FiveWs="id.version")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -963,8 +969,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -996,7 +1003,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// For testing purposes, not real usage
     /// </summary>
-    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("experimental", InSummary=true, IsModifier=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ExperimentalElement
     {
@@ -1027,7 +1034,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=140)]
+    [FhirElement("date", InSummary=true, Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -1058,7 +1065,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=150)]
+    [FhirElement("publisher", InSummary=true, Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -1162,7 +1169,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why this graph definition is defined
     /// </summary>
-    [FhirElement("purpose", Order=200)]
+    [FhirElement("purpose", Order=200, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Markdown PurposeElement
     {
@@ -1195,6 +1202,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("start", Order=210)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResourceType> StartElement

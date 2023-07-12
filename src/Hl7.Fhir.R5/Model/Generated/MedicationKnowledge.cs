@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medicationknowledge-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
     /// </summary>
-    [FhirEnumeration("MedicationKnowledgeStatusCodes")]
+    [FhirEnumeration("MedicationKnowledgeStatusCodes", "http://hl7.org/fhir/ValueSet/medicationknowledge-status", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status")]
     public enum MedicationKnowledgeStatusCodes
     {
       /// <summary>
       /// The medication referred to by this MedicationKnowledge is in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication referred to by this MedicationKnowledge was entered in error within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication referred to by this MedicationKnowledge is not in active use within the drug database or inventory system.
       /// (system: http://hl7.org/fhir/CodeSystem/medicationknowledge-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/CodeSystem/medicationknowledge-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#RelatedMedicationKnowledge", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.relatedMedicationKnowledge")]
     public partial class RelatedMedicationKnowledgeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -224,6 +225,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Monograph", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.monograph")]
     public partial class MonographComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -357,6 +359,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Cost", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.cost")]
     public partial class CostComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -555,6 +558,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#MonitoringProgram", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.monitoringProgram")]
     public partial class MonitoringProgramComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -704,6 +708,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#IndicationGuideline", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.indicationGuideline")]
     public partial class IndicationGuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -837,6 +842,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#DosingGuideline", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.indicationGuideline.dosingGuideline")]
     public partial class DosingGuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1014,6 +1020,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Dosage", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.indicationGuideline.dosingGuideline.dosage")]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1147,6 +1154,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#PatientCharacteristic", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.indicationGuideline.dosingGuideline.patientCharacteristic")]
     public partial class PatientCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1281,6 +1289,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#MedicineClassification", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.medicineClassification")]
     public partial class MedicineClassificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1438,6 +1447,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Packaging", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.packaging")]
     public partial class PackagingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1572,6 +1582,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#StorageGuideline", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.storageGuideline")]
     public partial class StorageGuidelineComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1767,6 +1778,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#EnvironmentalSetting", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.storageGuideline.environmentalSetting")]
     public partial class EnvironmentalSettingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1902,6 +1914,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Regulatory", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.regulatory")]
     public partial class RegulatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2082,6 +2095,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.regulatory.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2233,6 +2247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#MaxDispense", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.regulatory.maxDispense")]
     public partial class MaxDispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2365,6 +2380,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Definitional", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.definitional")]
     public partial class DefinitionalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2568,6 +2584,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#Ingredient", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.definitional.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2724,6 +2741,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationKnowledge#DrugCharacteristic", IsNestedType=true)]
+    [BackboneType("MedicationKnowledge.definitional.drugCharacteristic")]
     public partial class DrugCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2883,6 +2901,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationKnowledgeStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationKnowledge.MedicationKnowledgeStatusCodes> StatusElement
     {

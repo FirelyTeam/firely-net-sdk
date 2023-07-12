@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/imagingstudy-status)
     /// (system: http://hl7.org/fhir/imagingstudy-status)
     /// </summary>
-    [FhirEnumeration("ImagingStudyStatus")]
+    [FhirEnumeration("ImagingStudyStatus", "http://hl7.org/fhir/ValueSet/imagingstudy-status", "http://hl7.org/fhir/imagingstudy-status")]
     public enum ImagingStudyStatus
     {
       /// <summary>
       /// The existence of the imaging study is registered, but there is nothing yet available.
       /// (system: http://hl7.org/fhir/imagingstudy-status)
       /// </summary>
-      [EnumLiteral("registered", "http://hl7.org/fhir/imagingstudy-status"), Description("Registered")]
+      [EnumLiteral("registered"), Description("Registered")]
       Registered,
       /// <summary>
       /// At least one instance has been associated with this imaging study.
       /// (system: http://hl7.org/fhir/imagingstudy-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/imagingstudy-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// The imaging study is unavailable because the imaging study was not started or not completed (also sometimes called "aborted").
       /// (system: http://hl7.org/fhir/imagingstudy-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/imagingstudy-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The imaging study has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/imagingstudy-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/imagingstudy-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/imagingstudy-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/imagingstudy-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingStudy#Series", IsNestedType=true)]
+    [BackboneType("ImagingStudy.series")]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -552,6 +553,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingStudy#Performer", IsNestedType=true)]
+    [BackboneType("ImagingStudy.series.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -686,6 +688,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingStudy#Instance", IsNestedType=true)]
+    [BackboneType("ImagingStudy.series.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -930,6 +933,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ImagingStudyStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ImagingStudy.ImagingStudyStatus> StatusElement

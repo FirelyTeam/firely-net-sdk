@@ -60,88 +60,88 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-subject-status)
     /// (system: http://hl7.org/fhir/research-subject-status)
     /// </summary>
-    [FhirEnumeration("ResearchSubjectStatus")]
+    [FhirEnumeration("ResearchSubjectStatus", "http://hl7.org/fhir/ValueSet/research-subject-status", "http://hl7.org/fhir/research-subject-status")]
     public enum ResearchSubjectStatus
     {
       /// <summary>
       /// An identified person that can be considered for inclusion in a study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("candidate", "http://hl7.org/fhir/research-subject-status"), Description("Candidate")]
+      [EnumLiteral("candidate"), Description("Candidate")]
       Candidate,
       /// <summary>
       /// A person that has met the eligibility criteria for inclusion in a study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("eligible", "http://hl7.org/fhir/research-subject-status"), Description("Eligible")]
+      [EnumLiteral("eligible"), Description("Eligible")]
       Eligible,
       /// <summary>
       /// A person is no longer receiving study intervention and/or being evaluated with tests and procedures according to the protocol, but they are being monitored on a protocol-prescribed schedule.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("follow-up", "http://hl7.org/fhir/research-subject-status"), Description("Follow-up")]
+      [EnumLiteral("follow-up"), Description("Follow-up")]
       FollowUp,
       /// <summary>
       /// A person who did not meet one or more criteria required for participation in a study is considered to have failed screening or
       /// is ineligible for the study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("ineligible", "http://hl7.org/fhir/research-subject-status"), Description("Ineligible")]
+      [EnumLiteral("ineligible"), Description("Ineligible")]
       Ineligible,
       /// <summary>
       /// A person for whom registration was not completed.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("not-registered", "http://hl7.org/fhir/research-subject-status"), Description("Not Registered")]
+      [EnumLiteral("not-registered"), Description("Not Registered")]
       NotRegistered,
       /// <summary>
       /// A person that has ended their participation on a study either because their treatment/observation is complete or through not
       /// responding, withdrawal, non-compliance and/or adverse event.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("off-study", "http://hl7.org/fhir/research-subject-status"), Description("Off-study")]
+      [EnumLiteral("off-study"), Description("Off-study")]
       OffStudy,
       /// <summary>
       /// A person that is enrolled or registered on a study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("on-study", "http://hl7.org/fhir/research-subject-status"), Description("On-study")]
+      [EnumLiteral("on-study"), Description("On-study")]
       OnStudy,
       /// <summary>
       /// The person is receiving the treatment or participating in an activity (e.g. yoga, diet, etc.) that the study is evaluating.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("on-study-intervention", "http://hl7.org/fhir/research-subject-status"), Description("On-study-intervention")]
+      [EnumLiteral("on-study-intervention"), Description("On-study-intervention")]
       OnStudyIntervention,
       /// <summary>
       /// The subject is being evaluated via tests and assessments according to the study calendar, but is not receiving any intervention. Note that this state is study-dependent and might not exist in all studies.  A synonym for this is "short-term follow-up".
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("on-study-observation", "http://hl7.org/fhir/research-subject-status"), Description("On-study-observation")]
+      [EnumLiteral("on-study-observation"), Description("On-study-observation")]
       OnStudyObservation,
       /// <summary>
       /// A person is pre-registered for a study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("pending-on-study", "http://hl7.org/fhir/research-subject-status"), Description("Pending on-study")]
+      [EnumLiteral("pending-on-study"), Description("Pending on-study")]
       PendingOnStudy,
       /// <summary>
       /// A person that is potentially eligible for participation in the study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("potential-candidate", "http://hl7.org/fhir/research-subject-status"), Description("Potential Candidate")]
+      [EnumLiteral("potential-candidate"), Description("Potential Candidate")]
       PotentialCandidate,
       /// <summary>
       /// A person who is being evaluated for eligibility for a study.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("screening", "http://hl7.org/fhir/research-subject-status"), Description("Screening")]
+      [EnumLiteral("screening"), Description("Screening")]
       Screening,
       /// <summary>
       /// The person has withdrawn their participation in the study before registration.
       /// (system: http://hl7.org/fhir/research-subject-status)
       /// </summary>
-      [EnumLiteral("withdrawn", "http://hl7.org/fhir/research-subject-status"), Description("Withdrawn")]
+      [EnumLiteral("withdrawn"), Description("Withdrawn")]
       Withdrawn,
     }
 
@@ -164,6 +164,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResearchSubjectStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ResearchSubject.ResearchSubjectStatus> StatusElement

@@ -60,51 +60,51 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-statement-status)
     /// (system: http://hl7.org/fhir/device-statement-status)
     /// </summary>
-    [FhirEnumeration("DeviceUseStatementStatus")]
+    [FhirEnumeration("DeviceUseStatementStatus", "http://hl7.org/fhir/ValueSet/device-statement-status", "http://hl7.org/fhir/device-statement-status")]
     public enum DeviceUseStatementStatus
     {
       /// <summary>
       /// The device is still being used.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-statement-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The device is no longer being used.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/device-statement-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The statement was recorded incorrectly.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The device may be used at some time in the future.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("intended", "http://hl7.org/fhir/device-statement-status"), Description("Intended")]
+      [EnumLiteral("intended"), Description("Intended")]
       Intended,
       /// <summary>
       /// Actions implied by the statement have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/device-statement-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/device-statement-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
     }
 
     /// <summary>
     /// External identifier for this record
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -118,8 +118,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceUseStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> StatusElement
@@ -151,7 +152,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient using device
     /// </summary>
-    [FhirElement("subject", Order=110)]
+    [FhirElement("subject", Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -167,7 +168,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period device was used
     /// </summary>
-    [FhirElement("whenUsed", Order=120)]
+    [FhirElement("whenUsed", Order=120, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period WhenUsed
     {
@@ -180,7 +181,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// How often  the device was used
     /// </summary>
-    [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("timing", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Timing),typeof(Hl7.Fhir.Model.Period),typeof(Hl7.Fhir.Model.FhirDateTime))]
     [DataMember]
@@ -195,7 +196,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When statement was recorded
     /// </summary>
-    [FhirElement("recordedOn", Order=140)]
+    [FhirElement("recordedOn", Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime RecordedOnElement
     {
@@ -226,7 +227,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who made the statement
     /// </summary>
-    [FhirElement("source", Order=150)]
+    [FhirElement("source", Order=150, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson")]
     [DataMember]
@@ -241,7 +242,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reference to device used
     /// </summary>
-    [FhirElement("device", Order=160)]
+    [FhirElement("device", Order=160, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Device")]
     [Cardinality(Min=1,Max=1)]
@@ -257,7 +258,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why device was used
     /// </summary>
-    [FhirElement("indication", Order=170)]
+    [FhirElement("indication", Order=170, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Indication

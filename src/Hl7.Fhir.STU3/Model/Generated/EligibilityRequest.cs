@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,8 +72,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -104,7 +105,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Desired processing priority
     /// </summary>
-    [FhirElement("priority", Order=110)]
+    [FhirElement("priority", Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Priority
     {
@@ -117,7 +118,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the Products and Services
     /// </summary>
-    [FhirElement("patient", Order=120)]
+    [FhirElement("patient", Order=120, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -132,7 +133,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Estimated date or dates of Service
     /// </summary>
-    [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("serviced", Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -147,7 +148,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=140)]
+    [FhirElement("created", Order=140, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -178,7 +179,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author
     /// </summary>
-    [FhirElement("enterer", Order=150)]
+    [FhirElement("enterer", Order=150, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -193,7 +194,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("provider", Order=160)]
+    [FhirElement("provider", Order=160, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -208,7 +209,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization
     /// </summary>
-    [FhirElement("organization", Order=170)]
+    [FhirElement("organization", Order=170, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -223,7 +224,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target
     /// </summary>
-    [FhirElement("insurer", Order=180)]
+    [FhirElement("insurer", Order=180, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -238,7 +239,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Servicing Facility
     /// </summary>
-    [FhirElement("facility", Order=190)]
+    [FhirElement("facility", Order=190, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]

@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/address-use)
     /// (system: http://hl7.org/fhir/address-use)
     /// </summary>
-    [FhirEnumeration("AddressUse")]
+    [FhirEnumeration("AddressUse", "http://hl7.org/fhir/ValueSet/address-use", "http://hl7.org/fhir/address-use")]
     public enum AddressUse
     {
       /// <summary>
       /// A communication address at a home.
       /// (system: http://hl7.org/fhir/address-use)
       /// </summary>
-      [EnumLiteral("home", "http://hl7.org/fhir/address-use"), Description("Home")]
+      [EnumLiteral("home"), Description("Home")]
       Home,
       /// <summary>
       /// An office address. First choice for business related contacts during business hours.
       /// (system: http://hl7.org/fhir/address-use)
       /// </summary>
-      [EnumLiteral("work", "http://hl7.org/fhir/address-use"), Description("Work")]
+      [EnumLiteral("work"), Description("Work")]
       Work,
       /// <summary>
       /// A temporary address. The period can provide more detailed information.
       /// (system: http://hl7.org/fhir/address-use)
       /// </summary>
-      [EnumLiteral("temp", "http://hl7.org/fhir/address-use"), Description("Temporary")]
+      [EnumLiteral("temp"), Description("Temporary")]
       Temp,
       /// <summary>
       /// This address is no longer in use (or was never correct but retained for records).
       /// (system: http://hl7.org/fhir/address-use)
       /// </summary>
-      [EnumLiteral("old", "http://hl7.org/fhir/address-use"), Description("Old / Incorrect")]
+      [EnumLiteral("old"), Description("Old / Incorrect")]
       Old,
       /// <summary>
       /// An address to be used to send bills, invoices, receipts etc.
       /// (system: http://hl7.org/fhir/address-use)
       /// </summary>
-      [EnumLiteral("billing", "http://hl7.org/fhir/address-use"), Description("Billing")]
+      [EnumLiteral("billing"), Description("Billing")]
       Billing,
     }
 
@@ -100,26 +100,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/address-type)
     /// (system: http://hl7.org/fhir/address-type)
     /// </summary>
-    [FhirEnumeration("AddressType")]
+    [FhirEnumeration("AddressType", "http://hl7.org/fhir/ValueSet/address-type", "http://hl7.org/fhir/address-type")]
     public enum AddressType
     {
       /// <summary>
       /// Mailing addresses - PO Boxes and care-of addresses.
       /// (system: http://hl7.org/fhir/address-type)
       /// </summary>
-      [EnumLiteral("postal", "http://hl7.org/fhir/address-type"), Description("Postal")]
+      [EnumLiteral("postal"), Description("Postal")]
       Postal,
       /// <summary>
       /// A physical address that can be visited.
       /// (system: http://hl7.org/fhir/address-type)
       /// </summary>
-      [EnumLiteral("physical", "http://hl7.org/fhir/address-type"), Description("Physical")]
+      [EnumLiteral("physical"), Description("Physical")]
       Physical,
       /// <summary>
       /// An address that is both physical and postal.
       /// (system: http://hl7.org/fhir/address-type)
       /// </summary>
-      [EnumLiteral("both", "http://hl7.org/fhir/address-type"), Description("Postal & Physical")]
+      [EnumLiteral("both"), Description("Postal & Physical")]
       Both,
     }
 
@@ -128,6 +128,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("use", InSummary=true, IsModifier=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AddressUse")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
     {
@@ -160,6 +161,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=40)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AddressType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Address.AddressType> TypeElement
     {

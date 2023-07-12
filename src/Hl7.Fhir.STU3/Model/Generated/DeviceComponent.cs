@@ -60,74 +60,74 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measurement-principle)
     /// (system: http://hl7.org/fhir/measurement-principle)
     /// </summary>
-    [FhirEnumeration("MeasmntPrinciple")]
+    [FhirEnumeration("MeasmntPrinciple", "http://hl7.org/fhir/ValueSet/measurement-principle", "http://hl7.org/fhir/measurement-principle")]
     public enum MeasmntPrinciple
     {
       /// <summary>
       /// Measurement principle isn't in the list.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/measurement-principle"), Description("MSP Other")]
+      [EnumLiteral("other"), Description("MSP Other")]
       Other,
       /// <summary>
       /// Measurement is done using the chemical principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("chemical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Chemical")]
+      [EnumLiteral("chemical"), Description("MSP Chemical")]
       Chemical,
       /// <summary>
       /// Measurement is done using the electrical principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("electrical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Electrical")]
+      [EnumLiteral("electrical"), Description("MSP Electrical")]
       Electrical,
       /// <summary>
       /// Measurement is done using the impedance principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("impedance", "http://hl7.org/fhir/measurement-principle"), Description("MSP Impedance")]
+      [EnumLiteral("impedance"), Description("MSP Impedance")]
       Impedance,
       /// <summary>
       /// Measurement is done using the nuclear principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("nuclear", "http://hl7.org/fhir/measurement-principle"), Description("MSP Nuclear")]
+      [EnumLiteral("nuclear"), Description("MSP Nuclear")]
       Nuclear,
       /// <summary>
       /// Measurement is done using the optical principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("optical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Optical")]
+      [EnumLiteral("optical"), Description("MSP Optical")]
       Optical,
       /// <summary>
       /// Measurement is done using the thermal principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("thermal", "http://hl7.org/fhir/measurement-principle"), Description("MSP Thermal")]
+      [EnumLiteral("thermal"), Description("MSP Thermal")]
       Thermal,
       /// <summary>
       /// Measurement is done using the biological principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("biological", "http://hl7.org/fhir/measurement-principle"), Description("MSP Biological")]
+      [EnumLiteral("biological"), Description("MSP Biological")]
       Biological,
       /// <summary>
       /// Measurement is done using the mechanical principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("mechanical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Mechanical")]
+      [EnumLiteral("mechanical"), Description("MSP Mechanical")]
       Mechanical,
       /// <summary>
       /// Measurement is done using the acoustical principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("acoustical", "http://hl7.org/fhir/measurement-principle"), Description("MSP Acoustical")]
+      [EnumLiteral("acoustical"), Description("MSP Acoustical")]
       Acoustical,
       /// <summary>
       /// Measurement is done using the manual principle.
       /// (system: http://hl7.org/fhir/measurement-principle)
       /// </summary>
-      [EnumLiteral("manual", "http://hl7.org/fhir/measurement-principle"), Description("MSP Manual")]
+      [EnumLiteral("manual"), Description("MSP Manual")]
       Manual,
     }
 
@@ -137,6 +137,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceComponent#ProductionSpecification", IsNestedType=true)]
+    [BackboneType("DeviceComponent.productionSpecification")]
     public partial class ProductionSpecificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -305,7 +306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance id assigned by the software stack
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
@@ -319,7 +320,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What kind of component it is
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=100)]
+    [FhirElement("type", InSummary=true, Order=100, FiveWs="class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
@@ -333,7 +334,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Recent system change timestamp
     /// </summary>
-    [FhirElement("lastSystemChange", InSummary=true, Order=110)]
+    [FhirElement("lastSystemChange", InSummary=true, Order=110, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant LastSystemChangeElement
     {
@@ -423,6 +424,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("measurementPrinciple", InSummary=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasmntPrinciple")]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceComponent.MeasmntPrinciple> MeasurementPrincipleElement
     {

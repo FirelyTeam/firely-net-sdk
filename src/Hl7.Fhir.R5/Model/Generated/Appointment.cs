@@ -60,69 +60,69 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentstatus)
     /// (system: http://hl7.org/fhir/appointmentstatus)
     /// </summary>
-    [FhirEnumeration("AppointmentStatus")]
+    [FhirEnumeration("AppointmentStatus", "http://hl7.org/fhir/ValueSet/appointmentstatus", "http://hl7.org/fhir/appointmentstatus")]
     public enum AppointmentStatus
     {
       /// <summary>
       /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time might not be set yet.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/appointmentstatus"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/appointmentstatus"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
       /// <summary>
       /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("booked", "http://hl7.org/fhir/appointmentstatus"), Description("Booked")]
+      [EnumLiteral("booked"), Description("Booked")]
       Booked,
       /// <summary>
       /// The patient/patients has/have arrived and is/are waiting to be seen.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("arrived", "http://hl7.org/fhir/appointmentstatus"), Description("Arrived")]
+      [EnumLiteral("arrived"), Description("Arrived")]
       Arrived,
       /// <summary>
       /// The planning stages of the appointment are now complete, the encounter resource will exist and will track further status changes. Note that an encounter may exist before the appointment status is fulfilled for many reasons.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("fulfilled", "http://hl7.org/fhir/appointmentstatus"), Description("Fulfilled")]
+      [EnumLiteral("fulfilled"), Description("Fulfilled")]
       Fulfilled,
       /// <summary>
       /// The appointment has been cancelled.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/appointmentstatus"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("noshow", "http://hl7.org/fhir/appointmentstatus"), Description("No Show")]
+      [EnumLiteral("noshow"), Description("No Show")]
       Noshow,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/appointmentstatus"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
       /// <summary>
       /// When checked in, all pre-encounter administrative work is complete, and the encounter may begin. (where multiple patients are involved, they are all present).
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("checked-in", "http://hl7.org/fhir/appointmentstatus"), Description("Checked In")]
+      [EnumLiteral("checked-in"), Description("Checked In")]
       CheckedIn,
       /// <summary>
       /// The appointment has been placed on a waitlist, to be scheduled/confirmed in the future when a slot/service is available.
       /// A specific time might or might not be pre-allocated.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("waitlist", "http://hl7.org/fhir/appointmentstatus"), Description("Waitlisted")]
+      [EnumLiteral("waitlist"), Description("Waitlisted")]
       Waitlist,
     }
 
@@ -131,32 +131,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/participationstatus)
     /// (system: http://hl7.org/fhir/participationstatus)
     /// </summary>
-    [FhirEnumeration("ParticipationStatus")]
+    [FhirEnumeration("ParticipationStatus", "http://hl7.org/fhir/ValueSet/participationstatus", "http://hl7.org/fhir/participationstatus")]
     public enum ParticipationStatus
     {
       /// <summary>
       /// The participant has accepted the appointment.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/participationstatus"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// The participant has declined the appointment and will not participate in the appointment.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("declined", "http://hl7.org/fhir/participationstatus"), Description("Declined")]
+      [EnumLiteral("declined"), Description("Declined")]
       Declined,
       /// <summary>
       /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("tentative", "http://hl7.org/fhir/participationstatus"), Description("Tentative")]
+      [EnumLiteral("tentative"), Description("Tentative")]
       Tentative,
       /// <summary>
       /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
+      [EnumLiteral("needs-action"), Description("Needs Action")]
       NeedsAction,
     }
 
@@ -165,2822 +165,2822 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/timezones)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("IANATimezones")]
+    [FhirEnumeration("IANATimezones", "http://hl7.org/fhir/ValueSet/timezones", "https://www.iana.org/time-zones")]
     public enum IANATimezones
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Abidjan", "https://www.iana.org/time-zones"), Description("Africa/Abidjan")]
+      [EnumLiteral("Africa/Abidjan"), Description("Africa/Abidjan")]
       Africa_Abidjan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Accra", "https://www.iana.org/time-zones"), Description("Africa/Accra")]
+      [EnumLiteral("Africa/Accra"), Description("Africa/Accra")]
       Africa_Accra,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Addis_Ababa", "https://www.iana.org/time-zones"), Description("Africa/Addis_Ababa")]
+      [EnumLiteral("Africa/Addis_Ababa"), Description("Africa/Addis_Ababa")]
       Africa_Addis_Ababa,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Algiers", "https://www.iana.org/time-zones"), Description("Africa/Algiers")]
+      [EnumLiteral("Africa/Algiers"), Description("Africa/Algiers")]
       Africa_Algiers,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Asmara", "https://www.iana.org/time-zones"), Description("Africa/Asmara")]
+      [EnumLiteral("Africa/Asmara"), Description("Africa/Asmara")]
       Africa_Asmara,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Bamako", "https://www.iana.org/time-zones"), Description("Africa/Bamako")]
+      [EnumLiteral("Africa/Bamako"), Description("Africa/Bamako")]
       Africa_Bamako,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Bangui", "https://www.iana.org/time-zones"), Description("Africa/Bangui")]
+      [EnumLiteral("Africa/Bangui"), Description("Africa/Bangui")]
       Africa_Bangui,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Banjul", "https://www.iana.org/time-zones"), Description("Africa/Banjul")]
+      [EnumLiteral("Africa/Banjul"), Description("Africa/Banjul")]
       Africa_Banjul,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Bissau", "https://www.iana.org/time-zones"), Description("Africa/Bissau")]
+      [EnumLiteral("Africa/Bissau"), Description("Africa/Bissau")]
       Africa_Bissau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Blantyre", "https://www.iana.org/time-zones"), Description("Africa/Blantyre")]
+      [EnumLiteral("Africa/Blantyre"), Description("Africa/Blantyre")]
       Africa_Blantyre,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Brazzaville", "https://www.iana.org/time-zones"), Description("Africa/Brazzaville")]
+      [EnumLiteral("Africa/Brazzaville"), Description("Africa/Brazzaville")]
       Africa_Brazzaville,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Bujumbura", "https://www.iana.org/time-zones"), Description("Africa/Bujumbura")]
+      [EnumLiteral("Africa/Bujumbura"), Description("Africa/Bujumbura")]
       Africa_Bujumbura,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Cairo", "https://www.iana.org/time-zones"), Description("Africa/Cairo")]
+      [EnumLiteral("Africa/Cairo"), Description("Africa/Cairo")]
       Africa_Cairo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Casablanca", "https://www.iana.org/time-zones"), Description("Africa/Casablanca")]
+      [EnumLiteral("Africa/Casablanca"), Description("Africa/Casablanca")]
       Africa_Casablanca,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Ceuta", "https://www.iana.org/time-zones"), Description("Africa/Ceuta")]
+      [EnumLiteral("Africa/Ceuta"), Description("Africa/Ceuta")]
       Africa_Ceuta,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Conakry", "https://www.iana.org/time-zones"), Description("Africa/Conakry")]
+      [EnumLiteral("Africa/Conakry"), Description("Africa/Conakry")]
       Africa_Conakry,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Dakar", "https://www.iana.org/time-zones"), Description("Africa/Dakar")]
+      [EnumLiteral("Africa/Dakar"), Description("Africa/Dakar")]
       Africa_Dakar,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Dar_es_Salaam", "https://www.iana.org/time-zones"), Description("Africa/Dar_es_Salaam")]
+      [EnumLiteral("Africa/Dar_es_Salaam"), Description("Africa/Dar_es_Salaam")]
       Africa_Dar_es_Salaam,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Djibouti", "https://www.iana.org/time-zones"), Description("Africa/Djibouti")]
+      [EnumLiteral("Africa/Djibouti"), Description("Africa/Djibouti")]
       Africa_Djibouti,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Douala", "https://www.iana.org/time-zones"), Description("Africa/Douala")]
+      [EnumLiteral("Africa/Douala"), Description("Africa/Douala")]
       Africa_Douala,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/El_Aaiun", "https://www.iana.org/time-zones"), Description("Africa/El_Aaiun")]
+      [EnumLiteral("Africa/El_Aaiun"), Description("Africa/El_Aaiun")]
       Africa_El_Aaiun,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Freetown", "https://www.iana.org/time-zones"), Description("Africa/Freetown")]
+      [EnumLiteral("Africa/Freetown"), Description("Africa/Freetown")]
       Africa_Freetown,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Gaborone", "https://www.iana.org/time-zones"), Description("Africa/Gaborone")]
+      [EnumLiteral("Africa/Gaborone"), Description("Africa/Gaborone")]
       Africa_Gaborone,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Harare", "https://www.iana.org/time-zones"), Description("Africa/Harare")]
+      [EnumLiteral("Africa/Harare"), Description("Africa/Harare")]
       Africa_Harare,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Johannesburg", "https://www.iana.org/time-zones"), Description("Africa/Johannesburg")]
+      [EnumLiteral("Africa/Johannesburg"), Description("Africa/Johannesburg")]
       Africa_Johannesburg,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Juba", "https://www.iana.org/time-zones"), Description("Africa/Juba")]
+      [EnumLiteral("Africa/Juba"), Description("Africa/Juba")]
       Africa_Juba,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Kampala", "https://www.iana.org/time-zones"), Description("Africa/Kampala")]
+      [EnumLiteral("Africa/Kampala"), Description("Africa/Kampala")]
       Africa_Kampala,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Khartoum", "https://www.iana.org/time-zones"), Description("Africa/Khartoum")]
+      [EnumLiteral("Africa/Khartoum"), Description("Africa/Khartoum")]
       Africa_Khartoum,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Kigali", "https://www.iana.org/time-zones"), Description("Africa/Kigali")]
+      [EnumLiteral("Africa/Kigali"), Description("Africa/Kigali")]
       Africa_Kigali,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Kinshasa", "https://www.iana.org/time-zones"), Description("Africa/Kinshasa")]
+      [EnumLiteral("Africa/Kinshasa"), Description("Africa/Kinshasa")]
       Africa_Kinshasa,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Lagos", "https://www.iana.org/time-zones"), Description("Africa/Lagos")]
+      [EnumLiteral("Africa/Lagos"), Description("Africa/Lagos")]
       Africa_Lagos,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Libreville", "https://www.iana.org/time-zones"), Description("Africa/Libreville")]
+      [EnumLiteral("Africa/Libreville"), Description("Africa/Libreville")]
       Africa_Libreville,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Lome", "https://www.iana.org/time-zones"), Description("Africa/Lome")]
+      [EnumLiteral("Africa/Lome"), Description("Africa/Lome")]
       Africa_Lome,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Luanda", "https://www.iana.org/time-zones"), Description("Africa/Luanda")]
+      [EnumLiteral("Africa/Luanda"), Description("Africa/Luanda")]
       Africa_Luanda,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Lubumbashi", "https://www.iana.org/time-zones"), Description("Africa/Lubumbashi")]
+      [EnumLiteral("Africa/Lubumbashi"), Description("Africa/Lubumbashi")]
       Africa_Lubumbashi,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Lusaka", "https://www.iana.org/time-zones"), Description("Africa/Lusaka")]
+      [EnumLiteral("Africa/Lusaka"), Description("Africa/Lusaka")]
       Africa_Lusaka,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Malabo", "https://www.iana.org/time-zones"), Description("Africa/Malabo")]
+      [EnumLiteral("Africa/Malabo"), Description("Africa/Malabo")]
       Africa_Malabo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Maputo", "https://www.iana.org/time-zones"), Description("Africa/Maputo")]
+      [EnumLiteral("Africa/Maputo"), Description("Africa/Maputo")]
       Africa_Maputo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Maseru", "https://www.iana.org/time-zones"), Description("Africa/Maseru")]
+      [EnumLiteral("Africa/Maseru"), Description("Africa/Maseru")]
       Africa_Maseru,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Mbabane", "https://www.iana.org/time-zones"), Description("Africa/Mbabane")]
+      [EnumLiteral("Africa/Mbabane"), Description("Africa/Mbabane")]
       Africa_Mbabane,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Mogadishu", "https://www.iana.org/time-zones"), Description("Africa/Mogadishu")]
+      [EnumLiteral("Africa/Mogadishu"), Description("Africa/Mogadishu")]
       Africa_Mogadishu,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Monrovia", "https://www.iana.org/time-zones"), Description("Africa/Monrovia")]
+      [EnumLiteral("Africa/Monrovia"), Description("Africa/Monrovia")]
       Africa_Monrovia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Nairobi", "https://www.iana.org/time-zones"), Description("Africa/Nairobi")]
+      [EnumLiteral("Africa/Nairobi"), Description("Africa/Nairobi")]
       Africa_Nairobi,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Ndjamena", "https://www.iana.org/time-zones"), Description("Africa/Ndjamena")]
+      [EnumLiteral("Africa/Ndjamena"), Description("Africa/Ndjamena")]
       Africa_Ndjamena,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Niamey", "https://www.iana.org/time-zones"), Description("Africa/Niamey")]
+      [EnumLiteral("Africa/Niamey"), Description("Africa/Niamey")]
       Africa_Niamey,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Nouakchott", "https://www.iana.org/time-zones"), Description("Africa/Nouakchott")]
+      [EnumLiteral("Africa/Nouakchott"), Description("Africa/Nouakchott")]
       Africa_Nouakchott,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Ouagadougou", "https://www.iana.org/time-zones"), Description("Africa/Ouagadougou")]
+      [EnumLiteral("Africa/Ouagadougou"), Description("Africa/Ouagadougou")]
       Africa_Ouagadougou,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Porto-Novo", "https://www.iana.org/time-zones"), Description("Africa/Porto-Novo")]
+      [EnumLiteral("Africa/Porto-Novo"), Description("Africa/Porto-Novo")]
       Africa_PortoNovo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Sao_Tome", "https://www.iana.org/time-zones"), Description("Africa/Sao_Tome")]
+      [EnumLiteral("Africa/Sao_Tome"), Description("Africa/Sao_Tome")]
       Africa_Sao_Tome,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Timbuktu", "https://www.iana.org/time-zones"), Description("Africa/Timbuktu")]
+      [EnumLiteral("Africa/Timbuktu"), Description("Africa/Timbuktu")]
       Africa_Timbuktu,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Tripoli", "https://www.iana.org/time-zones"), Description("Africa/Tripoli")]
+      [EnumLiteral("Africa/Tripoli"), Description("Africa/Tripoli")]
       Africa_Tripoli,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Tunis", "https://www.iana.org/time-zones"), Description("Africa/Tunis")]
+      [EnumLiteral("Africa/Tunis"), Description("Africa/Tunis")]
       Africa_Tunis,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Africa/Windhoek", "https://www.iana.org/time-zones"), Description("Africa/Windhoek")]
+      [EnumLiteral("Africa/Windhoek"), Description("Africa/Windhoek")]
       Africa_Windhoek,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Adak", "https://www.iana.org/time-zones"), Description("America/Adak")]
+      [EnumLiteral("America/Adak"), Description("America/Adak")]
       America_Adak,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Anchorage", "https://www.iana.org/time-zones"), Description("America/Anchorage")]
+      [EnumLiteral("America/Anchorage"), Description("America/Anchorage")]
       America_Anchorage,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Anguilla", "https://www.iana.org/time-zones"), Description("America/Anguilla")]
+      [EnumLiteral("America/Anguilla"), Description("America/Anguilla")]
       America_Anguilla,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Antigua", "https://www.iana.org/time-zones"), Description("America/Antigua")]
+      [EnumLiteral("America/Antigua"), Description("America/Antigua")]
       America_Antigua,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Araguaina", "https://www.iana.org/time-zones"), Description("America/Araguaina")]
+      [EnumLiteral("America/Araguaina"), Description("America/Araguaina")]
       America_Araguaina,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Buenos_Aires", "https://www.iana.org/time-zones"), Description("America/Argentina/Buenos_Aires")]
+      [EnumLiteral("America/Argentina/Buenos_Aires"), Description("America/Argentina/Buenos_Aires")]
       America_Argentina_Buenos_Aires,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Catamarca", "https://www.iana.org/time-zones"), Description("America/Argentina/Catamarca")]
+      [EnumLiteral("America/Argentina/Catamarca"), Description("America/Argentina/Catamarca")]
       America_Argentina_Catamarca,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/ComodRivadavia", "https://www.iana.org/time-zones"), Description("America/Argentina/ComodRivadavia")]
+      [EnumLiteral("America/Argentina/ComodRivadavia"), Description("America/Argentina/ComodRivadavia")]
       America_Argentina_ComodRivadavia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Cordoba", "https://www.iana.org/time-zones"), Description("America/Argentina/Cordoba")]
+      [EnumLiteral("America/Argentina/Cordoba"), Description("America/Argentina/Cordoba")]
       America_Argentina_Cordoba,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Jujuy", "https://www.iana.org/time-zones"), Description("America/Argentina/Jujuy")]
+      [EnumLiteral("America/Argentina/Jujuy"), Description("America/Argentina/Jujuy")]
       America_Argentina_Jujuy,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/La_Rioja", "https://www.iana.org/time-zones"), Description("America/Argentina/La_Rioja")]
+      [EnumLiteral("America/Argentina/La_Rioja"), Description("America/Argentina/La_Rioja")]
       America_Argentina_La_Rioja,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Mendoza", "https://www.iana.org/time-zones"), Description("America/Argentina/Mendoza")]
+      [EnumLiteral("America/Argentina/Mendoza"), Description("America/Argentina/Mendoza")]
       America_Argentina_Mendoza,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Rio_Gallegos", "https://www.iana.org/time-zones"), Description("America/Argentina/Rio_Gallegos")]
+      [EnumLiteral("America/Argentina/Rio_Gallegos"), Description("America/Argentina/Rio_Gallegos")]
       America_Argentina_Rio_Gallegos,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Salta", "https://www.iana.org/time-zones"), Description("America/Argentina/Salta")]
+      [EnumLiteral("America/Argentina/Salta"), Description("America/Argentina/Salta")]
       America_Argentina_Salta,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/San_Juan", "https://www.iana.org/time-zones"), Description("America/Argentina/San_Juan")]
+      [EnumLiteral("America/Argentina/San_Juan"), Description("America/Argentina/San_Juan")]
       America_Argentina_San_Juan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/San_Luis", "https://www.iana.org/time-zones"), Description("America/Argentina/San_Luis")]
+      [EnumLiteral("America/Argentina/San_Luis"), Description("America/Argentina/San_Luis")]
       America_Argentina_San_Luis,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Tucuman", "https://www.iana.org/time-zones"), Description("America/Argentina/Tucuman")]
+      [EnumLiteral("America/Argentina/Tucuman"), Description("America/Argentina/Tucuman")]
       America_Argentina_Tucuman,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Argentina/Ushuaia", "https://www.iana.org/time-zones"), Description("America/Argentina/Ushuaia")]
+      [EnumLiteral("America/Argentina/Ushuaia"), Description("America/Argentina/Ushuaia")]
       America_Argentina_Ushuaia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Aruba", "https://www.iana.org/time-zones"), Description("America/Aruba")]
+      [EnumLiteral("America/Aruba"), Description("America/Aruba")]
       America_Aruba,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Asuncion", "https://www.iana.org/time-zones"), Description("America/Asuncion")]
+      [EnumLiteral("America/Asuncion"), Description("America/Asuncion")]
       America_Asuncion,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Atikokan", "https://www.iana.org/time-zones"), Description("America/Atikokan")]
+      [EnumLiteral("America/Atikokan"), Description("America/Atikokan")]
       America_Atikokan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Bahia", "https://www.iana.org/time-zones"), Description("America/Bahia")]
+      [EnumLiteral("America/Bahia"), Description("America/Bahia")]
       America_Bahia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Bahia_Banderas", "https://www.iana.org/time-zones"), Description("America/Bahia_Banderas")]
+      [EnumLiteral("America/Bahia_Banderas"), Description("America/Bahia_Banderas")]
       America_Bahia_Banderas,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Barbados", "https://www.iana.org/time-zones"), Description("America/Barbados")]
+      [EnumLiteral("America/Barbados"), Description("America/Barbados")]
       America_Barbados,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Belem", "https://www.iana.org/time-zones"), Description("America/Belem")]
+      [EnumLiteral("America/Belem"), Description("America/Belem")]
       America_Belem,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Belize", "https://www.iana.org/time-zones"), Description("America/Belize")]
+      [EnumLiteral("America/Belize"), Description("America/Belize")]
       America_Belize,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Blanc-Sablon", "https://www.iana.org/time-zones"), Description("America/Blanc-Sablon")]
+      [EnumLiteral("America/Blanc-Sablon"), Description("America/Blanc-Sablon")]
       America_BlancSablon,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Boa_Vista", "https://www.iana.org/time-zones"), Description("America/Boa_Vista")]
+      [EnumLiteral("America/Boa_Vista"), Description("America/Boa_Vista")]
       America_Boa_Vista,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Bogota", "https://www.iana.org/time-zones"), Description("America/Bogota")]
+      [EnumLiteral("America/Bogota"), Description("America/Bogota")]
       America_Bogota,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Boise", "https://www.iana.org/time-zones"), Description("America/Boise")]
+      [EnumLiteral("America/Boise"), Description("America/Boise")]
       America_Boise,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Cambridge_Bay", "https://www.iana.org/time-zones"), Description("America/Cambridge_Bay")]
+      [EnumLiteral("America/Cambridge_Bay"), Description("America/Cambridge_Bay")]
       America_Cambridge_Bay,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Campo_Grande", "https://www.iana.org/time-zones"), Description("America/Campo_Grande")]
+      [EnumLiteral("America/Campo_Grande"), Description("America/Campo_Grande")]
       America_Campo_Grande,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Cancun", "https://www.iana.org/time-zones"), Description("America/Cancun")]
+      [EnumLiteral("America/Cancun"), Description("America/Cancun")]
       America_Cancun,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Caracas", "https://www.iana.org/time-zones"), Description("America/Caracas")]
+      [EnumLiteral("America/Caracas"), Description("America/Caracas")]
       America_Caracas,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Cayenne", "https://www.iana.org/time-zones"), Description("America/Cayenne")]
+      [EnumLiteral("America/Cayenne"), Description("America/Cayenne")]
       America_Cayenne,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Cayman", "https://www.iana.org/time-zones"), Description("America/Cayman")]
+      [EnumLiteral("America/Cayman"), Description("America/Cayman")]
       America_Cayman,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Chicago", "https://www.iana.org/time-zones"), Description("America/Chicago")]
+      [EnumLiteral("America/Chicago"), Description("America/Chicago")]
       America_Chicago,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Chihuahua", "https://www.iana.org/time-zones"), Description("America/Chihuahua")]
+      [EnumLiteral("America/Chihuahua"), Description("America/Chihuahua")]
       America_Chihuahua,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Coral_Harbour", "https://www.iana.org/time-zones"), Description("America/Coral_Harbour")]
+      [EnumLiteral("America/Coral_Harbour"), Description("America/Coral_Harbour")]
       America_Coral_Harbour,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Costa_Rica", "https://www.iana.org/time-zones"), Description("America/Costa_Rica")]
+      [EnumLiteral("America/Costa_Rica"), Description("America/Costa_Rica")]
       America_Costa_Rica,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Creston", "https://www.iana.org/time-zones"), Description("America/Creston")]
+      [EnumLiteral("America/Creston"), Description("America/Creston")]
       America_Creston,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Cuiaba", "https://www.iana.org/time-zones"), Description("America/Cuiaba")]
+      [EnumLiteral("America/Cuiaba"), Description("America/Cuiaba")]
       America_Cuiaba,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Curacao", "https://www.iana.org/time-zones"), Description("America/Curacao")]
+      [EnumLiteral("America/Curacao"), Description("America/Curacao")]
       America_Curacao,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Danmarkshavn", "https://www.iana.org/time-zones"), Description("America/Danmarkshavn")]
+      [EnumLiteral("America/Danmarkshavn"), Description("America/Danmarkshavn")]
       America_Danmarkshavn,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Dawson", "https://www.iana.org/time-zones"), Description("America/Dawson")]
+      [EnumLiteral("America/Dawson"), Description("America/Dawson")]
       America_Dawson,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Dawson_Creek", "https://www.iana.org/time-zones"), Description("America/Dawson_Creek")]
+      [EnumLiteral("America/Dawson_Creek"), Description("America/Dawson_Creek")]
       America_Dawson_Creek,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Denver", "https://www.iana.org/time-zones"), Description("America/Denver")]
+      [EnumLiteral("America/Denver"), Description("America/Denver")]
       America_Denver,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Detroit", "https://www.iana.org/time-zones"), Description("America/Detroit")]
+      [EnumLiteral("America/Detroit"), Description("America/Detroit")]
       America_Detroit,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Dominica", "https://www.iana.org/time-zones"), Description("America/Dominica")]
+      [EnumLiteral("America/Dominica"), Description("America/Dominica")]
       America_Dominica,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Edmonton", "https://www.iana.org/time-zones"), Description("America/Edmonton")]
+      [EnumLiteral("America/Edmonton"), Description("America/Edmonton")]
       America_Edmonton,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Eirunepe", "https://www.iana.org/time-zones"), Description("America/Eirunepe")]
+      [EnumLiteral("America/Eirunepe"), Description("America/Eirunepe")]
       America_Eirunepe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/El_Salvador", "https://www.iana.org/time-zones"), Description("America/El_Salvador")]
+      [EnumLiteral("America/El_Salvador"), Description("America/El_Salvador")]
       America_El_Salvador,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Ensenada", "https://www.iana.org/time-zones"), Description("America/Ensenada")]
+      [EnumLiteral("America/Ensenada"), Description("America/Ensenada")]
       America_Ensenada,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Fort_Nelson", "https://www.iana.org/time-zones"), Description("America/Fort_Nelson")]
+      [EnumLiteral("America/Fort_Nelson"), Description("America/Fort_Nelson")]
       America_Fort_Nelson,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Fortaleza", "https://www.iana.org/time-zones"), Description("America/Fortaleza")]
+      [EnumLiteral("America/Fortaleza"), Description("America/Fortaleza")]
       America_Fortaleza,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Glace_Bay", "https://www.iana.org/time-zones"), Description("America/Glace_Bay")]
+      [EnumLiteral("America/Glace_Bay"), Description("America/Glace_Bay")]
       America_Glace_Bay,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Goose_Bay", "https://www.iana.org/time-zones"), Description("America/Goose_Bay")]
+      [EnumLiteral("America/Goose_Bay"), Description("America/Goose_Bay")]
       America_Goose_Bay,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Grand_Turk", "https://www.iana.org/time-zones"), Description("America/Grand_Turk")]
+      [EnumLiteral("America/Grand_Turk"), Description("America/Grand_Turk")]
       America_Grand_Turk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Grenada", "https://www.iana.org/time-zones"), Description("America/Grenada")]
+      [EnumLiteral("America/Grenada"), Description("America/Grenada")]
       America_Grenada,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Guadeloupe", "https://www.iana.org/time-zones"), Description("America/Guadeloupe")]
+      [EnumLiteral("America/Guadeloupe"), Description("America/Guadeloupe")]
       America_Guadeloupe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Guatemala", "https://www.iana.org/time-zones"), Description("America/Guatemala")]
+      [EnumLiteral("America/Guatemala"), Description("America/Guatemala")]
       America_Guatemala,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Guayaquil", "https://www.iana.org/time-zones"), Description("America/Guayaquil")]
+      [EnumLiteral("America/Guayaquil"), Description("America/Guayaquil")]
       America_Guayaquil,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Guyana", "https://www.iana.org/time-zones"), Description("America/Guyana")]
+      [EnumLiteral("America/Guyana"), Description("America/Guyana")]
       America_Guyana,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Halifax", "https://www.iana.org/time-zones"), Description("America/Halifax")]
+      [EnumLiteral("America/Halifax"), Description("America/Halifax")]
       America_Halifax,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Havana", "https://www.iana.org/time-zones"), Description("America/Havana")]
+      [EnumLiteral("America/Havana"), Description("America/Havana")]
       America_Havana,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Hermosillo", "https://www.iana.org/time-zones"), Description("America/Hermosillo")]
+      [EnumLiteral("America/Hermosillo"), Description("America/Hermosillo")]
       America_Hermosillo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Indianapolis", "https://www.iana.org/time-zones"), Description("America/Indiana/Indianapolis")]
+      [EnumLiteral("America/Indiana/Indianapolis"), Description("America/Indiana/Indianapolis")]
       America_Indiana_Indianapolis,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Knox", "https://www.iana.org/time-zones"), Description("America/Indiana/Knox")]
+      [EnumLiteral("America/Indiana/Knox"), Description("America/Indiana/Knox")]
       America_Indiana_Knox,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Marengo", "https://www.iana.org/time-zones"), Description("America/Indiana/Marengo")]
+      [EnumLiteral("America/Indiana/Marengo"), Description("America/Indiana/Marengo")]
       America_Indiana_Marengo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Petersburg", "https://www.iana.org/time-zones"), Description("America/Indiana/Petersburg")]
+      [EnumLiteral("America/Indiana/Petersburg"), Description("America/Indiana/Petersburg")]
       America_Indiana_Petersburg,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Tell_City", "https://www.iana.org/time-zones"), Description("America/Indiana/Tell_City")]
+      [EnumLiteral("America/Indiana/Tell_City"), Description("America/Indiana/Tell_City")]
       America_Indiana_Tell_City,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Vevay", "https://www.iana.org/time-zones"), Description("America/Indiana/Vevay")]
+      [EnumLiteral("America/Indiana/Vevay"), Description("America/Indiana/Vevay")]
       America_Indiana_Vevay,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Vincennes", "https://www.iana.org/time-zones"), Description("America/Indiana/Vincennes")]
+      [EnumLiteral("America/Indiana/Vincennes"), Description("America/Indiana/Vincennes")]
       America_Indiana_Vincennes,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Indiana/Winamac", "https://www.iana.org/time-zones"), Description("America/Indiana/Winamac")]
+      [EnumLiteral("America/Indiana/Winamac"), Description("America/Indiana/Winamac")]
       America_Indiana_Winamac,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Inuvik", "https://www.iana.org/time-zones"), Description("America/Inuvik")]
+      [EnumLiteral("America/Inuvik"), Description("America/Inuvik")]
       America_Inuvik,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Iqaluit", "https://www.iana.org/time-zones"), Description("America/Iqaluit")]
+      [EnumLiteral("America/Iqaluit"), Description("America/Iqaluit")]
       America_Iqaluit,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Jamaica", "https://www.iana.org/time-zones"), Description("America/Jamaica")]
+      [EnumLiteral("America/Jamaica"), Description("America/Jamaica")]
       America_Jamaica,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Juneau", "https://www.iana.org/time-zones"), Description("America/Juneau")]
+      [EnumLiteral("America/Juneau"), Description("America/Juneau")]
       America_Juneau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Kentucky/Louisville", "https://www.iana.org/time-zones"), Description("America/Kentucky/Louisville")]
+      [EnumLiteral("America/Kentucky/Louisville"), Description("America/Kentucky/Louisville")]
       America_Kentucky_Louisville,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Kentucky/Monticello", "https://www.iana.org/time-zones"), Description("America/Kentucky/Monticello")]
+      [EnumLiteral("America/Kentucky/Monticello"), Description("America/Kentucky/Monticello")]
       America_Kentucky_Monticello,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/La_Paz", "https://www.iana.org/time-zones"), Description("America/La_Paz")]
+      [EnumLiteral("America/La_Paz"), Description("America/La_Paz")]
       America_La_Paz,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Lima", "https://www.iana.org/time-zones"), Description("America/Lima")]
+      [EnumLiteral("America/Lima"), Description("America/Lima")]
       America_Lima,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Los_Angeles", "https://www.iana.org/time-zones"), Description("America/Los_Angeles")]
+      [EnumLiteral("America/Los_Angeles"), Description("America/Los_Angeles")]
       America_Los_Angeles,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Maceio", "https://www.iana.org/time-zones"), Description("America/Maceio")]
+      [EnumLiteral("America/Maceio"), Description("America/Maceio")]
       America_Maceio,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Managua", "https://www.iana.org/time-zones"), Description("America/Managua")]
+      [EnumLiteral("America/Managua"), Description("America/Managua")]
       America_Managua,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Manaus", "https://www.iana.org/time-zones"), Description("America/Manaus")]
+      [EnumLiteral("America/Manaus"), Description("America/Manaus")]
       America_Manaus,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Martinique", "https://www.iana.org/time-zones"), Description("America/Martinique")]
+      [EnumLiteral("America/Martinique"), Description("America/Martinique")]
       America_Martinique,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Matamoros", "https://www.iana.org/time-zones"), Description("America/Matamoros")]
+      [EnumLiteral("America/Matamoros"), Description("America/Matamoros")]
       America_Matamoros,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Mazatlan", "https://www.iana.org/time-zones"), Description("America/Mazatlan")]
+      [EnumLiteral("America/Mazatlan"), Description("America/Mazatlan")]
       America_Mazatlan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Menominee", "https://www.iana.org/time-zones"), Description("America/Menominee")]
+      [EnumLiteral("America/Menominee"), Description("America/Menominee")]
       America_Menominee,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Merida", "https://www.iana.org/time-zones"), Description("America/Merida")]
+      [EnumLiteral("America/Merida"), Description("America/Merida")]
       America_Merida,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Metlakatla", "https://www.iana.org/time-zones"), Description("America/Metlakatla")]
+      [EnumLiteral("America/Metlakatla"), Description("America/Metlakatla")]
       America_Metlakatla,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Mexico_City", "https://www.iana.org/time-zones"), Description("America/Mexico_City")]
+      [EnumLiteral("America/Mexico_City"), Description("America/Mexico_City")]
       America_Mexico_City,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Miquelon", "https://www.iana.org/time-zones"), Description("America/Miquelon")]
+      [EnumLiteral("America/Miquelon"), Description("America/Miquelon")]
       America_Miquelon,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Moncton", "https://www.iana.org/time-zones"), Description("America/Moncton")]
+      [EnumLiteral("America/Moncton"), Description("America/Moncton")]
       America_Moncton,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Monterrey", "https://www.iana.org/time-zones"), Description("America/Monterrey")]
+      [EnumLiteral("America/Monterrey"), Description("America/Monterrey")]
       America_Monterrey,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Montevideo", "https://www.iana.org/time-zones"), Description("America/Montevideo")]
+      [EnumLiteral("America/Montevideo"), Description("America/Montevideo")]
       America_Montevideo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Montreal", "https://www.iana.org/time-zones"), Description("America/Montreal")]
+      [EnumLiteral("America/Montreal"), Description("America/Montreal")]
       America_Montreal,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Montserrat", "https://www.iana.org/time-zones"), Description("America/Montserrat")]
+      [EnumLiteral("America/Montserrat"), Description("America/Montserrat")]
       America_Montserrat,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Nassau", "https://www.iana.org/time-zones"), Description("America/Nassau")]
+      [EnumLiteral("America/Nassau"), Description("America/Nassau")]
       America_Nassau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/New_York", "https://www.iana.org/time-zones"), Description("America/New_York")]
+      [EnumLiteral("America/New_York"), Description("America/New_York")]
       America_New_York,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Nipigon", "https://www.iana.org/time-zones"), Description("America/Nipigon")]
+      [EnumLiteral("America/Nipigon"), Description("America/Nipigon")]
       America_Nipigon,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Nome", "https://www.iana.org/time-zones"), Description("America/Nome")]
+      [EnumLiteral("America/Nome"), Description("America/Nome")]
       America_Nome,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Noronha", "https://www.iana.org/time-zones"), Description("America/Noronha")]
+      [EnumLiteral("America/Noronha"), Description("America/Noronha")]
       America_Noronha,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/North_Dakota/Beulah", "https://www.iana.org/time-zones"), Description("America/North_Dakota/Beulah")]
+      [EnumLiteral("America/North_Dakota/Beulah"), Description("America/North_Dakota/Beulah")]
       America_North_Dakota_Beulah,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/North_Dakota/Center", "https://www.iana.org/time-zones"), Description("America/North_Dakota/Center")]
+      [EnumLiteral("America/North_Dakota/Center"), Description("America/North_Dakota/Center")]
       America_North_Dakota_Center,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/North_Dakota/New_Salem", "https://www.iana.org/time-zones"), Description("America/North_Dakota/New_Salem")]
+      [EnumLiteral("America/North_Dakota/New_Salem"), Description("America/North_Dakota/New_Salem")]
       America_North_Dakota_New_Salem,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Nuuk", "https://www.iana.org/time-zones"), Description("America/Nuuk")]
+      [EnumLiteral("America/Nuuk"), Description("America/Nuuk")]
       America_Nuuk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Ojinaga", "https://www.iana.org/time-zones"), Description("America/Ojinaga")]
+      [EnumLiteral("America/Ojinaga"), Description("America/Ojinaga")]
       America_Ojinaga,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Panama", "https://www.iana.org/time-zones"), Description("America/Panama")]
+      [EnumLiteral("America/Panama"), Description("America/Panama")]
       America_Panama,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Pangnirtung", "https://www.iana.org/time-zones"), Description("America/Pangnirtung")]
+      [EnumLiteral("America/Pangnirtung"), Description("America/Pangnirtung")]
       America_Pangnirtung,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Paramaribo", "https://www.iana.org/time-zones"), Description("America/Paramaribo")]
+      [EnumLiteral("America/Paramaribo"), Description("America/Paramaribo")]
       America_Paramaribo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Phoenix", "https://www.iana.org/time-zones"), Description("America/Phoenix")]
+      [EnumLiteral("America/Phoenix"), Description("America/Phoenix")]
       America_Phoenix,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Port-au-Prince", "https://www.iana.org/time-zones"), Description("America/Port-au-Prince")]
+      [EnumLiteral("America/Port-au-Prince"), Description("America/Port-au-Prince")]
       America_PortAuPrince,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Port_of_Spain", "https://www.iana.org/time-zones"), Description("America/Port_of_Spain")]
+      [EnumLiteral("America/Port_of_Spain"), Description("America/Port_of_Spain")]
       America_Port_of_Spain,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Porto_Velho", "https://www.iana.org/time-zones"), Description("America/Porto_Velho")]
+      [EnumLiteral("America/Porto_Velho"), Description("America/Porto_Velho")]
       America_Porto_Velho,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Puerto_Rico", "https://www.iana.org/time-zones"), Description("America/Puerto_Rico")]
+      [EnumLiteral("America/Puerto_Rico"), Description("America/Puerto_Rico")]
       America_Puerto_Rico,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Punta_Arenas", "https://www.iana.org/time-zones"), Description("America/Punta_Arenas")]
+      [EnumLiteral("America/Punta_Arenas"), Description("America/Punta_Arenas")]
       America_Punta_Arenas,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Rainy_River", "https://www.iana.org/time-zones"), Description("America/Rainy_River")]
+      [EnumLiteral("America/Rainy_River"), Description("America/Rainy_River")]
       America_Rainy_River,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Rankin_Inlet", "https://www.iana.org/time-zones"), Description("America/Rankin_Inlet")]
+      [EnumLiteral("America/Rankin_Inlet"), Description("America/Rankin_Inlet")]
       America_Rankin_Inlet,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Recife", "https://www.iana.org/time-zones"), Description("America/Recife")]
+      [EnumLiteral("America/Recife"), Description("America/Recife")]
       America_Recife,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Regina", "https://www.iana.org/time-zones"), Description("America/Regina")]
+      [EnumLiteral("America/Regina"), Description("America/Regina")]
       America_Regina,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Resolute", "https://www.iana.org/time-zones"), Description("America/Resolute")]
+      [EnumLiteral("America/Resolute"), Description("America/Resolute")]
       America_Resolute,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Rio_Branco", "https://www.iana.org/time-zones"), Description("America/Rio_Branco")]
+      [EnumLiteral("America/Rio_Branco"), Description("America/Rio_Branco")]
       America_Rio_Branco,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Rosario", "https://www.iana.org/time-zones"), Description("America/Rosario")]
+      [EnumLiteral("America/Rosario"), Description("America/Rosario")]
       America_Rosario,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Santarem", "https://www.iana.org/time-zones"), Description("America/Santarem")]
+      [EnumLiteral("America/Santarem"), Description("America/Santarem")]
       America_Santarem,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Santiago", "https://www.iana.org/time-zones"), Description("America/Santiago")]
+      [EnumLiteral("America/Santiago"), Description("America/Santiago")]
       America_Santiago,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Santo_Domingo", "https://www.iana.org/time-zones"), Description("America/Santo_Domingo")]
+      [EnumLiteral("America/Santo_Domingo"), Description("America/Santo_Domingo")]
       America_Santo_Domingo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Sao_Paulo", "https://www.iana.org/time-zones"), Description("America/Sao_Paulo")]
+      [EnumLiteral("America/Sao_Paulo"), Description("America/Sao_Paulo")]
       America_Sao_Paulo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Scoresbysund", "https://www.iana.org/time-zones"), Description("America/Scoresbysund")]
+      [EnumLiteral("America/Scoresbysund"), Description("America/Scoresbysund")]
       America_Scoresbysund,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Sitka", "https://www.iana.org/time-zones"), Description("America/Sitka")]
+      [EnumLiteral("America/Sitka"), Description("America/Sitka")]
       America_Sitka,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/St_Johns", "https://www.iana.org/time-zones"), Description("America/St_Johns")]
+      [EnumLiteral("America/St_Johns"), Description("America/St_Johns")]
       America_St_Johns,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/St_Kitts", "https://www.iana.org/time-zones"), Description("America/St_Kitts")]
+      [EnumLiteral("America/St_Kitts"), Description("America/St_Kitts")]
       America_St_Kitts,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/St_Lucia", "https://www.iana.org/time-zones"), Description("America/St_Lucia")]
+      [EnumLiteral("America/St_Lucia"), Description("America/St_Lucia")]
       America_St_Lucia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/St_Thomas", "https://www.iana.org/time-zones"), Description("America/St_Thomas")]
+      [EnumLiteral("America/St_Thomas"), Description("America/St_Thomas")]
       America_St_Thomas,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/St_Vincent", "https://www.iana.org/time-zones"), Description("America/St_Vincent")]
+      [EnumLiteral("America/St_Vincent"), Description("America/St_Vincent")]
       America_St_Vincent,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Swift_Current", "https://www.iana.org/time-zones"), Description("America/Swift_Current")]
+      [EnumLiteral("America/Swift_Current"), Description("America/Swift_Current")]
       America_Swift_Current,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Tegucigalpa", "https://www.iana.org/time-zones"), Description("America/Tegucigalpa")]
+      [EnumLiteral("America/Tegucigalpa"), Description("America/Tegucigalpa")]
       America_Tegucigalpa,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Thule", "https://www.iana.org/time-zones"), Description("America/Thule")]
+      [EnumLiteral("America/Thule"), Description("America/Thule")]
       America_Thule,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Thunder_Bay", "https://www.iana.org/time-zones"), Description("America/Thunder_Bay")]
+      [EnumLiteral("America/Thunder_Bay"), Description("America/Thunder_Bay")]
       America_Thunder_Bay,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Tijuana", "https://www.iana.org/time-zones"), Description("America/Tijuana")]
+      [EnumLiteral("America/Tijuana"), Description("America/Tijuana")]
       America_Tijuana,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Toronto", "https://www.iana.org/time-zones"), Description("America/Toronto")]
+      [EnumLiteral("America/Toronto"), Description("America/Toronto")]
       America_Toronto,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Tortola", "https://www.iana.org/time-zones"), Description("America/Tortola")]
+      [EnumLiteral("America/Tortola"), Description("America/Tortola")]
       America_Tortola,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Vancouver", "https://www.iana.org/time-zones"), Description("America/Vancouver")]
+      [EnumLiteral("America/Vancouver"), Description("America/Vancouver")]
       America_Vancouver,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Whitehorse", "https://www.iana.org/time-zones"), Description("America/Whitehorse")]
+      [EnumLiteral("America/Whitehorse"), Description("America/Whitehorse")]
       America_Whitehorse,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Winnipeg", "https://www.iana.org/time-zones"), Description("America/Winnipeg")]
+      [EnumLiteral("America/Winnipeg"), Description("America/Winnipeg")]
       America_Winnipeg,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Yakutat", "https://www.iana.org/time-zones"), Description("America/Yakutat")]
+      [EnumLiteral("America/Yakutat"), Description("America/Yakutat")]
       America_Yakutat,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("America/Yellowknife", "https://www.iana.org/time-zones"), Description("America/Yellowknife")]
+      [EnumLiteral("America/Yellowknife"), Description("America/Yellowknife")]
       America_Yellowknife,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Casey", "https://www.iana.org/time-zones"), Description("Antarctica/Casey")]
+      [EnumLiteral("Antarctica/Casey"), Description("Antarctica/Casey")]
       Antarctica_Casey,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Davis", "https://www.iana.org/time-zones"), Description("Antarctica/Davis")]
+      [EnumLiteral("Antarctica/Davis"), Description("Antarctica/Davis")]
       Antarctica_Davis,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/DumontDUrville", "https://www.iana.org/time-zones"), Description("Antarctica/DumontDUrville")]
+      [EnumLiteral("Antarctica/DumontDUrville"), Description("Antarctica/DumontDUrville")]
       Antarctica_DumontDUrville,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Macquarie", "https://www.iana.org/time-zones"), Description("Antarctica/Macquarie")]
+      [EnumLiteral("Antarctica/Macquarie"), Description("Antarctica/Macquarie")]
       Antarctica_Macquarie,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Mawson", "https://www.iana.org/time-zones"), Description("Antarctica/Mawson")]
+      [EnumLiteral("Antarctica/Mawson"), Description("Antarctica/Mawson")]
       Antarctica_Mawson,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/McMurdo", "https://www.iana.org/time-zones"), Description("Antarctica/McMurdo")]
+      [EnumLiteral("Antarctica/McMurdo"), Description("Antarctica/McMurdo")]
       Antarctica_McMurdo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Palmer", "https://www.iana.org/time-zones"), Description("Antarctica/Palmer")]
+      [EnumLiteral("Antarctica/Palmer"), Description("Antarctica/Palmer")]
       Antarctica_Palmer,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Rothera", "https://www.iana.org/time-zones"), Description("Antarctica/Rothera")]
+      [EnumLiteral("Antarctica/Rothera"), Description("Antarctica/Rothera")]
       Antarctica_Rothera,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Syowa", "https://www.iana.org/time-zones"), Description("Antarctica/Syowa")]
+      [EnumLiteral("Antarctica/Syowa"), Description("Antarctica/Syowa")]
       Antarctica_Syowa,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Troll", "https://www.iana.org/time-zones"), Description("Antarctica/Troll")]
+      [EnumLiteral("Antarctica/Troll"), Description("Antarctica/Troll")]
       Antarctica_Troll,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Antarctica/Vostok", "https://www.iana.org/time-zones"), Description("Antarctica/Vostok")]
+      [EnumLiteral("Antarctica/Vostok"), Description("Antarctica/Vostok")]
       Antarctica_Vostok,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Aden", "https://www.iana.org/time-zones"), Description("Asia/Aden")]
+      [EnumLiteral("Asia/Aden"), Description("Asia/Aden")]
       Asia_Aden,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Almaty", "https://www.iana.org/time-zones"), Description("Asia/Almaty")]
+      [EnumLiteral("Asia/Almaty"), Description("Asia/Almaty")]
       Asia_Almaty,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Amman", "https://www.iana.org/time-zones"), Description("Asia/Amman")]
+      [EnumLiteral("Asia/Amman"), Description("Asia/Amman")]
       Asia_Amman,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Anadyr", "https://www.iana.org/time-zones"), Description("Asia/Anadyr")]
+      [EnumLiteral("Asia/Anadyr"), Description("Asia/Anadyr")]
       Asia_Anadyr,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Aqtau", "https://www.iana.org/time-zones"), Description("Asia/Aqtau")]
+      [EnumLiteral("Asia/Aqtau"), Description("Asia/Aqtau")]
       Asia_Aqtau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Aqtobe", "https://www.iana.org/time-zones"), Description("Asia/Aqtobe")]
+      [EnumLiteral("Asia/Aqtobe"), Description("Asia/Aqtobe")]
       Asia_Aqtobe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Ashgabat", "https://www.iana.org/time-zones"), Description("Asia/Ashgabat")]
+      [EnumLiteral("Asia/Ashgabat"), Description("Asia/Ashgabat")]
       Asia_Ashgabat,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Atyrau", "https://www.iana.org/time-zones"), Description("Asia/Atyrau")]
+      [EnumLiteral("Asia/Atyrau"), Description("Asia/Atyrau")]
       Asia_Atyrau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Baghdad", "https://www.iana.org/time-zones"), Description("Asia/Baghdad")]
+      [EnumLiteral("Asia/Baghdad"), Description("Asia/Baghdad")]
       Asia_Baghdad,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Bahrain", "https://www.iana.org/time-zones"), Description("Asia/Bahrain")]
+      [EnumLiteral("Asia/Bahrain"), Description("Asia/Bahrain")]
       Asia_Bahrain,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Baku", "https://www.iana.org/time-zones"), Description("Asia/Baku")]
+      [EnumLiteral("Asia/Baku"), Description("Asia/Baku")]
       Asia_Baku,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Bangkok", "https://www.iana.org/time-zones"), Description("Asia/Bangkok")]
+      [EnumLiteral("Asia/Bangkok"), Description("Asia/Bangkok")]
       Asia_Bangkok,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Barnaul", "https://www.iana.org/time-zones"), Description("Asia/Barnaul")]
+      [EnumLiteral("Asia/Barnaul"), Description("Asia/Barnaul")]
       Asia_Barnaul,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Beirut", "https://www.iana.org/time-zones"), Description("Asia/Beirut")]
+      [EnumLiteral("Asia/Beirut"), Description("Asia/Beirut")]
       Asia_Beirut,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Bishkek", "https://www.iana.org/time-zones"), Description("Asia/Bishkek")]
+      [EnumLiteral("Asia/Bishkek"), Description("Asia/Bishkek")]
       Asia_Bishkek,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Brunei", "https://www.iana.org/time-zones"), Description("Asia/Brunei")]
+      [EnumLiteral("Asia/Brunei"), Description("Asia/Brunei")]
       Asia_Brunei,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Chita", "https://www.iana.org/time-zones"), Description("Asia/Chita")]
+      [EnumLiteral("Asia/Chita"), Description("Asia/Chita")]
       Asia_Chita,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Choibalsan", "https://www.iana.org/time-zones"), Description("Asia/Choibalsan")]
+      [EnumLiteral("Asia/Choibalsan"), Description("Asia/Choibalsan")]
       Asia_Choibalsan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Chongqing", "https://www.iana.org/time-zones"), Description("Asia/Chongqing")]
+      [EnumLiteral("Asia/Chongqing"), Description("Asia/Chongqing")]
       Asia_Chongqing,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Colombo", "https://www.iana.org/time-zones"), Description("Asia/Colombo")]
+      [EnumLiteral("Asia/Colombo"), Description("Asia/Colombo")]
       Asia_Colombo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Damascus", "https://www.iana.org/time-zones"), Description("Asia/Damascus")]
+      [EnumLiteral("Asia/Damascus"), Description("Asia/Damascus")]
       Asia_Damascus,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Dhaka", "https://www.iana.org/time-zones"), Description("Asia/Dhaka")]
+      [EnumLiteral("Asia/Dhaka"), Description("Asia/Dhaka")]
       Asia_Dhaka,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Dili", "https://www.iana.org/time-zones"), Description("Asia/Dili")]
+      [EnumLiteral("Asia/Dili"), Description("Asia/Dili")]
       Asia_Dili,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Dubai", "https://www.iana.org/time-zones"), Description("Asia/Dubai")]
+      [EnumLiteral("Asia/Dubai"), Description("Asia/Dubai")]
       Asia_Dubai,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Dushanbe", "https://www.iana.org/time-zones"), Description("Asia/Dushanbe")]
+      [EnumLiteral("Asia/Dushanbe"), Description("Asia/Dushanbe")]
       Asia_Dushanbe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Famagusta", "https://www.iana.org/time-zones"), Description("Asia/Famagusta")]
+      [EnumLiteral("Asia/Famagusta"), Description("Asia/Famagusta")]
       Asia_Famagusta,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Gaza", "https://www.iana.org/time-zones"), Description("Asia/Gaza")]
+      [EnumLiteral("Asia/Gaza"), Description("Asia/Gaza")]
       Asia_Gaza,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Hanoi", "https://www.iana.org/time-zones"), Description("Asia/Hanoi")]
+      [EnumLiteral("Asia/Hanoi"), Description("Asia/Hanoi")]
       Asia_Hanoi,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Harbin", "https://www.iana.org/time-zones"), Description("Asia/Harbin")]
+      [EnumLiteral("Asia/Harbin"), Description("Asia/Harbin")]
       Asia_Harbin,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Hebron", "https://www.iana.org/time-zones"), Description("Asia/Hebron")]
+      [EnumLiteral("Asia/Hebron"), Description("Asia/Hebron")]
       Asia_Hebron,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Ho_Chi_Minh", "https://www.iana.org/time-zones"), Description("Asia/Ho_Chi_Minh")]
+      [EnumLiteral("Asia/Ho_Chi_Minh"), Description("Asia/Ho_Chi_Minh")]
       Asia_Ho_Chi_Minh,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Hong_Kong", "https://www.iana.org/time-zones"), Description("Asia/Hong_Kong")]
+      [EnumLiteral("Asia/Hong_Kong"), Description("Asia/Hong_Kong")]
       Asia_Hong_Kong,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Hovd", "https://www.iana.org/time-zones"), Description("Asia/Hovd")]
+      [EnumLiteral("Asia/Hovd"), Description("Asia/Hovd")]
       Asia_Hovd,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Irkutsk", "https://www.iana.org/time-zones"), Description("Asia/Irkutsk")]
+      [EnumLiteral("Asia/Irkutsk"), Description("Asia/Irkutsk")]
       Asia_Irkutsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Jakarta", "https://www.iana.org/time-zones"), Description("Asia/Jakarta")]
+      [EnumLiteral("Asia/Jakarta"), Description("Asia/Jakarta")]
       Asia_Jakarta,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Jayapura", "https://www.iana.org/time-zones"), Description("Asia/Jayapura")]
+      [EnumLiteral("Asia/Jayapura"), Description("Asia/Jayapura")]
       Asia_Jayapura,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Jerusalem", "https://www.iana.org/time-zones"), Description("Asia/Jerusalem")]
+      [EnumLiteral("Asia/Jerusalem"), Description("Asia/Jerusalem")]
       Asia_Jerusalem,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kabul", "https://www.iana.org/time-zones"), Description("Asia/Kabul")]
+      [EnumLiteral("Asia/Kabul"), Description("Asia/Kabul")]
       Asia_Kabul,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kamchatka", "https://www.iana.org/time-zones"), Description("Asia/Kamchatka")]
+      [EnumLiteral("Asia/Kamchatka"), Description("Asia/Kamchatka")]
       Asia_Kamchatka,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Karachi", "https://www.iana.org/time-zones"), Description("Asia/Karachi")]
+      [EnumLiteral("Asia/Karachi"), Description("Asia/Karachi")]
       Asia_Karachi,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kashgar", "https://www.iana.org/time-zones"), Description("Asia/Kashgar")]
+      [EnumLiteral("Asia/Kashgar"), Description("Asia/Kashgar")]
       Asia_Kashgar,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kathmandu", "https://www.iana.org/time-zones"), Description("Asia/Kathmandu")]
+      [EnumLiteral("Asia/Kathmandu"), Description("Asia/Kathmandu")]
       Asia_Kathmandu,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Khandyga", "https://www.iana.org/time-zones"), Description("Asia/Khandyga")]
+      [EnumLiteral("Asia/Khandyga"), Description("Asia/Khandyga")]
       Asia_Khandyga,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kolkata", "https://www.iana.org/time-zones"), Description("Asia/Kolkata")]
+      [EnumLiteral("Asia/Kolkata"), Description("Asia/Kolkata")]
       Asia_Kolkata,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Krasnoyarsk", "https://www.iana.org/time-zones"), Description("Asia/Krasnoyarsk")]
+      [EnumLiteral("Asia/Krasnoyarsk"), Description("Asia/Krasnoyarsk")]
       Asia_Krasnoyarsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kuala_Lumpur", "https://www.iana.org/time-zones"), Description("Asia/Kuala_Lumpur")]
+      [EnumLiteral("Asia/Kuala_Lumpur"), Description("Asia/Kuala_Lumpur")]
       Asia_Kuala_Lumpur,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kuching", "https://www.iana.org/time-zones"), Description("Asia/Kuching")]
+      [EnumLiteral("Asia/Kuching"), Description("Asia/Kuching")]
       Asia_Kuching,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Kuwait", "https://www.iana.org/time-zones"), Description("Asia/Kuwait")]
+      [EnumLiteral("Asia/Kuwait"), Description("Asia/Kuwait")]
       Asia_Kuwait,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Macau", "https://www.iana.org/time-zones"), Description("Asia/Macau")]
+      [EnumLiteral("Asia/Macau"), Description("Asia/Macau")]
       Asia_Macau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Magadan", "https://www.iana.org/time-zones"), Description("Asia/Magadan")]
+      [EnumLiteral("Asia/Magadan"), Description("Asia/Magadan")]
       Asia_Magadan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Makassar", "https://www.iana.org/time-zones"), Description("Asia/Makassar")]
+      [EnumLiteral("Asia/Makassar"), Description("Asia/Makassar")]
       Asia_Makassar,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Manila", "https://www.iana.org/time-zones"), Description("Asia/Manila")]
+      [EnumLiteral("Asia/Manila"), Description("Asia/Manila")]
       Asia_Manila,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Muscat", "https://www.iana.org/time-zones"), Description("Asia/Muscat")]
+      [EnumLiteral("Asia/Muscat"), Description("Asia/Muscat")]
       Asia_Muscat,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Nicosia", "https://www.iana.org/time-zones"), Description("Asia/Nicosia")]
+      [EnumLiteral("Asia/Nicosia"), Description("Asia/Nicosia")]
       Asia_Nicosia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Novokuznetsk", "https://www.iana.org/time-zones"), Description("Asia/Novokuznetsk")]
+      [EnumLiteral("Asia/Novokuznetsk"), Description("Asia/Novokuznetsk")]
       Asia_Novokuznetsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Novosibirsk", "https://www.iana.org/time-zones"), Description("Asia/Novosibirsk")]
+      [EnumLiteral("Asia/Novosibirsk"), Description("Asia/Novosibirsk")]
       Asia_Novosibirsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Omsk", "https://www.iana.org/time-zones"), Description("Asia/Omsk")]
+      [EnumLiteral("Asia/Omsk"), Description("Asia/Omsk")]
       Asia_Omsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Oral", "https://www.iana.org/time-zones"), Description("Asia/Oral")]
+      [EnumLiteral("Asia/Oral"), Description("Asia/Oral")]
       Asia_Oral,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Phnom_Penh", "https://www.iana.org/time-zones"), Description("Asia/Phnom_Penh")]
+      [EnumLiteral("Asia/Phnom_Penh"), Description("Asia/Phnom_Penh")]
       Asia_Phnom_Penh,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Pontianak", "https://www.iana.org/time-zones"), Description("Asia/Pontianak")]
+      [EnumLiteral("Asia/Pontianak"), Description("Asia/Pontianak")]
       Asia_Pontianak,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Pyongyang", "https://www.iana.org/time-zones"), Description("Asia/Pyongyang")]
+      [EnumLiteral("Asia/Pyongyang"), Description("Asia/Pyongyang")]
       Asia_Pyongyang,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Qatar", "https://www.iana.org/time-zones"), Description("Asia/Qatar")]
+      [EnumLiteral("Asia/Qatar"), Description("Asia/Qatar")]
       Asia_Qatar,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Qostanay", "https://www.iana.org/time-zones"), Description("Asia/Qostanay")]
+      [EnumLiteral("Asia/Qostanay"), Description("Asia/Qostanay")]
       Asia_Qostanay,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Qyzylorda", "https://www.iana.org/time-zones"), Description("Asia/Qyzylorda")]
+      [EnumLiteral("Asia/Qyzylorda"), Description("Asia/Qyzylorda")]
       Asia_Qyzylorda,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Riyadh", "https://www.iana.org/time-zones"), Description("Asia/Riyadh")]
+      [EnumLiteral("Asia/Riyadh"), Description("Asia/Riyadh")]
       Asia_Riyadh,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Sakhalin", "https://www.iana.org/time-zones"), Description("Asia/Sakhalin")]
+      [EnumLiteral("Asia/Sakhalin"), Description("Asia/Sakhalin")]
       Asia_Sakhalin,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Samarkand", "https://www.iana.org/time-zones"), Description("Asia/Samarkand")]
+      [EnumLiteral("Asia/Samarkand"), Description("Asia/Samarkand")]
       Asia_Samarkand,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Seoul", "https://www.iana.org/time-zones"), Description("Asia/Seoul")]
+      [EnumLiteral("Asia/Seoul"), Description("Asia/Seoul")]
       Asia_Seoul,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Shanghai", "https://www.iana.org/time-zones"), Description("Asia/Shanghai")]
+      [EnumLiteral("Asia/Shanghai"), Description("Asia/Shanghai")]
       Asia_Shanghai,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Singapore", "https://www.iana.org/time-zones"), Description("Asia/Singapore")]
+      [EnumLiteral("Asia/Singapore"), Description("Asia/Singapore")]
       Asia_Singapore,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Srednekolymsk", "https://www.iana.org/time-zones"), Description("Asia/Srednekolymsk")]
+      [EnumLiteral("Asia/Srednekolymsk"), Description("Asia/Srednekolymsk")]
       Asia_Srednekolymsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Taipei", "https://www.iana.org/time-zones"), Description("Asia/Taipei")]
+      [EnumLiteral("Asia/Taipei"), Description("Asia/Taipei")]
       Asia_Taipei,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Tashkent", "https://www.iana.org/time-zones"), Description("Asia/Tashkent")]
+      [EnumLiteral("Asia/Tashkent"), Description("Asia/Tashkent")]
       Asia_Tashkent,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Tbilisi", "https://www.iana.org/time-zones"), Description("Asia/Tbilisi")]
+      [EnumLiteral("Asia/Tbilisi"), Description("Asia/Tbilisi")]
       Asia_Tbilisi,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Tehran", "https://www.iana.org/time-zones"), Description("Asia/Tehran")]
+      [EnumLiteral("Asia/Tehran"), Description("Asia/Tehran")]
       Asia_Tehran,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Tel_Aviv", "https://www.iana.org/time-zones"), Description("Asia/Tel_Aviv")]
+      [EnumLiteral("Asia/Tel_Aviv"), Description("Asia/Tel_Aviv")]
       Asia_Tel_Aviv,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Thimphu", "https://www.iana.org/time-zones"), Description("Asia/Thimphu")]
+      [EnumLiteral("Asia/Thimphu"), Description("Asia/Thimphu")]
       Asia_Thimphu,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Tokyo", "https://www.iana.org/time-zones"), Description("Asia/Tokyo")]
+      [EnumLiteral("Asia/Tokyo"), Description("Asia/Tokyo")]
       Asia_Tokyo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Tomsk", "https://www.iana.org/time-zones"), Description("Asia/Tomsk")]
+      [EnumLiteral("Asia/Tomsk"), Description("Asia/Tomsk")]
       Asia_Tomsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Ulaanbaatar", "https://www.iana.org/time-zones"), Description("Asia/Ulaanbaatar")]
+      [EnumLiteral("Asia/Ulaanbaatar"), Description("Asia/Ulaanbaatar")]
       Asia_Ulaanbaatar,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Urumqi", "https://www.iana.org/time-zones"), Description("Asia/Urumqi")]
+      [EnumLiteral("Asia/Urumqi"), Description("Asia/Urumqi")]
       Asia_Urumqi,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Ust-Nera", "https://www.iana.org/time-zones"), Description("Asia/Ust-Nera")]
+      [EnumLiteral("Asia/Ust-Nera"), Description("Asia/Ust-Nera")]
       Asia_UstNera,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Vientiane", "https://www.iana.org/time-zones"), Description("Asia/Vientiane")]
+      [EnumLiteral("Asia/Vientiane"), Description("Asia/Vientiane")]
       Asia_Vientiane,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Vladivostok", "https://www.iana.org/time-zones"), Description("Asia/Vladivostok")]
+      [EnumLiteral("Asia/Vladivostok"), Description("Asia/Vladivostok")]
       Asia_Vladivostok,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Yakutsk", "https://www.iana.org/time-zones"), Description("Asia/Yakutsk")]
+      [EnumLiteral("Asia/Yakutsk"), Description("Asia/Yakutsk")]
       Asia_Yakutsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Yangon", "https://www.iana.org/time-zones"), Description("Asia/Yangon")]
+      [EnumLiteral("Asia/Yangon"), Description("Asia/Yangon")]
       Asia_Yangon,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Yekaterinburg", "https://www.iana.org/time-zones"), Description("Asia/Yekaterinburg")]
+      [EnumLiteral("Asia/Yekaterinburg"), Description("Asia/Yekaterinburg")]
       Asia_Yekaterinburg,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Asia/Yerevan", "https://www.iana.org/time-zones"), Description("Asia/Yerevan")]
+      [EnumLiteral("Asia/Yerevan"), Description("Asia/Yerevan")]
       Asia_Yerevan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Azores", "https://www.iana.org/time-zones"), Description("Atlantic/Azores")]
+      [EnumLiteral("Atlantic/Azores"), Description("Atlantic/Azores")]
       Atlantic_Azores,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Bermuda", "https://www.iana.org/time-zones"), Description("Atlantic/Bermuda")]
+      [EnumLiteral("Atlantic/Bermuda"), Description("Atlantic/Bermuda")]
       Atlantic_Bermuda,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Canary", "https://www.iana.org/time-zones"), Description("Atlantic/Canary")]
+      [EnumLiteral("Atlantic/Canary"), Description("Atlantic/Canary")]
       Atlantic_Canary,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Cape_Verde", "https://www.iana.org/time-zones"), Description("Atlantic/Cape_Verde")]
+      [EnumLiteral("Atlantic/Cape_Verde"), Description("Atlantic/Cape_Verde")]
       Atlantic_Cape_Verde,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Faroe", "https://www.iana.org/time-zones"), Description("Atlantic/Faroe")]
+      [EnumLiteral("Atlantic/Faroe"), Description("Atlantic/Faroe")]
       Atlantic_Faroe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Jan_Mayen", "https://www.iana.org/time-zones"), Description("Atlantic/Jan_Mayen")]
+      [EnumLiteral("Atlantic/Jan_Mayen"), Description("Atlantic/Jan_Mayen")]
       Atlantic_Jan_Mayen,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Madeira", "https://www.iana.org/time-zones"), Description("Atlantic/Madeira")]
+      [EnumLiteral("Atlantic/Madeira"), Description("Atlantic/Madeira")]
       Atlantic_Madeira,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Reykjavik", "https://www.iana.org/time-zones"), Description("Atlantic/Reykjavik")]
+      [EnumLiteral("Atlantic/Reykjavik"), Description("Atlantic/Reykjavik")]
       Atlantic_Reykjavik,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/South_Georgia", "https://www.iana.org/time-zones"), Description("Atlantic/South_Georgia")]
+      [EnumLiteral("Atlantic/South_Georgia"), Description("Atlantic/South_Georgia")]
       Atlantic_South_Georgia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/St_Helena", "https://www.iana.org/time-zones"), Description("Atlantic/St_Helena")]
+      [EnumLiteral("Atlantic/St_Helena"), Description("Atlantic/St_Helena")]
       Atlantic_St_Helena,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Atlantic/Stanley", "https://www.iana.org/time-zones"), Description("Atlantic/Stanley")]
+      [EnumLiteral("Atlantic/Stanley"), Description("Atlantic/Stanley")]
       Atlantic_Stanley,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Adelaide", "https://www.iana.org/time-zones"), Description("Australia/Adelaide")]
+      [EnumLiteral("Australia/Adelaide"), Description("Australia/Adelaide")]
       Australia_Adelaide,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Brisbane", "https://www.iana.org/time-zones"), Description("Australia/Brisbane")]
+      [EnumLiteral("Australia/Brisbane"), Description("Australia/Brisbane")]
       Australia_Brisbane,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Broken_Hill", "https://www.iana.org/time-zones"), Description("Australia/Broken_Hill")]
+      [EnumLiteral("Australia/Broken_Hill"), Description("Australia/Broken_Hill")]
       Australia_Broken_Hill,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Currie", "https://www.iana.org/time-zones"), Description("Australia/Currie")]
+      [EnumLiteral("Australia/Currie"), Description("Australia/Currie")]
       Australia_Currie,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Darwin", "https://www.iana.org/time-zones"), Description("Australia/Darwin")]
+      [EnumLiteral("Australia/Darwin"), Description("Australia/Darwin")]
       Australia_Darwin,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Eucla", "https://www.iana.org/time-zones"), Description("Australia/Eucla")]
+      [EnumLiteral("Australia/Eucla"), Description("Australia/Eucla")]
       Australia_Eucla,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Hobart", "https://www.iana.org/time-zones"), Description("Australia/Hobart")]
+      [EnumLiteral("Australia/Hobart"), Description("Australia/Hobart")]
       Australia_Hobart,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Lindeman", "https://www.iana.org/time-zones"), Description("Australia/Lindeman")]
+      [EnumLiteral("Australia/Lindeman"), Description("Australia/Lindeman")]
       Australia_Lindeman,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Lord_Howe", "https://www.iana.org/time-zones"), Description("Australia/Lord_Howe")]
+      [EnumLiteral("Australia/Lord_Howe"), Description("Australia/Lord_Howe")]
       Australia_Lord_Howe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Melbourne", "https://www.iana.org/time-zones"), Description("Australia/Melbourne")]
+      [EnumLiteral("Australia/Melbourne"), Description("Australia/Melbourne")]
       Australia_Melbourne,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Perth", "https://www.iana.org/time-zones"), Description("Australia/Perth")]
+      [EnumLiteral("Australia/Perth"), Description("Australia/Perth")]
       Australia_Perth,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Australia/Sydney", "https://www.iana.org/time-zones"), Description("Australia/Sydney")]
+      [EnumLiteral("Australia/Sydney"), Description("Australia/Sydney")]
       Australia_Sydney,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("CET", "https://www.iana.org/time-zones"), Description("CET")]
+      [EnumLiteral("CET"), Description("CET")]
       CET,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("CST6CDT", "https://www.iana.org/time-zones"), Description("CST6CDT")]
+      [EnumLiteral("CST6CDT"), Description("CST6CDT")]
       CST6CDT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("EET", "https://www.iana.org/time-zones"), Description("EET")]
+      [EnumLiteral("EET"), Description("EET")]
       EET,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("EST", "https://www.iana.org/time-zones"), Description("EST")]
+      [EnumLiteral("EST"), Description("EST")]
       EST,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("EST5EDT", "https://www.iana.org/time-zones"), Description("EST5EDT")]
+      [EnumLiteral("EST5EDT"), Description("EST5EDT")]
       EST5EDT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT", "https://www.iana.org/time-zones"), Description("Etc/GMT")]
+      [EnumLiteral("Etc/GMT"), Description("Etc/GMT")]
       Etc_GMT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+1", "https://www.iana.org/time-zones"), Description("Etc/GMT+1")]
+      [EnumLiteral("Etc/GMT+1"), Description("Etc/GMT+1")]
       Etc_GMT_1,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+10", "https://www.iana.org/time-zones"), Description("Etc/GMT+10")]
+      [EnumLiteral("Etc/GMT+10"), Description("Etc/GMT+10")]
       Etc_GMT_10,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+11", "https://www.iana.org/time-zones"), Description("Etc/GMT+11")]
+      [EnumLiteral("Etc/GMT+11"), Description("Etc/GMT+11")]
       Etc_GMT_11,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+12", "https://www.iana.org/time-zones"), Description("Etc/GMT+12")]
+      [EnumLiteral("Etc/GMT+12"), Description("Etc/GMT+12")]
       Etc_GMT_12,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+2", "https://www.iana.org/time-zones"), Description("Etc/GMT+2")]
+      [EnumLiteral("Etc/GMT+2"), Description("Etc/GMT+2")]
       Etc_GMT_2,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+3", "https://www.iana.org/time-zones"), Description("Etc/GMT+3")]
+      [EnumLiteral("Etc/GMT+3"), Description("Etc/GMT+3")]
       Etc_GMT_3,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+4", "https://www.iana.org/time-zones"), Description("Etc/GMT+4")]
+      [EnumLiteral("Etc/GMT+4"), Description("Etc/GMT+4")]
       Etc_GMT_4,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+5", "https://www.iana.org/time-zones"), Description("Etc/GMT+5")]
+      [EnumLiteral("Etc/GMT+5"), Description("Etc/GMT+5")]
       Etc_GMT_5,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+6", "https://www.iana.org/time-zones"), Description("Etc/GMT+6")]
+      [EnumLiteral("Etc/GMT+6"), Description("Etc/GMT+6")]
       Etc_GMT_6,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+7", "https://www.iana.org/time-zones"), Description("Etc/GMT+7")]
+      [EnumLiteral("Etc/GMT+7"), Description("Etc/GMT+7")]
       Etc_GMT_7,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+8", "https://www.iana.org/time-zones"), Description("Etc/GMT+8")]
+      [EnumLiteral("Etc/GMT+8"), Description("Etc/GMT+8")]
       Etc_GMT_8,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT+9", "https://www.iana.org/time-zones"), Description("Etc/GMT+9")]
+      [EnumLiteral("Etc/GMT+9"), Description("Etc/GMT+9")]
       Etc_GMT_9,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-1", "https://www.iana.org/time-zones"), Description("Etc/GMT-1")]
+      [EnumLiteral("Etc/GMT-1"), Description("Etc/GMT-1")]
       Etc_GMT1,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-10", "https://www.iana.org/time-zones"), Description("Etc/GMT-10")]
+      [EnumLiteral("Etc/GMT-10"), Description("Etc/GMT-10")]
       Etc_GMT10,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-11", "https://www.iana.org/time-zones"), Description("Etc/GMT-11")]
+      [EnumLiteral("Etc/GMT-11"), Description("Etc/GMT-11")]
       Etc_GMT11,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-12", "https://www.iana.org/time-zones"), Description("Etc/GMT-12")]
+      [EnumLiteral("Etc/GMT-12"), Description("Etc/GMT-12")]
       Etc_GMT12,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-13", "https://www.iana.org/time-zones"), Description("Etc/GMT-13")]
+      [EnumLiteral("Etc/GMT-13"), Description("Etc/GMT-13")]
       Etc_GMT13,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-14", "https://www.iana.org/time-zones"), Description("Etc/GMT-14")]
+      [EnumLiteral("Etc/GMT-14"), Description("Etc/GMT-14")]
       Etc_GMT14,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-2", "https://www.iana.org/time-zones"), Description("Etc/GMT-2")]
+      [EnumLiteral("Etc/GMT-2"), Description("Etc/GMT-2")]
       Etc_GMT2,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-3", "https://www.iana.org/time-zones"), Description("Etc/GMT-3")]
+      [EnumLiteral("Etc/GMT-3"), Description("Etc/GMT-3")]
       Etc_GMT3,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-4", "https://www.iana.org/time-zones"), Description("Etc/GMT-4")]
+      [EnumLiteral("Etc/GMT-4"), Description("Etc/GMT-4")]
       Etc_GMT4,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-5", "https://www.iana.org/time-zones"), Description("Etc/GMT-5")]
+      [EnumLiteral("Etc/GMT-5"), Description("Etc/GMT-5")]
       Etc_GMT5,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-6", "https://www.iana.org/time-zones"), Description("Etc/GMT-6")]
+      [EnumLiteral("Etc/GMT-6"), Description("Etc/GMT-6")]
       Etc_GMT6,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-7", "https://www.iana.org/time-zones"), Description("Etc/GMT-7")]
+      [EnumLiteral("Etc/GMT-7"), Description("Etc/GMT-7")]
       Etc_GMT7,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-8", "https://www.iana.org/time-zones"), Description("Etc/GMT-8")]
+      [EnumLiteral("Etc/GMT-8"), Description("Etc/GMT-8")]
       Etc_GMT8,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/GMT-9", "https://www.iana.org/time-zones"), Description("Etc/GMT-9")]
+      [EnumLiteral("Etc/GMT-9"), Description("Etc/GMT-9")]
       Etc_GMT9,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Etc/UTC", "https://www.iana.org/time-zones"), Description("Etc/UTC")]
+      [EnumLiteral("Etc/UTC"), Description("Etc/UTC")]
       Etc_UTC,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Amsterdam", "https://www.iana.org/time-zones"), Description("Europe/Amsterdam")]
+      [EnumLiteral("Europe/Amsterdam"), Description("Europe/Amsterdam")]
       Europe_Amsterdam,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Andorra", "https://www.iana.org/time-zones"), Description("Europe/Andorra")]
+      [EnumLiteral("Europe/Andorra"), Description("Europe/Andorra")]
       Europe_Andorra,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Astrakhan", "https://www.iana.org/time-zones"), Description("Europe/Astrakhan")]
+      [EnumLiteral("Europe/Astrakhan"), Description("Europe/Astrakhan")]
       Europe_Astrakhan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Athens", "https://www.iana.org/time-zones"), Description("Europe/Athens")]
+      [EnumLiteral("Europe/Athens"), Description("Europe/Athens")]
       Europe_Athens,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Belfast", "https://www.iana.org/time-zones"), Description("Europe/Belfast")]
+      [EnumLiteral("Europe/Belfast"), Description("Europe/Belfast")]
       Europe_Belfast,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Belgrade", "https://www.iana.org/time-zones"), Description("Europe/Belgrade")]
+      [EnumLiteral("Europe/Belgrade"), Description("Europe/Belgrade")]
       Europe_Belgrade,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Berlin", "https://www.iana.org/time-zones"), Description("Europe/Berlin")]
+      [EnumLiteral("Europe/Berlin"), Description("Europe/Berlin")]
       Europe_Berlin,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Brussels", "https://www.iana.org/time-zones"), Description("Europe/Brussels")]
+      [EnumLiteral("Europe/Brussels"), Description("Europe/Brussels")]
       Europe_Brussels,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Bucharest", "https://www.iana.org/time-zones"), Description("Europe/Bucharest")]
+      [EnumLiteral("Europe/Bucharest"), Description("Europe/Bucharest")]
       Europe_Bucharest,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Budapest", "https://www.iana.org/time-zones"), Description("Europe/Budapest")]
+      [EnumLiteral("Europe/Budapest"), Description("Europe/Budapest")]
       Europe_Budapest,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Chisinau", "https://www.iana.org/time-zones"), Description("Europe/Chisinau")]
+      [EnumLiteral("Europe/Chisinau"), Description("Europe/Chisinau")]
       Europe_Chisinau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Copenhagen", "https://www.iana.org/time-zones"), Description("Europe/Copenhagen")]
+      [EnumLiteral("Europe/Copenhagen"), Description("Europe/Copenhagen")]
       Europe_Copenhagen,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Dublin", "https://www.iana.org/time-zones"), Description("Europe/Dublin")]
+      [EnumLiteral("Europe/Dublin"), Description("Europe/Dublin")]
       Europe_Dublin,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Gibraltar", "https://www.iana.org/time-zones"), Description("Europe/Gibraltar")]
+      [EnumLiteral("Europe/Gibraltar"), Description("Europe/Gibraltar")]
       Europe_Gibraltar,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Guernsey", "https://www.iana.org/time-zones"), Description("Europe/Guernsey")]
+      [EnumLiteral("Europe/Guernsey"), Description("Europe/Guernsey")]
       Europe_Guernsey,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Helsinki", "https://www.iana.org/time-zones"), Description("Europe/Helsinki")]
+      [EnumLiteral("Europe/Helsinki"), Description("Europe/Helsinki")]
       Europe_Helsinki,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Isle_of_Man", "https://www.iana.org/time-zones"), Description("Europe/Isle_of_Man")]
+      [EnumLiteral("Europe/Isle_of_Man"), Description("Europe/Isle_of_Man")]
       Europe_Isle_of_Man,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Istanbul", "https://www.iana.org/time-zones"), Description("Europe/Istanbul")]
+      [EnumLiteral("Europe/Istanbul"), Description("Europe/Istanbul")]
       Europe_Istanbul,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Jersey", "https://www.iana.org/time-zones"), Description("Europe/Jersey")]
+      [EnumLiteral("Europe/Jersey"), Description("Europe/Jersey")]
       Europe_Jersey,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Kaliningrad", "https://www.iana.org/time-zones"), Description("Europe/Kaliningrad")]
+      [EnumLiteral("Europe/Kaliningrad"), Description("Europe/Kaliningrad")]
       Europe_Kaliningrad,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Kiev", "https://www.iana.org/time-zones"), Description("Europe/Kiev")]
+      [EnumLiteral("Europe/Kiev"), Description("Europe/Kiev")]
       Europe_Kiev,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Kirov", "https://www.iana.org/time-zones"), Description("Europe/Kirov")]
+      [EnumLiteral("Europe/Kirov"), Description("Europe/Kirov")]
       Europe_Kirov,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Lisbon", "https://www.iana.org/time-zones"), Description("Europe/Lisbon")]
+      [EnumLiteral("Europe/Lisbon"), Description("Europe/Lisbon")]
       Europe_Lisbon,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Ljubljana", "https://www.iana.org/time-zones"), Description("Europe/Ljubljana")]
+      [EnumLiteral("Europe/Ljubljana"), Description("Europe/Ljubljana")]
       Europe_Ljubljana,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/London", "https://www.iana.org/time-zones"), Description("Europe/London")]
+      [EnumLiteral("Europe/London"), Description("Europe/London")]
       Europe_London,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Luxembourg", "https://www.iana.org/time-zones"), Description("Europe/Luxembourg")]
+      [EnumLiteral("Europe/Luxembourg"), Description("Europe/Luxembourg")]
       Europe_Luxembourg,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Madrid", "https://www.iana.org/time-zones"), Description("Europe/Madrid")]
+      [EnumLiteral("Europe/Madrid"), Description("Europe/Madrid")]
       Europe_Madrid,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Malta", "https://www.iana.org/time-zones"), Description("Europe/Malta")]
+      [EnumLiteral("Europe/Malta"), Description("Europe/Malta")]
       Europe_Malta,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Minsk", "https://www.iana.org/time-zones"), Description("Europe/Minsk")]
+      [EnumLiteral("Europe/Minsk"), Description("Europe/Minsk")]
       Europe_Minsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Monaco", "https://www.iana.org/time-zones"), Description("Europe/Monaco")]
+      [EnumLiteral("Europe/Monaco"), Description("Europe/Monaco")]
       Europe_Monaco,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Moscow", "https://www.iana.org/time-zones"), Description("Europe/Moscow")]
+      [EnumLiteral("Europe/Moscow"), Description("Europe/Moscow")]
       Europe_Moscow,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Oslo", "https://www.iana.org/time-zones"), Description("Europe/Oslo")]
+      [EnumLiteral("Europe/Oslo"), Description("Europe/Oslo")]
       Europe_Oslo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Paris", "https://www.iana.org/time-zones"), Description("Europe/Paris")]
+      [EnumLiteral("Europe/Paris"), Description("Europe/Paris")]
       Europe_Paris,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Prague", "https://www.iana.org/time-zones"), Description("Europe/Prague")]
+      [EnumLiteral("Europe/Prague"), Description("Europe/Prague")]
       Europe_Prague,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Riga", "https://www.iana.org/time-zones"), Description("Europe/Riga")]
+      [EnumLiteral("Europe/Riga"), Description("Europe/Riga")]
       Europe_Riga,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Rome", "https://www.iana.org/time-zones"), Description("Europe/Rome")]
+      [EnumLiteral("Europe/Rome"), Description("Europe/Rome")]
       Europe_Rome,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Samara", "https://www.iana.org/time-zones"), Description("Europe/Samara")]
+      [EnumLiteral("Europe/Samara"), Description("Europe/Samara")]
       Europe_Samara,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Sarajevo", "https://www.iana.org/time-zones"), Description("Europe/Sarajevo")]
+      [EnumLiteral("Europe/Sarajevo"), Description("Europe/Sarajevo")]
       Europe_Sarajevo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Saratov", "https://www.iana.org/time-zones"), Description("Europe/Saratov")]
+      [EnumLiteral("Europe/Saratov"), Description("Europe/Saratov")]
       Europe_Saratov,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Simferopol", "https://www.iana.org/time-zones"), Description("Europe/Simferopol")]
+      [EnumLiteral("Europe/Simferopol"), Description("Europe/Simferopol")]
       Europe_Simferopol,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Skopje", "https://www.iana.org/time-zones"), Description("Europe/Skopje")]
+      [EnumLiteral("Europe/Skopje"), Description("Europe/Skopje")]
       Europe_Skopje,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Sofia", "https://www.iana.org/time-zones"), Description("Europe/Sofia")]
+      [EnumLiteral("Europe/Sofia"), Description("Europe/Sofia")]
       Europe_Sofia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Stockholm", "https://www.iana.org/time-zones"), Description("Europe/Stockholm")]
+      [EnumLiteral("Europe/Stockholm"), Description("Europe/Stockholm")]
       Europe_Stockholm,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Tallinn", "https://www.iana.org/time-zones"), Description("Europe/Tallinn")]
+      [EnumLiteral("Europe/Tallinn"), Description("Europe/Tallinn")]
       Europe_Tallinn,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Tirane", "https://www.iana.org/time-zones"), Description("Europe/Tirane")]
+      [EnumLiteral("Europe/Tirane"), Description("Europe/Tirane")]
       Europe_Tirane,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Tiraspol", "https://www.iana.org/time-zones"), Description("Europe/Tiraspol")]
+      [EnumLiteral("Europe/Tiraspol"), Description("Europe/Tiraspol")]
       Europe_Tiraspol,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Ulyanovsk", "https://www.iana.org/time-zones"), Description("Europe/Ulyanovsk")]
+      [EnumLiteral("Europe/Ulyanovsk"), Description("Europe/Ulyanovsk")]
       Europe_Ulyanovsk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Uzhgorod", "https://www.iana.org/time-zones"), Description("Europe/Uzhgorod")]
+      [EnumLiteral("Europe/Uzhgorod"), Description("Europe/Uzhgorod")]
       Europe_Uzhgorod,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Vaduz", "https://www.iana.org/time-zones"), Description("Europe/Vaduz")]
+      [EnumLiteral("Europe/Vaduz"), Description("Europe/Vaduz")]
       Europe_Vaduz,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Vienna", "https://www.iana.org/time-zones"), Description("Europe/Vienna")]
+      [EnumLiteral("Europe/Vienna"), Description("Europe/Vienna")]
       Europe_Vienna,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Vilnius", "https://www.iana.org/time-zones"), Description("Europe/Vilnius")]
+      [EnumLiteral("Europe/Vilnius"), Description("Europe/Vilnius")]
       Europe_Vilnius,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Volgograd", "https://www.iana.org/time-zones"), Description("Europe/Volgograd")]
+      [EnumLiteral("Europe/Volgograd"), Description("Europe/Volgograd")]
       Europe_Volgograd,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Warsaw", "https://www.iana.org/time-zones"), Description("Europe/Warsaw")]
+      [EnumLiteral("Europe/Warsaw"), Description("Europe/Warsaw")]
       Europe_Warsaw,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Zagreb", "https://www.iana.org/time-zones"), Description("Europe/Zagreb")]
+      [EnumLiteral("Europe/Zagreb"), Description("Europe/Zagreb")]
       Europe_Zagreb,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Zaporozhye", "https://www.iana.org/time-zones"), Description("Europe/Zaporozhye")]
+      [EnumLiteral("Europe/Zaporozhye"), Description("Europe/Zaporozhye")]
       Europe_Zaporozhye,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Europe/Zurich", "https://www.iana.org/time-zones"), Description("Europe/Zurich")]
+      [EnumLiteral("Europe/Zurich"), Description("Europe/Zurich")]
       Europe_Zurich,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Factory", "https://www.iana.org/time-zones"), Description("Factory")]
+      [EnumLiteral("Factory"), Description("Factory")]
       Factory,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("HST", "https://www.iana.org/time-zones"), Description("HST")]
+      [EnumLiteral("HST"), Description("HST")]
       HST,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Antananarivo", "https://www.iana.org/time-zones"), Description("Indian/Antananarivo")]
+      [EnumLiteral("Indian/Antananarivo"), Description("Indian/Antananarivo")]
       Indian_Antananarivo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Chagos", "https://www.iana.org/time-zones"), Description("Indian/Chagos")]
+      [EnumLiteral("Indian/Chagos"), Description("Indian/Chagos")]
       Indian_Chagos,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Christmas", "https://www.iana.org/time-zones"), Description("Indian/Christmas")]
+      [EnumLiteral("Indian/Christmas"), Description("Indian/Christmas")]
       Indian_Christmas,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Cocos", "https://www.iana.org/time-zones"), Description("Indian/Cocos")]
+      [EnumLiteral("Indian/Cocos"), Description("Indian/Cocos")]
       Indian_Cocos,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Comoro", "https://www.iana.org/time-zones"), Description("Indian/Comoro")]
+      [EnumLiteral("Indian/Comoro"), Description("Indian/Comoro")]
       Indian_Comoro,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Kerguelen", "https://www.iana.org/time-zones"), Description("Indian/Kerguelen")]
+      [EnumLiteral("Indian/Kerguelen"), Description("Indian/Kerguelen")]
       Indian_Kerguelen,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Mahe", "https://www.iana.org/time-zones"), Description("Indian/Mahe")]
+      [EnumLiteral("Indian/Mahe"), Description("Indian/Mahe")]
       Indian_Mahe,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Maldives", "https://www.iana.org/time-zones"), Description("Indian/Maldives")]
+      [EnumLiteral("Indian/Maldives"), Description("Indian/Maldives")]
       Indian_Maldives,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Mauritius", "https://www.iana.org/time-zones"), Description("Indian/Mauritius")]
+      [EnumLiteral("Indian/Mauritius"), Description("Indian/Mauritius")]
       Indian_Mauritius,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Mayotte", "https://www.iana.org/time-zones"), Description("Indian/Mayotte")]
+      [EnumLiteral("Indian/Mayotte"), Description("Indian/Mayotte")]
       Indian_Mayotte,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Indian/Reunion", "https://www.iana.org/time-zones"), Description("Indian/Reunion")]
+      [EnumLiteral("Indian/Reunion"), Description("Indian/Reunion")]
       Indian_Reunion,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("MET", "https://www.iana.org/time-zones"), Description("MET")]
+      [EnumLiteral("MET"), Description("MET")]
       MET,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("MST", "https://www.iana.org/time-zones"), Description("MST")]
+      [EnumLiteral("MST"), Description("MST")]
       MST,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("MST7MDT", "https://www.iana.org/time-zones"), Description("MST7MDT")]
+      [EnumLiteral("MST7MDT"), Description("MST7MDT")]
       MST7MDT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("PST8PDT", "https://www.iana.org/time-zones"), Description("PST8PDT")]
+      [EnumLiteral("PST8PDT"), Description("PST8PDT")]
       PST8PDT,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Apia", "https://www.iana.org/time-zones"), Description("Pacific/Apia")]
+      [EnumLiteral("Pacific/Apia"), Description("Pacific/Apia")]
       Pacific_Apia,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Auckland", "https://www.iana.org/time-zones"), Description("Pacific/Auckland")]
+      [EnumLiteral("Pacific/Auckland"), Description("Pacific/Auckland")]
       Pacific_Auckland,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Bougainville", "https://www.iana.org/time-zones"), Description("Pacific/Bougainville")]
+      [EnumLiteral("Pacific/Bougainville"), Description("Pacific/Bougainville")]
       Pacific_Bougainville,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Chatham", "https://www.iana.org/time-zones"), Description("Pacific/Chatham")]
+      [EnumLiteral("Pacific/Chatham"), Description("Pacific/Chatham")]
       Pacific_Chatham,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Chuuk", "https://www.iana.org/time-zones"), Description("Pacific/Chuuk")]
+      [EnumLiteral("Pacific/Chuuk"), Description("Pacific/Chuuk")]
       Pacific_Chuuk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Easter", "https://www.iana.org/time-zones"), Description("Pacific/Easter")]
+      [EnumLiteral("Pacific/Easter"), Description("Pacific/Easter")]
       Pacific_Easter,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Efate", "https://www.iana.org/time-zones"), Description("Pacific/Efate")]
+      [EnumLiteral("Pacific/Efate"), Description("Pacific/Efate")]
       Pacific_Efate,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Enderbury", "https://www.iana.org/time-zones"), Description("Pacific/Enderbury")]
+      [EnumLiteral("Pacific/Enderbury"), Description("Pacific/Enderbury")]
       Pacific_Enderbury,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Fakaofo", "https://www.iana.org/time-zones"), Description("Pacific/Fakaofo")]
+      [EnumLiteral("Pacific/Fakaofo"), Description("Pacific/Fakaofo")]
       Pacific_Fakaofo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Fiji", "https://www.iana.org/time-zones"), Description("Pacific/Fiji")]
+      [EnumLiteral("Pacific/Fiji"), Description("Pacific/Fiji")]
       Pacific_Fiji,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Funafuti", "https://www.iana.org/time-zones"), Description("Pacific/Funafuti")]
+      [EnumLiteral("Pacific/Funafuti"), Description("Pacific/Funafuti")]
       Pacific_Funafuti,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Galapagos", "https://www.iana.org/time-zones"), Description("Pacific/Galapagos")]
+      [EnumLiteral("Pacific/Galapagos"), Description("Pacific/Galapagos")]
       Pacific_Galapagos,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Gambier", "https://www.iana.org/time-zones"), Description("Pacific/Gambier")]
+      [EnumLiteral("Pacific/Gambier"), Description("Pacific/Gambier")]
       Pacific_Gambier,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Guadalcanal", "https://www.iana.org/time-zones"), Description("Pacific/Guadalcanal")]
+      [EnumLiteral("Pacific/Guadalcanal"), Description("Pacific/Guadalcanal")]
       Pacific_Guadalcanal,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Guam", "https://www.iana.org/time-zones"), Description("Pacific/Guam")]
+      [EnumLiteral("Pacific/Guam"), Description("Pacific/Guam")]
       Pacific_Guam,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Honolulu", "https://www.iana.org/time-zones"), Description("Pacific/Honolulu")]
+      [EnumLiteral("Pacific/Honolulu"), Description("Pacific/Honolulu")]
       Pacific_Honolulu,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Johnston", "https://www.iana.org/time-zones"), Description("Pacific/Johnston")]
+      [EnumLiteral("Pacific/Johnston"), Description("Pacific/Johnston")]
       Pacific_Johnston,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Kiritimati", "https://www.iana.org/time-zones"), Description("Pacific/Kiritimati")]
+      [EnumLiteral("Pacific/Kiritimati"), Description("Pacific/Kiritimati")]
       Pacific_Kiritimati,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Kosrae", "https://www.iana.org/time-zones"), Description("Pacific/Kosrae")]
+      [EnumLiteral("Pacific/Kosrae"), Description("Pacific/Kosrae")]
       Pacific_Kosrae,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Kwajalein", "https://www.iana.org/time-zones"), Description("Pacific/Kwajalein")]
+      [EnumLiteral("Pacific/Kwajalein"), Description("Pacific/Kwajalein")]
       Pacific_Kwajalein,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Majuro", "https://www.iana.org/time-zones"), Description("Pacific/Majuro")]
+      [EnumLiteral("Pacific/Majuro"), Description("Pacific/Majuro")]
       Pacific_Majuro,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Marquesas", "https://www.iana.org/time-zones"), Description("Pacific/Marquesas")]
+      [EnumLiteral("Pacific/Marquesas"), Description("Pacific/Marquesas")]
       Pacific_Marquesas,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Midway", "https://www.iana.org/time-zones"), Description("Pacific/Midway")]
+      [EnumLiteral("Pacific/Midway"), Description("Pacific/Midway")]
       Pacific_Midway,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Nauru", "https://www.iana.org/time-zones"), Description("Pacific/Nauru")]
+      [EnumLiteral("Pacific/Nauru"), Description("Pacific/Nauru")]
       Pacific_Nauru,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Niue", "https://www.iana.org/time-zones"), Description("Pacific/Niue")]
+      [EnumLiteral("Pacific/Niue"), Description("Pacific/Niue")]
       Pacific_Niue,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Norfolk", "https://www.iana.org/time-zones"), Description("Pacific/Norfolk")]
+      [EnumLiteral("Pacific/Norfolk"), Description("Pacific/Norfolk")]
       Pacific_Norfolk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Noumea", "https://www.iana.org/time-zones"), Description("Pacific/Noumea")]
+      [EnumLiteral("Pacific/Noumea"), Description("Pacific/Noumea")]
       Pacific_Noumea,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Pago_Pago", "https://www.iana.org/time-zones"), Description("Pacific/Pago_Pago")]
+      [EnumLiteral("Pacific/Pago_Pago"), Description("Pacific/Pago_Pago")]
       Pacific_Pago_Pago,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Palau", "https://www.iana.org/time-zones"), Description("Pacific/Palau")]
+      [EnumLiteral("Pacific/Palau"), Description("Pacific/Palau")]
       Pacific_Palau,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Pitcairn", "https://www.iana.org/time-zones"), Description("Pacific/Pitcairn")]
+      [EnumLiteral("Pacific/Pitcairn"), Description("Pacific/Pitcairn")]
       Pacific_Pitcairn,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Pohnpei", "https://www.iana.org/time-zones"), Description("Pacific/Pohnpei")]
+      [EnumLiteral("Pacific/Pohnpei"), Description("Pacific/Pohnpei")]
       Pacific_Pohnpei,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Port_Moresby", "https://www.iana.org/time-zones"), Description("Pacific/Port_Moresby")]
+      [EnumLiteral("Pacific/Port_Moresby"), Description("Pacific/Port_Moresby")]
       Pacific_Port_Moresby,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Rarotonga", "https://www.iana.org/time-zones"), Description("Pacific/Rarotonga")]
+      [EnumLiteral("Pacific/Rarotonga"), Description("Pacific/Rarotonga")]
       Pacific_Rarotonga,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Saipan", "https://www.iana.org/time-zones"), Description("Pacific/Saipan")]
+      [EnumLiteral("Pacific/Saipan"), Description("Pacific/Saipan")]
       Pacific_Saipan,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Tahiti", "https://www.iana.org/time-zones"), Description("Pacific/Tahiti")]
+      [EnumLiteral("Pacific/Tahiti"), Description("Pacific/Tahiti")]
       Pacific_Tahiti,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Tarawa", "https://www.iana.org/time-zones"), Description("Pacific/Tarawa")]
+      [EnumLiteral("Pacific/Tarawa"), Description("Pacific/Tarawa")]
       Pacific_Tarawa,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Tongatapu", "https://www.iana.org/time-zones"), Description("Pacific/Tongatapu")]
+      [EnumLiteral("Pacific/Tongatapu"), Description("Pacific/Tongatapu")]
       Pacific_Tongatapu,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Wake", "https://www.iana.org/time-zones"), Description("Pacific/Wake")]
+      [EnumLiteral("Pacific/Wake"), Description("Pacific/Wake")]
       Pacific_Wake,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("Pacific/Wallis", "https://www.iana.org/time-zones"), Description("Pacific/Wallis")]
+      [EnumLiteral("Pacific/Wallis"), Description("Pacific/Wallis")]
       Pacific_Wallis,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: https://www.iana.org/time-zones)
       /// </summary>
-      [EnumLiteral("WET", "https://www.iana.org/time-zones"), Description("WET")]
+      [EnumLiteral("WET"), Description("WET")]
       WET,
     }
 
@@ -2989,38 +2989,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/week-of-month)
     /// (system: http://hl7.org/fhir/week-of-month)
     /// </summary>
-    [FhirEnumeration("WeekOfMonth")]
+    [FhirEnumeration("WeekOfMonth", "http://hl7.org/fhir/ValueSet/week-of-month", "http://hl7.org/fhir/week-of-month")]
     public enum WeekOfMonth
     {
       /// <summary>
       /// First week of the month.
       /// (system: http://hl7.org/fhir/week-of-month)
       /// </summary>
-      [EnumLiteral("first", "http://hl7.org/fhir/week-of-month"), Description("First")]
+      [EnumLiteral("first"), Description("First")]
       First,
       /// <summary>
       /// Second week of the month.
       /// (system: http://hl7.org/fhir/week-of-month)
       /// </summary>
-      [EnumLiteral("second", "http://hl7.org/fhir/week-of-month"), Description("Second")]
+      [EnumLiteral("second"), Description("Second")]
       Second,
       /// <summary>
       /// Third week of the month.
       /// (system: http://hl7.org/fhir/week-of-month)
       /// </summary>
-      [EnumLiteral("third", "http://hl7.org/fhir/week-of-month"), Description("Third")]
+      [EnumLiteral("third"), Description("Third")]
       Third,
       /// <summary>
       /// Fourth week of the month.
       /// (system: http://hl7.org/fhir/week-of-month)
       /// </summary>
-      [EnumLiteral("fourth", "http://hl7.org/fhir/week-of-month"), Description("Fourth")]
+      [EnumLiteral("fourth"), Description("Fourth")]
       Fourth,
       /// <summary>
       /// Last week of the month.
       /// (system: http://hl7.org/fhir/week-of-month)
       /// </summary>
-      [EnumLiteral("last", "http://hl7.org/fhir/week-of-month"), Description("Last")]
+      [EnumLiteral("last"), Description("Last")]
       Last,
     }
 
@@ -3030,6 +3030,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#Participant", IsNestedType=true)]
+    [BackboneType("Appointment.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3115,6 +3116,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipationStatus> StatusElement
@@ -3268,6 +3270,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#RecurrenceTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate")]
     public partial class RecurrenceTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3669,6 +3672,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#WeeklyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.weeklyTemplate")]
     public partial class WeeklyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4076,6 +4080,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#MonthlyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.monthlyTemplate")]
     public partial class MonthlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4288,6 +4293,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#YearlyTemplate", IsNestedType=true)]
+    [BackboneType("Appointment.recurrenceTemplate.yearlyTemplate")]
     public partial class YearlyTemplateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4429,6 +4435,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement

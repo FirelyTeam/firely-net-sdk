@@ -10,30 +10,47 @@ namespace Hl7.Fhir.Specification.Tests
     [TestClass]
     public class LocalTerminologyServiceTests
     {
-        private readonly LocalTerminologyService _service = new(ZipSource.CreateValidationSource());
+        private readonly LocalTerminologyService _service = new(
+            new CachedResolver(
+                new MultiResolver(
+                    ZipSource.CreateValidationSource(),
+                    new InMemoryResourceResolver(new ValueSet() { Url = "http://example.com/an-exotic-valuset" })
+                )
+            )
+        );
 
-        [TestMethod]
-        public async Task CodeNotFoundMessageTest()
+        [DataTestMethod]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", "context", null, "AdministrativeGender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "invalid", null, "theSystem", "AdministrativeGender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", "context", null, "UCUM Codes")]
+        [DataRow("http://hl7.org/fhir/ValueSet/age-units", "invalid", null, "theSystem", "UCUM Codes")]
+        public async Task CodeNotFoundMessageTest(string valueset, string code, string context, string system, string valuesetTitle)
         {
-            var valueset = "http://hl7.org/fhir/ValueSet/administrative-gender";
+            var parameters = new ValidateCodeParameters()
+                   .WithValueSet(valueset);
+
+            parameters = !string.IsNullOrEmpty(context)
+                ? parameters.WithCode(code: code, context: context)
+                : parameters.WithCode(code: code, system: system);
+
+            var withSystem = string.IsNullOrEmpty(system) ? string.Empty : $" from system '{system}'";
+            var result = await _service.ValueSetValidateCode(parameters.Build());
+            result.Parameter.Should().Contain(p => p.Name == "message")
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code '{code}'{withSystem} does not exist in the value set '{valuesetTitle}' ({valueset})"));
+        }
+
+        [DataTestMethod]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "not-human", "http://hl7.org/fhir/ValueSet/account-type", "Not existing code for gender")]
+        [DataRow("http://hl7.org/fhir/ValueSet/administrative-gender", "not-human", "http://example.com/an-exotic-valuset", "Not existing code for gender")]
+        public async Task CodingWithValuesetAsSystem(string valueset, string code, string system, string display)
+        {
             var parameters = new ValidateCodeParameters()
                    .WithValueSet(valueset)
-                   .WithCode(code: "invalid", context: "context")
-                   .Build();
+                   .WithCoding(new Coding(system, code, display));
 
-            var result = await _service.ValueSetValidateCode(parameters);
+            var result = await _service.ValueSetValidateCode(parameters.Build());
             result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code 'invalid' does not exist in valueset '{valueset}'"));
-
-
-            parameters = new ValidateCodeParameters()
-                   .WithValueSet(valueset)
-                   .WithCode(code: "invalid", system: "theSystem")
-                   .Build();
-            result = await _service.ValueSetValidateCode(parameters);
-            result.Parameter.Should().Contain(p => p.Name == "message")
-                .Subject.Value.Should().BeEquivalentTo(new FhirString($"Code 'invalid' from system 'theSystem' does not exist in valueset '{valueset}'"));
-
+                .Subject.Value.Should().BeEquivalentTo(new FhirString($"The Coding references a value set, not a code system ('{system}')"));
         }
     }
 }

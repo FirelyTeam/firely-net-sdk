@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/explanationofbenefit-status)
     /// (system: http://hl7.org/fhir/explanationofbenefit-status)
     /// </summary>
-    [FhirEnumeration("ExplanationOfBenefitStatus")]
+    [FhirEnumeration("ExplanationOfBenefitStatus", "http://hl7.org/fhir/ValueSet/explanationofbenefit-status", "http://hl7.org/fhir/explanationofbenefit-status")]
     public enum ExplanationOfBenefitStatus
     {
       /// <summary>
       /// The resource instance is currently in-force.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The resource instance is withdrawn, rescinded or reversed.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// A new resource instance the contents of which is not complete.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The resource instance was entered in error.
       /// (system: http://hl7.org/fhir/explanationofbenefit-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/explanationofbenefit-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -94,32 +94,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/resource-type-link)
     /// (system: http://hl7.org/fhir/resource-type-link)
     /// </summary>
-    [FhirEnumeration("PayeeResourceType")]
+    [FhirEnumeration("PayeeResourceType", "http://hl7.org/fhir/ValueSet/resource-type-link", "http://hl7.org/fhir/resource-type-link")]
     public enum PayeeResourceType
     {
       /// <summary>
       /// Organization resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("organization", "http://hl7.org/fhir/resource-type-link"), Description("Organization")]
+      [EnumLiteral("organization"), Description("Organization")]
       Organization,
       /// <summary>
       /// Patient resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("patient", "http://hl7.org/fhir/resource-type-link"), Description("Patient")]
+      [EnumLiteral("patient"), Description("Patient")]
       Patient,
       /// <summary>
       /// Practitioner resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("practitioner", "http://hl7.org/fhir/resource-type-link"), Description("Practitioner")]
+      [EnumLiteral("practitioner"), Description("Practitioner")]
       Practitioner,
       /// <summary>
       /// RelatedPerson resource
       /// (system: http://hl7.org/fhir/resource-type-link)
       /// </summary>
-      [EnumLiteral("relatedperson", "http://hl7.org/fhir/resource-type-link"), Description("RelatedPerson")]
+      [EnumLiteral("relatedperson"), Description("RelatedPerson")]
       Relatedperson,
     }
 
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode)
     /// (system: http://hl7.org/fhir/v3/ActCode)
     /// </summary>
-    [FhirEnumeration("ActInvoiceGroupCode")]
+    [FhirEnumeration("ActInvoiceGroupCode", "http://hl7.org/fhir/ValueSet/v3-ActInvoiceGroupCode", "http://hl7.org/fhir/v3/ActCode")]
     public enum ActInvoiceGroupCode
     {
       /// <summary>
@@ -139,49 +139,49 @@ namespace Hl7.Fhir.Model
       ///                         The domain is only specified for an intermediate invoice element group (non-root or non-top level) for an Invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("_ActInvoiceInterGroupCode", "http://hl7.org/fhir/v3/ActCode"), Description("ActInvoiceInterGroupCode")]
+      [EnumLiteral("_ActInvoiceInterGroupCode"), Description("ActInvoiceInterGroupCode")]
       ActInvoiceInterGroupCode,
       /// <summary>
       /// A grouping of invoice element groups and details including the ones specifying the compound ingredients being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPNDDRGING", "http://hl7.org/fhir/v3/ActCode"), Description("compound drug invoice group")]
+      [EnumLiteral("CPNDDRGING"), Description("compound drug invoice group")]
       CPNDDRGING,
       /// <summary>
       /// A grouping of invoice element details including the one specifying an ingredient drug being invoiced. It may also contain generic detail items such as tax or markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPNDINDING", "http://hl7.org/fhir/v3/ActCode"), Description("compound ingredient invoice group")]
+      [EnumLiteral("CPNDINDING"), Description("compound ingredient invoice group")]
       CPNDINDING,
       /// <summary>
       /// A grouping of invoice element groups and details including the ones specifying the compound supplies being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPNDSUPING", "http://hl7.org/fhir/v3/ActCode"), Description("compound supply invoice group")]
+      [EnumLiteral("CPNDSUPING"), Description("compound supply invoice group")]
       CPNDSUPING,
       /// <summary>
       /// A grouping of invoice element details including the one specifying the drug being invoiced. It may also contain generic detail items such as markup.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("DRUGING", "http://hl7.org/fhir/v3/ActCode"), Description("drug invoice group")]
+      [EnumLiteral("DRUGING"), Description("drug invoice group")]
       DRUGING,
       /// <summary>
       /// A grouping of invoice element details including the ones specifying the frame fee and the frame dispensing cost that are being invoiced.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("FRAMEING", "http://hl7.org/fhir/v3/ActCode"), Description("frame invoice group")]
+      [EnumLiteral("FRAMEING"), Description("frame invoice group")]
       FRAMEING,
       /// <summary>
       /// A grouping of invoice element details including the ones specifying the lens fee and the lens dispensing cost that are being invoiced.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("LENSING", "http://hl7.org/fhir/v3/ActCode"), Description("lens invoice group")]
+      [EnumLiteral("LENSING"), Description("lens invoice group")]
       LENSING,
       /// <summary>
       /// A grouping of invoice element details including the one specifying the product (good or supply) being invoiced. It may also contain generic detail items such as tax or discount.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("PRDING", "http://hl7.org/fhir/v3/ActCode"), Description("product invoice group")]
+      [EnumLiteral("PRDING"), Description("product invoice group")]
       PRDING,
       /// <summary>
       /// Type of invoice element that is used to assist in describing an Invoice that is either submitted for adjudication or for which is returned on adjudication results.
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
       ///                         Codes from this domain reflect the type of Invoice such as Pharmacy Dispense, Clinical Service and Clinical Product.  The domain is only specified for the root (top level) invoice element group for an Invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("_ActInvoiceRootGroupCode", "http://hl7.org/fhir/v3/ActCode"), Description("ActInvoiceRootGroupCode")]
+      [EnumLiteral("_ActInvoiceRootGroupCode"), Description("ActInvoiceRootGroupCode")]
       ActInvoiceRootGroupCode,
       /// <summary>
       /// Clinical product invoice where the Invoice Grouping contains one or more billable item and is supported by clinical product(s).
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
       ///                         For example, a crutch or a wheelchair.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CPINV", "http://hl7.org/fhir/v3/ActCode"), Description("clinical product invoice")]
+      [EnumLiteral("CPINV"), Description("clinical product invoice")]
       CPINV,
       /// <summary>
       /// Clinical Services Invoice which can be used to describe a single service, multiple services or repeated services.
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
       ///                         For example, the same Chiropractic adjustment (service or treatment) delivered on 3 separate occasions over a period of time at the discretion of the provider (e.g. month).
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CSINV", "http://hl7.org/fhir/v3/ActCode"), Description("clinical service invoice")]
+      [EnumLiteral("CSINV"), Description("clinical service invoice")]
       CSINV,
       /// <summary>
       /// A clinical Invoice Grouping consisting of one or more services and one or more product.  Billing for these service(s) and product(s) are supported by multiple clinical billable events (acts).
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
       ///                         For example , a brace (product) invoiced together with the fitting (service).
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("CSPINV", "http://hl7.org/fhir/v3/ActCode"), Description("clinical service and product")]
+      [EnumLiteral("CSPINV"), Description("clinical service and product")]
       CSPINV,
       /// <summary>
       /// Invoice Grouping without clinical justification.  These will not require identification of participants and associations from a clinical context such as patient and provider.
@@ -235,7 +235,7 @@ namespace Hl7.Fhir.Model
       ///                         Examples are interest charges and mileage.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("FININV", "http://hl7.org/fhir/v3/ActCode"), Description("financial invoice")]
+      [EnumLiteral("FININV"), Description("financial invoice")]
       FININV,
       /// <summary>
       /// A clinical Invoice Grouping consisting of one or more oral health services. Billing for these service(s) are supported by multiple clinical billable events (acts).
@@ -243,37 +243,37 @@ namespace Hl7.Fhir.Model
       ///                         All items in the Invoice Grouping must be adjudicated together to be acceptable to the Adjudicator.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("OHSINV", "http://hl7.org/fhir/v3/ActCode"), Description("oral health service")]
+      [EnumLiteral("OHSINV"), Description("oral health service")]
       OHSINV,
       /// <summary>
       /// HealthCare facility preferred accommodation invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("PAINV", "http://hl7.org/fhir/v3/ActCode"), Description("preferred accommodation invoice")]
+      [EnumLiteral("PAINV"), Description("preferred accommodation invoice")]
       PAINV,
       /// <summary>
       /// Pharmacy dispense invoice for a compound.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("RXCINV", "http://hl7.org/fhir/v3/ActCode"), Description("Rx compound invoice")]
+      [EnumLiteral("RXCINV"), Description("Rx compound invoice")]
       RXCINV,
       /// <summary>
       /// Pharmacy dispense invoice not involving a compound
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("RXDINV", "http://hl7.org/fhir/v3/ActCode"), Description("Rx dispense invoice")]
+      [EnumLiteral("RXDINV"), Description("Rx dispense invoice")]
       RXDINV,
       /// <summary>
       /// Clinical services invoice where the Invoice Group contains one billable item for multiple clinical services in one or more sessions.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("SBFINV", "http://hl7.org/fhir/v3/ActCode"), Description("sessional or block fee invoice")]
+      [EnumLiteral("SBFINV"), Description("sessional or block fee invoice")]
       SBFINV,
       /// <summary>
       /// Vision dispense invoice for up to 2 lens (left and right), frame and optional discount.  Eye exams are invoiced as a clinical service invoice.
       /// (system: http://hl7.org/fhir/v3/ActCode)
       /// </summary>
-      [EnumLiteral("VRXINV", "http://hl7.org/fhir/v3/ActCode"), Description("vision dispense invoice")]
+      [EnumLiteral("VRXINV"), Description("vision dispense invoice")]
       VRXINV,
     }
 
@@ -283,6 +283,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#RelatedClaim", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.related")]
     public partial class RelatedClaimComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -438,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Payee", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.payee")]
     public partial class PayeeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -593,6 +595,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SupportingInformation", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.information")]
     public partial class SupportingInformationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -837,6 +840,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#CareTeam", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.careTeam")]
     public partial class CareTeamComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -879,7 +883,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Member of the Care Team
       /// </summary>
-      [FhirElement("provider", Order=50)]
+      [FhirElement("provider", Order=50, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","Organization")]
       [Cardinality(Min=1,Max=1)]
@@ -1074,6 +1078,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Diagnosis", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1273,6 +1278,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Procedure", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.procedure")]
     public partial class ProcedureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1467,6 +1473,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Insurance", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1619,6 +1626,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Accident", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.accident")]
     public partial class AccidentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1793,6 +1801,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Item", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item")]
     public partial class ItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2030,7 +2039,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Date or dates of Service
       /// </summary>
-      [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("serviced", Order=140, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.Date),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -2045,7 +2054,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Place of service
       /// </summary>
-      [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("location", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="where")]
       [CLSCompliant(false)]
       [References("Location")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.Address),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -2534,6 +2543,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Adjudication", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.adjudication")]
     public partial class AdjudicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2728,6 +2738,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Detail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3209,6 +3220,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#SubDetail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.item.detail.subDetail")]
     public partial class SubDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3667,6 +3679,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItem", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.addItem")]
     public partial class AddedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3993,6 +4006,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#AddedItemsDetail", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.addItem.detail")]
     public partial class AddedItemsDetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4255,6 +4269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Payment", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.payment")]
     public partial class PaymentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4492,6 +4507,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Note", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.processNote")]
     public partial class NoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4703,6 +4719,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#BenefitBalance", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.benefitBalance")]
     public partial class BenefitBalanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5044,6 +5061,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ExplanationOfBenefit#Benefit", IsNestedType=true)]
+    [BackboneType("ExplanationOfBenefit.benefitBalance.financial")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -5199,7 +5217,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -5213,8 +5231,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ExplanationOfBenefitStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ExplanationOfBenefit.ExplanationOfBenefitStatus> StatusElement
     {
@@ -5245,7 +5264,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type or discipline
     /// </summary>
-    [FhirElement("type", Order=110)]
+    [FhirElement("type", Order=110, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -5258,7 +5277,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Finer grained claim type information
     /// </summary>
-    [FhirElement("subType", Order=120)]
+    [FhirElement("subType", Order=120, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> SubType
@@ -5272,7 +5291,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the Products and Services
     /// </summary>
-    [FhirElement("patient", Order=130)]
+    [FhirElement("patient", Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -5287,7 +5306,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period for charge submission
     /// </summary>
-    [FhirElement("billablePeriod", Order=140)]
+    [FhirElement("billablePeriod", Order=140, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period BillablePeriod
     {
@@ -5300,7 +5319,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=150)]
+    [FhirElement("created", Order=150, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -5331,7 +5350,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author
     /// </summary>
-    [FhirElement("enterer", Order=160)]
+    [FhirElement("enterer", Order=160, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -5346,7 +5365,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer responsible for the EOB
     /// </summary>
-    [FhirElement("insurer", Order=170)]
+    [FhirElement("insurer", Order=170, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -5361,7 +5380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible provider for the claim
     /// </summary>
-    [FhirElement("provider", Order=180)]
+    [FhirElement("provider", Order=180, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -5376,7 +5395,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization for the claim
     /// </summary>
-    [FhirElement("organization", Order=190)]
+    [FhirElement("organization", Order=190, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -5391,7 +5410,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Treatment Referral
     /// </summary>
-    [FhirElement("referral", Order=200)]
+    [FhirElement("referral", Order=200, FiveWs="who.cause")]
     [CLSCompliant(false)]
     [References("ReferralRequest")]
     [DataMember]
@@ -5406,7 +5425,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Servicing Facility
     /// </summary>
-    [FhirElement("facility", Order=210)]
+    [FhirElement("facility", Order=210, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -5421,7 +5440,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim reference
     /// </summary>
-    [FhirElement("claim", Order=220)]
+    [FhirElement("claim", Order=220, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Claim")]
     [DataMember]

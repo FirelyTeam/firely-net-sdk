@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImmunizationRecommendation#Recommendation", IsNestedType=true)]
+    [BackboneType("ImmunizationRecommendation.recommendation")]
     public partial class RecommendationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -391,6 +392,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImmunizationRecommendation#DateCriterion", IsNestedType=true)]
+    [BackboneType("ImmunizationRecommendation.recommendation.dateCriterion")]
     public partial class DateCriterionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -542,6 +544,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImmunizationRecommendation#Protocol", IsNestedType=true)]
+    [BackboneType("ImmunizationRecommendation.recommendation.protocol")]
     public partial class ProtocolComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -770,7 +773,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -784,7 +787,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who this profile is for
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=100)]
+    [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]

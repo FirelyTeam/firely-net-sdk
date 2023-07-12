@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-intent)
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [FhirEnumeration("CarePlanIntent")]
+    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent", "http://hl7.org/fhir/request-intent")]
     public enum CarePlanIntent
     {
       /// <summary>
       /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The request represents a request/demand and authorization for action by the requestor.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The request represents a component or option for a RequestOrchestration that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestOrchestration]]] for additional information on how this status is used.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
+      [EnumLiteral("option"), Description("Option")]
       Option,
       /// <summary>
       /// The request represents a legally binding instruction authored by a Patient or RelatedPerson.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("directive", "http://hl7.org/fhir/request-intent"), Description("Directive")]
+      [EnumLiteral("directive"), Description("Directive")]
       Directive,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Activity", IsNestedType=true)]
+    [BackboneType("CarePlan.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -383,6 +384,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -416,6 +418,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> IntentElement

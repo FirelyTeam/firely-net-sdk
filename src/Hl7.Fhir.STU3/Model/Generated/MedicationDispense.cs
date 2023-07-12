@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-dispense-status)
     /// (system: http://hl7.org/fhir/medication-dispense-status)
     /// </summary>
-    [FhirEnumeration("MedicationDispenseStatus")]
+    [FhirEnumeration("MedicationDispenseStatus", "http://hl7.org/fhir/ValueSet/medication-dispense-status", "http://hl7.org/fhir/medication-dispense-status")]
     public enum MedicationDispenseStatus
     {
       /// <summary>
       /// The core event has not started yet, but some staging activities have begun (e.g. initial compounding or packaging of medication). Preparation stages may be tracked for billing purposes.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("preparation", "http://hl7.org/fhir/medication-dispense-status"), Description("Preparation")]
+      [EnumLiteral("preparation"), Description("Preparation")]
       Preparation,
       /// <summary>
       /// The dispense has started but has not yet completed.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/medication-dispense-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called "suspended"
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-dispense-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the dispense have occurred.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-dispense-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The dispense was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-dispense-status"), Description("Entered in-Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in-Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the dispense have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-dispense-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-dispense-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Performer", IsNestedType=true)]
+    [BackboneType("MedicationDispense.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -243,6 +244,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationDispense#Substitution", IsNestedType=true)]
+    [BackboneType("MedicationDispense.substitution")]
     public partial class SubstitutionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -438,7 +440,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -468,8 +470,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// preparation | in-progress | on-hold | completed | entered-in-error | stopped
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationDispenseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus> StatusElement
     {
@@ -513,7 +516,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What medication was supplied
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("medication", InSummary=true, Order=130, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -530,7 +533,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who the dispense is for
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -560,7 +563,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Information that supports the dispensing of the medication
     /// </summary>
-    [FhirElement("supportingInformation", Order=160)]
+    [FhirElement("supportingInformation", Order=160, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]

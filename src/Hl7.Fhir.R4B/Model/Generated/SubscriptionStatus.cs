@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscription-notification-type)
     /// (system: http://hl7.org/fhir/subscription-notification-type)
     /// </summary>
-    [FhirEnumeration("SubscriptionNotificationType")]
+    [FhirEnumeration("SubscriptionNotificationType", "http://hl7.org/fhir/ValueSet/subscription-notification-type", "http://hl7.org/fhir/subscription-notification-type")]
     public enum SubscriptionNotificationType
     {
       /// <summary>
       /// The status was generated as part of the setup or verification of a communications channel.
       /// (system: http://hl7.org/fhir/subscription-notification-type)
       /// </summary>
-      [EnumLiteral("handshake", "http://hl7.org/fhir/subscription-notification-type"), Description("Handshake")]
+      [EnumLiteral("handshake"), Description("Handshake")]
       Handshake,
       /// <summary>
       /// The status was generated to perform a heartbeat notification to the subscriber.
       /// (system: http://hl7.org/fhir/subscription-notification-type)
       /// </summary>
-      [EnumLiteral("heartbeat", "http://hl7.org/fhir/subscription-notification-type"), Description("Heartbeat")]
+      [EnumLiteral("heartbeat"), Description("Heartbeat")]
       Heartbeat,
       /// <summary>
       /// The status was generated for an event to the subscriber.
       /// (system: http://hl7.org/fhir/subscription-notification-type)
       /// </summary>
-      [EnumLiteral("event-notification", "http://hl7.org/fhir/subscription-notification-type"), Description("Event Notification")]
+      [EnumLiteral("event-notification"), Description("Event Notification")]
       EventNotification,
       /// <summary>
       /// The status was generated in response to a status query/request.
       /// (system: http://hl7.org/fhir/subscription-notification-type)
       /// </summary>
-      [EnumLiteral("query-status", "http://hl7.org/fhir/subscription-notification-type"), Description("Query Status")]
+      [EnumLiteral("query-status"), Description("Query Status")]
       QueryStatus,
       /// <summary>
       /// The status was generated in response to an event query/request.
       /// (system: http://hl7.org/fhir/subscription-notification-type)
       /// </summary>
-      [EnumLiteral("query-event", "http://hl7.org/fhir/subscription-notification-type"), Description("Query Event")]
+      [EnumLiteral("query-event"), Description("Query Event")]
       QueryEvent,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubscriptionStatus#NotificationEvent", IsNestedType=true)]
+    [BackboneType("SubscriptionStatus.notificationEvent")]
     public partial class NotificationEventComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -317,6 +318,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatusCodes> StatusElement
     {
@@ -349,6 +351,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.what[x]")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SubscriptionNotificationType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SubscriptionStatus.SubscriptionNotificationType> TypeElement

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ProcessResponse#ProcessNote", IsNestedType=true)]
+    [BackboneType("ProcessResponse.processNote")]
     public partial class ProcessNoteComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -207,7 +208,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -221,8 +222,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcessResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -253,7 +255,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=110)]
+    [FhirElement("created", Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -284,7 +286,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Authoring Organization
     /// </summary>
-    [FhirElement("organization", Order=120)]
+    [FhirElement("organization", Order=120, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -299,7 +301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Request reference
     /// </summary>
-    [FhirElement("request", Order=130)]
+    [FhirElement("request", Order=130, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]

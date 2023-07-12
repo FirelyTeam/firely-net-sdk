@@ -60,98 +60,98 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contract-status)
     /// (system: http://hl7.org/fhir/contract-status)
     /// </summary>
-    [FhirEnumeration("ContractResourceStatusCodes")]
+    [FhirEnumeration("ContractResourceStatusCodes", "http://hl7.org/fhir/ValueSet/contract-status", "http://hl7.org/fhir/contract-status")]
     public enum ContractResourceStatusCodes
     {
       /// <summary>
       /// Contract is augmented with additional information to correct errors in a predecessor or to updated values in a predecessor. Usage: Contract altered within effective time. Precedence Order = 9. Comparable FHIR and v.3 status codes: revised; replaced.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("amended", "http://hl7.org/fhir/contract-status"), Description("Amended")]
+      [EnumLiteral("amended"), Description("Amended")]
       Amended,
       /// <summary>
       /// Contract is augmented with additional information that was missing from a predecessor Contract. Usage: Contract altered within effective time. Precedence Order = 9. Comparable FHIR and v.3 status codes: updated, replaced.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("appended", "http://hl7.org/fhir/contract-status"), Description("Appended")]
+      [EnumLiteral("appended"), Description("Appended")]
       Appended,
       /// <summary>
       /// Contract is terminated due to failure of the Grantor and/or the Grantee to fulfil one or more contract provisions. Usage: Abnormal contract termination. Precedence Order = 10. Comparable FHIR and v.3 status codes: stopped; failed; aborted.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/contract-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Contract is pended to rectify failure of the Grantor or the Grantee to fulfil contract provision(s). E.g., Grantee complaint about Grantor's failure to comply with contract provisions. Usage: Contract pended. Precedence Order = 7. Comparable FHIR and v.3 status codes: on hold; pended; suspended.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("disputed", "http://hl7.org/fhir/contract-status"), Description("Disputed")]
+      [EnumLiteral("disputed"), Description("Disputed")]
       Disputed,
       /// <summary>
       /// Contract was created in error. No Precedence Order.  Status may be applied to a Contract with any status.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/contract-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Contract execution pending; may be executed when either the Grantor or the Grantee accepts the contract provisions by signing. I.e., where either the Grantor or the Grantee has signed, but not both. E.g., when an insurance applicant signs the insurers application, which references the policy. Usage: Optional first step of contract execution activity.  May be skipped and contracting activity moves directly to executed state. Precedence Order = 3. Comparable FHIR and v.3 status codes: draft; preliminary; planned; intended; active.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("executable", "http://hl7.org/fhir/contract-status"), Description("Executable")]
+      [EnumLiteral("executable"), Description("Executable")]
       Executable,
       /// <summary>
       /// Contract is activated for period stipulated when both the Grantor and Grantee have signed it. Usage: Required state for normal completion of contracting activity.  Precedence Order = 6. Comparable FHIR and v.3 status codes: accepted; completed.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("executed", "http://hl7.org/fhir/contract-status"), Description("Executed")]
+      [EnumLiteral("executed"), Description("Executed")]
       Executed,
       /// <summary>
       /// Contract execution is suspended while either or both the Grantor and Grantee propose and consider new or revised contract provisions. I.e., where the party which has not signed proposes changes to the terms.  E .g., a life insurer declines to agree to the signed application because the life insurer has evidence that the applicant, who asserted to being younger or a non-smoker to get a lower premium rate - but offers instead to agree to a higher premium based on the applicants actual age or smoking status. Usage: Optional contract activity between executable and executed state. Precedence Order = 4. Comparable FHIR and v.3 status codes: in progress; review; held.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("negotiable", "http://hl7.org/fhir/contract-status"), Description("Negotiable")]
+      [EnumLiteral("negotiable"), Description("Negotiable")]
       Negotiable,
       /// <summary>
       /// Contract is a proposal by either the Grantor or the Grantee. Aka - A Contract hard copy or electronic 'template', 'form' or 'application'. E.g., health insurance application; consent directive form. Usage: Beginning of contract negotiation, which may have been completed as a precondition because used for 0..* contracts. Precedence Order = 2. Comparable FHIR and v.3 status codes: requested; new.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("offered", "http://hl7.org/fhir/contract-status"), Description("Offered")]
+      [EnumLiteral("offered"), Description("Offered")]
       Offered,
       /// <summary>
       /// Contract template is available as the basis for an application or offer by the Grantor or Grantee. E.g., health insurance policy; consent directive policy.  Usage: Required initial contract activity, which may have been completed as a precondition because used for 0..* contracts. Precedence Order = 1. Comparable FHIR and v.3 status codes: proposed; intended.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("policy", "http://hl7.org/fhir/contract-status"), Description("Policy")]
+      [EnumLiteral("policy"), Description("Policy")]
       Policy,
       /// <summary>
       ///  Execution of the Contract is not completed because either or both the Grantor and Grantee decline to accept some or all of the contract provisions. Usage: Optional contract activity between executable and abnormal termination. Precedence Order = 5. Comparable FHIR and v.3 status codes:  stopped; cancelled.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/contract-status"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
       /// <summary>
       /// Beginning of a successor Contract at the termination of predecessor Contract lifecycle. Usage: Follows termination of a preceding Contract that has reached its expiry date. Precedence Order = 13. Comparable FHIR and v.3 status codes: superseded.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("renewed", "http://hl7.org/fhir/contract-status"), Description("Renewed")]
+      [EnumLiteral("renewed"), Description("Renewed")]
       Renewed,
       /// <summary>
       /// A Contract that is rescinded.  May be required prior to replacing with an updated Contract. Comparable FHIR and v.3 status codes: nullified.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("revoked", "http://hl7.org/fhir/contract-status"), Description("Revoked")]
+      [EnumLiteral("revoked"), Description("Revoked")]
       Revoked,
       /// <summary>
       /// Contract is reactivated after being pended because of faulty execution. *E.g., competency of the signer(s), or where the policy is substantially different from and did not accompany the application/form so that the applicant could not compare them. Aka - ''reactivated''. Usage: Optional stage where a pended contract is reactivated. Precedence Order = 8. Comparable FHIR and v.3 status codes: reactivated.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("resolved", "http://hl7.org/fhir/contract-status"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
       /// <summary>
       /// Contract reaches its expiry date. It might or might not be renewed or renegotiated. Usage: Normal end of contract period. Precedence Order = 12. Comparable FHIR and v.3 status codes: Obsoleted.
       /// (system: http://hl7.org/fhir/contract-status)
       /// </summary>
-      [EnumLiteral("terminated", "http://hl7.org/fhir/contract-status"), Description("Terminated")]
+      [EnumLiteral("terminated"), Description("Terminated")]
       Terminated,
     }
 
@@ -160,98 +160,98 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contract-publicationstatus)
     /// (system: http://hl7.org/fhir/contract-publicationstatus)
     /// </summary>
-    [FhirEnumeration("ContractResourcePublicationStatusCodes")]
+    [FhirEnumeration("ContractResourcePublicationStatusCodes", "http://hl7.org/fhir/ValueSet/contract-publicationstatus", "http://hl7.org/fhir/contract-publicationstatus")]
     public enum ContractResourcePublicationStatusCodes
     {
       /// <summary>
       /// Contract is augmented with additional information to correct errors in a predecessor or to updated values in a predecessor. Usage: Contract altered within effective time. Precedence Order = 9. Comparable FHIR and v.3 status codes: revised; replaced.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("amended", "http://hl7.org/fhir/contract-publicationstatus"), Description("Amended")]
+      [EnumLiteral("amended"), Description("Amended")]
       Amended,
       /// <summary>
       /// Contract is augmented with additional information that was missing from a predecessor Contract. Usage: Contract altered within effective time. Precedence Order = 9. Comparable FHIR and v.3 status codes: updated, replaced.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("appended", "http://hl7.org/fhir/contract-publicationstatus"), Description("Appended")]
+      [EnumLiteral("appended"), Description("Appended")]
       Appended,
       /// <summary>
       /// Contract is terminated due to failure of the Grantor and/or the Grantee to fulfil one or more contract provisions. Usage: Abnormal contract termination. Precedence Order = 10. Comparable FHIR and v.3 status codes: stopped; failed; aborted.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/contract-publicationstatus"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Contract is pended to rectify failure of the Grantor or the Grantee to fulfil contract provision(s). E.g., Grantee complaint about Grantor's failure to comply with contract provisions. Usage: Contract pended. Precedence Order = 7. Comparable FHIR and v.3 status codes: on hold; pended; suspended.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("disputed", "http://hl7.org/fhir/contract-publicationstatus"), Description("Disputed")]
+      [EnumLiteral("disputed"), Description("Disputed")]
       Disputed,
       /// <summary>
       /// Contract was created in error. No Precedence Order.  Status may be applied to a Contract with any status.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/contract-publicationstatus"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Contract execution pending; may be executed when either the Grantor or the Grantee accepts the contract provisions by signing. I.e., where either the Grantor or the Grantee has signed, but not both. E.g., when an insurance applicant signs the insurers application, which references the policy. Usage: Optional first step of contract execution activity.  May be skipped and contracting activity moves directly to executed state. Precedence Order = 3. Comparable FHIR and v.3 status codes: draft; preliminary; planned; intended; active.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("executable", "http://hl7.org/fhir/contract-publicationstatus"), Description("Executable")]
+      [EnumLiteral("executable"), Description("Executable")]
       Executable,
       /// <summary>
       /// Contract is activated for period stipulated when both the Grantor and Grantee have signed it. Usage: Required state for normal completion of contracting activity.  Precedence Order = 6. Comparable FHIR and v.3 status codes: accepted; completed.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("executed", "http://hl7.org/fhir/contract-publicationstatus"), Description("Executed")]
+      [EnumLiteral("executed"), Description("Executed")]
       Executed,
       /// <summary>
       /// Contract execution is suspended while either or both the Grantor and Grantee propose and consider new or revised contract provisions. I.e., where the party which has not signed proposes changes to the terms.  E .g., a life insurer declines to agree to the signed application because the life insurer has evidence that the applicant, who asserted to being younger or a non-smoker to get a lower premium rate - but offers instead to agree to a higher premium based on the applicants actual age or smoking status. Usage: Optional contract activity between executable and executed state. Precedence Order = 4. Comparable FHIR and v.3 status codes: in progress; review; held.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("negotiable", "http://hl7.org/fhir/contract-publicationstatus"), Description("Negotiable")]
+      [EnumLiteral("negotiable"), Description("Negotiable")]
       Negotiable,
       /// <summary>
       /// Contract is a proposal by either the Grantor or the Grantee. Aka - A Contract hard copy or electronic 'template', 'form' or 'application'. E.g., health insurance application; consent directive form. Usage: Beginning of contract negotiation, which may have been completed as a precondition because used for 0..* contracts. Precedence Order = 2. Comparable FHIR and v.3 status codes: requested; new.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("offered", "http://hl7.org/fhir/contract-publicationstatus"), Description("Offered")]
+      [EnumLiteral("offered"), Description("Offered")]
       Offered,
       /// <summary>
       /// Contract template is available as the basis for an application or offer by the Grantor or Grantee. E.g., health insurance policy; consent directive policy.  Usage: Required initial contract activity, which may have been completed as a precondition because used for 0..* contracts. Precedence Order = 1. Comparable FHIR and v.3 status codes: proposed; intended.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("policy", "http://hl7.org/fhir/contract-publicationstatus"), Description("Policy")]
+      [EnumLiteral("policy"), Description("Policy")]
       Policy,
       /// <summary>
       ///  Execution of the Contract is not completed because either or both the Grantor and Grantee decline to accept some or all of the contract provisions. Usage: Optional contract activity between executable and abnormal termination. Precedence Order = 5. Comparable FHIR and v.3 status codes:  stopped; cancelled.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/contract-publicationstatus"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
       /// <summary>
       /// Beginning of a successor Contract at the termination of predecessor Contract lifecycle. Usage: Follows termination of a preceding Contract that has reached its expiry date. Precedence Order = 13. Comparable FHIR and v.3 status codes: superseded.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("renewed", "http://hl7.org/fhir/contract-publicationstatus"), Description("Renewed")]
+      [EnumLiteral("renewed"), Description("Renewed")]
       Renewed,
       /// <summary>
       /// A Contract that is rescinded.  May be required prior to replacing with an updated Contract. Comparable FHIR and v.3 status codes: nullified.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("revoked", "http://hl7.org/fhir/contract-publicationstatus"), Description("Revoked")]
+      [EnumLiteral("revoked"), Description("Revoked")]
       Revoked,
       /// <summary>
       /// Contract is reactivated after being pended because of faulty execution. *E.g., competency of the signer(s), or where the policy is substantially different from and did not accompany the application/form so that the applicant could not compare them. Aka - ''reactivated''. Usage: Optional stage where a pended contract is reactivated. Precedence Order = 8. Comparable FHIR and v.3 status codes: reactivated.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("resolved", "http://hl7.org/fhir/contract-publicationstatus"), Description("Resolved")]
+      [EnumLiteral("resolved"), Description("Resolved")]
       Resolved,
       /// <summary>
       /// Contract reaches its expiry date. It might or might not be renewed or renegotiated. Usage: Normal end of contract period. Precedence Order = 12. Comparable FHIR and v.3 status codes: Obsoleted.
       /// (system: http://hl7.org/fhir/contract-publicationstatus)
       /// </summary>
-      [EnumLiteral("terminated", "http://hl7.org/fhir/contract-publicationstatus"), Description("Terminated")]
+      [EnumLiteral("terminated"), Description("Terminated")]
       Terminated,
     }
 
@@ -261,6 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContentDefinition", IsNestedType=true)]
+    [BackboneType("Contract.contentDefinition")]
     public partial class ContentDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -346,6 +347,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("publicationStatus", Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ContractPublicationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Contract.ContractResourcePublicationStatusCodes> PublicationStatusElement
@@ -539,6 +541,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Term", IsNestedType=true)]
+    [BackboneType("Contract.term")]
     public partial class TermComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -934,6 +937,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#SecurityLabel", IsNestedType=true)]
+    [BackboneType("Contract.term.securityLabel")]
     public partial class SecurityLabelComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1131,6 +1135,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContractOffer", IsNestedType=true)]
+    [BackboneType("Contract.term.offer")]
     public partial class ContractOfferComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1500,6 +1505,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContractParty", IsNestedType=true)]
+    [BackboneType("Contract.term.offer.party")]
     public partial class ContractPartyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1635,6 +1641,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Answer", IsNestedType=true)]
+    [BackboneType("Contract.term.offer.answer")]
     public partial class AnswerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1748,6 +1755,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ContractAsset", IsNestedType=true)]
+    [BackboneType("Contract.term.asset")]
     public partial class ContractAssetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2250,6 +2258,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#AssetContext", IsNestedType=true)]
+    [BackboneType("Contract.term.asset.context")]
     public partial class AssetContextComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2424,6 +2433,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ValuedItem", IsNestedType=true)]
+    [BackboneType("Contract.term.asset.valuedItem")]
     public partial class ValuedItemComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2954,6 +2964,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Action", IsNestedType=true)]
+    [BackboneType("Contract.term.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3673,6 +3684,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ActionSubject", IsNestedType=true)]
+    [BackboneType("Contract.term.action.subject")]
     public partial class ActionSubjectComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3807,6 +3819,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#Signatory", IsNestedType=true)]
+    [BackboneType("Contract.signer")]
     public partial class SignatoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3965,6 +3978,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#FriendlyLanguage", IsNestedType=true)]
+    [BackboneType("Contract.friendly")]
     public partial class FriendlyLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4078,6 +4092,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#LegalLanguage", IsNestedType=true)]
+    [BackboneType("Contract.legal")]
     public partial class LegalLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4191,6 +4206,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Contract#ComputableLanguage", IsNestedType=true)]
+    [BackboneType("Contract.rule")]
     public partial class ComputableLanguageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -4379,6 +4395,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ContractStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contract.ContractResourceStatusCodes> StatusElement
     {

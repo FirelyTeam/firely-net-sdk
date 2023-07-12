@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
     /// (system: http://hl7.org/fhir/medication-statement-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatementStatus")]
+    [FhirEnumeration("MedicationStatementStatus", "http://hl7.org/fhir/ValueSet/medication-statement-status", "http://hl7.org/fhir/medication-statement-status")]
     public enum MedicationStatementStatus
     {
       /// <summary>
       /// The medication is still being taken.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/medication-statement-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication is no longer being taken.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/medication-statement-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The statement was recorded incorrectly.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/medication-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication may be taken at some time in the future.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("intended", "http://hl7.org/fhir/medication-statement-status"), Description("Intended")]
+      [EnumLiteral("intended"), Description("Intended")]
       Intended,
       /// <summary>
       /// Actions implied by the statement have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/medication-statement-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/medication-statement-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/medication-statement-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
     }
 
@@ -106,39 +106,39 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-taken)
     /// (system: http://hl7.org/fhir/medication-statement-taken)
     /// </summary>
-    [FhirEnumeration("MedicationStatementTaken")]
+    [FhirEnumeration("MedicationStatementTaken", "http://hl7.org/fhir/ValueSet/medication-statement-taken", "http://hl7.org/fhir/medication-statement-taken")]
     public enum MedicationStatementTaken
     {
       /// <summary>
       /// Positive assertion that patient has taken medication
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("y", "http://hl7.org/fhir/medication-statement-taken"), Description("Yes")]
+      [EnumLiteral("y"), Description("Yes")]
       Y,
       /// <summary>
       /// Negative assertion that patient has not taken medication
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("n", "http://hl7.org/fhir/medication-statement-taken"), Description("No")]
+      [EnumLiteral("n"), Description("No")]
       N,
       /// <summary>
       /// Unknown assertion if patient has taken medication
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("unk", "http://hl7.org/fhir/medication-statement-taken"), Description("Unknown")]
+      [EnumLiteral("unk"), Description("Unknown")]
       Unk,
       /// <summary>
       /// Patient reporting does not apply
       /// (system: http://hl7.org/fhir/medication-statement-taken)
       /// </summary>
-      [EnumLiteral("na", "http://hl7.org/fhir/medication-statement-taken"), Description("Not Applicable")]
+      [EnumLiteral("na"), Description("Not Applicable")]
       Na,
     }
 
     /// <summary>
     /// External identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -199,8 +199,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | completed | entered-in-error | intended | stopped | on-hold
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=130)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementStatus> StatusElement
@@ -232,7 +233,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of medication usage
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=140)]
+    [FhirElement("category", InSummary=true, Order=140, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -245,7 +246,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What medication was taken
     /// </summary>
-    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("medication", InSummary=true, Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="what")]
     [CLSCompliant(false)]
     [References("Medication")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -262,7 +263,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The date/time or interval when the medication was taken
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -277,7 +278,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the statement was asserted?
     /// </summary>
-    [FhirElement("dateAsserted", InSummary=true, Order=170)]
+    [FhirElement("dateAsserted", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateAssertedElement
     {
@@ -308,7 +309,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person or organization that provided the information about the taking of this medication
     /// </summary>
-    [FhirElement("informationSource", Order=180)]
+    [FhirElement("informationSource", Order=180, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson","Organization")]
     [DataMember]
@@ -323,7 +324,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who is/was taking  the medication
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=190)]
+    [FhirElement("subject", InSummary=true, Order=190, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [Cardinality(Min=1,Max=1)]
@@ -357,6 +358,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("taken", InSummary=true, IsModifier=true, Order=210)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatementTaken")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatementTaken> TakenElement
@@ -402,7 +404,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for why the medication is being/was taken
     /// </summary>
-    [FhirElement("reasonCode", Order=230)]
+    [FhirElement("reasonCode", Order=230, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -416,7 +418,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Condition or observation that supports why the medication is being/was taken
     /// </summary>
-    [FhirElement("reasonReference", Order=240)]
+    [FhirElement("reasonReference", Order=240, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation")]
     [Cardinality(Min=0,Max=-1)]
