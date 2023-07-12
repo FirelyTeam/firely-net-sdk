@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Study", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study")]
     public partial class StudyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -261,6 +262,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Series", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study.series")]
     public partial class SeriesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -437,6 +439,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ImagingManifest#Instance", IsNestedType=true)]
+    [BackboneType("ImagingManifest.study.series.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -603,7 +606,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// SOP Instance UID
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -616,7 +619,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient of the selected objects
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=100)]
+    [FhirElement("patient", InSummary=true, Order=100, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -632,7 +635,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time when the selection of instances was made
     /// </summary>
-    [FhirElement("authoringTime", InSummary=true, Order=110)]
+    [FhirElement("authoringTime", InSummary=true, Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoringTimeElement
     {
@@ -663,7 +666,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Author (human or machine)
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=120)]
+    [FhirElement("author", InSummary=true, Order=120, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Device","Organization","Patient","RelatedPerson")]
     [DataMember]

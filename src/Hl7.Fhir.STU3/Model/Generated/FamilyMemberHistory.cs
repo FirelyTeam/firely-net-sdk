@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/history-status)
     /// (system: http://hl7.org/fhir/history-status)
     /// </summary>
-    [FhirEnumeration("FamilyHistoryStatus")]
+    [FhirEnumeration("FamilyHistoryStatus", "http://hl7.org/fhir/ValueSet/history-status", "http://hl7.org/fhir/history-status")]
     public enum FamilyHistoryStatus
     {
       /// <summary>
       /// Some health information is known and captured, but not complete - see notes for details.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/history-status"), Description("Partial")]
+      [EnumLiteral("partial"), Description("Partial")]
       Partial,
       /// <summary>
       /// All available related health information is captured as of the date (and possibly time) when the family member history was taken.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/history-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/history-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
       /// <summary>
       /// Health information for this individual is unavailable/unknown.
       /// (system: http://hl7.org/fhir/history-status)
       /// </summary>
-      [EnumLiteral("health-unknown", "http://hl7.org/fhir/history-status"), Description("Health unknown")]
+      [EnumLiteral("health-unknown"), Description("Health unknown")]
       HealthUnknown,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("FamilyMemberHistory#Condition", IsNestedType=true)]
+    [BackboneType("FamilyMemberHistory.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -271,7 +272,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Id(s) for this record
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -301,8 +302,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// partial | completed | entered-in-error | health-unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FamilyHistoryStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FamilyMemberHistory.FamilyHistoryStatus> StatusElement
@@ -378,7 +380,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient history is about
     /// </summary>
-    [FhirElement("patient", InSummary=true, Order=140)]
+    [FhirElement("patient", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [Cardinality(Min=1,Max=1)]
@@ -394,7 +396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When history was captured/updated
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=150)]
+    [FhirElement("date", InSummary=true, Order=150, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -472,6 +474,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=180)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {
@@ -578,7 +581,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?
     /// </summary>
-    [FhirElement("reasonCode", InSummary=true, Order=230)]
+    [FhirElement("reasonCode", InSummary=true, Order=230, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> ReasonCode
@@ -592,7 +595,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why was family member history performed?
     /// </summary>
-    [FhirElement("reasonReference", InSummary=true, Order=240)]
+    [FhirElement("reasonReference", InSummary=true, Order=240, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition","Observation","AllergyIntolerance","QuestionnaireResponse")]
     [Cardinality(Min=0,Max=-1)]

@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
     /// (system: http://hl7.org/fhir/specimen-status)
     /// </summary>
-    [FhirEnumeration("SpecimenStatus")]
+    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status", "http://hl7.org/fhir/specimen-status")]
     public enum SpecimenStatus
     {
       /// <summary>
       /// The physical specimen is present and in good condition.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/specimen-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// There is no physical specimen because it is either lost, destroyed or consumed.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unavailable", "http://hl7.org/fhir/specimen-status"), Description("Unavailable")]
+      [EnumLiteral("unavailable"), Description("Unavailable")]
       Unavailable,
       /// <summary>
       /// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unsatisfactory", "http://hl7.org/fhir/specimen-status"), Description("Unsatisfactory")]
+      [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
       Unsatisfactory,
       /// <summary>
       /// The specimen was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/specimen-status"), Description("Entered-in-error")]
+      [EnumLiteral("entered-in-error"), Description("Entered-in-error")]
       EnteredInError,
     }
 
@@ -95,6 +95,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Collection", IsNestedType=true)]
+    [BackboneType("Specimen.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -105,7 +106,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who collected the specimen
       /// </summary>
-      [FhirElement("collector", InSummary=true, Order=40)]
+      [FhirElement("collector", InSummary=true, Order=40, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner")]
       [DataMember]
@@ -120,7 +121,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Collection time
       /// </summary>
-      [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("collected", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="when.init")]
       [CLSCompliant(false)]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
       [DataMember]
@@ -296,6 +297,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Processing", IsNestedType=true)]
+    [BackboneType("Specimen.processing")]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -494,6 +496,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Container", IsNestedType=true)]
+    [BackboneType("Specimen.container")]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -732,7 +735,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -746,7 +749,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifier assigned by the lab
     /// </summary>
-    [FhirElement("accessionIdentifier", InSummary=true, Order=100)]
+    [FhirElement("accessionIdentifier", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier AccessionIdentifier
     {
@@ -759,8 +762,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// available | unavailable | unsatisfactory | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SpecimenStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {
@@ -791,7 +795,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of material that forms the specimen
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=120)]
+    [FhirElement("type", InSummary=true, Order=120, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -804,7 +808,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the specimen came from. This may be from the patient(s) or from the environment or a device
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=130)]
+    [FhirElement("subject", InSummary=true, Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Substance")]
     [Cardinality(Min=1,Max=1)]
@@ -820,7 +824,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The time when specimen was received for processing
     /// </summary>
-    [FhirElement("receivedTime", InSummary=true, Order=140)]
+    [FhirElement("receivedTime", InSummary=true, Order=140, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime ReceivedTimeElement
     {
@@ -867,7 +871,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the specimen was collected
     /// </summary>
-    [FhirElement("request", Order=160)]
+    [FhirElement("request", Order=160, FiveWs="why")]
     [CLSCompliant(false)]
     [References("ProcedureRequest")]
     [Cardinality(Min=0,Max=-1)]

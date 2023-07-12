@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-status)
     /// (system: http://hl7.org/fhir/specimen-status)
     /// </summary>
-    [FhirEnumeration("SpecimenStatus")]
+    [FhirEnumeration("SpecimenStatus", "http://hl7.org/fhir/ValueSet/specimen-status", "http://hl7.org/fhir/specimen-status")]
     public enum SpecimenStatus
     {
       /// <summary>
       /// The physical specimen is present and in good condition.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("available", "http://hl7.org/fhir/specimen-status"), Description("Available")]
+      [EnumLiteral("available"), Description("Available")]
       Available,
       /// <summary>
       /// There is no physical specimen because it is either lost, destroyed or consumed.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unavailable", "http://hl7.org/fhir/specimen-status"), Description("Unavailable")]
+      [EnumLiteral("unavailable"), Description("Unavailable")]
       Unavailable,
       /// <summary>
       /// The specimen cannot be used because of a quality issue such as a broken container, contamination, or too old.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("unsatisfactory", "http://hl7.org/fhir/specimen-status"), Description("Unsatisfactory")]
+      [EnumLiteral("unsatisfactory"), Description("Unsatisfactory")]
       Unsatisfactory,
       /// <summary>
       /// The specimen was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/specimen-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/specimen-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/specimen-combined)
     /// (system: http://hl7.org/fhir/specimen-combined)
     /// </summary>
-    [FhirEnumeration("SpecimenCombined")]
+    [FhirEnumeration("SpecimenCombined", "http://hl7.org/fhir/ValueSet/specimen-combined", "http://hl7.org/fhir/specimen-combined")]
     public enum SpecimenCombined
     {
       /// <summary>
       /// The specimen is in a group.
       /// (system: http://hl7.org/fhir/specimen-combined)
       /// </summary>
-      [EnumLiteral("grouped", "http://hl7.org/fhir/specimen-combined"), Description("Grouped")]
+      [EnumLiteral("grouped"), Description("Grouped")]
       Grouped,
       /// <summary>
       /// The specimen is pooled.
       /// (system: http://hl7.org/fhir/specimen-combined)
       /// </summary>
-      [EnumLiteral("pooled", "http://hl7.org/fhir/specimen-combined"), Description("Pooled")]
+      [EnumLiteral("pooled"), Description("Pooled")]
       Pooled,
     }
 
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Feature", IsNestedType=true)]
+    [BackboneType("Specimen.feature")]
     public partial class FeatureComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -268,6 +269,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Collection", IsNestedType=true)]
+    [BackboneType("Specimen.collection")]
     public partial class CollectionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -561,6 +563,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Processing", IsNestedType=true)]
+    [BackboneType("Specimen.processing")]
     public partial class ProcessingComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -759,6 +762,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Specimen#Container", IsNestedType=true)]
+    [BackboneType("Specimen.container")]
     public partial class ContainerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -943,6 +947,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SpecimenStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenStatus> StatusElement
     {
@@ -1066,6 +1071,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("combined", InSummary=true, Order=170)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Specimen.SpecimenCombined> CombinedElement
     {

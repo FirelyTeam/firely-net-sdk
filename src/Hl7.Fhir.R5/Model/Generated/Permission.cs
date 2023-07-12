@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permission-status)
     /// (system: http://hl7.org/fhir/permission-status)
     /// </summary>
-    [FhirEnumeration("PermissionStatus")]
+    [FhirEnumeration("PermissionStatus", "http://hl7.org/fhir/ValueSet/permission-status", "http://hl7.org/fhir/permission-status")]
     public enum PermissionStatus
     {
       /// <summary>
       /// Permission is given.
       /// (system: http://hl7.org/fhir/permission-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/permission-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// Permission was entered in error and is not active.
       /// (system: http://hl7.org/fhir/permission-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/permission-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Permission is being defined.
       /// (system: http://hl7.org/fhir/permission-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/permission-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// Permission not granted.
       /// (system: http://hl7.org/fhir/permission-status)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/permission-status"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
     }
 
@@ -94,44 +94,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/permission-rule-combining)
     /// (system: http://hl7.org/fhir/permission-rule-combining)
     /// </summary>
-    [FhirEnumeration("PermissionRuleCombining")]
+    [FhirEnumeration("PermissionRuleCombining", "http://hl7.org/fhir/ValueSet/permission-rule-combining", "http://hl7.org/fhir/permission-rule-combining")]
     public enum PermissionRuleCombining
     {
       /// <summary>
       /// The deny overrides combining algorithm is intended for those cases where a deny decision should have priority over a permit decision.
       /// (system: http://hl7.org/fhir/permission-rule-combining)
       /// </summary>
-      [EnumLiteral("deny-overrides", "http://hl7.org/fhir/permission-rule-combining"), Description("Deny-overrides")]
+      [EnumLiteral("deny-overrides"), Description("Deny-overrides")]
       DenyOverrides,
       /// <summary>
       /// The permit overrides combining algorithm is intended for those cases where a permit decision should have priority over a deny decision.
       /// (system: http://hl7.org/fhir/permission-rule-combining)
       /// </summary>
-      [EnumLiteral("permit-overrides", "http://hl7.org/fhir/permission-rule-combining"), Description("Permit-overrides")]
+      [EnumLiteral("permit-overrides"), Description("Permit-overrides")]
       PermitOverrides,
       /// <summary>
       /// The behavior of this algorithm is identical to that of the “Deny-overrides” rule-combining algorithm with one exception.  The order in which the collection of rules is evaluated SHALL match the order as listed in the permission.
       /// (system: http://hl7.org/fhir/permission-rule-combining)
       /// </summary>
-      [EnumLiteral("ordered-deny-overrides", "http://hl7.org/fhir/permission-rule-combining"), Description("Ordered-deny-overrides")]
+      [EnumLiteral("ordered-deny-overrides"), Description("Ordered-deny-overrides")]
       OrderedDenyOverrides,
       /// <summary>
       /// The behavior of this algorithm is identical to that of the “Permit-overrides” rule-combining algorithm with one exception.  The order in which the collection of rules is evaluated SHALL match the order as listed in the permission.
       /// (system: http://hl7.org/fhir/permission-rule-combining)
       /// </summary>
-      [EnumLiteral("ordered-permit-overrides", "http://hl7.org/fhir/permission-rule-combining"), Description("Ordered-permit-overrides")]
+      [EnumLiteral("ordered-permit-overrides"), Description("Ordered-permit-overrides")]
       OrderedPermitOverrides,
       /// <summary>
       /// The “Deny-unless-permit” combining algorithm is intended for those cases where a permit decision should have priority over a deny decision, and an “Indeterminate” or “NotApplicable” must never be the result. It is particularly useful at the top level in a policy structure to ensure that a PDP will always return a definite “Permit” or “Deny” result.
       /// (system: http://hl7.org/fhir/permission-rule-combining)
       /// </summary>
-      [EnumLiteral("deny-unless-permit", "http://hl7.org/fhir/permission-rule-combining"), Description("Deny-unless-permit")]
+      [EnumLiteral("deny-unless-permit"), Description("Deny-unless-permit")]
       DenyUnlessPermit,
       /// <summary>
       /// The “Permit-unless-deny” combining algorithm is intended for those cases where a deny decision should have priority over a permit decision, and an “Indeterminate” or “NotApplicable” must never be the result. It is particularly useful at the top level in a policy structure to ensure that a PDP will always return a definite “Permit” or “Deny” result. This algorithm has the following behavior.
       /// (system: http://hl7.org/fhir/permission-rule-combining)
       /// </summary>
-      [EnumLiteral("permit-unless-deny", "http://hl7.org/fhir/permission-rule-combining"), Description("Permit-unless-deny")]
+      [EnumLiteral("permit-unless-deny"), Description("Permit-unless-deny")]
       PermitUnlessDeny,
     }
 
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Justification", IsNestedType=true)]
+    [BackboneType("Permission.justification")]
     public partial class JustificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -276,6 +277,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Rule", IsNestedType=true)]
+    [BackboneType("Permission.rule")]
     public partial class RuleComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -288,6 +290,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, IsModifier=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("PermissionProvisionType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConsentProvisionType> TypeElement
       {
@@ -473,6 +476,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Data", IsNestedType=true)]
+    [BackboneType("Permission.rule.data")]
     public partial class DataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -651,6 +655,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Resource", IsNestedType=true)]
+    [BackboneType("Permission.rule.data.resource")]
     public partial class ResourceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -663,6 +668,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
@@ -805,6 +811,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Permission#Activity", IsNestedType=true)]
+    [BackboneType("Permission.rule.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -962,6 +969,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, Order=90)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PermissionStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Permission.PermissionStatus> StatusElement
@@ -1068,6 +1076,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("combining", InSummary=true, IsModifier=true, Order=140)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PermissionCombining")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Permission.PermissionRuleCombining> CombiningElement

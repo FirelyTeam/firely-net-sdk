@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Details", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.detail")]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -397,6 +398,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Notes", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.processNote")]
     public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -409,6 +411,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NoteType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.NoteType> TypeElement
       {
@@ -578,6 +581,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentReconciliationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
@@ -701,6 +705,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("outcome", Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RemittanceOutcome")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RemittanceOutcome> OutcomeElement
     {

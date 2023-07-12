@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/units-of-time)
     /// (systems: 0)
     /// </summary>
-    [FhirEnumeration("UnitsOfTime")]
+    [FhirEnumeration("UnitsOfTime", "http://hl7.org/fhir/ValueSet/units-of-time", "http://unitsofmeasure.org")]
     public enum UnitsOfTime
     {
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("s", "http://unitsofmeasure.org"), Description("second")]
+      [EnumLiteral("s"), Description("second")]
       S,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("min", "http://unitsofmeasure.org"), Description("minute")]
+      [EnumLiteral("min"), Description("minute")]
       Min,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("h", "http://unitsofmeasure.org"), Description("hour")]
+      [EnumLiteral("h"), Description("hour")]
       H,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("d", "http://unitsofmeasure.org"), Description("day")]
+      [EnumLiteral("d"), Description("day")]
       D,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("wk", "http://unitsofmeasure.org"), Description("week")]
+      [EnumLiteral("wk"), Description("week")]
       Wk,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("mo", "http://unitsofmeasure.org"), Description("month")]
+      [EnumLiteral("mo"), Description("month")]
       Mo,
       /// <summary>
       /// MISSING DESCRIPTION
       /// (system: http://unitsofmeasure.org)
       /// </summary>
-      [EnumLiteral("a", "http://unitsofmeasure.org"), Description("year")]
+      [EnumLiteral("a"), Description("year")]
       A,
     }
 
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-timing)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("EventTiming")]
+    [FhirEnumeration("EventTiming", "http://hl7.org/fhir/ValueSet/event-timing", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent")]
     public enum EventTiming
     {
       /// <summary>
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
       /// Description: Prior to beginning a regular period of extended sleep (this would exclude naps).  Note that this might occur at different times of day depending on a person's regular sleep schedule.
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("HS", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("HS")]
+      [EnumLiteral("HS"), Description("HS")]
       HS,
       /// <summary>
       /// Description: Upon waking up from a regular period of sleep, in order to start regular activities (this would exclude waking up from a nap or temporarily waking up during a period of sleep)
@@ -206,79 +206,79 @@ namespace Hl7.Fhir.Model
       ///                         Take basal body temperature on waking in establishing date of ovulation
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("WAKE", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("WAKE")]
+      [EnumLiteral("WAKE"), Description("WAKE")]
       WAKE,
       /// <summary>
       /// Description: meal (from lat. ante cibus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("C", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("C")]
+      [EnumLiteral("C"), Description("C")]
       C,
       /// <summary>
       /// Description: breakfast (from lat. cibus matutinus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("CM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("CM")]
+      [EnumLiteral("CM"), Description("CM")]
       CM,
       /// <summary>
       /// Description: lunch (from lat. cibus diurnus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("CD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("CD")]
+      [EnumLiteral("CD"), Description("CD")]
       CD,
       /// <summary>
       /// Description: dinner (from lat. cibus vespertinus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("CV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("CV")]
+      [EnumLiteral("CV"), Description("CV")]
       CV,
       /// <summary>
       /// before meal (from lat. ante cibus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("AC", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("AC")]
+      [EnumLiteral("AC"), Description("AC")]
       AC,
       /// <summary>
       /// before breakfast (from lat. ante cibus matutinus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("ACM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("ACM")]
+      [EnumLiteral("ACM"), Description("ACM")]
       ACM,
       /// <summary>
       /// before lunch (from lat. ante cibus diurnus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("ACD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("ACD")]
+      [EnumLiteral("ACD"), Description("ACD")]
       ACD,
       /// <summary>
       /// before dinner (from lat. ante cibus vespertinus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("ACV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("ACV")]
+      [EnumLiteral("ACV"), Description("ACV")]
       ACV,
       /// <summary>
       /// after meal (from lat. post cibus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PC", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PC")]
+      [EnumLiteral("PC"), Description("PC")]
       PC,
       /// <summary>
       /// after breakfast (from lat. post cibus matutinus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PCM", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PCM")]
+      [EnumLiteral("PCM"), Description("PCM")]
       PCM,
       /// <summary>
       /// after lunch (from lat. post cibus diurnus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PCD", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PCD")]
+      [EnumLiteral("PCD"), Description("PCD")]
       PCD,
       /// <summary>
       /// after dinner (from lat. post cibus vespertinus)
       /// (system: http://terminology.hl7.org/CodeSystem/v3-TimingEvent)
       /// </summary>
-      [EnumLiteral("PCV", "http://terminology.hl7.org/CodeSystem/v3-TimingEvent"), Description("PCV")]
+      [EnumLiteral("PCV"), Description("PCV")]
       PCV,
     }
 
@@ -288,6 +288,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Timing#Repeat", IsNestedType=true)]
+    [BackboneType("Timing.repeat")]
     public partial class RepeatComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -439,6 +440,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("durationUnit", InSummary=true, Order=80)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> DurationUnitElement
       {
@@ -595,6 +597,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("periodUnit", InSummary=true, Order=130)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UnitsOfTime")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Timing.UnitsOfTime> PeriodUnitElement
       {
@@ -627,6 +630,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("dayOfWeek", InSummary=true, Order=140)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DayOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DayOfWeekElement
@@ -692,6 +696,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("when", InSummary=true, Order=160)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EventTiming")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.Timing.EventTiming>> WhenElement
@@ -1009,6 +1014,7 @@ namespace Hl7.Fhir.Model
     /// BID | TID | QID | AM | PM | QD | QOD | +
     /// </summary>
     [FhirElement("code", InSummary=true, Order=60)]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Serialization
                 .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
                 .SetNarrativeValidationKind(NarrativeValidation)
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                .SetLocation(context.Path);
+                .SetLocation(context.PathStack);
 
             reportedErrors = runAttributeValidation(instance, context.ElementMapping.ValidationAttributes, validationContext);
         }
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
                 .SetValidateRecursively(false)    // Don't go deeper - we've already validated the children because we're parsing bottom-up.
                 .SetNarrativeValidationKind(NarrativeValidation)
                 .SetPositionInfo(new PositionInfo((int)context.LineNumber, (int)context.LinePosition))
-                .SetLocation(context.Path);
+                .SetLocation(context.PathStack);
 
             if (instance is null)
             {
@@ -83,7 +83,13 @@ namespace Hl7.Fhir.Serialization
                     var propValue = propMapping.GetValue(instance);
 
                     if (propValue is null || ReflectionHelper.IsRepeatingElement(propValue, out var list) && list.Count == 0)
-                        errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, validationContext));
+                    {
+                        // Add the name of the property to the path, so we can display the correct name of the element,
+                        // even if it does not really contain any values.
+                        var nestedContext = validationContext.IntoEmptyProperty(propMapping.Name);
+
+                        errors = add(errors, runAttributeValidation(propValue, new[] { cardinality }, nestedContext));
+                    }
                 }
             }
 
@@ -105,7 +111,7 @@ namespace Hl7.Fhir.Serialization
             }
 
             reportedErrors = errors?.ToArray();
-            return;           
+            return;
         }
 
         private IEnumerable<CodedValidationException>? add(IEnumerable<CodedValidationException>? errors, IEnumerable<CodedValidationException>? moreErrors)
@@ -131,7 +137,7 @@ namespace Hl7.Fhir.Serialization
                     if (vr is CodedValidationResult cvr)
                         errors = add(errors, new[] { cvr.ValidationException });
                     else
-                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");                  
+                        throw new InvalidOperationException($"Validation attributes should return a {nameof(CodedValidationResult)}.");
                 }
             }
 

@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-statement-status)
     /// (system: http://hl7.org/fhir/device-statement-status)
     /// </summary>
-    [FhirEnumeration("DeviceUseStatementStatus")]
+    [FhirEnumeration("DeviceUseStatementStatus", "http://hl7.org/fhir/ValueSet/device-statement-status", "http://hl7.org/fhir/device-statement-status")]
     public enum DeviceUseStatementStatus
     {
       /// <summary>
       /// The device is still being used.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-statement-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The device is no longer being used.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/device-statement-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The statement was recorded incorrectly.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The device may be used at some time in the future.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("intended", "http://hl7.org/fhir/device-statement-status"), Description("Intended")]
+      [EnumLiteral("intended"), Description("Intended")]
       Intended,
       /// <summary>
       /// Actions implied by the statement have been permanently halted, before all of them occurred.
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/device-statement-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called "suspended".
       /// (system: http://hl7.org/fhir/device-statement-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/device-statement-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
     }
 
@@ -136,6 +136,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DeviceUseStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DeviceUseStatement.DeviceUseStatementStatus> StatusElement

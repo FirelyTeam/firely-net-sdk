@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Goal", IsNestedType=true)]
+    [BackboneType("PlanDefinition.goal")]
     public partial class GoalComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -306,6 +307,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Target", IsNestedType=true)]
+    [BackboneType("PlanDefinition.goal.target")]
     public partial class TargetComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -461,6 +463,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Actor", IsNestedType=true)]
+    [BackboneType("PlanDefinition.actor")]
     public partial class ActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -651,6 +654,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Option", IsNestedType=true)]
+    [BackboneType("PlanDefinition.actor.option")]
     public partial class OptionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -663,6 +667,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
       {
@@ -865,6 +870,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Action", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action")]
     public partial class ActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1032,6 +1038,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("priority", Order=90)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("RequestPriority")]
       [DataMember]
       public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
       {
@@ -1278,6 +1285,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("groupingBehavior", Order=240)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionGroupingBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionGroupingBehavior> GroupingBehaviorElement
       {
@@ -1310,6 +1318,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("selectionBehavior", Order=250)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionSelectionBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionSelectionBehavior> SelectionBehaviorElement
       {
@@ -1342,6 +1351,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("requiredBehavior", Order=260)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRequiredBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRequiredBehavior> RequiredBehaviorElement
       {
@@ -1374,6 +1384,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("precheckBehavior", Order=270)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionPrecheckBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionPrecheckBehavior> PrecheckBehaviorElement
       {
@@ -1406,6 +1417,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("cardinalityBehavior", Order=280)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionCardinalityBehavior")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionCardinalityBehavior> CardinalityBehaviorElement
       {
@@ -1848,6 +1860,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Condition", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.condition")]
     public partial class ConditionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1860,6 +1873,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionConditionKind")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionConditionKind> KindElement
@@ -1999,6 +2013,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Input", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.input")]
     public partial class InputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2188,6 +2203,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Output", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2377,6 +2393,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#RelatedAction", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.relatedAction")]
     public partial class RelatedActionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2421,6 +2438,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("relationship", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRelationshipType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> RelationshipElement
@@ -2454,6 +2472,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("endRelationship", Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActionRelationshipType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionRelationshipType> EndRelationshipElement
       {
@@ -2612,6 +2631,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#Participant", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2655,6 +2675,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ActivityParticipantType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.ActionParticipantType> TypeElement
       {
@@ -2888,6 +2909,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PlanDefinition#DynamicValue", IsNestedType=true)]
+    [BackboneType("PlanDefinition.action.dynamicValue")]
     public partial class DynamicValueComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -3233,6 +3255,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=170, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

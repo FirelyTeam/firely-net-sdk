@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new start time
     /// </summary>
-    [FhirElement("start", Order=110)]
+    [FhirElement("start", Order=110, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant StartElement
     {
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Time from appointment, or requested new end time
     /// </summary>
-    [FhirElement("end", Order=120)]
+    [FhirElement("end", Order=120, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {
@@ -164,7 +164,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Person, Location/HealthcareService or Device
     /// </summary>
-    [FhirElement("actor", InSummary=true, Order=140)]
+    [FhirElement("actor", InSummary=true, Order=140, FiveWs="who")]
     [CLSCompliant(false)]
     [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
     [DataMember]
@@ -181,6 +181,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("participantStatus", InSummary=true, IsModifier=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ParticipantStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ParticipationStatus> ParticipantStatusElement

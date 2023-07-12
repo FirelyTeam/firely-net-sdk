@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/provenance-entity-role)
     /// (system: http://hl7.org/fhir/provenance-entity-role)
     /// </summary>
-    [FhirEnumeration("ProvenanceEntityRole")]
+    [FhirEnumeration("ProvenanceEntityRole", "http://hl7.org/fhir/ValueSet/provenance-entity-role", "http://hl7.org/fhir/provenance-entity-role")]
     public enum ProvenanceEntityRole
     {
       /// <summary>
       /// A transformation of an entity into another, an update of an entity resulting in a new one, or the construction of a new entity based on a preexisting entity.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("derivation", "http://hl7.org/fhir/provenance-entity-role"), Description("Derivation")]
+      [EnumLiteral("derivation"), Description("Derivation")]
       Derivation,
       /// <summary>
       /// A derivation for which the resulting entity is a revised version of some original.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("revision", "http://hl7.org/fhir/provenance-entity-role"), Description("Revision")]
+      [EnumLiteral("revision"), Description("Revision")]
       Revision,
       /// <summary>
       /// The repeat of (some or all of) an entity, such as text or image, by someone who may or may not be its original author.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("quotation", "http://hl7.org/fhir/provenance-entity-role"), Description("Quotation")]
+      [EnumLiteral("quotation"), Description("Quotation")]
       Quotation,
       /// <summary>
       /// A primary source for a topic refers to something produced by some agent with direct experience and knowledge about the topic, at the time of the topic's study, without benefit from hindsight.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/provenance-entity-role"), Description("Source")]
+      [EnumLiteral("source"), Description("Source")]
       Source,
       /// <summary>
       /// A derivation for which the entity is removed from accessibility usually through the use of the Delete operation.
       /// (system: http://hl7.org/fhir/provenance-entity-role)
       /// </summary>
-      [EnumLiteral("removal", "http://hl7.org/fhir/provenance-entity-role"), Description("Removal")]
+      [EnumLiteral("removal"), Description("Removal")]
       Removal,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Provenance#Agent", IsNestedType=true)]
+    [BackboneType("Provenance.agent")]
     public partial class AgentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -125,7 +126,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Who participated
       /// </summary>
-      [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice)]
+      [FhirElement("who", InSummary=true, Order=50, Choice=ChoiceType.DatatypeChoice, FiveWs="who.actor")]
       [CLSCompliant(false)]
       [References("Practitioner","RelatedPerson","Patient","Device","Organization")]
       [AllowedTypes(typeof(Hl7.Fhir.Model.FhirUri),typeof(Hl7.Fhir.Model.ResourceReference))]
@@ -284,6 +285,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Provenance#Entity", IsNestedType=true)]
+    [BackboneType("Provenance.entity")]
     public partial class EntityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -296,6 +298,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("role", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ProvenanceEntityRole")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole> RoleElement
@@ -459,7 +462,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Target Reference(s) (usually version specific)
     /// </summary>
-    [FhirElement("target", InSummary=true, Order=90)]
+    [FhirElement("target", InSummary=true, Order=90, FiveWs="what")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=1,Max=-1)]
@@ -475,7 +478,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity occurred
     /// </summary>
-    [FhirElement("period", Order=100)]
+    [FhirElement("period", Order=100, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -488,7 +491,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the activity was recorded / updated
     /// </summary>
-    [FhirElement("recorded", InSummary=true, Order=110)]
+    [FhirElement("recorded", InSummary=true, Order=110, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.Instant RecordedElement
@@ -552,7 +555,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the activity occurred, if relevant
     /// </summary>
-    [FhirElement("location", Order=130)]
+    [FhirElement("location", Order=130, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -567,7 +570,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason the activity is occurring
     /// </summary>
-    [FhirElement("reason", Order=140)]
+    [FhirElement("reason", Order=140, FiveWs="why")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Coding> Reason
@@ -581,7 +584,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Activity that occurred
     /// </summary>
-    [FhirElement("activity", Order=150)]
+    [FhirElement("activity", Order=150, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.Coding Activity
     {
@@ -594,7 +597,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Actor involved
     /// </summary>
-    [FhirElement("agent", Order=160)]
+    [FhirElement("agent", Order=160, FiveWs="who")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Provenance.AgentComponent> Agent

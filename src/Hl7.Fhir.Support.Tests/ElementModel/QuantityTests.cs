@@ -6,7 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
-using Hl7.Fhir.Tests;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -68,7 +68,7 @@ namespace Hl7.Fhir.ElementModel.Tests
         }
 
         [TestMethod]
-        public void Comparison()
+        public void QuantityComparison()
         {
             var smaller = new P.Quantity(3.14m, "kg");
             var bigger = new P.Quantity(4.0m, "kg");
@@ -90,11 +90,61 @@ namespace Hl7.Fhir.ElementModel.Tests
         {
             var a = new P.Quantity(3.14m, "kg");
             var b = new P.Quantity(30.5m, "g");
-
-            ExceptionAssert.Throws<NotSupportedException>(() => a < b);
+            /*
+            Func<object> func = () => a < b;
+            ExceptionAssert.Throws<NotSupportedException>);
             Assert.IsFalse(a == b);
             ExceptionAssert.Throws<NotSupportedException>(() => a >= b);
-            Assert.IsFalse(a.Equals(b));
+            Assert.IsFalse(a.Equals(b));*/
+        }
+
+        public enum Comparison
+        {
+            LessThan,
+            Equals,
+            GreaterThan
+        }
+
+        [DataTestMethod]
+        [DataRow("1 'm'", "1 'm'", Comparison.Equals)]
+        [DataRow("1 'm'", "2 'm'", Comparison.LessThan)]
+        [DataRow("1 'cm'", "1 'm'", Comparison.LessThan)]
+        [DataRow("30.0 'g'", "0.03 'kg'", Comparison.Equals)]
+        [DataRow("1 '[in_i]'", "2 'cm'", Comparison.GreaterThan)] // 1 inch is greater than 2
+        [DataRow("1 '[stone_av]'", "6350.29318 'g'", Comparison.Equals)]
+        [DataRow("3 'hr'", "3 'h'", Comparison.Equals, true)]
+        [DataRow("3 'a'", "3 year", Comparison.Equals)]
+        [DataRow("3 'a'", "3 years", Comparison.Equals)]
+        [DataRow("3 'mo'", "3 months", Comparison.Equals)]
+        [DataRow("3 'd'", "3 days", Comparison.Equals)]
+        [DataRow("1 'd'", "3 days", Comparison.LessThan)]
+        public void QuantityCompareTests(string left, string right, Comparison expectedResult, bool shouldThrowException = false)
+        {
+
+            P.Quantity.TryParse(left, out var a);
+            P.Quantity.TryParse(right, out var b);
+
+            Func<int> func = () => a.CompareTo(b);
+
+            if (shouldThrowException)
+            {
+                func.Should().Throw<Exception>();
+                return;
+            }
+            var result = func();
+
+            switch (expectedResult)
+            {
+                case Comparison.LessThan:
+                    result.Should().BeNegative();
+                    break;
+                case Comparison.Equals:
+                    result.Should().Be(0);
+                    break;
+                case Comparison.GreaterThan:
+                    result.Should().BePositive();
+                    break;
+            }
         }
     }
 }

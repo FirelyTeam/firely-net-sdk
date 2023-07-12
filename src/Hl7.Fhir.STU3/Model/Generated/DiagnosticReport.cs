@@ -60,68 +60,68 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/diagnostic-report-status)
     /// (system: http://hl7.org/fhir/diagnostic-report-status)
     /// </summary>
-    [FhirEnumeration("DiagnosticReportStatus")]
+    [FhirEnumeration("DiagnosticReportStatus", "http://hl7.org/fhir/ValueSet/diagnostic-report-status", "http://hl7.org/fhir/diagnostic-report-status")]
     public enum DiagnosticReportStatus
     {
       /// <summary>
       /// The existence of the report is registered, but there is nothing yet available.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("registered", "http://hl7.org/fhir/diagnostic-report-status"), Description("Registered")]
+      [EnumLiteral("registered"), Description("Registered")]
       Registered,
       /// <summary>
       /// This is a partial (e.g. initial, interim or preliminary) report: data in the report may be incomplete or unverified.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/diagnostic-report-status"), Description("Partial")]
+      [EnumLiteral("partial"), Description("Partial")]
       Partial,
       /// <summary>
       /// Verified early results are available, but not all  results are final.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("preliminary", "http://hl7.org/fhir/diagnostic-report-status"), Description("Preliminary")]
+      [EnumLiteral("preliminary"), Description("Preliminary")]
       Preliminary,
       /// <summary>
       /// The report is complete and verified by an authorized person.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("final", "http://hl7.org/fhir/diagnostic-report-status"), Description("Final")]
+      [EnumLiteral("final"), Description("Final")]
       Final,
       /// <summary>
       /// Subsequent to being final, the report has been modified.  This includes any change in the results, diagnosis, narrative text, or other content of a report that has been issued.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("amended", "http://hl7.org/fhir/diagnostic-report-status"), Description("Amended")]
+      [EnumLiteral("amended"), Description("Amended")]
       Amended,
       /// <summary>
       /// Subsequent to being final, the report has been modified  to correct an error in the report or referenced results.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("corrected", "http://hl7.org/fhir/diagnostic-report-status"), Description("Corrected")]
+      [EnumLiteral("corrected"), Description("Corrected")]
       Corrected,
       /// <summary>
       /// Subsequent to being final, the report has been modified by adding new content. The existing content is unchanged.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("appended", "http://hl7.org/fhir/diagnostic-report-status"), Description("Appended")]
+      [EnumLiteral("appended"), Description("Appended")]
       Appended,
       /// <summary>
       /// The report is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/diagnostic-report-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The report has been withdrawn following a previous final release.  This electronic record should never have existed, though it is possible that real-world decisions were based on it. (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".)
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/diagnostic-report-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://hl7.org/fhir/diagnostic-report-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/diagnostic-report-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -131,6 +131,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Performer", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -265,6 +266,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DiagnosticReport#Image", IsNestedType=true)]
+    [BackboneType("DiagnosticReport.image")]
     public partial class ImageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -414,7 +416,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier for report
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -444,8 +446,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | partial | preliminary | final +
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("DiagnosticReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus> StatusElement
@@ -477,7 +480,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Service category
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=120)]
+    [FhirElement("category", InSummary=true, Order=120, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -490,7 +493,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name/Code for this diagnostic report
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -504,7 +507,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The subject of the report - usually, but not always, the patient
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
@@ -519,7 +522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Health care event when test ordered
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=150)]
+    [FhirElement("context", InSummary=true, Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -534,7 +537,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Clinically relevant time/time-period for report
     /// </summary>
-    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("effective", InSummary=true, Order=160, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -549,7 +552,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// DateTime this version was released
     /// </summary>
-    [FhirElement("issued", InSummary=true, Order=170)]
+    [FhirElement("issued", InSummary=true, Order=170, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Instant IssuedElement
     {
@@ -580,7 +583,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Participants in producing the report
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=180)]
+    [FhirElement("performer", InSummary=true, Order=180, FiveWs="who.witness")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.DiagnosticReport.PerformerComponent> Performer

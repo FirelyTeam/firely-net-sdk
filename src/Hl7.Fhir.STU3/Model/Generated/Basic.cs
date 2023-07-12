@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Resource
     /// </summary>
-    [FhirElement("code", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("code", InSummary=true, IsModifier=true, Order=100, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Identifies the focus of this resource
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=110)]
+    [FhirElement("subject", InSummary=true, Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When created
     /// </summary>
-    [FhirElement("created", InSummary=true, Order=120)]
+    [FhirElement("created", InSummary=true, Order=120, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.Date CreatedElement
     {
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who created
     /// </summary>
-    [FhirElement("author", InSummary=true, Order=130)]
+    [FhirElement("author", InSummary=true, Order=130, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Patient","RelatedPerson")]
     [DataMember]

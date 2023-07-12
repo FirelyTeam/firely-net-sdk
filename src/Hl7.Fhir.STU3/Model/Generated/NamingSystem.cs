@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-type)
     /// (system: http://hl7.org/fhir/namingsystem-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemType")]
+    [FhirEnumeration("NamingSystemType", "http://hl7.org/fhir/ValueSet/namingsystem-type", "http://hl7.org/fhir/namingsystem-type")]
     public enum NamingSystemType
     {
       /// <summary>
       /// The naming system is used to define concepts and symbols to represent those concepts; e.g. UCUM, LOINC, NDC code, local lab codes, etc.
       /// (system: http://hl7.org/fhir/namingsystem-type)
       /// </summary>
-      [EnumLiteral("codesystem", "http://hl7.org/fhir/namingsystem-type"), Description("Code System")]
+      [EnumLiteral("codesystem"), Description("Code System")]
       Codesystem,
       /// <summary>
       /// The naming system is used to manage identifiers (e.g. license numbers, order numbers, etc.).
       /// (system: http://hl7.org/fhir/namingsystem-type)
       /// </summary>
-      [EnumLiteral("identifier", "http://hl7.org/fhir/namingsystem-type"), Description("Identifier")]
+      [EnumLiteral("identifier"), Description("Identifier")]
       Identifier,
       /// <summary>
       /// The naming system is used as the root for other identifiers and naming systems.
       /// (system: http://hl7.org/fhir/namingsystem-type)
       /// </summary>
-      [EnumLiteral("root", "http://hl7.org/fhir/namingsystem-type"), Description("Root")]
+      [EnumLiteral("root"), Description("Root")]
       Root,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/namingsystem-identifier-type)
     /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
     /// </summary>
-    [FhirEnumeration("NamingSystemIdentifierType")]
+    [FhirEnumeration("NamingSystemIdentifierType", "http://hl7.org/fhir/ValueSet/namingsystem-identifier-type", "http://hl7.org/fhir/namingsystem-identifier-type")]
     public enum NamingSystemIdentifierType
     {
       /// <summary>
       /// An ISO object identifier; e.g. 1.2.3.4.5.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("oid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("OID")]
+      [EnumLiteral("oid"), Description("OID")]
       Oid,
       /// <summary>
       /// A universally unique identifier of the form a5afddf4-e880-459b-876e-e4591b0acc11.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("uuid", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("UUID")]
+      [EnumLiteral("uuid"), Description("UUID")]
       Uuid,
       /// <summary>
       /// A uniform resource identifier (ideally a URL - uniform resource locator); e.g. http://unitsofmeasure.org.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("uri", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("URI")]
+      [EnumLiteral("uri"), Description("URI")]
       Uri,
       /// <summary>
       /// Some other type of unique identifier; e.g. HL7-assigned reserved string such as LN for LOINC.
       /// (system: http://hl7.org/fhir/namingsystem-identifier-type)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/namingsystem-identifier-type"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("NamingSystem#UniqueId", IsNestedType=true)]
+    [BackboneType("NamingSystem.uniqueId")]
     public partial class UniqueIdComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -135,6 +136,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("NamingSystemIdentifierType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemIdentifierType> TypeElement
@@ -166,7 +168,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// The unique identifier
       /// </summary>
-      [FhirElement("value", Order=50)]
+      [FhirElement("value", Order=50, FiveWs="id")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Hl7.Fhir.Model.FhirString ValueElement
@@ -424,8 +426,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | active | retired | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -457,8 +460,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// codesystem | identifier | root
     /// </summary>
-    [FhirElement("kind", Order=110)]
+    [FhirElement("kind", Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("NamingSystemType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.NamingSystem.NamingSystemType> KindElement
@@ -490,7 +494,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date this was last changed
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=120)]
+    [FhirElement("date", InSummary=true, Order=120, FiveWs="when.recorded")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
@@ -522,7 +526,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of the publisher (organization or individual)
     /// </summary>
-    [FhirElement("publisher", InSummary=true, Order=130)]
+    [FhirElement("publisher", InSummary=true, Order=130, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString PublisherElement
     {
@@ -567,7 +571,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who maintains system namespace?
     /// </summary>
-    [FhirElement("responsible", Order=150)]
+    [FhirElement("responsible", Order=150, FiveWs="who.witness")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ResponsibleElement
     {

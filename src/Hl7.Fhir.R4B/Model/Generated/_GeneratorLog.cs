@@ -24,7 +24,6 @@
 // Generated Shared Enumeration: ActionRelationshipType (http://hl7.org/fhir/ValueSet/action-relationship-type)
   // Used in model class (resource): PlanDefinition.action.relatedAction.relationship
   // Used in model class (resource): RequestGroup.action.relatedAction.relationship
-  // Used in model class (type): Extension.extension.value[x]
 
 // Generated Shared Enumeration: ActionRequiredBehavior (http://hl7.org/fhir/ValueSet/action-required-behavior)
   // Used in model class (resource): PlanDefinition.action.requiredBehavior
@@ -71,22 +70,12 @@
 
 // Generated Shared Enumeration: ConceptMapEquivalence (http://hl7.org/fhir/ValueSet/concept-map-equivalence)
   // Used in model class (resource): ConceptMap.group.element.target.equivalence
-  // Used in model class (type): Extension.value[x]
-
-// Deferred generation of Shared Enumeration (will be generated in another subset): ConstraintSeverity (http://hl7.org/fhir/ValueSet/constraint-severity)
-  // Used in model class (type): ElementDefinition.constraint.severity
-  // Used in model class (type): Extension.extension.value[x]
 
 // Generated Shared Enumeration: CountryValueSet (http://hl7.org/fhir/ValueSet/country)
   // Used in model class (resource): Ingredient.substance.strength.country
   // Used in model class (resource): Ingredient.substance.strength.referenceStrength.country
   // Used in model class (resource): MedicinalProductDefinition.name.countryLanguage.country
   // Used in model class (resource): SubstanceDefinition.sourceMaterial.countryOfOrigin
-
-// Generated Shared Enumeration: DataAbsentReason (http://hl7.org/fhir/ValueSet/data-absent-reason)
-  // Used in model class (resource): Observation.dataAbsentReason
-  // Used in model class (resource): Observation.component.dataAbsentReason
-  // Used in model class (type): Extension.value[x]
 
 // Generated Shared Enumeration: DaysOfWeek (http://hl7.org/fhir/ValueSet/days-of-week)
   // Used in model class (type): Timing.repeat.dayOfWeek
@@ -119,14 +108,12 @@
   // Used in model class (resource): Communication.status
   // Used in model class (resource): Media.status
   // Used in model class (resource): Procedure.status
-  // Used in model class (resource): Event.status
 
 // Deferred generation of Shared Enumeration (will be generated in another subset): FHIRVersion (http://hl7.org/fhir/ValueSet/FHIR-version)
   // Used in model class (resource): CapabilityStatement.fhirVersion
   // Used in model class (resource): ImplementationGuide.fhirVersion
   // Used in model class (resource): ImplementationGuide.definition.resource.fhirVersion
   // Used in model class (resource): StructureDefinition.fhirVersion
-  // Used in model class (type): Extension.value[x]
 
 // Deferred generation of Shared Enumeration (will be generated in another subset): FilterOperator (http://hl7.org/fhir/ValueSet/filter-operator)
   // Used in model class (resource): CodeSystem.filter.operator
@@ -164,7 +151,6 @@
 
 // Generated Shared Enumeration: MessageheaderResponseRequest (http://hl7.org/fhir/ValueSet/messageheader-response-request)
   // Used in model class (resource): MessageDefinition.responseRequired
-  // Used in model class (type): Extension.value[x]
 
 // Generated Shared Enumeration: NoteType (http://hl7.org/fhir/ValueSet/note-type)
   // Used in model class (resource): ClaimResponse.processNote.type
@@ -230,7 +216,6 @@
   // Used in model class (resource): TerminologyCapabilities.status
   // Used in model class (resource): TestScript.status
   // Used in model class (resource): ValueSet.status
-  // Used in model class (resource): Definition.status
 
 // Generated Shared Enumeration: RemittanceOutcome (http://hl7.org/fhir/ValueSet/remittance-outcome)
   // Used in model class (resource): ClaimResponse.outcome
@@ -245,7 +230,6 @@
   // Used in model class (resource): NutritionOrder.intent
   // Used in model class (resource): RequestGroup.intent
   // Used in model class (resource): ServiceRequest.intent
-  // Used in model class (resource): Request.intent
 
 // Generated Shared Enumeration: RequestPriority (http://hl7.org/fhir/ValueSet/request-priority)
   // Used in model class (resource): ActivityDefinition.priority
@@ -259,7 +243,6 @@
   // Used in model class (resource): ServiceRequest.priority
   // Used in model class (resource): SupplyRequest.priority
   // Used in model class (resource): Task.priority
-  // Used in model class (resource): Request.priority
 
 // Generated Shared Enumeration: RequestStatus (http://hl7.org/fhir/ValueSet/request-status)
   // Used in model class (resource): CarePlan.status
@@ -268,7 +251,6 @@
   // Used in model class (resource): NutritionOrder.status
   // Used in model class (resource): RequestGroup.status
   // Used in model class (resource): ServiceRequest.status
-  // Used in model class (resource): Request.status
 
 // Generated Shared Enumeration: ResourceType (http://hl7.org/fhir/ValueSet/resource-types)
   // Used in model class (type): Reference.type
@@ -283,7 +265,6 @@
   // Used in model class (resource): Questionnaire.subjectType
   // Used in model class (resource): SearchParameter.base
   // Used in model class (resource): SearchParameter.target
-  // Used in model class (type): Extension.value[x]
 
 // Deferred generation of Shared Enumeration (will be generated in another subset): SearchParamType (http://hl7.org/fhir/ValueSet/search-param-type)
   // Used in model class (resource): CapabilityStatement.rest.resource.searchParam.type

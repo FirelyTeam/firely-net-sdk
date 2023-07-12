@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-intent)
     /// (system: http://hl7.org/fhir/request-intent)
     /// </summary>
-    [FhirEnumeration("CarePlanIntent")]
+    [FhirEnumeration("CarePlanIntent", "http://hl7.org/fhir/ValueSet/care-plan-intent", "http://hl7.org/fhir/request-intent")]
     public enum CarePlanIntent
     {
       /// <summary>
       /// The request is a suggestion made by someone/something that does not have an intention to ensure it occurs and without providing an authorization to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("proposal", "http://hl7.org/fhir/request-intent"), Description("Proposal")]
+      [EnumLiteral("proposal"), Description("Proposal")]
       Proposal,
       /// <summary>
       /// The request represents an intention to ensure something occurs without providing an authorization for others to act.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("plan", "http://hl7.org/fhir/request-intent"), Description("Plan")]
+      [EnumLiteral("plan"), Description("Plan")]
       Plan,
       /// <summary>
       /// The request represents a request/demand and authorization for action by a Practitioner.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("order", "http://hl7.org/fhir/request-intent"), Description("Order")]
+      [EnumLiteral("order"), Description("Order")]
       Order,
       /// <summary>
       /// The request represents a component or option for a RequestGroup that establishes timing, conditionality and/or other constraints among a set of requests.  Refer to [[[RequestGroup]]] for additional information on how this status is used.
       /// (system: http://hl7.org/fhir/request-intent)
       /// </summary>
-      [EnumLiteral("option", "http://hl7.org/fhir/request-intent"), Description("Option")]
+      [EnumLiteral("option"), Description("Option")]
       Option,
     }
 
@@ -94,56 +94,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-activity-kind)
     /// (system: http://hl7.org/fhir/resource-types)
     /// </summary>
-    [FhirEnumeration("CarePlanActivityKind")]
+    [FhirEnumeration("CarePlanActivityKind", "http://hl7.org/fhir/ValueSet/care-plan-activity-kind", "http://hl7.org/fhir/resource-types")]
     public enum CarePlanActivityKind
     {
       /// <summary>
       /// A booking of a healthcare event among patient(s), practitioner(s), related person(s) and/or device(s) for a specific date/time. This may result in one or more Encounter(s).
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("Appointment", "http://hl7.org/fhir/resource-types"), Description("Appointment")]
+      [EnumLiteral("Appointment"), Description("Appointment")]
       Appointment,
       /// <summary>
       /// A request to convey information; e.g. the CDS system proposes that an alert be sent to a responsible provider, the CDS system proposes that the public health agency be notified about a reportable condition.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("CommunicationRequest", "http://hl7.org/fhir/resource-types"), Description("CommunicationRequest")]
+      [EnumLiteral("CommunicationRequest"), Description("CommunicationRequest")]
       CommunicationRequest,
       /// <summary>
       /// Represents a request for a patient to employ a medical device. The device may be an implantable device, or an external assistive device, such as a walker.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("DeviceRequest", "http://hl7.org/fhir/resource-types"), Description("DeviceRequest")]
+      [EnumLiteral("DeviceRequest"), Description("DeviceRequest")]
       DeviceRequest,
       /// <summary>
       /// An order or request for both supply of the medication and the instructions for administration of the medication to a patient. The resource is called "MedicationRequest" rather than "MedicationPrescription" or "MedicationOrder" to generalize the use across inpatient and outpatient settings, including care plans, etc., and to harmonize with workflow patterns.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("MedicationRequest", "http://hl7.org/fhir/resource-types"), Description("MedicationRequest")]
+      [EnumLiteral("MedicationRequest"), Description("MedicationRequest")]
       MedicationRequest,
       /// <summary>
       /// A request to supply a diet, formula feeding (enteral) or oral nutritional supplement to a patient/resident.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("NutritionOrder", "http://hl7.org/fhir/resource-types"), Description("NutritionOrder")]
+      [EnumLiteral("NutritionOrder"), Description("NutritionOrder")]
       NutritionOrder,
       /// <summary>
       /// A task to be performed.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("Task", "http://hl7.org/fhir/resource-types"), Description("Task")]
+      [EnumLiteral("Task"), Description("Task")]
       Task,
       /// <summary>
       /// A record of a request for service such as diagnostic investigations, treatments, or operations to be performed.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("ServiceRequest", "http://hl7.org/fhir/resource-types"), Description("ServiceRequest")]
+      [EnumLiteral("ServiceRequest"), Description("ServiceRequest")]
       ServiceRequest,
       /// <summary>
       /// An authorization for the provision of glasses and/or contact lenses to a patient.
       /// (system: http://hl7.org/fhir/resource-types)
       /// </summary>
-      [EnumLiteral("VisionPrescription", "http://hl7.org/fhir/resource-types"), Description("VisionPrescription")]
+      [EnumLiteral("VisionPrescription"), Description("VisionPrescription")]
       VisionPrescription,
     }
 
@@ -152,62 +152,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/care-plan-activity-status)
     /// (system: http://hl7.org/fhir/care-plan-activity-status)
     /// </summary>
-    [FhirEnumeration("CarePlanActivityStatus")]
+    [FhirEnumeration("CarePlanActivityStatus", "http://hl7.org/fhir/ValueSet/care-plan-activity-status", "http://hl7.org/fhir/care-plan-activity-status")]
     public enum CarePlanActivityStatus
     {
       /// <summary>
       /// Care plan activity is planned but no action has yet been taken.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("not-started", "http://hl7.org/fhir/care-plan-activity-status"), Description("Not Started")]
+      [EnumLiteral("not-started"), Description("Not Started")]
       NotStarted,
       /// <summary>
       /// Appointment or other booking has occurred but activity has not yet begun.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("scheduled", "http://hl7.org/fhir/care-plan-activity-status"), Description("Scheduled")]
+      [EnumLiteral("scheduled"), Description("Scheduled")]
       Scheduled,
       /// <summary>
       /// Care plan activity has been started but is not yet complete.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/care-plan-activity-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Care plan activity was started but has temporarily ceased with an expectation of resumption at a future time.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/care-plan-activity-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// Care plan activity has been completed (more or less) as planned.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/care-plan-activity-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The planned care plan activity has been withdrawn.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/care-plan-activity-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// The planned care plan activity has been ended prior to completion after the activity was started.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/care-plan-activity-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The current state of the care plan activity is not known.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which one.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/care-plan-activity-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
       /// <summary>
       /// Care plan activity was entered in error and voided.
       /// (system: http://hl7.org/fhir/care-plan-activity-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/care-plan-activity-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -217,6 +217,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Activity", IsNestedType=true)]
+    [BackboneType("CarePlan.activity")]
     public partial class ActivityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -421,6 +422,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("CarePlan#Detail", IsNestedType=true)]
+    [BackboneType("CarePlan.activity.detail")]
     public partial class DetailComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -433,6 +435,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("kind", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CarePlanActivityKind")]
       [DataMember]
       public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityKind> KindElement
       {
@@ -588,6 +591,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", IsModifier=true, Order=110)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("CarePlanActivityStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus> StatusElement
@@ -1137,6 +1141,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestStatus> StatusElement
@@ -1170,6 +1175,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("intent", InSummary=true, IsModifier=true, Order=160)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("CarePlanIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.CarePlan.CarePlanIntent> IntentElement
@@ -1202,6 +1208,7 @@ namespace Hl7.Fhir.Model
     /// Type of plan
     /// </summary>
     [FhirElement("category", InSummary=true, Order=170, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category

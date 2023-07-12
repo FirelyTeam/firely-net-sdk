@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SubstanceProtein#Subunit", IsNestedType=true)]
+    [BackboneType("SubstanceProtein.subunit")]
     public partial class SubunitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

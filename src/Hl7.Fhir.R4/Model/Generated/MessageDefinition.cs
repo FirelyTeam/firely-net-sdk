@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/message-significance-category)
     /// (system: http://hl7.org/fhir/message-significance-category)
     /// </summary>
-    [FhirEnumeration("MessageSignificanceCategory")]
+    [FhirEnumeration("MessageSignificanceCategory", "http://hl7.org/fhir/ValueSet/message-significance-category", "http://hl7.org/fhir/message-significance-category")]
     public enum MessageSignificanceCategory
     {
       /// <summary>
       /// The message represents/requests a change that should not be processed more than once; e.g., making a booking for an appointment.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("consequence", "http://hl7.org/fhir/message-significance-category"), Description("Consequence")]
+      [EnumLiteral("consequence"), Description("Consequence")]
       Consequence,
       /// <summary>
       /// The message represents a response to query for current information. Retrospective processing is wrong and/or wasteful.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("currency", "http://hl7.org/fhir/message-significance-category"), Description("Currency")]
+      [EnumLiteral("currency"), Description("Currency")]
       Currency,
       /// <summary>
       /// The content is not necessarily intended to be current, and it can be reprocessed, though there may be version issues created by processing old notifications.
       /// (system: http://hl7.org/fhir/message-significance-category)
       /// </summary>
-      [EnumLiteral("notification", "http://hl7.org/fhir/message-significance-category"), Description("Notification")]
+      [EnumLiteral("notification"), Description("Notification")]
       Notification,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#Focus", IsNestedType=true)]
+    [BackboneType("MessageDefinition.focus")]
     public partial class FocusComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -101,6 +102,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("code", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ResourceType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ResourceType> CodeElement
@@ -339,6 +341,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MessageDefinition#AllowedResponse", IsNestedType=true)]
+    [BackboneType("MessageDefinition.allowedResponse")]
     public partial class AllowedResponseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -676,6 +679,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=150, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -1017,6 +1021,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("category", InSummary=true, Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MessageSignificanceCategory")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageDefinition.MessageSignificanceCategory> CategoryElement
     {
@@ -1063,6 +1068,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("responseRequired", Order=300)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("messageheader-response-request")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MessageheaderResponseRequest> ResponseRequiredElement
     {

@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
     /// (system: http://hl7.org/fhir/consent-state-codes)
     /// </summary>
-    [FhirEnumeration("ConsentState")]
+    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes", "http://hl7.org/fhir/consent-state-codes")]
     public enum ConsentState
     {
       /// <summary>
       /// The consent is in development or awaiting use but is not yet intended to be acted upon.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/consent-state-codes"), Description("Pending")]
+      [EnumLiteral("draft"), Description("Pending")]
       Draft,
       /// <summary>
       /// The consent is to be followed and enforced.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The consent is terminated or replaced.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/consent-state-codes"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The consent development has been terminated prior to completion.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("not-done", "http://hl7.org/fhir/consent-state-codes"), Description("Abandoned")]
+      [EnumLiteral("not-done"), Description("Abandoned")]
       NotDone,
       /// <summary>
       /// The consent was created wrongly (e.g. wrong patient) and should be ignored.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The resource is in an indeterminate state.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/consent-state-codes"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#PolicyBasis", IsNestedType=true)]
+    [BackboneType("Consent.policyBasis")]
     public partial class PolicyBasisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -258,6 +259,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#Verification", IsNestedType=true)]
+    [BackboneType("Consent.verification")]
     public partial class VerificationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -497,6 +499,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provision", IsNestedType=true)]
+    [BackboneType("Consent.provision")]
     public partial class provisionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -857,6 +860,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provisionActor", IsNestedType=true)]
+    [BackboneType("Consent.provision.actor")]
     public partial class provisionActorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -990,6 +994,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Consent#provisionData", IsNestedType=true)]
+    [BackboneType("Consent.provision.data")]
     public partial class provisionDataComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1002,6 +1007,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("meaning", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConsentDataMeaning")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConsentDataMeaning> MeaningElement
@@ -1157,6 +1163,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConsentState")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Consent.ConsentState> StatusElement
@@ -1414,6 +1421,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("decision", InSummary=true, IsModifier=true, Order=250)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ConsentProvisionType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.ConsentProvisionType> DecisionElement
     {

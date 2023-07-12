@@ -9,6 +9,7 @@
 using FluentAssertions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Specification;
+using Hl7.Fhir.Specification.Source;
 using Hl7.Fhir.Tests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -21,8 +22,115 @@ using Tasks = System.Threading.Tasks;
 
 namespace Hl7.Fhir.Serialization.Tests
 {
+    [TestClass]
     public partial class RoundtripTest
     {
+#if R5
+        private readonly string _attachmentJson = "{\"size\":\"12\"}";
+#else
+        private readonly string _attachmentJson = "{\"size\":12}";
+#endif
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesXmlPoco()
+        {
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async Tasks.Task FullRoundtripOfAllExamplesXmlPocoAsync()
+        {
+            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: true, provider: null);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJsonPoco()
+        {
+            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: true, provider: null);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async Tasks.Task FullRoundtripOfAllExamplesJsonPocoAsync()
+        {
+            await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: true, provider: null);
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesXmlNavPocoProvider()
+        {
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async Tasks.Task FullRoundtripOfAllExamplesXmlNavPocoProviderAsync()
+        {
+            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJsonNavPocoProvider()
+        {
+            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async Tasks.Task FullRoundtripOfAllExamplesJsonNavPocoProviderAsync()
+        {
+            await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: false, provider: new PocoStructureDefinitionSummaryProvider());
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesXmlNavSdProvider()
+        {
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            FullRoundtripOfAllExamples("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async Tasks.Task FullRoundtripOfAllExamplesXmlNavSdProviderAsync()
+        {
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            await FullRoundtripOfAllExamplesAsync("examples.zip", "FHIRRoundTripTestXml",
+                "Roundtripping xml->json->xml", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public void FullRoundtripOfAllExamplesJsonNavSdProvider()
+        {
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            FullRoundtripOfAllExamples("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
+        }
+
+        [TestMethod]
+        [TestCategory("LongRunner")]
+        public async Tasks.Task FullRoundtripOfAllExamplesJsonNavSdProviderAsync()
+        {
+            var source = new CachedResolver(ZipSource.CreateValidationSource());
+            await FullRoundtripOfAllExamplesAsync("examples-json.zip", "FHIRRoundTripTestJson",
+                "Roundtripping json->xml->json", usingPoco: false, provider: new StructureDefinitionSummaryProvider(source));
+        }
+
         private static string GetFullPathForExample(string filename) => Path.Combine("TestData", filename);
 
         public static ZipArchive ReadTestZip(string filename)
@@ -163,7 +271,7 @@ namespace Hl7.Fhir.Serialization.Tests
             Assert.AreEqual(0, errors.Count, "Errors were encountered comparing converted content");
         }
 
-        static bool SkipFile(string file)
+        private static bool SkipFile(string file)
         {
             if (file.Contains(".profile"))
                 return true;
@@ -177,8 +285,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true; // not a resource
             if (file.Contains("uml.json"))
                 return true; // not a resource
-            if (file.Contains("examplescenario-example"))
-                return true; // this resource has a property name resourceType (which is reserved in the .net json serializer)
             if (file.Contains("backbone-elements"))
                 return true; // its not really a resource!
             if (file.Contains("json-edge-cases"))
@@ -194,8 +300,6 @@ namespace Hl7.Fhir.Serialization.Tests
                 return true; // this file is known to have a single dud valueset - have reported on Zulip
                              // https://chat.fhir.org/#narrow/stream/48-terminology/subject/v2.20Table.200550
 
-            if (file.Contains("subscriptiontopic-example-admission"))  // version 4.6.0: resourceType is not accepted in resourceTrigger
-                return true;
             if (file.Contains("conceptmaps."))  // version 4.6.0: identifier is not an array
                 return true;
             if (file.EndsWith("-questionnaire.json") && !file.EndsWith("operation-structuredefinition-questionnaire.json"))  // version 4.6.0: 'choice' is not a valid Questionnaire.Item.Type anymore
@@ -204,10 +308,6 @@ namespace Hl7.Fhir.Serialization.Tests
             if (file.EndsWith("notification-empty(9601c07a-e34f-4945-93ca-6efb5394c995).xml"))
                 return true;
 
-#if R5
-            // This example contains resourceType which cannot be handled by our old serializers
-            if (file.Contains("subscription-example")) return true;
-#endif 
             return false;
         }
 

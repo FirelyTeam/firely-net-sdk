@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/guidance-response-status)
     /// (system: http://hl7.org/fhir/guidance-response-status)
     /// </summary>
-    [FhirEnumeration("GuidanceResponseStatus")]
+    [FhirEnumeration("GuidanceResponseStatus", "http://hl7.org/fhir/ValueSet/guidance-response-status", "http://hl7.org/fhir/guidance-response-status")]
     public enum GuidanceResponseStatus
     {
       /// <summary>
       /// The request was processed successfully
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("success", "http://hl7.org/fhir/guidance-response-status"), Description("Success")]
+      [EnumLiteral("success"), Description("Success")]
       Success,
       /// <summary>
       /// The request was processed successfully, but more data may result in a more complete evaluation
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("data-requested", "http://hl7.org/fhir/guidance-response-status"), Description("Data Requested")]
+      [EnumLiteral("data-requested"), Description("Data Requested")]
       DataRequested,
       /// <summary>
       /// The request was processed, but more data is required to complete the evaluation
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("data-required", "http://hl7.org/fhir/guidance-response-status"), Description("Data Required")]
+      [EnumLiteral("data-required"), Description("Data Required")]
       DataRequired,
       /// <summary>
       /// The request is currently being processed
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/guidance-response-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The request was not processed successfully
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("failure", "http://hl7.org/fhir/guidance-response-status"), Description("Failure")]
+      [EnumLiteral("failure"), Description("Failure")]
       Failure,
       /// <summary>
       /// The response was entered in error
       /// (system: http://hl7.org/fhir/guidance-response-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/guidance-response-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=100)]
+    [FhirElement("identifier", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -164,8 +164,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// success | data-requested | data-required | in-progress | failure | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=120)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GuidanceResponseStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.GuidanceResponse.GuidanceResponseStatus> StatusElement
@@ -197,7 +198,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient the request was performed for
     /// </summary>
-    [FhirElement("subject", Order=130)]
+    [FhirElement("subject", Order=130, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -212,7 +213,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Encounter or Episode during which the response was returned
     /// </summary>
-    [FhirElement("context", Order=140)]
+    [FhirElement("context", Order=140, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -227,7 +228,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the guidance response was processed
     /// </summary>
-    [FhirElement("occurrenceDateTime", Order=150)]
+    [FhirElement("occurrenceDateTime", Order=150, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime OccurrenceDateTimeElement
     {
@@ -258,7 +259,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Device returning the guidance
     /// </summary>
-    [FhirElement("performer", Order=160)]
+    [FhirElement("performer", Order=160, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Device")]
     [DataMember]
@@ -273,7 +274,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason for the response
     /// </summary>
-    [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("reason", Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

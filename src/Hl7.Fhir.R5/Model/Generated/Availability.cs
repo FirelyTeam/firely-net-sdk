@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Availability#AvailableTime", IsNestedType=true)]
+    [BackboneType("Availability.availableTime")]
     public partial class AvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>
@@ -73,6 +74,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("daysOfWeek", InSummary=true, Order=30)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("DaysOfWeek")]
       [Cardinality(Min=0,Max=-1)]
       [DataMember]
       public List<Code<Hl7.Fhir.Model.DaysOfWeek>> DaysOfWeekElement
@@ -310,6 +312,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Availability#NotAvailableTime", IsNestedType=true)]
+    [BackboneType("Availability.notAvailableTime")]
     public partial class NotAvailableTimeComponent : Hl7.Fhir.Model.Element
     {
       /// <summary>

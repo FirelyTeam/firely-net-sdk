@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentstatus)
     /// (system: http://hl7.org/fhir/appointmentstatus)
     /// </summary>
-    [FhirEnumeration("AppointmentStatus")]
+    [FhirEnumeration("AppointmentStatus", "http://hl7.org/fhir/ValueSet/appointmentstatus", "http://hl7.org/fhir/appointmentstatus")]
     public enum AppointmentStatus
     {
       /// <summary>
       /// None of the participant(s) have finalized their acceptance of the appointment request, and the start/end time may not be set yet.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("proposed", "http://hl7.org/fhir/appointmentstatus"), Description("Proposed")]
+      [EnumLiteral("proposed"), Description("Proposed")]
       Proposed,
       /// <summary>
       /// Some or all of the participant(s) have not finalized their acceptance of the appointment request.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/appointmentstatus"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
       /// <summary>
       /// All participant(s) have been considered and the appointment is confirmed to go ahead at the date/times specified.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("booked", "http://hl7.org/fhir/appointmentstatus"), Description("Booked")]
+      [EnumLiteral("booked"), Description("Booked")]
       Booked,
       /// <summary>
       /// Some of the patients have arrived.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("arrived", "http://hl7.org/fhir/appointmentstatus"), Description("Arrived")]
+      [EnumLiteral("arrived"), Description("Arrived")]
       Arrived,
       /// <summary>
       /// This appointment has completed and may have resulted in an encounter.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("fulfilled", "http://hl7.org/fhir/appointmentstatus"), Description("Fulfilled")]
+      [EnumLiteral("fulfilled"), Description("Fulfilled")]
       Fulfilled,
       /// <summary>
       /// The appointment has been cancelled.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/appointmentstatus"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Some or all of the participant(s) have not/did not appear for the appointment (usually the patient).
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("noshow", "http://hl7.org/fhir/appointmentstatus"), Description("No Show")]
+      [EnumLiteral("noshow"), Description("No Show")]
       Noshow,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/appointmentstatus)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/appointmentstatus"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 
@@ -118,26 +118,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/participantrequired)
     /// (system: http://hl7.org/fhir/participantrequired)
     /// </summary>
-    [FhirEnumeration("ParticipantRequired")]
+    [FhirEnumeration("ParticipantRequired", "http://hl7.org/fhir/ValueSet/participantrequired", "http://hl7.org/fhir/participantrequired")]
     public enum ParticipantRequired
     {
       /// <summary>
       /// The participant is required to attend the appointment.
       /// (system: http://hl7.org/fhir/participantrequired)
       /// </summary>
-      [EnumLiteral("required", "http://hl7.org/fhir/participantrequired"), Description("Required")]
+      [EnumLiteral("required"), Description("Required")]
       Required,
       /// <summary>
       /// The participant may optionally attend the appointment.
       /// (system: http://hl7.org/fhir/participantrequired)
       /// </summary>
-      [EnumLiteral("optional", "http://hl7.org/fhir/participantrequired"), Description("Optional")]
+      [EnumLiteral("optional"), Description("Optional")]
       Optional,
       /// <summary>
       /// The participant is excluded from the appointment, and may not be informed of the appointment taking place. (Appointment is about them, not for them - such as 2 doctors discussing results about a patient's test).
       /// (system: http://hl7.org/fhir/participantrequired)
       /// </summary>
-      [EnumLiteral("information-only", "http://hl7.org/fhir/participantrequired"), Description("Information Only")]
+      [EnumLiteral("information-only"), Description("Information Only")]
       InformationOnly,
     }
 
@@ -147,6 +147,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Appointment#Participant", IsNestedType=true)]
+    [BackboneType("Appointment.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -171,7 +172,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Person, Location/HealthcareService or Device
       /// </summary>
-      [FhirElement("actor", InSummary=true, Order=50)]
+      [FhirElement("actor", InSummary=true, Order=50, FiveWs="who")]
       [CLSCompliant(false)]
       [References("Patient","Practitioner","RelatedPerson","Device","HealthcareService","Location")]
       [DataMember]
@@ -188,6 +189,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("required", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipantRequired")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Appointment.ParticipantRequired> RequiredElement
       {
@@ -220,6 +222,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=70)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ParticipationStatus")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ParticipationStatus> StatusElement
@@ -361,7 +364,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// External Ids for this item
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -375,8 +378,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposed | pending | booked | arrived | fulfilled | cancelled | noshow | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AppointmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Appointment.AppointmentStatus> StatusElement
@@ -435,7 +439,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The specialty of a practitioner that would be required to perform the service requested in this appointment
     /// </summary>
-    [FhirElement("specialty", InSummary=true, Order=130)]
+    [FhirElement("specialty", InSummary=true, Order=130, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Specialty
@@ -492,7 +496,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Used to make informed decisions if needing to re-prioritize
     /// </summary>
-    [FhirElement("priority", Order=170)]
+    [FhirElement("priority", Order=170, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.UnsignedInt PriorityElement
     {
@@ -554,7 +558,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Additional information to support the appointment
     /// </summary>
-    [FhirElement("supportingInformation", Order=190)]
+    [FhirElement("supportingInformation", Order=190, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Resource")]
     [Cardinality(Min=0,Max=-1)]
@@ -570,7 +574,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to take place
     /// </summary>
-    [FhirElement("start", InSummary=true, Order=200)]
+    [FhirElement("start", InSummary=true, Order=200, FiveWs="when.init")]
     [DataMember]
     public Hl7.Fhir.Model.Instant StartElement
     {
@@ -601,7 +605,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When appointment is to conclude
     /// </summary>
-    [FhirElement("end", InSummary=true, Order=210)]
+    [FhirElement("end", InSummary=true, Order=210, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Instant EndElement
     {

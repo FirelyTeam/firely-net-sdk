@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/supplyrequest-status)
     /// (system: http://hl7.org/fhir/supplyrequest-status)
     /// </summary>
-    [FhirEnumeration("SupplyRequestStatus")]
+    [FhirEnumeration("SupplyRequestStatus", "http://hl7.org/fhir/ValueSet/supplyrequest-status", "http://hl7.org/fhir/supplyrequest-status")]
     public enum SupplyRequestStatus
     {
       /// <summary>
       /// The request has been created but is not yet complete or ready for action.
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/supplyrequest-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The request is ready to be acted upon.
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/supplyrequest-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The authorization/request to act has been temporarily withdrawn but is expected to resume in the future.
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/supplyrequest-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The authorization/request to act has been terminated prior to the full completion of the intended actions.  No further activity should occur.
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/supplyrequest-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Activity against the request has been sufficiently completed to the satisfaction of the requester.
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/supplyrequest-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "cancelled" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/supplyrequest-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The authoring/source system does not know which of the status values currently applies for this observation. Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply, but the authoring/source system does not know which.
       /// (system: http://hl7.org/fhir/supplyrequest-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/supplyrequest-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SupplyRequest#Parameter", IsNestedType=true)]
+    [BackboneType("SupplyRequest.parameter")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -259,6 +260,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SupplyRequestStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SupplyRequest.SupplyRequestStatus> StatusElement
     {
@@ -290,6 +292,7 @@ namespace Hl7.Fhir.Model
     /// The kind of supply (central, non-stock, etc.)
     /// </summary>
     [FhirElement("category", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Category
     {
@@ -304,6 +307,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("priority", InSummary=true, Order=120, FiveWs="FiveWs.grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RequestPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {

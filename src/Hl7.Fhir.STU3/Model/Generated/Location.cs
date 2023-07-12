@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/location-status)
     /// (system: http://hl7.org/fhir/location-status)
     /// </summary>
-    [FhirEnumeration("LocationStatus")]
+    [FhirEnumeration("LocationStatus", "http://hl7.org/fhir/ValueSet/location-status", "http://hl7.org/fhir/location-status")]
     public enum LocationStatus
     {
       /// <summary>
       /// The location is operational.
       /// (system: http://hl7.org/fhir/location-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/location-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The location is temporarily closed.
       /// (system: http://hl7.org/fhir/location-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/location-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The location is no longer used.
       /// (system: http://hl7.org/fhir/location-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/location-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/location-mode)
     /// (system: http://hl7.org/fhir/location-mode)
     /// </summary>
-    [FhirEnumeration("LocationMode")]
+    [FhirEnumeration("LocationMode", "http://hl7.org/fhir/ValueSet/location-mode", "http://hl7.org/fhir/location-mode")]
     public enum LocationMode
     {
       /// <summary>
       /// The Location resource represents a specific instance of a location (e.g. Operating Theatre 1A).
       /// (system: http://hl7.org/fhir/location-mode)
       /// </summary>
-      [EnumLiteral("instance", "http://hl7.org/fhir/location-mode"), Description("Instance")]
+      [EnumLiteral("instance"), Description("Instance")]
       Instance,
       /// <summary>
       /// The Location represents a class of locations (e.g. Any Operating Theatre) although this class of locations could be constrained within a specific boundary (such as organization, or parent location, address etc.).
       /// (system: http://hl7.org/fhir/location-mode)
       /// </summary>
-      [EnumLiteral("kind", "http://hl7.org/fhir/location-mode"), Description("Kind")]
+      [EnumLiteral("kind"), Description("Kind")]
       Kind,
     }
 
@@ -111,6 +111,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Location#Position", IsNestedType=true)]
+    [BackboneType("Location.position")]
     public partial class PositionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -317,7 +318,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique code or number identifying the location to its users
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -331,8 +332,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | suspended | inactive
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("LocationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
     {
@@ -363,7 +365,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// The Operational status of the location (typically only for a bed/room)
     /// </summary>
-    [FhirElement("operationalStatus", InSummary=true, Order=110)]
+    [FhirElement("operationalStatus", InSummary=true, Order=110, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.Coding OperationalStatus
     {
@@ -470,8 +472,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// instance | kind
     /// </summary>
-    [FhirElement("mode", InSummary=true, IsModifier=true, Order=150)]
+    [FhirElement("mode", InSummary=true, IsModifier=true, Order=150, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("LocationMode")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
     {
@@ -502,7 +505,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of function performed
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=160)]
+    [FhirElement("type", InSummary=true, Order=160, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -542,7 +545,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Physical form of the location
     /// </summary>
-    [FhirElement("physicalType", InSummary=true, Order=190)]
+    [FhirElement("physicalType", InSummary=true, Order=190, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept PhysicalType
     {

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Insurance", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.insurance")]
     public partial class InsuranceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -219,6 +220,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Benefits", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.insurance.benefitBalance")]
     public partial class BenefitsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -560,6 +562,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Benefit", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.insurance.benefitBalance.financial")]
     public partial class BenefitComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -718,6 +721,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("EligibilityResponse#Errors", IsNestedType=true)]
+    [BackboneType("EligibilityResponse.error")]
     public partial class ErrorsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -825,7 +829,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -839,8 +843,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EligibilityResponseStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -871,7 +876,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=110)]
+    [FhirElement("created", Order=110, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -902,7 +907,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible practitioner
     /// </summary>
-    [FhirElement("requestProvider", Order=120)]
+    [FhirElement("requestProvider", Order=120, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -917,7 +922,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible organization
     /// </summary>
-    [FhirElement("requestOrganization", Order=130)]
+    [FhirElement("requestOrganization", Order=130, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -932,7 +937,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Eligibility reference
     /// </summary>
-    [FhirElement("request", Order=140)]
+    [FhirElement("request", Order=140, FiveWs="why")]
     [CLSCompliant(false)]
     [References("EligibilityRequest")]
     [DataMember]

@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Details", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.detail")]
     public partial class DetailsComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -130,7 +131,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Organization which is receiving the payment
       /// </summary>
-      [FhirElement("payee", Order=80)]
+      [FhirElement("payee", Order=80, FiveWs="who.focus")]
       [CLSCompliant(false)]
       [References("Organization")]
       [DataMember]
@@ -329,6 +330,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("PaymentReconciliation#Notes", IsNestedType=true)]
+    [BackboneType("PaymentReconciliation.processNote")]
     public partial class NotesComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -475,7 +477,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -489,8 +491,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PaymentReconciliationStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -521,7 +524,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Period covered
     /// </summary>
-    [FhirElement("period", Order=110)]
+    [FhirElement("period", Order=110, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period Period
     {
@@ -534,7 +537,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Creation date
     /// </summary>
-    [FhirElement("created", Order=120)]
+    [FhirElement("created", Order=120, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime CreatedElement
     {
@@ -565,7 +568,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Insurer
     /// </summary>
-    [FhirElement("organization", Order=130)]
+    [FhirElement("organization", Order=130, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -580,7 +583,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Claim reference
     /// </summary>
-    [FhirElement("request", Order=140)]
+    [FhirElement("request", Order=140, FiveWs="why")]
     [CLSCompliant(false)]
     [References("ProcessRequest")]
     [DataMember]

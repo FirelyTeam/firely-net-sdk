@@ -47,7 +47,7 @@ namespace Hl7.Fhir.FhirPath
         internal static SymbolTable GetSymbols() => COMPILER.Symbols;
 
         /// <inheritdoc cref="FhirPathCompilerCache.Select(ITypedElement, string, EvaluationContext?)"/>
-        public static IEnumerable<Base> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
+        public static IEnumerable<Base?> Select(this Base input, string expression, FhirEvaluationContext? ctx = null)
             => CACHE.Select(input.ToTypedElement(), expression, ctx ?? FhirEvaluationContext.CreateDefault()).ToFhirValues();
 
         /// <inheritdoc cref="FhirPathCompilerCache.Scalar(ITypedElement, string, EvaluationContext?)"/>

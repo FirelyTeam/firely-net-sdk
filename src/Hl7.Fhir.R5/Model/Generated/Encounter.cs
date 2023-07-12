@@ -60,34 +60,34 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/encounter-location-status)
     /// (system: http://hl7.org/fhir/encounter-location-status)
     /// </summary>
-    [FhirEnumeration("EncounterLocationStatus")]
+    [FhirEnumeration("EncounterLocationStatus", "http://hl7.org/fhir/ValueSet/encounter-location-status", "http://hl7.org/fhir/encounter-location-status")]
     public enum EncounterLocationStatus
     {
       /// <summary>
       /// The patient is planned to be moved to this location at some point in the future.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("planned", "http://hl7.org/fhir/encounter-location-status"), Description("Planned")]
+      [EnumLiteral("planned"), Description("Planned")]
       Planned,
       /// <summary>
       /// The patient is currently at this location, or was between the period specified.
       /// A system may update these records when the patient leaves the location to either reserved, or completed.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/encounter-location-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This location is held empty for this patient.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("reserved", "http://hl7.org/fhir/encounter-location-status"), Description("Reserved")]
+      [EnumLiteral("reserved"), Description("Reserved")]
       Reserved,
       /// <summary>
       /// The patient was at this location during the period specified.
       /// Not to be used when the patient is currently at the location.
       /// (system: http://hl7.org/fhir/encounter-location-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/encounter-location-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
     }
 
@@ -97,6 +97,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Participant", IsNestedType=true)]
+    [BackboneType("Encounter.participant")]
     public partial class ParticipantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Reason", IsNestedType=true)]
+    [BackboneType("Encounter.reason")]
     public partial class ReasonComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -386,6 +388,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Diagnosis", IsNestedType=true)]
+    [BackboneType("Encounter.diagnosis")]
     public partial class DiagnosisComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -519,6 +522,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Admission", IsNestedType=true)]
+    [BackboneType("Encounter.admission")]
     public partial class AdmissionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -742,6 +746,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Encounter#Location", IsNestedType=true)]
+    [BackboneType("Encounter.location")]
     public partial class LocationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -770,6 +775,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("status", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EncounterLocationStatus")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Encounter.EncounterLocationStatus> StatusElement
       {
@@ -952,6 +958,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("EncounterStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EncounterStatus> StatusElement

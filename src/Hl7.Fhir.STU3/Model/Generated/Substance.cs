@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/substance-status)
     /// (system: http://hl7.org/fhir/substance-status)
     /// </summary>
-    [FhirEnumeration("FHIRSubstanceStatus")]
+    [FhirEnumeration("FHIRSubstanceStatus", "http://hl7.org/fhir/ValueSet/substance-status", "http://hl7.org/fhir/substance-status")]
     public enum FHIRSubstanceStatus
     {
       /// <summary>
       /// The substance is considered for use or reference
       /// (system: http://hl7.org/fhir/substance-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/substance-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The substance is considered for reference, but not for use
       /// (system: http://hl7.org/fhir/substance-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/substance-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The substance was entered in error
       /// (system: http://hl7.org/fhir/substance-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/substance-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Instance", IsNestedType=true)]
+    [BackboneType("Substance.instance")]
     public partial class InstanceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -260,6 +261,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Substance#Ingredient", IsNestedType=true)]
+    [BackboneType("Substance.ingredient")]
     public partial class IngredientComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -392,7 +394,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -406,8 +408,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=100)]
+    [FhirElement("status", InSummary=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRSubstanceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Substance.FHIRSubstanceStatus> StatusElement
     {
@@ -438,7 +441,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What class/type of substance this is
     /// </summary>
-    [FhirElement("category", InSummary=true, Order=110)]
+    [FhirElement("category", InSummary=true, Order=110, FiveWs="class")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> Category
@@ -452,7 +455,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What substance this is
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=120)]
+    [FhirElement("code", InSummary=true, Order=120, FiveWs="what")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code

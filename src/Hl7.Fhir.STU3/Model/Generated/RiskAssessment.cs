@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RiskAssessment#Prediction", IsNestedType=true)]
+    [BackboneType("RiskAssessment.prediction")]
     public partial class PredictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -318,7 +319,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique identifier for the assessment
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Identifier Identifier
     {
@@ -361,8 +362,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// registered | preliminary | final | amended +
     /// </summary>
-    [FhirElement("status", Order=120)]
+    [FhirElement("status", Order=120, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("RiskAssessmentStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ObservationStatus> StatusElement
@@ -394,7 +396,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Evaluation mechanism
     /// </summary>
-    [FhirElement("method", InSummary=true, Order=130)]
+    [FhirElement("method", InSummary=true, Order=130, FiveWs="class")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Method
     {
@@ -407,7 +409,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Type of assessment
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=140)]
+    [FhirElement("code", InSummary=true, Order=140, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -420,7 +422,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who/what does assessment apply to?
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=150)]
+    [FhirElement("subject", InSummary=true, Order=150, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group")]
     [DataMember]
@@ -435,7 +437,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where was assessment performed?
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=160)]
+    [FhirElement("context", InSummary=true, Order=160, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -450,7 +452,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When was assessment made?
     /// </summary>
-    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("occurrence", InSummary=true, Order=170, Choice=ChoiceType.DatatypeChoice, FiveWs="when.done")]
     [CLSCompliant(false)]
     [AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime),typeof(Hl7.Fhir.Model.Period))]
     [DataMember]
@@ -480,7 +482,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who did assessment?
     /// </summary>
-    [FhirElement("performer", InSummary=true, Order=190)]
+    [FhirElement("performer", InSummary=true, Order=190, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Practitioner","Device")]
     [DataMember]
@@ -495,7 +497,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why the assessment was necessary?
     /// </summary>
-    [FhirElement("reason", Order=200, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("reason", Order=200, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Resource")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

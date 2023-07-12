@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/contributor-type)
     /// (system: http://hl7.org/fhir/contributor-type)
     /// </summary>
-    [FhirEnumeration("ContributorType")]
+    [FhirEnumeration("ContributorType", "http://hl7.org/fhir/ValueSet/contributor-type", "http://hl7.org/fhir/contributor-type")]
     public enum ContributorType
     {
       /// <summary>
       /// An author of the content of the module.
       /// (system: http://hl7.org/fhir/contributor-type)
       /// </summary>
-      [EnumLiteral("author", "http://hl7.org/fhir/contributor-type"), Description("Author")]
+      [EnumLiteral("author"), Description("Author")]
       Author,
       /// <summary>
       /// An editor of the content of the module.
       /// (system: http://hl7.org/fhir/contributor-type)
       /// </summary>
-      [EnumLiteral("editor", "http://hl7.org/fhir/contributor-type"), Description("Editor")]
+      [EnumLiteral("editor"), Description("Editor")]
       Editor,
       /// <summary>
       /// A reviewer of the content of the module.
       /// (system: http://hl7.org/fhir/contributor-type)
       /// </summary>
-      [EnumLiteral("reviewer", "http://hl7.org/fhir/contributor-type"), Description("Reviewer")]
+      [EnumLiteral("reviewer"), Description("Reviewer")]
       Reviewer,
       /// <summary>
       /// An endorser of the content of the module.
       /// (system: http://hl7.org/fhir/contributor-type)
       /// </summary>
-      [EnumLiteral("endorser", "http://hl7.org/fhir/contributor-type"), Description("Endorser")]
+      [EnumLiteral("endorser"), Description("Endorser")]
       Endorser,
     }
 
@@ -94,6 +94,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=30)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ContributorType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Contributor.ContributorType> TypeElement

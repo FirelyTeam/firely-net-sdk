@@ -59,6 +59,7 @@ namespace Hl7.Fhir.Model
     /// Mime type of the content, with charset etc.
     /// </summary>
     [FhirElement("contentType", InSummary=true, Order=30)]
+    [Binding("MimeType")]
     [DataMember]
     public Hl7.Fhir.Model.Code ContentTypeElement
     {
@@ -90,6 +91,7 @@ namespace Hl7.Fhir.Model
     /// Human language of the content (BCP-47)
     /// </summary>
     [FhirElement("language", InSummary=true, Order=40)]
+    [Binding("Language")]
     [DataMember]
     public Hl7.Fhir.Model.Code LanguageElement
     {

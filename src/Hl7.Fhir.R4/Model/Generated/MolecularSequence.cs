@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sequence-type)
     /// (system: http://hl7.org/fhir/sequence-type)
     /// </summary>
-    [FhirEnumeration("sequenceType")]
+    [FhirEnumeration("sequenceType", "http://hl7.org/fhir/ValueSet/sequence-type", "http://hl7.org/fhir/sequence-type")]
     public enum SequenceType
     {
       /// <summary>
       /// Amino acid sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("aa", "http://hl7.org/fhir/sequence-type"), Description("AA Sequence")]
+      [EnumLiteral("aa"), Description("AA Sequence")]
       Aa,
       /// <summary>
       /// DNA Sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("dna", "http://hl7.org/fhir/sequence-type"), Description("DNA Sequence")]
+      [EnumLiteral("dna"), Description("DNA Sequence")]
       Dna,
       /// <summary>
       /// RNA Sequence.
       /// (system: http://hl7.org/fhir/sequence-type)
       /// </summary>
-      [EnumLiteral("rna", "http://hl7.org/fhir/sequence-type"), Description("RNA Sequence")]
+      [EnumLiteral("rna"), Description("RNA Sequence")]
       Rna,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/orientation-type)
     /// (system: http://hl7.org/fhir/orientation-type)
     /// </summary>
-    [FhirEnumeration("orientationType")]
+    [FhirEnumeration("orientationType", "http://hl7.org/fhir/ValueSet/orientation-type", "http://hl7.org/fhir/orientation-type")]
     public enum OrientationType
     {
       /// <summary>
       /// Sense orientation of reference sequence.
       /// (system: http://hl7.org/fhir/orientation-type)
       /// </summary>
-      [EnumLiteral("sense", "http://hl7.org/fhir/orientation-type"), Description("Sense orientation of referenceSeq")]
+      [EnumLiteral("sense"), Description("Sense orientation of referenceSeq")]
       Sense,
       /// <summary>
       /// Antisense orientation of reference sequence.
       /// (system: http://hl7.org/fhir/orientation-type)
       /// </summary>
-      [EnumLiteral("antisense", "http://hl7.org/fhir/orientation-type"), Description("Antisense orientation of referenceSeq")]
+      [EnumLiteral("antisense"), Description("Antisense orientation of referenceSeq")]
       Antisense,
     }
 
@@ -110,20 +110,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/strand-type)
     /// (system: http://hl7.org/fhir/strand-type)
     /// </summary>
-    [FhirEnumeration("strandType")]
+    [FhirEnumeration("strandType", "http://hl7.org/fhir/ValueSet/strand-type", "http://hl7.org/fhir/strand-type")]
     public enum StrandType
     {
       /// <summary>
       /// Watson strand of reference sequence.
       /// (system: http://hl7.org/fhir/strand-type)
       /// </summary>
-      [EnumLiteral("watson", "http://hl7.org/fhir/strand-type"), Description("Watson strand of referenceSeq")]
+      [EnumLiteral("watson"), Description("Watson strand of referenceSeq")]
       Watson,
       /// <summary>
       /// Crick strand of reference sequence.
       /// (system: http://hl7.org/fhir/strand-type)
       /// </summary>
-      [EnumLiteral("crick", "http://hl7.org/fhir/strand-type"), Description("Crick strand of referenceSeq")]
+      [EnumLiteral("crick"), Description("Crick strand of referenceSeq")]
       Crick,
     }
 
@@ -132,26 +132,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
-    [FhirEnumeration("qualityType")]
+    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type", "http://hl7.org/fhir/quality-type")]
     public enum QualityType
     {
       /// <summary>
       /// INDEL Comparison.
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("indel", "http://hl7.org/fhir/quality-type"), Description("INDEL Comparison")]
+      [EnumLiteral("indel"), Description("INDEL Comparison")]
       Indel,
       /// <summary>
       /// SNP Comparison.
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("snp", "http://hl7.org/fhir/quality-type"), Description("SNP Comparison")]
+      [EnumLiteral("snp"), Description("SNP Comparison")]
       Snp,
       /// <summary>
       /// UNKNOWN Comparison.
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/quality-type"), Description("UNKNOWN Comparison")]
+      [EnumLiteral("unknown"), Description("UNKNOWN Comparison")]
       Unknown,
     }
 
@@ -160,38 +160,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/repository-type)
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
-    [FhirEnumeration("repositoryType")]
+    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type", "http://hl7.org/fhir/repository-type")]
     public enum RepositoryType
     {
       /// <summary>
       /// When URL is clicked, the resource can be seen directly (by webpage or by download link format).
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("directlink", "http://hl7.org/fhir/repository-type"), Description("Click and see")]
+      [EnumLiteral("directlink"), Description("Click and see")]
       Directlink,
       /// <summary>
       /// When the API method (e.g. [base_url]/[parameter]) related with the URL of the website is executed, the resource can be seen directly (usually in JSON or XML format).
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("openapi", "http://hl7.org/fhir/repository-type"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
+      [EnumLiteral("openapi"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
       Openapi,
       /// <summary>
       /// When logged into the website, the resource can be seen.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("login", "http://hl7.org/fhir/repository-type"), Description("Result cannot be access unless an account is logged in")]
+      [EnumLiteral("login"), Description("Result cannot be access unless an account is logged in")]
       Login,
       /// <summary>
       /// When logged in and  follow the API in the website related with URL, the resource can be seen.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("oauth", "http://hl7.org/fhir/repository-type"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
+      [EnumLiteral("oauth"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
       Oauth,
       /// <summary>
       /// Some other complicated or particular way to get resource from URL.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/repository-type"), Description("Some other complicated or particular way to get resource from URL.")]
+      [EnumLiteral("other"), Description("Some other complicated or particular way to get resource from URL.")]
       Other,
     }
 
@@ -201,6 +201,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#ReferenceSeq", IsNestedType=true)]
+    [BackboneType("MolecularSequence.referenceSeq")]
     public partial class ReferenceSeqComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -257,6 +258,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("orientation", InSummary=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("orientationType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.OrientationType> OrientationElement
       {
@@ -348,6 +350,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("strand", InSummary=true, Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("strandType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.StrandType> StrandElement
       {
@@ -598,6 +601,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Variant", IsNestedType=true)]
+    [BackboneType("MolecularSequence.variant")]
     public partial class VariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -909,6 +913,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Quality", IsNestedType=true)]
+    [BackboneType("MolecularSequence.quality")]
     public partial class QualityComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -921,6 +926,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("qualityType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.QualityType> TypeElement
@@ -1526,6 +1532,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Roc", IsNestedType=true)]
+    [BackboneType("MolecularSequence.quality.roc")]
     public partial class RocComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1900,6 +1907,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Repository", IsNestedType=true)]
+    [BackboneType("MolecularSequence.repository")]
     public partial class RepositoryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1912,6 +1920,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("type", InSummary=true, Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("repositoryType")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.MolecularSequence.RepositoryType> TypeElement
@@ -2229,6 +2238,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#StructureVariant", IsNestedType=true)]
+    [BackboneType("MolecularSequence.structureVariant")]
     public partial class StructureVariantComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2462,6 +2472,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Outer", IsNestedType=true)]
+    [BackboneType("MolecularSequence.structureVariant.outer")]
     public partial class OuterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2629,6 +2640,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MolecularSequence#Inner", IsNestedType=true)]
+    [BackboneType("MolecularSequence.structureVariant.inner")]
     public partial class InnerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -2809,6 +2821,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=100)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("sequenceType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.MolecularSequence.SequenceType> TypeElement
     {

@@ -60,80 +60,80 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/task-status)
     /// (system: http://hl7.org/fhir/task-status)
     /// </summary>
-    [FhirEnumeration("TaskStatus")]
+    [FhirEnumeration("TaskStatus", "http://hl7.org/fhir/ValueSet/task-status", "http://hl7.org/fhir/task-status")]
     public enum TaskStatus
     {
       /// <summary>
       /// The task is not yet ready to be acted upon.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/task-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The task is ready to be acted upon and action is sought.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("requested", "http://hl7.org/fhir/task-status"), Description("Requested")]
+      [EnumLiteral("requested"), Description("Requested")]
       Requested,
       /// <summary>
       /// A potential performer has claimed ownership of the task and is evaluating whether to perform it.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("received", "http://hl7.org/fhir/task-status"), Description("Received")]
+      [EnumLiteral("received"), Description("Received")]
       Received,
       /// <summary>
       /// The potential performer has agreed to execute the task but has not yet started work.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/task-status"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// The potential performer who claimed ownership of the task has decided not to execute it prior to performing any action.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("rejected", "http://hl7.org/fhir/task-status"), Description("Rejected")]
+      [EnumLiteral("rejected"), Description("Rejected")]
       Rejected,
       /// <summary>
       /// Task is ready to be performed, but no action has yet been taken.  Used in place of requested/received/accepted/rejected when request assignment and acceptance is a given.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("ready", "http://hl7.org/fhir/task-status"), Description("Ready")]
+      [EnumLiteral("ready"), Description("Ready")]
       Ready,
       /// <summary>
       /// The task was not completed.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("cancelled", "http://hl7.org/fhir/task-status"), Description("Cancelled")]
+      [EnumLiteral("cancelled"), Description("Cancelled")]
       Cancelled,
       /// <summary>
       /// Task has been started but is not yet complete.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/task-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// Task has been started but work has been paused.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/task-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The task was attempted but could not be completed due to some error.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("failed", "http://hl7.org/fhir/task-status"), Description("Failed")]
+      [EnumLiteral("failed"), Description("Failed")]
       Failed,
       /// <summary>
       /// The task has been completed.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/task-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The task should never have existed and is retained only because of the possibility it may have used.
       /// (system: http://hl7.org/fhir/task-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/task-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
     }
 
@@ -143,6 +143,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Requester", IsNestedType=true)]
+    [BackboneType("Task.requester")]
     public partial class RequesterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -153,7 +154,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Individual asking for task
       /// </summary>
-      [FhirElement("agent", InSummary=true, Order=40)]
+      [FhirElement("agent", InSummary=true, Order=40, FiveWs="who.author")]
       [CLSCompliant(false)]
       [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
       [Cardinality(Min=1,Max=1)]
@@ -279,6 +280,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Restriction", IsNestedType=true)]
+    [BackboneType("Task.restriction")]
     public partial class RestrictionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -453,6 +455,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Parameter", IsNestedType=true)]
+    [BackboneType("Task.input")]
     public partial class ParameterComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -588,6 +591,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Task#Output", IsNestedType=true)]
+    [BackboneType("Task.output")]
     public partial class OutputComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -720,7 +724,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Instance Identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -795,8 +799,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// draft | requested | received | accepted | +
     /// </summary>
-    [FhirElement("status", InSummary=true, Order=140)]
+    [FhirElement("status", InSummary=true, Order=140, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Task.TaskStatus> StatusElement
@@ -854,8 +859,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// proposal | plan | order +
     /// </summary>
-    [FhirElement("intent", InSummary=true, Order=170)]
+    [FhirElement("intent", InSummary=true, Order=170, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskIntent")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestIntent> IntentElement
@@ -887,8 +893,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// normal | urgent | asap | stat
     /// </summary>
-    [FhirElement("priority", Order=180)]
+    [FhirElement("priority", Order=180, FiveWs="grade")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("TaskPriority")]
     [DataMember]
     public Code<Hl7.Fhir.Model.RequestPriority> PriorityElement
     {
@@ -919,7 +926,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Type
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=190)]
+    [FhirElement("code", InSummary=true, Order=190, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -963,7 +970,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What task is acting on
     /// </summary>
-    [FhirElement("focus", InSummary=true, Order=210)]
+    [FhirElement("focus", InSummary=true, Order=210, FiveWs="what")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -978,7 +985,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Beneficiary of the Task
     /// </summary>
-    [FhirElement("for", InSummary=true, Order=220)]
+    [FhirElement("for", InSummary=true, Order=220, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Resource")]
     [DataMember]
@@ -993,7 +1000,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Healthcare event during which this task originated
     /// </summary>
-    [FhirElement("context", InSummary=true, Order=230)]
+    [FhirElement("context", InSummary=true, Order=230, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter","EpisodeOfCare")]
     [DataMember]
@@ -1008,7 +1015,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Start and end time of execution
     /// </summary>
-    [FhirElement("executionPeriod", InSummary=true, Order=240)]
+    [FhirElement("executionPeriod", InSummary=true, Order=240, FiveWs="when.done")]
     [DataMember]
     public Hl7.Fhir.Model.Period ExecutionPeriod
     {
@@ -1021,7 +1028,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Task Creation Date
     /// </summary>
-    [FhirElement("authoredOn", Order=250)]
+    [FhirElement("authoredOn", Order=250, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime AuthoredOnElement
     {
@@ -1096,7 +1103,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// requester | dispatcher | scheduler | performer | monitor | manager | acquirer | reviewer
     /// </summary>
-    [FhirElement("performerType", Order=280)]
+    [FhirElement("performerType", Order=280, FiveWs="who.actor")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.CodeableConcept> PerformerType
@@ -1110,7 +1117,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Responsible individual
     /// </summary>
-    [FhirElement("owner", InSummary=true, Order=290)]
+    [FhirElement("owner", InSummary=true, Order=290, FiveWs="who.actor")]
     [CLSCompliant(false)]
     [References("Device","Organization","Patient","Practitioner","RelatedPerson")]
     [DataMember]
@@ -1125,7 +1132,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Why task is needed
     /// </summary>
-    [FhirElement("reason", Order=300)]
+    [FhirElement("reason", Order=300, FiveWs="why")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Reason
     {

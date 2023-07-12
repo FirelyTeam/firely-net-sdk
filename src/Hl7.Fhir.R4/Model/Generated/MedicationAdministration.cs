@@ -60,50 +60,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-admin-status)
     /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
     /// </summary>
-    [FhirEnumeration("MedicationAdministrationStatusCodes")]
+    [FhirEnumeration("MedicationAdministrationStatusCodes", "http://hl7.org/fhir/ValueSet/medication-admin-status", "http://terminology.hl7.org/CodeSystem/medication-admin-status")]
     public enum MedicationAdministrationStatusCodes
     {
       /// <summary>
       /// The administration has started but has not yet completed.
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The administration was terminated prior to any impact on the subject (though preparatory actions may have been taken)
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("not-done", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Not Done")]
+      [EnumLiteral("not-done"), Description("Not Done")]
       NotDone,
       /// <summary>
       /// Actions implied by the administration have been temporarily halted, but are expected to continue later. May also be called 'suspended'.
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// All actions that are implied by the administration have occurred.
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("completed", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// The administration was entered in error and therefore nullified.
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// Actions implied by the administration have been permanently halted, before all of them occurred.
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The authoring system does not know which of the status values currently applies for this request. Note: This concept is not to be used for 'other' - one of the listed statuses is presumed to apply, it's just not known which one.
       /// (system: http://terminology.hl7.org/CodeSystem/medication-admin-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://terminology.hl7.org/CodeSystem/medication-admin-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -113,6 +113,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationAdministration#Performer", IsNestedType=true)]
+    [BackboneType("MedicationAdministration.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -247,6 +248,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MedicationAdministration#Dosage", IsNestedType=true)]
+    [BackboneType("MedicationAdministration.dosage")]
     public partial class DosageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -547,6 +549,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationAdministrationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatusCodes> StatusElement

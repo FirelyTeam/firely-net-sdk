@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("RelatedPerson#Communication", IsNestedType=true)]
+    [BackboneType("RelatedPerson.communication")]
     public partial class CommunicationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -313,6 +314,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("gender", InSummary=true, Order=150)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AdministrativeGender")]
     [DataMember]
     public Code<Hl7.Fhir.Model.AdministrativeGender> GenderElement
     {

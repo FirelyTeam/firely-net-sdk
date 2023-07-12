@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/deviceassociation-status)
     /// (system: http://hl7.org/fhir/deviceassociation-status)
     /// </summary>
-    [FhirEnumeration("DeviceAssociationCodes")]
+    [FhirEnumeration("DeviceAssociationCodes", "http://hl7.org/fhir/ValueSet/deviceassociation-status", "http://hl7.org/fhir/deviceassociation-status")]
     public enum DeviceAssociationCodes
     {
       /// <summary>
       /// The device is implanted in the patient.
       /// (system: http://hl7.org/fhir/deviceassociation-status)
       /// </summary>
-      [EnumLiteral("implanted", "http://hl7.org/fhir/deviceassociation-status"), Description("Implanted")]
+      [EnumLiteral("implanted"), Description("Implanted")]
       Implanted,
       /// <summary>
       /// The device is no longer implanted in the patient. Note that this is not the value to be used for devices that have never been implanted. In those cases, no value or a specific value can be used.
       /// (system: http://hl7.org/fhir/deviceassociation-status)
       /// </summary>
-      [EnumLiteral("explanted", "http://hl7.org/fhir/deviceassociation-status"), Description("Explanted")]
+      [EnumLiteral("explanted"), Description("Explanted")]
       Explanted,
       /// <summary>
       /// The association was entered in error and therefore nullified.
       /// (system: http://hl7.org/fhir/deviceassociation-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/deviceassociation-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The device is attached to the patient but not implanted in the patient.
       /// (system: http://hl7.org/fhir/deviceassociation-status)
       /// </summary>
-      [EnumLiteral("attached", "http://hl7.org/fhir/deviceassociation-status"), Description("Attached")]
+      [EnumLiteral("attached"), Description("Attached")]
       Attached,
       /// <summary>
       /// The association status of the device has not been determined.
       /// (system: http://hl7.org/fhir/deviceassociation-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/deviceassociation-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("DeviceAssociation#Operation", IsNestedType=true)]
+    [BackboneType("DeviceAssociation.operation")]
     public partial class OperationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>

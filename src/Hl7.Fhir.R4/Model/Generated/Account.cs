@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/account-status)
     /// (system: http://hl7.org/fhir/account-status)
     /// </summary>
-    [FhirEnumeration("AccountStatus")]
+    [FhirEnumeration("AccountStatus", "http://hl7.org/fhir/ValueSet/account-status", "http://hl7.org/fhir/account-status")]
     public enum AccountStatus
     {
       /// <summary>
       /// This account is active and may be used.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/account-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// This account is inactive and should not be used to track financial information.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/account-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/account-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
       /// <summary>
       /// This account is on hold.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/account-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The account status is unknown.
       /// (system: http://hl7.org/fhir/account-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/account-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -101,6 +101,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Coverage", IsNestedType=true)]
+    [BackboneType("Account.coverage")]
     public partial class CoverageComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -253,6 +254,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Account#Guarantor", IsNestedType=true)]
+    [BackboneType("Account.guarantor")]
     public partial class GuarantorComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -440,6 +442,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("AccountStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Account.AccountStatus> StatusElement
@@ -472,6 +475,7 @@ namespace Hl7.Fhir.Model
     /// E.g. patient, expense, depreciation
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {

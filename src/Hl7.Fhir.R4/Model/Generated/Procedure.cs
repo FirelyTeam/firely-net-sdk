@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Procedure#Performer", IsNestedType=true)]
+    [BackboneType("Procedure.performer")]
     public partial class PerformerComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -219,6 +220,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Procedure#FocalDevice", IsNestedType=true)]
+    [BackboneType("Procedure.focalDevice")]
     public partial class FocalDeviceComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -462,6 +464,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ProcedureStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.EventStatus> StatusElement
@@ -520,6 +523,7 @@ namespace Hl7.Fhir.Model
     /// Identification of the procedure
     /// </summary>
     [FhirElement("code", InSummary=true, Order=170, FiveWs="FiveWs.what[x]")]
+    [CqlElement(IsPrimaryCodePath=true)]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

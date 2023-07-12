@@ -60,56 +60,56 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/medication-statement-status)
     /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
     /// </summary>
-    [FhirEnumeration("MedicationStatusCodes")]
+    [FhirEnumeration("MedicationStatusCodes", "http://hl7.org/fhir/ValueSet/medication-statement-status", "http://hl7.org/fhir/CodeSystem/medication-statement-status")]
     public enum MedicationStatusCodes
     {
       /// <summary>
       /// The medication is still being taken.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The medication is no longer being taken.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// Some of the actions that are implied by the medication statement may have occurred.  For example, the patient may have taken some of the medication.  Clinical decision support systems should take this status into account.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The medication may be taken at some time in the future.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("intended", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Intended")]
+      [EnumLiteral("intended"), Description("Intended")]
       Intended,
       /// <summary>
       /// Actions implied by the statement have been permanently halted, before all of them occurred. This should not be used if the statement was entered in error.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// Actions implied by the statement have been temporarily halted, but are expected to continue later. May also be called 'suspended'.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("on-hold", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("On Hold")]
+      [EnumLiteral("on-hold"), Description("On Hold")]
       OnHold,
       /// <summary>
       /// The state of the medication use is not currently known.
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
       /// <summary>
       /// The medication was not consumed by the patient
       /// (system: http://hl7.org/fhir/CodeSystem/medication-statement-status)
       /// </summary>
-      [EnumLiteral("not-taken", "http://hl7.org/fhir/CodeSystem/medication-statement-status"), Description("Not Taken")]
+      [EnumLiteral("not-taken"), Description("Not Taken")]
       NotTaken,
     }
 
@@ -164,6 +164,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=120, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MedicationStatementStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MedicationStatement.MedicationStatusCodes> StatusElement

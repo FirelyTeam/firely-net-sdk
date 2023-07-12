@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/device-status)
     /// (system: http://hl7.org/fhir/device-status)
     /// </summary>
-    [FhirEnumeration("FHIRDeviceStatus")]
+    [FhirEnumeration("FHIRDeviceStatus", "http://hl7.org/fhir/ValueSet/device-status", "http://hl7.org/fhir/device-status")]
     public enum FHIRDeviceStatus
     {
       /// <summary>
       /// The Device is available for use.  Note: This means for *implanted devices*  the device is implanted in the patient.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/device-status"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The Device is no longer available for use (e.g. lost, expired, damaged).  Note: This means for *implanted devices*  the device has been removed from the patient.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/device-status"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The Device was entered in error and voided.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/device-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The status of the device has not been determined.
       /// (system: http://hl7.org/fhir/device-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/device-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -94,44 +94,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/udi-entry-type)
     /// (system: http://hl7.org/fhir/udi-entry-type)
     /// </summary>
-    [FhirEnumeration("UDIEntryType")]
+    [FhirEnumeration("UDIEntryType", "http://hl7.org/fhir/ValueSet/udi-entry-type", "http://hl7.org/fhir/udi-entry-type")]
     public enum UDIEntryType
     {
       /// <summary>
       /// A Barcode scanner captured the data from the device label
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("barcode", "http://hl7.org/fhir/udi-entry-type"), Description("BarCode")]
+      [EnumLiteral("barcode"), Description("BarCode")]
       Barcode,
       /// <summary>
       /// An RFID chip reader captured the data from the device label
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("rfid", "http://hl7.org/fhir/udi-entry-type"), Description("RFID")]
+      [EnumLiteral("rfid"), Description("RFID")]
       Rfid,
       /// <summary>
       /// The data was read from the label by a person and manually entered. (e.g.  via a keyboard)
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("manual", "http://hl7.org/fhir/udi-entry-type"), Description("Manual")]
+      [EnumLiteral("manual"), Description("Manual")]
       Manual,
       /// <summary>
       /// The data originated from a patient's implant card and read by an operator.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("card", "http://hl7.org/fhir/udi-entry-type"), Description("Card")]
+      [EnumLiteral("card"), Description("Card")]
       Card,
       /// <summary>
       /// The data originated from a patient source and not directly scanned or read from a label or card.
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("self-reported", "http://hl7.org/fhir/udi-entry-type"), Description("Self Reported")]
+      [EnumLiteral("self-reported"), Description("Self Reported")]
       SelfReported,
       /// <summary>
       /// The method of data capture has not been determined
       /// (system: http://hl7.org/fhir/udi-entry-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/udi-entry-type"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -141,6 +141,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Device#Udi", IsNestedType=true)]
+    [BackboneType("Device.udi")]
     public partial class UdiComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -151,7 +152,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Mandatory fixed portion of UDI
       /// </summary>
-      [FhirElement("deviceIdentifier", InSummary=true, Order=40)]
+      [FhirElement("deviceIdentifier", InSummary=true, Order=40, FiveWs="what")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString DeviceIdentifierElement
       {
@@ -182,7 +183,7 @@ namespace Hl7.Fhir.Model
       /// <summary>
       /// Device Name as appears on UDI label
       /// </summary>
-      [FhirElement("name", InSummary=true, Order=50)]
+      [FhirElement("name", InSummary=true, Order=50, FiveWs="what")]
       [DataMember]
       public Hl7.Fhir.Model.FhirString NameElement
       {
@@ -339,6 +340,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("entryType", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("UDIEntryType")]
       [DataMember]
       public Code<Hl7.Fhir.Model.Device.UDIEntryType> EntryTypeElement
       {
@@ -506,7 +508,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Instance identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -520,7 +522,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique Device Identifier (UDI) Barcode string
     /// </summary>
-    [FhirElement("udi", InSummary=true, Order=100)]
+    [FhirElement("udi", InSummary=true, Order=100, FiveWs="id")]
     [DataMember]
     public Hl7.Fhir.Model.Device.UdiComponent Udi
     {
@@ -533,8 +535,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | inactive | entered-in-error | unknown
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=110, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("FHIRDeviceStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.Device.FHIRDeviceStatus> StatusElement
     {
@@ -565,7 +568,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What kind of device this is
     /// </summary>
-    [FhirElement("type", Order=120)]
+    [FhirElement("type", Order=120, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Type
     {
@@ -578,7 +581,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Lot number of manufacture
     /// </summary>
-    [FhirElement("lotNumber", Order=130)]
+    [FhirElement("lotNumber", Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString LotNumberElement
     {
@@ -609,7 +612,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Name of device manufacturer
     /// </summary>
-    [FhirElement("manufacturer", Order=140)]
+    [FhirElement("manufacturer", Order=140, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ManufacturerElement
     {
@@ -640,7 +643,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date when the device was made
     /// </summary>
-    [FhirElement("manufactureDate", Order=150)]
+    [FhirElement("manufactureDate", Order=150, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime ManufactureDateElement
     {
@@ -671,7 +674,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Date and time of expiry of this device (if applicable)
     /// </summary>
-    [FhirElement("expirationDate", Order=160)]
+    [FhirElement("expirationDate", Order=160, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime ExpirationDateElement
     {
@@ -702,7 +705,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Model id assigned by the manufacturer
     /// </summary>
-    [FhirElement("model", Order=170)]
+    [FhirElement("model", Order=170, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString ModelElement
     {
@@ -733,7 +736,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Version number (i.e. software)
     /// </summary>
-    [FhirElement("version", Order=180)]
+    [FhirElement("version", Order=180, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.FhirString VersionElement
     {
@@ -764,7 +767,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Patient to whom Device is affixed
     /// </summary>
-    [FhirElement("patient", Order=190)]
+    [FhirElement("patient", Order=190, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -779,7 +782,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Organization responsible for device
     /// </summary>
-    [FhirElement("owner", Order=200)]
+    [FhirElement("owner", Order=200, FiveWs="who.source")]
     [CLSCompliant(false)]
     [References("Organization")]
     [DataMember]
@@ -794,7 +797,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Details for human/organization for support
     /// </summary>
-    [FhirElement("contact", Order=210)]
+    [FhirElement("contact", Order=210, FiveWs="who.source")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.ContactPoint> Contact
@@ -808,7 +811,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Where the resource is found
     /// </summary>
-    [FhirElement("location", Order=220)]
+    [FhirElement("location", Order=220, FiveWs="where")]
     [CLSCompliant(false)]
     [References("Location")]
     [DataMember]
@@ -823,7 +826,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Network address to contact device
     /// </summary>
-    [FhirElement("url", Order=230)]
+    [FhirElement("url", Order=230, FiveWs="where")]
     [DataMember]
     public Hl7.Fhir.Model.FhirUri UrlElement
     {

@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-xpath-usage)
     /// (system: http://hl7.org/fhir/search-xpath-usage)
     /// </summary>
-    [FhirEnumeration("XPathUsageType")]
+    [FhirEnumeration("XPathUsageType", "http://hl7.org/fhir/ValueSet/search-xpath-usage", "http://hl7.org/fhir/search-xpath-usage")]
     public enum XPathUsageType
     {
       /// <summary>
       /// The search parameter is derived directly from the selected nodes based on the type definitions.
       /// (system: http://hl7.org/fhir/search-xpath-usage)
       /// </summary>
-      [EnumLiteral("normal", "http://hl7.org/fhir/search-xpath-usage"), Description("Normal")]
+      [EnumLiteral("normal"), Description("Normal")]
       Normal,
       /// <summary>
       /// The search parameter is derived by a phonetic transform from the selected nodes.
       /// (system: http://hl7.org/fhir/search-xpath-usage)
       /// </summary>
-      [EnumLiteral("phonetic", "http://hl7.org/fhir/search-xpath-usage"), Description("Phonetic")]
+      [EnumLiteral("phonetic"), Description("Phonetic")]
       Phonetic,
       /// <summary>
       /// The search parameter is based on a spatial transform of the selected nodes.
       /// (system: http://hl7.org/fhir/search-xpath-usage)
       /// </summary>
-      [EnumLiteral("nearby", "http://hl7.org/fhir/search-xpath-usage"), Description("Nearby")]
+      [EnumLiteral("nearby"), Description("Nearby")]
       Nearby,
       /// <summary>
       /// The search parameter is based on a spatial transform of the selected nodes, using physical distance from the middle.
       /// (system: http://hl7.org/fhir/search-xpath-usage)
       /// </summary>
-      [EnumLiteral("distance", "http://hl7.org/fhir/search-xpath-usage"), Description("Distance")]
+      [EnumLiteral("distance"), Description("Distance")]
       Distance,
       /// <summary>
       /// The interpretation of the xpath statement is unknown (and can't be automated).
       /// (system: http://hl7.org/fhir/search-xpath-usage)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/search-xpath-usage"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
@@ -100,62 +100,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-comparator)
     /// (system: http://hl7.org/fhir/search-comparator)
     /// </summary>
-    [FhirEnumeration("SearchComparator")]
+    [FhirEnumeration("SearchComparator", "http://hl7.org/fhir/ValueSet/search-comparator", "http://hl7.org/fhir/search-comparator")]
     public enum SearchComparator
     {
       /// <summary>
       /// the value for the parameter in the resource is equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("eq", "http://hl7.org/fhir/search-comparator"), Description("Equals")]
+      [EnumLiteral("eq"), Description("Equals")]
       Eq,
       /// <summary>
       /// the value for the parameter in the resource is not equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("ne", "http://hl7.org/fhir/search-comparator"), Description("Not Equals")]
+      [EnumLiteral("ne"), Description("Not Equals")]
       Ne,
       /// <summary>
       /// the value for the parameter in the resource is greater than the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("gt", "http://hl7.org/fhir/search-comparator"), Description("Greater Than")]
+      [EnumLiteral("gt"), Description("Greater Than")]
       Gt,
       /// <summary>
       /// the value for the parameter in the resource is less than the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("lt", "http://hl7.org/fhir/search-comparator"), Description("Less Than")]
+      [EnumLiteral("lt"), Description("Less Than")]
       Lt,
       /// <summary>
       /// the value for the parameter in the resource is greater or equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("ge", "http://hl7.org/fhir/search-comparator"), Description("Greater or Equals")]
+      [EnumLiteral("ge"), Description("Greater or Equals")]
       Ge,
       /// <summary>
       /// the value for the parameter in the resource is less or equal to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("le", "http://hl7.org/fhir/search-comparator"), Description("Less of Equal")]
+      [EnumLiteral("le"), Description("Less of Equal")]
       Le,
       /// <summary>
       /// the value for the parameter in the resource starts after the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("sa", "http://hl7.org/fhir/search-comparator"), Description("Starts After")]
+      [EnumLiteral("sa"), Description("Starts After")]
       Sa,
       /// <summary>
       /// the value for the parameter in the resource ends before the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("eb", "http://hl7.org/fhir/search-comparator"), Description("Ends Before")]
+      [EnumLiteral("eb"), Description("Ends Before")]
       Eb,
       /// <summary>
       /// the value for the parameter in the resource is approximately the same to the provided value.
       /// (system: http://hl7.org/fhir/search-comparator)
       /// </summary>
-      [EnumLiteral("ap", "http://hl7.org/fhir/search-comparator"), Description("Approximately")]
+      [EnumLiteral("ap"), Description("Approximately")]
       Ap,
     }
 
@@ -164,80 +164,80 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-modifier-code)
     /// (system: http://hl7.org/fhir/search-modifier-code)
     /// </summary>
-    [FhirEnumeration("SearchModifierCode")]
+    [FhirEnumeration("SearchModifierCode", "http://hl7.org/fhir/ValueSet/search-modifier-code", "http://hl7.org/fhir/search-modifier-code")]
     public enum SearchModifierCode
     {
       /// <summary>
       /// The search parameter returns resources that have a value or not.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("missing", "http://hl7.org/fhir/search-modifier-code"), Description("Missing")]
+      [EnumLiteral("missing"), Description("Missing")]
       Missing,
       /// <summary>
       /// The search parameter returns resources that have a value that exactly matches the supplied parameter (the whole string, including casing and accents).
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("exact", "http://hl7.org/fhir/search-modifier-code"), Description("Exact")]
+      [EnumLiteral("exact"), Description("Exact")]
       Exact,
       /// <summary>
       /// The search parameter returns resources that include the supplied parameter value anywhere within the field being searched.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("contains", "http://hl7.org/fhir/search-modifier-code"), Description("Contains")]
+      [EnumLiteral("contains"), Description("Contains")]
       Contains,
       /// <summary>
       /// The search parameter returns resources that do not contain a match.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("not", "http://hl7.org/fhir/search-modifier-code"), Description("Not")]
+      [EnumLiteral("not"), Description("Not")]
       Not,
       /// <summary>
       /// The search parameter is processed as a string that searches text associated with the code/value - either CodeableConcept.text, Coding.display, or Identifier.type.text.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("text", "http://hl7.org/fhir/search-modifier-code"), Description("Text")]
+      [EnumLiteral("text"), Description("Text")]
       Text,
       /// <summary>
       /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is in the specified value set.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("in", "http://hl7.org/fhir/search-modifier-code"), Description("In")]
+      [EnumLiteral("in"), Description("In")]
       In,
       /// <summary>
       /// The search parameter is a URI (relative or absolute) that identifies a value set, and the search parameter tests whether the coding is not in the specified value set.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("not-in", "http://hl7.org/fhir/search-modifier-code"), Description("Not In")]
+      [EnumLiteral("not-in"), Description("Not In")]
       NotIn,
       /// <summary>
       /// The search parameter tests whether the value in a resource is subsumed by the specified value (is-a, or hierarchical relationships).
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("below", "http://hl7.org/fhir/search-modifier-code"), Description("Below")]
+      [EnumLiteral("below"), Description("Below")]
       Below,
       /// <summary>
       /// The search parameter tests whether the value in a resource subsumes the specified value (is-a, or hierarchical relationships).
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("above", "http://hl7.org/fhir/search-modifier-code"), Description("Above")]
+      [EnumLiteral("above"), Description("Above")]
       Above,
       /// <summary>
       /// The search parameter only applies to the Resource Type specified as a modifier (e.g. the modifier is not actually :type, but :Patient etc.).
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("type", "http://hl7.org/fhir/search-modifier-code"), Description("Type")]
+      [EnumLiteral("type"), Description("Type")]
       Type,
       /// <summary>
       /// The search parameter applies to the identifier on the resource, not the reference.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("identifier", "http://hl7.org/fhir/search-modifier-code"), Description("Identifier")]
+      [EnumLiteral("identifier"), Description("Identifier")]
       Identifier,
       /// <summary>
       /// The search parameter has the format system|code|value, where the system and code refer to an Identifier.type.coding.system and .code, and match if any of the type codes match. All 3 parts must be present.
       /// (system: http://hl7.org/fhir/search-modifier-code)
       /// </summary>
-      [EnumLiteral("ofType", "http://hl7.org/fhir/search-modifier-code"), Description("Of Type")]
+      [EnumLiteral("ofType"), Description("Of Type")]
       OfType,
     }
 
@@ -247,6 +247,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("SearchParameter#Component", IsNestedType=true)]
+    [BackboneType("SearchParameter.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -541,6 +542,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=130, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement
@@ -804,6 +806,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("base", InSummary=true, Order=230)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ResourceType")]
     [Cardinality(Min=1,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> BaseElement
@@ -837,6 +840,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=240)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchParamType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParamType> TypeElement
@@ -932,6 +936,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("xpathUsage", Order=270)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("XPathUsageType")]
     [DataMember]
     public Code<Hl7.Fhir.Model.SearchParameter.XPathUsageType> XpathUsageElement
     {
@@ -964,6 +969,8 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("target", Order=280)]
     [DeclaredType(Type = typeof(Code))]
+    [CqlElement(IsPrimaryCodePath = true)]
+    [Binding("ResourceType")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.ResourceType>> TargetElement
@@ -1059,6 +1066,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("comparator", Order=310)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchComparator")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchComparator>> ComparatorElement
@@ -1092,6 +1100,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("modifier", Order=320)]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("SearchModifierCode")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Code<Hl7.Fhir.Model.SearchParameter.SearchModifierCode>> ModifierElement

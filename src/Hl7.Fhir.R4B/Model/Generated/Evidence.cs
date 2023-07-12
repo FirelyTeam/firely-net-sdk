@@ -61,6 +61,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#VariableDefinition", IsNestedType=true)]
+    [BackboneType("Evidence.variableDefinition")]
     public partial class VariableDefinitionComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -304,6 +305,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#Statistic", IsNestedType=true)]
+    [BackboneType("Evidence.statistic")]
     public partial class StatisticComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -668,6 +670,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#SampleSize", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.sampleSize")]
     public partial class SampleSizeComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -938,6 +941,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#AttributeEstimate", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.attributeEstimate")]
     public partial class AttributeEstimateComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1217,6 +1221,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#ModelCharacteristic", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.modelCharacteristic")]
     public partial class ModelCharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1395,6 +1400,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#Variable", IsNestedType=true)]
+    [BackboneType("Evidence.statistic.modelCharacteristic.variable")]
     public partial class VariableComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1423,6 +1429,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("handling", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("EvidenceVariableHandling")]
       [DataMember]
       public Code<Hl7.Fhir.Model.EvidenceVariableHandling> HandlingElement
       {
@@ -1617,6 +1624,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Evidence#Certainty", IsNestedType=true)]
+    [BackboneType("Evidence.certainty")]
     public partial class CertaintyComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1996,6 +2004,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

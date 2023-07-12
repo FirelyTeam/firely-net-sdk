@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/list-status)
     /// (system: http://hl7.org/fhir/list-status)
     /// </summary>
-    [FhirEnumeration("ListStatus")]
+    [FhirEnumeration("ListStatus", "http://hl7.org/fhir/ValueSet/list-status", "http://hl7.org/fhir/list-status")]
     public enum ListStatus
     {
       /// <summary>
       /// The list is considered to be an active part of the patient's record.
       /// (system: http://hl7.org/fhir/list-status)
       /// </summary>
-      [EnumLiteral("current", "http://hl7.org/fhir/list-status"), Description("Current")]
+      [EnumLiteral("current"), Description("Current")]
       Current,
       /// <summary>
       /// The list is "old" and should no longer be considered accurate or relevant.
       /// (system: http://hl7.org/fhir/list-status)
       /// </summary>
-      [EnumLiteral("retired", "http://hl7.org/fhir/list-status"), Description("Retired")]
+      [EnumLiteral("retired"), Description("Retired")]
       Retired,
       /// <summary>
       /// The list was never accurate.  It is retained for medico-legal purposes only.
       /// (system: http://hl7.org/fhir/list-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/list-status"), Description("Entered In Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered In Error")]
       EnteredInError,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("List#Entry", IsNestedType=true)]
+    [BackboneType("List.entry")]
     public partial class EntryComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -300,7 +301,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -314,8 +315,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// current | retired | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ListStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.List.ListStatus> StatusElement
@@ -347,8 +349,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// working | snapshot | changes
     /// </summary>
-    [FhirElement("mode", InSummary=true, IsModifier=true, Order=110)]
+    [FhirElement("mode", InSummary=true, IsModifier=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("ListMode")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.ListMode> ModeElement
@@ -411,7 +414,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// What the purpose of this list is
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {
@@ -424,7 +427,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// If all resources have the same subject
     /// </summary>
-    [FhirElement("subject", InSummary=true, Order=140)]
+    [FhirElement("subject", InSummary=true, Order=140, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient","Group","Device","Location")]
     [DataMember]
@@ -439,7 +442,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Context in which list created
     /// </summary>
-    [FhirElement("encounter", Order=150)]
+    [FhirElement("encounter", Order=150, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -454,7 +457,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When the list was prepared
     /// </summary>
-    [FhirElement("date", InSummary=true, Order=160)]
+    [FhirElement("date", InSummary=true, Order=160, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateElement
     {
@@ -485,7 +488,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who and/or what defined the list contents (aka Author)
     /// </summary>
-    [FhirElement("source", InSummary=true, Order=170)]
+    [FhirElement("source", InSummary=true, Order=170, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner","Patient","Device")]
     [DataMember]

@@ -8,6 +8,7 @@
 
 #nullable enable
 
+using Hl7.Fhir.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,35 +17,38 @@ namespace Hl7.Fhir.Introspection
 {
     internal class PropertyMappingCollection
     {
-        public PropertyMappingCollection()
+        public PropertyMappingCollection(IEnumerable<PropertyMapping> mappings)
         {
-            // nothing beyond default initializers.
-        }
+            var byName = new Dictionary<string, PropertyMapping>(StringComparer.OrdinalIgnoreCase);
 
-        public PropertyMappingCollection(Dictionary<string, PropertyMapping> byName)
-        {
-            if (byName.Comparer != StringComparer.OrdinalIgnoreCase)
-                throw new ArgumentException("Dictionary should be keyed by OrdinalIgnoreCase.");
+            foreach (var mapping in mappings)
+            {
+                var propKey = mapping.Name;
+                if (byName.ContainsKey(propKey))
+                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique.");
+
+                byName[propKey] = mapping;
+            }
 
             ByName = byName;
-            ByOrder = byName.Values.OrderBy(pm => pm.Order).ToList();
+            ByOrder = ByName.Values.OrderBy(pm => pm.Order).ToList();
             ChoiceProperties = ByOrder.Where(pm => pm.Choice == ChoiceType.DatatypeChoice).ToList();
         }
 
         /// <summary>
         /// List of the properties, in the order of appearance.
         /// </summary>
-        public readonly List<PropertyMapping> ByOrder = new();
+        public readonly IReadOnlyList<PropertyMapping> ByOrder;
 
         /// <summary>
         /// The list of properties that represent choice elements.
         /// </summary>
-        public readonly List<PropertyMapping> ChoiceProperties = new();
+        public readonly IReadOnlyList<PropertyMapping> ChoiceProperties;
 
         /// <summary>
         /// List of the properties, keyed by name.
         /// </summary>
-        public readonly Dictionary<string, PropertyMapping> ByName = new();
+        public readonly IReadOnlyDictionary<string, PropertyMapping> ByName;
     }
 }
 

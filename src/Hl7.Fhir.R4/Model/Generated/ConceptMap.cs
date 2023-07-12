@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode)
     /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
     /// </summary>
-    [FhirEnumeration("ConceptMapGroupUnmappedMode")]
+    [FhirEnumeration("ConceptMapGroupUnmappedMode", "http://hl7.org/fhir/ValueSet/conceptmap-unmapped-mode", "http://hl7.org/fhir/conceptmap-unmapped-mode")]
     public enum ConceptMapGroupUnmappedMode
     {
       /// <summary>
       /// Use the code as provided in the $translate request.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("provided", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Provided Code")]
+      [EnumLiteral("provided"), Description("Provided Code")]
       Provided,
       /// <summary>
       /// Use the code explicitly provided in the group.unmapped.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("fixed", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Fixed Code")]
+      [EnumLiteral("fixed"), Description("Fixed Code")]
       Fixed,
       /// <summary>
       /// Use the map identified by the canonical URL in the url element.
       /// (system: http://hl7.org/fhir/conceptmap-unmapped-mode)
       /// </summary>
-      [EnumLiteral("other-map", "http://hl7.org/fhir/conceptmap-unmapped-mode"), Description("Other Map")]
+      [EnumLiteral("other-map"), Description("Other Map")]
       OtherMap,
     }
 
@@ -89,6 +89,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Group", IsNestedType=true)]
+    [BackboneType("ConceptMap.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -381,6 +382,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#SourceElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element")]
     public partial class SourceElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -571,6 +573,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#TargetElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target")]
     public partial class TargetElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -645,6 +648,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("equivalence", IsModifier=true, Order=60)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapEquivalence")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMapEquivalence> EquivalenceElement
@@ -866,6 +870,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#OtherElement", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.element.target.dependsOn")]
     public partial class OtherElementComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1115,6 +1120,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("ConceptMap#Unmapped", IsNestedType=true)]
+    [BackboneType("ConceptMap.group.unmapped")]
     public partial class UnmappedComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1127,6 +1133,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("mode", Order=40)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("ConceptMapGroupUnmappedMode")]
       [Cardinality(Min=1,Max=1)]
       [DataMember]
       public Code<Hl7.Fhir.Model.ConceptMap.ConceptMapGroupUnmappedMode> ModeElement
@@ -1500,6 +1507,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=140, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("PublicationStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.PublicationStatus> StatusElement

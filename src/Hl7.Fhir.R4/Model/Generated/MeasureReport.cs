@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-status)
     /// (system: http://hl7.org/fhir/measure-report-status)
     /// </summary>
-    [FhirEnumeration("MeasureReportStatus")]
+    [FhirEnumeration("MeasureReportStatus", "http://hl7.org/fhir/ValueSet/measure-report-status", "http://hl7.org/fhir/measure-report-status")]
     public enum MeasureReportStatus
     {
       /// <summary>
       /// The report is complete and ready for use.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/measure-report-status"), Description("Complete")]
+      [EnumLiteral("complete"), Description("Complete")]
       Complete,
       /// <summary>
       /// The report is currently being generated.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("pending", "http://hl7.org/fhir/measure-report-status"), Description("Pending")]
+      [EnumLiteral("pending"), Description("Pending")]
       Pending,
       /// <summary>
       /// An error occurred attempting to generate the report.
       /// (system: http://hl7.org/fhir/measure-report-status)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/measure-report-status"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
     }
 
@@ -88,32 +88,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/measure-report-type)
     /// (system: http://hl7.org/fhir/measure-report-type)
     /// </summary>
-    [FhirEnumeration("MeasureReportType")]
+    [FhirEnumeration("MeasureReportType", "http://hl7.org/fhir/ValueSet/measure-report-type", "http://hl7.org/fhir/measure-report-type")]
     public enum MeasureReportType
     {
       /// <summary>
       /// An individual report that provides information on the performance for a given measure with respect to a single subject.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("individual", "http://hl7.org/fhir/measure-report-type"), Description("Individual")]
+      [EnumLiteral("individual"), Description("Individual")]
       Individual,
       /// <summary>
       /// A subject list report that includes a listing of subjects that satisfied each population criteria in the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("subject-list", "http://hl7.org/fhir/measure-report-type"), Description("Subject List")]
+      [EnumLiteral("subject-list"), Description("Subject List")]
       SubjectList,
       /// <summary>
       /// A summary report that returns the number of members in each population criteria for the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("summary", "http://hl7.org/fhir/measure-report-type"), Description("Summary")]
+      [EnumLiteral("summary"), Description("Summary")]
       Summary,
       /// <summary>
       /// A data collection report that contains data-of-interest for the measure.
       /// (system: http://hl7.org/fhir/measure-report-type)
       /// </summary>
-      [EnumLiteral("data-collection", "http://hl7.org/fhir/measure-report-type"), Description("Data Collection")]
+      [EnumLiteral("data-collection"), Description("Data Collection")]
       DataCollection,
     }
 
@@ -123,6 +123,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Group", IsNestedType=true)]
+    [BackboneType("MeasureReport.group")]
     public partial class GroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -300,6 +301,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Population", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.population")]
     public partial class PopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -473,6 +475,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Stratifier", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier")]
     public partial class StratifierComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -606,6 +609,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroup", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier.stratum")]
     public partial class StratifierGroupComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -783,6 +787,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#Component", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier.stratum.component")]
     public partial class ComponentComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -916,6 +921,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("MeasureReport#StratifierGroupPopulation", IsNestedType=true)]
+    [BackboneType("MeasureReport.group.stratifier.stratum.population")]
     public partial class StratifierGroupPopulationComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -1102,6 +1108,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="FiveWs.status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportStatus")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportStatus> StatusElement
@@ -1135,6 +1142,7 @@ namespace Hl7.Fhir.Model
     /// </summary>
     [FhirElement("type", InSummary=true, Order=110, FiveWs="FiveWs.class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("MeasureReportType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.MeasureReport.MeasureReportType> TypeElement

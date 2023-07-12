@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/group-type)
     /// (system: http://hl7.org/fhir/group-type)
     /// </summary>
-    [FhirEnumeration("GroupType")]
+    [FhirEnumeration("GroupType", "http://hl7.org/fhir/ValueSet/group-type", "http://hl7.org/fhir/group-type")]
     public enum GroupType
     {
       /// <summary>
       /// Group contains "person" Patient resources
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("person", "http://hl7.org/fhir/group-type"), Description("Person")]
+      [EnumLiteral("person"), Description("Person")]
       Person,
       /// <summary>
       /// Group contains "animal" Patient resources
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("animal", "http://hl7.org/fhir/group-type"), Description("Animal")]
+      [EnumLiteral("animal"), Description("Animal")]
       Animal,
       /// <summary>
       /// Group contains healthcare practitioner resources
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("practitioner", "http://hl7.org/fhir/group-type"), Description("Practitioner")]
+      [EnumLiteral("practitioner"), Description("Practitioner")]
       Practitioner,
       /// <summary>
       /// Group contains Device resources
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("device", "http://hl7.org/fhir/group-type"), Description("Device")]
+      [EnumLiteral("device"), Description("Device")]
       Device,
       /// <summary>
       /// Group contains Medication resources
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("medication", "http://hl7.org/fhir/group-type"), Description("Medication")]
+      [EnumLiteral("medication"), Description("Medication")]
       Medication,
       /// <summary>
       /// Group contains Substance resources
       /// (system: http://hl7.org/fhir/group-type)
       /// </summary>
-      [EnumLiteral("substance", "http://hl7.org/fhir/group-type"), Description("Substance")]
+      [EnumLiteral("substance"), Description("Substance")]
       Substance,
     }
 
@@ -107,6 +107,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Characteristic", IsNestedType=true)]
+    [BackboneType("Group.characteristic")]
     public partial class CharacteristicComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -305,6 +306,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("Group#Member", IsNestedType=true)]
+    [BackboneType("Group.member")]
     public partial class MemberComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -476,7 +478,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Unique id
     /// </summary>
-    [FhirElement("identifier", InSummary=true, Order=90)]
+    [FhirElement("identifier", InSummary=true, Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -490,7 +492,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Whether this group's record is in active use
     /// </summary>
-    [FhirElement("active", InSummary=true, Order=100)]
+    [FhirElement("active", InSummary=true, Order=100, FiveWs="status")]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActiveElement
     {
@@ -521,8 +523,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// person | animal | practitioner | device | medication | substance
     /// </summary>
-    [FhirElement("type", InSummary=true, Order=110)]
+    [FhirElement("type", InSummary=true, Order=110, FiveWs="class")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("GroupType")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
@@ -554,7 +557,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Descriptive or actual
     /// </summary>
-    [FhirElement("actual", InSummary=true, Order=120)]
+    [FhirElement("actual", InSummary=true, Order=120, FiveWs="class")]
     [Cardinality(Min=1,Max=1)]
     [DataMember]
     public Hl7.Fhir.Model.FhirBoolean ActualElement
@@ -586,7 +589,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Kind of Group members
     /// </summary>
-    [FhirElement("code", InSummary=true, Order=130)]
+    [FhirElement("code", InSummary=true, Order=130, FiveWs="what")]
     [DataMember]
     public Hl7.Fhir.Model.CodeableConcept Code
     {

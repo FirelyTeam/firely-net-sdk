@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-eye-codes)
     /// (system: http://hl7.org/fhir/vision-eye-codes)
     /// </summary>
-    [FhirEnumeration("VisionEyes")]
+    [FhirEnumeration("VisionEyes", "http://hl7.org/fhir/ValueSet/vision-eye-codes", "http://hl7.org/fhir/vision-eye-codes")]
     public enum VisionEyes
     {
       /// <summary>
       /// Right Eye
       /// (system: http://hl7.org/fhir/vision-eye-codes)
       /// </summary>
-      [EnumLiteral("right", "http://hl7.org/fhir/vision-eye-codes"), Description("Right Eye")]
+      [EnumLiteral("right"), Description("Right Eye")]
       Right,
       /// <summary>
       /// Left Eye
       /// (system: http://hl7.org/fhir/vision-eye-codes)
       /// </summary>
-      [EnumLiteral("left", "http://hl7.org/fhir/vision-eye-codes"), Description("Left Eye")]
+      [EnumLiteral("left"), Description("Left Eye")]
       Left,
     }
 
@@ -82,32 +82,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/vision-base-codes)
     /// (system: http://hl7.org/fhir/vision-base-codes)
     /// </summary>
-    [FhirEnumeration("VisionBase")]
+    [FhirEnumeration("VisionBase", "http://hl7.org/fhir/ValueSet/vision-base-codes", "http://hl7.org/fhir/vision-base-codes")]
     public enum VisionBase
     {
       /// <summary>
       /// top
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("up", "http://hl7.org/fhir/vision-base-codes"), Description("Up")]
+      [EnumLiteral("up"), Description("Up")]
       Up,
       /// <summary>
       /// bottom
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("down", "http://hl7.org/fhir/vision-base-codes"), Description("Down")]
+      [EnumLiteral("down"), Description("Down")]
       Down,
       /// <summary>
       /// inner edge
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("in", "http://hl7.org/fhir/vision-base-codes"), Description("In")]
+      [EnumLiteral("in"), Description("In")]
       In,
       /// <summary>
       /// outer edge
       /// (system: http://hl7.org/fhir/vision-base-codes)
       /// </summary>
-      [EnumLiteral("out", "http://hl7.org/fhir/vision-base-codes"), Description("Out")]
+      [EnumLiteral("out"), Description("Out")]
       Out,
     }
 
@@ -117,6 +117,7 @@ namespace Hl7.Fhir.Model
     [Serializable]
     [DataContract]
     [FhirType("VisionPrescription#Dispense", IsNestedType=true)]
+    [BackboneType("VisionPrescription.dispense")]
     public partial class DispenseComponent : Hl7.Fhir.Model.BackboneElement
     {
       /// <summary>
@@ -142,6 +143,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("eye", Order=50)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("VisionEyes")]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionEyes> EyeElement
       {
@@ -298,6 +300,7 @@ namespace Hl7.Fhir.Model
       /// </summary>
       [FhirElement("base", Order=100)]
       [DeclaredType(Type = typeof(Code))]
+      [Binding("VisionBase")]
       [DataMember]
       public Code<Hl7.Fhir.Model.VisionPrescription.VisionBase> BaseElement
       {
@@ -750,7 +753,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Business identifier
     /// </summary>
-    [FhirElement("identifier", Order=90)]
+    [FhirElement("identifier", Order=90, FiveWs="id")]
     [Cardinality(Min=0,Max=-1)]
     [DataMember]
     public List<Hl7.Fhir.Model.Identifier> Identifier
@@ -764,8 +767,9 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// active | cancelled | draft | entered-in-error
     /// </summary>
-    [FhirElement("status", InSummary=true, IsModifier=true, Order=100)]
+    [FhirElement("status", InSummary=true, IsModifier=true, Order=100, FiveWs="status")]
     [DeclaredType(Type = typeof(Code))]
+    [Binding("VisionStatus")]
     [DataMember]
     public Code<Hl7.Fhir.Model.FinancialResourceStatusCodes> StatusElement
     {
@@ -796,7 +800,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who prescription is for
     /// </summary>
-    [FhirElement("patient", Order=110)]
+    [FhirElement("patient", Order=110, FiveWs="who.focus")]
     [CLSCompliant(false)]
     [References("Patient")]
     [DataMember]
@@ -811,7 +815,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Created during encounter / admission / stay
     /// </summary>
-    [FhirElement("encounter", Order=120)]
+    [FhirElement("encounter", Order=120, FiveWs="context")]
     [CLSCompliant(false)]
     [References("Encounter")]
     [DataMember]
@@ -826,7 +830,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// When prescription was authorized
     /// </summary>
-    [FhirElement("dateWritten", Order=130)]
+    [FhirElement("dateWritten", Order=130, FiveWs="when.recorded")]
     [DataMember]
     public Hl7.Fhir.Model.FhirDateTime DateWrittenElement
     {
@@ -857,7 +861,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Who authorizes the vision product
     /// </summary>
-    [FhirElement("prescriber", Order=140)]
+    [FhirElement("prescriber", Order=140, FiveWs="who.author")]
     [CLSCompliant(false)]
     [References("Practitioner")]
     [DataMember]
@@ -872,7 +876,7 @@ namespace Hl7.Fhir.Model
     /// <summary>
     /// Reason or indication for writing the prescription
     /// </summary>
-    [FhirElement("reason", Order=150, Choice=ChoiceType.DatatypeChoice)]
+    [FhirElement("reason", Order=150, Choice=ChoiceType.DatatypeChoice, FiveWs="why")]
     [CLSCompliant(false)]
     [References("Condition")]
     [AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept),typeof(Hl7.Fhir.Model.ResourceReference))]

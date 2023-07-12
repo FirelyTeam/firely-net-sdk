@@ -1922,9 +1922,7 @@ namespace Hl7.Fhir.Specification.Tests
                     // Only the .use child element has a profile diff constraint
                     bool isConstrained = elem.Path == "Patient.identifier.use";
 
-                    // [WMR 20170713] Changed
-                    // Assert.AreEqual(isConstrained, hasConstraints);
-                    Assert.AreEqual(isConstrained || elem.IsExtension(), hasConstraints);
+                    Assert.AreEqual(isConstrained, hasConstraints);
 
                     var elemHasChanges = hasChanges(elem);
                     Assert.AreEqual(isConstrained, elemHasChanges);
@@ -2151,6 +2149,89 @@ namespace Hl7.Fhir.Specification.Tests
                 // [WMR 20181212] R4 - Definition type changed from string to markdown
                 Assert.IsTrue(elem.DefinitionElement.IsExactly(baseElem.DefinitionElement));
                 Assert.IsFalse(elem.DefinitionElement.IsConstrainedByDiff());
+            }
+            finally
+            {
+                // Detach event handlers
+                _generator.Constraint -= constraintHandler;
+                _generator.PrepareElement -= elementHandler;
+                _generator.PrepareBaseProfile -= profileHandler;
+            }
+        }
+
+        [TestMethod]
+        public async T.Task TestBaseAnnotations_StructureDefinition_ExtensionHeaderSlicingElement()
+        {
+            const string url = @"https://example.org/fhir/StructureDefinition/MyPatient";
+            const string urlExtension = @"http://hl7.org/fhir/StructureDefinition/cqf-initialValue";
+            const string sliceName = "initialValue";
+            const string path = "Patient.active.extension";
+
+            var sd = new StructureDefinition()
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "MyPatient",
+                Url = url,
+                Abstract = false,
+                FhirVersion = FHIRVersion.N4_0_1,
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition(path)
+                        {
+                        },
+                        new ElementDefinition(path)
+                        {
+                            SliceName = sliceName,
+                            Type = new List<ElementDefinition.TypeRefComponent>()
+                            {
+                                new ElementDefinition.TypeRefComponent()
+                                {
+                                    Code = "Extension",
+                                    ProfileElement = new List<Canonical>()
+                                    {
+                                        new Canonical(urlExtension)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            var source = new CachedResolver(new MultiResolver(_standardFhirSource, new InMemoryResourceResolver(sd)));
+
+            var settings = new SnapshotGeneratorSettings(_settings)
+            {
+                GenerateAnnotationsOnConstraints = true
+            };
+            _generator = new SnapshotGenerator(source, settings);
+
+            try
+            {
+                _generator.PrepareBaseProfile += profileHandler;
+                _generator.PrepareElement += elementHandler;
+                _generator.Constraint += constraintHandler;
+
+                var expanded = await _generator.GenerateAsync(sd);
+                dumpOutcome(_generator.Outcome);
+                assertBaseDefs(expanded, settings);
+
+                var header = expanded.Single(e => e.Path == path && e.SliceName == null);
+                var extension = expanded.Single(e => e.Path == path && e.SliceName == sliceName);
+
+                Assert.IsTrue(header.TryGetAnnotation<BaseDefAnnotation>(out var annoHeader));
+                Assert.IsTrue(extension.TryGetAnnotation<BaseDefAnnotation>(out var annoExtension));
+
+                Assert.IsTrue(header.Slicing != null);
+                Assert.IsTrue(extension.Slicing == null);
+
+                Assert.IsTrue(annoHeader.BaseElementDefinition.Slicing != null);
+                Assert.IsTrue(annoExtension.BaseElementDefinition.Slicing == null);
             }
             finally
             {
@@ -9802,6 +9883,75 @@ namespace Hl7.Fhir.Specification.Tests
 
             var valueQuantityEld = elementDefinitions.FirstOrDefault(eld => "Observation.value[x]:valueQuantity".Equals((eld.ElementId)));
             Assert.IsNull(valueQuantityEld);
+        }
+
+        [TestMethod]
+        public async T.Task TestNewR5Elements()
+        {
+            var sd = createR5StructureDefinition();
+            var resolver = new InMemoryResourceResolver(sd);
+            var multiResolver = new MultiResolver(_testResolver, resolver);
+
+            _generator = new SnapshotGenerator(multiResolver, _settings);
+
+            var snapshot = await _generator.GenerateAsync(sd);
+            var gender = snapshot.Where(e => e.Path == "Patient.gender").FirstOrDefault();
+            gender.Should().NotBeNull();
+
+            gender.SliceIsConstraining.Should().BeFalse();
+            gender.MustHaveValue.Should().BeTrue();
+            gender.ValueAlternatives.Should().Contain("foo");
+            gender.ValueAlternatives.Should().Contain("bar");
+            gender.Binding.Additional.FirstOrDefault().Purpose.Should().Be(ElementDefinition.AdditionalBindingPurposeVS.Maximum);
+            gender.Binding.Additional.FirstOrDefault().Documentation.Should().Be("foo");
+
+        }
+
+        private StructureDefinition createR5StructureDefinition()
+        {
+            return new StructureDefinition
+            {
+                Type = FHIRAllTypes.Patient.GetLiteral(),
+                BaseDefinition = ModelInfo.CanonicalUriForFhirCoreType(FHIRAllTypes.Patient),
+                Name = "PatientWithR5Features",
+                Url = @"http://example.org/fhir/StructureDefinition/PatientWithR5Features",
+                Derivation = StructureDefinition.TypeDerivationRule.Constraint,
+                Kind = StructureDefinition.StructureDefinitionKind.Resource,
+                Differential = new StructureDefinition.DifferentialComponent()
+                {
+                    Element = new List<ElementDefinition>()
+                    {
+                        new ElementDefinition("Patient.gender")
+                        {
+                            SliceIsConstraining = false,
+                            MustHaveValue = true,
+                            ValueAlternatives = new List<string>()
+                            {
+                                "foo",
+                                "bar"
+                            },
+                            Binding = new()
+                            {
+                                Strength = BindingStrength.Required,
+                                Description = "The gender of a person used for administrative purposes",
+                                ValueSet = "http://hl7.org/fhir/ValueSet/administrative-gender|5.0.0",
+                                Additional = new List<ElementDefinition.AdditionalComponent>
+                                {
+                                    new()
+                                    {
+                                        Purpose = ElementDefinition.AdditionalBindingPurposeVS.Maximum,
+                                        ValueSet = "http://example.org/fhir/ValueSet/additional-binding",
+                                        Documentation = "foo",
+                                        ShortDoco = "bar",
+                                        Any = true
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            };
         }
     }
 }
