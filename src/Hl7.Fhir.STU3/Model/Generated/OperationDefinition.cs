@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/operation-kind)
     /// (system: http://hl7.org/fhir/operation-kind)
     /// </summary>
-    [FhirEnumeration("OperationKind", "http://hl7.org/fhir/ValueSet/operation-kind")]
+    [FhirEnumeration("OperationKind", "http://hl7.org/fhir/ValueSet/operation-kind", "http://hl7.org/fhir/operation-kind")]
     public enum OperationKind
     {
       /// <summary>
       /// This operation is invoked as an operation.
       /// (system: http://hl7.org/fhir/operation-kind)
       /// </summary>
-      [EnumLiteral("operation", "http://hl7.org/fhir/operation-kind"), Description("Operation")]
+      [EnumLiteral("operation"), Description("Operation")]
       Operation,
       /// <summary>
       /// This operation is a named query, invoked using the search mechanism.
       /// (system: http://hl7.org/fhir/operation-kind)
       /// </summary>
-      [EnumLiteral("query", "http://hl7.org/fhir/operation-kind"), Description("Query")]
+      [EnumLiteral("query"), Description("Query")]
       Query,
     }
 

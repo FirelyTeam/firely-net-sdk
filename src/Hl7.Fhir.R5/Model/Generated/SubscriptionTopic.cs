@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/interaction-trigger)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("InteractionTrigger", "http://hl7.org/fhir/ValueSet/interaction-trigger")]
+    [FhirEnumeration("InteractionTrigger", "http://hl7.org/fhir/ValueSet/interaction-trigger", "http://hl7.org/fhir/restful-interaction")]
     public enum InteractionTrigger
     {
       /// <summary>
       /// Create a new resource with a server assigned id.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// Update an existing resource by its id (or create it if it is new).
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
+      [EnumLiteral("update"), Description("update")]
       Update,
       /// <summary>
       /// Delete a resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
+      [EnumLiteral("delete"), Description("delete")]
       Delete,
     }
 
@@ -88,20 +88,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior)
     /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
     /// </summary>
-    [FhirEnumeration("CriteriaNotExistsBehavior", "http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior")]
+    [FhirEnumeration("CriteriaNotExistsBehavior", "http://hl7.org/fhir/ValueSet/subscriptiontopic-cr-behavior", "http://hl7.org/fhir/subscriptiontopic-cr-behavior")]
     public enum CriteriaNotExistsBehavior
     {
       /// <summary>
       /// The requested conditional statement will pass if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-passes", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("Test passes")]
+      [EnumLiteral("test-passes"), Description("Test passes")]
       TestPasses,
       /// <summary>
       /// The requested conditional statement will fail if a matching state does not exist (e.g., previous state during create).
       /// (system: http://hl7.org/fhir/subscriptiontopic-cr-behavior)
       /// </summary>
-      [EnumLiteral("test-fails", "http://hl7.org/fhir/subscriptiontopic-cr-behavior"), Description("Test fails")]
+      [EnumLiteral("test-fails"), Description("Test fails")]
       TestFails,
     }
 

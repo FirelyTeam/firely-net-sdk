@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/insuranceplan-applicability)
     /// (system: http://terminology.hl7.org/CodeSystem/applicability)
     /// </summary>
-    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability")]
+    [FhirEnumeration("BenefitCostApplicability", "http://hl7.org/fhir/ValueSet/insuranceplan-applicability", "http://terminology.hl7.org/CodeSystem/applicability")]
     public enum BenefitCostApplicability
     {
       /// <summary>
       /// Provider is contracted with the health insurance company to provide services to plan members for specific pre-negotiated rates
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("in-network", "http://terminology.hl7.org/CodeSystem/applicability"), Description("In Network")]
+      [EnumLiteral("in-network"), Description("In Network")]
       InNetwork,
       /// <summary>
       /// Provider is  not contracted with the health insurance company to provide services to plan members for specific pre-negotiated rates
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("out-of-network", "http://terminology.hl7.org/CodeSystem/applicability"), Description("Out of Network")]
+      [EnumLiteral("out-of-network"), Description("Out of Network")]
       OutOfNetwork,
       /// <summary>
       /// Other applicability
       /// (system: http://terminology.hl7.org/CodeSystem/applicability)
       /// </summary>
-      [EnumLiteral("other", "http://terminology.hl7.org/CodeSystem/applicability"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 

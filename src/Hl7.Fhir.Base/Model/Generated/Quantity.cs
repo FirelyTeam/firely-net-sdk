@@ -60,38 +60,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quantity-comparator)
     /// (system: http://hl7.org/fhir/quantity-comparator)
     /// </summary>
-    [FhirEnumeration("QuantityComparator", "http://hl7.org/fhir/ValueSet/quantity-comparator")]
+    [FhirEnumeration("QuantityComparator", "http://hl7.org/fhir/ValueSet/quantity-comparator", "http://hl7.org/fhir/quantity-comparator")]
     public enum QuantityComparator
     {
       /// <summary>
       /// The actual value is less than the given value.
       /// (system: http://hl7.org/fhir/quantity-comparator)
       /// </summary>
-      [EnumLiteral("<", "http://hl7.org/fhir/quantity-comparator"), Description("Less than")]
+      [EnumLiteral("<"), Description("Less than")]
       LessThan,
       /// <summary>
       /// The actual value is less than or equal to the given value.
       /// (system: http://hl7.org/fhir/quantity-comparator)
       /// </summary>
-      [EnumLiteral("<=", "http://hl7.org/fhir/quantity-comparator"), Description("Less or Equal to")]
+      [EnumLiteral("<="), Description("Less or Equal to")]
       LessOrEqual,
       /// <summary>
       /// The actual value is greater than or equal to the given value.
       /// (system: http://hl7.org/fhir/quantity-comparator)
       /// </summary>
-      [EnumLiteral(">=", "http://hl7.org/fhir/quantity-comparator"), Description("Greater or Equal to")]
+      [EnumLiteral(">="), Description("Greater or Equal to")]
       GreaterOrEqual,
       /// <summary>
       /// The actual value is greater than the given value.
       /// (system: http://hl7.org/fhir/quantity-comparator)
       /// </summary>
-      [EnumLiteral(">", "http://hl7.org/fhir/quantity-comparator"), Description("Greater than")]
+      [EnumLiteral(">"), Description("Greater than")]
       GreaterThan,
       /// <summary>
       /// The actual value is sufficient for the total quantity to equal the given value.
       /// (system: http://hl7.org/fhir/quantity-comparator)
       /// </summary>
-      [EnumLiteral("ad", "http://hl7.org/fhir/quantity-comparator"), Description("Sufficient to achieve this total quantity")]
+      [EnumLiteral("ad"), Description("Sufficient to achieve this total quantity")]
       Ad,
     }
 

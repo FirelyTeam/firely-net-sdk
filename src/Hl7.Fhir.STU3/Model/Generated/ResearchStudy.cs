@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/research-study-status)
     /// (system: http://hl7.org/fhir/research-study-status)
     /// </summary>
-    [FhirEnumeration("ResearchStudyStatus", "http://hl7.org/fhir/ValueSet/research-study-status")]
+    [FhirEnumeration("ResearchStudyStatus", "http://hl7.org/fhir/ValueSet/research-study-status", "http://hl7.org/fhir/research-study-status")]
     public enum ResearchStudyStatus
     {
       /// <summary>
       /// The study is undergoing design but the process of selecting study subjects and capturing data has not yet begun.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/research-study-status"), Description("Draft")]
+      [EnumLiteral("draft"), Description("Draft")]
       Draft,
       /// <summary>
       /// The study is currently being executed
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/research-study-status"), Description("In-progress")]
+      [EnumLiteral("in-progress"), Description("In-progress")]
       InProgress,
       /// <summary>
       /// Execution of the study has been temporarily paused
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("suspended", "http://hl7.org/fhir/research-study-status"), Description("Suspended")]
+      [EnumLiteral("suspended"), Description("Suspended")]
       Suspended,
       /// <summary>
       /// The study was terminated prior to the final determination of results
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("stopped", "http://hl7.org/fhir/research-study-status"), Description("Stopped")]
+      [EnumLiteral("stopped"), Description("Stopped")]
       Stopped,
       /// <summary>
       /// The information sought by the study has been gathered and compiled and no further work is being performed
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/research-study-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This study never actually existed.  The record is retained for tracking purposes in the event decisions may have been made based on this erroneous information.
       /// (system: http://hl7.org/fhir/research-study-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/research-study-status"), Description("Entered in error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in error")]
       EnteredInError,
     }
 

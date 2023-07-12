@@ -60,44 +60,44 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/consent-state-codes)
     /// (system: http://hl7.org/fhir/consent-state-codes)
     /// </summary>
-    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes")]
+    [FhirEnumeration("ConsentState", "http://hl7.org/fhir/ValueSet/consent-state-codes", "http://hl7.org/fhir/consent-state-codes")]
     public enum ConsentState
     {
       /// <summary>
       /// The consent is in development or awaiting use but is not yet intended to be acted upon.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("draft", "http://hl7.org/fhir/consent-state-codes"), Description("Pending")]
+      [EnumLiteral("draft"), Description("Pending")]
       Draft,
       /// <summary>
       /// The consent is to be followed and enforced.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("active", "http://hl7.org/fhir/consent-state-codes"), Description("Active")]
+      [EnumLiteral("active"), Description("Active")]
       Active,
       /// <summary>
       /// The consent is terminated or replaced.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("inactive", "http://hl7.org/fhir/consent-state-codes"), Description("Inactive")]
+      [EnumLiteral("inactive"), Description("Inactive")]
       Inactive,
       /// <summary>
       /// The consent development has been terminated prior to completion.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("not-done", "http://hl7.org/fhir/consent-state-codes"), Description("Abandoned")]
+      [EnumLiteral("not-done"), Description("Abandoned")]
       NotDone,
       /// <summary>
       /// The consent was created wrongly (e.g. wrong patient) and should be ignored.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/consent-state-codes"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The resource is in an indeterminate state.
       /// (system: http://hl7.org/fhir/consent-state-codes)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/consent-state-codes"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 

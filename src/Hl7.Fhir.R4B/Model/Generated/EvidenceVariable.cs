@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/characteristic-combination)
     /// (system: http://hl7.org/fhir/characteristic-combination)
     /// </summary>
-    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination")]
+    [FhirEnumeration("CharacteristicCombination", "http://hl7.org/fhir/ValueSet/characteristic-combination", "http://hl7.org/fhir/characteristic-combination")]
     public enum CharacteristicCombinationCode
     {
       /// <summary>
       /// Combine characteristics with AND.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("intersection", "http://hl7.org/fhir/characteristic-combination"), Description("intersection")]
+      [EnumLiteral("intersection"), Description("intersection")]
       Intersection,
       /// <summary>
       /// Combine characteristics with OR.
       /// (system: http://hl7.org/fhir/characteristic-combination)
       /// </summary>
-      [EnumLiteral("union", "http://hl7.org/fhir/characteristic-combination"), Description("union")]
+      [EnumLiteral("union"), Description("union")]
       Union,
     }
 

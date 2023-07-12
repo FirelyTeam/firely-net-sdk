@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose)
     /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
     /// </summary>
-    [FhirEnumeration("EligibilityResponsePurpose", "http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose")]
+    [FhirEnumeration("EligibilityResponsePurpose", "http://hl7.org/fhir/ValueSet/eligibilityresponse-purpose", "http://hl7.org/fhir/eligibilityresponse-purpose")]
     public enum EligibilityResponsePurpose
     {
       /// <summary>
       /// The prior authorization requirements for the listed, or discovered if specified, converages for the categories of service and/or specifed biling codes are requested.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("auth-requirements", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage auth-requirements")]
+      [EnumLiteral("auth-requirements"), Description("Coverage auth-requirements")]
       AuthRequirements,
       /// <summary>
       /// The plan benefits and optionally benefits consumed  for the listed, or discovered if specified, converages are requested.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("benefits", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage benefits")]
+      [EnumLiteral("benefits"), Description("Coverage benefits")]
       Benefits,
       /// <summary>
       /// The insurer is requested to report on any coverages which they are aware of in addition to any specifed.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("discovery", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage Discovery")]
+      [EnumLiteral("discovery"), Description("Coverage Discovery")]
       Discovery,
       /// <summary>
       /// A check that the specified coverages are in-force is requested.
       /// (system: http://hl7.org/fhir/eligibilityresponse-purpose)
       /// </summary>
-      [EnumLiteral("validation", "http://hl7.org/fhir/eligibilityresponse-purpose"), Description("Coverage Validation")]
+      [EnumLiteral("validation"), Description("Coverage Validation")]
       Validation,
     }
 
@@ -94,32 +94,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/eligibility-outcome)
     /// (system: http://hl7.org/fhir/eligibility-outcome)
     /// </summary>
-    [FhirEnumeration("EligibilityOutcome", "http://hl7.org/fhir/ValueSet/eligibility-outcome")]
+    [FhirEnumeration("EligibilityOutcome", "http://hl7.org/fhir/ValueSet/eligibility-outcome", "http://hl7.org/fhir/eligibility-outcome")]
     public enum EligibilityOutcome
     {
       /// <summary>
       /// The Claim/Pre-authorization/Pre-determination has been received but processing has not begun.
       /// (system: http://hl7.org/fhir/eligibility-outcome)
       /// </summary>
-      [EnumLiteral("queued", "http://hl7.org/fhir/eligibility-outcome"), Description("Queued")]
+      [EnumLiteral("queued"), Description("Queued")]
       Queued,
       /// <summary>
       /// The processing has completed without errors
       /// (system: http://hl7.org/fhir/eligibility-outcome)
       /// </summary>
-      [EnumLiteral("complete", "http://hl7.org/fhir/eligibility-outcome"), Description("Processing Complete")]
+      [EnumLiteral("complete"), Description("Processing Complete")]
       Complete,
       /// <summary>
       /// One or more errors have been detected in the Claim
       /// (system: http://hl7.org/fhir/eligibility-outcome)
       /// </summary>
-      [EnumLiteral("error", "http://hl7.org/fhir/eligibility-outcome"), Description("Error")]
+      [EnumLiteral("error"), Description("Error")]
       Error,
       /// <summary>
       /// No errors have been detected in the Claim and some of the adjudication has been performed.
       /// (system: http://hl7.org/fhir/eligibility-outcome)
       /// </summary>
-      [EnumLiteral("partial", "http://hl7.org/fhir/eligibility-outcome"), Description("Partial Processing")]
+      [EnumLiteral("partial"), Description("Partial Processing")]
       Partial,
     }
 

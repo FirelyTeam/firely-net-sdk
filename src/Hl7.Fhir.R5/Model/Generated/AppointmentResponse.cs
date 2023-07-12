@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/appointmentresponse-status)
     /// (systems: 2)
     /// </summary>
-    [FhirEnumeration("AppointmentResponseStatus", "http://hl7.org/fhir/ValueSet/appointmentresponse-status")]
+    [FhirEnumeration("AppointmentResponseStatus", "http://hl7.org/fhir/ValueSet/appointmentresponse-status", "http://hl7.org/fhir/participationstatus")]
     public enum AppointmentResponseStatus
     {
       /// <summary>
       /// The participant has accepted the appointment.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("accepted", "http://hl7.org/fhir/participationstatus"), Description("Accepted")]
+      [EnumLiteral("accepted"), Description("Accepted")]
       Accepted,
       /// <summary>
       /// The participant has declined the appointment and will not participate in the appointment.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("declined", "http://hl7.org/fhir/participationstatus"), Description("Declined")]
+      [EnumLiteral("declined"), Description("Declined")]
       Declined,
       /// <summary>
       /// The participant has  tentatively accepted the appointment. This could be automatically created by a system and requires further processing before it can be accepted. There is no commitment that attendance will occur.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("tentative", "http://hl7.org/fhir/participationstatus"), Description("Tentative")]
+      [EnumLiteral("tentative"), Description("Tentative")]
       Tentative,
       /// <summary>
       /// The participant needs to indicate if they accept the appointment by changing this status to one of the other statuses.
       /// (system: http://hl7.org/fhir/participationstatus)
       /// </summary>
-      [EnumLiteral("needs-action", "http://hl7.org/fhir/participationstatus"), Description("Needs Action")]
+      [EnumLiteral("needs-action"), Description("Needs Action")]
       NeedsAction,
       /// <summary>
       /// This instance should not have been part of this patient's medical record.

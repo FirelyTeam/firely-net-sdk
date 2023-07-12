@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/coverage-kind)
     /// (system: http://hl7.org/fhir/coverage-kind)
     /// </summary>
-    [FhirEnumeration("Kind", "http://hl7.org/fhir/ValueSet/coverage-kind")]
+    [FhirEnumeration("Kind", "http://hl7.org/fhir/ValueSet/coverage-kind", "http://hl7.org/fhir/coverage-kind")]
     public enum CoverageKindCode
     {
       /// <summary>
       /// The Coverage provides the identifiers and card-level details of an insurance policy.
       /// (system: http://hl7.org/fhir/coverage-kind)
       /// </summary>
-      [EnumLiteral("insurance", "http://hl7.org/fhir/coverage-kind"), Description("Insurance")]
+      [EnumLiteral("insurance"), Description("Insurance")]
       Insurance,
       /// <summary>
       /// One or more persons and/or organizations are paying for the services rendered.
       /// (system: http://hl7.org/fhir/coverage-kind)
       /// </summary>
-      [EnumLiteral("self-pay", "http://hl7.org/fhir/coverage-kind"), Description("Self-pay")]
+      [EnumLiteral("self-pay"), Description("Self-pay")]
       SelfPay,
       /// <summary>
       /// Some other organization is paying for the service.
       /// (system: http://hl7.org/fhir/coverage-kind)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/coverage-kind"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 
