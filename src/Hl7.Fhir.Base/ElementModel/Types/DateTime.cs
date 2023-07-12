@@ -17,9 +17,8 @@ namespace Hl7.Fhir.ElementModel.Types
 {
     public class DateTime : Any, IComparable, ICqlEquatable, ICqlOrderable, ICqlConvertible
     {
-        internal DateTime(string original, DateTimeOffset parsedValue, DateTimePrecision precision, bool hasOffset)
+        internal DateTime(DateTimeOffset parsedValue, DateTimePrecision precision, bool hasOffset)
         {
-            _original = original;
             _parsedValue = parsedValue;
             Precision = precision;
             HasOffset = hasOffset;
@@ -32,15 +31,11 @@ namespace Hl7.Fhir.ElementModel.Types
 
         public static string FormatDateTimeOffset(DateTimeOffset dto) => dto.ToString(FMT_FULL);
 
-        public static DateTime FromDateTimeOffset(DateTimeOffset dto)
-        {
-            var representation = FormatDateTimeOffset(dto);
-            return Parse(representation);
-        }
+        public static DateTime FromDateTimeOffset(DateTimeOffset dto) => new(dto, DateTimePrecision.Fraction, hasOffset: true);
 
         public static DateTime Now() => FromDateTimeOffset(DateTimeOffset.Now);
 
-        public static DateTime Today() => DateTime.Parse(DateTimeOffset.Now.ToString("yyyy-MM-ddK"));
+        public static DateTime Today() => new(DateTimeOffset.Now, DateTimePrecision.Day, hasOffset: true);
 
         public Date TruncateToDate() => Date.FromDateTimeOffset(
             ToDateTimeOffset(_parsedValue.Offset), Precision, includeOffset: HasOffset);
@@ -99,23 +94,25 @@ namespace Hl7.Fhir.ElementModel.Types
                 _ => throw new ArgumentException($"'{addValue.Unit}' is not a valid time-valued unit", nameof(addValue)),
             };
 
-            string representation = dto.ToString(FMT_FULL);
-            if (representation.Length > dateTimeValue._original.Length)
+            var resultRepresentation = dto.ToString(FMT_FULL);
+            var originalRepresentation = dateTimeValue._parsedValue.ToString(FMT_FULL);
+
+            if (resultRepresentation.Length > originalRepresentation.Length)
             {
                 // need to trim appropriately.
                 if (dateTimeValue.Precision <= DateTimePrecision.Minute)
-                    representation = representation.Substring(0, dateTimeValue._original.Length);
+                    resultRepresentation = resultRepresentation.Substring(0, originalRepresentation.Length);
                 else
                 {
                     if (!dateTimeValue.HasOffset)
                     {
                         // trim the offset from it
-                        representation = dto.ToString("yyyy-MM-dd'T'HH:mm:ss.FFFFFFF");
+                        resultRepresentation = dto.ToString("yyyy-MM-dd'T'HH:mm:ss.FFFFFFF");
                     }
                 }
             }
 
-            var result = new DateTime(representation, dto, dateTimeValue.Precision, dateTimeValue.HasOffset);
+            var result = new DateTime(dto, dateTimeValue.Precision, dateTimeValue.HasOffset);
             return result;
         }
 
@@ -124,7 +121,6 @@ namespace Hl7.Fhir.ElementModel.Types
         /// </summary>
         public TimeSpan? Offset => HasOffset ? _parsedValue.Offset : null;
 
-        private readonly string _original;
         private readonly DateTimeOffset _parsedValue;
 
         /// <summary>
@@ -166,7 +162,7 @@ namespace Hl7.Fhir.ElementModel.Types
             var matches = DATETIMEREGEX.Match(representation);
             if (!matches.Success)
             {
-                value = new DateTime(representation, default, default, default);
+                value = new DateTime(default, default, default);
                 return false;
             }
 
@@ -198,7 +194,7 @@ namespace Hl7.Fhir.ElementModel.Types
                   (offset.Success ? offset.Value : "Z");
 
             var success = DateTimeOffset.TryParse(parseableDT, out var parsedValue);
-            value = new DateTime(representation, parsedValue, prec, offset.Success);
+            value = new DateTime(parsedValue, prec, offset.Success);
             return success;
         }
 
@@ -301,8 +297,8 @@ namespace Hl7.Fhir.ElementModel.Types
         public static bool operator >=(DateTime a, DateTime b) => a.CompareTo(b) >= 0;
 
 
-        public override int GetHashCode() => _original.GetHashCode();
-        public override string ToString() => _original;
+        public override int GetHashCode() => _parsedValue.GetHashCode();
+        public override string ToString() => FormatDateTimeOffset(_parsedValue);
 
         public static explicit operator DateTime(DateTimeOffset dto) => FromDateTimeOffset(dto);
         public static explicit operator Date(DateTime dt) => ((ICqlConvertible)dt).TryConvertToDate().ValueOrThrow();
