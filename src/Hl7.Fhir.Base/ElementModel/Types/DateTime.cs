@@ -10,6 +10,7 @@
 
 using Hl7.Fhir.Utility;
 using System;
+using System.Text;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
 
@@ -95,7 +96,7 @@ namespace Hl7.Fhir.ElementModel.Types
             };
 
             var resultRepresentation = dto.ToString(FMT_FULL);
-            var originalRepresentation = dateTimeValue._parsedValue.ToString(FMT_FULL);
+            var originalRepresentation = dateTimeValue.ToString();
 
             if (resultRepresentation.Length > originalRepresentation.Length)
             {
@@ -112,8 +113,7 @@ namespace Hl7.Fhir.ElementModel.Types
                 }
             }
 
-            var result = new DateTime(dto, dateTimeValue.Precision, dateTimeValue.HasOffset);
-            return result;
+            return Parse(resultRepresentation);
         }
 
         /// <summary>
@@ -298,7 +298,22 @@ namespace Hl7.Fhir.ElementModel.Types
 
 
         public override int GetHashCode() => _parsedValue.GetHashCode();
-        public override string ToString() => FormatDateTimeOffset(_parsedValue);
+        public override string ToString()
+        {
+            var format = new StringBuilder();
+
+            // "yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";
+            if (Precision >= DateTimePrecision.Year) format.Append("yyyy");
+            if (Precision >= DateTimePrecision.Month) format.Append("-MM");
+            if (Precision >= DateTimePrecision.Day) format.Append("-dd");
+            if (Precision >= DateTimePrecision.Hour) format.Append("'T'HH");
+            if (Precision >= DateTimePrecision.Minute) format.Append(":mm");
+            if (Precision >= DateTimePrecision.Second) format.Append(":ss");
+            if (Precision >= DateTimePrecision.Fraction) format.Append(".FFFFFFF");
+            if (HasOffset) format.Append('K');
+
+            return _parsedValue.ToString(format.ToString());
+        }
 
         public static explicit operator DateTime(DateTimeOffset dto) => FromDateTimeOffset(dto);
         public static explicit operator Date(DateTime dt) => ((ICqlConvertible)dt).TryConvertToDate().ValueOrThrow();

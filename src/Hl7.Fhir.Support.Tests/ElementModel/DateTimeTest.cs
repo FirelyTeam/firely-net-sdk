@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/FirelyTeam/firely-net-sdk/master/LICENSE
  */
 
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using P = Hl7.Fhir.ElementModel.Types;
@@ -136,6 +137,23 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.AreEqual(2018, pdt.Years);
             Assert.AreEqual(4, pdt.Months);
             Assert.AreEqual("2018-04", pdt.ToString());
+        }
+
+        [TestMethod]
+        [DataRow("2001")]
+        [DataRow("2001-04")]
+        [DataRow("2001-04-06")]
+        [DataRow("2001-04-06+01:30")]
+        [DataRow("2001-04-06T13")]
+        [DataRow("2001-04-06T13:01")]
+        [DataRow("2001-04-06T13:01+02:00")]
+        [DataRow("2001-04-06T13:01:02")]
+        [DataRow("2001-04-06T13:01:02-04:00")]
+        [DataRow("2001-04-06T13:01:02.1234-04:00")]
+        public void CanConvertToString(string format)
+        {
+            var parsed = P.DateTime.Parse(format);
+            parsed.ToString().Should().Be(format);
         }
     }
 }
