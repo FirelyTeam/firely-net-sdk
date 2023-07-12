@@ -150,6 +150,8 @@ namespace Hl7.Fhir.ElementModel.Tests
         [DataRow("2001-04-06T13:01:02")]
         [DataRow("2001-04-06T13:01:02-04:00")]
         [DataRow("2001-04-06T13:01:02.1234-04:00")]
+        [DataRow("2001-04-06T13:01:02.1234+00:00")]
+        [DataRow("2001-04-06T13:01:02.1234Z")]
         public void CanConvertToString(string format)
         {
             var parsed = P.DateTime.Parse(format);

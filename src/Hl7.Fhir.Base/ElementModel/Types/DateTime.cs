@@ -10,7 +10,6 @@
 
 using Hl7.Fhir.Utility;
 using System;
-using System.Text;
 using System.Text.RegularExpressions;
 using static Hl7.Fhir.Utility.Result;
 
@@ -194,9 +193,19 @@ namespace Hl7.Fhir.ElementModel.Types
                   (offset.Success ? offset.Value : "Z");
 
             var success = DateTimeOffset.TryParse(parseableDT, out var parsedValue);
-            value = new DateTime(parsedValue, prec, offset.Success);
+            value = new DateTime(parsedValue, prec, offset.Success)
+            {
+                parsedWithZOffset = offset.Success && offset.Value == "Z"
+            };
+
             return success;
         }
+
+        /// <summary>
+        /// Whether, when this instance was constructed using Parse(), the original
+        /// string used Z instead of +00:00.
+        /// </summary>
+        private bool parsedWithZOffset { get; init; }
 
         /// <summary>
         /// Compare two datetimes based on CQL equality rules
@@ -300,19 +309,24 @@ namespace Hl7.Fhir.ElementModel.Types
         public override int GetHashCode() => _parsedValue.GetHashCode();
         public override string ToString()
         {
-            var format = new StringBuilder();
-
             // "yyyy-MM-dd'T'HH:mm:ss.FFFFFFFK";
-            if (Precision >= DateTimePrecision.Year) format.Append("yyyy");
-            if (Precision >= DateTimePrecision.Month) format.Append("-MM");
-            if (Precision >= DateTimePrecision.Day) format.Append("-dd");
-            if (Precision >= DateTimePrecision.Hour) format.Append("'T'HH");
-            if (Precision >= DateTimePrecision.Minute) format.Append(":mm");
-            if (Precision >= DateTimePrecision.Second) format.Append(":ss");
-            if (Precision >= DateTimePrecision.Fraction) format.Append(".FFFFFFF");
-            if (HasOffset) format.Append('K');
+            var length = Precision switch
+            {
+                DateTimePrecision.Year => 4,
+                DateTimePrecision.Month => 7,
+                DateTimePrecision.Day => 10,
+                DateTimePrecision.Hour => 15,
+                DateTimePrecision.Minute => 18,
+                DateTimePrecision.Second => 21,
+                DateTimePrecision.Fraction => 29,
+                _ => 29
+            };
 
-            return _parsedValue.ToString(format.ToString());
+            var format = FMT_FULL.Substring(0, length);
+            if (HasOffset && !parsedWithZOffset) format += 'K';
+            if (HasOffset && parsedWithZOffset) format += "'Z'";
+
+            return _parsedValue.ToString(format);
         }
 
         public static explicit operator DateTime(DateTimeOffset dto) => FromDateTimeOffset(dto);
