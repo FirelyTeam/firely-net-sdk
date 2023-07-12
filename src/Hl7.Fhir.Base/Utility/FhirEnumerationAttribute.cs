@@ -40,13 +40,14 @@ namespace Hl7.Fhir.Utility
         private readonly string _bindingName;
 
         // This is a positional argument
-        public FhirEnumerationAttribute(string bindingName, string? canonical)
+        public FhirEnumerationAttribute(string bindingName, string? canonical = null, string? defaultCodeSystem = null)
         {
             this._bindingName = bindingName;
             Valueset = canonical;
+            DefaultCodeSystem = defaultCodeSystem;
         }
 
-        public FhirEnumerationAttribute(string bindingName) : this(bindingName, null)
+        public FhirEnumerationAttribute(string bindingName) : this(bindingName, null, null)
         {
             // Nothing
         }
@@ -57,6 +58,8 @@ namespace Hl7.Fhir.Utility
         }
 
         public string? Valueset { get; }
+
+        public string? DefaultCodeSystem { get; }
     }
 }
 

@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-status)
     /// (system: http://hl7.org/fhir/event-status)
     /// </summary>
-    [FhirEnumeration("AdverseEventStatus", "http://hl7.org/fhir/ValueSet/adverse-event-status")]
+    [FhirEnumeration("AdverseEventStatus", "http://hl7.org/fhir/ValueSet/adverse-event-status", "http://hl7.org/fhir/event-status")]
     public enum AdverseEventStatus
     {
       /// <summary>
       /// The event is currently occurring.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("in-progress", "http://hl7.org/fhir/event-status"), Description("In Progress")]
+      [EnumLiteral("in-progress"), Description("In Progress")]
       InProgress,
       /// <summary>
       /// The event has now concluded.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("completed", "http://hl7.org/fhir/event-status"), Description("Completed")]
+      [EnumLiteral("completed"), Description("Completed")]
       Completed,
       /// <summary>
       /// This electronic record should never have existed, though it is possible that real-world decisions were based on it.  (If real-world activity has occurred, the status should be "stopped" rather than "entered-in-error".).
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("entered-in-error", "http://hl7.org/fhir/event-status"), Description("Entered in Error")]
+      [EnumLiteral("entered-in-error"), Description("Entered in Error")]
       EnteredInError,
       /// <summary>
       /// The authoring/source system does not know which of the status values currently applies for this event.  Note: This concept is not to be used for "other" - one of the listed statuses is presumed to apply,  but the authoring/source system does not know which.
       /// (system: http://hl7.org/fhir/event-status)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/event-status"), Description("Unknown")]
+      [EnumLiteral("unknown"), Description("Unknown")]
       Unknown,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/adverse-event-actuality)
     /// (system: http://hl7.org/fhir/adverse-event-actuality)
     /// </summary>
-    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality")]
+    [FhirEnumeration("AdverseEventActuality", "http://hl7.org/fhir/ValueSet/adverse-event-actuality", "http://hl7.org/fhir/adverse-event-actuality")]
     public enum AdverseEventActuality
     {
       /// <summary>
       /// The adverse event actually happened regardless of whether anyone was affected or harmed.
       /// (system: http://hl7.org/fhir/adverse-event-actuality)
       /// </summary>
-      [EnumLiteral("actual", "http://hl7.org/fhir/adverse-event-actuality"), Description("Adverse Event")]
+      [EnumLiteral("actual"), Description("Adverse Event")]
       Actual,
       /// <summary>
       /// A potential adverse event.
       /// (system: http://hl7.org/fhir/adverse-event-actuality)
       /// </summary>
-      [EnumLiteral("potential", "http://hl7.org/fhir/adverse-event-actuality"), Description("Potential Adverse Event")]
+      [EnumLiteral("potential"), Description("Potential Adverse Event")]
       Potential,
     }
 

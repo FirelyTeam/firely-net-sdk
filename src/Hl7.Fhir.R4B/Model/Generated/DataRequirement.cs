@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/sort-direction)
     /// (system: http://hl7.org/fhir/sort-direction)
     /// </summary>
-    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction")]
+    [FhirEnumeration("SortDirection", "http://hl7.org/fhir/ValueSet/sort-direction", "http://hl7.org/fhir/sort-direction")]
     public enum SortDirection
     {
       /// <summary>
       /// Sort by the value ascending, so that lower values appear first.
       /// (system: http://hl7.org/fhir/sort-direction)
       /// </summary>
-      [EnumLiteral("ascending", "http://hl7.org/fhir/sort-direction"), Description("Ascending")]
+      [EnumLiteral("ascending"), Description("Ascending")]
       Ascending,
       /// <summary>
       /// Sort by the value descending, so that lower values appear last.
       /// (system: http://hl7.org/fhir/sort-direction)
       /// </summary>
-      [EnumLiteral("descending", "http://hl7.org/fhir/sort-direction"), Description("Descending")]
+      [EnumLiteral("descending"), Description("Descending")]
       Descending,
     }
 

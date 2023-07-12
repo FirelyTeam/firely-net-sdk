@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/examplescenario-actor-type)
     /// (system: http://hl7.org/fhir/examplescenario-actor-type)
     /// </summary>
-    [FhirEnumeration("ExampleScenarioActorType", "http://hl7.org/fhir/ValueSet/examplescenario-actor-type")]
+    [FhirEnumeration("ExampleScenarioActorType", "http://hl7.org/fhir/ValueSet/examplescenario-actor-type", "http://hl7.org/fhir/examplescenario-actor-type")]
     public enum ExampleScenarioActorType
     {
       /// <summary>
       /// A person.
       /// (system: http://hl7.org/fhir/examplescenario-actor-type)
       /// </summary>
-      [EnumLiteral("person", "http://hl7.org/fhir/examplescenario-actor-type"), Description("Person")]
+      [EnumLiteral("person"), Description("Person")]
       Person,
       /// <summary>
       /// A system.
       /// (system: http://hl7.org/fhir/examplescenario-actor-type)
       /// </summary>
-      [EnumLiteral("entity", "http://hl7.org/fhir/examplescenario-actor-type"), Description("System")]
+      [EnumLiteral("entity"), Description("System")]
       Entity,
     }
 

@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/graph-compartment-rule)
     /// (system: http://hl7.org/fhir/graph-compartment-rule)
     /// </summary>
-    [FhirEnumeration("GraphCompartmentRule", "http://hl7.org/fhir/ValueSet/graph-compartment-rule")]
+    [FhirEnumeration("GraphCompartmentRule", "http://hl7.org/fhir/ValueSet/graph-compartment-rule", "http://hl7.org/fhir/graph-compartment-rule")]
     public enum GraphCompartmentRule
     {
       /// <summary>
       /// The compartment must be identical (the same literal reference)
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("identical", "http://hl7.org/fhir/graph-compartment-rule"), Description("Identical")]
+      [EnumLiteral("identical"), Description("Identical")]
       Identical,
       /// <summary>
       /// The compartment must be the same - the record must be about the same patient, but the reference may be different
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("matching", "http://hl7.org/fhir/graph-compartment-rule"), Description("Matching")]
+      [EnumLiteral("matching"), Description("Matching")]
       Matching,
       /// <summary>
       /// The compartment must be different
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("different", "http://hl7.org/fhir/graph-compartment-rule"), Description("Different")]
+      [EnumLiteral("different"), Description("Different")]
       Different,
       /// <summary>
       /// The compartment rule is defined in the accompanying FHIRPath expression
       /// (system: http://hl7.org/fhir/graph-compartment-rule)
       /// </summary>
-      [EnumLiteral("custom", "http://hl7.org/fhir/graph-compartment-rule"), Description("Custom")]
+      [EnumLiteral("custom"), Description("Custom")]
       Custom,
     }
 

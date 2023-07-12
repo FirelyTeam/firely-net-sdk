@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning)
     /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
     /// </summary>
-    [FhirEnumeration("CodeSystemHierarchyMeaning", "http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning")]
+    [FhirEnumeration("CodeSystemHierarchyMeaning", "http://hl7.org/fhir/ValueSet/codesystem-hierarchy-meaning", "http://hl7.org/fhir/codesystem-hierarchy-meaning")]
     public enum CodeSystemHierarchyMeaning
     {
       /// <summary>
       /// No particular relationship between the concepts can be assumed, except what can be determined by inspection of the definitions of the elements (possible reasons to use this: importing from a source where this is not defined, or where various parts of the hierarchy have different meanings).
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("grouped-by", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Grouped By")]
+      [EnumLiteral("grouped-by"), Description("Grouped By")]
       GroupedBy,
       /// <summary>
       /// A hierarchy where the child concepts have an IS-A relationship with the parents - that is, all the properties of the parent are also true for its child concepts. Not that is-a is a property of the concepts, so additional subsumption relationships may be defined using properties.
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("is-a", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Is-A")]
+      [EnumLiteral("is-a"), Description("Is-A")]
       IsA,
       /// <summary>
       /// Child elements list the individual parts of a composite whole (e.g. body site).
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("part-of", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Part Of")]
+      [EnumLiteral("part-of"), Description("Part Of")]
       PartOf,
       /// <summary>
       /// Child concepts in the hierarchy may have only one parent, and there is a presumption that the code system is a "closed world" meaning all things must be in the hierarchy. This results in concepts such as "not otherwise classified.".
       /// (system: http://hl7.org/fhir/codesystem-hierarchy-meaning)
       /// </summary>
-      [EnumLiteral("classified-with", "http://hl7.org/fhir/codesystem-hierarchy-meaning"), Description("Classified With")]
+      [EnumLiteral("classified-with"), Description("Classified With")]
       ClassifiedWith,
     }
 
@@ -94,50 +94,50 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/concept-property-type)
     /// (system: http://hl7.org/fhir/concept-property-type)
     /// </summary>
-    [FhirEnumeration("PropertyType", "http://hl7.org/fhir/ValueSet/concept-property-type")]
+    [FhirEnumeration("PropertyType", "http://hl7.org/fhir/ValueSet/concept-property-type", "http://hl7.org/fhir/concept-property-type")]
     public enum PropertyType
     {
       /// <summary>
       /// The property value is a code that identifies a concept defined in the code system.
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("code", "http://hl7.org/fhir/concept-property-type"), Description("code (internal reference)")]
+      [EnumLiteral("code"), Description("code (internal reference)")]
       Code,
       /// <summary>
       /// The property  value is a code defined in an external code system. This may be used for translations, but is not the intent.
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("Coding", "http://hl7.org/fhir/concept-property-type"), Description("Coding (external reference)")]
+      [EnumLiteral("Coding"), Description("Coding (external reference)")]
       Coding,
       /// <summary>
       /// The property value is a string.
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("string", "http://hl7.org/fhir/concept-property-type"), Description("string")]
+      [EnumLiteral("string"), Description("string")]
       String,
       /// <summary>
       /// The property value is an integer (often used to assign ranking values to concepts for supporting score assessments).
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("integer", "http://hl7.org/fhir/concept-property-type"), Description("integer")]
+      [EnumLiteral("integer"), Description("integer")]
       Integer,
       /// <summary>
       /// The property value is a boolean true | false.
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("boolean", "http://hl7.org/fhir/concept-property-type"), Description("boolean")]
+      [EnumLiteral("boolean"), Description("boolean")]
       Boolean,
       /// <summary>
       /// The property is a date or a date + time.
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("dateTime", "http://hl7.org/fhir/concept-property-type"), Description("dateTime")]
+      [EnumLiteral("dateTime"), Description("dateTime")]
       DateTime,
       /// <summary>
       /// The property value is a decimal number.
       /// (system: http://hl7.org/fhir/concept-property-type)
       /// </summary>
-      [EnumLiteral("decimal", "http://hl7.org/fhir/concept-property-type"), Description("decimal")]
+      [EnumLiteral("decimal"), Description("decimal")]
       Decimal,
     }
 

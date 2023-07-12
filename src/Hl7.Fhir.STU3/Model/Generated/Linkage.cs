@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/linkage-type)
     /// (system: http://hl7.org/fhir/linkage-type)
     /// </summary>
-    [FhirEnumeration("LinkageType", "http://hl7.org/fhir/ValueSet/linkage-type")]
+    [FhirEnumeration("LinkageType", "http://hl7.org/fhir/ValueSet/linkage-type", "http://hl7.org/fhir/linkage-type")]
     public enum LinkageType
     {
       /// <summary>
       /// The record represents the "source of truth" (from the perspective of this Linkage resource) for the underlying event/condition/etc.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
-      [EnumLiteral("source", "http://hl7.org/fhir/linkage-type"), Description("Source of truth")]
+      [EnumLiteral("source"), Description("Source of truth")]
       Source,
       /// <summary>
       /// The record represents the alternative view of the underlying event/condition/etc.  The record may still be actively maintained, even though it is not considered to be the source of truth.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
-      [EnumLiteral("alternate", "http://hl7.org/fhir/linkage-type"), Description("Alternate record")]
+      [EnumLiteral("alternate"), Description("Alternate record")]
       Alternate,
       /// <summary>
       /// The record represents an obsolete record of the underlyng event/condition/etc.  It is not expected to be actively maintained.
       /// (system: http://hl7.org/fhir/linkage-type)
       /// </summary>
-      [EnumLiteral("historical", "http://hl7.org/fhir/linkage-type"), Description("Historical/obsolete record")]
+      [EnumLiteral("historical"), Description("Historical/obsolete record")]
       Historical,
     }
 

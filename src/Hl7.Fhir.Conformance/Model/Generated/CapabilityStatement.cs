@@ -60,20 +60,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/restful-capability-mode)
     /// (system: http://hl7.org/fhir/restful-capability-mode)
     /// </summary>
-    [FhirEnumeration("RestfulCapabilityMode", "http://hl7.org/fhir/ValueSet/restful-capability-mode")]
+    [FhirEnumeration("RestfulCapabilityMode", "http://hl7.org/fhir/ValueSet/restful-capability-mode", "http://hl7.org/fhir/restful-capability-mode")]
     public enum RestfulCapabilityMode
     {
       /// <summary>
       /// The application acts as a client for this resource.
       /// (system: http://hl7.org/fhir/restful-capability-mode)
       /// </summary>
-      [EnumLiteral("client", "http://hl7.org/fhir/restful-capability-mode"), Description("Client")]
+      [EnumLiteral("client"), Description("Client")]
       Client,
       /// <summary>
       /// The application acts as a server for this resource.
       /// (system: http://hl7.org/fhir/restful-capability-mode)
       /// </summary>
-      [EnumLiteral("server", "http://hl7.org/fhir/restful-capability-mode"), Description("Server")]
+      [EnumLiteral("server"), Description("Server")]
       Server,
     }
 
@@ -82,26 +82,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/versioning-policy)
     /// (system: http://hl7.org/fhir/versioning-policy)
     /// </summary>
-    [FhirEnumeration("ResourceVersionPolicy", "http://hl7.org/fhir/ValueSet/versioning-policy")]
+    [FhirEnumeration("ResourceVersionPolicy", "http://hl7.org/fhir/ValueSet/versioning-policy", "http://hl7.org/fhir/versioning-policy")]
     public enum ResourceVersionPolicy
     {
       /// <summary>
       /// VersionId meta-property is not supported (server) or used (client).
       /// (system: http://hl7.org/fhir/versioning-policy)
       /// </summary>
-      [EnumLiteral("no-version", "http://hl7.org/fhir/versioning-policy"), Description("No VersionId Support")]
+      [EnumLiteral("no-version"), Description("No VersionId Support")]
       NoVersion,
       /// <summary>
       /// VersionId meta-property is supported (server) or used (client).
       /// (system: http://hl7.org/fhir/versioning-policy)
       /// </summary>
-      [EnumLiteral("versioned", "http://hl7.org/fhir/versioning-policy"), Description("Versioned")]
+      [EnumLiteral("versioned"), Description("Versioned")]
       Versioned,
       /// <summary>
       /// Supports version-aware updates (server) or will be specified (If-match header) for updates (client).
       /// (system: http://hl7.org/fhir/versioning-policy)
       /// </summary>
-      [EnumLiteral("versioned-update", "http://hl7.org/fhir/versioning-policy"), Description("VersionId tracked fully")]
+      [EnumLiteral("versioned-update"), Description("VersionId tracked fully")]
       VersionedUpdate,
     }
 
@@ -110,32 +110,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-read-status)
     /// (system: http://hl7.org/fhir/conditional-read-status)
     /// </summary>
-    [FhirEnumeration("ConditionalReadStatus", "http://hl7.org/fhir/ValueSet/conditional-read-status")]
+    [FhirEnumeration("ConditionalReadStatus", "http://hl7.org/fhir/ValueSet/conditional-read-status", "http://hl7.org/fhir/conditional-read-status")]
     public enum ConditionalReadStatus
     {
       /// <summary>
       /// No support for conditional reads.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-read-status"), Description("Not Supported")]
+      [EnumLiteral("not-supported"), Description("Not Supported")]
       NotSupported,
       /// <summary>
       /// Conditional reads are supported, but only with the If-Modified-Since HTTP Header.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("modified-since", "http://hl7.org/fhir/conditional-read-status"), Description("If-Modified-Since")]
+      [EnumLiteral("modified-since"), Description("If-Modified-Since")]
       ModifiedSince,
       /// <summary>
       /// Conditional reads are supported, but only with the If-None-Match HTTP Header.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("not-match", "http://hl7.org/fhir/conditional-read-status"), Description("If-None-Match")]
+      [EnumLiteral("not-match"), Description("If-None-Match")]
       NotMatch,
       /// <summary>
       /// Conditional reads are supported, with both If-Modified-Since and If-None-Match HTTP Headers.
       /// (system: http://hl7.org/fhir/conditional-read-status)
       /// </summary>
-      [EnumLiteral("full-support", "http://hl7.org/fhir/conditional-read-status"), Description("Full Support")]
+      [EnumLiteral("full-support"), Description("Full Support")]
       FullSupport,
     }
 
@@ -144,26 +144,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/conditional-delete-status)
     /// (system: http://hl7.org/fhir/conditional-delete-status)
     /// </summary>
-    [FhirEnumeration("ConditionalDeleteStatus", "http://hl7.org/fhir/ValueSet/conditional-delete-status")]
+    [FhirEnumeration("ConditionalDeleteStatus", "http://hl7.org/fhir/ValueSet/conditional-delete-status", "http://hl7.org/fhir/conditional-delete-status")]
     public enum ConditionalDeleteStatus
     {
       /// <summary>
       /// No support for conditional deletes.
       /// (system: http://hl7.org/fhir/conditional-delete-status)
       /// </summary>
-      [EnumLiteral("not-supported", "http://hl7.org/fhir/conditional-delete-status"), Description("Not Supported")]
+      [EnumLiteral("not-supported"), Description("Not Supported")]
       NotSupported,
       /// <summary>
       /// Conditional deletes are supported, but only single resources at a time.
       /// (system: http://hl7.org/fhir/conditional-delete-status)
       /// </summary>
-      [EnumLiteral("single", "http://hl7.org/fhir/conditional-delete-status"), Description("Single Deletes Supported")]
+      [EnumLiteral("single"), Description("Single Deletes Supported")]
       Single,
       /// <summary>
       /// Conditional deletes are supported, and multiple resources can be deleted in a single interaction.
       /// (system: http://hl7.org/fhir/conditional-delete-status)
       /// </summary>
-      [EnumLiteral("multiple", "http://hl7.org/fhir/conditional-delete-status"), Description("Multiple Deletes Supported")]
+      [EnumLiteral("multiple"), Description("Multiple Deletes Supported")]
       Multiple,
     }
 
@@ -172,38 +172,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/reference-handling-policy)
     /// (system: http://hl7.org/fhir/reference-handling-policy)
     /// </summary>
-    [FhirEnumeration("ReferenceHandlingPolicy", "http://hl7.org/fhir/ValueSet/reference-handling-policy")]
+    [FhirEnumeration("ReferenceHandlingPolicy", "http://hl7.org/fhir/ValueSet/reference-handling-policy", "http://hl7.org/fhir/reference-handling-policy")]
     public enum ReferenceHandlingPolicy
     {
       /// <summary>
       /// The server supports and populates Literal references (i.e. using Reference.reference) where they are known (this code does not guarantee that all references are literal; see 'enforced').
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("literal", "http://hl7.org/fhir/reference-handling-policy"), Description("Literal References")]
+      [EnumLiteral("literal"), Description("Literal References")]
       Literal,
       /// <summary>
       /// The server allows logical references (i.e. using Reference.identifier).
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("logical", "http://hl7.org/fhir/reference-handling-policy"), Description("Logical References")]
+      [EnumLiteral("logical"), Description("Logical References")]
       Logical,
       /// <summary>
       /// The server will attempt to resolve logical references to literal references - i.e. converting Reference.identifier to Reference.reference (if resolution fails, the server may still accept resources; see logical).
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("resolves", "http://hl7.org/fhir/reference-handling-policy"), Description("Resolves References")]
+      [EnumLiteral("resolves"), Description("Resolves References")]
       Resolves,
       /// <summary>
       /// The server enforces that references have integrity - e.g. it ensures that references can always be resolved. This is typically the case for clinical record systems, but often not the case for middleware/proxy systems.
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("enforced", "http://hl7.org/fhir/reference-handling-policy"), Description("Reference Integrity Enforced")]
+      [EnumLiteral("enforced"), Description("Reference Integrity Enforced")]
       Enforced,
       /// <summary>
       /// The server does not support references that point to other servers.
       /// (system: http://hl7.org/fhir/reference-handling-policy)
       /// </summary>
-      [EnumLiteral("local", "http://hl7.org/fhir/reference-handling-policy"), Description("Local References Only")]
+      [EnumLiteral("local"), Description("Local References Only")]
       Local,
     }
 
@@ -212,62 +212,62 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("TypeRestfulInteraction", "http://hl7.org/fhir/ValueSet/type-restful-interaction")]
+    [FhirEnumeration("TypeRestfulInteraction", "http://hl7.org/fhir/ValueSet/type-restful-interaction", "http://hl7.org/fhir/restful-interaction")]
     public enum TypeRestfulInteraction
     {
       /// <summary>
       /// Read the current state of the resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("read", "http://hl7.org/fhir/restful-interaction"), Description("read")]
+      [EnumLiteral("read"), Description("read")]
       Read,
       /// <summary>
       /// Read the state of a specific version of the resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("vread", "http://hl7.org/fhir/restful-interaction"), Description("vread")]
+      [EnumLiteral("vread"), Description("vread")]
       Vread,
       /// <summary>
       /// Update an existing resource by its id (or create it if it is new).
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("update", "http://hl7.org/fhir/restful-interaction"), Description("update")]
+      [EnumLiteral("update"), Description("update")]
       Update,
       /// <summary>
       /// Update an existing resource by posting a set of changes to it.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("patch", "http://hl7.org/fhir/restful-interaction"), Description("patch")]
+      [EnumLiteral("patch"), Description("patch")]
       Patch,
       /// <summary>
       /// Delete a resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("delete", "http://hl7.org/fhir/restful-interaction"), Description("delete")]
+      [EnumLiteral("delete"), Description("delete")]
       Delete,
       /// <summary>
       /// Retrieve the change history for a particular resource.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("history-instance", "http://hl7.org/fhir/restful-interaction"), Description("history-instance")]
+      [EnumLiteral("history-instance"), Description("history-instance")]
       HistoryInstance,
       /// <summary>
       /// Retrieve the change history for all resources of a particular type.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("history-type", "http://hl7.org/fhir/restful-interaction"), Description("history-type")]
+      [EnumLiteral("history-type"), Description("history-type")]
       HistoryType,
       /// <summary>
       /// Create a new resource with a server assigned id.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("create", "http://hl7.org/fhir/restful-interaction"), Description("create")]
+      [EnumLiteral("create"), Description("create")]
       Create,
       /// <summary>
       /// Search all resources of the specified type based on some filter criteria.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("search-type", "http://hl7.org/fhir/restful-interaction"), Description("search-type")]
+      [EnumLiteral("search-type"), Description("search-type")]
       SearchType,
     }
 
@@ -276,32 +276,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/system-restful-interaction)
     /// (system: http://hl7.org/fhir/restful-interaction)
     /// </summary>
-    [FhirEnumeration("SystemRestfulInteraction", "http://hl7.org/fhir/ValueSet/system-restful-interaction")]
+    [FhirEnumeration("SystemRestfulInteraction", "http://hl7.org/fhir/ValueSet/system-restful-interaction", "http://hl7.org/fhir/restful-interaction")]
     public enum SystemRestfulInteraction
     {
       /// <summary>
       /// Update, create or delete a set of resources as a single transaction.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("transaction", "http://hl7.org/fhir/restful-interaction"), Description("transaction")]
+      [EnumLiteral("transaction"), Description("transaction")]
       Transaction,
       /// <summary>
       /// perform a set of a separate interactions in a single http operation
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("batch", "http://hl7.org/fhir/restful-interaction"), Description("batch")]
+      [EnumLiteral("batch"), Description("batch")]
       Batch,
       /// <summary>
       /// Search all resources based on some filter criteria.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("search-system", "http://hl7.org/fhir/restful-interaction"), Description("search-system")]
+      [EnumLiteral("search-system"), Description("search-system")]
       SearchSystem,
       /// <summary>
       /// Retrieve the change history for all resources on a system.
       /// (system: http://hl7.org/fhir/restful-interaction)
       /// </summary>
-      [EnumLiteral("history-system", "http://hl7.org/fhir/restful-interaction"), Description("history-system")]
+      [EnumLiteral("history-system"), Description("history-system")]
       HistorySystem,
     }
 
@@ -310,20 +310,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/event-capability-mode)
     /// (system: http://hl7.org/fhir/event-capability-mode)
     /// </summary>
-    [FhirEnumeration("EventCapabilityMode", "http://hl7.org/fhir/ValueSet/event-capability-mode")]
+    [FhirEnumeration("EventCapabilityMode", "http://hl7.org/fhir/ValueSet/event-capability-mode", "http://hl7.org/fhir/event-capability-mode")]
     public enum EventCapabilityMode
     {
       /// <summary>
       /// The application sends requests and receives responses.
       /// (system: http://hl7.org/fhir/event-capability-mode)
       /// </summary>
-      [EnumLiteral("sender", "http://hl7.org/fhir/event-capability-mode"), Description("Sender")]
+      [EnumLiteral("sender"), Description("Sender")]
       Sender,
       /// <summary>
       /// The application receives requests and sends responses.
       /// (system: http://hl7.org/fhir/event-capability-mode)
       /// </summary>
-      [EnumLiteral("receiver", "http://hl7.org/fhir/event-capability-mode"), Description("Receiver")]
+      [EnumLiteral("receiver"), Description("Receiver")]
       Receiver,
     }
 
@@ -332,20 +332,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/document-mode)
     /// (system: http://hl7.org/fhir/document-mode)
     /// </summary>
-    [FhirEnumeration("DocumentMode", "http://hl7.org/fhir/ValueSet/document-mode")]
+    [FhirEnumeration("DocumentMode", "http://hl7.org/fhir/ValueSet/document-mode", "http://hl7.org/fhir/document-mode")]
     public enum DocumentMode
     {
       /// <summary>
       /// The application produces documents of the specified type.
       /// (system: http://hl7.org/fhir/document-mode)
       /// </summary>
-      [EnumLiteral("producer", "http://hl7.org/fhir/document-mode"), Description("Producer")]
+      [EnumLiteral("producer"), Description("Producer")]
       Producer,
       /// <summary>
       /// The application consumes documents of the specified type.
       /// (system: http://hl7.org/fhir/document-mode)
       /// </summary>
-      [EnumLiteral("consumer", "http://hl7.org/fhir/document-mode"), Description("Consumer")]
+      [EnumLiteral("consumer"), Description("Consumer")]
       Consumer,
     }
 

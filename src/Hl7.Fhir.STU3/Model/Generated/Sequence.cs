@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/quality-type)
     /// (system: http://hl7.org/fhir/quality-type)
     /// </summary>
-    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type")]
+    [FhirEnumeration("qualityType", "http://hl7.org/fhir/ValueSet/quality-type", "http://hl7.org/fhir/quality-type")]
     public enum QualityType
     {
       /// <summary>
       /// INDEL Comparison
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("indel", "http://hl7.org/fhir/quality-type"), Description("INDEL Comparison")]
+      [EnumLiteral("indel"), Description("INDEL Comparison")]
       Indel,
       /// <summary>
       /// SNP Comparison
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("snp", "http://hl7.org/fhir/quality-type"), Description("SNP Comparison")]
+      [EnumLiteral("snp"), Description("SNP Comparison")]
       Snp,
       /// <summary>
       /// UNKNOWN Comparison
       /// (system: http://hl7.org/fhir/quality-type)
       /// </summary>
-      [EnumLiteral("unknown", "http://hl7.org/fhir/quality-type"), Description("UNKNOWN Comparison")]
+      [EnumLiteral("unknown"), Description("UNKNOWN Comparison")]
       Unknown,
     }
 
@@ -88,38 +88,38 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/repository-type)
     /// (system: http://hl7.org/fhir/repository-type)
     /// </summary>
-    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type")]
+    [FhirEnumeration("repositoryType", "http://hl7.org/fhir/ValueSet/repository-type", "http://hl7.org/fhir/repository-type")]
     public enum RepositoryType
     {
       /// <summary>
       /// When URL is clicked, the resource can be seen directly (by webpage or by download link format)
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("directlink", "http://hl7.org/fhir/repository-type"), Description("Click and see")]
+      [EnumLiteral("directlink"), Description("Click and see")]
       Directlink,
       /// <summary>
       /// When the API method (e.g. [base_url]/[parameter]) related with the URL of the website is executed, the resource can be seen directly (usually in JSON or XML format)
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("openapi", "http://hl7.org/fhir/repository-type"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
+      [EnumLiteral("openapi"), Description("The URL is the RESTful or other kind of API that can access to the result.")]
       Openapi,
       /// <summary>
       /// When logged into the website, the resource can be seen.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("login", "http://hl7.org/fhir/repository-type"), Description("Result cannot be access unless an account is logged in")]
+      [EnumLiteral("login"), Description("Result cannot be access unless an account is logged in")]
       Login,
       /// <summary>
       /// When logged in and  follow the API in the website related with URL, the resource can be seen.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("oauth", "http://hl7.org/fhir/repository-type"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
+      [EnumLiteral("oauth"), Description("Result need to be fetched with API and need LOGIN( or cookies are required when visiting the link of resource)")]
       Oauth,
       /// <summary>
       /// Some other complicated or particular way to get resource from URL.
       /// (system: http://hl7.org/fhir/repository-type)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/repository-type"), Description("Some other complicated or particular way to get resource from URL.")]
+      [EnumLiteral("other"), Description("Some other complicated or particular way to get resource from URL.")]
       Other,
     }
 

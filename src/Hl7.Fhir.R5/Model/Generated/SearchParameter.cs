@@ -60,26 +60,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/search-processingmode)
     /// (system: http://hl7.org/fhir/search-processingmode)
     /// </summary>
-    [FhirEnumeration("SearchProcessingModeType", "http://hl7.org/fhir/ValueSet/search-processingmode")]
+    [FhirEnumeration("SearchProcessingModeType", "http://hl7.org/fhir/ValueSet/search-processingmode", "http://hl7.org/fhir/search-processingmode")]
     public enum SearchProcessingModeType
     {
       /// <summary>
       /// The search parameter is derived directly from the selected nodes based on the type definitions.
       /// (system: http://hl7.org/fhir/search-processingmode)
       /// </summary>
-      [EnumLiteral("normal", "http://hl7.org/fhir/search-processingmode"), Description("Normal")]
+      [EnumLiteral("normal"), Description("Normal")]
       Normal,
       /// <summary>
       /// The search parameter is derived by a phonetic transform from the selected nodes.
       /// (system: http://hl7.org/fhir/search-processingmode)
       /// </summary>
-      [EnumLiteral("phonetic", "http://hl7.org/fhir/search-processingmode"), Description("Phonetic")]
+      [EnumLiteral("phonetic"), Description("Phonetic")]
       Phonetic,
       /// <summary>
       /// The interpretation of the xpath statement is unknown (and can't be automated).
       /// (system: http://hl7.org/fhir/search-processingmode)
       /// </summary>
-      [EnumLiteral("other", "http://hl7.org/fhir/search-processingmode"), Description("Other")]
+      [EnumLiteral("other"), Description("Other")]
       Other,
     }
 

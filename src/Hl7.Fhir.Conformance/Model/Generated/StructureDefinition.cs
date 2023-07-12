@@ -60,32 +60,32 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/structure-definition-kind)
     /// (system: http://hl7.org/fhir/structure-definition-kind)
     /// </summary>
-    [FhirEnumeration("StructureDefinitionKind", "http://hl7.org/fhir/ValueSet/structure-definition-kind")]
+    [FhirEnumeration("StructureDefinitionKind", "http://hl7.org/fhir/ValueSet/structure-definition-kind", "http://hl7.org/fhir/structure-definition-kind")]
     public enum StructureDefinitionKind
     {
       /// <summary>
       /// A primitive type that has a value and an extension. These can be used throughout complex datatype, Resource and extension definitions. Only the base specification can define primitive types.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("primitive-type", "http://hl7.org/fhir/structure-definition-kind"), Description("Primitive Data Type")]
+      [EnumLiteral("primitive-type"), Description("Primitive Data Type")]
       PrimitiveType,
       /// <summary>
       /// A  complex structure that defines a set of data elements that is suitable for use in 'resources'. The base specification defines a number of complex types, and other specifications can define additional types. These structures do not have a maintained identity.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("complex-type", "http://hl7.org/fhir/structure-definition-kind"), Description("Complex Data Type")]
+      [EnumLiteral("complex-type"), Description("Complex Data Type")]
       ComplexType,
       /// <summary>
       /// A 'resource' - a directed acyclic graph of elements that aggregrates other types into an identifiable entity. The base FHIR resources are defined by the FHIR specification itself but other 'resources' can be defined in additional specifications (though these will not be recognized as 'resources' by the FHIR specification; i.e. they do not get end-points etc., or act as the targets of references in FHIR defined resources - though other specifications can treat them this way).
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("resource", "http://hl7.org/fhir/structure-definition-kind"), Description("Resource")]
+      [EnumLiteral("resource"), Description("Resource")]
       Resource,
       /// <summary>
       /// A pattern or a template that is not intended to be a real resource or complex type.
       /// (system: http://hl7.org/fhir/structure-definition-kind)
       /// </summary>
-      [EnumLiteral("logical", "http://hl7.org/fhir/structure-definition-kind"), Description("Logical")]
+      [EnumLiteral("logical"), Description("Logical")]
       Logical,
     }
 
@@ -94,20 +94,20 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/type-derivation-rule)
     /// (system: http://hl7.org/fhir/type-derivation-rule)
     /// </summary>
-    [FhirEnumeration("TypeDerivationRule", "http://hl7.org/fhir/ValueSet/type-derivation-rule")]
+    [FhirEnumeration("TypeDerivationRule", "http://hl7.org/fhir/ValueSet/type-derivation-rule", "http://hl7.org/fhir/type-derivation-rule")]
     public enum TypeDerivationRule
     {
       /// <summary>
       /// This definition defines a new type that adds additional elements and optionally additional rules to the base type.
       /// (system: http://hl7.org/fhir/type-derivation-rule)
       /// </summary>
-      [EnumLiteral("specialization", "http://hl7.org/fhir/type-derivation-rule"), Description("Specialization")]
+      [EnumLiteral("specialization"), Description("Specialization")]
       Specialization,
       /// <summary>
       /// This definition adds additional rules to an existing concrete type.
       /// (system: http://hl7.org/fhir/type-derivation-rule)
       /// </summary>
-      [EnumLiteral("constraint", "http://hl7.org/fhir/type-derivation-rule"), Description("Constraint")]
+      [EnumLiteral("constraint"), Description("Constraint")]
       Constraint,
     }
 
@@ -116,26 +116,26 @@ namespace Hl7.Fhir.Model
     /// (url: http://hl7.org/fhir/ValueSet/extension-context-type)
     /// (system: http://hl7.org/fhir/extension-context-type)
     /// </summary>
-    [FhirEnumeration("ExtensionContextType", "http://hl7.org/fhir/ValueSet/extension-context-type")]
+    [FhirEnumeration("ExtensionContextType", "http://hl7.org/fhir/ValueSet/extension-context-type", "http://hl7.org/fhir/extension-context-type")]
     public enum ExtensionContextType
     {
       /// <summary>
       /// The context is all elements that match the FHIRPath query found in the expression.
       /// (system: http://hl7.org/fhir/extension-context-type)
       /// </summary>
-      [EnumLiteral("fhirpath", "http://hl7.org/fhir/extension-context-type"), Description("FHIRPath")]
+      [EnumLiteral("fhirpath"), Description("FHIRPath")]
       Fhirpath,
       /// <summary>
       /// The context is any element that has an ElementDefinition.id that matches that found in the expression. This includes ElementDefinition Ids that have slicing identifiers. The full path for the element is [url]#[elementid]. If there is no #, the Element id is one defined in the base specification.
       /// (system: http://hl7.org/fhir/extension-context-type)
       /// </summary>
-      [EnumLiteral("element", "http://hl7.org/fhir/extension-context-type"), Description("Element ID")]
+      [EnumLiteral("element"), Description("Element ID")]
       Element,
       /// <summary>
       /// The context is a particular extension from a particular StructureDefinition, and the expression is just a uri that identifies the extension.
       /// (system: http://hl7.org/fhir/extension-context-type)
       /// </summary>
-      [EnumLiteral("extension", "http://hl7.org/fhir/extension-context-type"), Description("Extension URL")]
+      [EnumLiteral("extension"), Description("Extension URL")]
       Extension,
     }
 
