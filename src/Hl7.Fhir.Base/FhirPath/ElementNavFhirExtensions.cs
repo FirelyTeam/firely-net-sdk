@@ -27,6 +27,7 @@ namespace Hl7.Fhir.FhirPath
         public static SymbolTable AddFhirExtensions(this SymbolTable t)
         {
             t.Add("hasValue", (ITypedElement f) => f.HasValue(), doNullProp: false);
+            t.Add("resolve", (ITypedElement f, EvaluationContext ctx) => resolver(f, ctx), doNullProp: false);
             t.Add("resolve", (IEnumerable<ITypedElement> f, EvaluationContext ctx) => f.Select(fi => resolver(fi, ctx)), doNullProp: false);
 
             t.Add("memberOf", (Func<object, string, bool>)memberOf, doNullProp: false);
