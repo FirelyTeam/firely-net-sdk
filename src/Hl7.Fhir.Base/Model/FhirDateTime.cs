@@ -99,7 +99,11 @@ namespace Hl7.Fhir.Model
 
         private static readonly P.DateTime INVALID_VALUE = P.DateTime.Now();
 
-        private bool tryGetParsedValue(out P.DateTime? dateTime)
+        /// <summary>
+        /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
+        /// </summary>
+        /// <returns>true if the FhirDateTime contains a valid date/time string, false otherwise.</returns>
+        public bool TryToDateTime(out P.DateTime? dateTime)
         {
             if (_parsedValue is null)
             {
@@ -120,6 +124,12 @@ namespace Hl7.Fhir.Model
 
             bool hasInvalidParsedValue() => ReferenceEquals(_parsedValue, INVALID_VALUE);
         }
+
+        /// <summary>
+        /// Converts a FhirDateTime to a <see cref="P.DateTime"/>.
+        /// </summary>
+        /// <exception cref="FormatException">Thrown when the Value does not contain a valid FHIR DateTime.</exception>
+        public P.DateTime? ToDateTime() => TryToDateTime(out var dt) ? dt : throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
         protected override void OnObjectValueChanged()
         {
@@ -143,7 +153,7 @@ namespace Hl7.Fhir.Model
 
             // ToDateTimeOffset() will convert partial date/times by filling out to midnight/january 1 UTC
             // When there's no timezone, the UTC is assumed
-            if (!tryGetParsedValue(out var dt))
+            if (!TryToDateTime(out var dt))
                 throw new FormatException($"String '{Value}' was not recognized as a valid datetime.");
 
             // Since Value is not null and the parsed value is valid, dto will not be null
@@ -156,7 +166,7 @@ namespace Hl7.Fhir.Model
         /// <returns>True if the value of the FhirDateTime is not null, can be parsed as a DateTimeOffset and has a specified timezone, false otherwise.</returns>
         public bool TryToDateTimeOffset(out DateTimeOffset dto)
         {
-            if (Value is not null && tryGetParsedValue(out var dt) && dt!.Offset is not null)
+            if (Value is not null && TryToDateTime(out var dt) && dt!.Offset is not null)
             {
                 dto = dt.ToDateTimeOffset(dt.Offset.Value);
                 return true;
@@ -176,7 +186,7 @@ namespace Hl7.Fhir.Model
         /// <returns>True if the value of the FhirDateTime is not null and can be parsed as a DateTimeOffset, false otherwise.</returns>
         public bool TryToDateTimeOffset(TimeSpan defaultOffset, out DateTimeOffset dto)
         {
-            if (Value is not null && tryGetParsedValue(out var dt))
+            if (Value is not null && TryToDateTime(out var dt))
             {
                 dto = dt!.ToDateTimeOffset(defaultOffset);
                 return true;

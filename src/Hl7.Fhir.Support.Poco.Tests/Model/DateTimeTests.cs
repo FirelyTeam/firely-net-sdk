@@ -149,17 +149,43 @@ namespace Hl7.Fhir.Tests.Model
         }
 
         [TestMethod]
-        public void CachesValue()
+        public void CanConvertToDateTime()
         {
-            var sw = Stopwatch.StartNew();
+            var dft = new FhirDateTime(2023, 07, 11, 13, 0, 0, TimeSpan.FromHours(1));
+            dft.TryToDateTime(out var dt).Should().BeTrue();
+            dt.Hours.Should().Be(13);
+            dt.Offset.Value.Hours.Should().Be(1);
+            dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Second);
+
+            dft = new FhirDateTime(2023, 07, 11);
+            dft.TryToDateTime(out dt).Should().BeTrue();
+            dt.Days.Should().Be(11);
+            dt.HasOffset.Should().BeFalse();
+            dt.Precision.Should().Be(ElementModel.Types.DateTimePrecision.Day);
+
+            dft = new FhirDateTime("crap");
+            dft.TryToDateTime(out dt).Should().BeFalse();
+
+            dft = new FhirDateTime(null);
+            dft.TryToDateTime(out dt).Should().BeTrue();
+            dt.Should().BeNull();
+        }
+
+        [TestMethod]
+        public void CacheImprovesSpeed()
+        {
             var dts = "2023-07-11T13:00:00";
             var dt = new FhirDateTime(dts);
+            _ = dt.TryToDateTime(out var _); // trigger initial compile of regex
+
+            var sw = Stopwatch.StartNew();
 
             for (var i = 0; i < 1000; i++)
             {
                 // Clear the cache each invocation
                 dt.Value = dts;
                 _ = dt.TryToDateTimeOffset(TimeSpan.Zero, out var _);
+                dt.Value = null;
             }
 
             sw.Stop();
@@ -176,9 +202,8 @@ namespace Hl7.Fhir.Tests.Model
 
             Console.WriteLine(sw2.Elapsed.ToString());
 
-            // On my machine this is actually 200 times faster, but we'll keep a factor 10
-            // to ensure caching, but be less sensitive to variations in processor speed.
-            (sw2.ElapsedMilliseconds * 10).Should().BeLessThan(sw.ElapsedMilliseconds);
+            // It's actually about 20x faster on my machine
+            (sw2.Elapsed).Should().BeLessThan(sw.Elapsed);
         }
     }
 }
