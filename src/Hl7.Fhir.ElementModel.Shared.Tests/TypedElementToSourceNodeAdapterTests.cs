@@ -28,7 +28,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             var result2 = sourceNode.Annotation<IResourceTypeSupplier>();
             Assert.IsNotNull(result2);
             Assert.AreEqual("TypedElementToSourceNodeAdapter", result2.GetType().Name); // I use the classname here, because PocoElementNode is internal in Hl7.Fhir.Core
-            Assert.AreSame(sourceNode, result2);
+            Assert.AreSame(sourceNode, result2 as ISourceNode);
         }
 
         [TestMethod]
@@ -72,7 +72,7 @@ namespace Hl7.Fhir.ElementModel.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(typeof(TypedElementToSourceNodeAdapter), result.GetType());
             Assert.AreEqual("Patient", adapter.GetResourceTypeIndicator());
-            Assert.AreSame(adapter, result);
+            Assert.AreSame(adapter, result as ISourceNode);
         }
     }
 }
